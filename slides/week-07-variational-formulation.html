@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-03-01">
-  <title>MATH 435: Mathematical Imaging – Fourier Transform in Imaging</title>
+  <meta name="dcterms.date" content="2001-07-01">
+  <title>MATH 435: Mathematical Imaging – Variational Formulation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -214,8 +214,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Fourier Transform in Imaging</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 3</p>
+  <h1 class="title">Variational Formulation</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 7</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -225,24 +225,24 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-03-01</p>
+  <p class="date">2001-07-01</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
 <div class="section-kicker">
-<p>From blur to frequency</p>
+<p>From formula to framework</p>
 </div>
-<p>What does it mean for an image to contain high frequencies?</p>
+<p>What does it mean to reconstruct an image by minimizing an energy?</p>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <div class="checklist">
 <ul>
-<li>Interpret 1D and 2D frequencies.</li>
-<li>Compute and read Fourier magnitudes.</li>
-<li>Separate magnitude and phase.</li>
-<li>Use the convolution theorem.</li>
-<li>Explain blur and deblurring in frequency space.</li>
+<li>Interpret reconstruction as energy minimization.</li>
+<li>Separate data fidelity and regularization.</li>
+<li>Read convexity geometrically.</li>
+<li>Derive the Euler-Lagrange equation for an <span class="math inline">\ell_2</span> model.</li>
+<li>Connect optimality to gradient descent.</li>
 </ul>
 </div>
 </section>
@@ -257,386 +257,462 @@ Laurent Najman
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>recap convolution and blur</td>
+<td style="text-align: right;">0-8 min</td>
+<td>recap Tikhonov regularization</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-25 min</td>
-<td>1D frequencies and the DFT</td>
+<td style="text-align: right;">8-20 min</td>
+<td>variational energy viewpoint</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">25-40 min</td>
-<td>2D Fourier transform of images</td>
+<td style="text-align: right;">20-32 min</td>
+<td>convexity as geometry</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">40-52 min</td>
-<td>magnitude, phase, and geometry</td>
+<td style="text-align: right;">32-50 min</td>
+<td>Euler-Lagrange derivation for <span class="math inline">\ell_2</span> smoothing</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">52-63 min</td>
-<td>convolution theorem</td>
+<td style="text-align: right;">50-62 min</td>
+<td>gradient descent intuition</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">63-72 min</td>
-<td>filtering and deblurring</td>
+<td style="text-align: right;">62-70 min</td>
+<td>real-image quadratic denoising</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">72-75 min</td>
-<td>exit checkpoint</td>
+<td style="text-align: right;">70-75 min</td>
+<td>checkpoint</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="reminder-from-week-2" class="slide level2">
-<h2>Reminder from Week 2</h2>
-<div class="model-box">
-<p>For a fixed blur kernel <span class="math inline">h</span>,</p>
+<section id="bridge-from-week-6" class="slide level2">
+<h2>Bridge from Week 6</h2>
+<p>Tikhonov regularization solves</p>
 <p><span class="math display">
-y = h * x.
+\min_x \|Ax-y\|_2^2+\lambda\|x\|_2^2.
 </span></p>
-</div>
-<div class="question-box">
-<p>Why does blur remove fine details?</p>
-</div>
-</section>
-<section id="the-big-idea" class="slide level2">
-<h2>The Big Idea</h2>
 <div class="takeaway-box">
-<p>Fourier analysis rewrites an image as a sum of oscillations.</p>
+<p>This is one example of a much larger idea: choose an energy and minimize it.</p>
 </div>
-<p>Low frequencies describe slow variation.</p>
-<p>High frequencies describe rapid variation, edges, and texture.</p>
 </section>
-<section id="part-1-1d-frequencies" class="slide level2 section-slide">
-<h2>Part 1: 1D Frequencies</h2>
-<div class="section-kicker">
-<p>Start with signals</p>
-</div>
-<p>Frequency counts oscillations</p>
-</section>
-<section id="a-sine-wave" class="slide level2">
-<h2>A Sine Wave</h2>
-<p>A simple oscillation can be written as</p>
+<section id="variational-reconstruction" class="slide level2">
+<h2>Variational Reconstruction</h2>
+<p>We write reconstruction as</p>
 <p><span class="math display">
-s_k[n] = \sin\left(2\pi k n / N\right).
+\hat{x}
+=
+\operatorname*{argmin}_x E(x).
 </span></p>
+<p>Often:</p>
+<p><span class="math display">
+E(x)=D(y,f(x))+\lambda R(x).
+</span></p>
+</section>
+<section id="what-the-terms-mean" class="slide level2">
+<h2>What the Terms Mean</h2>
+<div class="two-col">
 <div class="definition-box">
-<p>The integer <span class="math inline">k</span> is the frequency index. Larger <span class="math inline">k</span> means more oscillations over the same interval.</p>
+<p>Data fidelity:</p>
+<p><span class="math display">
+D(y,f(x))
+</span></p>
+<p>agreement with measurements.</p>
+</div>
+<div class="model-box">
+<p>Regularization:</p>
+<p><span class="math display">
+R(x)
+</span></p>
+<p>preferred image structure.</p>
+</div>
 </div>
 </section>
-<section id="activity-1-predict-the-spectrum" class="slide level2">
-<h2>Activity 1: Predict the Spectrum</h2>
+<section id="part-1-energy-viewpoint" class="slide level2 section-slide">
+<h2>Part 1: Energy Viewpoint</h2>
+<div class="section-kicker">
+<p>One objective, many models</p>
+</div>
+<p>Data plus prior preference</p>
+</section>
+<section id="energy-as-a-model" class="slide level2">
+<h2>Energy as a Model</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week07-energy-terms.png" alt="Data term, regularizer, and total energy as functions of a scalar candidate"></p>
+</div>
+</section>
+<section id="why-this-is-powerful" class="slide level2">
+<h2>Why This Is Powerful</h2>
+<div class="checklist">
+<ul>
+<li>The data model decides the fidelity term.</li>
+<li>The image prior decides the regularizer.</li>
+<li>The optimization method decides how we minimize.</li>
+<li>The minimizer is the reconstruction.</li>
+</ul>
+</div>
+</section>
+<section id="examples-from-previous-weeks" class="slide level2">
+<h2>Examples from Previous Weeks</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Energy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gaussian direct denoising</td>
+<td><span class="math inline">\|x-y\|_2^2</span></td>
+</tr>
+<tr class="even">
+<td>Tikhonov</td>
+<td><span class="math inline">\|Ax-y\|_2^2+\lambda\|x\|_2^2</span></td>
+</tr>
+<tr class="odd">
+<td>Quadratic smoothing</td>
+<td><span class="math inline">\|u-y\|_2^2+\lambda\|\nabla u\|_2^2</span></td>
+</tr>
+<tr class="even">
+<td>Poisson data</td>
+<td><span class="math inline">\sum_i f_i(x)-z_i\log f_i(x)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="activity-1-name-the-terms" class="slide level2">
+<h2>Activity 1: Name the Terms</h2>
 <div class="time-tag">
 <p>5 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Suppose</p>
+<p>For</p>
 <p><span class="math display">
-x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
+E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2,
 </span></p>
-<p>Where should the Fourier magnitude be large?</p>
+<p>identify the data term, the regularizer, and the parameter.</p>
 </div>
 </section>
-<section id="frequency-components" class="slide level2">
-<h2>Frequency Components</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-1d-frequencies.png" alt="Low frequency sine, high frequency sine, their sum, and Fourier magnitude"></p>
-</div>
-</section>
-<section id="the-discrete-fourier-transform" class="slide level2">
-<h2>The Discrete Fourier Transform</h2>
-<p>For a length-<span class="math inline">N</span> signal:</p>
-<p><span class="math display">
-\widehat{x}[k] =
-\sum_{n=0}^{N-1} x[n] e^{-2\pi i kn/N}.
-</span></p>
-<div class="caption">
-<p>Each coefficient measures how much frequency <span class="math inline">k</span> is present.</p>
-</div>
-</section>
-<section id="complex-coefficients" class="slide level2">
-<h2>Complex Coefficients</h2>
-<p>Fourier coefficients are usually complex:</p>
-<p><span class="math display">
-\widehat{x}[k] = a_k + i b_k.
-</span></p>
-<div class="two-col">
-<div class="definition-box">
-<p>Magnitude:</p>
-<p><span class="math display">
-|\widehat{x}[k]|
-</span> strength of frequency <span class="math inline">k</span></p>
-</div>
-<div class="model-box">
-<p>Phase:</p>
-<p><span class="math display">
-\arg(\widehat{x}[k])
-</span> alignment of the oscillation</p>
-</div>
-</div>
-</section>
-<section id="what-fft-returns" class="slide level2">
-<h2>What FFT Returns</h2>
-<div class="code-small">
-<div id="42699221" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a>spectrum <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb1-4"><a></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(spectrum)</span>
-<span id="cb1-5"><a></a>phase <span class="op">=</span> np.angle(spectrum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="caption">
-<p><code>fft</code> computes the DFT quickly. The mathematics is the same transform.</p>
-</div>
-</section>
-<section id="part-2-2d-fourier-transform" class="slide level2 section-slide">
-<h2>Part 2: 2D Fourier Transform</h2>
+<section id="part-2-convexity" class="slide level2 section-slide">
+<h2>Part 2: Convexity</h2>
 <div class="section-kicker">
-<p>Images are 2D signals</p>
+<p>Geometry of energies</p>
 </div>
-<p>Frequencies have direction</p>
+<p>Can we trust local descent?</p>
 </section>
-<section id="images-as-2d-signals" class="slide level2">
-<h2>Images as 2D Signals</h2>
-<p>A grayscale image is an array <span class="math inline">x[m,n]</span>.</p>
-<p>The 2D Fourier transform uses horizontal and vertical frequency indices:</p>
-<p><span class="math display">
-\widehat{x}[u,v] =
-\sum_{m,n} x[m,n] e^{-2\pi i(um/M + vn/N)}.
-</span></p>
-</section>
-<section id="image-spectrum" class="slide level2">
-<h2>Image Spectrum</h2>
+<section id="convexity-picture" class="slide level2">
+<h2>Convexity Picture</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week03-image-spectrum.png" alt="Real image and centered log Fourier magnitude"></p>
+<p><img data-src="../assets/figures/week07-convexity.png" alt="Convex and nonconvex energy landscapes shown by contours"></p>
 </div>
 </section>
-<section id="centered-spectrum" class="slide level2">
-<h2>Centered Spectrum</h2>
-<p>Most software places the zero frequency at the corner.</p>
-<p>For visualization, we often use:</p>
-<div class="code-small">
-<div id="4dc7f125" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>F <span class="op">=</span> np.fft.fft2(image)</span>
-<span id="cb2-2"><a></a>F_centered <span class="op">=</span> np.fft.fftshift(F)</span>
-<span id="cb2-3"><a></a>log_magnitude <span class="op">=</span> np.log1p(np.<span class="bu">abs</span>(F_centered))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="reading-the-spectrum" class="slide level2">
-<h2>Reading the Spectrum</h2>
-<div class="three-col">
-<div class="model-box">
-<div class="tag">
-<p>Center</p>
-</div>
-<p>Average and slow variation.</p>
-</div>
+<section id="convex-function-informally" class="slide level2">
+<h2>Convex Function, Informally</h2>
+<p>A function is convex if the line segment between two points on its graph stays above the graph.</p>
 <div class="definition-box">
-<div class="tag">
-<p>Far from center</p>
-</div>
-<p>Fine oscillations and texture.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Direction</p>
-</div>
-<p>Frequency orientation.</p>
-</div>
+<p>For minimization, convexity means there are no deceptive local minima.</p>
 </div>
 </section>
-<section id="mini-check" class="slide level2">
-<h2>Mini-Check</h2>
+<section id="why-convexity-matters" class="slide level2">
+<h2>Why Convexity Matters</h2>
+<p>For a convex energy:</p>
+<div class="checklist">
+<ul>
+<li>every local minimizer is global;</li>
+<li>first-order optimality is meaningful;</li>
+<li>many algorithms have reliable behavior.</li>
+</ul>
+</div>
+<div class="caption">
+<p>Convex does not always mean easy, but it removes a major ambiguity.</p>
+</div>
+</section>
+<section id="quadratic-energies-are-convex" class="slide level2">
+<h2>Quadratic Energies Are Convex</h2>
+<p>The energy</p>
+<p><span class="math display">
+E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2
+</span></p>
+<p>is convex for <span class="math inline">\lambda\ge 0</span>.</p>
+<div class="takeaway-box">
+<p>This is why it is a good first variational model.</p>
+</div>
+</section>
+<section id="activity-2-convex-or-not" class="slide level2">
+<h2>Activity 2: Convex or Not?</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
 <div class="exercise-box">
-<p>An image has strong vertical stripes.</p>
-<p>Which direction of frequency should be strong: horizontal, vertical, or both?</p>
+<p>Which energies are convex?</p>
+<ol type="1">
+<li><span class="math inline">E(x)=x^2</span>;</li>
+<li><span class="math inline">E(x)=(x-1)^2+0.5x^2</span>;</li>
+<li><span class="math inline">E(x)=x^4-x^2</span>;</li>
+<li><span class="math inline">E(x)=|x|</span>.</li>
+</ol>
 </div>
 </section>
-<section id="part-3-magnitude-and-phase" class="slide level2 section-slide">
-<h2>Part 3: Magnitude and Phase</h2>
+<section id="part-3-euler-lagrange-equation" class="slide level2 section-slide">
+<h2>Part 3: Euler-Lagrange Equation</h2>
 <div class="section-kicker">
-<p>What is stored in a coefficient?</p>
+<p>Optimality condition</p>
 </div>
-<p>Strength and alignment</p>
+<p>Set the first variation to zero</p>
 </section>
-<section id="magnitude-and-phase" class="slide level2">
-<h2>Magnitude and Phase</h2>
-<p>For each Fourier coefficient:</p>
+<section id="the-model" class="slide level2">
+<h2>The Model</h2>
+<p>Consider the denoising energy</p>
 <p><span class="math display">
-\widehat{x}[u,v] =
-|\widehat{x}[u,v]| e^{i\phi[u,v]}.
+E(u)
+=
+\frac12\int_\Omega (u-y)^2\,dx
++
+\frac{\lambda}{2}\int_\Omega |\nabla u|^2\,dx.
 </span></p>
 <div class="caption">
-<p>Magnitude says how much. Phase says where the oscillation lines up.</p>
+<p><span class="math inline">y</span> is the noisy image and <span class="math inline">u</span> is the reconstruction.</p>
 </div>
 </section>
-<section id="magnitude-versus-phase" class="slide level2">
-<h2>Magnitude Versus Phase</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-magnitude-phase.png" alt="Original image, Fourier magnitude, magnitude-only reconstruction, and phase-only reconstruction"></p>
-</div>
-</section>
-<section id="discussion" class="slide level2">
-<h2>Discussion</h2>
-<div class="question-box">
-<p>Which reconstruction preserves more recognizable geometry?</p>
-<p>What does that suggest about the importance of phase?</p>
-</div>
-</section>
-<section id="python-demo-spectrum-of-an-image" class="slide level2 code-small">
-<h2>Python Demo: Spectrum of an Image</h2>
-<div id="46717ac9" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
-<span id="cb3-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
-<span id="cb3-5"><a></a>F <span class="op">=</span> np.fft.fft2(image)</span>
-<span id="cb3-6"><a></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(F)</span>
-<span id="cb3-7"><a></a>phase <span class="op">=</span> np.angle(F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="run-todays-code" class="slide level2 code-small">
-<h2>Run Today’s Code</h2>
-<p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">python3</span> examples/week03_fourier_imaging.py</span>
-<span id="cb4-2"><a></a><span class="ex">python3</span> examples/make_week03_figures.py</span>
-<span id="cb4-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
-<span id="cb4-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="part-4-convolution-theorem" class="slide level2 section-slide">
-<h2>Part 4: Convolution Theorem</h2>
-<div class="section-kicker">
-<p>The Week 2 bridge</p>
-</div>
-<p>Convolution becomes multiplication</p>
-</section>
-<section id="the-convolution-theorem" class="slide level2">
-<h2>The Convolution Theorem</h2>
-<p>If</p>
+<section id="perturb-the-candidate" class="slide level2">
+<h2>Perturb the Candidate</h2>
+<p>To test optimality, perturb <span class="math inline">u</span> in direction <span class="math inline">v</span>:</p>
 <p><span class="math display">
-y = h * x,
+u_\epsilon = u+\epsilon v.
 </span></p>
-<p>then</p>
+<p>At a minimizer, the derivative with respect to <span class="math inline">\epsilon</span> must vanish at <span class="math inline">\epsilon=0</span>:</p>
 <p><span class="math display">
-\widehat{y} = \widehat{h}\,\widehat{x}.
+\left.\frac{d}{d\epsilon}E(u+\epsilon v)\right|_{\epsilon=0}=0.
+</span></p>
+</section>
+<section id="data-term-variation" class="slide level2">
+<h2>Data Term Variation</h2>
+<p>For the data term:</p>
+<p><span class="math display">
+\frac12\int_\Omega (u+\epsilon v-y)^2\,dx.
+</span></p>
+<p>Differentiate:</p>
+<p><span class="math display">
+\left.\frac{d}{d\epsilon}\right|_{\epsilon=0}
+\frac12\int_\Omega (u+\epsilon v-y)^2\,dx
+=
+\int_\Omega (u-y)v\,dx.
+</span></p>
+</section>
+<section id="regularizer-variation" class="slide level2">
+<h2>Regularizer Variation</h2>
+<p>For the smoothness term:</p>
+<p><span class="math display">
+\frac{\lambda}{2}\int_\Omega |\nabla(u+\epsilon v)|^2\,dx.
+</span></p>
+<p>Differentiate:</p>
+<p><span class="math display">
+\lambda\int_\Omega \nabla u\cdot \nabla v\,dx.
+</span></p>
+</section>
+<section id="integration-by-parts" class="slide level2">
+<h2>Integration by Parts</h2>
+<p>Ignoring boundary terms for this guided derivation:</p>
+<p><span class="math display">
+\int_\Omega \nabla u\cdot \nabla v\,dx
+=
+-\int_\Omega (\Delta u)v\,dx.
+</span></p>
+<p>So the first variation is:</p>
+<p><span class="math display">
+\int_\Omega \left[(u-y)-\lambda\Delta u\right]v\,dx.
+</span></p>
+</section>
+<section id="euler-lagrange-equation" class="slide level2">
+<h2>Euler-Lagrange Equation</h2>
+<p>Since this must hold for all perturbations <span class="math inline">v</span>:</p>
+<p><span class="math display">
+(u-y)-\lambda\Delta u=0.
+</span></p>
+<p>Equivalently:</p>
+<p><span class="math display">
+u-\lambda\Delta u=y.
 </span></p>
 <div class="takeaway-box">
-<p>Blur is easier to understand in frequency space.</p>
+<p>The minimizer solves a differential equation.</p>
 </div>
 </section>
-<section id="why-this-matters" class="slide level2">
-<h2>Why This Matters</h2>
-<p>If <span class="math inline">\widehat{h}</span> is small at high frequencies, then</p>
+<section id="discrete-version" class="slide level2">
+<h2>Discrete Version</h2>
+<p>On a pixel grid:</p>
 <p><span class="math display">
-\widehat{y}[u,v] = \widehat{h}[u,v]\widehat{x}[u,v]
+(u-y)+\lambda L u=0,
 </span></p>
-<p>has weak high-frequency content.</p>
-<div class="caption">
-<p>This is the frequency-space explanation for smoothing.</p>
-</div>
-</section>
-<section id="convolution-theorem-picture" class="slide level2">
-<h2>Convolution Theorem Picture</h2>
+<p>where <span class="math inline">L</span> is a discrete negative Laplacian.</p>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week03-convolution-theorem.png" alt="Image, blur kernel, blurred image, and Fourier magnitude of the kernel"></p>
+<p><img data-src="../assets/figures/week07-euler-lagrange-stencil.png" alt="Finite-difference neighborhood and Euler-Lagrange equations for quadratic smoothing"></p>
 </div>
 </section>
-<section id="activity-2-translate-the-model" class="slide level2">
-<h2>Activity 2: Translate the Model</h2>
+<section id="activity-3-fill-the-gap" class="slide level2">
+<h2>Activity 3: Fill the Gap</h2>
 <div class="time-tag">
 <p>6 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Translate each statement between image space and frequency space:</p>
+<p>For</p>
+<p><span class="math display">
+E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|Du\|_2^2,
+</span></p>
+<p>show that the discrete optimality condition is</p>
+<p><span class="math display">
+(u-y)+\lambda D^T D u=0.
+</span></p>
+</div>
+</section>
+<section id="relationship-to-tikhonov" class="slide level2">
+<h2>Relationship to Tikhonov</h2>
+<p>This is Tikhonov with a different penalty:</p>
+<div class="two-col">
+<div class="definition-box">
+<p>Week 6:</p>
+<p><span class="math display">
+\|Ax-y\|_2^2+\lambda\|x\|_2^2.
+</span></p>
+</div>
+<div class="model-box">
+<p>Week 7:</p>
+<p><span class="math display">
+\|u-y\|_2^2+\lambda\|\nabla u\|_2^2.
+</span></p>
+</div>
+</div>
+</section>
+<section id="what-the-regularizer-says" class="slide level2">
+<h2>What the Regularizer Says</h2>
+<p>The term</p>
+<p><span class="math display">
+\|\nabla u\|_2^2
+</span></p>
+<p>penalizes changes between neighboring pixels.</p>
+<div class="takeaway-box">
+<p>It prefers smooth images.</p>
+</div>
+</section>
+<section id="part-4-gradient-descent-intuition" class="slide level2 section-slide">
+<h2>Part 4: Gradient Descent Intuition</h2>
+<div class="section-kicker">
+<p>From equation to algorithm</p>
+</div>
+<p>Move downhill</p>
+</section>
+<section id="gradient-descent" class="slide level2">
+<h2>Gradient Descent</h2>
+<p>For an energy <span class="math inline">E(u)</span>:</p>
+<p><span class="math display">
+u^{k+1}=u^k-\tau\nabla E(u^k).
+</span></p>
+<div class="definition-box">
+<p><span class="math inline">\tau</span> is the step size. It controls how far we move each iteration.</p>
+</div>
+</section>
+<section id="downhill-picture" class="slide level2">
+<h2>Downhill Picture</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week07-gradient-descent-path.png" alt="Gradient descent path on a convex quadratic energy landscape"></p>
+</div>
+</section>
+<section id="for-quadratic-denoising" class="slide level2">
+<h2>For Quadratic Denoising</h2>
+<p>The gradient is</p>
+<p><span class="math display">
+\nabla E(u)
+=
+(u-y)+\lambda L u.
+</span></p>
+<p>So gradient descent is:</p>
+<p><span class="math display">
+u^{k+1}
+=
+u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
+</span></p>
+</section>
+<section id="step-size-matters" class="slide level2">
+<h2>Step Size Matters</h2>
+<div class="question-box">
+<p>What happens if <span class="math inline">\tau</span> is too large?</p>
+</div>
+<div class="caption">
+<p>Gradient descent can overshoot or diverge even for a convex quadratic.</p>
+</div>
+</section>
+<section id="energy-decreases" class="slide level2">
+<h2>Energy Decreases</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week07-gradient-descent-energy.png" alt="Energy decreasing under gradient descent and denoising iterates"></p>
+</div>
+</section>
+<section id="activity-4-interpret-iterates" class="slide level2">
+<h2>Activity 4: Interpret Iterates</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>In the gradient descent figure:</p>
 <ol type="1">
-<li>blur averages nearby pixels;</li>
-<li>blur suppresses fine detail;</li>
-<li>deblurring divides by the blur response.</li>
+<li>Why does the energy decrease?</li>
+<li>Why does the image become smoother?</li>
+<li>Why is the lowest RMSE not necessarily the final iterate?</li>
 </ol>
 </div>
 </section>
-<section id="part-5-filtering" class="slide level2 section-slide">
-<h2>Part 5: Filtering</h2>
+<section id="part-5-real-image-denoising" class="slide level2 section-slide">
+<h2>Part 5: Real Image Denoising</h2>
 <div class="section-kicker">
-<p>Manipulating frequencies</p>
+<p>Quadratic smoothing in practice</p>
 </div>
-<p>Masks in the Fourier domain</p>
+<p>Noise reduction versus edge blur</p>
 </section>
-<section id="low-pass-and-high-pass" class="slide level2">
-<h2>Low-Pass and High-Pass</h2>
-<div class="two-col">
-<div class="definition-box">
-<p>Low-pass filter:</p>
-<p>keeps slow variation and removes rapid variation.</p>
-</div>
-<div class="model-box">
-<p>High-pass filter:</p>
-<p>keeps rapid variation and removes smooth background.</p>
-</div>
-</div>
-</section>
-<section id="low-pass-and-high-pass-image" class="slide level2">
-<h2>Low-Pass and High-Pass Image</h2>
+<section id="quadratic-denoising" class="slide level2">
+<h2>Quadratic Denoising</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week03-low-high-pass.png" alt="Original image, low-pass Fourier mask, low-pass reconstruction, and high-pass reconstruction"></p>
+<p><img data-src="../assets/figures/week07-quadratic-denoising.png" alt="Original image, noisy image, and quadratic denoising with several lambda values"></p>
 </div>
 </section>
-<section id="frequency-masks-are-models" class="slide level2">
-<h2>Frequency Masks Are Models</h2>
+<section id="what-this-model-gets-right" class="slide level2">
+<h2>What This Model Gets Right</h2>
+<div class="checklist">
+<ul>
+<li>It is convex.</li>
+<li>The optimality condition is linear.</li>
+<li>It reduces Gaussian-like noise.</li>
+<li>It is mathematically transparent.</li>
+</ul>
+</div>
+</section>
+<section id="what-this-model-gets-wrong" class="slide level2">
+<h2>What This Model Gets Wrong</h2>
 <div class="question-box">
-<p>A sharp circular cutoff is mathematically simple.</p>
-<p>Is it always a good physical model of an imaging system?</p>
+<p>Edges are also large gradients.</p>
+<p>What does <span class="math inline">\|\nabla u\|_2^2</span> do to edges?</p>
 </div>
-<div class="caption">
-<p>We use it to learn the idea. Real systems often have smoother frequency responses.</p>
-</div>
-</section>
-<section id="part-6-deblurring-revisited" class="slide level2 section-slide">
-<h2>Part 6: Deblurring Revisited</h2>
-<div class="section-kicker">
-<p>The inverse problem, now visible</p>
-</div>
-<p>Division is dangerous</p>
-</section>
-<section id="inverse-filtering" class="slide level2">
-<h2>Inverse Filtering</h2>
-<p>If</p>
-<p><span class="math display">
-\widehat{y} = \widehat{h}\widehat{x} + \widehat{\eta},
-</span></p>
-<p>the naive inverse is</p>
-<p><span class="math display">
-\widehat{x} = \frac{\widehat{y}}{\widehat{h}}.
-</span></p>
-<div class="question-box">
-<p>What happens where <span class="math inline">|\widehat{h}|</span> is close to zero?</p>
-</div>
-</section>
-<section id="inverse-filtering-picture" class="slide level2">
-<h2>Inverse Filtering Picture</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-inverse-filtering.png" alt="Original image, blurred noisy image, naive inverse, and regularized inverse"></p>
-</div>
-</section>
-<section id="why-the-naive-inverse-fails" class="slide level2">
-<h2>Why the Naive Inverse Fails</h2>
 <div class="takeaway-box">
-<p>Deblurring amplifies frequencies that blur suppressed.</p>
+<p>Quadratic smoothing reduces noise and blurs edges.</p>
 </div>
-<p>If the measurement contains noise, those frequencies may be mostly noise.</p>
 </section>
-<section id="a-stabilized-alternative" class="slide level2">
-<h2>A Stabilized Alternative</h2>
-<p>One common frequency-domain stabilizer is</p>
+<section id="preview-of-week-8" class="slide level2">
+<h2>Preview of Week 8</h2>
+<p>Total Variation replaces squared gradients by gradient magnitude:</p>
 <p><span class="math display">
-\widehat{x}_\lambda =
-\frac{\overline{\widehat{h}}}{|\widehat{h}|^2 + \lambda}\widehat{y}.
+\int_\Omega |\nabla u|\,dx.
 </span></p>
 <div class="caption">
-<p>The parameter <span class="math inline">\lambda</span> controls how much we trust weak frequencies.</p>
+<p>This changes the behavior near edges.</p>
 </div>
+</section>
+<section id="code-demo-run-week-7-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 7 Examples</h2>
+<p>From the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> examples/week07_variational.py</span>
+<span id="cb1-2"><a></a><span class="ex">python3</span> examples/make_week07_figures.py</span>
+<span id="cb1-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="in-class-notebook-activity" class="slide level2">
 <h2>In-Class Notebook Activity</h2>
@@ -644,30 +720,42 @@ y = h * x,
 <p>8 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Open the Week 3 notebook.</p>
-<p>Change the low-pass radius and the deblurring stabilizer.</p>
-<p>Record one visual effect and one numerical effect.</p>
+<p>Open the Week 7 notebook.</p>
+<ol type="1">
+<li>Change <span class="math inline">\lambda</span> in quadratic denoising.</li>
+<li>Change the gradient descent step size.</li>
+<li>Compare the closed-form solution with gradient descent iterates.</li>
+<li>Record when smoothness helps and when it destroys edges.</li>
+</ol>
+</div>
+</section>
+<section id="quiz-style-check" class="slide level2">
+<h2>Quiz-Style Check</h2>
+<div class="exercise-box">
+<p>For each expression, identify its role:</p>
+<ol type="1">
+<li><span class="math inline">D(y,f(u))</span>;</li>
+<li><span class="math inline">R(u)</span>;</li>
+<li><span class="math inline">(u-y)-\lambda\Delta u=0</span>;</li>
+<li><span class="math inline">u^{k+1}=u^k-\tau\nabla E(u^k)</span>.</li>
+</ol>
 </div>
 </section>
 <section id="end-of-class-checkpoint" class="slide level2">
 <h2>End-of-Class Checkpoint</h2>
 <div class="exercise-box">
-<p>For each item, give one sentence:</p>
+<p>Answer in one sentence each:</p>
 <ol type="1">
-<li>What does a Fourier magnitude show?</li>
-<li>Where are low frequencies in a centered spectrum?</li>
-<li>What does the convolution theorem say?</li>
-<li>Why does inverse filtering amplify noise?</li>
+<li>What is a variational model?</li>
+<li>Why is convexity useful?</li>
+<li>What is an Euler-Lagrange equation?</li>
+<li>What does gradient descent do?</li>
 </ol>
 </div>
 </section>
 <section id="suggested-answers" class="slide level2">
 <h2>Suggested Answers</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Question</th>
@@ -676,20 +764,20 @@ y = h * x,
 </thead>
 <tbody>
 <tr class="odd">
-<td>Fourier magnitude</td>
-<td>strength of each frequency</td>
+<td>variational model</td>
+<td>reconstruct by minimizing an energy</td>
 </tr>
 <tr class="even">
-<td>centered low frequencies</td>
-<td>near the center</td>
+<td>convexity</td>
+<td>local minima are global minima</td>
 </tr>
 <tr class="odd">
-<td>convolution theorem</td>
-<td>convolution in space is multiplication in frequency</td>
+<td>Euler-Lagrange</td>
+<td>first-order optimality condition for an energy</td>
 </tr>
 <tr class="even">
-<td>noise amplification</td>
-<td>division by small blur response magnifies noise</td>
+<td>gradient descent</td>
+<td>iterative movement opposite the energy gradient</td>
 </tr>
 </tbody>
 </table>
@@ -698,22 +786,22 @@ y = h * x,
 <h2>What Students Should Remember</h2>
 <div class="takeaway-box">
 <ul>
-<li>Fourier coefficients describe oscillations.</li>
-<li>Images have horizontal and vertical frequencies.</li>
-<li>Magnitude and phase carry different information.</li>
-<li>Blur is low-pass behavior in frequency space.</li>
-<li>Deblurring needs regularization because inverse filtering is unstable.</li>
+<li>Variational imaging models are energy minimization models.</li>
+<li>Energies combine data fidelity and regularization.</li>
+<li>Convexity gives a safer optimization landscape.</li>
+<li>Euler-Lagrange equations express optimality.</li>
+<li>Quadratic smoothness is clear and useful, but it blurs edges.</li>
 </ul>
 </div>
 </section>
 <section id="next-time" class="slide level2">
 <h2>Next Time</h2>
-<p>Noise and statistical image models:</p>
+<p>Total Variation regularization:</p>
 <ul>
-<li>additive noise;</li>
-<li>Gaussian and Poisson models;</li>
-<li>signal-to-noise ratio;</li>
-<li>likelihoods for reconstruction.</li>
+<li>TV norm;</li>
+<li>edge preservation;</li>
+<li>comparison with <span class="math inline">\ell_2</span> smoothing;</li>
+<li>staircasing effect.</li>
 </ul>
 
 
