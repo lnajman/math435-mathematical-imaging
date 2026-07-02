@@ -1,0 +1,367 @@
+---
+title: "Stability, Robustness, and Ethics"
+subtitle: "Chapter 14"
+---
+
+[Slides](../slides/week-14-stability-robustness-ethics.html) | [Notebook](../notebooks/week14_stability_robustness.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- explain stability as sensitivity to perturbations;
+- test how parameter choices affect a reconstruction;
+- measure perturbation amplification in an inverse problem;
+- design a robustness test across noise, models, and image families;
+- distinguish visual plausibility from measurement support;
+- document assumptions, failures, and limitations responsibly.
+
+## Reliability Is Tested
+
+Previous chapters built more expressive reconstruction methods: Tikhonov regularization, variational models, TV, sparse priors, wavelets, learned patch priors, and plug-and-play denoisers.
+
+The natural final question is not only:
+
+> Does the reconstruction look good?
+
+It is also:
+
+> Under what conditions should we trust it?
+
+::: {.figure}
+![](../assets/figures/week14-reliability-loop.png){fig-alt="Reliability loop showing reconstruction method, perturbation tests, domain-shift tests, robustness checks, and decision"}
+
+Reliability is not a single final score. It is a loop of modeling, testing, stress testing, and documenting what has been learned.
+:::
+
+In mathematical imaging, a beautiful output can still be unsafe if it is unstable, outside the tested domain, or visually plausible but unsupported by the measurements.
+
+## Stability
+
+An imaging method is stable if small changes in the data tend to produce small changes in the reconstruction.
+
+If $y$ is the measured data and $\hat{x}(y)$ is the reconstructed image, stability asks whether a small perturbation $\delta y$ produces a controlled change
+
+$$
+\hat{x}(y+\delta y)-\hat{x}(y).
+$$
+
+This is the practical form of the third Hadamard condition from Chapter 5: continuous dependence on the data.
+
+Perturbations are not only random noise. They can come from:
+
+- sensor noise;
+- calibration error;
+- an imperfect blur kernel;
+- discretization choices;
+- preprocessing;
+- a change in acquisition protocol;
+- a mismatch between training data and test data.
+
+The central danger is error amplification. Forward imaging often loses information: blur weakens high frequencies, masks discard observations, subsampling removes coefficients, and noise corrupts weak signal components. Trying to undo that loss can magnify small errors.
+
+## Parameter Sensitivity
+
+Regularization makes inverse problems more stable, but the amount of regularization matters.
+
+For Tikhonov regularization,
+
+$$
+\hat{x}_\lambda
+=
+\arg\min_x
+\frac12\|Ax-y\|_2^2
++
+\frac{\lambda}{2}\|Lx\|_2^2,
+$$
+
+the parameter $\lambda$ controls the balance between data consistency and prior smoothness.
+
+::: {.figure}
+![](../assets/figures/week14-lambda-sensitivity.png){fig-alt="Tikhonov parameter sensitivity curve and reconstructions for weak, near-best, and strong regularization"}
+
+The reconstruction can change substantially as $\lambda$ moves from weak to strong regularization.
+:::
+
+Weak regularization often:
+
+- fits unstable directions;
+- amplifies noise;
+- gives a low data residual but poor image quality.
+
+Strong regularization often:
+
+- suppresses noise and artifacts;
+- also suppresses details;
+- may fit the data poorly.
+
+The goal is not to find a magic value of $\lambda$. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.
+
+## Perturbation Amplification
+
+A simple stability diagnostic is to perturb the data and compare relative input and output changes.
+
+Take an observation $y$ and add a small perturbation $\delta y$. Compute
+
+$$
+\frac{\|\delta y\|}{\|y\|}
+\qquad\text{and}\qquad
+\frac{\|\hat{x}(y+\delta y)-\hat{x}(y)\|}{\|\hat{x}(y)\|}.
+$$
+
+The ratio
+
+$$
+\frac{
+\|\hat{x}(y+\delta y)-\hat{x}(y)\|/\|\hat{x}(y)\|
+}{
+\|\delta y\|/\|y\|
+}
+$$
+
+is an empirical amplification factor.
+
+::: {.figure}
+![](../assets/figures/week14-perturbation-amplification.png){fig-alt="Output-change over input-change versus Tikhonov lambda, showing large amplification for weak regularization"}
+
+Weak regularization can make the reconstruction much more sensitive to small perturbations in the data.
+:::
+
+This diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.
+
+## Singular Values And Stability
+
+For a linear forward model $y=Ax+\eta$, singular values explain why inversion can be unstable.
+
+If
+
+$$
+A = U\Sigma V^\top,
+$$
+
+then direct inversion divides by singular values:
+
+$$
+x
+=
+\sum_i
+\frac{u_i^\top y}{\sigma_i}v_i.
+$$
+
+When $\sigma_i$ is small, the factor $1/\sigma_i$ is large. Noise or modeling error in the corresponding data direction is amplified.
+
+Regularization limits this amplification. For example, standard Tikhonov filtering replaces $1/\sigma_i$ by
+
+$$
+\frac{\sigma_i}{\sigma_i^2+\lambda}.
+$$
+
+This factor does not explode when $\sigma_i$ is small. The price is bias: some true details are also reduced.
+
+## Robustness
+
+Stability asks about sensitivity to small changes. Robustness asks whether a method continues to work acceptably across a meaningful range of conditions.
+
+A method is robust only relative to a testing plan. Useful axes include:
+
+- noise level;
+- blur or sampling mismatch;
+- parameter settings;
+- image class;
+- acquisition device;
+- rare but important structures;
+- preprocessing choices.
+
+A minimal robustness table might look like this:
+
+| Test | Question |
+|---|---|
+| noise sweep | Does performance degrade smoothly? |
+| parameter sweep | Is there a wide safe range? |
+| model mismatch | What happens if $A$ is wrong? |
+| image family shift | Does the prior overfit one domain? |
+| small feature test | Are weak structures preserved? |
+
+Robustness is not proven by one successful example. It is supported by a pattern of successful and failed tests.
+
+## Domain Robustness
+
+Learned priors are powerful, but they learn from the examples they see.
+
+::: {.figure}
+![](../assets/figures/week14-domain-robustness.png){fig-alt="RMSE of noisy, Gaussian, and camera-trained PCA denoising across camera, moon, and coins image families"}
+
+A denoiser trained on one image family can be less reliable on another image family.
+:::
+
+This is not a defect of learning itself. It is an assumption that must be named. The training set acts like a prior: it says which images and structures are expected.
+
+In inverse problems, overfitting can mean:
+
+- excellent results on benchmark images;
+- poor behavior on new acquisition conditions;
+- learned texture that is not supported by the data;
+- hidden failure on rare cases;
+- performance differences across populations, instruments, or sites.
+
+## Hallucination
+
+In reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.
+
+This can happen with learned methods, but the general risk is older than deep learning. Any strong prior can add, remove, or reshape information when the data are insufficient.
+
+There are two symmetric dangers:
+
+- a false positive: the method invents a structure;
+- a false negative: the method removes a real but weak structure.
+
+Both matter. Which one is worse depends on the task.
+
+## Small Feature Risk
+
+Small or low-contrast features are often the hardest to handle responsibly. They may be exactly the features that matter.
+
+::: {.figure}
+![](../assets/figures/week14-small-feature-risk.png){fig-alt="Small bright feature weakened by regularization and smoothing"}
+
+Strong regularization and smoothing can make an image look calmer while reducing the contrast of a small real feature.
+:::
+
+This is why image quality cannot be judged only by smoothness or visual appeal. A visually pleasing reconstruction may be worse for a detection task.
+
+For a small-feature test, measure something task-specific, for example:
+
+- feature contrast;
+- localization error;
+- detection rate;
+- false positive rate;
+- false negative rate.
+
+## Data Consistency Is Necessary
+
+An output should be compatible with the measurement model:
+
+$$
+A\hat{x}\approx y.
+$$
+
+Data consistency is necessary, but it is not sufficient. In an ill-posed inverse problem, many images can explain the same measurement within noise tolerance.
+
+This is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.
+
+## Evaluation
+
+No single evaluation number is enough.
+
+When ground truth is available, report quantitative metrics such as RMSE or PSNR. But also check whether those metrics hide localized failures.
+
+When ground truth is not available, use indirect tests:
+
+- data residuals;
+- perturbation sensitivity;
+- parameter sweeps;
+- model mismatch tests;
+- comparison with simpler baselines;
+- expert or domain review;
+- uncertainty or confidence reporting.
+
+For project reports, a failure case is not a weakness. It is evidence that the method has been tested honestly.
+
+## Ethics And Responsibility
+
+Mathematical imaging methods can influence decisions in science, engineering, medicine, remote sensing, cultural heritage, and security. The same reconstruction can be both mathematically interesting and socially consequential.
+
+::: {.figure}
+![](../assets/figures/week14-ethics-questions.png){fig-alt="Ethics questions before deployment: training data, tested failures, harm, uncertainty, auditability"}
+
+Before deployment, ask who could be harmed by false positives, false negatives, missing uncertainty, or untested domain shift.
+:::
+
+Ethical failure modes include:
+
+- a method works worse for some populations or acquisition sites;
+- a reconstruction removes rare but important signs;
+- a plausible output is treated as direct measurement;
+- users are not told when the method is outside its tested domain;
+- code and parameters are not reproducible.
+
+Ethics here is not separate from mathematics. Stability, robustness, reproducibility, and honest communication are part of responsible modeling.
+
+## What To Document
+
+For a reconstruction method, document:
+
+- the forward model and its assumptions;
+- the noise model;
+- the regularizer or learned prior;
+- training data, if any;
+- parameter choices;
+- validation cases;
+- known failures;
+- uncertainty and limitations;
+- intended use and non-use.
+
+This documentation makes the reconstruction inspectable. It also helps future users understand what the image is, and what it is not.
+
+## Project Checkpoint
+
+By the end of the course project, your report should include:
+
+- the mathematical model;
+- the reconstruction algorithm;
+- a parameter study;
+- results on multiple cases;
+- a failure or limitation analysis;
+- code and reproducibility notes.
+
+For the oral defense, both teammates should be able to explain:
+
+- the forward model;
+- the inverse problem;
+- the role of the prior or regularizer;
+- the numerical algorithm;
+- the main success;
+- the main limitation.
+
+## Computation
+
+The Week 14 notebook makes the reliability checks concrete.
+
+Use it to:
+
+1. Sweep Tikhonov $\lambda$.
+2. Measure perturbation amplification.
+3. Track small-feature contrast.
+4. Compare denoising across image families.
+5. Write a reliability checklist for the project.
+
+To regenerate the Week 14 examples from the repository root:
+
+```bash
+python3 examples/week14_stability_robustness.py
+python3 examples/make_week14_figures.py
+python3 scripts/build_notebooks.py
+./scripts/quarto render
+```
+
+The notebook is the best place to change parameters and see how sensitive the conclusions are.
+
+## Exercises
+
+1. **Parameter sensitivity.** Choose two nearby values of $\lambda$ in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.
+
+2. **Perturbation test.** Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.
+
+3. **Robustness table.** For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.
+
+4. **Small-feature test.** Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.
+
+5. **Ethics paragraph.** Write five sentences explaining when your method should not be used.
+
+## Takeaways
+
+- Ill-posed inverse problems require stability checks.
+- A good-looking image can still be unreliable.
+- Learned priors inherit assumptions from training data.
+- Robustness must be tested across realistic and stressful cases.
+- Ethical reconstruction means documenting assumptions, failures, and limits.

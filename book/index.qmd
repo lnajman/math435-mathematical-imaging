@@ -43,6 +43,7 @@ For each chapter, students should be able to answer:
 | 11 | Wavelets and multiscale representation | [slides](../slides/week-11-wavelets.html) | [notebook](../notebooks/week11_wavelets.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) |
 | 12 | Model-based vs data-driven imaging | [slides](../slides/week-12-model-data.html) | [notebook](../notebooks/week12_model_data.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) |
 | 13 | Plug-and-play and learned regularization | [slides](../slides/week-13-plug-and-play.html) | [notebook](../notebooks/week13_plug_and_play.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
+| 14 | Stability, robustness, and ethics | [slides](../slides/week-14-stability-robustness-ethics.html) | [notebook](../notebooks/week14_stability_robustness.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
 
 ## Roadmap
 
@@ -56,7 +57,7 @@ The complete book will follow the course arc:
 | IV | 10-13 | Sparsity, wavelets, learned priors, plug-and-play methods |
 | V | 14-15 | Robustness, ethics, project reporting, oral defense |
 
-The first writing pass now contains Chapters 1-13. The remaining writing work is Chapter 14 plus the project/reporting chapter.
+The first writing pass now contains Chapters 1-14. The remaining writing work is the project/reporting chapter.
 
 ## Notation
 
