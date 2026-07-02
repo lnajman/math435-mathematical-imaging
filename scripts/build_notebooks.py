@@ -1130,10 +1130,530 @@ def week03_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week04_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 4 - Noise Models and Likelihoods
+
+            This notebook accompanies the fourth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - simulate Gaussian and Poisson noise on an image;
+            - compare constant-variance and signal-dependent noise;
+            - compute simple SNR quantities;
+            - plot Gaussian and Poisson negative log-likelihoods;
+            - explain why a likelihood becomes a data-fidelity term.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def normalize01(values):
+                values = np.asarray(values, dtype=float)
+                vmin = values.min()
+                vmax = values.max()
+                if vmax == vmin:
+                    return np.zeros_like(values)
+                return (values - vmin) / (vmax - vmin)
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def add_gaussian_noise(image, sigma, rng):
+                return np.clip(image + sigma * rng.standard_normal(image.shape), 0.0, 1.0)
+
+
+            def add_poisson_noise(image, peak_photons, rng):
+                counts = rng.poisson(peak_photons * image)
+                return np.clip(counts / peak_photons, 0.0, 1.0), counts
+
+
+            def show_heatmaps(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin,
+                            zmax=zmax,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+
+
+            def gaussian_nll(candidate_x, observed_y, sigma):
+                return 0.5 * ((observed_y - candidate_x) / sigma) ** 2
+
+
+            def poisson_nll(candidate_x, observed_count, peak_photons):
+                mean_count = np.maximum(peak_photons * candidate_x, 1e-12)
+                return mean_count - observed_count * np.log(mean_count)
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Load an Image and Add Noise
+
+            We start with a clean grayscale image. Then we create one Gaussian observation and two Poisson observations.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43504)
+
+            image = data.camera().astype(float) / 255.0
+            image = image[80:336, 90:346]
+
+            gaussian_sigma = 0.08
+            poisson_low_photons = 18
+            poisson_high_photons = 120
+
+            gaussian_noisy = add_gaussian_noise(image, gaussian_sigma, rng)
+            poisson_low, poisson_low_counts = add_poisson_noise(image, poisson_low_photons, rng)
+            poisson_high, poisson_high_counts = add_poisson_noise(image, poisson_high_photons, rng)
+
+            show_heatmaps(
+                [image, gaussian_noisy, poisson_low, poisson_high],
+                [
+                    "clean image",
+                    f"Gaussian sigma={gaussian_sigma}",
+                    f"Poisson peak={poisson_low_photons}",
+                    f"Poisson peak={poisson_high_photons}",
+                ],
+                height=430,
+            )
+
+            print("Gaussian RMSE:", round(rmse(gaussian_noisy, image), 4))
+            print("Poisson low-light RMSE:", round(rmse(poisson_low, image), 4))
+            print("Poisson higher-photon RMSE:", round(rmse(poisson_high, image), 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change `gaussian_sigma`, `poisson_low_photons`, and `poisson_high_photons`.
+
+            Before rerunning, predict which image will become noisier and why.
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            gaussian_sigma = 0.04
+            peak_photons = 35
+
+            gaussian_experiment = add_gaussian_noise(image, gaussian_sigma, rng)
+            poisson_experiment, poisson_experiment_counts = add_poisson_noise(image, peak_photons, rng)
+
+            show_heatmaps(
+                [image, gaussian_experiment, poisson_experiment],
+                ["clean", f"Gaussian sigma={gaussian_sigma}", f"Poisson peak={peak_photons}"],
+                height=430,
+            )
+
+            print("Gaussian RMSE:", round(rmse(gaussian_experiment, image), 4))
+            print("Poisson RMSE:", round(rmse(poisson_experiment, image), 4))
+            """
+        ),
+        md(
+            """
+            ### 2. Gaussian Noise Has Constant Variance
+
+            In the additive Gaussian model,
+
+            ```text
+            y_i = x_i + eta_i,   eta_i ~ N(0, sigma^2)
+            ```
+
+            the variance of the residual does not depend on the true intensity.
+            """
+        ),
+        code(
+            """
+            residual = gaussian_noisy - image
+            dark_pixels = (image > 0.05) & (image < 0.20)
+            bright_pixels = image > 0.75
+
+            fig = go.Figure()
+            fig.add_trace(
+                go.Histogram(
+                    x=residual.ravel(),
+                    nbinsx=80,
+                    histnorm="probability density",
+                    marker_color="#24536b",
+                    name="all residuals",
+                )
+            )
+            fig.update_layout(
+                title="Gaussian residual histogram",
+                xaxis_title="observed - true intensity",
+                yaxis_title="density",
+                height=380,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            print("residual mean:", round(float(residual.mean()), 4))
+            print("residual std, dark pixels:", round(float(residual[dark_pixels].std()), 4))
+            print("residual std, bright pixels:", round(float(residual[bright_pixels].std()), 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Why are the two standard deviations close? What would make them different in a real camera?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your explanation here."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ### 3. Poisson Noise Depends on the Signal
+
+            For a photon count,
+
+            ```text
+            z_i ~ Poisson(lambda_i)
+            ```
+
+            the mean and variance are both `lambda_i`.
+            """
+        ),
+        code(
+            """
+            true_intensities = np.array([0.15, 0.45, 0.80])
+            peak_photons = 50
+            count_samples = rng.poisson(peak_photons * true_intensities[:, None], size=(3, 8000))
+
+            fig = go.Figure()
+            colors = ["#24536b", "#9a5b2f", "#2f7a54"]
+            for intensity, samples, color in zip(true_intensities, count_samples, colors):
+                fig.add_trace(
+                    go.Histogram(
+                        x=samples,
+                        nbinsx=45,
+                        histnorm="probability",
+                        opacity=0.55,
+                        marker_color=color,
+                        name=f"true intensity={intensity}",
+                    )
+                )
+            fig.update_layout(
+                title="Poisson count distributions",
+                xaxis_title="photon count",
+                yaxis_title="probability",
+                barmode="overlay",
+                height=390,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            for intensity, samples in zip(true_intensities, count_samples):
+                print(
+                    f"intensity={intensity:.2f}",
+                    "sample mean=", round(float(samples.mean()), 2),
+                    "sample variance=", round(float(samples.var()), 2),
+                )
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Change `peak_photons`. What happens to the spread of the count distributions?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            peak_photons = 12
+            intensity = 0.50
+
+            samples = rng.poisson(peak_photons * intensity, size=8000)
+
+            fig = go.Figure(
+                go.Histogram(
+                    x=samples,
+                    nbinsx=35,
+                    histnorm="probability",
+                    marker_color="#24536b",
+                )
+            )
+            fig.update_layout(
+                title=f"Poisson counts: intensity={intensity}, peak={peak_photons}",
+                xaxis_title="count",
+                yaxis_title="probability",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            print("sample mean:", round(float(samples.mean()), 3))
+            print("sample variance:", round(float(samples.var()), 3))
+            print("sample SNR:", round(float(samples.mean() / samples.std()), 3))
+            """
+        ),
+        md(
+            """
+            ### 4. Signal-to-Noise Ratio
+
+            Signal-to-noise ratio compares the signal size with the typical noise size.
+
+            For Gaussian noise, a simple pixelwise SNR is `x / sigma`.
+
+            For Poisson counts, the count SNR is approximately `sqrt(lambda)`.
+            """
+        ),
+        code(
+            """
+            intensities = np.linspace(0.02, 1.0, 200)
+            sigma = 0.08
+            gaussian_snr = intensities / sigma
+            photon_levels = [12, 40, 140]
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["Gaussian", "Poisson"])
+            fig.add_trace(
+                go.Scatter(x=intensities, y=gaussian_snr, mode="lines", name="sigma=0.08"),
+                row=1,
+                col=1,
+            )
+            for peak in photon_levels:
+                fig.add_trace(
+                    go.Scatter(
+                        x=intensities,
+                        y=np.sqrt(peak * intensities),
+                        mode="lines",
+                        name=f"peak={peak}",
+                    ),
+                    row=1,
+                    col=2,
+                )
+            fig.update_xaxes(title_text="true intensity", row=1, col=1)
+            fig.update_xaxes(title_text="true intensity", row=1, col=2)
+            fig.update_yaxes(title_text="SNR", row=1, col=1)
+            fig.update_yaxes(title_text="SNR", row=1, col=2)
+            fig.update_layout(height=390, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Suppose a pixel has expected photon count `lambda=25`.
+
+            Compute its standard deviation and SNR. Then repeat for `lambda=100`.
+            """
+        ),
+        code(
+            """
+            for lam in [25, 100]:
+                standard_deviation = np.sqrt(lam)
+                snr = lam / standard_deviation
+                print(f"lambda={lam}: std={standard_deviation:.2f}, SNR={snr:.2f}")
+            """
+        ),
+        md(
+            """
+            ### 5. Likelihoods Become Data-Fidelity Terms
+
+            A likelihood asks: if the true value were `x`, how plausible would the observation be?
+
+            Minimizing a negative log-likelihood gives a data-fidelity term.
+            """
+        ),
+        code(
+            """
+            candidate_x = np.linspace(0.01, 1.0, 400)
+
+            observed_y = 0.57
+            sigma = 0.09
+            gaussian_cost = gaussian_nll(candidate_x, observed_y, sigma)
+            gaussian_cost = gaussian_cost - gaussian_cost.min()
+
+            observed_count = 20
+            peak_photons = 35
+            poisson_cost = poisson_nll(candidate_x, observed_count, peak_photons)
+            poisson_cost = poisson_cost - poisson_cost.min()
+
+            fig = make_subplots(
+                rows=1,
+                cols=2,
+                subplot_titles=["Gaussian negative log-likelihood", "Poisson negative log-likelihood"],
+            )
+            fig.add_trace(go.Scatter(x=candidate_x, y=gaussian_cost, mode="lines"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=candidate_x, y=poisson_cost, mode="lines"), row=1, col=2)
+            fig.update_xaxes(title_text="candidate true intensity", row=1, col=1)
+            fig.update_xaxes(title_text="candidate true intensity", row=1, col=2)
+            fig.update_yaxes(title_text="relative cost", row=1, col=1)
+            fig.update_yaxes(title_text="relative cost", row=1, col=2)
+            fig.update_layout(height=390, showlegend=False, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+
+            print("Gaussian minimizer:", round(float(candidate_x[np.argmin(gaussian_cost)]), 3))
+            print("observed_y:", observed_y)
+            print("Poisson minimizer:", round(float(candidate_x[np.argmin(poisson_cost)]), 3))
+            print("observed_count / peak_photons:", round(observed_count / peak_photons, 3))
+            """
+        ),
+        md(
+            """
+            ### Exercise 5
+
+            Change `observed_count` and `peak_photons`.
+
+            What happens to the minimizer of the Poisson cost?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            observed_count = 8
+            peak_photons = 20
+
+            poisson_cost = poisson_nll(candidate_x, observed_count, peak_photons)
+            poisson_cost = poisson_cost - poisson_cost.min()
+
+            fig = go.Figure(go.Scatter(x=candidate_x, y=poisson_cost, mode="lines"))
+            fig.update_layout(
+                title="Poisson negative log-likelihood",
+                xaxis_title="candidate true intensity",
+                yaxis_title="relative cost",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            print("minimizer:", round(float(candidate_x[np.argmin(poisson_cost)]), 3))
+            print("count / peak:", round(observed_count / peak_photons, 3))
+            """
+        ),
+        md(
+            """
+            ### 6. Averaging Repeated Gaussian Measurements
+
+            If we have independent observations of the same image, averaging reduces Gaussian noise.
+
+            The standard deviation decreases like `1 / sqrt(number of observations)`.
+            """
+        ),
+        code(
+            """
+            sigma = 0.12
+            repeated = np.array([add_gaussian_noise(image, sigma, rng) for _ in range(16)])
+            counts = [1, 2, 4, 8, 16]
+            averaged_images = [repeated[:count].mean(axis=0) for count in counts]
+            errors = [rmse(average, image) for average in averaged_images]
+
+            show_heatmaps(
+                [image] + averaged_images[:4],
+                ["clean"] + [f"average {count}" for count in counts[:4]],
+                height=420,
+            )
+
+            fig = go.Figure(go.Scatter(x=counts, y=errors, mode="lines+markers"))
+            fig.update_layout(
+                title="RMSE after averaging repeated noisy measurements",
+                xaxis_title="number of measurements",
+                yaxis_title="RMSE",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            for count, error in zip(counts, errors):
+                print(f"average {count:2d}: RMSE={error:.4f}")
+            """
+        ),
+        md(
+            """
+            ### Exercise 6
+
+            Averaging helps with random noise.
+
+            Give one example of an imaging failure that averaging cannot fix.
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your example here."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. Why does Gaussian noise lead to a squared-error data term?
+            2. Why is Poisson noise signal-dependent?
+            3. What happens to SNR when photon count increases?
+            4. Why does regularization still matter after choosing a likelihood?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            In the next class, we will combine data-fidelity terms with priors or regularizers:
+
+            ```text
+            minimize data_fit(y, f(x)) + lambda * regularizer(x)
+            ```
+
+            Week 4 gives the statistical meaning of the `data_fit` part.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
     write_notebook("week03_fourier_imaging.ipynb", week03_cells())
+    write_notebook("week04_noise_likelihood.ipynb", week04_cells())
 
 
 if __name__ == "__main__":

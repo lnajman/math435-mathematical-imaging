@@ -13,6 +13,7 @@ project:
     - slides/week-01-image-formation.qmd
     - slides/week-02-convolution-blur.qmd
     - slides/week-03-fourier-imaging.qmd
+    - slides/week-04-noise-likelihood.qmd
     - project/index.qmd
 
 website:

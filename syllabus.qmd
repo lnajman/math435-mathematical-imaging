@@ -358,7 +358,7 @@ This syllabus must be augmented by a syllabus supplement for students.
 <tr>
 <td><strong>Final Examination</strong>.</td>
 <td colspan="3">TBD by the Registrar’s Office</td>
-<td>35%</td>
+<td>30%</td>
 </tr>
 </tbody>
 </table>

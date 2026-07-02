@@ -12,6 +12,7 @@ NOTEBOOKS = [
     ROOT / "notebooks" / "week01_image_formation.ipynb",
     ROOT / "notebooks" / "week02_convolution_blur.ipynb",
     ROOT / "notebooks" / "week03_fourier_imaging.ipynb",
+    ROOT / "notebooks" / "week04_noise_likelihood.ipynb",
 ]
 OUTPUT_DIR = Path("/private/tmp/math435-notebook-validation")
 
