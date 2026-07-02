@@ -1,28 +1,770 @@
 ---
-title: "Syllabus Summary"
+title: "Syllabus"
+toc: true
+toc-depth: 3
 ---
 
-## Catalog Description
+<!-- This page is generated from the official Word syllabus by scripts/convert_syllabus_docx.py. -->
+
+## Course Information
+
+**MATH 435: Mathematical Imaging**
+
+(3 Lecture hours, 0 Laboratory, 3 Credits)
+
+## Prerequisites
+
+- MATH 317 – Advanced Calculus
+
+- MATH 318 – Linear Algebra II
+
+- MATH 412 – Probability and Statistics
+
+## Corequisites
+
+- None
+
+## Course Catalog Description
 
 This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.
 
-The course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python.
+The course emphasizes mathematical modeling, stability analysis, regularization techniques (Tikhonov, Total Variation, sparse methods), and computational implementation. Classical model-based approaches are connected to modern computational imaging techniques, including data-driven and learning-based reconstruction methods.
 
-## Main Text
+Applications focus on medical and scientific imaging.
 
-M. Bertero and P. Boccacci, *Introduction to Inverse Problems in Imaging*, 2nd edition, CRC Press, 2021.
+## Textbook
 
-## References
+- M Bertero. and P. Boccacci, *Introduction to Inverse Problems in Imaging*, 2nd ed., CRC Press, 2021.
 
-- A. Chambolle and T. Pock, "An introduction to continuous optimization for imaging," *Acta Numerica*, 25, 161-319, 2016.
-- S. Mallat, *A Wavelet Tour of Signal Processing*, 3rd edition, Academic Press, 2008.
+## Reference Materials
 
-## Assessment Structure
+- A. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” *Acta Numerica*, vol. 25, pp. 161–319, 2016.
 
-| Assessment | Weight | Timing |
-|---|---:|---|
-| Quizzes | 15% | Weeks 4 and 12 |
-| Two-student modeling project | 30% | Assigned Week 6, report Week 14, defense Week 15 |
-| Semester examination | 25% | Week 8 |
-| Final examination | 30% | Exam week |
+- S. Mallat, *A Wavelet Tour of Signal Processing*, 3rd ed., Academic Press, 2008.
 
+- Selected recent research articles on modern computational imaging and learning-based reconstruction (provided during the course).
+
+## Course Structure & Learning Methodology
+
+Lectures will be 3x50 minutes or 2 × 75-minutes per week. The course is delivered through lectures, guided mathematical derivations, conceptual discussions, and computational demonstrations using MATLAB or Python. Homework assignments and an individual modeling project are conducted throughout the semester to reinforce understanding.
+
+The course emphasizes reasoning and modeling rather than formal proof-writing.
+
+## Course Topics
+
+| **Week \#** | **Topics** |
+|:--:|----|
+| 01 | Image formation models; convolution; linear systems |
+| 02 | Fourier transform; convolution theorem; frequency interpretation of blur |
+| 03 | Discrete Fourier transform (DFT); spectral analysis; filtering |
+| 04 | Noise models: Gaussian and Poisson; likelihood formulation |
+| 05 | Ill-posed inverse problems; instability; SVD (conceptual) |
+| 06 | Tikhonov regularization; parameter effects; bias–variance tradeoff |
+| 07 | Variational models; convexity (geometric view); Euler–Lagrange derivation |
+| 08 | Total Variation regularization; edge preservation; comparison with ℓ2 |
+| 09 | Convex optimization basics; gradient descent; proximal ideas |
+| 10 | Sparse reconstruction; ℓ1 regularization; compressed sensing intuition |
+| 11 | Wavelets and multiscale representations; thresholding |
+| 12 | Modern computational imaging: model-based vs data-driven reconstruction |
+| 13 | Plug-and-play priors; learned regularization; CNNs as iterative operators |
+| 14 | Stability, robustness, and limitations of AI-based reconstruction |
+| 15 | Project presentations and oral defenses |
+
+## Laboratory and/or Computing/Digital Resources
+
+Python (NumPy, SciPy, Matplotlib).
+
+## Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)
+
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 59%" />
+<col style="width: 18%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>No.</strong></th>
+<th><strong>CLOs</strong></th>
+<th><strong>PLOs</strong></th>
+<th><strong>Emphasis Level<sup>#</sup></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Formulate mathematical models for image formation, degradation, and reconstruction problem</td>
+<td>1,2</td>
+<td>H,H</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><p>Analyze ill-posed imaging problems and evaluate the role of</p>
+<p>regularization techniques in ensuring stability and meaningful</p>
+<p>reconstruction.</p></td>
+<td>1,3</td>
+<td>H,H</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><p>Design and implement computational reconstruction methods and</p>
+<p>interpret experimental results using scientific judgment.</p></td>
+<td>2,3</td>
+<td>H,H</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><p>Communicate mathematical reasoning, modeling decisions, and</p>
+<p>reconstruction results effectively in written and oral formats.</p></td>
+<td>4</td>
+<td>H</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><p>Work effectively in two-student teams to plan, execute, and deliver a</p>
+<p>modeling project while recognizing ethical considerations and the</p>
+<p>societal impact of computational imaging solutions.</p></td>
+<td>5,6</td>
+<td>M,H</td>
+</tr>
+</tbody>
+</table>
+
+<sup>\*</sup>PLOs can be found in the academic catalog
+
+<sup>\#</sup>Emphasis level: H: High; M: Medium; L: Low; N: Nothing specific
+
+## Assessment
+
+All course learning outcomes are assessed using the following assessment tools.
+
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 31%" />
+<col style="width: 20%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Assessment Instruments</strong></th>
+<th style="text-align: center;"><strong>Contribution to Course Grade (%)</strong></th>
+<th style="text-align: center;"><strong>Week #</strong></th>
+<th style="text-align: center;"><strong>CLO(s)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>Quizzes</p>
+</td>
+<td>15%</td>
+<td>4,12</td>
+<td>1,2</td>
+</tr>
+<tr>
+<td><p>Two-Student Team Modeling</p>
+<p>Project (Joint Report</p>
+<p>and Individual Oral Defense)</p>
+</td>
+<td>30%</td>
+<td><p>Proposal: Week 6</p>
+<p>Report: Week 14</p>
+<p>Oral Defense: Week 15</p></td>
+<td>1,2,3,4,5</td>
+</tr>
+<tr>
+<td><p>Semester Examination</p>
+</td>
+<td>25%</td>
+<td>Week 8</td>
+<td>1,2</td>
+</tr>
+<tr>
+<td><p>Final Examination</p>
+</td>
+<td>30%</td>
+<td>Exam Week</td>
+<td>1,2,3</td>
+</tr>
+</tbody>
+</table>
+
+Students may use computational tools and AI assistance for the project, but must be able to justify and defend all modeling decisions during the oral defense.
+
+## Grading Scheme
+
+The official Khalifa University grading system uses letter grades with pluses and minuses. Passing grades range from A to D; F is failing. Each letter grade is assigned a grade point on a four-point scale as per the guidelines below:
+
+*For undergraduate programs:*
+
+<table style="width:100%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 16%" />
+<col style="width: 44%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Letter Grade</strong></th>
+<th style="text-align: center;"><strong>Grade Point</strong></th>
+<th style="text-align: center;"><strong>Grade Range</strong></th>
+<th style="text-align: center;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>4.00</td>
+<td>From 92.5% to 100%</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>A-</td>
+<td>3.70</td>
+<td>From 89.5% to less than 92.5%</td>
+<td rowspan="2">Very Good</td>
+</tr>
+<tr>
+<td>B+</td>
+<td>3.30</td>
+<td>From 86.5% to less than 89.5%</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3.00</td>
+<td>From 82.5% to less than 86.5%</td>
+<td rowspan="2">Good</td>
+</tr>
+<tr>
+<td>B-</td>
+<td>2.70</td>
+<td>From 79.5% to less than 82.5%</td>
+</tr>
+<tr>
+<td>C+</td>
+<td>2.30</td>
+<td>From 76.5% to less than 79.5%</td>
+<td rowspan="2">Satisfactory</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2.00</td>
+<td>From 72.5% to less than 76.5%</td>
+</tr>
+<tr>
+<td>C-</td>
+<td>1.70</td>
+<td>From 69.5% to less than 72.5%</td>
+<td>Less than Satisfactory</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1.00</td>
+<td>From 59.5% to less than 69.5%</td>
+<td>Poor</td>
+</tr>
+<tr>
+<td>F</td>
+<td>0.00</td>
+<td>Less than 59.5%</td>
+<td>Fail</td>
+</tr>
+</tbody>
+</table>
+
+## Academic Integrity Statement
+
+“As a Khalifa University student, I will not lie, cheat, steal, or use any unfair means in academic work and will behave according to university rules and UAE societal norms and expectations.” Refer to ACA 3500 Academic Integrity Policy for more details.
+
+## Copyright and Plagiarism
+
+All students must adhere to the university’s policies on copyright and plagiarism, including the ethical use of generative AI tools. Any use of AI-generated content must be properly attributed and must not violate academic integrity standards.
+
+::: {.callout-note}
+This syllabus must be augmented by a syllabus supplement for students.
+:::
+
+## Syllabus Supplement
+
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 2%" />
+<col style="width: 25%" />
+<col style="width: 34%" />
+<col style="width: 10%" />
+</colgroup>
+<tbody>
+<tr>
+<td colspan="5"><strong>Organizational Details</strong></td>
+</tr>
+<tr>
+<td colspan="2"><strong>Course Code and Title:</strong></td>
+<td colspan="3" style="text-align: left;">MATH 435 – Mathematical Imaging</td>
+</tr>
+<tr>
+<td colspan="2"><strong>Semester:</strong></td>
+<td colspan="3"></td>
+</tr>
+<tr>
+<td colspan="2"><strong>Schedule:</strong></td>
+<td colspan="3"></td>
+</tr>
+<tr>
+<td colspan="2"><strong>Instructor:</strong></td>
+<td colspan="3"></td>
+</tr>
+<tr>
+<td colspan="2"><strong>Contact Email:</strong></td>
+<td colspan="3"></td>
+</tr>
+<tr>
+<td colspan="2"><strong>Office Room Number:</strong></td>
+<td colspan="3"></td>
+</tr>
+<tr>
+<td colspan="2"><strong>Office Hours:</strong></td>
+<td colspan="3"></td>
+</tr>
+<tr>
+<td colspan="5"><strong>Assessment Methodology</strong></td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;"></td>
+<td><strong>Tentative Dates</strong></td>
+<td><strong>Weight</strong></td>
+</tr>
+<tr>
+<td rowspan="3"><strong>Coursework</strong>.</td>
+<td colspan="2">Quiz 1</td>
+<td>Week 4 (7.5%)</td>
+<td rowspan="3">45%</td>
+</tr>
+<tr>
+<td colspan="2">Quiz 2</td>
+<td>Week 12 (7.5%)</td>
+</tr>
+<tr>
+<td colspan="2">Project and Presentation</td>
+<td>Week 14/15 (30%)</td>
+</tr>
+<tr>
+<td><strong>Midterm Examination</strong>.</td>
+<td colspan="3">Week 8</td>
+<td>25%</td>
+</tr>
+<tr>
+<td><strong>Final Examination</strong>.</td>
+<td colspan="3">TBD by the Registrar’s Office</td>
+<td>35%</td>
+</tr>
+</tbody>
+</table>
+
+## Instructor Policy on Late Submission of Assignments
+
+### Quizzes
+
+There will be no make-up quizzes. If the student fails to attend a scheduled quiz **without** an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.
+
+If the student fails to attend a quiz and the **Student Success Department confirms** that the student's absence from that quiz is approved, then the grade that will be assigned to that quiz is:
+
+- the grade of the Semester examination if that quiz took place before the Semester examination;
+- the grade of the Final Examination if that quiz took place after the Semester examination.
+
+### Semester Examination
+
+There will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination **without** an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.
+
+If the student fails to attend the Semester examination and the **Student Success Department confirms** that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.
+
+**A maximum of 40% of the course grade can be compensated through the above policy.**
+
+## Additional Information
+
+### Assessment
+
+Late submission of the group project will not be accepted.
+
+### Project
+
+The project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.
+
+Students are required to use Python for all computational implementations and analyses.
+
+A written report and the corresponding code must be submitted in Week 13.
+
+In Week 14, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project.
+
+Failure to participate in the oral defense will result in a maximum of 50% of the project grade.
+
+### Calculator Policy
+
+You will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.
+
+### Classroom Policies
+
+Discipline is one of the main components of your academic and professional success.
+
+Please arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.
+
+Please ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked "Absent" in the Banner.
+
+**If you are absent for any lecture, it is your responsibility to cover the missed material.**
+
+## Weekly Plan (Tentative)
+
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Week #</strong></th>
+<th style="text-align: center;"><strong>Topics</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">01</td>
+<td>Image formation models; convolution; linear systems</td>
+</tr>
+<tr>
+<td style="text-align: center;">02</td>
+<td>Fourier transform; convolution theorem; frequency interpretation of blur</td>
+</tr>
+<tr>
+<td style="text-align: center;">03</td>
+<td>Discrete Fourier transform (DFT); spectral analysis; filtering</td>
+</tr>
+<tr>
+<td style="text-align: center;">04</td>
+<td>Noise models: Gaussian and Poisson; likelihood formulation<br />
+Quiz 1</td>
+</tr>
+<tr>
+<td style="text-align: center;">05</td>
+<td>Ill-posed inverse problems; instability; SVD (conceptual)</td>
+</tr>
+<tr>
+<td style="text-align: center;">06</td>
+<td>Tikhonov regularization; parameter effects; bias–variance tradeoff<br />
+Project assigned</td>
+</tr>
+<tr>
+<td style="text-align: center;">07</td>
+<td>Variational models; convexity (geometric view); Euler–Lagrange derivation</td>
+</tr>
+<tr>
+<td style="text-align: center;">08</td>
+<td>Total Variation regularization; edge preservation; comparison with ℓ2<br />
+Midterm</td>
+</tr>
+<tr>
+<td style="text-align: center;">09</td>
+<td>Convex optimization basics; gradient descent; proximal ideas</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td>Sparse reconstruction; ℓ1 regularization; compressed sensing intuition</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td>Wavelets and multiscale representations; thresholding</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td>Modern computational imaging: model-based vs data-driven reconstruction<br />
+Quiz 2</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td>Plug-and-play priors; learned regularization; CNNs as iterative operators</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td>Stability, robustness, and limitations of AI-based reconstruction<br />
+Project report</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td>Project presentations and oral defenses</td>
+</tr>
+</tbody>
+</table>
+
+## Detailed Weekly Plan (15 Weeks, Tentative)
+
+## Week 1 – Introduction to Imaging as a Mathematical Problem
+
+**Topics**
+
+- What is an image mathematically?
+
+- Continuous vs discrete images
+
+- Pixels, grids, vector representation
+
+- Linear systems viewpoint of imaging
+
+- Forward operator concept
+
+**Focus**  
+Students understand that imaging is a mathematical mapping:
+
+$$
+Ax = b
+$$
+
+**Learning Goal**  
+Students can describe image formation as a mathematical model.
+
+## Week 2 – Convolution and Blur
+
+**Topics**
+
+- Convolution in 1D and 2D
+
+- Point spread function (PSF)
+
+- Physical meaning of blur
+
+- Boundary conditions
+
+**In class**
+
+- Compute simple convolution examples
+
+- Visual interpretation of blur
+
+**Learning Goal**  
+Students can formulate blur as convolution.
+
+## Week 3 – Fourier Transform in Imaging
+
+**Topics**
+
+- 2D Fourier transform
+
+- Convolution theorem
+
+- Frequency interpretation of blur
+
+- Low-pass vs high-pass filtering
+
+**Focus**  
+Why inversion in frequency domain amplifies noise.
+
+**Learning Goal**  
+Students understand why deblurring is unstable.
+
+## Week 4 – Discrete Fourier Transform & Noise Models
+
+**Topics**
+
+- DFT and FFT
+
+- Spectral representation of images
+
+- Gaussian noise model
+
+- Poisson noise (medical relevance)
+
+- Likelihood formulation
+
+**Learning Goal**  
+Students can distinguish noise models and write likelihood expressions.
+
+## Week 5 – Ill-Posed Inverse Problems
+
+**Topics**
+
+- Hadamard definition of well-posedness
+
+- Instability of inverse filtering
+
+- Singular values (conceptual SVD)
+
+- Condition number
+
+**Demonstration**  
+Noise amplification in inverse filtering.
+
+**Learning Goal**  
+Students understand why reconstruction requires regularization.
+
+## Week 6 – Tikhonov Regularization
+
+**Topics**
+
+- ℓ2 regularization
+
+- Closed-form solution
+
+$$
+(A^{T}A + \lambda I)x = A^{T}b
+$$
+
+- Bias–variance tradeoff
+
+- Parameter influence
+
+**Project Assigned**
+
+Teams receive dataset + problem description.
+
+**Learning Goal**  
+Students understand stabilization through regularization.
+
+## Week 7 – Variational Formulation
+
+**Topics**
+
+- Energy minimization framework
+
+- Convexity (geometric interpretation)
+
+- Euler–Lagrange derivation (guided)
+
+- Gradient descent intuition
+
+**Learning Goal**  
+Students can derive optimality condition for ℓ2 model.
+
+## Week 8 – Total Variation (TV) Regularization
+
+**Topics**
+
+- Definition of TV norm
+
+- Edge preservation mechanism
+
+- Comparison with ℓ2 smoothing
+
+- Staircasing effect
+
+**Midterm Exam**
+
+**Learning Goal**  
+Students can explain why TV preserves edges better than ℓ2.
+
+## Week 9 – Optimization Methods
+
+**Topics**
+
+- Convex sets and convex functions
+
+- Subgradient concept (intuitive)
+
+- Proximal operator idea
+
+- Iterative shrinkage algorithm (ISTA intuition)
+
+**Learning Goal**  
+Students understand algorithmic structure behind regularization.
+
+## Week 10 – Sparse Reconstruction
+
+**Topics**
+
+- ℓ1 regularization
+
+- Sparsity concept
+
+- Compressed sensing intuition
+
+- Comparison ℓ1 vs ℓ2
+
+**Focus**  
+Why sparsity improves reconstruction in certain bases.
+
+**Learning Goal**  
+Students can justify when ℓ1 is preferable.
+
+## Week 11 – Wavelets and Multiscale Representation
+
+**Topics**
+
+- Wavelet transform concept
+
+- Sparsity in wavelet domain
+
+- Thresholding methods
+
+- Denoising comparison experiments
+
+**Learning Goal**  
+Students can connect representation choice to reconstruction quality.
+
+## Week 12 – Model-Based vs Data-Driven Imaging
+
+**Topics**
+
+- Classical variational reconstruction
+
+- Learned priors concept
+
+- Neural networks as parameterized operators
+
+- Comparison of philosophies
+
+**Learning Goal**  
+Students understand the difference between handcrafted and learned regularizers.
+
+## Week 13 – Plug-and-Play and Learned Regularization
+
+**Topics**
+
+- Iterative algorithms structure
+
+- Replacing proximal operator with denoiser
+
+- Plug-and-play priors
+
+- CNN as denoiser in optimization loop
+
+- Convergence questions (conceptual)
+
+**Learning Goal**  
+Students understand how AI integrates into mathematical frameworks.
+
+## Week 14 – Stability, Robustness, and Ethics
+
+**Topics**
+
+- Parameter sensitivity analysis
+
+- Hallucination artifacts in AI reconstruction
+
+- Overfitting in inverse problems
+
+- Reliability in medical imaging
+
+- Societal and ethical implications
+
+**Project Reports Due**
+
+**Learning Goal**  
+Students recognize limitations and ethical considerations.
+
+## Week 15 – Oral Defenses
+
+**Activities**
+
+- Individual oral defense per student
+
+- Evaluation of:
+
+  - Modeling understanding
+
+  - Parameter reasoning
+
+  - Interpretation of results
+
+  - Team collaboration
+
+**Learning Goal**  
+Students demonstrate independent mastery of project content.

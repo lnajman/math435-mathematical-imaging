@@ -18,3 +18,18 @@ table {
   font-size: 0.96rem;
 }
 
+.content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.content th,
+.content td {
+  vertical-align: top;
+}
+
+.content .mark {
+  background: #fff3bf;
+  padding: 0.05rem 0.2rem;
+}
