@@ -541,9 +541,9 @@ Answer quickly:
 
 ## Next Time
 
-Course project workshop and imaging case studies:
+Stability, robustness, and ethics:
 
-- choosing a forward model;
-- choosing a regularizer or learned prior;
-- planning experiments;
-- reporting limitations.
+- parameter sensitivity analysis;
+- hallucination artifacts;
+- overfitting and distribution shift;
+- reliability in high-stakes imaging.

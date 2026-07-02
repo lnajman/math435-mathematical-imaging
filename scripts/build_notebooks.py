@@ -5596,6 +5596,484 @@ def week13_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week14_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 14 - Stability, Robustness, and Ethics
+
+            This notebook accompanies the fourteenth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - run a parameter sensitivity test;
+            - measure perturbation amplification;
+            - check whether regularization suppresses a small feature;
+            - test a learned prior across image families;
+            - write a reliability checklist for an imaging project.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from scipy.ndimage import gaussian_filter
+            from skimage import data, draw
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def relative_norm(values, reference):
+                return float(np.linalg.norm(values) / max(np.linalg.norm(reference), 1e-12))
+
+
+            def show_image_grid(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin if colorscale == "Gray" else None,
+                            zmax=zmax if colorscale == "Gray" else None,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+
+
+            def gaussian_kernel2d(size, sigma):
+                axis = np.arange(-(size // 2), size // 2 + 1)
+                xx, yy = np.meshgrid(axis, axis)
+                kernel = np.exp(-(xx**2 + yy**2) / (2.0 * sigma**2))
+                return kernel / kernel.sum()
+
+
+            def centered_kernel_fft(kernel, shape):
+                padded = np.zeros(shape)
+                kh, kw = kernel.shape
+                padded[:kh, :kw] = kernel
+                padded = np.roll(padded, -(kh // 2), axis=0)
+                padded = np.roll(padded, -(kw // 2), axis=1)
+                return np.fft.fft2(padded)
+
+
+            def blur_periodic(image, kernel_fft):
+                return np.real(np.fft.ifft2(np.fft.fft2(image) * kernel_fft))
+
+
+            def data_residual(estimate, observation, kernel_fft):
+                residual = blur_periodic(estimate, kernel_fft) - observation
+                return float(np.linalg.norm(residual) / np.sqrt(residual.size))
+
+
+            def tikhonov_deblur_raw(observation, kernel_fft, lam):
+                numerator = np.conj(kernel_fft) * np.fft.fft2(observation)
+                denominator = np.abs(kernel_fft) ** 2 + lam
+                return np.real(np.fft.ifft2(numerator / denominator))
+
+
+            def tikhonov_deblur(observation, kernel_fft, lam):
+                return np.clip(tikhonov_deblur_raw(observation, kernel_fft, lam), 0.0, 1.0)
+
+
+            def local_contrast(image, center=(48, 48), radius=4):
+                rr, cc = np.indices(image.shape)
+                distance = np.sqrt((rr - center[0]) ** 2 + (cc - center[1]) ** 2)
+                inner = image[distance <= radius]
+                ring = image[(distance > radius + 3) & (distance <= radius + 10)]
+                return float(inner.mean() - ring.mean())
+
+
+            def extract_random_patches(image, patch_size, count, seed):
+                rng = np.random.default_rng(seed)
+                rows, cols = image.shape
+                patches = np.empty((count, patch_size * patch_size))
+                for index in range(count):
+                    row = rng.integers(0, rows - patch_size + 1)
+                    col = rng.integers(0, cols - patch_size + 1)
+                    patches[index] = image[row : row + patch_size, col : col + patch_size].reshape(-1)
+                return patches
+
+
+            def fit_patch_pca(patches):
+                mean = patches.mean(axis=0)
+                _, singular_values, components = np.linalg.svd(patches - mean, full_matrices=False)
+                return mean, components, singular_values
+
+
+            def pca_patch_denoise(noisy, mean, components, patch_size, n_components):
+                rows, cols = noisy.shape
+                estimate = np.zeros_like(noisy)
+                weights = np.zeros_like(noisy)
+                basis = components[:n_components]
+                for row in range(rows - patch_size + 1):
+                    for col in range(cols - patch_size + 1):
+                        patch = noisy[row : row + patch_size, col : col + patch_size].reshape(-1)
+                        scores = (patch - mean) @ basis.T
+                        reconstructed = mean + scores @ basis
+                        estimate[row : row + patch_size, col : col + patch_size] += reconstructed.reshape(patch_size, patch_size)
+                        weights[row : row + patch_size, col : col + patch_size] += 1.0
+                return np.clip(estimate / np.maximum(weights, 1.0), 0.0, 1.0)
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Build a Deblurring Test Case
+
+            We start with the same kind of inverse problem as earlier:
+
+            ```text
+            y = A x + noise
+            ```
+
+            The reliability question is not only "can we reconstruct?" but "when should we trust the reconstruction?"
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43514)
+
+            image = data.camera().astype(float) / 255.0
+            clean = image[132:228, 178:274]
+            kernel = gaussian_kernel2d(size=21, sigma=2.4)
+            kernel_fft = centered_kernel_fft(kernel, clean.shape)
+            blurred = blur_periodic(clean, kernel_fft)
+            observation = np.clip(blurred + 0.015 * rng.standard_normal(clean.shape), 0.0, 1.0)
+
+            show_image_grid(
+                [clean, kernel, observation],
+                ["clean crop", "blur kernel", f"blurred + noise, RMSE={rmse(observation, clean):.3f}"],
+                colorscales=["Gray", "Viridis", "Gray"],
+                height=420,
+            )
+            """
+        ),
+        md(
+            """
+            ### 2. Parameter Sensitivity
+
+            Sweep the Tikhonov parameter. Track both reconstruction error and data residual.
+            """
+        ),
+        code(
+            """
+            lambda_grid = np.logspace(-5, -0.4, 18)
+            sensitivity_rows = []
+
+            for lam in lambda_grid:
+                estimate = tikhonov_deblur(observation, kernel_fft, lam)
+                sensitivity_rows.append(
+                    {
+                        "lambda": lam,
+                        "rmse": rmse(estimate, clean),
+                        "residual": data_residual(estimate, observation, kernel_fft),
+                        "contrast": local_contrast(estimate),
+                    }
+                )
+
+            best_row = min(sensitivity_rows, key=lambda row: row["rmse"])
+            print("best lambda by RMSE:", f"{best_row['lambda']:.3e}")
+            print("best RMSE:", round(best_row["rmse"], 4))
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=lambda_grid, y=[row["rmse"] for row in sensitivity_rows], mode="lines+markers", name="RMSE"))
+            fig.add_trace(go.Scatter(x=lambda_grid, y=[row["residual"] for row in sensitivity_rows], mode="lines+markers", name="data residual"))
+            fig.add_vline(x=best_row["lambda"], line_dash="dash")
+            fig.update_layout(
+                title="Parameter sensitivity",
+                xaxis_title="Tikhonov lambda",
+                yaxis_title="score",
+                xaxis_type="log",
+                height=390,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Choose three lambdas and compare the images. Which failure mode appears for weak and strong regularization?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            student_lambdas = [1e-5, best_row["lambda"], 2e-1]
+
+            student_images = [tikhonov_deblur(observation, kernel_fft, lam) for lam in student_lambdas]
+            student_titles = [
+                f"lambda={lam:.1e}, RMSE={rmse(estimate, clean):.3f}"
+                for lam, estimate in zip(student_lambdas, student_images)
+            ]
+
+            show_image_grid(student_images, student_titles, height=410)
+            """
+        ),
+        md(
+            """
+            ### 3. Perturbation Amplification
+
+            Now add a tiny perturbation to the measured data in a vulnerable Fourier direction.
+
+            We compare the relative change in the input data with the relative change in the reconstruction.
+            """
+        ),
+        code(
+            """
+            rows, cols = clean.shape
+            rr, cc = np.indices(clean.shape)
+            target = np.sqrt(1e-5)
+            magnitudes = np.abs(kernel_fft).copy()
+            magnitudes[0, 0] = np.inf
+            freq_row, freq_col = np.unravel_index(int(np.argmin(np.abs(magnitudes - target))), clean.shape)
+            sinusoid = np.cos(2.0 * np.pi * (freq_row * rr / rows + freq_col * cc / cols))
+            perturbation = 0.002 * sinusoid / np.sqrt(np.mean(sinusoid**2))
+            perturbed_observation = observation + perturbation
+
+            amplification_rows = []
+            for lam in [1e-5, 1e-4, 1e-3, 1e-2, 1e-1]:
+                base = tikhonov_deblur_raw(observation, kernel_fft, lam)
+                perturbed = tikhonov_deblur_raw(perturbed_observation, kernel_fft, lam)
+                input_change = relative_norm(perturbed_observation - observation, observation)
+                output_change = relative_norm(perturbed - base, base)
+                amplification_rows.append(
+                    {
+                        "lambda": lam,
+                        "input_change": input_change,
+                        "output_change": output_change,
+                        "gain": output_change / input_change,
+                    }
+                )
+
+            fig = go.Figure()
+            fig.add_trace(
+                go.Scatter(
+                    x=[row["lambda"] for row in amplification_rows],
+                    y=[row["gain"] for row in amplification_rows],
+                    mode="lines+markers",
+                )
+            )
+            fig.update_layout(
+                title="Perturbation amplification",
+                xaxis_title="Tikhonov lambda",
+                yaxis_title="output-change / input-change",
+                xaxis_type="log",
+                yaxis_type="log",
+                height=390,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            for row in amplification_rows:
+                print(row)
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change the perturbation amplitude from `0.002` to another value.
+
+            Does the gain change? Why is that expected for a linear reconstruction formula?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your observation here after changing the perturbation amplitude."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ### 4. Small Feature Risk
+
+            A reconstruction can look cleaner while weakening a small but important feature.
+            """
+        ),
+        code(
+            """
+            feature_rng = np.random.default_rng(43514)
+            background = gaussian_filter(feature_rng.random((96, 96)), sigma=7.0)
+            background = (background - background.min()) / (background.max() - background.min())
+            feature_clean = 0.30 + 0.35 * background
+            disk_rows, disk_cols = draw.disk((48, 48), radius=4, shape=feature_clean.shape)
+            feature_clean[disk_rows, disk_cols] = np.clip(feature_clean[disk_rows, disk_cols] + 0.32, 0.0, 1.0)
+
+            feature_kernel = gaussian_kernel2d(size=19, sigma=2.1)
+            feature_kernel_fft = centered_kernel_fft(feature_kernel, feature_clean.shape)
+            feature_observation = np.clip(
+                blur_periodic(feature_clean, feature_kernel_fft)
+                + 0.012 * feature_rng.standard_normal(feature_clean.shape),
+                0.0,
+                1.0,
+            )
+            weak = tikhonov_deblur(feature_observation, feature_kernel_fft, lam=5e-4)
+            strong = tikhonov_deblur(feature_observation, feature_kernel_fft, lam=5e-2)
+            smoothed = gaussian_filter(strong, sigma=1.2, mode="wrap")
+
+            feature_images = [feature_clean, feature_observation, weak, strong, smoothed]
+            feature_titles = [
+                f"clean, contrast={local_contrast(feature_clean):.3f}",
+                "blurred + noise",
+                f"weak, contrast={local_contrast(weak):.3f}",
+                f"strong, contrast={local_contrast(strong):.3f}",
+                f"smoothed, contrast={local_contrast(smoothed):.3f}",
+            ]
+            show_image_grid(feature_images, feature_titles, height=420)
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Change the disk radius or intensity. When does the feature become hard to distinguish from artifacts?
+            """
+        ),
+        code(
+            """
+            observation = "TODO: write what changed when you modified the feature size or intensity."
+            print(observation)
+            """
+        ),
+        md(
+            """
+            ### 5. Learned Prior Across Image Families
+
+            A learned prior may work well on data similar to its training examples and less well elsewhere.
+            """
+        ),
+        code(
+            """
+            camera = data.camera().astype(float) / 255.0
+            training = camera[:320, :320]
+            patch_size = 7
+            training_patches = extract_random_patches(training, patch_size=patch_size, count=4500, seed=43514)
+            patch_mean, patch_components, _ = fit_patch_pca(training_patches)
+
+            domain_cases = [
+                ("camera", camera[352:448, 256:352]),
+                ("moon", data.moon().astype(float)[300:396, 100:196] / 255.0),
+                ("coins", data.coins().astype(float)[40:136, 40:136] / 255.0),
+            ]
+
+            domain_rows = []
+            for name, domain_clean in domain_cases:
+                domain_noisy = np.clip(domain_clean + 0.07 * rng.standard_normal(domain_clean.shape), 0.0, 1.0)
+                domain_gaussian = np.clip(gaussian_filter(domain_noisy, sigma=1.0, mode="reflect"), 0.0, 1.0)
+                domain_learned = pca_patch_denoise(
+                    domain_noisy,
+                    patch_mean,
+                    patch_components,
+                    patch_size=patch_size,
+                    n_components=16,
+                )
+                domain_rows.append(
+                    {
+                        "domain": name,
+                        "noisy": rmse(domain_noisy, domain_clean),
+                        "Gaussian": rmse(domain_gaussian, domain_clean),
+                        "camera-learned PCA": rmse(domain_learned, domain_clean),
+                    }
+                )
+
+            domains = [row["domain"] for row in domain_rows]
+            fig = go.Figure()
+            for method in ["noisy", "Gaussian", "camera-learned PCA"]:
+                fig.add_trace(go.Bar(x=domains, y=[row[method] for row in domain_rows], name=method))
+            fig.update_layout(
+                title="Robustness across image families",
+                xaxis_title="test image family",
+                yaxis_title="RMSE",
+                barmode="group",
+                height=400,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            for row in domain_rows:
+                print(row)
+            """
+        ),
+        md(
+            """
+            ### 6. Reliability Checklist
+
+            A final reconstruction report should not only show the best image.
+
+            It should say where the method is reliable and where it is not.
+            """
+        ),
+        code(
+            """
+            project_checklist = {
+                "forward model": "TODO: what is A, and when is it wrong?",
+                "parameter sweep": "TODO: which parameter range did you test?",
+                "robustness": "TODO: which noise/model/domain changes did you test?",
+                "failure case": "TODO: show one honest failure or limitation",
+                "ethics": "TODO: who could be affected by a wrong reconstruction?",
+            }
+
+            for item, answer in project_checklist.items():
+                print(f"{item}: {answer}")
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. What does stability mean?
+            2. Why can weak regularization amplify perturbations?
+            3. Why is a smooth image not automatically reliable?
+            4. What should a project report say about limitations?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Use the same reliability questions in your project report and oral defense:
+
+            - What is your model?
+            - What assumptions did you make?
+            - What tests support your result?
+            - Where does your method fail?
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -5610,6 +6088,7 @@ def main() -> None:
     write_notebook("week11_wavelets.ipynb", week11_cells())
     write_notebook("week12_model_data.ipynb", week12_cells())
     write_notebook("week13_plug_and_play.ipynb", week13_cells())
+    write_notebook("week14_stability_robustness.ipynb", week14_cells())
 
 
 if __name__ == "__main__":

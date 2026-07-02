@@ -20,3 +20,4 @@ The slide deck is being developed week by week. Each deck is a Quarto Reveal.js 
 | 11 | Wavelets and multiscale representation | [HTML deck](week-11-wavelets.html) |
 | 12 | Model-based vs data-driven imaging | [HTML deck](week-12-model-data.html) |
 | 13 | Plug-and-play and learned regularization | [HTML deck](week-13-plug-and-play.html) |
+| 14 | Stability, robustness, and ethics | [HTML deck](week-14-stability-robustness-ethics.html) |

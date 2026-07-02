@@ -23,6 +23,7 @@ project:
     - slides/week-11-wavelets.qmd
     - slides/week-12-model-data.qmd
     - slides/week-13-plug-and-play.qmd
+    - slides/week-14-stability-robustness-ethics.qmd
     - project/index.qmd
 
 website:
