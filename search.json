@@ -301,27 +301,6 @@
     "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
-  },
-  {
-    "objectID": "index.html#current-focus",
-    "href": "index.html#current-focus",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Current Focus",
-    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
-  },
-  {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
-  },
-  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus Summary",
@@ -355,6 +334,41 @@
     "title": "Syllabus Summary",
     "section": "Assessment Structure",
     "text": "Assessment Structure\n\n\n\n\n\n\n\n\nAssessment\nWeight\nTiming\n\n\n\n\nQuizzes\n15%\nWeeks 4 and 12\n\n\nTwo-student modeling project\n30%\nAssigned Week 6, report Week 14, defense Week 15\n\n\nSemester examination\n25%\nWeek 8\n\n\nFinal examination\n30%\nExam week"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "",
+    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
+  },
+  {
+    "objectID": "index.html#current-focus",
+    "href": "index.html#current-focus",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Current Focus",
+    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
+  },
+  {
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
+  },
+  {
+    "objectID": "notebooks/index.html",
+    "href": "notebooks/index.html",
+    "title": "Notebooks",
+    "section": "",
+    "text": "The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.\nUse the Google Colab links if you want to work in a browser without installing Python locally."
+  },
+  {
+    "objectID": "notebooks/index.html#working-locally",
+    "href": "notebooks/index.html#working-locally",
+    "title": "Notebooks",
+    "section": "Working Locally",
+    "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
   },
   {
     "objectID": "slides/template.html#section-divider",
