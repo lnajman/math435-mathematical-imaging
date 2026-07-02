@@ -10,7 +10,8 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <title>MATH 435: Mathematical Imaging – MATH 435 Slide Template</title>
+  <meta name="dcterms.date" content="2001-04-01">
+  <title>MATH 435: Mathematical Imaging – Noise Models and Likelihoods</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -213,8 +214,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH 435 Slide Template</h1>
-  <p class="subtitle">Reusable patterns for lecture decks</p>
+  <h1 class="title">Noise Models and Likelihoods</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 4</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -224,102 +225,702 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">Invalid Date</p>
+  <p class="date">2001-04-01</p>
 </section>
-<section id="section-divider" class="slide level2 section-slide">
-<h2>Section Divider</h2>
+<section id="opening-question" class="slide level2 inverse-slide">
+<h2>Opening Question</h2>
 <div class="section-kicker">
-<p>Part 1</p>
+<p>From images to statistics</p>
 </div>
-<p>The big conceptual turn</p>
+<p>If two pixels have the same recorded value, do we have the same confidence in both of them?</p>
 </section>
-<section id="learning-goals" class="slide level2">
-<h2>Learning Goals</h2>
-<p>By the end of this lecture, students should be able to:</p>
+<section id="today" class="slide level2">
+<h2>Today</h2>
+<div class="checklist">
 <ul>
-<li>state the mathematical object being modeled;</li>
-<li>identify the forward operator and observed data;</li>
-<li>explain why the inverse problem is difficult;</li>
-<li>implement the minimal computational representation.</li>
+<li>Distinguish deterministic degradation from random noise.</li>
+<li>Model additive Gaussian noise.</li>
+<li>Model photon-counting Poisson noise.</li>
+<li>Compare signal-to-noise behavior.</li>
+<li>Derive likelihood-based data terms for reconstruction.</li>
 </ul>
-</section>
-<section id="definition-slide" class="slide level2">
-<h2>Definition Slide</h2>
-<div class="definition-box">
-<div class="tag">
-<p>Definition</p>
 </div>
-<p>An image is modeled as a function</p>
+</section>
+<section id="minute-plan" class="slide level2">
+<h2>75-Minute Plan</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Time</th>
+<th>Work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0-8 min</td>
+<td>recap Fourier and inverse filtering</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8-18 min</td>
+<td>observe noise in real images</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18-32 min</td>
+<td>Gaussian noise model</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">32-47 min</td>
+<td>Poisson noise model</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">47-58 min</td>
+<td>SNR and repeated measurements</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">58-68 min</td>
+<td>likelihoods and data fidelity</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">68-73 min</td>
+<td>notebook activity</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">73-75 min</td>
+<td>exit checkpoint</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="bridge-from-week-3" class="slide level2">
+<h2>Bridge from Week 3</h2>
+<p>Last time we wrote a noisy deblurring model as</p>
 <p><span class="math display">
-u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}
+\widehat{y} = \widehat{h}\widehat{x} + \widehat{\eta}.
 </span></p>
-<p>or, after sampling, as an array <span class="math inline">U \in \mathbb{R}^{m \times n}</span>.</p>
+<div class="question-box">
+<p>We discussed why deblurring amplifies noise. Today: what is that noise?</p>
 </div>
 </section>
-<section id="model-slide" class="slide level2">
-<h2>Model Slide</h2>
+<section id="observation-model" class="slide level2">
+<h2>Observation Model</h2>
+<p>In imaging, we often write</p>
+<p><span class="math display">
+y = f(x) + \eta.
+</span></p>
+<div class="definition-box">
+<p><span class="math inline">x</span> is the unknown scene or image, <span class="math inline">f</span> is the forward imaging process, <span class="math inline">y</span> is the recorded data, and <span class="math inline">\eta</span> is random noise.</p>
+</div>
+</section>
+<section id="linear-is-a-special-case" class="slide level2">
+<h2>Linear Is a Special Case</h2>
+<p>When the forward model is linear, we can write</p>
+<p><span class="math display">
+y = A x + \eta.
+</span></p>
+<div class="takeaway-box">
+<p>But not every imaging process is linear. Occlusion, saturation, thresholding, and many camera pipelines can break linearity.</p>
+</div>
+</section>
+<section id="why-noise-models-matter" class="slide level2">
+<h2>Why Noise Models Matter</h2>
+<div class="three-col">
 <div class="model-box">
 <div class="tag">
-<p>Forward model</p>
+<p>Uncertainty</p>
 </div>
-<p><span class="math display">
-y = A x + \eta
-</span></p>
+<p>How much should we trust a measurement?</p>
+</div>
+<div class="definition-box">
+<div class="tag">
+<p>Fidelity</p>
+</div>
+<p>Which reconstructions agree with data?</p>
+</div>
+<div class="question-box">
+<div class="tag">
+<p>Algorithms</p>
+</div>
+<p>What objective should we minimize?</p>
+</div>
+</div>
+</section>
+<section id="part-1-seeing-noise" class="slide level2 section-slide">
+<h2>Part 1: Seeing Noise</h2>
+<div class="section-kicker">
+<p>Before formulas</p>
+</div>
+<p>Look at the image</p>
+</section>
+<section id="same-image-different-noise" class="slide level2">
+<h2>Same Image, Different Noise</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week04-noise-models.png" alt="Clean image, Gaussian noisy image, low-light Poisson noisy image, and higher-photon Poisson noisy image"></p>
+</div>
+</section>
+<section id="first-discussion" class="slide level2">
+<h2>First Discussion</h2>
+<div class="time-tag">
+<p>4 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Compare the three noisy images.</p>
+<ol type="1">
+<li>Which noise looks independent of brightness?</li>
+<li>Which noise looks worse in dark or low-count regions?</li>
+<li>Which model seems closer to low-light photography?</li>
+</ol>
+</div>
+</section>
+<section id="random-variables-at-pixels" class="slide level2">
+<h2>Random Variables at Pixels</h2>
+<p>For a pixel <span class="math inline">i</span>, the recorded value <span class="math inline">y_i</span> is a random variable.</p>
+<div class="model-box">
+<p>The noise model specifies the probability law of <span class="math inline">y_i</span> when the unknown true value is <span class="math inline">x_i</span>.</p>
+</div>
+</section>
+<section id="what-we-want-from-a-model" class="slide level2">
+<h2>What We Want from a Model</h2>
+<p>A useful noise model should answer:</p>
+<div class="checklist">
 <ul>
-<li><span class="math inline">x</span>: unknown image</li>
-<li><span class="math inline">A</span>: forward imaging operator</li>
-<li><span class="math inline">y</span>: observed data</li>
-<li><span class="math inline">\eta</span>: noise or model error</li>
+<li>What values of <span class="math inline">y_i</span> are likely?</li>
+<li>How large are typical errors?</li>
+<li>Does the variance depend on intensity?</li>
+<li>What cost should penalize disagreement with data?</li>
 </ul>
 </div>
 </section>
-<section id="figure-slide" class="slide level2">
-<h2>Figure Slide</h2>
-<div class="two-col-wide">
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week01-real-image-vectorization.png" alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"></p>
-<div class="caption">
-<p>Use one strong visual per slide when possible.</p>
+<section id="part-2-gaussian-noise" class="slide level2 section-slide">
+<h2>Part 2: Gaussian Noise</h2>
+<div class="section-kicker">
+<p>Additive errors</p>
 </div>
-</div>
-<div class="compact">
-<p>The figure should carry the idea before the equations formalize it.</p>
-</div>
-</div>
+<p>Constant variance</p>
 </section>
-<section id="code-slide" class="slide level2 code-small">
-<h2>Code Slide</h2>
-<div id="7300b970" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
-<span id="cb1-4"><a></a>U <span class="op">=</span> np.arange(m <span class="op">*</span> n).reshape(m, n)</span>
-<span id="cb1-5"><a></a>x <span class="op">=</span> U.reshape(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb1-6"><a></a></span>
-<span id="cb1-7"><a></a><span class="bu">print</span>(U)</span>
-<span id="cb1-8"><a></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="exercise-slide" class="slide level2">
-<h2>Exercise Slide</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>In class</p>
-</div>
-<p>Suppose an operator keeps only every other pixel. What information is lost, and what kind of prior knowledge could help recover a plausible image?</p>
-</div>
-</section>
-<section id="takeaway-slide" class="slide level2">
-<h2>Takeaway Slide</h2>
-<div class="takeaway-box">
-<div class="tag">
-<p>Takeaway</p>
-</div>
-<p>The course repeatedly moves through the same chain:</p>
+<section id="gaussian-model" class="slide level2">
+<h2>Gaussian Model</h2>
+<p>The simplest model is</p>
 <p><span class="math display">
-\text{physics} \to \text{operator} \to \text{inverse problem} \to \text{regularized computation}.
+y_i = x_i + \eta_i,
+\qquad
+\eta_i \sim \mathcal{N}(0,\sigma^2).
+</span></p>
+<div class="definition-box">
+<p>The parameter <span class="math inline">\sigma</span> is the standard deviation of the noise.</p>
+</div>
+</section>
+<section id="gaussian-assumptions" class="slide level2">
+<h2>Gaussian Assumptions</h2>
+<div class="checklist">
+<ul>
+<li>Errors are additive.</li>
+<li>Errors have mean zero.</li>
+<li>Errors are often assumed independent.</li>
+<li>Error variance is the same for all pixels.</li>
+</ul>
+</div>
+<div class="caption">
+<p>These assumptions are useful, not universal.</p>
+</div>
+</section>
+<section id="gaussian-residuals" class="slide level2">
+<h2>Gaussian Residuals</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week04-noise-histograms.png" alt="Histogram of Gaussian residuals and histograms of Poisson counts for several intensities"></p>
+</div>
+</section>
+<section id="activity-1-constant-variance" class="slide level2">
+<h2>Activity 1: Constant Variance</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>If <span class="math inline">y_i=x_i+\eta_i</span> and <span class="math inline">\eta_i\sim\mathcal{N}(0,\sigma^2)</span>, what are</p>
+<p><span class="math display">
+\mathbb{E}[y_i\mid x_i]
+\quad\text{and}\quad
+\mathrm{Var}(y_i\mid x_i)?
+</span></p>
+<p>Does the variance depend on <span class="math inline">x_i</span>?</p>
+</div>
+</section>
+<section id="gaussian-density" class="slide level2">
+<h2>Gaussian Density</h2>
+<p>For one pixel:</p>
+<p><span class="math display">
+p(y_i\mid x_i)
+=
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(
+-\frac{(y_i-x_i)^2}{2\sigma^2}
+\right).
+</span></p>
+<div class="caption">
+<p>The most likely value is <span class="math inline">x_i=y_i</span>.</p>
+</div>
+</section>
+<section id="independent-pixels" class="slide level2">
+<h2>Independent Pixels</h2>
+<p>If the pixel errors are independent,</p>
+<p><span class="math display">
+p(y\mid x)=
+\prod_i p(y_i\mid x_i).
+</span></p>
+<p>Taking negative logarithms gives</p>
+<p><span class="math display">
+-\log p(y\mid x)
+=
+\frac{1}{2\sigma^2}\sum_i (y_i-x_i)^2
++ \text{constant}.
+</span></p>
+</section>
+<section id="gaussian-data-fidelity" class="slide level2">
+<h2>Gaussian Data Fidelity</h2>
+<p>For the direct observation model <span class="math inline">y=x+\eta</span>:</p>
+<p><span class="math display">
+\operatorname*{argmin}_x
+\frac{1}{2}\|y-x\|_2^2
+= y.
+</span></p>
+<div class="takeaway-box">
+<p>Gaussian noise leads naturally to least squares.</p>
+</div>
+</section>
+<section id="with-a-linear-forward-model" class="slide level2">
+<h2>With a Linear Forward Model</h2>
+<p>If the forward model is linear:</p>
+<p><span class="math display">
+y = A x + \eta,
+\qquad
+\eta\sim\mathcal{N}(0,\sigma^2 I),
+</span></p>
+<p>then the Gaussian negative log-likelihood is</p>
+<p><span class="math display">
+\frac{1}{2\sigma^2}\|Ax-y\|_2^2.
+</span></p>
+</section>
+<section id="with-a-general-forward-model" class="slide level2">
+<h2>With a General Forward Model</h2>
+<p>If the forward model is nonlinear:</p>
+<p><span class="math display">
+y = f(x)+\eta,
+</span></p>
+<p>the Gaussian data term becomes</p>
+<p><span class="math display">
+\frac{1}{2\sigma^2}\|f(x)-y\|_2^2.
+</span></p>
+<div class="caption">
+<p>The likelihood idea does not require linearity.</p>
+</div>
+</section>
+<section id="python-demo-gaussian-noise" class="slide level2 code-small">
+<h2>Python Demo: Gaussian Noise</h2>
+<div id="3724af7d" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
+<span id="cb1-5"><a></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">43504</span>)</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a>sigma <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb1-8"><a></a>noisy <span class="op">=</span> np.clip(image <span class="op">+</span> sigma <span class="op">*</span> rng.standard_normal(image.shape), <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb1-9"><a></a>residual <span class="op">=</span> noisy <span class="op">-</span> image</span>
+<span id="cb1-10"><a></a></span>
+<span id="cb1-11"><a></a><span class="bu">print</span>(residual.mean(), residual.std())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="gaussian-limitations" class="slide level2">
+<h2>Gaussian Limitations</h2>
+<div class="question-box">
+<p>Can an additive Gaussian model produce negative pixel intensities or values above the sensor maximum?</p>
+</div>
+<div class="caption">
+<p>In practice we often clip values. Clipping changes the statistical model.</p>
+</div>
+</section>
+<section id="part-3-poisson-noise" class="slide level2 section-slide">
+<h2>Part 3: Poisson Noise</h2>
+<div class="section-kicker">
+<p>Photon counting</p>
+</div>
+<p>Variance depends on signal</p>
+</section>
+<section id="why-poisson" class="slide level2">
+<h2>Why Poisson?</h2>
+<p>Light arrives as photons.</p>
+<p>A sensor counts random arrivals during exposure.</p>
+<div class="model-box">
+<p>Poisson noise is a natural model when the dominant randomness is photon counting.</p>
+</div>
+</section>
+<section id="poisson-model" class="slide level2">
+<h2>Poisson Model</h2>
+<p>Let <span class="math inline">z_i</span> be the photon count at pixel <span class="math inline">i</span>.</p>
+<p><span class="math display">
+z_i \sim \operatorname{Poisson}(\lambda_i).
+</span></p>
+<p>The Poisson law is</p>
+<p><span class="math display">
+\mathbb{P}(z_i=k\mid \lambda_i)
+= e^{-\lambda_i}\frac{\lambda_i^k}{k!}.
+</span></p>
+</section>
+<section id="mean-equals-variance" class="slide level2">
+<h2>Mean Equals Variance</h2>
+<p>For a Poisson random variable:</p>
+<p><span class="math display">
+\mathbb{E}[z_i]=\lambda_i,
+\qquad
+\mathrm{Var}(z_i)=\lambda_i.
+</span></p>
+<div class="takeaway-box">
+<p>The standard deviation is <span class="math inline">\sqrt{\lambda_i}</span>, so absolute noise increases with brightness.</p>
+</div>
+</section>
+<section id="relative-noise" class="slide level2">
+<h2>Relative Noise</h2>
+<p>The relative fluctuation is roughly</p>
+<p><span class="math display">
+\frac{\sqrt{\lambda_i}}{\lambda_i}
+=
+\frac{1}{\sqrt{\lambda_i}}.
+</span></p>
+<div class="caption">
+<p>More photons means better relative precision.</p>
+</div>
+</section>
+<section id="snr-picture" class="slide level2">
+<h2>SNR Picture</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week04-snr-curves.png" alt="Gaussian and Poisson signal-to-noise ratio curves"></p>
+</div>
+</section>
+<section id="activity-2-photon-counts" class="slide level2">
+<h2>Activity 2: Photon Counts</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>A pixel has expected count <span class="math inline">\lambda=25</span>.</p>
+<ol type="1">
+<li>What is the standard deviation?</li>
+<li>What is the approximate SNR?</li>
+<li>What happens to the SNR if exposure gives <span class="math inline">\lambda=100</span>?</li>
+</ol>
+</div>
+</section>
+<section id="intensity-scaling" class="slide level2">
+<h2>Intensity Scaling</h2>
+<p>Digital images often store normalized intensities in <span class="math inline">[0,1]</span>.</p>
+<p>If <span class="math inline">\alpha</span> is the maximum expected photon count, a simple model is</p>
+<p><span class="math display">
+z_i \sim \operatorname{Poisson}(\alpha x_i),
+\qquad
+y_i = z_i / \alpha.
+</span></p>
+</section>
+<section id="low-light-is-hard" class="slide level2">
+<h2>Low Light Is Hard</h2>
+<div class="question-box">
+<p>Which is more reliable: observing 5 photons or 500 photons?</p>
+</div>
+<div class="takeaway-box">
+<p>Low-light imaging is difficult because the data are made of small random counts.</p>
+</div>
+</section>
+<section id="poisson-likelihood" class="slide level2">
+<h2>Poisson Likelihood</h2>
+<p>For independent counts:</p>
+<p><span class="math display">
+p(z\mid x)
+=
+\prod_i
+e^{-\alpha x_i}
+\frac{(\alpha x_i)^{z_i}}{z_i!}.
+</span></p>
+<p>Ignoring constants independent of <span class="math inline">x</span>:</p>
+<p><span class="math display">
+-\log p(z\mid x)
+=
+\sum_i
+\alpha x_i - z_i\log(\alpha x_i).
+</span></p>
+</section>
+<section id="poisson-data-fidelity" class="slide level2">
+<h2>Poisson Data Fidelity</h2>
+<p>For a general positive forward model <span class="math inline">f_i(x)&gt;0</span>:</p>
+<p><span class="math display">
+z_i \sim \operatorname{Poisson}(f_i(x)).
+</span></p>
+<p>Then</p>
+<p><span class="math display">
+-\log p(z\mid x)
+=
+\sum_i f_i(x) - z_i\log(f_i(x))
++ \text{constant}.
+</span></p>
+<div class="caption">
+<p>This is not a least-squares data term.</p>
+</div>
+</section>
+<section id="likelihood-curves" class="slide level2">
+<h2>Likelihood Curves</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week04-likelihood-curves.png" alt="Gaussian and Poisson negative log-likelihood curves for one pixel"></p>
+</div>
+</section>
+<section id="activity-3-compare-costs" class="slide level2">
+<h2>Activity 3: Compare Costs</h2>
+<div class="time-tag">
+<p>6 minutes</p>
+</div>
+<div class="exercise-box">
+<p>For one pixel, compare:</p>
+<p><span class="math display">
+\frac{1}{2\sigma^2}(y-x)^2
+\quad\text{and}\quad
+\alpha x - z\log(\alpha x).
+</span></p>
+<p>Which one is symmetric around its minimizer? Which one requires <span class="math inline">x&gt;0</span>?</p>
+</div>
+</section>
+<section id="gaussian-vs-poisson" class="slide level2">
+<h2>Gaussian vs Poisson</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Gaussian</th>
+<th>Poisson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data type</td>
+<td>continuous intensity</td>
+<td>integer counts</td>
+</tr>
+<tr class="even">
+<td>Variance</td>
+<td>constant <span class="math inline">\sigma^2</span></td>
+<td>equals mean</td>
+</tr>
+<tr class="odd">
+<td>Typical fidelity</td>
+<td>squared error</td>
+<td>count likelihood</td>
+</tr>
+<tr class="even">
+<td>Natural for</td>
+<td>read noise, aggregate errors</td>
+<td>photon-limited imaging</td>
+</tr>
+<tr class="odd">
+<td>Constraint</td>
+<td>often unconstrained</td>
+<td>positive mean</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="part-4-repeated-measurements" class="slide level2 section-slide">
+<h2>Part 4: Repeated Measurements</h2>
+<div class="section-kicker">
+<p>Noise can average out</p>
+</div>
+<p>Independence matters</p>
+</section>
+<section id="averaging-gaussian-noise" class="slide level2">
+<h2>Averaging Gaussian Noise</h2>
+<p>If</p>
+<p><span class="math display">
+y^{(j)} = x + \eta^{(j)},
+\qquad
+\eta^{(j)}\sim\mathcal{N}(0,\sigma^2),
+</span></p>
+<p>and the noise samples are independent, then</p>
+<p><span class="math display">
+\bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
+</span></p>
+<p>has noise standard deviation <span class="math inline">\sigma/\sqrt{m}</span>.</p>
+</section>
+<section id="averaging-picture" class="slide level2">
+<h2>Averaging Picture</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week04-averaging.png" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"></p>
+</div>
+</section>
+<section id="what-averaging-cannot-do" class="slide level2">
+<h2>What Averaging Cannot Do</h2>
+<div class="question-box">
+<p>If the person is hidden behind a tree, can averaging many photographs reveal the hidden person?</p>
+</div>
+<div class="takeaway-box">
+<p>Averaging reduces random noise in recorded data. It does not recover scene content that never reached the sensor.</p>
+</div>
+</section>
+<section id="part-5-from-likelihood-to-reconstruction" class="slide level2 section-slide">
+<h2>Part 5: From Likelihood to Reconstruction</h2>
+<div class="section-kicker">
+<p>The inverse problem bridge</p>
+</div>
+<p>Data term plus prior</p>
+</section>
+<section id="maximum-likelihood" class="slide level2">
+<h2>Maximum Likelihood</h2>
+<p>Given data <span class="math inline">y</span>, maximum likelihood estimates <span class="math inline">x</span> by</p>
+<p><span class="math display">
+\operatorname*{argmax}_x p(y\mid x).
+</span></p>
+<p>Equivalently,</p>
+<p><span class="math display">
+\operatorname*{argmin}_x -\log p(y\mid x).
+</span></p>
+</section>
+<section id="why-maximum-likelihood-is-not-enough" class="slide level2">
+<h2>Why Maximum Likelihood Is Not Enough</h2>
+<div class="question-box">
+<p>If many images agree almost equally well with the noisy data, how should we choose among them?</p>
+</div>
+<div class="caption">
+<p>This is where regularization enters.</p>
+</div>
+</section>
+<section id="regularized-reconstruction" class="slide level2">
+<h2>Regularized Reconstruction</h2>
+<p>A common form is</p>
+<p><span class="math display">
+\operatorname*{argmin}_x
+D(y, f(x)) + \lambda R(x).
+</span></p>
+<div class="two-col">
+<div class="definition-box">
+<p><span class="math inline">D</span> is the data fidelity term from the noise model.</p>
+</div>
+<div class="model-box">
+<p><span class="math inline">R</span> is a regularizer encoding prior information.</p>
+</div>
+</div>
+</section>
+<section id="examples-of-data-terms" class="slide level2">
+<h2>Examples of Data Terms</h2>
+<div class="two-col">
+<div class="definition-box">
+<p>Gaussian:</p>
+<p><span class="math display">
+D(y,f(x))=
+\frac{1}{2\sigma^2}\|y-f(x)\|_2^2.
 </span></p>
 </div>
+<div class="model-box">
+<p>Poisson:</p>
+<p><span class="math display">
+D(z,f(x))=
+\sum_i f_i(x)-z_i\log f_i(x).
+</span></p>
+</div>
+</div>
+</section>
+<section id="code-demo-run-week-4-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 4 Examples</h2>
+<p>From the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week04_noise_likelihood.py</span>
+<span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week04_figures.py</span>
+<span id="cb2-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb2-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="in-class-notebook-activity" class="slide level2">
+<h2>In-Class Notebook Activity</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Open the Week 4 notebook.</p>
+<ol type="1">
+<li>Change Gaussian <code>sigma</code>.</li>
+<li>Change Poisson <code>peak_photons</code>.</li>
+<li>Compare RMSE, residual histograms, and image appearance.</li>
+</ol>
+</div>
+</section>
+<section id="quiz-style-check" class="slide level2">
+<h2>Quiz-Style Check</h2>
+<div class="exercise-box">
+<p>For each observation, choose Gaussian, Poisson, or neither:</p>
+<ol type="1">
+<li>independent additive errors with fixed variance;</li>
+<li>photon counts with variance equal to the mean;</li>
+<li>saturation at the maximum sensor value;</li>
+<li>low-light measurements with very few photons.</li>
+</ol>
+</div>
+</section>
+<section id="end-of-class-checkpoint" class="slide level2">
+<h2>End-of-Class Checkpoint</h2>
+<div class="exercise-box">
+<p>Answer in one sentence each:</p>
+<ol type="1">
+<li>Why does Gaussian noise lead to least squares?</li>
+<li>Why is Poisson noise signal-dependent?</li>
+<li>What is SNR?</li>
+<li>What does a likelihood contribute to an inverse problem?</li>
+</ol>
+</div>
+</section>
+<section id="suggested-answers" class="slide level2">
+<h2>Suggested Answers</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Short answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gaussian to least squares</td>
+<td>the negative log of a Gaussian density is quadratic</td>
+</tr>
+<tr class="even">
+<td>Poisson signal dependence</td>
+<td>mean and variance are both <span class="math inline">\lambda</span></td>
+</tr>
+<tr class="odd">
+<td>SNR</td>
+<td>signal strength divided by typical noise size</td>
+</tr>
+<tr class="even">
+<td>likelihood role</td>
+<td>it defines the data fidelity term</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="what-students-should-remember" class="slide level2">
+<h2>What Students Should Remember</h2>
+<div class="takeaway-box">
+<ul>
+<li>A noise model is a probability law for measurements.</li>
+<li>Gaussian noise has constant variance and leads to least squares.</li>
+<li>Poisson noise models counts and has variance equal to the mean.</li>
+<li>Likelihoods turn measurement assumptions into reconstruction objectives.</li>
+<li>Regularization is still needed when data alone do not determine a stable image.</li>
+</ul>
+</div>
+</section>
+<section id="next-time" class="slide level2">
+<h2>Next Time</h2>
+<p>Bayesian and variational reconstruction:</p>
+<ul>
+<li>priors and regularization;</li>
+<li>maximum a posteriori estimation;</li>
+<li>Tikhonov regularization;</li>
+<li>choosing the balance parameter.</li>
+</ul>
 
 
 </section>
