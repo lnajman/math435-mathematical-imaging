@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-01-01">
-  <title>MATH 435: Mathematical Imaging – Images as Mathematical Objects</title>
+  <meta name="dcterms.date" content="2001-10-01">
+  <title>MATH 435: Mathematical Imaging – Sparse Reconstruction</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -208,17 +208,14 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Images as Mathematical Objects</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 1</p>
+  <h1 class="title">Sparse Reconstruction</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 10</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -228,24 +225,24 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-01-01</p>
+  <p class="date">2001-10-01</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
 <div class="section-kicker">
-<p>Mathematical imaging begins here</p>
+<p>Too few measurements</p>
 </div>
-<p>If a scanner gives us imperfect data, what exactly are we trying to recover?</p>
+<p>Can fewer measurements be enough if the unknown image has a simple hidden structure?</p>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <div class="checklist">
 <ul>
-<li>Model an image as a function, an array, and a vector.</li>
-<li>Connect pixel grids to linear algebra.</li>
-<li>Introduce the forward model <span class="math inline">y = Ax + \eta</span>.</li>
-<li>Separate image formation from image reconstruction.</li>
-<li>Write the first NumPy representations.</li>
+<li>Define sparsity in a basis or transform.</li>
+<li>Compare l1 and l2 regularization.</li>
+<li>Explain why l1 can recover sparse signals.</li>
+<li>Build compressed sensing intuition.</li>
+<li>Use a sparse DCT prior for image reconstruction.</li>
 </ul>
 </div>
 </section>
@@ -260,645 +257,448 @@ Laurent Najman
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>motivation and course pattern</td>
+<td style="text-align: right;">0-8 min</td>
+<td>recap: proximal methods and soft thresholding</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-30 min</td>
-<td>image models, pixels, vectorization</td>
+<td style="text-align: right;">8-20 min</td>
+<td>sparsity and representations</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">30-45 min</td>
-<td>hand activity and NumPy representation</td>
+<td style="text-align: right;">20-34 min</td>
+<td>l1 versus l2 geometry</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">45-60 min</td>
-<td>forward model and inverse problem</td>
+<td style="text-align: right;">34-49 min</td>
+<td>underdetermined sparse recovery</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">60-72 min</td>
-<td>masking example with a real image</td>
+<td style="text-align: right;">49-60 min</td>
+<td>compressed sensing intuition</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">72-75 min</td>
-<td>exit checkpoint</td>
+<td style="text-align: right;">60-70 min</td>
+<td>notebook activity</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">70-75 min</td>
+<td>synthesis and exit check</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="the-course-pattern" class="slide level2">
-<h2>The Course Pattern</h2>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a></a>flowchart LR</span>
-<span id="cb1-2"><a></a>  P["physics or sensing"] --&gt; A["forward operator A"]</span>
-<span id="cb1-3"><a></a>  A --&gt; Y["data y"]</span>
-<span id="cb1-4"><a></a>  Y --&gt; R["reconstruction method"]</span>
-<span id="cb1-5"><a></a>  R --&gt; X["image estimate x-hat"]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="caption">
-<p>Most of the course studies the middle two arrows: how data are produced, and how reconstruction stabilizes the inverse problem.</p>
-</div>
-</section>
-<section id="what-is-an-image" class="slide level2">
-<h2>What Is an Image?</h2>
-<div class="definition-box">
-<div class="tag">
-<p>Continuous model</p>
-</div>
-<p>At the mathematical level, a grayscale image is often modeled as a function</p>
+<section id="bridge-from-week-9" class="slide level2">
+<h2>Bridge from Week 9</h2>
+<p>Week 9 introduced ISTA:</p>
 <p><span class="math display">
-u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}.
-</span></p>
-<p>The value <span class="math inline">u(x,y)</span> is the intensity at location <span class="math inline">(x,y)</span>.</p>
-</div>
-</section>
-<section id="color-and-multichannel-images" class="slide level2">
-<h2>Color and Multichannel Images</h2>
-<div class="two-col">
-<div class="model-box">
-<p>For color images, the value at each point has several components:</p>
-<p><span class="math display">
-u : \Omega \to \mathbb{R}^3.
-</span></p>
-<p>Each location stores red, green, and blue intensities.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Question</p>
-</div>
-<p>What changes mathematically when a medical image has many channels, time frames, or slices?</p>
-</div>
-</div>
-</section>
-<section id="from-continuous-to-discrete" class="slide level2">
-<h2>From Continuous to Discrete</h2>
-<p>Digital images are sampled on a grid:</p>
-<p><span class="math display">
-u_{i,j} \approx u(x_i, y_j).
-</span></p>
-<p>For an image with <span class="math inline">m</span> rows and <span class="math inline">n</span> columns:</p>
-<p><span class="math display">
-U =
-\begin{bmatrix}
-u_{1,1} &amp; u_{1,2} &amp; \cdots &amp; u_{1,n} \\
-u_{2,1} &amp; u_{2,2} &amp; \cdots &amp; u_{2,n} \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-u_{m,1} &amp; u_{m,2} &amp; \cdots &amp; u_{m,n}
-\end{bmatrix}.
-</span></p>
-</section>
-<section id="activity-1-vectorize-by-hand" class="slide level2">
-<h2>Activity 1: Vectorize by Hand</h2>
-<div class="time-tag">
-<p>8 minutes</p>
-</div>
-<div class="exercise-box">
-<p>Given</p>
-<p><span class="math display">
-U =
-\begin{bmatrix}
-10 &amp; 20 &amp; 30 &amp; 40 \\
-50 &amp; 60 &amp; 70 &amp; 80 \\
-90 &amp; 100 &amp; 110 &amp; 120
-\end{bmatrix},
-</span></p>
-<p>write <span class="math inline">\operatorname{vec}(U)</span> using row-major order.</p>
-</div>
-</section>
-<section id="activity-1-debrief" class="slide level2">
-<h2>Activity 1 Debrief</h2>
-<p>Row-major order reads rows from left to right:</p>
-<p><span class="math display">
-\operatorname{vec}(U) =
-\begin{bmatrix}
-10 &amp; 20 &amp; 30 &amp; 40 &amp; 50 &amp; 60 &amp; 70 &amp; 80 &amp; 90 &amp; 100 &amp; 110 &amp; 120
-\end{bmatrix}^{T}.
+x^{k+1}
+=
+S_{\tau\lambda}
+\left(x^k-\tau A^\top(Ax^k-y)\right).
 </span></p>
 <div class="question-box">
-<p>How would the vector change under column-major order?</p>
+<p>What modeling assumption is soft thresholding trying to impose?</p>
 </div>
 </section>
-<section id="a-real-image-as-data" class="slide level2">
-<h2>A Real Image as Data</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week01-real-image-vectorization.png" alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"></p>
-<div class="caption">
-<p>Real sample image from <code>skimage.data.camera()</code>. The mathematical object is not the displayed photograph alone; it is the numerical array behind it.</p>
-</div>
-</div>
-</section>
-<section id="matrix-or-vector" class="slide level2">
-<h2>Matrix or Vector?</h2>
-<div class="two-col">
-<div class="definition-box">
-<div class="tag">
-<p>Visualization</p>
-</div>
-<p>For display, a grayscale image is naturally a matrix:</p>
-<p><span class="math display">
-U \in \mathbb{R}^{m \times n}.
-</span></p>
-</div>
-<div class="model-box">
-<div class="tag">
-<p>Computation</p>
-</div>
-<p>For linear algebra, reshape the image as</p>
-<p><span class="math display">
-x = \operatorname{vec}(U) \in \mathbb{R}^{mn}.
-</span></p>
-</div>
-</div>
-</section>
-<section id="why-vectorize" class="slide level2">
-<h2>Why Vectorize?</h2>
-<p>Once <span class="math inline">U</span> is written as a vector <span class="math inline">x</span>, we can use matrices to represent many controlled imaging operations:</p>
-<p><span class="math display">
-x \mapsto Ax.
-</span></p>
-<p>Examples:</p>
-<ul>
-<li>masking pixels;</li>
-<li>blurring;</li>
-<li>sampling Fourier coefficients;</li>
-<li>projecting along lines;</li>
-<li>combining channels or frames.</li>
-</ul>
-<div class="caption">
-<p>This is a modeling choice, not a claim that all image formation is linear.</p>
-</div>
-</section>
-<section id="first-numpy-representation" class="slide level2 code-small">
-<h2>First NumPy Representation</h2>
-<div id="a6ecfaf3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
-<span id="cb2-4"><a></a>U <span class="op">=</span> np.arange(m <span class="op">*</span> n).reshape(m, n)</span>
-<span id="cb2-5"><a></a></span>
-<span id="cb2-6"><a></a>x <span class="op">=</span> U.reshape(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb2-7"><a></a>U_back <span class="op">=</span> x.reshape(m, n)</span>
-<span id="cb2-8"><a></a></span>
-<span id="cb2-9"><a></a><span class="bu">print</span>(U)</span>
-<span id="cb2-10"><a></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="caption">
-<p>The same image can be an array for display and a vector for linear algebra.</p>
-</div>
-</section>
-<section id="vectorization-convention" class="slide level2">
-<h2>Vectorization Convention</h2>
-<p>NumPy uses row-major order by default:</p>
-<div id="136fcbb4" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="bu">print</span>(U.reshape(<span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb3-5"><a></a><span class="co"># [1 2 3 4 5 6]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="exercise-box">
-<p>When translating formulas into code, always state your vectorization convention.</p>
-</div>
-</section>
-<section id="indexing-matters" class="slide level2">
-<h2>Indexing Matters</h2>
-<div class="two-col">
-<div class="model-box">
-<p>For an image <span class="math inline">U \in \mathbb{R}^{m \times n}</span>, a pixel has two indices:</p>
-<p><span class="math display">
-U_{i,j}.
-</span></p>
-</div>
-<div class="definition-box">
-<p>After vectorization, the same pixel has one index:</p>
-<p><span class="math display">
-x_k.
-</span></p>
-<p>For row-major order, <span class="math inline">k = (i-1)n + j</span>.</p>
-</div>
-</div>
-</section>
-<section id="micro-check" class="slide level2">
-<h2>Micro-Check</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>2 minutes</p>
-</div>
-<p>For a <span class="math inline">4 \times 5</span> image, where does pixel <span class="math inline">(i,j) = (3,2)</span> appear in row-major vectorization?</p>
-<p><span class="math display">
-k = (i-1)n + j
-</span></p>
-</div>
-</section>
-<section id="the-forward-model" class="slide level2 section-slide">
-<h2>The Forward Model</h2>
+<section id="part-1-sparsity" class="slide level2 section-slide">
+<h2>Part 1: Sparsity</h2>
 <div class="section-kicker">
-<p>The central equation</p>
+<p>Most coefficients are zero</p>
 </div>
-<p>From image formation to inverse problems</p>
+<p>But only after choosing a representation</p>
 </section>
-<section id="the-central-model" class="slide level2">
-<h2>The Central Model</h2>
-<div class="model-box">
-<div class="tag">
-<p>First forward model</p>
-</div>
+<section id="sparse-vector" class="slide level2">
+<h2>Sparse Vector</h2>
+<p>A vector <span class="math inline">x\in\mathbb{R}^n</span> is <span class="math inline">k</span>-sparse if it has at most <span class="math inline">k</span> nonzero entries.</p>
 <p><span class="math display">
-y = A x + \eta.
+\|x\|_0
+=
+\#\{i:x_i\neq 0\}.
 </span></p>
+<div class="caption">
+<p><span class="math inline">\|\cdot\|_0</span> counts nonzeros; it is not a true norm.</p>
+</div>
+</section>
+<section id="sparse-versus-dense" class="slide level2">
+<h2>Sparse Versus Dense</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week10-sparse-vs-dense.png" alt="Sparse signal and dense signal coefficient plots"></p>
+</div>
+</section>
+<section id="representation-matters" class="slide level2">
+<h2>Representation Matters</h2>
+<p>An image may not be sparse as pixels.</p>
+<p>It may be sparse or approximately sparse in:</p>
+<div class="checklist">
 <ul>
-<li><span class="math inline">x</span>: unknown clean image;</li>
-<li><span class="math inline">A</span>: forward imaging operator;</li>
-<li><span class="math inline">y</span>: observed data;</li>
-<li><span class="math inline">\eta</span>: noise or modeling error.</li>
+<li>Fourier coefficients;</li>
+<li>DCT coefficients;</li>
+<li>wavelet coefficients;</li>
+<li>learned dictionaries;</li>
+<li>gradient domain.</li>
 </ul>
 </div>
-<div class="caption">
-<p>This linear model is the first mathematical language of the course. We will also need nonlinear and information-losing models.</p>
+</section>
+<section id="approximate-sparsity" class="slide level2">
+<h2>Approximate Sparsity</h2>
+<p>Natural images often have many small transform coefficients and a few large ones.</p>
+<div class="takeaway-box">
+<p>Sparse reconstruction does not require exact zeros everywhere; it often relies on coefficients that decay quickly.</p>
 </div>
 </section>
-<section id="what-does-a-mean" class="slide level2">
-<h2>What Does <span class="math inline">A</span> Mean?</h2>
+<section id="activity-1-choose-the-basis" class="slide level2">
+<h2>Activity 1: Choose the Basis</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Which representation would you try for each object?</p>
+<ol type="1">
+<li>a smooth sky image;</li>
+<li>a piecewise-constant segmentation map;</li>
+<li>a periodic texture;</li>
+<li>a medical image with sharp organ boundaries.</li>
+</ol>
+</div>
+</section>
+<section id="part-2-l1-versus-l2" class="slide level2 section-slide">
+<h2>Part 2: l1 Versus l2</h2>
+<div class="section-kicker">
+<p>Two priors, different geometry</p>
+</div>
+<p>Spread energy or select coefficients</p>
+</section>
+<section id="l2-regularization" class="slide level2">
+<h2>l2 Regularization</h2>
+<p>Tikhonov-style regularization uses</p>
+<p><span class="math display">
+\frac12\|Ax-y\|_2^2+\frac{\lambda}{2}\|x\|_2^2.
+</span></p>
+<div class="takeaway-box">
+<p>l2 regularization prefers small energy spread across coefficients.</p>
+</div>
+</section>
+<section id="l1-regularization" class="slide level2">
+<h2>l1 Regularization</h2>
+<p>Sparse reconstruction often uses</p>
+<p><span class="math display">
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1.
+</span></p>
+<p>where</p>
+<p><span class="math display">
+\|x\|_1=\sum_i |x_i|.
+</span></p>
+<div class="takeaway-box">
+<p>l1 regularization encourages exact zeros.</p>
+</div>
+</section>
+<section id="why-l0-is-not-the-default" class="slide level2">
+<h2>Why l0 Is Not the Default</h2>
+<p>The ideal sparse model might be:</p>
+<p><span class="math display">
+\min_x \|x\|_0
+\quad\text{subject to}\quad
+Ax=y.
+</span></p>
+<p>But this is combinatorial.</p>
+<div class="model-box">
+<p>l1 is the convex relaxation that keeps much of the sparse behavior.</p>
+</div>
+</section>
+<section id="geometry-of-l1-and-l2" class="slide level2">
+<h2>Geometry of l1 and l2</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week10-l1-l2-geometry.png" alt="Geometry showing l1 diamond and l2 circle touching a data constraint"></p>
+</div>
+</section>
+<section id="reading-the-geometry" class="slide level2">
+<h2>Reading the Geometry</h2>
+<p>The l2 ball is round.</p>
+<p>The l1 ball has corners on coordinate axes.</p>
+<div class="takeaway-box">
+<p>When a constraint first touches an l1 ball, it often touches a corner, which means some coordinates are exactly zero.</p>
+</div>
+</section>
+<section id="activity-2-before-seeing-the-answer" class="slide level2">
+<h2>Activity 2: Before Seeing the Answer</h2>
+<div class="time-tag">
+<p>4 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Suppose many vectors fit the same measurements.</p>
+<p>Would l2 or l1 be more likely to choose a vector with only a few nonzero coefficients? Why?</p>
+</div>
+</section>
+<section id="part-3-underdetermined-recovery" class="slide level2 section-slide">
+<h2>Part 3: Underdetermined Recovery</h2>
+<div class="section-kicker">
+<p>More unknowns than equations</p>
+</div>
+<p>The prior chooses among many solutions</p>
+</section>
+<section id="the-linear-model" class="slide level2">
+<h2>The Linear Model</h2>
+<p>We observe</p>
+<p><span class="math display">
+y=Ax,
+</span></p>
+<p>where <span class="math inline">A</span> has fewer rows than columns.</p>
+<div class="question-box">
+<p>If <span class="math inline">m&lt;n</span>, why should we expect many possible solutions?</p>
+</div>
+</section>
+<section id="minimum-l2-norm-solution" class="slide level2">
+<h2>Minimum l2-Norm Solution</h2>
+<p>One classical choice is:</p>
+<p><span class="math display">
+\min_x \|x\|_2
+\quad\text{subject to}\quad
+Ax=y.
+</span></p>
+<p>This gives the solution with smallest Euclidean norm.</p>
+<div class="takeaway-box">
+<p>It fits the data, but it may be dense.</p>
+</div>
+</section>
+<section id="l1-regularized-solution" class="slide level2">
+<h2>l1-Regularized Solution</h2>
+<p>Instead solve:</p>
+<p><span class="math display">
+\min_x
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1.
+</span></p>
+<p>This balances:</p>
+<div class="checklist">
+<ul>
+<li>fitting the measurements;</li>
+<li>keeping the coefficient vector sparse.</li>
+</ul>
+</div>
+</section>
+<section id="same-measurements-different-prior" class="slide level2">
+<h2>Same Measurements, Different Prior</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week10-l1-l2-recovery.png" alt="True sparse signal, l2 solution, and l1 solution from the same measurements"></p>
+</div>
+</section>
+<section id="what-happened" class="slide level2">
+<h2>What Happened?</h2>
+<p>Both methods see the same <span class="math inline">A</span> and <span class="math inline">y</span>.</p>
+<p>The difference is the prior.</p>
+<div class="takeaway-box">
+<p>l2 asks for a small vector; l1 asks for a sparse explanation.</p>
+</div>
+</section>
+<section id="important-caveat" class="slide level2">
+<h2>Important Caveat</h2>
+<p>l1 does not magically recover every sparse signal.</p>
+<p>It needs enough measurements and a measurement operator that mixes information well.</p>
+<div class="model-box">
+<p>Sparse recovery depends on the pair: sparsity model plus measurement design.</p>
+</div>
+</section>
+<section id="part-4-compressed-sensing-intuition" class="slide level2 section-slide">
+<h2>Part 4: Compressed Sensing Intuition</h2>
+<div class="section-kicker">
+<p>Sampling below the apparent dimension</p>
+</div>
+<p>When structure reduces degrees of freedom</p>
+</section>
+<section id="degrees-of-freedom" class="slide level2">
+<h2>Degrees of Freedom</h2>
+<p>If <span class="math inline">x\in\mathbb{R}^{1000}</span> is exactly 5-sparse, it is not truly a 1000-degree-of-freedom object.</p>
+<p>We need to learn:</p>
+<div class="checklist">
+<ul>
+<li>which 5 locations are active;</li>
+<li>the 5 active values.</li>
+</ul>
+</div>
+</section>
+<section id="measurement-count" class="slide level2">
+<h2>Measurement Count</h2>
+<p>Sparse recovery can work with far fewer than <span class="math inline">n</span> measurements.</p>
+<p>But not usually as few as <span class="math inline">k</span>.</p>
+<div class="takeaway-box">
+<p>We need enough measurements to identify both support and amplitudes robustly.</p>
+</div>
+</section>
+<section id="measurement-sweep" class="slide level2">
+<h2>Measurement Sweep</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week10-measurement-sweep.png" alt="Relative recovery error versus number of measurements for l1 and l2"></p>
+</div>
+</section>
+<section id="reading-the-sweep" class="slide level2">
+<h2>Reading the Sweep</h2>
+<div class="checklist">
+<ul>
+<li>With very few measurements, both methods struggle.</li>
+<li>After a threshold, l1 can recover the sparse vector well.</li>
+<li>The l2 solution remains dense because its prior is different.</li>
+</ul>
+</div>
+</section>
+<section id="activity-3-failure-modes" class="slide level2">
+<h2>Activity 3: Failure Modes</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Give one reason sparse recovery could fail even when the true signal is sparse.</p>
+</div>
+</section>
+<section id="part-5-sparse-images" class="slide level2 section-slide">
+<h2>Part 5: Sparse Images</h2>
+<div class="section-kicker">
+<p>Images are sparse after transformation</p>
+</div>
+<p>DCT example before wavelets</p>
+</section>
+<section id="dct-compression" class="slide level2">
+<h2>DCT Compression</h2>
+<p>The Discrete Cosine Transform represents an image patch as cosine patterns.</p>
+<p>Many image patches can be approximated using only a small fraction of DCT coefficients.</p>
+<div class="caption">
+<p>Wavelets in Week 11 will give a more imaging-focused multiscale representation.</p>
+</div>
+</section>
+<section id="few-coefficients-good-approximation" class="slide level2">
+<h2>Few Coefficients, Good Approximation</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week10-dct-compression.png" alt="Image patch, DCT magnitude, and reconstructions using a small fraction of coefficients"></p>
+</div>
+</section>
+<section id="sparse-reconstruction-from-pixels" class="slide level2">
+<h2>Sparse Reconstruction from Pixels</h2>
+<p>Suppose we observe only a random subset of pixels.</p>
+<p>We can reconstruct by solving:</p>
+<p><span class="math display">
+\min_c
+\frac12\|M D^{-1}c-y\|_2^2+\lambda\|c\|_1.
+</span></p>
+<div class="caption">
+<p><span class="math inline">D^{-1}c</span> maps DCT coefficients back to an image; <span class="math inline">M</span> keeps observed pixels.</p>
+</div>
+</section>
+<section id="random-pixels-plus-sparse-prior" class="slide level2">
+<h2>Random Pixels Plus Sparse Prior</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week10-sparse-image-reconstruction.png" alt="Sparse DCT reconstruction from random observed pixels"></p>
+</div>
+</section>
+<section id="what-this-does-not-say" class="slide level2">
+<h2>What This Does Not Say</h2>
+<p>This is not a universal promise.</p>
+<div class="checklist">
+<ul>
+<li>The representation must be appropriate.</li>
+<li>The measurements must contain useful information.</li>
+<li>The regularization weight matters.</li>
+<li>Real systems include noise, calibration, and model mismatch.</li>
+</ul>
+</div>
+</section>
+<section id="comparison-l1-versus-l2" class="slide level2">
+<h2>Comparison: l1 Versus l2</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>Operator</th>
-<th>Imaging meaning</th>
-<th>Typical difficulty</th>
+<th>Feature</th>
+<th>l2</th>
+<th>l1</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">I</span></td>
-<td>direct observation</td>
-<td>noise</td>
+<td>Geometry</td>
+<td>round</td>
+<td>corners</td>
 </tr>
 <tr class="even">
-<td>fixed masking</td>
-<td>selected pixels are recorded</td>
-<td>incomplete data</td>
+<td>Typical coefficients</td>
+<td>many small values</td>
+<td>many zeros</td>
 </tr>
 <tr class="odd">
-<td>convolution</td>
-<td>blur</td>
-<td>lost high frequencies</td>
+<td>Optimization</td>
+<td>smooth</td>
+<td>nonsmooth</td>
 </tr>
 <tr class="even">
-<td>Fourier sampling</td>
-<td>MRI-style acquisition</td>
-<td>indirect measurements</td>
+<td>Prior</td>
+<td>small energy</td>
+<td>sparse explanation</td>
 </tr>
 <tr class="odd">
-<td>projection</td>
-<td>tomography</td>
-<td>incomplete angles</td>
+<td>Useful when</td>
+<td>dense small errors</td>
+<td>few active structures</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="important-caveat" class="slide level2">
-<h2>Important Caveat</h2>
-<div class="definition-box">
-<div class="tag">
-<p>Linear model</p>
-</div>
-<p>If the measurement rule is fixed in advance, then many operators are linear:</p>
-<p><span class="math display">
-x \mapsto Ax.
-</span></p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>But real scenes</p>
-</div>
-<p>Visibility, occlusion, saturation, shadows, reflection, and segmentation can make the image formation process nonlinear or irreversible.</p>
-</div>
+<section id="code-demo-run-week-10-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 10 Examples</h2>
+<p>From the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> examples/week10_sparse_reconstruction.py</span>
+<span id="cb1-2"><a></a><span class="ex">python3</span> examples/make_week10_figures.py</span>
+<span id="cb1-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="image-formation-vs-reconstruction" class="slide level2">
-<h2>Image Formation vs Reconstruction</h2>
-<div class="two-col">
-<div class="model-box">
-<div class="tag">
-<p>Forward problem</p>
+<section id="in-class-notebook-activity" class="slide level2">
+<h2>In-Class Notebook Activity</h2>
+<div class="time-tag">
+<p>10 minutes</p>
 </div>
-<p>Given <span class="math inline">x</span>, predict the measured data:</p>
-<p><span class="math display">
-y = Ax + \eta.
-</span></p>
-<p>Usually stable.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Inverse problem</p>
-</div>
-<p>Given <span class="math inline">y</span>, estimate the unknown image:</p>
-<p><span class="math display">
-\hat{x} \approx x.
-</span></p>
-<p>Often unstable.</p>
-</div>
-</div>
-</section>
-<section id="fixed-mask-vs-occlusion" class="slide level2">
-<h2>Fixed Mask vs Occlusion</h2>
-<div class="two-col">
-<div class="model-box">
-<div class="tag">
-<p>Fixed mask</p>
-</div>
-<p>If we decide in advance which pixels to keep, then</p>
-<p><span class="math display">
-y = Mx
-</span></p>
-<p>is linear.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Occlusion</p>
-</div>
-<p>If a tree hides a person, the visible image depends on scene geometry, depth, and visibility.</p>
-<p>The hidden person is not encoded in the pixels.</p>
-</div>
-</div>
-</section>
-<section id="information-that-is-not-measured" class="slide level2">
-<h2>Information That Is Not Measured</h2>
-<div class="takeaway-box">
-<p>Some inverse problems are unstable but still contain indirect information.</p>
-<p>Other situations are simply not observed. If an object is completely occluded, no algorithm can recover its true appearance from that image alone without outside information.</p>
-</div>
-</section>
-<section id="audio-mixing-vs-image-visibility" class="slide level2">
-<h2>Audio Mixing vs Image Visibility</h2>
-<div class="two-col">
-<div class="model-box">
-<div class="tag">
-<p>Audio</p>
-</div>
-<p>Sound waves approximately superpose:</p>
-<p><span class="math display">
-y(t) \approx s_1(t) + s_2(t) + \cdots.
-</span></p>
-<p>Separation is still hard, but the mixture can contain all sources.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Images</p>
-</div>
-<p>Visibility is different: the camera records the visible surface.</p>
-<p>If a surface is hidden, its appearance is absent from that image.</p>
-</div>
-</div>
-</section>
-<section id="why-the-inverse-problem-is-hard" class="slide level2">
-<h2>Why the Inverse Problem Is Hard</h2>
-<p>The naive answer would be:</p>
-<p><span class="math display">
-x = A^{-1}y.
-</span></p>
-<div class="question-box">
-<p>What could go wrong with this answer?</p>
-</div>
-</section>
-<section id="why-the-naive-inverse-fails" class="slide level2">
-<h2>Why the Naive Inverse Fails</h2>
-<p>The naive answer would be:</p>
-<p><span class="math display">
-x = A^{-1}y.
-</span></p>
-<p>But this can fail because:</p>
-<ol type="1">
-<li><span class="math inline">A</span> may not be invertible.</li>
-<li><span class="math inline">A</span> may be badly conditioned.</li>
-<li>Noise can be amplified by inversion.</li>
-<li>Many plausible images may explain the same data.</li>
-</ol>
-</section>
-<section id="a-toy-masking-operator" class="slide level2">
-<h2>A Toy Masking Operator</h2>
-<p>Suppose a fixed set of pixels is measured.</p>
-<div id="5f19b3c6" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
-<span id="cb4-4"><a></a>mask <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>], dtype<span class="op">=</span><span class="bu">bool</span>)</span>
-<span id="cb4-5"><a></a></span>
-<span id="cb4-6"><a></a>y <span class="op">=</span> x[mask]</span>
-<span id="cb4-7"><a></a></span>
-<span id="cb4-8"><a></a><span class="bu">print</span>(<span class="st">"unknown image vector:"</span>, x)</span>
-<span id="cb4-9"><a></a><span class="bu">print</span>(<span class="st">"observed entries:"</span>, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The mask is fixed independently of the unknown image.</p>
-</section>
-<section id="matrix-view-of-masking" class="slide level2">
-<h2>Matrix View of Masking</h2>
-<div class="large-math">
-<p><span class="math display">
-y = Mx
-</span></p>
-</div>
-<p>Here <span class="math inline">M</span> selects rows from the identity matrix.</p>
-<div class="question-box">
-<p>If <span class="math inline">M</span> has fewer rows than columns, can there be a unique inverse?</p>
-</div>
-</section>
-<section id="worked-masking-matrix" class="slide level2">
-<h2>Worked Masking Matrix</h2>
-<p>Let</p>
-<p><span class="math display">
-x =
-\begin{bmatrix}
-x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
-\end{bmatrix}
-</span></p>
-<p>and suppose we observe only entries 1, 3, and 5:</p>
-<p><span class="math display">
-y =
-\begin{bmatrix}
-x_1 \\ x_3 \\ x_5
-\end{bmatrix}
-=
-\begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-x.
-</span></p>
-</section>
-<section id="what-is-lost" class="slide level2">
-<h2>What Is Lost?</h2>
-<div class="two-col">
-<div class="definition-box">
-<p>The matrix <span class="math inline">M</span> has shape <span class="math inline">3 \times 5</span>.</p>
-<p>It cannot have an inverse that recovers all five unknowns from three measurements.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Class question</p>
-</div>
-<p>Can you describe two different vectors <span class="math inline">x</span> that produce the same <span class="math inline">y</span>?</p>
-</div>
-</div>
-</section>
-<section id="a-real-masking-operator" class="slide level2">
-<h2>A Real Masking Operator</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week01-real-image-masking.png" alt="Real image, sampling mask, observed pixels, and zero-filled view"></p>
-</div>
-<div class="caption">
-<p>This is a fixed sampling mask. It is not the same as physical occlusion by an object in the scene.</p>
-</div>
-</section>
-<section id="python-demo-masking-a-real-image" class="slide level2 code-small">
-<h2>Python Demo: Masking a Real Image</h2>
-<div id="d85934ec" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
-<span id="cb5-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
-<span id="cb5-5"><a></a></span>
-<span id="cb5-6"><a></a>mask <span class="op">=</span> np.zeros_like(image, dtype<span class="op">=</span><span class="bu">bool</span>)</span>
-<span id="cb5-7"><a></a>mask[::<span class="dv">2</span>, ::<span class="dv">2</span>] <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb5-8"><a></a></span>
-<span id="cb5-9"><a></a>y <span class="op">=</span> image[mask]</span>
-<span id="cb5-10"><a></a>zero_filled <span class="op">=</span> np.where(mask, image, <span class="dv">0</span>)</span>
-<span id="cb5-11"><a></a></span>
-<span id="cb5-12"><a></a><span class="bu">print</span>(image.shape)</span>
-<span id="cb5-13"><a></a><span class="bu">print</span>(y.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="in-class-exercise-2" class="slide level2">
-<h2>In-Class Exercise 2</h2>
 <div class="exercise-box">
-<div class="tag">
-<p>Think, then discuss</p>
-</div>
-<p>Suppose an operator keeps only every other pixel.</p>
+<p>Open the Week 10 notebook.</p>
 <ol type="1">
-<li>What information has been lost?</li>
-<li>Can interpolation recover the original image exactly?</li>
-<li>What assumptions could make recovery plausible?</li>
+<li>Change the number of measurements.</li>
+<li>Change the sparsity level.</li>
+<li>Change the l1 regularization weight.</li>
+<li>Compare l2 and l1 solutions.</li>
+<li>Try a different observed-pixel fraction for the image example.</li>
 </ol>
 </div>
 </section>
-<section id="why-assumptions-enter" class="slide level2">
-<h2>Why Assumptions Enter</h2>
-<div class="takeaway-box">
-<p>The missing pixels are not hidden somewhere in <span class="math inline">y</span>.</p>
-<p>To choose one reconstruction among many possible images, we need a principle:</p>
-<p><span class="math display">
-\text{data fit} + \text{prior knowledge}.
-</span></p>
-</div>
-</section>
-<section id="prior-knowledge" class="slide level2">
-<h2>Prior Knowledge</h2>
-<p>Reconstruction needs information not present in the data alone.</p>
-<p>Common priors in this course:</p>
-<ul>
-<li>small energy or smoothness;</li>
-<li>sparse representation;</li>
-<li>piecewise smoothness with edges;</li>
-<li>physical constraints;</li>
-<li>learned or data-driven regularity.</li>
-</ul>
-</section>
-<section id="modeling-habit" class="slide level2 section-slide">
-<h2>Modeling Habit</h2>
-<div class="section-kicker">
-<p>A practical checklist</p>
-</div>
-<p>Ask these questions for every problem.</p>
-</section>
-<section id="the-five-questions" class="slide level2">
-<h2>The Five Questions</h2>
-<div class="takeaway-box">
-<ol type="1">
-<li>What is the unknown <span class="math inline">x</span>?</li>
-<li>What is measured as data <span class="math inline">y</span>?</li>
-<li>What is the forward operator <span class="math inline">A</span>?</li>
-<li>What noise model is reasonable for <span class="math inline">\eta</span>?</li>
-<li>What prior knowledge should guide reconstruction?</li>
-</ol>
-</div>
-</section>
-<section id="mini-case-blurred-photograph" class="slide level2">
-<h2>Mini-Case: Blurred Photograph</h2>
-<div class="two-col">
-<div class="model-box">
-<p>The data are a blurred and noisy image:</p>
-<p><span class="math display">
-y = h * x + \eta.
-</span></p>
-<p>The operator <span class="math inline">A</span> is convolution by the point spread function <span class="math inline">h</span>.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Preview</p>
-</div>
-<p>Next week, we will make this precise and compute it.</p>
-</div>
-</div>
-</section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="quiz-style-check" class="slide level2">
+<h2>Quiz-Style Check</h2>
 <div class="exercise-box">
-<div class="tag">
-<p>Exit ticket</p>
-</div>
-<p>For each situation, identify <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and one reasonable prior:</p>
+<p>Answer quickly:</p>
 <ol type="1">
-<li>a blurred phone photograph;</li>
-<li>a CT scan with few projection angles;</li>
-<li>an old photograph with scratches and missing regions.</li>
+<li>What does sparse mean?</li>
+<li>Why does l1 promote zeros?</li>
+<li>Why can l2 fit the data but fail to recover the sparse signal?</li>
+<li>What must be chosen before saying an image is sparse?</li>
 </ol>
 </div>
 </section>
 <section id="suggested-answers" class="slide level2">
 <h2>Suggested Answers</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Situation</th>
-<th><span class="math inline">A</span></th>
-<th>Possible prior</th>
+<th>Question</th>
+<th>Short answer</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>blurred photo</td>
-<td>convolution</td>
-<td>sharp edges, natural-image smoothness</td>
+<td>sparse</td>
+<td>few nonzero or significant coefficients</td>
 </tr>
 <tr class="even">
-<td>few-angle CT</td>
-<td>projection operator</td>
-<td>piecewise smooth anatomy</td>
+<td>l1 zeros</td>
+<td>corners and soft thresholding</td>
 </tr>
 <tr class="odd">
-<td>missing regions</td>
-<td>fixed masking, if mask is known</td>
-<td>texture or geometric continuation</td>
+<td>l2 failure</td>
+<td>spreads energy across many coefficients</td>
 </tr>
 <tr class="even">
-<td>object hidden by a tree</td>
-<td>nonlinear visibility/occlusion</td>
-<td>cannot recover true appearance from one image alone</td>
+<td>image sparsity</td>
+<td>a representation or transform</td>
 </tr>
 </tbody>
 </table>
@@ -907,23 +707,22 @@ y = h * x + \eta.
 <h2>What Students Should Remember</h2>
 <div class="takeaway-box">
 <ul>
-<li>A digital image can be treated as a function, matrix, or vector.</li>
-<li>Linear operators are a powerful first model for many controlled imaging systems.</li>
-<li>Real image formation can also be nonlinear and information-losing.</li>
-<li>Reconstruction is difficult because the inverse map may be unstable, nonunique, or physically impossible.</li>
-<li>Regularization adds mathematical prior knowledge to stabilize recovery.</li>
+<li>Sparsity is representation-dependent.</li>
+<li>l1 is a convex surrogate for sparse selection.</li>
+<li>l1 and l2 encode different priors.</li>
+<li>Compressed sensing works when measurements and sparse model are compatible.</li>
+<li>Sparse priors can reconstruct images from incomplete data, but only under assumptions.</li>
 </ul>
 </div>
 </section>
 <section id="next-time" class="slide level2">
 <h2>Next Time</h2>
-<p>Convolution and blur:</p>
+<p>Wavelets and multiscale representation:</p>
 <ul>
-<li>1D and 2D convolution;</li>
-<li>point spread functions;</li>
-<li>boundary conditions;</li>
-<li>blur as a linear operator;</li>
-<li>first deblurring experiment.</li>
+<li>why image detail lives at multiple scales;</li>
+<li>wavelet coefficients;</li>
+<li>thresholding;</li>
+<li>denoising experiments.</li>
 </ul>
 
 
