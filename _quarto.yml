@@ -18,6 +18,10 @@ project:
     - book/week-07-variational-formulation.qmd
     - book/week-08-total-variation.qmd
     - book/week-09-optimization-methods.qmd
+    - book/week-10-sparse-reconstruction.qmd
+    - book/week-11-wavelets.qmd
+    - book/week-12-model-data.qmd
+    - book/week-13-plug-and-play.qmd
     - slides/index.qmd
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
@@ -85,6 +89,16 @@ website:
               text: "8. Total Variation regularization"
             - href: book/week-09-optimization-methods.qmd
               text: "9. Optimization methods"
+        - section: "Part IV: Sparse and Learned Priors"
+          contents:
+            - href: book/week-10-sparse-reconstruction.qmd
+              text: "10. Sparse reconstruction"
+            - href: book/week-11-wavelets.qmd
+              text: "11. Wavelets and multiscale representation"
+            - href: book/week-12-model-data.qmd
+              text: "12. Model-based vs data-driven imaging"
+            - href: book/week-13-plug-and-play.qmd
+              text: "13. Plug-and-play and learned regularization"
   page-footer:
     left: "MATH 435: Mathematical Imaging"
     right: "Built with Quarto"

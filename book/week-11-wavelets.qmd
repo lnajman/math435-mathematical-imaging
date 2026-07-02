@@ -1,0 +1,187 @@
+---
+title: "Wavelets and Multiscale Representation"
+subtitle: "Chapter 11"
+---
+
+[Slides](../slides/week-11-wavelets.html) | [Notebook](../notebooks/week11_wavelets.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- explain wavelets as localized multiscale patterns;
+- read a 2D wavelet decomposition;
+- connect wavelet coefficients to sparsity;
+- use thresholding for compression and denoising;
+- compare wavelet denoising with ordinary smoothing.
+
+## Why Wavelets?
+
+Fourier analysis tells us which frequencies are present, but Fourier modes are global. A local edge affects many Fourier coefficients.
+
+Wavelets are local and multiscale. They can be shifted in position, scaled in size, and used to describe coarse and fine image structures.
+
+This makes wavelets a natural representation for localized edges and details.
+
+## Haar Intuition
+
+The Haar wavelet is the simplest wavelet example.
+
+::: {.figure}
+![](../assets/figures/week11-haar-atoms.png){fig-alt="Haar scaling function, Haar wavelet, and a shifted scaled Haar wavelet"}
+
+The scaling function stores averages; the wavelet stores differences.
+:::
+
+For two neighboring values $a$ and $b$,
+
+$$
+\text{average}=\frac{a+b}{2},
+\qquad
+\text{detail}=\frac{a-b}{2}.
+$$
+
+The average stores coarse information. The detail stores local change.
+
+Repeating this idea on averages gives a multiscale decomposition: fine details first, then coarser details at larger scales.
+
+## Multiscale Decomposition
+
+::: {.figure}
+![](../assets/figures/week11-1d-multiscale.png){fig-alt="A 1D signal decomposed into coarse approximation and several wavelet detail scales"}
+
+A signal can be decomposed into a coarse approximation plus details at several scales.
+:::
+
+The approximation contains the broad trend. Coarse details capture large jumps. Fine details capture narrow changes and oscillations.
+
+The transform does not create new information. It reorganizes information into coarse approximation plus details.
+
+For orthogonal wavelets, energy is preserved up to normalization.
+
+## Two-Dimensional Wavelets
+
+For images, the wavelet transform is applied along rows and columns. At each scale, we get:
+
+- approximation coefficients;
+- horizontal detail coefficients;
+- vertical detail coefficients;
+- diagonal detail coefficients.
+
+::: {.figure}
+![](../assets/figures/week11-image-subbands.png){fig-alt="Image patch and 2-level wavelet coefficient layout"}
+
+The coefficient layout separates coarse image content from directional details.
+:::
+
+| Subband | Rough meaning |
+|---|---|
+| LL | coarse approximation |
+| LH | horizontal-type detail |
+| HL | vertical-type detail |
+| HH | diagonal or corner-like detail |
+
+Naming conventions vary by library, but the main idea is directional detail at multiple scales.
+
+## Wavelet Sparsity
+
+Many image regions are locally smooth. Only edges and texture create large detail coefficients.
+
+::: {.figure}
+![](../assets/figures/week11-coefficient-decay.png){fig-alt="Sorted coefficient magnitudes for pixels, DCT, and wavelet representations"}
+
+Wavelet coefficients often decay quickly for piecewise-smooth images.
+:::
+
+This is why wavelets are useful for sparse imaging: they represent many natural images with many small coefficients and a few large ones.
+
+## Compression
+
+Compression keeps only the most important coefficients.
+
+::: {.figure}
+![](../assets/figures/week11-wavelet-compression.png){fig-alt="Original image and wavelet reconstructions keeping different fractions of largest coefficients"}
+
+Keeping a small fraction of large coefficients can preserve recognizable structure.
+:::
+
+Hard thresholding keeps a coefficient only if it is large enough:
+
+$$
+H_T(c)=
+\begin{cases}
+c, & |c|\geq T,\\
+0, & |c|<T.
+\end{cases}
+$$
+
+Hard thresholding is useful for compression, but it can create artifacts.
+
+Soft thresholding shrinks coefficients:
+
+$$
+S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
+$$
+
+Soft thresholding is the proximal operator behind l1 regularization.
+
+## Wavelet Denoising
+
+Noise often creates many small detail coefficients. Wavelet denoising:
+
+1. transforms the noisy image;
+2. thresholds detail coefficients;
+3. reconstructs the image.
+
+::: {.figure}
+![](../assets/figures/week11-wavelet-denoising.png){fig-alt="Original, noisy, Gaussian-smoothed, and wavelet-denoised images"}
+
+Wavelet denoising can remove noise while preserving localized structure.
+:::
+
+The threshold controls the tradeoff.
+
+::: {.figure}
+![](../assets/figures/week11-threshold-sweep.png){fig-alt="Wavelet denoising with several threshold strengths"}
+
+Small thresholds leave noise; large thresholds remove real detail.
+:::
+
+## Wavelets Versus TV
+
+| Model | Prior | Typical strength | Typical artifact |
+|---|---|---|---|
+| TV | sparse gradients | sharp edges | staircasing |
+| wavelets | sparse multiscale coefficients | localized detail | ringing or texture loss |
+
+Both are sparse priors, but they encode different structure.
+
+Wavelets are not automatic truth machines. The wavelet family, boundary handling, threshold value, texture structure, and forward model all matter.
+
+## Computation
+
+The Week 11 notebook lets you change the wavelet family, number of decomposition levels, retained coefficient fraction, and denoising threshold.
+
+Run:
+
+```bash
+python3 examples/week11_wavelets.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. What makes wavelets different from Fourier modes?
+2. Compute the Haar average and detail for the pair $(8,6)$.
+3. What information does a detail coefficient store?
+4. Why can wavelet coefficients be sparse for piecewise-smooth images?
+5. Compare hard thresholding and soft thresholding.
+
+## Takeaways
+
+- Wavelets represent images across position, scale, and direction.
+- A wavelet transform splits images into coarse approximation and detail subbands.
+- Many images are approximately sparse in wavelet coefficients.
+- Thresholding gives compression and denoising algorithms.
+- Representation choice controls the success of sparse reconstruction.

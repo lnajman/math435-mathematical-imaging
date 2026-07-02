@@ -1,0 +1,229 @@
+---
+title: "Model-Based vs Data-Driven Imaging"
+subtitle: "Chapter 12"
+---
+
+[Slides](../slides/week-12-model-data.html) | [Notebook](../notebooks/week12_model_data.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- compare model-based and data-driven imaging;
+- identify forward models, priors, solvers, and training data;
+- interpret a neural network as a parameterized operator;
+- explain a small learned patch prior;
+- discuss generalization and failure modes.
+
+## Where Does Prior Knowledge Come From?
+
+Wavelets gave us a handcrafted representation. We chose the wavelet family, decomposition level, thresholding rule, and threshold strength.
+
+Data-driven imaging asks a different question: what if some of these choices are learned from examples?
+
+::: {.figure}
+![](../assets/figures/week12-two-philosophies.png){fig-alt="Diagram comparing model-based imaging and data-driven imaging workflows"}
+
+Model-based methods write assumptions; data-driven methods learn assumptions from examples.
+:::
+
+## Model-Based Imaging
+
+A classical reconstruction often solves
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R(x).
+$$
+
+Here $D$ is data fidelity and $R$ is the regularizer or prior.
+
+In a model-based method, we specify:
+
+- the forward model $A$;
+- the noise model or data term;
+- the regularizer;
+- the parameter $\lambda$;
+- the optimization method.
+
+Examples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.
+
+Model-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.
+
+## Data-Driven Imaging
+
+Instead of writing the reconstruction rule by hand, a data-driven method learns a function:
+
+$$
+\hat{x}=f_\theta(y).
+$$
+
+The parameters $\theta$ are chosen from training data.
+
+With supervised training pairs $(y_i,x_i)$, one solves
+
+$$
+\min_\theta
+\sum_i
+\ell(f_\theta(y_i),x_i).
+$$
+
+The loss tells the network what counts as a good reconstruction on the training set.
+
+Data-driven methods still require choices:
+
+- training data;
+- architecture;
+- loss function;
+- optimizer;
+- evaluation metric;
+- deployment domain.
+
+The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.
+
+## Strengths And Risks
+
+Data-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.
+
+They can fail when:
+
+- the test distribution changes;
+- training data is biased;
+- the loss rewards the wrong thing;
+- uncertainty is hidden;
+- hallucinated structure looks plausible.
+
+The last point matters especially in medical and scientific imaging: plausible is not the same as measured.
+
+## Neural Networks As Operators
+
+::: {.figure}
+![](../assets/figures/week12-neural-operator.png){fig-alt="Diagram of a neural network as a parameterized operator from input image to output image"}
+
+A neural network is a parameterized map from input data to output image.
+:::
+
+At a high level, layers combine linear filtering or mixing, nonlinear activations, many learned parameters, and composition of simple operations.
+
+A composition of only linear layers is still linear. Nonlinear activations allow the map to adapt to image content.
+
+Some methods ignore the explicit forward model:
+
+$$
+\hat{x}=f_\theta(y).
+$$
+
+Others include it inside an iterative reconstruction:
+
+$$
+x^{k+1}
+=
+\text{learned step using } A,\ A^\top,\ y.
+$$
+
+This second viewpoint leads naturally to plug-and-play and learned regularization.
+
+## A Small Learned Patch Prior
+
+Learning does not require a large neural network. A simple patch PCA prior already illustrates the main idea.
+
+We extract many clean image patches and learn:
+
+- a mean patch;
+- principal patch directions;
+- a low-dimensional patch model.
+
+::: {.figure}
+![](../assets/figures/week12-pca-atoms.png){fig-alt="Mean patch and learned PCA patch atoms from image patches"}
+
+Patch PCA learns common directions of variation from examples.
+:::
+
+For each noisy patch, denoising can:
+
+1. subtract the learned mean patch;
+2. project onto the first few learned directions;
+3. reconstruct the patch;
+4. average overlapping reconstructed patches.
+
+This is data-driven even though it is not a neural network.
+
+::: {.figure}
+![](../assets/figures/week12-denoising-comparison.png){fig-alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"}
+
+Handcrafted and learned priors can be compared on the same denoising task.
+:::
+
+## Capacity And Generalization
+
+The number of retained PCA components controls model capacity.
+
+::: {.figure}
+![](../assets/figures/week12-capacity-curve.png){fig-alt="Patch PCA singular spectrum and denoising RMSE versus number of components"}
+
+Too few components oversmooth; too many components preserve noise.
+:::
+
+If the learned prior is trained on one image family and tested on another, performance can change.
+
+::: {.figure}
+![](../assets/figures/week12-distribution-shift.png){fig-alt="Learned PCA denoising on a camera crop and a coins crop, showing distribution dependence"}
+
+Generalization is central to learned imaging.
+:::
+
+Distribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.
+
+## Comparing The Philosophies
+
+| Question | Model-based | Data-driven |
+|---|---|---|
+| Prior comes from | formulas and modeling | examples and loss |
+| Interpretability | usually higher | often lower |
+| Data requirement | lower | higher |
+| Physics | explicit | sometimes implicit |
+| Failure mode | wrong model or prior | distribution shift or hallucination |
+
+Many modern methods combine both philosophies: explicit forward model, learned denoiser or prior, iterative algorithm structure, and data-consistency steps.
+
+## Evaluation
+
+Pixel RMSE is not enough. We may also need:
+
+- task accuracy;
+- uncertainty estimates;
+- robustness to distribution shift;
+- consistency with measured data;
+- expert review.
+
+This is the doorway to plug-and-play and learned regularization.
+
+## Computation
+
+The Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.
+
+Run:
+
+```bash
+python3 examples/week12_model_data.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. What does a model-based method specify explicitly?
+2. What does a data-driven method learn from examples?
+3. Why is a neural network a nonlinear operator?
+4. What is distribution shift?
+5. Give one reason hallucinated structure is dangerous in scientific imaging.
+
+## Takeaways
+
+- Model-based methods write assumptions explicitly.
+- Data-driven methods learn assumptions from examples.
+- Neural networks are parameterized nonlinear operators.
+- Learned methods can be powerful but depend on training data.
+- Modern imaging often combines physics, optimization, and learning.

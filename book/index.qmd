@@ -39,6 +39,10 @@ For each chapter, students should be able to answer:
 | 7 | Variational formulation | [slides](../slides/week-07-variational-formulation.html) | [notebook](../notebooks/week07_variational_formulation.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) |
 | 8 | Total Variation regularization | [slides](../slides/week-08-total-variation.html) | [notebook](../notebooks/week08_total_variation.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) |
 | 9 | Optimization methods | [slides](../slides/week-09-optimization-methods.html) | [notebook](../notebooks/week09_optimization_methods.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb) |
+| 10 | Sparse reconstruction | [slides](../slides/week-10-sparse-reconstruction.html) | [notebook](../notebooks/week10_sparse_reconstruction.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb) |
+| 11 | Wavelets and multiscale representation | [slides](../slides/week-11-wavelets.html) | [notebook](../notebooks/week11_wavelets.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) |
+| 12 | Model-based vs data-driven imaging | [slides](../slides/week-12-model-data.html) | [notebook](../notebooks/week12_model_data.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) |
+| 13 | Plug-and-play and learned regularization | [slides](../slides/week-13-plug-and-play.html) | [notebook](../notebooks/week13_plug_and_play.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
 
 ## Roadmap
 
@@ -52,7 +56,7 @@ The complete book will follow the course arc:
 | IV | 10-13 | Sparsity, wavelets, learned priors, plug-and-play methods |
 | V | 14-15 | Robustness, ethics, project reporting, oral defense |
 
-The first writing pass now contains Chapters 1-9. Later passes will convert the remaining weekly materials into full chapters.
+The first writing pass now contains Chapters 1-13. The remaining writing work is Chapter 14 plus the project/reporting chapter.
 
 ## Notation
 

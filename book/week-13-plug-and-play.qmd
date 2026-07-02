@@ -1,0 +1,268 @@
+---
+title: "Plug-and-Play and Learned Regularization"
+subtitle: "Chapter 13"
+---
+
+[Slides](../slides/week-13-plug-and-play.html) | [Notebook](../notebooks/week13_plug_and_play.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- recall proximal algorithms for regularized inverse problems;
+- define plug-and-play reconstruction;
+- compare explicit and implicit regularization;
+- interpret deblurring examples with handcrafted and learned denoisers;
+- discuss fixed points, convergence, and trust.
+
+## Can A Denoiser Be A Prior?
+
+Plug-and-play is a hybrid idea. It keeps the measurement model
+
+$$
+y \approx Ax
+$$
+
+and inserts an image-restoration tool that knows what plausible images look like.
+
+The key question is: where should that image-restoration tool enter the algorithm?
+
+## Proximal Algorithms
+
+A standard variational model is
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x
+\frac{1}{2}\|Ax-y\|_2^2+\lambda R(x).
+$$
+
+The data term uses the forward model. The regularizer encodes image structure.
+
+For
+
+$$
+D(x)=\frac{1}{2}\|Ax-y\|_2^2,
+$$
+
+the gradient is
+
+$$
+\nabla D(x)=A^\top(Ax-y).
+$$
+
+A data-consistency step is
+
+$$
+z^k=x^k-\tau A^\top(Ax^k-y).
+$$
+
+The proximal operator of $R$ is
+
+$$
+\operatorname{prox}_{\lambda R}(z)
+=
+\operatorname*{argmin}_x
+\frac{1}{2}\|x-z\|_2^2+\lambda R(x).
+$$
+
+It asks for an image close to $z$ but preferred by the prior $R$.
+
+## Proximal Gradient
+
+Putting the steps together gives
+
+$$
+z^k=x^k-\tau A^\top(Ax^k-y),
+$$
+
+$$
+x^{k+1}
+=
+\operatorname{prox}_{\tau\lambda R}(z^k).
+$$
+
+The proximal step receives a corrupted intermediate image $z^k$ and returns a more regular image. This sounds like denoising.
+
+::: {.figure}
+![](../assets/figures/week13-prox-vs-denoiser.png){fig-alt="Comparison of a classical proximal step and a plug-and-play denoising step"}
+
+Plug-and-play replaces a proximal map by a denoising operator.
+:::
+
+## Plug-and-Play Update
+
+Plug-and-play reconstruction uses
+
+$$
+z^k=x^k-\tau A^\top(Ax^k-y),
+$$
+
+$$
+x^{k+1}=D_\sigma(z^k),
+$$
+
+where $D_\sigma$ is a denoising operator.
+
+::: {.figure}
+![](../assets/figures/week13-pnp-loop.png){fig-alt="Plug-and-play loop with data consistency step and denoiser step"}
+
+PnP alternates between data consistency and denoising.
+:::
+
+The denoiser can be Gaussian smoothing, median filtering, wavelet thresholding, non-local means, a learned neural-network denoiser, or a learned patch prior.
+
+The data-consistency step still uses the forward model $A$, the adjoint $A^\top$, the measured data $y$, and the data term. PnP does not throw away physics; it uses physics between denoising steps.
+
+## Explicit Versus Implicit Prior
+
+In classical proximal gradient, the regularizer $R$ is explicit:
+
+$$
+x^{k+1}
+=
+\operatorname{prox}_{\tau\lambda R}(z^k).
+$$
+
+In plug-and-play,
+
+$$
+x^{k+1}=D_\sigma(z^k).
+$$
+
+If $D_\sigma$ is not exactly a proximal operator, the iteration may not minimize a known objective. The prior is implicit: it is represented by the behavior of the denoiser.
+
+This gives flexibility, but it changes the theory.
+
+## Learned Regularization Views
+
+Hybrid learned methods can be understood in several ways:
+
+- learn a denoiser and use it inside an iterative method;
+- learn a regularizer $R_\theta(x)$ and optimize with it;
+- learn an unrolled reconstruction algorithm with data-consistency layers.
+
+An explicit learned regularizer has the form
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R_\theta(x).
+$$
+
+A learned-denoiser form uses
+
+$$
+x^{k+1}=D_\theta(z^k).
+$$
+
+The denoiser has learned image statistics from training data, so its training distribution matters.
+
+## Deblurring Example
+
+Suppose
+
+$$
+y=Ax+\eta
+$$
+
+is a blurred and noisy image. We can compare Tikhonov deblurring, plug-and-play with Gaussian denoising, and plug-and-play with a learned PCA patch denoiser.
+
+::: {.figure}
+![](../assets/figures/week13-pnp-deblurring.png){fig-alt="Deblurring comparison with clean, observation, Tikhonov, Gaussian PnP, and learned PnP reconstructions"}
+
+Different priors create different deblurring behavior.
+:::
+
+Tikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.
+
+::: {.figure}
+![](../assets/figures/week13-iteration-curve.png){fig-alt="RMSE and fixed-point change versus plug-and-play iteration"}
+
+Iteration curves help diagnose convergence and reconstruction quality in examples where ground truth is known.
+:::
+
+## Fixed Points
+
+PnP is often analyzed as a fixed-point iteration:
+
+$$
+x^\star
+=
+D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
+$$
+
+The fixed point balances data consistency with denoiser preference.
+
+::: {.figure}
+![](../assets/figures/week13-strength-tradeoff.png){fig-alt="RMSE and data residual as Gaussian denoiser strength changes"}
+
+Denoising strength controls the tradeoff between stability and fidelity.
+:::
+
+If denoising is too weak, noise and inversion artifacts remain. If denoising is too strong, details are removed and the result may move away from measured data.
+
+## Convergence And Trust
+
+For convex $R$ and suitable step size, classical proximal gradient has a clear story:
+
+- it minimizes a known objective;
+- objective values can be monitored;
+- convergence can be proved under standard assumptions.
+
+For a general denoiser:
+
+- there may be no explicit $R$;
+- there may be no decreasing objective;
+- convergence depends on properties of $D_\sigma$;
+- a fixed point may not be a minimizer.
+
+This does not make PnP unusable. It means validation becomes central.
+
+## Failure Modes
+
+::: {.figure}
+![](../assets/figures/week13-failure-mode.png){fig-alt="Camera-trained learned denoiser applied to a moon image crop, showing distribution shift"}
+
+A learned prior can fail when the test image has different statistics from the training images.
+:::
+
+When using PnP, ask:
+
+- Is the denoiser stable to small perturbations?
+- Does the data residual remain reasonable?
+- Does the result change much between iterations?
+- Does the method pass tests on out-of-distribution images?
+- Does it preserve task-critical structures?
+
+Practical learned imaging should report baseline comparisons, data-consistency errors, sensitivity to denoising strength, robustness to distribution shift, uncertainty when possible, and task-based evaluation.
+
+## Computation
+
+The Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.
+
+Run:
+
+```bash
+python3 examples/week13_plug_and_play.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. What does a proximal operator do?
+2. What does plug-and-play replace in proximal gradient?
+3. Why might PnP not minimize a known objective?
+4. What is a fixed point of the PnP iteration?
+5. Give two safeguards for using learned denoisers in high-stakes imaging.
+
+## Takeaways
+
+- Plug-and-play keeps the forward model and inserts a denoiser.
+- The denoiser acts as an implicit prior.
+- Learned denoisers can improve reconstructions when data match training.
+- PnP needs careful validation because objective and convergence guarantees change.
+- Always check both image quality and consistency with measurements.

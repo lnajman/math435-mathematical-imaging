@@ -1,0 +1,229 @@
+---
+title: "Sparse Reconstruction"
+subtitle: "Chapter 10"
+---
+
+[Slides](../slides/week-10-sparse-reconstruction.html) | [Notebook](../notebooks/week10_sparse_reconstruction.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- define sparsity in a basis or transform;
+- compare l1 and l2 regularization;
+- explain why l1 can recover sparse signals;
+- describe compressed sensing intuition;
+- use a sparse DCT prior for image reconstruction.
+
+## Sparsity As A Prior
+
+Week 9 introduced ISTA:
+
+$$
+x^{k+1}
+=
+S_{\tau\lambda}
+\left(x^k-\tau A^\top(Ax^k-y)\right).
+$$
+
+The soft-thresholding step imposes a modeling assumption: many coefficients should be zero or nearly zero.
+
+A vector $x\in\mathbb{R}^n$ is $k$-sparse if it has at most $k$ nonzero entries:
+
+$$
+\|x\|_0
+=
+\#\{i:x_i\neq 0\}.
+$$
+
+The notation $\|\cdot\|_0$ counts nonzeros; it is not a true norm.
+
+::: {.figure}
+![](../assets/figures/week10-sparse-vs-dense.png){fig-alt="Sparse signal and dense signal coefficient plots"}
+
+Sparse vectors have only a few active coefficients; dense vectors spread information across many entries.
+:::
+
+## Representation Matters
+
+An image may not be sparse as pixels. It may be sparse, or approximately sparse, after a transform.
+
+Common representations include:
+
+- Fourier coefficients;
+- DCT coefficients;
+- wavelet coefficients;
+- learned dictionaries;
+- gradient domain.
+
+Natural images often have many small transform coefficients and a few large ones. Sparse reconstruction does not require exact zeros everywhere; fast coefficient decay can be enough for useful approximation.
+
+## l2 Regularization
+
+Tikhonov-style regularization uses
+
+$$
+\frac12\|Ax-y\|_2^2
++
+\frac{\lambda}{2}\|x\|_2^2.
+$$
+
+The l2 penalty prefers small energy spread across coefficients. It is smooth and mathematically convenient, but it does not specifically ask for exact zeros.
+
+When many vectors fit the data, l2 often chooses a dense small-norm solution.
+
+## l1 Regularization
+
+Sparse reconstruction often uses
+
+$$
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
+$$
+
+where
+
+$$
+\|x\|_1=\sum_i |x_i|.
+$$
+
+The l1 penalty encourages exact zeros. It is convex but nonsmooth.
+
+The ideal sparse model might be
+
+$$
+\min_x \|x\|_0
+\quad\text{subject to}\quad
+Ax=y.
+$$
+
+This problem is combinatorial. The l1 norm is a convex relaxation that preserves much of the sparse behavior.
+
+## Geometry Of l1 And l2
+
+::: {.figure}
+![](../assets/figures/week10-l1-l2-geometry.png){fig-alt="Geometry showing l1 diamond and l2 circle touching a data constraint"}
+
+The corners of the l1 ball make sparse solutions more likely.
+:::
+
+The l2 ball is round. The l1 ball has corners on coordinate axes. When a data constraint first touches an l1 ball, it often touches a corner, which means some coordinates are exactly zero.
+
+This geometric picture matches the algorithmic picture from soft thresholding.
+
+## Underdetermined Recovery
+
+Suppose we observe
+
+$$
+y=Ax,
+$$
+
+where $A$ has fewer rows than columns. If $m<n$, there are usually many possible solutions.
+
+One classical choice is the minimum l2-norm solution:
+
+$$
+\min_x \|x\|_2
+\quad\text{subject to}\quad
+Ax=y.
+$$
+
+This fits the data, but it may be dense.
+
+The l1-regularized solution
+
+$$
+\min_x
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1
+$$
+
+balances data fit with sparse coefficients.
+
+::: {.figure}
+![](../assets/figures/week10-l1-l2-recovery.png){fig-alt="True sparse signal, l2 solution, and l1 solution from the same measurements"}
+
+The same measurements can lead to very different reconstructions under different priors.
+:::
+
+Both methods see the same $A$ and $y$. The difference is the prior: l2 asks for a small vector, while l1 asks for a sparse explanation.
+
+## Compressed Sensing Intuition
+
+If $x\in\mathbb{R}^{1000}$ is exactly 5-sparse, it is not truly a 1000-degree-of-freedom object. We need to learn which 5 locations are active and the 5 active values.
+
+Sparse recovery can work with far fewer than $n$ measurements, but not usually as few as $k$. We need enough measurements to identify support and amplitudes robustly.
+
+::: {.figure}
+![](../assets/figures/week10-measurement-sweep.png){fig-alt="Relative recovery error versus number of measurements for l1 and l2"}
+
+l1 recovery can improve sharply once enough measurements are available.
+:::
+
+Sparse recovery can fail even when the true signal is sparse. The representation must be appropriate, the measurement operator must mix information well, and the regularization weight must be chosen carefully.
+
+## Sparse Images
+
+For images, sparsity is usually transform-domain sparsity.
+
+The Discrete Cosine Transform represents an image patch using cosine patterns. Many patches can be approximated using only a small fraction of DCT coefficients.
+
+::: {.figure}
+![](../assets/figures/week10-dct-compression.png){fig-alt="Image patch, DCT magnitude, and reconstructions using a small fraction of coefficients"}
+
+Few large transform coefficients can preserve much of the visual structure.
+:::
+
+Suppose we observe only a random subset of pixels. We can reconstruct using sparse DCT coefficients by solving
+
+$$
+\min_c
+\frac12\|M D^{-1}c-y\|_2^2+\lambda\|c\|_1.
+$$
+
+Here $D^{-1}c$ maps DCT coefficients back to an image, and $M$ keeps the observed pixels.
+
+::: {.figure}
+![](../assets/figures/week10-sparse-image-reconstruction.png){fig-alt="Sparse DCT reconstruction from random observed pixels"}
+
+Sparse priors can fill in missing data when the transform model is appropriate.
+:::
+
+This is not a universal promise. The representation, measurements, noise level, calibration, model mismatch, and regularization weight all matter.
+
+## l1 Versus l2
+
+| Feature | l2 | l1 |
+|---|---|---|
+| Geometry | round | corners |
+| Typical coefficients | many small values | many zeros |
+| Optimization | smooth | nonsmooth |
+| Prior | small energy | sparse explanation |
+| Useful when | dense small errors | few active structures |
+
+## Computation
+
+The Week 10 notebook lets you change the number of measurements, the sparsity level, the l1 regularization weight, and the observed-pixel fraction in the image example.
+
+Run:
+
+```bash
+python3 examples/week10_sparse_reconstruction.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. What does it mean for a vector to be $k$-sparse?
+2. Why is sparsity representation-dependent for images?
+3. Explain why l1 regularization promotes exact zeros.
+4. Give one reason l1 recovery can fail even when the true signal is sparse.
+5. In the sparse DCT image model, what are the roles of $M$, $D^{-1}$, and $c$?
+
+## Takeaways
+
+- Sparsity means few nonzero or significant coefficients.
+- Images are sparse only after choosing a representation.
+- l1 is a convex surrogate for sparse selection.
+- l1 and l2 encode different priors.
+- Sparse reconstruction works when the measurement model and sparse representation are compatible.
