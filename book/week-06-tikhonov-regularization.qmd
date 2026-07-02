@@ -1,0 +1,274 @@
+---
+title: "Tikhonov Regularization"
+subtitle: "Chapter 6"
+---
+
+[Slides](../slides/week-06-tikhonov-regularization.html) | [Notebook](../notebooks/week06_tikhonov_regularization.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- formulate Tikhonov regularization;
+- derive the normal equations;
+- interpret the regularization parameter $\lambda$;
+- read Tikhonov filter factors;
+- explain the bias-stability tradeoff.
+
+## Why Regularize?
+
+Chapter 5 showed that direct inversion can amplify noise through terms such as
+
+$$
+\frac{\langle \eta,u_i\rangle}{\sigma_i}.
+$$
+
+When $\sigma_i$ is small, division by $\sigma_i$ is dangerous. Regularization changes the inverse problem so that weakly observed directions are not trusted blindly.
+
+For a linear imaging model
+
+$$
+y=Ax+\eta,
+$$
+
+the Gaussian least-squares data fit is
+
+$$
+\|Ax-y\|_2^2.
+$$
+
+If $A$ is ill-conditioned, least squares can fit noise. Data fit alone does not know which data components are reliable.
+
+## Tikhonov Regularization
+
+The simplest Tikhonov model is
+
+$$
+x_\lambda
+=
+\operatorname*{argmin}_x
+\|Ax-y\|_2^2+\lambda\|x\|_2^2.
+$$
+
+The parameter $\lambda>0$ controls the strength of regularization.
+
+The objective has two terms:
+
+| Term | Role |
+|---|---|
+| $\|Ax-y\|_2^2$ | prefer reconstructions that explain the measurements |
+| $\lambda\|x\|_2^2$ | prefer smaller-energy solutions |
+
+If two images explain the data similarly, Tikhonov prefers the one with smaller norm.
+
+::: {.figure}
+![](../assets/figures/week06-tikhonov-path.png){fig-alt="True signal, blurred noisy data, and Tikhonov reconstructions for three lambda values"}
+
+Changing $\lambda$ moves the reconstruction along a path from unstable to over-damped.
+:::
+
+Very small $\lambda$ leaves unstable directions barely damped. Moderate $\lambda$ can control noise while preserving structure. Large $\lambda$ over-damps the solution.
+
+## Deriving The Normal Equations
+
+Let
+
+$$
+J(x)=\|Ax-y\|_2^2+\lambda\|x\|_2^2.
+$$
+
+Expanding,
+
+$$
+J(x)=(Ax-y)^T(Ax-y)+\lambda x^T x.
+$$
+
+The gradient is
+
+$$
+\nabla J(x)=2A^T(Ax-y)+2\lambda x.
+$$
+
+At a minimizer,
+
+$$
+\nabla J(x_\lambda)=0.
+$$
+
+Setting the gradient to zero gives
+
+$$
+A^T(Ax_\lambda-y)+\lambda x_\lambda=0.
+$$
+
+Therefore,
+
+$$
+(A^TA+\lambda I)x_\lambda=A^Ty.
+$$
+
+These are the Tikhonov normal equations.
+
+## Closed-Form Solution
+
+If $\lambda>0$,
+
+$$
+x_\lambda
+=
+(A^TA+\lambda I)^{-1}A^Ty.
+$$
+
+Tikhonov replaces an unstable inverse by a stabilized linear solve.
+
+If $A$ has singular values $\sigma_i$, then $A^TA$ has eigenvalues $\sigma_i^2$. Tikhonov shifts them:
+
+$$
+\sigma_i^2
+\quad\longmapsto\quad
+\sigma_i^2+\lambda.
+$$
+
+Small eigenvalues are lifted away from zero.
+
+For small educational examples, the direct matrix form is:
+
+```python
+lhs = A.T @ A + lam * np.eye(n)
+rhs = A.T @ y
+x_lam = np.linalg.solve(lhs, rhs)
+```
+
+For large imaging problems, one usually avoids forming dense matrices explicitly and uses iterative methods or operator implementations.
+
+## SVD Interpretation
+
+Let
+
+$$
+A v_i = \sigma_i u_i.
+$$
+
+Then Tikhonov can be written as
+
+$$
+x_\lambda
+=
+\sum_i
+\frac{\sigma_i}{\sigma_i^2+\lambda}
+\langle y,u_i\rangle v_i.
+$$
+
+Compare this with direct inversion, whose factor is
+
+$$
+\frac{1}{\sigma_i}.
+$$
+
+Tikhonov replaces it with
+
+$$
+\frac{\sigma_i}{\sigma_i^2+\lambda}.
+$$
+
+When $\sigma_i$ is small, Tikhonov avoids division by a tiny number.
+
+::: {.figure}
+![](../assets/figures/week06-filter-factors.png){fig-alt="Singular values and Tikhonov inverse filter factors for several lambda values"}
+
+Filter factors show how each singular direction is damped.
+:::
+
+## Reading Filter Factors
+
+Filter factors reveal the effect of $\lambda$:
+
+- small $\lambda$ behaves more like the direct inverse;
+- larger $\lambda$ damps weak singular directions;
+- strong damping reduces noise but also removes detail.
+
+For example, if $\sigma=0.001$, direct inversion uses $1/\sigma=1000$. With $\lambda=0.01$, Tikhonov uses
+
+$$
+\frac{0.001}{0.001^2+0.01}
+\approx 0.1.
+$$
+
+The unstable amplification is replaced by strong damping.
+
+## Choosing Lambda
+
+The parameter $\lambda$ is the lesson.
+
+Small $\lambda$ gives better data fit but more noise amplification. Large $\lambda$ gives more stability but more bias and blur.
+
+::: {.figure}
+![](../assets/figures/week06-parameter-tradeoff.png){fig-alt="RMSE versus lambda and L-curve for Tikhonov regularization"}
+
+The best parameter balances data fit and regularization.
+:::
+
+The true image is usually unknown, so an RMSE curve is a teaching diagnostic rather than a practical parameter-choice method. In practice, parameter choice may use validation data, discrepancy principles, cross-validation, L-curve heuristics, or domain-specific performance criteria.
+
+::: {.figure}
+![](../assets/figures/week06-image-tikhonov.png){fig-alt="Original image, blurred noisy image, and Tikhonov deblurring with several lambda values"}
+
+The visually best value of $\lambda$ depends on the task and risk.
+:::
+
+In a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.
+
+## Bias And Variance
+
+Imagine repeating the noisy measurement many times.
+
+Bias is systematic error from the average reconstruction. Variance is random variation across noise realizations.
+
+::: {.figure}
+![](../assets/figures/week06-bias-variance.png){fig-alt="Bias squared, variance, and total mean squared error versus lambda"}
+
+Regularization trades variance for bias.
+:::
+
+Increasing $\lambda$ usually reduces variance and increases bias. The best mean squared error often lies between the extremes.
+
+The error can be large for two opposite reasons:
+
+- if $\lambda$ is too small, noise amplification remains;
+- if $\lambda$ is too large, the reconstruction is over-smoothed and biased.
+
+## What Tikhonov Does Not Solve
+
+Tikhonov is a first regularization method, not the final answer to imaging.
+
+It tends to prefer small-energy solutions, which may over-smooth edges or texture. It also depends on a linear model and a quadratic penalty in its basic form.
+
+Later chapters introduce more expressive regularizers, including variational penalties, total variation, sparsity, wavelets, and learned priors.
+
+## Computation
+
+The Week 6 notebook lets you change blur strength, noise level, and $\lambda$, then observe the resulting bias-stability tradeoff.
+
+Run:
+
+```bash
+python3 examples/week06_tikhonov.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. Predict what happens to the Tikhonov objective when $\lambda\to 0$ and when $\lambda\to\infty$.
+2. Derive the normal equations for $\|Ax-y\|_2^2+\lambda\|x\|_2^2$.
+3. If singular values are $1,0.1,0.001$, compare the smallest eigenvalue of $A^TA$ with that of $A^TA+\lambda I$ for $\lambda=0.01$.
+4. For $\sigma=0.001$ and $\lambda=0.01$, compare $1/\sigma$ with $\sigma/(\sigma^2+\lambda)$.
+5. Explain why increasing $\lambda$ can both improve and damage a reconstruction.
+
+## Takeaways
+
+- Tikhonov solves $\min_x \|Ax-y\|_2^2+\lambda\|x\|_2^2$.
+- The normal equations are $(A^TA+\lambda I)x=A^Ty$.
+- In SVD coordinates, Tikhonov damps weak singular directions.
+- $\lambda$ controls a bias-stability tradeoff.
+- Regularization is a modeling choice, not magic.

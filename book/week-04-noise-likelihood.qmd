@@ -1,0 +1,341 @@
+---
+title: "Noise Models and Likelihoods"
+subtitle: "Chapter 4"
+---
+
+[Slides](../slides/week-04-noise-likelihood.html) | [Notebook](../notebooks/week04_noise_likelihood.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- distinguish deterministic degradation from random noise;
+- model additive Gaussian noise;
+- model photon-counting Poisson noise;
+- compare absolute and relative noise behavior;
+- derive likelihood-based data terms for reconstruction.
+
+## Why Noise Models Matter
+
+In the first chapters we wrote idealized forward models such as blur or Fourier filtering. Real measurements also contain random variation.
+
+A common observation model is
+
+$$
+y = f(x) + \eta,
+$$
+
+where $x$ is the unknown scene or image, $f$ is the forward imaging process, $y$ is the recorded data, and $\eta$ is noise.
+
+When the forward model is linear, this becomes
+
+$$
+y = Ax + \eta.
+$$
+
+Linearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace $Ax$ by a general prediction $f(x)$.
+
+## Seeing Noise Before Modeling It
+
+The same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.
+
+::: {.figure}
+![](../assets/figures/week04-noise-models.png){fig-alt="Clean image, Gaussian noisy image, low-light Poisson noisy image, and higher-photon Poisson noisy image"}
+
+Different noise models create different visual artifacts.
+:::
+
+For a pixel $i$, the recorded value $y_i$ is a random variable. A noise model specifies the probability law of $y_i$ when the unknown true value is $x_i$.
+
+A useful noise model answers:
+
+- what recorded values are likely;
+- how large typical errors are;
+- whether the variance depends on intensity;
+- what cost should penalize disagreement with data.
+
+## Gaussian Noise
+
+The simplest model is additive Gaussian noise:
+
+$$
+y_i = x_i + \eta_i,
+\qquad
+\eta_i \sim \mathcal{N}(0,\sigma^2).
+$$
+
+The parameter $\sigma$ is the standard deviation of the noise. Under this model,
+
+$$
+\mathbb{E}[y_i\mid x_i] = x_i,
+\qquad
+\mathrm{Var}(y_i\mid x_i)=\sigma^2.
+$$
+
+The variance is constant: it does not depend on $x_i$.
+
+::: {.figure}
+![](../assets/figures/week04-noise-histograms.png){fig-alt="Histogram of Gaussian residuals and histograms of Poisson counts for several intensities"}
+
+Gaussian residuals are centered and symmetric, while Poisson counts change shape with intensity.
+:::
+
+For one pixel,
+
+$$
+p(y_i\mid x_i)
+=
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(
+-\frac{(y_i-x_i)^2}{2\sigma^2}
+\right).
+$$
+
+If pixel errors are independent, then
+
+$$
+p(y\mid x)=\prod_i p(y_i\mid x_i).
+$$
+
+Taking negative logarithms gives
+
+$$
+-\log p(y\mid x)
+=
+\frac{1}{2\sigma^2}\sum_i (y_i-x_i)^2
++ \text{constant}.
+$$
+
+Thus Gaussian noise leads naturally to least squares.
+
+## Gaussian Data Fidelity
+
+For direct observation $y=x+\eta$, maximum likelihood gives
+
+$$
+\operatorname*{argmin}_x
+\frac{1}{2}\|y-x\|_2^2
+= y.
+$$
+
+For a linear forward model
+
+$$
+y = Ax + \eta,
+\qquad
+\eta\sim\mathcal{N}(0,\sigma^2 I),
+$$
+
+the Gaussian negative log-likelihood is
+
+$$
+\frac{1}{2\sigma^2}\|Ax-y\|_2^2.
+$$
+
+For a general nonlinear forward model
+
+$$
+y = f(x)+\eta,
+$$
+
+the corresponding Gaussian data term is
+
+$$
+\frac{1}{2\sigma^2}\|f(x)-y\|_2^2.
+$$
+
+The squared error is therefore not just a convenient algebraic choice. It is the data fidelity term associated with a particular statistical assumption.
+
+## Gaussian Limitations
+
+Gaussian noise is useful and mathematically friendly, but it is not always physically faithful. An additive Gaussian model can produce negative intensities or values above the sensor maximum. In practice we often clip values, but clipping changes the statistical model.
+
+This is a general lesson: a simple model can be useful without being literally complete.
+
+## Poisson Noise
+
+Light arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.
+
+Let $z_i$ be the photon count at pixel $i$:
+
+$$
+z_i \sim \operatorname{Poisson}(\lambda_i).
+$$
+
+The Poisson law is
+
+$$
+\mathbb{P}(z_i=k\mid \lambda_i)
+= e^{-\lambda_i}\frac{\lambda_i^k}{k!}.
+$$
+
+For a Poisson random variable,
+
+$$
+\mathbb{E}[z_i]=\lambda_i,
+\qquad
+\mathrm{Var}(z_i)=\lambda_i.
+$$
+
+The standard deviation is $\sqrt{\lambda_i}$. Absolute noise increases with brightness, but relative noise decreases:
+
+$$
+\frac{\sqrt{\lambda_i}}{\lambda_i}
+=
+\frac{1}{\sqrt{\lambda_i}}.
+$$
+
+This is why low-light imaging is difficult. A pixel receiving 5 photons is much less reliable, relatively speaking, than a pixel receiving 500 photons.
+
+::: {.figure}
+![](../assets/figures/week04-snr-curves.png){fig-alt="Gaussian and Poisson signal-to-noise ratio curves"}
+
+Signal-to-noise behavior depends strongly on the noise model.
+:::
+
+## From Counts To Intensities
+
+Digital images often store normalized intensities in $[0,1]$. If $\alpha$ is the maximum expected photon count, a simple count model is
+
+$$
+z_i \sim \operatorname{Poisson}(\alpha x_i),
+\qquad
+y_i = z_i/\alpha.
+$$
+
+The normalized value $y_i$ is still random. Increasing exposure increases $\alpha$, which improves relative precision when the model is valid.
+
+## Poisson Likelihood
+
+For independent photon counts,
+
+$$
+p(z\mid x)
+=
+\prod_i
+e^{-\alpha x_i}
+\frac{(\alpha x_i)^{z_i}}{z_i!}.
+$$
+
+Ignoring constants independent of $x$,
+
+$$
+-\log p(z\mid x)
+=
+\sum_i
+\alpha x_i - z_i\log(\alpha x_i).
+$$
+
+For a general positive forward model $f_i(x)>0$,
+
+$$
+z_i \sim \operatorname{Poisson}(f_i(x))
+$$
+
+and
+
+$$
+-\log p(z\mid x)
+=
+\sum_i f_i(x) - z_i\log(f_i(x))
++ \text{constant}.
+$$
+
+This is not a least-squares data term.
+
+::: {.figure}
+![](../assets/figures/week04-likelihood-curves.png){fig-alt="Gaussian and Poisson negative log-likelihood curves for one pixel"}
+
+Likelihood curves encode how each model penalizes disagreement with the data.
+:::
+
+## Gaussian Versus Poisson
+
+| Feature | Gaussian | Poisson |
+|---|---|---|
+| Data type | continuous intensity | integer counts |
+| Variance | constant $\sigma^2$ | equals mean |
+| Typical fidelity | squared error | count likelihood |
+| Natural for | read noise, aggregate errors | photon-limited imaging |
+| Constraint | often unconstrained | positive mean |
+
+The choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.
+
+## Repeated Measurements
+
+If
+
+$$
+y^{(j)} = x + \eta^{(j)},
+\qquad
+\eta^{(j)}\sim\mathcal{N}(0,\sigma^2),
+$$
+
+and the noise samples are independent, then the average
+
+$$
+\bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
+$$
+
+has noise standard deviation $\sigma/\sqrt{m}$.
+
+::: {.figure}
+![](../assets/figures/week04-averaging.png){fig-alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"}
+
+Independent random noise can average out.
+:::
+
+Averaging cannot recover information that never reached the sensor. If scene content is physically hidden behind an occluder, repeated photographs from the same viewpoint do not reveal the hidden object. This is different from reducing random fluctuations in recorded pixels.
+
+## From Likelihood To Reconstruction
+
+Given data $y$, maximum likelihood estimates $x$ by
+
+$$
+\operatorname*{argmax}_x p(y\mid x),
+$$
+
+or equivalently
+
+$$
+\operatorname*{argmin}_x -\log p(y\mid x).
+$$
+
+Maximum likelihood uses the data model, but it is often not enough. In inverse problems, many images may agree almost equally well with noisy data.
+
+A common regularized reconstruction form is
+
+$$
+\operatorname*{argmin}_x
+D(y,f(x)) + \lambda R(x).
+$$
+
+Here $D$ is the data fidelity term from the noise model, and $R$ is a regularizer encoding prior information or desired structure.
+
+## Computation
+
+The Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.
+
+Run:
+
+```bash
+python3 examples/week04_noise_likelihood.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. For $y_i=x_i+\eta_i$ with $\eta_i\sim\mathcal{N}(0,\sigma^2)$, compute $\mathbb{E}[y_i\mid x_i]$ and $\mathrm{Var}(y_i\mid x_i)$.
+2. For a Poisson pixel with expected count $\lambda=25$, compute the standard deviation and approximate SNR.
+3. Explain why Poisson relative noise improves as the photon count increases.
+4. Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.
+5. Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.
+
+## Takeaways
+
+- Noise models connect physical measurement assumptions to mathematical data terms.
+- Gaussian additive noise leads to squared-error fidelity.
+- Poisson photon-counting noise has variance equal to its mean.
+- Low-light images are difficult because relative photon noise is high.
+- Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.

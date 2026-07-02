@@ -12,6 +12,9 @@ project:
     - book/week-01-image-formation.qmd
     - book/week-02-convolution-blur.qmd
     - book/week-03-fourier-imaging.qmd
+    - book/week-04-noise-likelihood.qmd
+    - book/week-05-ill-posed-inverse-problems.qmd
+    - book/week-06-tikhonov-regularization.qmd
     - slides/index.qmd
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
@@ -63,6 +66,14 @@ website:
               text: "2. Convolution and blur"
             - href: book/week-03-fourier-imaging.qmd
               text: "3. Fourier transform in imaging"
+        - section: "Part II: Noise and Regularization"
+          contents:
+            - href: book/week-04-noise-likelihood.qmd
+              text: "4. Noise models and likelihoods"
+            - href: book/week-05-ill-posed-inverse-problems.qmd
+              text: "5. Ill-posed inverse problems"
+            - href: book/week-06-tikhonov-regularization.qmd
+              text: "6. Tikhonov regularization"
   page-footer:
     left: "MATH 435: Mathematical Imaging"
     right: "Built with Quarto"
