@@ -1,0 +1,15 @@
+---
+title: "Modeling Project"
+---
+
+The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.
+
+Each team will:
+
+- define the forward model;
+- implement reconstruction methods in Python;
+- analyze parameter sensitivity;
+- interpret reconstruction quality;
+- submit a written report and code;
+- complete an individual oral defense.
+

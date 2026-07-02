@@ -1,0 +1,51 @@
+:root {
+  --course-blue: #24536b;
+  --course-teal: #126c83;
+  --course-copper: #9a5b2f;
+  --course-ink: #202428;
+}
+
+.reveal {
+  color: var(--course-ink);
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  color: var(--course-blue);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.reveal h1 {
+  font-size: 2.15em;
+}
+
+.reveal h2 {
+  font-size: 1.55em;
+}
+
+.reveal .slide-logo {
+  max-height: 48px !important;
+}
+
+.reveal table {
+  font-size: 0.78em;
+}
+
+.reveal table th {
+  color: var(--course-blue);
+}
+
+.reveal code {
+  color: #14384d;
+}
+
+.reveal pre code {
+  max-height: 480px;
+}
+
+.reveal .footer {
+  color: #5a646b;
+}
+
