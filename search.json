@@ -291,7 +291,14 @@
     "href": "slides/week-01-image-formation.html#why-the-inverse-problem-is-hard",
     "title": "Images as Mathematical Objects",
     "section": "Why the Inverse Problem Is Hard",
-    "text": "Why the Inverse Problem Is Hard\nThe naive answer would be:\n\nx = A^{-1}y.\n\nBut this can fail because:\n\nA may not be invertible.\nA may be badly conditioned.\nNoise can be amplified by inversion.\nMany plausible images may explain the same data."
+    "text": "Why the Inverse Problem Is Hard\nThe naive answer would be:\n\nx = A^{-1}y.\n\n\nWhat could go wrong with this answer?"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#why-the-naive-inverse-fails",
+    "href": "slides/week-01-image-formation.html#why-the-naive-inverse-fails",
+    "title": "Images as Mathematical Objects",
+    "section": "Why the Naive Inverse Fails",
+    "text": "Why the Naive Inverse Fails\nThe naive answer would be:\n\nx = A^{-1}y.\n\nBut this can fail because:\n\nA may not be invertible.\nA may be badly conditioned.\nNoise can be amplified by inversion.\nMany plausible images may explain the same data."
   },
   {
     "objectID": "slides/week-01-image-formation.html#a-toy-masking-operator",
