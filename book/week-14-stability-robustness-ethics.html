@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Noise Models and Likelihoods – MATH 435: Mathematical Imaging</title>
+<title>Stability, Robustness, and Ethics – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">4. Noise models and likelihoods</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-14-stability-robustness-ethics.html">Part V: Reliability and Projects</a></li><li class="breadcrumb-item"><a href="../book/week-14-stability-robustness-ethics.html">14. Stability, robustness, and ethics</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -270,7 +270,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-04-noise-likelihood.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-04-noise-likelihood.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4. Noise models and likelihoods</span></a>
   </div>
 </li>
@@ -363,7 +363,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-14-stability-robustness-ethics.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-14-stability-robustness-ethics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">14. Stability, robustness, and ethics</span></a>
   </div>
 </li>
@@ -380,30 +380,33 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#why-noise-models-matter" id="toc-why-noise-models-matter" class="nav-link" data-scroll-target="#why-noise-models-matter">Why Noise Models Matter</a></li>
-  <li><a href="#seeing-noise-before-modeling-it" id="toc-seeing-noise-before-modeling-it" class="nav-link" data-scroll-target="#seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</a></li>
-  <li><a href="#gaussian-noise" id="toc-gaussian-noise" class="nav-link" data-scroll-target="#gaussian-noise">Gaussian Noise</a></li>
-  <li><a href="#gaussian-data-fidelity" id="toc-gaussian-data-fidelity" class="nav-link" data-scroll-target="#gaussian-data-fidelity">Gaussian Data Fidelity</a></li>
-  <li><a href="#gaussian-limitations" id="toc-gaussian-limitations" class="nav-link" data-scroll-target="#gaussian-limitations">Gaussian Limitations</a></li>
-  <li><a href="#poisson-noise" id="toc-poisson-noise" class="nav-link" data-scroll-target="#poisson-noise">Poisson Noise</a></li>
-  <li><a href="#from-counts-to-intensities" id="toc-from-counts-to-intensities" class="nav-link" data-scroll-target="#from-counts-to-intensities">From Counts To Intensities</a></li>
-  <li><a href="#poisson-likelihood" id="toc-poisson-likelihood" class="nav-link" data-scroll-target="#poisson-likelihood">Poisson Likelihood</a></li>
-  <li><a href="#gaussian-versus-poisson" id="toc-gaussian-versus-poisson" class="nav-link" data-scroll-target="#gaussian-versus-poisson">Gaussian Versus Poisson</a></li>
-  <li><a href="#repeated-measurements" id="toc-repeated-measurements" class="nav-link" data-scroll-target="#repeated-measurements">Repeated Measurements</a></li>
-  <li><a href="#from-likelihood-to-reconstruction" id="toc-from-likelihood-to-reconstruction" class="nav-link" data-scroll-target="#from-likelihood-to-reconstruction">From Likelihood To Reconstruction</a></li>
+  <li><a href="#reliability-is-tested" id="toc-reliability-is-tested" class="nav-link" data-scroll-target="#reliability-is-tested">Reliability Is Tested</a></li>
+  <li><a href="#stability" id="toc-stability" class="nav-link" data-scroll-target="#stability">Stability</a></li>
+  <li><a href="#parameter-sensitivity" id="toc-parameter-sensitivity" class="nav-link" data-scroll-target="#parameter-sensitivity">Parameter Sensitivity</a></li>
+  <li><a href="#perturbation-amplification" id="toc-perturbation-amplification" class="nav-link" data-scroll-target="#perturbation-amplification">Perturbation Amplification</a></li>
+  <li><a href="#singular-values-and-stability" id="toc-singular-values-and-stability" class="nav-link" data-scroll-target="#singular-values-and-stability">Singular Values And Stability</a></li>
+  <li><a href="#robustness" id="toc-robustness" class="nav-link" data-scroll-target="#robustness">Robustness</a></li>
+  <li><a href="#domain-robustness" id="toc-domain-robustness" class="nav-link" data-scroll-target="#domain-robustness">Domain Robustness</a></li>
+  <li><a href="#hallucination" id="toc-hallucination" class="nav-link" data-scroll-target="#hallucination">Hallucination</a></li>
+  <li><a href="#small-feature-risk" id="toc-small-feature-risk" class="nav-link" data-scroll-target="#small-feature-risk">Small Feature Risk</a></li>
+  <li><a href="#data-consistency-is-necessary" id="toc-data-consistency-is-necessary" class="nav-link" data-scroll-target="#data-consistency-is-necessary">Data Consistency Is Necessary</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#ethics-and-responsibility" id="toc-ethics-and-responsibility" class="nav-link" data-scroll-target="#ethics-and-responsibility">Ethics And Responsibility</a></li>
+  <li><a href="#what-to-document" id="toc-what-to-document" class="nav-link" data-scroll-target="#what-to-document">What To Document</a></li>
+  <li><a href="#project-checkpoint" id="toc-project-checkpoint" class="nav-link" data-scroll-target="#project-checkpoint">Project Checkpoint</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-04-noise-likelihood.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-14-stability-robustness-ethics.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">4. Noise models and likelihoods</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-14-stability-robustness-ethics.html">Part V: Reliability and Projects</a></li><li class="breadcrumb-item"><a href="../book/week-14-stability-robustness-ethics.html">14. Stability, robustness, and ethics</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Noise Models and Likelihoods</h1>
-<p class="subtitle lead">Chapter 4</p>
+<h1 class="title">Stability, Robustness, and Ethics</h1>
+<p class="subtitle lead">Chapter 14</p>
 </div>
 
 
@@ -420,298 +423,338 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-04-noise-likelihood.html">Slides</a> | <a href="../notebooks/week04_noise_likelihood.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-14-stability-robustness-ethics.html">Slides</a> | <a href="../notebooks/week14_stability_robustness.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>distinguish deterministic degradation from random noise;</li>
-<li>model additive Gaussian noise;</li>
-<li>model photon-counting Poisson noise;</li>
-<li>compare absolute and relative noise behavior;</li>
-<li>derive likelihood-based data terms for reconstruction.</li>
+<li>explain stability as sensitivity to perturbations;</li>
+<li>test how parameter choices affect a reconstruction;</li>
+<li>measure perturbation amplification in an inverse problem;</li>
+<li>design a robustness test across noise, models, and image families;</li>
+<li>distinguish visual plausibility from measurement support;</li>
+<li>document assumptions, failures, and limitations responsibly.</li>
 </ul>
 </section>
-<section id="why-noise-models-matter" class="level2">
-<h2 class="anchored" data-anchor-id="why-noise-models-matter">Why Noise Models Matter</h2>
-<p>In the first chapters we wrote idealized forward models such as blur or Fourier filtering. Real measurements also contain random variation.</p>
-<p>A common observation model is</p>
-<p><span class="math display">
-y = f(x) + \eta,
-</span></p>
-<p>where <span class="math inline">x</span> is the unknown scene or image, <span class="math inline">f</span> is the forward imaging process, <span class="math inline">y</span> is the recorded data, and <span class="math inline">\eta</span> is noise.</p>
-<p>When the forward model is linear, this becomes</p>
-<p><span class="math display">
-y = Ax + \eta.
-</span></p>
-<p>Linearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace <span class="math inline">Ax</span> by a general prediction <span class="math inline">f(x)</span>.</p>
-</section>
-<section id="seeing-noise-before-modeling-it" class="level2">
-<h2 class="anchored" data-anchor-id="seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</h2>
-<p>The same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.</p>
+<section id="reliability-is-tested" class="level2">
+<h2 class="anchored" data-anchor-id="reliability-is-tested">Reliability Is Tested</h2>
+<p>Previous chapters built more expressive reconstruction methods: Tikhonov regularization, variational models, TV, sparse priors, wavelets, learned patch priors, and plug-and-play denoisers.</p>
+<p>The natural final question is not only:</p>
+<blockquote class="blockquote">
+<p>Does the reconstruction look good?</p>
+</blockquote>
+<p>It is also:</p>
+<blockquote class="blockquote">
+<p>Under what conditions should we trust it?</p>
+</blockquote>
 <div class="figure">
-<p><img src="../assets/figures/week04-noise-models.png" class="img-fluid" alt="Clean image, Gaussian noisy image, low-light Poisson noisy image, and higher-photon Poisson noisy image"></p>
-<p>Different noise models create different visual artifacts.</p>
+<p><img src="../assets/figures/week14-reliability-loop.png" class="img-fluid" alt="Reliability loop showing reconstruction method, perturbation tests, domain-shift tests, robustness checks, and decision"></p>
+<p>Reliability is not a single final score. It is a loop of modeling, testing, stress testing, and documenting what has been learned.</p>
 </div>
-<p>For a pixel <span class="math inline">i</span>, the recorded value <span class="math inline">y_i</span> is a random variable. A noise model specifies the probability law of <span class="math inline">y_i</span> when the unknown true value is <span class="math inline">x_i</span>.</p>
-<p>A useful noise model answers:</p>
+<p>In mathematical imaging, a beautiful output can still be unsafe if it is unstable, outside the tested domain, or visually plausible but unsupported by the measurements.</p>
+</section>
+<section id="stability" class="level2">
+<h2 class="anchored" data-anchor-id="stability">Stability</h2>
+<p>An imaging method is stable if small changes in the data tend to produce small changes in the reconstruction.</p>
+<p>If <span class="math inline">y</span> is the measured data and <span class="math inline">\hat{x}(y)</span> is the reconstructed image, stability asks whether a small perturbation <span class="math inline">\delta y</span> produces a controlled change</p>
+<p><span class="math display">
+\hat{x}(y+\delta y)-\hat{x}(y).
+</span></p>
+<p>This is the practical form of the third Hadamard condition from Chapter 5: continuous dependence on the data.</p>
+<p>Perturbations are not only random noise. They can come from:</p>
 <ul>
-<li>what recorded values are likely;</li>
-<li>how large typical errors are;</li>
-<li>whether the variance depends on intensity;</li>
-<li>what cost should penalize disagreement with data.</li>
+<li>sensor noise;</li>
+<li>calibration error;</li>
+<li>an imperfect blur kernel;</li>
+<li>discretization choices;</li>
+<li>preprocessing;</li>
+<li>a change in acquisition protocol;</li>
+<li>a mismatch between training data and test data.</li>
 </ul>
+<p>The central danger is error amplification. Forward imaging often loses information: blur weakens high frequencies, masks discard observations, subsampling removes coefficients, and noise corrupts weak signal components. Trying to undo that loss can magnify small errors.</p>
 </section>
-<section id="gaussian-noise" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-noise">Gaussian Noise</h2>
-<p>The simplest model is additive Gaussian noise:</p>
+<section id="parameter-sensitivity" class="level2">
+<h2 class="anchored" data-anchor-id="parameter-sensitivity">Parameter Sensitivity</h2>
+<p>Regularization makes inverse problems more stable, but the amount of regularization matters.</p>
+<p>For Tikhonov regularization,</p>
 <p><span class="math display">
-y_i = x_i + \eta_i,
-\qquad
-\eta_i \sim \mathcal{N}(0,\sigma^2).
+\hat{x}_\lambda
+=
+\arg\min_x
+\frac12\|Ax-y\|_2^2
++
+\frac{\lambda}{2}\|Lx\|_2^2,
 </span></p>
-<p>The parameter <span class="math inline">\sigma</span> is the standard deviation of the noise. Under this model,</p>
-<p><span class="math display">
-\mathbb{E}[y_i\mid x_i] = x_i,
-\qquad
-\mathrm{Var}(y_i\mid x_i)=\sigma^2.
-</span></p>
-<p>The variance is constant: it does not depend on <span class="math inline">x_i</span>.</p>
+<p>the parameter <span class="math inline">\lambda</span> controls the balance between data consistency and prior smoothness.</p>
 <div class="figure">
-<p><img src="../assets/figures/week04-noise-histograms.png" class="img-fluid" alt="Histogram of Gaussian residuals and histograms of Poisson counts for several intensities"></p>
-<p>Gaussian residuals are centered and symmetric, while Poisson counts change shape with intensity.</p>
+<p><img src="../assets/figures/week14-lambda-sensitivity.png" class="img-fluid" alt="Tikhonov parameter sensitivity curve and reconstructions for weak, near-best, and strong regularization"></p>
+<p>The reconstruction can change substantially as <span class="math inline">\lambda</span> moves from weak to strong regularization.</p>
 </div>
-<p>For one pixel,</p>
-<p><span class="math display">
-p(y_i\mid x_i)
-=
-\frac{1}{\sqrt{2\pi\sigma^2}}
-\exp\left(
--\frac{(y_i-x_i)^2}{2\sigma^2}
-\right).
-</span></p>
-<p>If pixel errors are independent, then</p>
-<p><span class="math display">
-p(y\mid x)=\prod_i p(y_i\mid x_i).
-</span></p>
-<p>Taking negative logarithms gives</p>
-<p><span class="math display">
--\log p(y\mid x)
-=
-\frac{1}{2\sigma^2}\sum_i (y_i-x_i)^2
-+ \text{constant}.
-</span></p>
-<p>Thus Gaussian noise leads naturally to least squares.</p>
+<p>Weak regularization often:</p>
+<ul>
+<li>fits unstable directions;</li>
+<li>amplifies noise;</li>
+<li>gives a low data residual but poor image quality.</li>
+</ul>
+<p>Strong regularization often:</p>
+<ul>
+<li>suppresses noise and artifacts;</li>
+<li>also suppresses details;</li>
+<li>may fit the data poorly.</li>
+</ul>
+<p>The goal is not to find a magic value of <span class="math inline">\lambda</span>. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.</p>
 </section>
-<section id="gaussian-data-fidelity" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-data-fidelity">Gaussian Data Fidelity</h2>
-<p>For direct observation <span class="math inline">y=x+\eta</span>, maximum likelihood gives</p>
+<section id="perturbation-amplification" class="level2">
+<h2 class="anchored" data-anchor-id="perturbation-amplification">Perturbation Amplification</h2>
+<p>A simple stability diagnostic is to perturb the data and compare relative input and output changes.</p>
+<p>Take an observation <span class="math inline">y</span> and add a small perturbation <span class="math inline">\delta y</span>. Compute</p>
 <p><span class="math display">
-\operatorname*{argmin}_x
-\frac{1}{2}\|y-x\|_2^2
-= y.
+\frac{\|\delta y\|}{\|y\|}
+\qquad\text{and}\qquad
+\frac{\|\hat{x}(y+\delta y)-\hat{x}(y)\|}{\|\hat{x}(y)\|}.
 </span></p>
-<p>For a linear forward model</p>
+<p>The ratio</p>
 <p><span class="math display">
-y = Ax + \eta,
-\qquad
-\eta\sim\mathcal{N}(0,\sigma^2 I),
+\frac{
+\|\hat{x}(y+\delta y)-\hat{x}(y)\|/\|\hat{x}(y)\|
+}{
+\|\delta y\|/\|y\|
+}
 </span></p>
-<p>the Gaussian negative log-likelihood is</p>
-<p><span class="math display">
-\frac{1}{2\sigma^2}\|Ax-y\|_2^2.
-</span></p>
-<p>For a general nonlinear forward model</p>
-<p><span class="math display">
-y = f(x)+\eta,
-</span></p>
-<p>the corresponding Gaussian data term is</p>
-<p><span class="math display">
-\frac{1}{2\sigma^2}\|f(x)-y\|_2^2.
-</span></p>
-<p>The squared error is therefore not just a convenient algebraic choice. It is the data fidelity term associated with a particular statistical assumption.</p>
-</section>
-<section id="gaussian-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-limitations">Gaussian Limitations</h2>
-<p>Gaussian noise is useful and mathematically friendly, but it is not always physically faithful. An additive Gaussian model can produce negative intensities or values above the sensor maximum. In practice we often clip values, but clipping changes the statistical model.</p>
-<p>This is a general lesson: a simple model can be useful without being literally complete.</p>
-</section>
-<section id="poisson-noise" class="level2">
-<h2 class="anchored" data-anchor-id="poisson-noise">Poisson Noise</h2>
-<p>Light arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.</p>
-<p>Let <span class="math inline">z_i</span> be the photon count at pixel <span class="math inline">i</span>:</p>
-<p><span class="math display">
-z_i \sim \operatorname{Poisson}(\lambda_i).
-</span></p>
-<p>The Poisson law is</p>
-<p><span class="math display">
-\mathbb{P}(z_i=k\mid \lambda_i)
-= e^{-\lambda_i}\frac{\lambda_i^k}{k!}.
-</span></p>
-<p>For a Poisson random variable,</p>
-<p><span class="math display">
-\mathbb{E}[z_i]=\lambda_i,
-\qquad
-\mathrm{Var}(z_i)=\lambda_i.
-</span></p>
-<p>The standard deviation is <span class="math inline">\sqrt{\lambda_i}</span>. Absolute noise increases with brightness, but relative noise decreases:</p>
-<p><span class="math display">
-\frac{\sqrt{\lambda_i}}{\lambda_i}
-=
-\frac{1}{\sqrt{\lambda_i}}.
-</span></p>
-<p>This is why low-light imaging is difficult. A pixel receiving 5 photons is much less reliable, relatively speaking, than a pixel receiving 500 photons.</p>
+<p>is an empirical amplification factor.</p>
 <div class="figure">
-<p><img src="../assets/figures/week04-snr-curves.png" class="img-fluid" alt="Gaussian and Poisson signal-to-noise ratio curves"></p>
-<p>Signal-to-noise behavior depends strongly on the noise model.</p>
+<p><img src="../assets/figures/week14-perturbation-amplification.png" class="img-fluid" alt="Output-change over input-change versus Tikhonov lambda, showing large amplification for weak regularization"></p>
+<p>Weak regularization can make the reconstruction much more sensitive to small perturbations in the data.</p>
 </div>
+<p>This diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.</p>
 </section>
-<section id="from-counts-to-intensities" class="level2">
-<h2 class="anchored" data-anchor-id="from-counts-to-intensities">From Counts To Intensities</h2>
-<p>Digital images often store normalized intensities in <span class="math inline">[0,1]</span>. If <span class="math inline">\alpha</span> is the maximum expected photon count, a simple count model is</p>
+<section id="singular-values-and-stability" class="level2">
+<h2 class="anchored" data-anchor-id="singular-values-and-stability">Singular Values And Stability</h2>
+<p>For a linear forward model <span class="math inline">y=Ax+\eta</span>, singular values explain why inversion can be unstable.</p>
+<p>If</p>
 <p><span class="math display">
-z_i \sim \operatorname{Poisson}(\alpha x_i),
-\qquad
-y_i = z_i/\alpha.
+A = U\Sigma V^\top,
 </span></p>
-<p>The normalized value <span class="math inline">y_i</span> is still random. Increasing exposure increases <span class="math inline">\alpha</span>, which improves relative precision when the model is valid.</p>
-</section>
-<section id="poisson-likelihood" class="level2">
-<h2 class="anchored" data-anchor-id="poisson-likelihood">Poisson Likelihood</h2>
-<p>For independent photon counts,</p>
+<p>then direct inversion divides by singular values:</p>
 <p><span class="math display">
-p(z\mid x)
-=
-\prod_i
-e^{-\alpha x_i}
-\frac{(\alpha x_i)^{z_i}}{z_i!}.
-</span></p>
-<p>Ignoring constants independent of <span class="math inline">x</span>,</p>
-<p><span class="math display">
--\log p(z\mid x)
+x
 =
 \sum_i
-\alpha x_i - z_i\log(\alpha x_i).
+\frac{u_i^\top y}{\sigma_i}v_i.
 </span></p>
-<p>For a general positive forward model <span class="math inline">f_i(x)&gt;0</span>,</p>
+<p>When <span class="math inline">\sigma_i</span> is small, the factor <span class="math inline">1/\sigma_i</span> is large. Noise or modeling error in the corresponding data direction is amplified.</p>
+<p>Regularization limits this amplification. For example, standard Tikhonov filtering replaces <span class="math inline">1/\sigma_i</span> by</p>
 <p><span class="math display">
-z_i \sim \operatorname{Poisson}(f_i(x))
+\frac{\sigma_i}{\sigma_i^2+\lambda}.
 </span></p>
-<p>and</p>
-<p><span class="math display">
--\log p(z\mid x)
-=
-\sum_i f_i(x) - z_i\log(f_i(x))
-+ \text{constant}.
-</span></p>
-<p>This is not a least-squares data term.</p>
-<div class="figure">
-<p><img src="../assets/figures/week04-likelihood-curves.png" class="img-fluid" alt="Gaussian and Poisson negative log-likelihood curves for one pixel"></p>
-<p>Likelihood curves encode how each model penalizes disagreement with the data.</p>
-</div>
+<p>This factor does not explode when <span class="math inline">\sigma_i</span> is small. The price is bias: some true details are also reduced.</p>
 </section>
-<section id="gaussian-versus-poisson" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-versus-poisson">Gaussian Versus Poisson</h2>
+<section id="robustness" class="level2">
+<h2 class="anchored" data-anchor-id="robustness">Robustness</h2>
+<p>Stability asks about sensitivity to small changes. Robustness asks whether a method continues to work acceptably across a meaningful range of conditions.</p>
+<p>A method is robust only relative to a testing plan. Useful axes include:</p>
+<ul>
+<li>noise level;</li>
+<li>blur or sampling mismatch;</li>
+<li>parameter settings;</li>
+<li>image class;</li>
+<li>acquisition device;</li>
+<li>rare but important structures;</li>
+<li>preprocessing choices.</li>
+</ul>
+<p>A minimal robustness table might look like this:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Feature</th>
-<th>Gaussian</th>
-<th>Poisson</th>
+<th>Test</th>
+<th>Question</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Data type</td>
-<td>continuous intensity</td>
-<td>integer counts</td>
+<td>noise sweep</td>
+<td>Does performance degrade smoothly?</td>
 </tr>
 <tr class="even">
-<td>Variance</td>
-<td>constant <span class="math inline">\sigma^2</span></td>
-<td>equals mean</td>
+<td>parameter sweep</td>
+<td>Is there a wide safe range?</td>
 </tr>
 <tr class="odd">
-<td>Typical fidelity</td>
-<td>squared error</td>
-<td>count likelihood</td>
+<td>model mismatch</td>
+<td>What happens if <span class="math inline">A</span> is wrong?</td>
 </tr>
 <tr class="even">
-<td>Natural for</td>
-<td>read noise, aggregate errors</td>
-<td>photon-limited imaging</td>
+<td>image family shift</td>
+<td>Does the prior overfit one domain?</td>
 </tr>
 <tr class="odd">
-<td>Constraint</td>
-<td>often unconstrained</td>
-<td>positive mean</td>
+<td>small feature test</td>
+<td>Are weak structures preserved?</td>
 </tr>
 </tbody>
 </table>
-<p>The choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.</p>
+<p>Robustness is not proven by one successful example. It is supported by a pattern of successful and failed tests.</p>
 </section>
-<section id="repeated-measurements" class="level2">
-<h2 class="anchored" data-anchor-id="repeated-measurements">Repeated Measurements</h2>
-<p>If</p>
-<p><span class="math display">
-y^{(j)} = x + \eta^{(j)},
-\qquad
-\eta^{(j)}\sim\mathcal{N}(0,\sigma^2),
-</span></p>
-<p>and the noise samples are independent, then the average</p>
-<p><span class="math display">
-\bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
-</span></p>
-<p>has noise standard deviation <span class="math inline">\sigma/\sqrt{m}</span>.</p>
+<section id="domain-robustness" class="level2">
+<h2 class="anchored" data-anchor-id="domain-robustness">Domain Robustness</h2>
+<p>Learned priors are powerful, but they learn from the examples they see.</p>
 <div class="figure">
-<p><img src="../assets/figures/week04-averaging.png" class="img-fluid" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"></p>
-<p>Independent random noise can average out.</p>
+<p><img src="../assets/figures/week14-domain-robustness.png" class="img-fluid" alt="RMSE of noisy, Gaussian, and camera-trained PCA denoising across camera, moon, and coins image families"></p>
+<p>A denoiser trained on one image family can be less reliable on another image family.</p>
 </div>
-<p>Averaging cannot recover information that never reached the sensor. If scene content is physically hidden behind an occluder, repeated photographs from the same viewpoint do not reveal the hidden object. This is different from reducing random fluctuations in recorded pixels.</p>
+<p>This is not a defect of learning itself. It is an assumption that must be named. The training set acts like a prior: it says which images and structures are expected.</p>
+<p>In inverse problems, overfitting can mean:</p>
+<ul>
+<li>excellent results on benchmark images;</li>
+<li>poor behavior on new acquisition conditions;</li>
+<li>learned texture that is not supported by the data;</li>
+<li>hidden failure on rare cases;</li>
+<li>performance differences across populations, instruments, or sites.</li>
+</ul>
 </section>
-<section id="from-likelihood-to-reconstruction" class="level2">
-<h2 class="anchored" data-anchor-id="from-likelihood-to-reconstruction">From Likelihood To Reconstruction</h2>
-<p>Given data <span class="math inline">y</span>, maximum likelihood estimates <span class="math inline">x</span> by</p>
+<section id="hallucination" class="level2">
+<h2 class="anchored" data-anchor-id="hallucination">Hallucination</h2>
+<p>In reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.</p>
+<p>This can happen with learned methods, but the general risk is older than deep learning. Any strong prior can add, remove, or reshape information when the data are insufficient.</p>
+<p>There are two symmetric dangers:</p>
+<ul>
+<li>a false positive: the method invents a structure;</li>
+<li>a false negative: the method removes a real but weak structure.</li>
+</ul>
+<p>Both matter. Which one is worse depends on the task.</p>
+</section>
+<section id="small-feature-risk" class="level2">
+<h2 class="anchored" data-anchor-id="small-feature-risk">Small Feature Risk</h2>
+<p>Small or low-contrast features are often the hardest to handle responsibly. They may be exactly the features that matter.</p>
+<div class="figure">
+<p><img src="../assets/figures/week14-small-feature-risk.png" class="img-fluid" alt="Small bright feature weakened by regularization and smoothing"></p>
+<p>Strong regularization and smoothing can make an image look calmer while reducing the contrast of a small real feature.</p>
+</div>
+<p>This is why image quality cannot be judged only by smoothness or visual appeal. A visually pleasing reconstruction may be worse for a detection task.</p>
+<p>For a small-feature test, measure something task-specific, for example:</p>
+<ul>
+<li>feature contrast;</li>
+<li>localization error;</li>
+<li>detection rate;</li>
+<li>false positive rate;</li>
+<li>false negative rate.</li>
+</ul>
+</section>
+<section id="data-consistency-is-necessary" class="level2">
+<h2 class="anchored" data-anchor-id="data-consistency-is-necessary">Data Consistency Is Necessary</h2>
+<p>An output should be compatible with the measurement model:</p>
 <p><span class="math display">
-\operatorname*{argmax}_x p(y\mid x),
+A\hat{x}\approx y.
 </span></p>
-<p>or equivalently</p>
-<p><span class="math display">
-\operatorname*{argmin}_x -\log p(y\mid x).
-</span></p>
-<p>Maximum likelihood uses the data model, but it is often not enough. In inverse problems, many images may agree almost equally well with noisy data.</p>
-<p>A common regularized reconstruction form is</p>
-<p><span class="math display">
-\operatorname*{argmin}_x
-D(y,f(x)) + \lambda R(x).
-</span></p>
-<p>Here <span class="math inline">D</span> is the data fidelity term from the noise model, and <span class="math inline">R</span> is a regularizer encoding prior information or desired structure.</p>
+<p>Data consistency is necessary, but it is not sufficient. In an ill-posed inverse problem, many images can explain the same measurement within noise tolerance.</p>
+<p>This is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.</p>
+</section>
+<section id="evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
+<p>No single evaluation number is enough.</p>
+<p>When ground truth is available, report quantitative metrics such as RMSE or PSNR. But also check whether those metrics hide localized failures.</p>
+<p>When ground truth is not available, use indirect tests:</p>
+<ul>
+<li>data residuals;</li>
+<li>perturbation sensitivity;</li>
+<li>parameter sweeps;</li>
+<li>model mismatch tests;</li>
+<li>comparison with simpler baselines;</li>
+<li>expert or domain review;</li>
+<li>uncertainty or confidence reporting.</li>
+</ul>
+<p>For project reports, a failure case is not a weakness. It is evidence that the method has been tested honestly.</p>
+</section>
+<section id="ethics-and-responsibility" class="level2">
+<h2 class="anchored" data-anchor-id="ethics-and-responsibility">Ethics And Responsibility</h2>
+<p>Mathematical imaging methods can influence decisions in science, engineering, medicine, remote sensing, cultural heritage, and security. The same reconstruction can be both mathematically interesting and socially consequential.</p>
+<div class="figure">
+<p><img src="../assets/figures/week14-ethics-questions.png" class="img-fluid" alt="Ethics questions before deployment: training data, tested failures, harm, uncertainty, auditability"></p>
+<p>Before deployment, ask who could be harmed by false positives, false negatives, missing uncertainty, or untested domain shift.</p>
+</div>
+<p>Ethical failure modes include:</p>
+<ul>
+<li>a method works worse for some populations or acquisition sites;</li>
+<li>a reconstruction removes rare but important signs;</li>
+<li>a plausible output is treated as direct measurement;</li>
+<li>users are not told when the method is outside its tested domain;</li>
+<li>code and parameters are not reproducible.</li>
+</ul>
+<p>Ethics here is not separate from mathematics. Stability, robustness, reproducibility, and honest communication are part of responsible modeling.</p>
+</section>
+<section id="what-to-document" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-document">What To Document</h2>
+<p>For a reconstruction method, document:</p>
+<ul>
+<li>the forward model and its assumptions;</li>
+<li>the noise model;</li>
+<li>the regularizer or learned prior;</li>
+<li>training data, if any;</li>
+<li>parameter choices;</li>
+<li>validation cases;</li>
+<li>known failures;</li>
+<li>uncertainty and limitations;</li>
+<li>intended use and non-use.</li>
+</ul>
+<p>This documentation makes the reconstruction inspectable. It also helps future users understand what the image is, and what it is not.</p>
+</section>
+<section id="project-checkpoint" class="level2">
+<h2 class="anchored" data-anchor-id="project-checkpoint">Project Checkpoint</h2>
+<p>By the end of the course project, your report should include:</p>
+<ul>
+<li>the mathematical model;</li>
+<li>the reconstruction algorithm;</li>
+<li>a parameter study;</li>
+<li>results on multiple cases;</li>
+<li>a failure or limitation analysis;</li>
+<li>code and reproducibility notes.</li>
+</ul>
+<p>For the oral defense, both teammates should be able to explain:</p>
+<ul>
+<li>the forward model;</li>
+<li>the inverse problem;</li>
+<li>the role of the prior or regularizer;</li>
+<li>the numerical algorithm;</li>
+<li>the main success;</li>
+<li>the main limitation.</li>
+</ul>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.</p>
-<p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week04_noise_likelihood.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>The Week 14 notebook makes the reliability checks concrete.</p>
+<p>Use it to:</p>
+<ol type="1">
+<li>Sweep Tikhonov <span class="math inline">\lambda</span>.</li>
+<li>Measure perturbation amplification.</li>
+<li>Track small-feature contrast.</li>
+<li>Compare denoising across image families.</li>
+<li>Write a reliability checklist for the project.</li>
+</ol>
+<p>To regenerate the Week 14 examples from the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week14_stability_robustness.py</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/make_week14_figures.py</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The notebook is the best place to change parameters and see how sensitive the conclusions are.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>For <span class="math inline">y_i=x_i+\eta_i</span> with <span class="math inline">\eta_i\sim\mathcal{N}(0,\sigma^2)</span>, compute <span class="math inline">\mathbb{E}[y_i\mid x_i]</span> and <span class="math inline">\mathrm{Var}(y_i\mid x_i)</span>.</li>
-<li>For a Poisson pixel with expected count <span class="math inline">\lambda=25</span>, compute the standard deviation and approximate SNR.</li>
-<li>Explain why Poisson relative noise improves as the photon count increases.</li>
-<li>Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.</li>
-<li>Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.</li>
+<li><p><strong>Parameter sensitivity.</strong> Choose two nearby values of <span class="math inline">\lambda</span> in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.</p></li>
+<li><p><strong>Perturbation test.</strong> Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.</p></li>
+<li><p><strong>Robustness table.</strong> For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.</p></li>
+<li><p><strong>Small-feature test.</strong> Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.</p></li>
+<li><p><strong>Ethics paragraph.</strong> Write five sentences explaining when your method should not be used.</p></li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Noise models connect physical measurement assumptions to mathematical data terms.</li>
-<li>Gaussian additive noise leads to squared-error fidelity.</li>
-<li>Poisson photon-counting noise has variance equal to its mean.</li>
-<li>Low-light images are difficult because relative photon noise is high.</li>
-<li>Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.</li>
+<li>Ill-posed inverse problems require stability checks.</li>
+<li>A good-looking image can still be unreliable.</li>
+<li>Learned priors inherit assumptions from training data.</li>
+<li>Robustness must be tested across realistic and stressful cases.</li>
+<li>Ethical reconstruction means documenting assumptions, failures, and limits.</li>
 </ul>
 
 
@@ -1126,7 +1169,7 @@ D(y,f(x)) + \lambda R(x).
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-04-noise-likelihood.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-14-stability-robustness-ethics.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
