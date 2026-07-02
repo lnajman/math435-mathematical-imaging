@@ -161,11 +161,11 @@
     "text": "From Continuous to Discrete\nDigital images are sampled on a grid:\n\nu_{i,j} \\approx u(x_i, y_j).\n\nFor an image with m rows and n columns:\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n} \\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n} \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#sampling-and-vectorization",
-    "href": "slides/week-01-image-formation.html#sampling-and-vectorization",
+    "objectID": "slides/week-01-image-formation.html#a-real-image-as-data",
+    "href": "slides/week-01-image-formation.html#a-real-image-as-data",
     "title": "Images as Mathematical Objects",
-    "section": "Sampling and Vectorization",
-    "text": "Sampling and Vectorization"
+    "section": "A Real Image as Data",
+    "text": "A Real Image as Data\n\n\n\nReal sample image from skimage.data.camera(). The mathematical object is not the displayed photograph alone; it is the numerical array behind it."
   },
   {
     "objectID": "slides/week-01-image-formation.html#matrix-or-vector",

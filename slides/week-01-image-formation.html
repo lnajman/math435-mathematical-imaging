@@ -319,10 +319,13 @@ u_{m,1} &amp; u_{m,2} &amp; \cdots &amp; u_{m,n}
 \end{bmatrix}.
 </span></p>
 </section>
-<section id="sampling-and-vectorization" class="slide level2">
-<h2>Sampling and Vectorization</h2>
+<section id="a-real-image-as-data" class="slide level2">
+<h2>A Real Image as Data</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week01-sampling-vectorization.png" alt="Synthetic image shown as a smooth field, a pixel grid, and a vector"></p>
+<p><img data-src="../assets/figures/week01-real-image-vectorization.png" alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"></p>
+<div class="caption">
+<p>Real sample image from <code>skimage.data.camera()</code>. The mathematical object is not the displayed photograph alone; it is the numerical array behind it.</p>
+</div>
 </div>
 </section>
 <section id="matrix-or-vector" class="slide level2">
@@ -365,7 +368,7 @@ x \mapsto Ax.
 </section>
 <section id="first-numpy-representation" class="slide level2 code-small">
 <h2>First NumPy Representation</h2>
-<div id="a5915eb0" class="cell">
+<div id="ff2d5ea4" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
@@ -384,7 +387,7 @@ x \mapsto Ax.
 <section id="vectorization-convention" class="slide level2">
 <h2>Vectorization Convention</h2>
 <p>NumPy uses row-major order by default:</p>
-<div id="1102c9be" class="cell">
+<div id="25bdcc3d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
 <span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
 <span id="cb3-3"><a></a></span>
@@ -500,7 +503,7 @@ x = A^{-1}y.
 <section id="a-toy-masking-operator" class="slide level2">
 <h2>A Toy Masking Operator</h2>
 <p>Suppose only some pixels are measured.</p>
-<div id="a67331c0" class="cell">
+<div id="0f90682f" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
