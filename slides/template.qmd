@@ -61,7 +61,7 @@ $$
 
 ::: {.two-col-wide}
 ::: {.figure-frame}
-![](../assets/figures/week01-sampling-vectorization.png){fig-alt="Synthetic image, pixel grid, and vector representation"}
+![](../assets/figures/week01-real-image-vectorization.png){fig-alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"}
 
 ::: {.caption}
 Use one strong visual per slide when possible.

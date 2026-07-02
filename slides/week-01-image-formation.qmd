@@ -100,10 +100,14 @@ u_{m,1} & u_{m,2} & \cdots & u_{m,n}
 \end{bmatrix}.
 $$
 
-## Sampling and Vectorization
+## A Real Image as Data
 
 ::: {.figure-frame}
-![](../assets/figures/week01-sampling-vectorization.png){fig-alt="Synthetic image shown as a smooth field, a pixel grid, and a vector"}
+![](../assets/figures/week01-real-image-vectorization.png){fig-alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"}
+
+::: {.caption}
+Real sample image from `skimage.data.camera()`. The mathematical object is not the displayed photograph alone; it is the numerical array behind it.
+:::
 :::
 
 ## Matrix or Vector?
@@ -381,4 +385,3 @@ Convolution and blur:
 - boundary conditions;
 - blur as a linear operator;
 - first deblurring experiment.
-
