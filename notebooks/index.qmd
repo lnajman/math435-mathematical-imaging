@@ -20,6 +20,7 @@ Use the Google Colab links if you want to work in a browser without installing P
 | 10 | Sparse reconstruction | [Download](week10_sparse_reconstruction.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb) |
 | 11 | Wavelets and multiscale representation | [Download](week11_wavelets.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) |
 | 12 | Model-based vs data-driven imaging | [Download](week12_model_data.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) |
+| 13 | Plug-and-play and learned regularization | [Download](week13_plug_and_play.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
 
 ## Working Locally
 

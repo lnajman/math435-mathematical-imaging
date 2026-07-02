@@ -21,6 +21,7 @@ NOTEBOOKS = [
     ROOT / "notebooks" / "week10_sparse_reconstruction.ipynb",
     ROOT / "notebooks" / "week11_wavelets.ipynb",
     ROOT / "notebooks" / "week12_model_data.ipynb",
+    ROOT / "notebooks" / "week13_plug_and_play.ipynb",
 ]
 OUTPUT_DIR = Path("/private/tmp/math435-notebook-validation")
 

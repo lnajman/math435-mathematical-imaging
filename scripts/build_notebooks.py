@@ -5075,6 +5075,527 @@ def week12_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week13_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 13 - Plug-and-Play and Learned Regularization
+
+            This notebook accompanies the thirteenth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - implement a data-consistency step for deblurring;
+            - replace a proximal step by a denoiser;
+            - compare Tikhonov and plug-and-play reconstructions;
+            - monitor fixed-point iterations;
+            - test how learned denoisers depend on training data.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from scipy.ndimage import gaussian_filter
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def show_image_grid(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin if colorscale == "Gray" else None,
+                            zmax=zmax if colorscale == "Gray" else None,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+
+
+            def gaussian_kernel2d(size, sigma):
+                axis = np.arange(-(size // 2), size // 2 + 1)
+                xx, yy = np.meshgrid(axis, axis)
+                kernel = np.exp(-(xx**2 + yy**2) / (2.0 * sigma**2))
+                return kernel / kernel.sum()
+
+
+            def centered_kernel_fft(kernel, shape):
+                padded = np.zeros(shape)
+                kh, kw = kernel.shape
+                padded[:kh, :kw] = kernel
+                padded = np.roll(padded, -(kh // 2), axis=0)
+                padded = np.roll(padded, -(kw // 2), axis=1)
+                return np.fft.fft2(padded)
+
+
+            def blur_periodic(image, kernel_fft):
+                return np.real(np.fft.ifft2(np.fft.fft2(image) * kernel_fft))
+
+
+            def adjoint_blur_periodic(image, kernel_fft):
+                return np.real(np.fft.ifft2(np.fft.fft2(image) * np.conj(kernel_fft)))
+
+
+            def data_gradient(estimate, observation, kernel_fft):
+                residual = blur_periodic(estimate, kernel_fft) - observation
+                return adjoint_blur_periodic(residual, kernel_fft)
+
+
+            def data_residual(estimate, observation, kernel_fft):
+                residual = blur_periodic(estimate, kernel_fft) - observation
+                return float(np.linalg.norm(residual) / np.sqrt(residual.size))
+
+
+            def tikhonov_deblur(observation, kernel_fft, lam):
+                numerator = np.conj(kernel_fft) * np.fft.fft2(observation)
+                denominator = np.abs(kernel_fft) ** 2 + lam
+                return np.clip(np.real(np.fft.ifft2(numerator / denominator)), 0.0, 1.0)
+
+
+            def pnp_gradient_descent(observation, kernel_fft, denoiser, iterations, step_size=1.0, clean=None):
+                estimate = observation.copy()
+                previous = estimate.copy()
+                history = {"rmse": [], "residual": [], "change": []}
+
+                for _ in range(iterations + 1):
+                    if clean is not None:
+                        history["rmse"].append(rmse(estimate, clean))
+                    history["residual"].append(data_residual(estimate, observation, kernel_fft))
+                    history["change"].append(float(np.linalg.norm(estimate - previous) / np.sqrt(estimate.size)))
+
+                    previous = estimate.copy()
+                    descent = estimate - step_size * data_gradient(estimate, observation, kernel_fft)
+                    estimate = np.clip(denoiser(descent), 0.0, 1.0)
+
+                return estimate, history
+
+
+            def extract_random_patches(image, patch_size, count, seed):
+                rng = np.random.default_rng(seed)
+                rows, cols = image.shape
+                patches = np.empty((count, patch_size * patch_size))
+                for index in range(count):
+                    row = rng.integers(0, rows - patch_size + 1)
+                    col = rng.integers(0, cols - patch_size + 1)
+                    patches[index] = image[row : row + patch_size, col : col + patch_size].reshape(-1)
+                return patches
+
+
+            def fit_patch_pca(patches):
+                mean = patches.mean(axis=0)
+                _, singular_values, components = np.linalg.svd(patches - mean, full_matrices=False)
+                return mean, components, singular_values
+
+
+            def pca_patch_denoise(noisy, mean, components, patch_size, n_components):
+                rows, cols = noisy.shape
+                estimate = np.zeros_like(noisy)
+                weights = np.zeros_like(noisy)
+                basis = components[:n_components]
+                for row in range(rows - patch_size + 1):
+                    for col in range(cols - patch_size + 1):
+                        patch = noisy[row : row + patch_size, col : col + patch_size].reshape(-1)
+                        scores = (patch - mean) @ basis.T
+                        reconstructed = mean + scores @ basis
+                        estimate[row : row + patch_size, col : col + patch_size] += reconstructed.reshape(patch_size, patch_size)
+                        weights[row : row + patch_size, col : col + patch_size] += 1.0
+                return np.clip(estimate / np.maximum(weights, 1.0), 0.0, 1.0)
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Build a Deblurring Problem
+
+            We use a periodic convolution model:
+
+            ```text
+            y = A x + noise
+            ```
+
+            The functions above implement `A`, `A.T`, and the gradient of the data term.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43513)
+
+            image = data.camera().astype(float) / 255.0
+            clean = image[132:228, 178:274]
+
+            kernel = gaussian_kernel2d(size=21, sigma=2.4)
+            kernel_fft = centered_kernel_fft(kernel, clean.shape)
+            blurred = blur_periodic(clean, kernel_fft)
+            observation = np.clip(blurred + 0.015 * rng.standard_normal(clean.shape), 0.0, 1.0)
+
+            show_image_grid(
+                [clean, kernel, observation],
+                ["clean image crop", "blur kernel", f"blurred + noise, RMSE={rmse(observation, clean):.3f}"],
+                colorscales=["Gray", "Viridis", "Gray"],
+                height=420,
+            )
+            """
+        ),
+        md(
+            """
+            ### 2. Classical Baseline: Tikhonov
+
+            Tikhonov deblurring solves a quadratic regularized problem. For periodic convolution, it has a Fourier-domain formula.
+            """
+        ),
+        code(
+            """
+            tikhonov_lambda = 0.002
+            tikhonov = tikhonov_deblur(observation, kernel_fft, lam=tikhonov_lambda)
+
+            show_image_grid(
+                [clean, observation, tikhonov],
+                [
+                    "clean",
+                    f"observation, RMSE={rmse(observation, clean):.3f}",
+                    f"Tikhonov, RMSE={rmse(tikhonov, clean):.3f}",
+                ],
+                height=420,
+            )
+
+            print("Tikhonov data residual:", round(data_residual(tikhonov, observation, kernel_fft), 4))
+            """
+        ),
+        md(
+            """
+            ### 3. Plug-and-Play with a Gaussian Denoiser
+
+            The PnP iteration alternates:
+
+            ```text
+            z = x - step_size * A.T(Ax - y)
+            x = denoise(z)
+            ```
+            """
+        ),
+        code(
+            """
+            gaussian_sigma = 0.65
+            gaussian_denoiser = lambda values: gaussian_filter(values, sigma=gaussian_sigma, mode="wrap")
+
+            pnp_gaussian, gaussian_history = pnp_gradient_descent(
+                observation,
+                kernel_fft,
+                gaussian_denoiser,
+                iterations=24,
+                step_size=1.0,
+                clean=clean,
+            )
+
+            show_image_grid(
+                [clean, observation, tikhonov, pnp_gaussian],
+                [
+                    "clean",
+                    f"observation, RMSE={rmse(observation, clean):.3f}",
+                    f"Tikhonov, RMSE={rmse(tikhonov, clean):.3f}",
+                    f"PnP Gaussian, RMSE={rmse(pnp_gaussian, clean):.3f}",
+                ],
+                height=420,
+            )
+
+            print("PnP Gaussian data residual:", round(data_residual(pnp_gaussian, observation, kernel_fft), 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change `student_sigma`. What happens when denoising is too weak or too strong?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            student_sigma = 0.35
+
+            student_denoiser = lambda values: gaussian_filter(values, sigma=student_sigma, mode="wrap")
+            student_pnp, student_history = pnp_gradient_descent(
+                observation,
+                kernel_fft,
+                student_denoiser,
+                iterations=24,
+                step_size=1.0,
+                clean=clean,
+            )
+
+            show_image_grid(
+                [observation, student_pnp],
+                ["observation", f"PnP sigma={student_sigma}, RMSE={rmse(student_pnp, clean):.3f}"],
+                height=380,
+            )
+            print("data residual:", round(data_residual(student_pnp, observation, kernel_fft), 4))
+            print("last fixed-point change:", round(student_history["change"][-1], 6))
+            """
+        ),
+        md(
+            """
+            ### 4. Sweep the Denoiser Strength
+
+            A stronger denoiser is not automatically better.
+            """
+        ),
+        code(
+            """
+            sigmas = [0.0, 0.35, 0.65, 1.0, 1.45]
+            sweep_rows = []
+
+            for sigma in sigmas:
+                if sigma == 0.0:
+                    denoiser = lambda values: values
+                else:
+                    denoiser = lambda values, s=sigma: gaussian_filter(values, sigma=s, mode="wrap")
+
+                estimate, history = pnp_gradient_descent(
+                    observation,
+                    kernel_fft,
+                    denoiser,
+                    iterations=24,
+                    step_size=1.0,
+                    clean=clean,
+                )
+                sweep_rows.append(
+                    {
+                        "sigma": sigma,
+                        "rmse": rmse(estimate, clean),
+                        "residual": data_residual(estimate, observation, kernel_fft),
+                        "change": history["change"][-1],
+                    }
+                )
+
+            fig = make_subplots(specs=[[{"secondary_y": True}]])
+            fig.add_trace(
+                go.Scatter(x=[row["sigma"] for row in sweep_rows], y=[row["rmse"] for row in sweep_rows], mode="lines+markers", name="RMSE"),
+                secondary_y=False,
+            )
+            fig.add_trace(
+                go.Scatter(x=[row["sigma"] for row in sweep_rows], y=[row["residual"] for row in sweep_rows], mode="lines+markers", name="data residual"),
+                secondary_y=True,
+            )
+            fig.update_xaxes(title_text="Gaussian denoiser sigma")
+            fig.update_yaxes(title_text="RMSE", secondary_y=False)
+            fig.update_yaxes(title_text="data residual", secondary_y=True)
+            fig.update_layout(height=390, margin=dict(l=20, r=20, t=40, b=45))
+            fig.show()
+
+            for row in sweep_rows:
+                print(row)
+            """
+        ),
+        md(
+            """
+            ### 5. Plug-and-Play with a Learned Patch Denoiser
+
+            Now we reuse the Week 12 idea: learn a PCA patch prior from clean camera patches.
+            """
+        ),
+        code(
+            """
+            patch_size = 7
+            train_image = image[:320, :320]
+            training_patches = extract_random_patches(train_image, patch_size=patch_size, count=5000, seed=43513)
+            patch_mean, patch_components, singular_values = fit_patch_pca(training_patches)
+
+            learned_denoiser = lambda values: pca_patch_denoise(
+                values,
+                patch_mean,
+                patch_components,
+                patch_size=patch_size,
+                n_components=18,
+            )
+
+            pnp_learned, learned_history = pnp_gradient_descent(
+                observation,
+                kernel_fft,
+                learned_denoiser,
+                iterations=24,
+                step_size=1.0,
+                clean=clean,
+            )
+
+            show_image_grid(
+                [clean, observation, tikhonov, pnp_gaussian, pnp_learned],
+                [
+                    "clean",
+                    f"observation, RMSE={rmse(observation, clean):.3f}",
+                    f"Tikhonov, RMSE={rmse(tikhonov, clean):.3f}",
+                    f"PnP Gaussian, RMSE={rmse(pnp_gaussian, clean):.3f}",
+                    f"PnP learned, RMSE={rmse(pnp_learned, clean):.3f}",
+                ],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### 6. Monitor the Iteration
+
+            A PnP algorithm may not minimize a known objective, so fixed-point change is useful to monitor.
+            """
+        ),
+        code(
+            """
+            iterations = np.arange(len(gaussian_history["rmse"]))
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["RMSE", "fixed-point change"])
+            fig.add_trace(go.Scatter(x=iterations, y=gaussian_history["rmse"], mode="lines+markers", name="Gaussian"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=iterations, y=learned_history["rmse"], mode="lines+markers", name="learned"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=iterations, y=gaussian_history["change"], mode="lines+markers", name="Gaussian change"), row=1, col=2)
+            fig.add_trace(go.Scatter(x=iterations, y=learned_history["change"], mode="lines+markers", name="learned change"), row=1, col=2)
+            fig.update_xaxes(title_text="iteration", row=1, col=1)
+            fig.update_xaxes(title_text="iteration", row=1, col=2)
+            fig.update_yaxes(title_text="RMSE", row=1, col=1)
+            fig.update_yaxes(title_text="change", row=1, col=2)
+            fig.update_layout(height=390, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change `student_components`. Does the learned denoiser become too weak or too restrictive?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            student_components = 10
+
+            student_learned_denoiser = lambda values: pca_patch_denoise(
+                values,
+                patch_mean,
+                patch_components,
+                patch_size=patch_size,
+                n_components=student_components,
+            )
+            student_learned_pnp, _ = pnp_gradient_descent(
+                observation,
+                kernel_fft,
+                student_learned_denoiser,
+                iterations=24,
+                step_size=1.0,
+                clean=clean,
+            )
+
+            show_image_grid(
+                [pnp_learned, student_learned_pnp],
+                ["18 components", f"{student_components} components"],
+                height=380,
+            )
+            print("student RMSE:", round(rmse(student_learned_pnp, clean), 4))
+            """
+        ),
+        md(
+            """
+            ### 7. Distribution Shift
+
+            A learned denoiser trained on camera patches may not be ideal for a different image family.
+            """
+        ),
+        code(
+            """
+            moon = data.moon().astype(float) / 255.0
+            shifted_clean = moon[300:396, 100:196]
+            shifted_kernel_fft = centered_kernel_fft(kernel, shifted_clean.shape)
+            shifted_observation = np.clip(
+                blur_periodic(shifted_clean, shifted_kernel_fft)
+                + 0.015 * rng.standard_normal(shifted_clean.shape),
+                0.0,
+                1.0,
+            )
+
+            shifted_gaussian, _ = pnp_gradient_descent(
+                shifted_observation,
+                shifted_kernel_fft,
+                gaussian_denoiser,
+                iterations=24,
+                step_size=1.0,
+                clean=shifted_clean,
+            )
+            shifted_learned, _ = pnp_gradient_descent(
+                shifted_observation,
+                shifted_kernel_fft,
+                learned_denoiser,
+                iterations=24,
+                step_size=1.0,
+                clean=shifted_clean,
+            )
+
+            show_image_grid(
+                [shifted_clean, shifted_observation, shifted_gaussian, shifted_learned],
+                [
+                    "moon crop",
+                    f"observation, RMSE={rmse(shifted_observation, shifted_clean):.3f}",
+                    f"PnP Gaussian, RMSE={rmse(shifted_gaussian, shifted_clean):.3f}",
+                    f"camera-learned PnP, RMSE={rmse(shifted_learned, shifted_clean):.3f}",
+                ],
+                height=420,
+            )
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. Which part of the PnP update uses the forward model?
+            2. Which part acts like an implicit prior?
+            3. Why might there be no explicit objective function?
+            4. Why should we report data residuals and distribution-shift tests?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            The remaining course work should connect these ideas to project design:
+
+            - define a forward model;
+            - choose a regularizer or denoiser;
+            - decide which metrics matter;
+            - document limitations and failure cases.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -5088,6 +5609,7 @@ def main() -> None:
     write_notebook("week10_sparse_reconstruction.ipynb", week10_cells())
     write_notebook("week11_wavelets.ipynb", week11_cells())
     write_notebook("week12_model_data.ipynb", week12_cells())
+    write_notebook("week13_plug_and_play.ipynb", week13_cells())
 
 
 if __name__ == "__main__":
