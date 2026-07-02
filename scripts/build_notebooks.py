@@ -4651,6 +4651,430 @@ def week11_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week12_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 12 - Model-Based vs Data-Driven Imaging
+
+            This notebook accompanies the twelfth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - distinguish model-based and data-driven reconstruction;
+            - interpret a neural network as a parameterized operator;
+            - learn a simple patch prior from clean image examples;
+            - compare Gaussian, wavelet, and learned patch denoising;
+            - explain why distribution shift matters.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, PyWavelets, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            import pywt
+            from scipy.ndimage import gaussian_filter
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def show_image_grid(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin if colorscale == "Gray" else None,
+                            zmax=zmax if colorscale == "Gray" else None,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+
+
+            def extract_random_patches(image, patch_size, count, seed):
+                rng = np.random.default_rng(seed)
+                rows, cols = image.shape
+                patches = np.empty((count, patch_size * patch_size))
+                for index in range(count):
+                    row = rng.integers(0, rows - patch_size + 1)
+                    col = rng.integers(0, cols - patch_size + 1)
+                    patches[index] = image[row : row + patch_size, col : col + patch_size].reshape(-1)
+                return patches
+
+
+            def fit_patch_pca(patches):
+                mean = patches.mean(axis=0)
+                _, singular_values, components = np.linalg.svd(patches - mean, full_matrices=False)
+                return mean, components, singular_values
+
+
+            def pca_patch_denoise(noisy, mean, components, patch_size, n_components):
+                rows, cols = noisy.shape
+                estimate = np.zeros_like(noisy)
+                weights = np.zeros_like(noisy)
+                basis = components[:n_components]
+                for row in range(rows - patch_size + 1):
+                    for col in range(cols - patch_size + 1):
+                        patch = noisy[row : row + patch_size, col : col + patch_size].reshape(-1)
+                        scores = (patch - mean) @ basis.T
+                        reconstructed = mean + scores @ basis
+                        estimate[row : row + patch_size, col : col + patch_size] += reconstructed.reshape(patch_size, patch_size)
+                        weights[row : row + patch_size, col : col + patch_size] += 1.0
+                return np.clip(estimate / np.maximum(weights, 1.0), 0.0, 1.0)
+
+
+            def wavelet_denoise(noisy, threshold_scale=0.30):
+                coeffs = pywt.wavedec2(noisy, wavelet="db2", level=3, mode="periodization")
+                sigma = float(np.median(np.abs(coeffs[-1][2])) / 0.6745)
+                threshold = threshold_scale * sigma * np.sqrt(2.0 * np.log(noisy.size))
+                denoised_coeffs = [coeffs[0]]
+                for horizontal, vertical, diagonal in coeffs[1:]:
+                    denoised_coeffs.append(
+                        tuple(pywt.threshold(detail, threshold, mode="soft") for detail in (horizontal, vertical, diagonal))
+                    )
+                reconstruction = pywt.waverec2(denoised_coeffs, wavelet="db2", mode="periodization")
+                return np.clip(reconstruction[: noisy.shape[0], : noisy.shape[1]], 0.0, 1.0)
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Model-Based and Data-Driven Inputs
+
+            A model-based method starts with an explicit forward model and prior.
+
+            A data-driven method starts with examples and a loss.
+            """
+        ),
+        code(
+            """
+            image = data.camera().astype(float) / 255.0
+            train_image = image[:320, :320]
+            test_image = image[352:448, 256:352]
+
+            show_image_grid(
+                [train_image, test_image],
+                ["training image region", "held-out test crop"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### 2. A Model-Based Baseline
+
+            We compare two handcrafted denoisers:
+
+            - Gaussian smoothing;
+            - wavelet thresholding.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43512)
+            noise_sigma = 0.08
+            noisy = np.clip(test_image + noise_sigma * rng.standard_normal(test_image.shape), 0.0, 1.0)
+            gaussian = np.clip(gaussian_filter(noisy, sigma=1.0, mode="reflect"), 0.0, 1.0)
+            wavelet = wavelet_denoise(noisy, threshold_scale=0.30)
+
+            show_image_grid(
+                [test_image, noisy, gaussian, wavelet],
+                [
+                    "clean",
+                    f"noisy, RMSE={rmse(noisy, test_image):.3f}",
+                    f"Gaussian, RMSE={rmse(gaussian, test_image):.3f}",
+                    f"wavelet, RMSE={rmse(wavelet, test_image):.3f}",
+                ],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### 3. Learn a Patch Prior
+
+            We learn a low-dimensional patch model from clean training patches using SVD/PCA.
+
+            This is data-driven, but not a neural network.
+            """
+        ),
+        code(
+            """
+            patch_size = 7
+            training_patches = extract_random_patches(
+                train_image,
+                patch_size=patch_size,
+                count=6000,
+                seed=43512,
+            )
+            patch_mean, patch_components, singular_values = fit_patch_pca(training_patches)
+
+            print("patch dimension:", patch_size * patch_size)
+            print("training patches:", training_patches.shape[0])
+            print("learned components:", patch_components.shape[0])
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(y=singular_values[:30], mode="lines+markers"))
+            fig.update_layout(
+                title="Learned patch spectrum",
+                xaxis_title="component index",
+                yaxis_title="singular value",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Learned Patch Atoms
+
+            The first PCA directions act like learned patch patterns.
+            """
+        ),
+        code(
+            """
+            atoms = [patch_mean.reshape(patch_size, patch_size)]
+            atoms += [patch_components[index].reshape(patch_size, patch_size) for index in range(9)]
+            atom_titles = ["mean"] + [f"atom {index + 1}" for index in range(9)]
+
+            show_image_grid(
+                atoms,
+                atom_titles,
+                colorscales=["Gray"] * len(atoms),
+                height=310,
+            )
+            """
+        ),
+        md(
+            """
+            ### 4. Learned Patch Denoising
+
+            To denoise a patch, we project it onto the learned patch subspace and reconstruct it.
+            """
+        ),
+        code(
+            """
+            learned = pca_patch_denoise(
+                noisy,
+                patch_mean,
+                patch_components,
+                patch_size=patch_size,
+                n_components=16,
+            )
+
+            show_image_grid(
+                [test_image, noisy, gaussian, wavelet, learned],
+                [
+                    "clean",
+                    f"noisy, RMSE={rmse(noisy, test_image):.3f}",
+                    f"Gaussian, RMSE={rmse(gaussian, test_image):.3f}",
+                    f"wavelet, RMSE={rmse(wavelet, test_image):.3f}",
+                    f"learned PCA, RMSE={rmse(learned, test_image):.3f}",
+                ],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change `n_components`. What happens when the learned model is too small or too large?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            n_components = 8
+
+            experiment = pca_patch_denoise(
+                noisy,
+                patch_mean,
+                patch_components,
+                patch_size=patch_size,
+                n_components=n_components,
+            )
+
+            show_image_grid([noisy, experiment], ["noisy", f"PCA components={n_components}"], height=390)
+            print("RMSE:", round(rmse(experiment, test_image), 4))
+            """
+        ),
+        md(
+            """
+            ### 5. Capacity Curve
+
+            The number of learned components controls the prior strength.
+            """
+        ),
+        code(
+            """
+            component_counts = [2, 4, 8, 12, 16, 24, 32, 40]
+            errors = []
+
+            for count in component_counts:
+                estimate = pca_patch_denoise(
+                    noisy,
+                    patch_mean,
+                    patch_components,
+                    patch_size=patch_size,
+                    n_components=count,
+                )
+                errors.append(rmse(estimate, test_image))
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=component_counts, y=errors, mode="lines+markers"))
+            fig.update_layout(
+                title="Denoising error versus learned model capacity",
+                xaxis_title="PCA components",
+                yaxis_title="RMSE",
+                height=380,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            for count, error in zip(component_counts, errors):
+                print(f"components={count:2d}, RMSE={error:.4f}")
+            """
+        ),
+        md(
+            """
+            ### 6. Neural Network as a Parameterized Operator
+
+            A neural network is also a parameterized map from input to output.
+
+            Here is a tiny patch-to-patch architecture count. We do not train it; the point is to see where parameters live.
+            """
+        ),
+        code(
+            """
+            input_dim = patch_size * patch_size
+            hidden_units = 32
+            output_dim = patch_size * patch_size
+
+            parameter_count = input_dim * hidden_units + hidden_units + hidden_units * output_dim + output_dim
+
+            print("input dimension:", input_dim)
+            print("hidden units:", hidden_units)
+            print("output dimension:", output_dim)
+            print("trainable parameters:", parameter_count)
+            """
+        ),
+        md(
+            """
+            ### 7. Distribution Shift
+
+            A learned prior can work well when test data resembles training data.
+
+            What happens when the test image changes?
+            """
+        ),
+        code(
+            """
+            coins = data.coins().astype(float) / 255.0
+            shifted_test = coins[40:136, 40:136]
+            shifted_noisy = np.clip(shifted_test + noise_sigma * rng.standard_normal(shifted_test.shape), 0.0, 1.0)
+            shifted_gaussian = np.clip(gaussian_filter(shifted_noisy, sigma=1.0, mode="reflect"), 0.0, 1.0)
+            shifted_learned = pca_patch_denoise(
+                shifted_noisy,
+                patch_mean,
+                patch_components,
+                patch_size=patch_size,
+                n_components=16,
+            )
+
+            show_image_grid(
+                [shifted_test, shifted_noisy, shifted_gaussian, shifted_learned],
+                [
+                    "different test image",
+                    f"noisy, RMSE={rmse(shifted_noisy, shifted_test):.3f}",
+                    f"Gaussian, RMSE={rmse(shifted_gaussian, shifted_test):.3f}",
+                    f"learned PCA, RMSE={rmse(shifted_learned, shifted_test):.3f}",
+                ],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change the training crop. Does the learned prior still help on the same test crop?
+            """
+        ),
+        code(
+            """
+            # TODO: change these slices.
+            alternative_train = image[0:192, 320:512]
+
+            alternative_patches = extract_random_patches(alternative_train, patch_size=patch_size, count=4000, seed=43513)
+            alternative_mean, alternative_components, _ = fit_patch_pca(alternative_patches)
+            alternative_learned = pca_patch_denoise(
+                noisy,
+                alternative_mean,
+                alternative_components,
+                patch_size=patch_size,
+                n_components=16,
+            )
+
+            show_image_grid(
+                [alternative_train, test_image, alternative_learned],
+                ["alternative training region", "test crop", f"learned result, RMSE={rmse(alternative_learned, test_image):.3f}"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. What does a model-based method specify explicitly?
+            2. What does a learned method get from training data?
+            3. Why is a neural network a parameterized operator?
+            4. Why can distribution shift be dangerous in imaging?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 13 studies plug-and-play and learned regularization: learned denoisers inside iterative reconstruction algorithms.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -4663,6 +5087,7 @@ def main() -> None:
     write_notebook("week09_optimization_methods.ipynb", week09_cells())
     write_notebook("week10_sparse_reconstruction.ipynb", week10_cells())
     write_notebook("week11_wavelets.ipynb", week11_cells())
+    write_notebook("week12_model_data.ipynb", week12_cells())
 
 
 if __name__ == "__main__":

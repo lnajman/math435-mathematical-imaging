@@ -21,6 +21,7 @@ project:
     - slides/week-09-optimization-methods.qmd
     - slides/week-10-sparse-reconstruction.qmd
     - slides/week-11-wavelets.qmd
+    - slides/week-12-model-data.qmd
     - project/index.qmd
 
 website:
