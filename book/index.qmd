@@ -36,6 +36,9 @@ For each chapter, students should be able to answer:
 | 4 | Noise models and likelihoods | [slides](../slides/week-04-noise-likelihood.html) | [notebook](../notebooks/week04_noise_likelihood.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb) |
 | 5 | Ill-posed inverse problems | [slides](../slides/week-05-ill-posed-inverse-problems.html) | [notebook](../notebooks/week05_ill_posed_inverse_problems.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) |
 | 6 | Tikhonov regularization | [slides](../slides/week-06-tikhonov-regularization.html) | [notebook](../notebooks/week06_tikhonov_regularization.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb) |
+| 7 | Variational formulation | [slides](../slides/week-07-variational-formulation.html) | [notebook](../notebooks/week07_variational_formulation.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) |
+| 8 | Total Variation regularization | [slides](../slides/week-08-total-variation.html) | [notebook](../notebooks/week08_total_variation.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) |
+| 9 | Optimization methods | [slides](../slides/week-09-optimization-methods.html) | [notebook](../notebooks/week09_optimization_methods.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb) |
 
 ## Roadmap
 
@@ -49,7 +52,7 @@ The complete book will follow the course arc:
 | IV | 10-13 | Sparsity, wavelets, learned priors, plug-and-play methods |
 | V | 14-15 | Robustness, ethics, project reporting, oral defense |
 
-The first writing pass now contains Chapters 1-6. Later passes will convert the remaining weekly materials into full chapters.
+The first writing pass now contains Chapters 1-9. Later passes will convert the remaining weekly materials into full chapters.
 
 ## Notation
 

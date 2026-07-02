@@ -15,6 +15,9 @@ project:
     - book/week-04-noise-likelihood.qmd
     - book/week-05-ill-posed-inverse-problems.qmd
     - book/week-06-tikhonov-regularization.qmd
+    - book/week-07-variational-formulation.qmd
+    - book/week-08-total-variation.qmd
+    - book/week-09-optimization-methods.qmd
     - slides/index.qmd
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
@@ -74,6 +77,14 @@ website:
               text: "5. Ill-posed inverse problems"
             - href: book/week-06-tikhonov-regularization.qmd
               text: "6. Tikhonov regularization"
+        - section: "Part III: Variational Models and Optimization"
+          contents:
+            - href: book/week-07-variational-formulation.qmd
+              text: "7. Variational formulation"
+            - href: book/week-08-total-variation.qmd
+              text: "8. Total Variation regularization"
+            - href: book/week-09-optimization-methods.qmd
+              text: "9. Optimization methods"
   page-footer:
     left: "MATH 435: Mathematical Imaging"
     right: "Built with Quarto"

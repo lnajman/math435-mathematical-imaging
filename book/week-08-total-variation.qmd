@@ -1,0 +1,220 @@
+---
+title: "Total Variation Regularization"
+subtitle: "Chapter 8"
+---
+
+[Slides](../slides/week-08-total-variation.html) | [Notebook](../notebooks/week08_total_variation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- define Total Variation;
+- compare TV with quadratic smoothness;
+- explain why TV preserves edges better;
+- identify staircasing artifacts;
+- use TV as a modeling prior for image denoising.
+
+## Edges Are Not Noise
+
+Quadratic smoothing uses
+
+$$
+E(u)
+=
+\frac12\|u-y\|_2^2
++
+\frac{\lambda}{2}\|\nabla u\|_2^2.
+$$
+
+This removes noise, but it also penalizes true edges. Edges and noise both create local changes, so a model must distinguish between unwanted oscillation and meaningful discontinuity.
+
+Total Variation changes the regularizer.
+
+## Continuous Total Variation
+
+For a grayscale image $u:\Omega\to\mathbb{R}$,
+
+$$
+\operatorname{TV}(u)
+=
+\int_\Omega |\nabla u(x)|\,dx.
+$$
+
+TV measures the total amount of change in the image.
+
+For a pixel grid, the isotropic discrete TV is
+
+$$
+\operatorname{TV}(u)
+=
+\sum_i
+\sqrt{(D_xu_i)^2+(D_yu_i)^2}.
+$$
+
+Here $D_x$ and $D_y$ are finite differences in horizontal and vertical directions.
+
+## TV Denoising
+
+The classical Rudin-Osher-Fatemi model is
+
+$$
+u_\lambda
+=
+\operatorname*{argmin}_u
+\frac12\|u-y\|_2^2
++
+\lambda\,\operatorname{TV}(u).
+$$
+
+The data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.
+
+This regularizer says: among images that fit the data, prefer images with small total variation.
+
+## l2 Versus TV Penalties
+
+For a one-dimensional gradient value $g$, compare:
+
+$$
+\text{quadratic penalty}=\frac12 g^2,
+\qquad
+\text{TV penalty}=|g|.
+$$
+
+::: {.figure}
+![](../assets/figures/week08-penalties.png){fig-alt="Quadratic and TV penalties for a gradient value and their derivative behavior"}
+
+Large gradients are much more expensive under a quadratic penalty than under TV.
+:::
+
+For example, if $g=4$, then $\frac12g^2=8$, while $|g|=4$. The difference becomes larger as $|g|$ grows.
+
+This is the basic reason TV preserves edges better: it penalizes the existence of change, but it is less aggressive toward large jumps than a squared-gradient model.
+
+## Nonsmoothness
+
+The function $|g|$ is not differentiable at $g=0$. This is not a minor technicality. It changes the optimization problem.
+
+Quadratic smoothing leads to smooth linear equations. TV denoising is convex but nonsmooth. That makes it powerful for edge preservation and more delicate to solve.
+
+Optimization methods for nonsmooth convex problems appear in the next chapter.
+
+## One-Dimensional Edge Preservation
+
+TV is easiest to understand on a step signal.
+
+::: {.figure}
+![](../assets/figures/week08-step-l2-tv.png){fig-alt="Noisy step signal denoised by quadratic smoothing and TV"}
+
+Quadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.
+:::
+
+TV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.
+
+This is useful when the image contains objects separated by edges.
+
+## Image Denoising
+
+The contrast between quadratic smoothing and TV also appears on images.
+
+::: {.figure}
+![](../assets/figures/week08-image-l2-tv.png){fig-alt="Original image, noisy image, l2 smoothed image, and TV denoised image"}
+
+TV removes noise while preserving stronger edge sets better than quadratic smoothing.
+:::
+
+Gradient maps make the behavior easier to see.
+
+::: {.figure}
+![](../assets/figures/week08-gradient-maps.png){fig-alt="Gradient magnitude maps of original, noisy, l2 smoothed, and TV denoised images"}
+
+Noise creates many small gradients. TV suppresses weak fluctuations while retaining stronger edges.
+:::
+
+## Choosing The TV Weight
+
+In
+
+$$
+\frac12\|u-y\|_2^2+\lambda\operatorname{TV}(u),
+$$
+
+larger $\lambda$ means:
+
+- stronger denoising;
+- fewer small variations;
+- greater risk of losing detail.
+
+::: {.figure}
+![](../assets/figures/week08-parameter-effects.png){fig-alt="TV denoising with several regularization weights"}
+
+The best value of $\lambda$ depends on the task.
+:::
+
+For a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.
+
+## Staircasing
+
+TV favors sparse gradients. That means many locations with zero gradient and a smaller number of jumps.
+
+::: {.figure}
+![](../assets/figures/week08-staircasing.png){fig-alt="Smooth noisy signal denoised by l2 smoothing and TV, showing TV staircasing"}
+
+TV can turn smooth variation into piecewise-flat plateaus.
+:::
+
+This staircasing effect is the signature artifact of TV. TV preserves edges, but it can create artificial plateaus in regions that should vary smoothly.
+
+## Strengths And Weaknesses
+
+| Property | l2 smoothing | TV |
+|---|---|---|
+| Noise removal | yes | yes |
+| Edge preservation | weak | strong |
+| Optimization | smooth linear problem | nonsmooth convex problem |
+| Typical artifact | blur | staircasing |
+| Best for | smooth images | piecewise-smooth or piecewise-constant images |
+
+TV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.
+
+This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.
+
+## Course Checkpoint
+
+At this point in the course, students should be able to connect:
+
+- image arrays and forward models;
+- convolution, blur, and Fourier interpretation;
+- noise models and likelihoods;
+- ill-posedness and singular values;
+- Tikhonov, variational energies, and TV.
+
+TV is the bridge from smooth quadratic models to nonsmooth optimization and sparse reconstruction.
+
+## Computation
+
+The Week 8 notebook lets you change the TV weight, compare TV and l2 smoothing, inspect gradient maps, and find staircasing examples.
+
+Run:
+
+```bash
+python3 examples/week08_total_variation.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. Write the continuous definition of $\operatorname{TV}(u)$.
+2. Write the discrete isotropic TV formula using $D_xu_i$ and $D_yu_i$.
+3. Compare the quadratic and TV costs for gradient values $g=1$ and $g=4$.
+4. Explain why TV preserves edges better than quadratic smoothing.
+5. Describe staircasing and give one situation where it would be undesirable.
+
+## Takeaways
+
+- Total Variation uses $\operatorname{TV}(u)=\int_\Omega |\nabla u|\,dx$.
+- TV favors images with small total change.
+- Compared with l2 smoothing, TV preserves stronger edges.
+- TV is convex but nonsmooth.
+- TV can create staircasing artifacts, so it is not always the right prior.

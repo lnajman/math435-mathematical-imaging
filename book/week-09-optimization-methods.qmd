@@ -1,0 +1,298 @@
+---
+title: "Optimization Methods"
+subtitle: "Chapter 9"
+---
+
+[Slides](../slides/week-09-optimization-methods.html) | [Notebook](../notebooks/week09_optimization_methods.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- recognize convex optimization problems in imaging;
+- use gradient descent for smooth energies;
+- explain why step size matters;
+- understand subgradient intuition for nonsmooth terms;
+- describe proximal operators and ISTA.
+
+## Models Are Not Enough
+
+A variational model defines a reconstruction as a minimizer:
+
+$$
+\min_u E(u).
+$$
+
+An optimization method gives a procedure for finding that minimizer:
+
+$$
+u^0,\ u^1,\ u^2,\ldots
+$$
+
+Regularization chooses the model. Optimization chooses how the model is solved.
+
+This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.
+
+## Convexity
+
+A set $C$ is convex if the segment between any two points in $C$ stays in $C$:
+
+$$
+(1-t)x+ty\in C,\qquad 0\leq t\leq 1.
+$$
+
+Nonnegative intensity constraints and box constraints often form convex sets.
+
+A function $E$ is convex if
+
+$$
+E((1-t)x+ty)
+\leq
+(1-t)E(x)+tE(y).
+$$
+
+::: {.figure}
+![](../assets/figures/week09-convexity.png){fig-alt="Smooth convex, nonsmooth convex, and nonconvex energy curves"}
+
+Convexity concerns the shape of the landscape; smoothness concerns the tools we can use.
+:::
+
+For a convex energy:
+
+- every local minimum is global;
+- descent methods have a target worth reaching;
+- optimality conditions are meaningful.
+
+TV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.
+
+## Gradient Descent
+
+For a differentiable energy $E$,
+
+$$
+u^{k+1}=u^k-\tau\nabla E(u^k).
+$$
+
+The parameter $\tau>0$ is the step size, also called the learning rate.
+
+The gradient points toward fastest local increase, so $-\nabla E(u^k)$ points toward fastest local decrease.
+
+::: {.figure}
+![](../assets/figures/week09-gradient-descent-path.png){fig-alt="Gradient descent paths over contour lines of a quadratic energy"}
+
+Gradient descent uses local slope information to move downhill.
+:::
+
+## Step Size
+
+Step size controls stability.
+
+If $\tau$ is too small:
+
+- progress is safe but slow;
+- many iterations are needed.
+
+If $\tau$ is too large:
+
+- the method may oscillate;
+- the energy can increase;
+- the iterates may diverge.
+
+::: {.figure}
+![](../assets/figures/week09-step-sizes.png){fig-alt="Gradient descent energy curves for several step sizes"}
+
+The same objective can behave very differently under different step sizes.
+:::
+
+If $\nabla E$ is Lipschitz with constant $L$, a typical safe range is
+
+$$
+0<\tau<\frac{2}{L}.
+$$
+
+Often one uses
+
+$$
+\tau\leq \frac{1}{L}
+$$
+
+for stable monotone decrease.
+
+## Stopping Criteria
+
+Common stopping rules include:
+
+- maximum number of iterations;
+- small change in energy;
+- small change in the image;
+- small gradient norm;
+- visual or task-driven stopping.
+
+Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.
+
+## Nonsmooth Terms
+
+Sparse and edge-preserving models often use terms such as
+
+$$
+|x|,
+\qquad
+\|x\|_1,
+\qquad
+\operatorname{TV}(u).
+$$
+
+These terms have corners. For $x\neq 0$,
+
+$$
+\frac{d}{dx}|x|=\operatorname{sign}(x).
+$$
+
+At $x=0$, there is no single derivative.
+
+The corner at zero is exactly what encourages sparsity.
+
+## Subgradient Intuition
+
+At a nonsmooth point, there may be many valid slopes. For $|x|$ at zero,
+
+$$
+\partial |0|=[-1,1].
+$$
+
+This is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.
+
+Treating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.
+
+## Proximal Operators
+
+The proximal operator of a regularizer $R$ is
+
+$$
+\operatorname{prox}_{\tau R}(v)
+=
+\operatorname*{argmin}_u
+\frac12\|u-v\|_2^2+\tau R(u).
+$$
+
+It balances staying near $v$ with reducing the regularizer.
+
+This is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.
+
+## Soft Thresholding
+
+For $R(u)=\lambda\|u\|_1$, the proximal operator is soft thresholding:
+
+$$
+\operatorname{prox}_{\tau\lambda\|\cdot\|_1}(v)
+=
+\operatorname{sign}(v)\max(|v|-\tau\lambda,0).
+$$
+
+::: {.figure}
+![](../assets/figures/week09-soft-threshold.png){fig-alt="Absolute value nonsmoothness and soft-thresholding proximal operator"}
+
+Soft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.
+:::
+
+Soft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.
+
+## Proximal Gradient
+
+Suppose the energy is split as
+
+$$
+E(u)=f(u)+R(u),
+$$
+
+where $f$ is smooth and $R$ may be nonsmooth.
+
+Proximal gradient uses
+
+$$
+u^{k+1}
+=
+\operatorname{prox}_{\tau R}
+\left(u^k-\tau\nabla f(u^k)\right).
+$$
+
+The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.
+
+## ISTA
+
+For the l1-regularized problem
+
+$$
+\min_x
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
+$$
+
+ISTA is
+
+$$
+x^{k+1}
+=
+S_{\tau\lambda}
+\left(x^k-\tau A^\top(Ax^k-y)\right),
+$$
+
+where $S_{\tau\lambda}$ is soft thresholding.
+
+| Step | Meaning |
+|---|---|
+| compute $Ax^k-y$ | current data mismatch |
+| apply $A^\top$ | move mismatch back to image or coefficient space |
+| gradient step | improve data fidelity |
+| soft threshold | impose sparsity |
+
+::: {.figure}
+![](../assets/figures/week09-ista-sparse-signal.png){fig-alt="Sparse signal reconstruction with ISTA and energy decrease"}
+
+ISTA alternates between data correction and sparsity promotion.
+:::
+
+::: {.figure}
+![](../assets/figures/week09-ista-image.png){fig-alt="Original image, blurred noisy observation, ISTA estimate, and sparse DCT coefficients"}
+
+The same pattern appears in image reconstruction with transform-domain sparsity.
+:::
+
+## Common Failure Modes
+
+Optimization can fail for reasons that are easy to confuse with modeling failure:
+
+- the step size is too large;
+- the implemented objective is not the intended objective;
+- stopping too early hides convergence;
+- stopping too late wastes computation or overfits noise;
+- a nonsmooth term is treated as if it were smooth.
+
+The more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.
+
+## Computation
+
+The Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.
+
+Run:
+
+```bash
+python3 examples/week09_optimization.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. Explain the difference between a variational model and an optimization method.
+2. For gradient descent, describe what happens when the step size is too small and when it is too large.
+3. Why does the absolute value penalty encourage exact zero values?
+4. Write the proximal operator definition for a regularizer $R$.
+5. Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.
+
+## Takeaways
+
+- Convexity makes minimization conceptually safer.
+- Gradient descent solves smooth problems by local descent.
+- Step size controls stability and speed.
+- l1 and TV are convex but nonsmooth.
+- Proximal operators are central for sparse and edge-preserving imaging.

@@ -1,0 +1,318 @@
+---
+title: "Variational Formulation"
+subtitle: "Chapter 7"
+---
+
+[Slides](../slides/week-07-variational-formulation.html) | [Notebook](../notebooks/week07_variational_formulation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- interpret reconstruction as energy minimization;
+- separate data fidelity and regularization;
+- explain why convexity matters;
+- derive the Euler-Lagrange equation for a quadratic smoothing model;
+- connect optimality equations to gradient descent.
+
+## From One Model To A Framework
+
+Tikhonov regularization solves
+
+$$
+\min_x \|Ax-y\|_2^2+\lambda\|x\|_2^2.
+$$
+
+This is one example of a larger modeling principle: choose an energy and minimize it.
+
+In variational reconstruction, we write
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x E(x).
+$$
+
+Often the energy has the form
+
+$$
+E(x)=D(y,f(x))+\lambda R(x).
+$$
+
+The data fidelity term $D(y,f(x))$ measures agreement with the observations. The regularizer $R(x)$ encodes preferred image structure.
+
+## Energy As A Model
+
+An energy is not only a numerical function. It is a modeling statement.
+
+::: {.figure}
+![](../assets/figures/week07-energy-terms.png){fig-alt="Data term, regularizer, and total energy as functions of a scalar candidate"}
+
+The minimizer balances data agreement with regularity.
+:::
+
+This viewpoint separates three choices:
+
+- the data model decides the fidelity term;
+- the image prior decides the regularizer;
+- the optimization method decides how the energy is minimized.
+
+Examples from previous chapters fit this pattern.
+
+| Model | Energy |
+|---|---|
+| Gaussian direct denoising | $\|x-y\|_2^2$ |
+| Tikhonov | $\|Ax-y\|_2^2+\lambda\|x\|_2^2$ |
+| Quadratic smoothing | $\|u-y\|_2^2+\lambda\|\nabla u\|_2^2$ |
+| Poisson data | $\sum_i f_i(x)-z_i\log f_i(x)$ |
+
+## A First Variational Denoising Model
+
+For a noisy image $y$, consider
+
+$$
+E(u)
+=
+\frac12\|u-y\|_2^2
++
+\frac{\lambda}{2}\|\nabla u\|_2^2.
+$$
+
+The first term keeps $u$ close to the observed image. The second term penalizes changes between neighboring pixels.
+
+The parameter $\lambda$ controls the strength of smoothing:
+
+- small $\lambda$: the reconstruction stays close to the data;
+- large $\lambda$: the reconstruction becomes smoother;
+- too large $\lambda$: meaningful edges are blurred.
+
+## Convexity
+
+Convexity is a geometric property of an energy. Informally, a function is convex if the line segment between two points on its graph stays above the graph.
+
+::: {.figure}
+![](../assets/figures/week07-convexity.png){fig-alt="Convex and nonconvex energy landscapes shown by contours"}
+
+Convex energies have no deceptive local minima.
+:::
+
+For a convex energy:
+
+- every local minimizer is global;
+- first-order optimality conditions are meaningful;
+- many algorithms have reliable behavior.
+
+Convex does not always mean easy, but it removes a major ambiguity. The quadratic denoising energy
+
+$$
+E(u)
+=
+\frac12\|u-y\|_2^2
++
+\frac{\lambda}{2}\|\nabla u\|_2^2
+$$
+
+is convex for $\lambda\ge 0$.
+
+## Euler-Lagrange Equation
+
+We now derive the optimality condition for a continuous denoising energy:
+
+$$
+E(u)
+=
+\frac12\int_\Omega (u-y)^2\,dx
++
+\frac{\lambda}{2}\int_\Omega |\nabla u|^2\,dx.
+$$
+
+The unknown $u$ is the reconstruction, and $y$ is the noisy image.
+
+To test optimality, perturb $u$ in a direction $v$:
+
+$$
+u_\epsilon = u+\epsilon v.
+$$
+
+At a minimizer, the derivative with respect to $\epsilon$ must vanish at $\epsilon=0$:
+
+$$
+\left.
+\frac{d}{d\epsilon}E(u+\epsilon v)
+\right|_{\epsilon=0}
+=0.
+$$
+
+## Variation Of The Data Term
+
+For the data term,
+
+$$
+\frac12\int_\Omega (u+\epsilon v-y)^2\,dx.
+$$
+
+Differentiating at $\epsilon=0$ gives
+
+$$
+\int_\Omega (u-y)v\,dx.
+$$
+
+This says that the data term pushes $u$ toward $y$.
+
+## Variation Of The Regularizer
+
+For the smoothness term,
+
+$$
+\frac{\lambda}{2}\int_\Omega |\nabla(u+\epsilon v)|^2\,dx,
+$$
+
+the derivative at $\epsilon=0$ is
+
+$$
+\lambda\int_\Omega \nabla u\cdot \nabla v\,dx.
+$$
+
+Using integration by parts and ignoring boundary terms in this guided derivation,
+
+$$
+\int_\Omega \nabla u\cdot \nabla v\,dx
+=
+-\int_\Omega (\Delta u)v\,dx.
+$$
+
+The first variation becomes
+
+$$
+\int_\Omega \left[(u-y)-\lambda\Delta u\right]v\,dx.
+$$
+
+Since this must hold for all perturbations $v$,
+
+$$
+(u-y)-\lambda\Delta u=0.
+$$
+
+Equivalently,
+
+$$
+u-\lambda\Delta u=y.
+$$
+
+The minimizer solves a differential equation.
+
+## Discrete Version
+
+On a pixel grid, the same idea leads to
+
+$$
+(u-y)+\lambda L u=0,
+$$
+
+where $L$ is a discrete negative Laplacian.
+
+For a finite-difference operator $D$, the energy
+
+$$
+E(u)
+=
+\frac12\|u-y\|_2^2
++
+\frac{\lambda}{2}\|Du\|_2^2
+$$
+
+has optimality condition
+
+$$
+(u-y)+\lambda D^TDu=0.
+$$
+
+::: {.figure}
+![](../assets/figures/week07-euler-lagrange-stencil.png){fig-alt="Finite-difference neighborhood and Euler-Lagrange equations for quadratic smoothing"}
+
+Finite differences turn the continuous optimality equation into a grid equation.
+:::
+
+This is Tikhonov with a different penalty: instead of penalizing $\|x\|_2^2$, we penalize squared image gradients.
+
+## Gradient Descent
+
+The optimality equation gives a condition that the minimizer must satisfy. Gradient descent gives an iterative way to approach it.
+
+For an energy $E(u)$,
+
+$$
+u^{k+1}=u^k-\tau\nabla E(u^k).
+$$
+
+The parameter $\tau$ is the step size.
+
+::: {.figure}
+![](../assets/figures/week07-gradient-descent-path.png){fig-alt="Gradient descent path on a convex quadratic energy landscape"}
+
+Gradient descent moves locally downhill on the energy landscape.
+:::
+
+For quadratic denoising,
+
+$$
+\nabla E(u)
+=
+(u-y)+\lambda L u.
+$$
+
+Therefore,
+
+$$
+u^{k+1}
+=
+u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
+$$
+
+If $\tau$ is too large, gradient descent can overshoot or diverge even for a convex quadratic.
+
+::: {.figure}
+![](../assets/figures/week07-gradient-descent-energy.png){fig-alt="Energy decreasing under gradient descent and denoising iterates"}
+
+The energy can decrease while image quality first improves and then becomes too smooth.
+:::
+
+## Real Image Denoising
+
+Quadratic smoothing is transparent and useful. It is convex, its optimality condition is linear, and it reduces Gaussian-like noise.
+
+::: {.figure}
+![](../assets/figures/week07-quadratic-denoising.png){fig-alt="Original image, noisy image, and quadratic denoising with several lambda values"}
+
+Quadratic smoothing reduces noise, but it also blurs edges.
+:::
+
+The weakness is also clear: edges are large gradients, and the term $\|\nabla u\|_2^2$ penalizes large gradients strongly. The next chapter replaces squared gradients with gradient magnitudes to better preserve edges.
+
+## Computation
+
+The Week 7 notebook lets you change $\lambda$, vary the gradient descent step size, and compare a closed-form solution with gradient descent iterates.
+
+Run:
+
+```bash
+python3 examples/week07_variational.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. In $E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2$, identify the data term, regularizer, and parameter.
+2. Explain why convexity is useful for minimization.
+3. Derive the variation of the data term $\frac12\int_\Omega (u-y)^2\,dx$.
+4. Explain why the Euler-Lagrange equation for quadratic denoising is $u-\lambda\Delta u=y$.
+5. In gradient descent, what can go wrong if the step size is too large?
+
+## Takeaways
+
+- Variational imaging models define reconstruction by energy minimization.
+- Energies combine data fidelity and regularization.
+- Convexity gives a safer optimization landscape.
+- Euler-Lagrange equations express first-order optimality.
+- Quadratic smoothness is clear and useful, but it blurs edges.
