@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimization Methods – MATH 435: Mathematical Imaging</title>
+<title>Model-Based vs Data-Driven Imaging – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-12-model-data.html">12. Model-based vs data-driven imaging</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +311,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">9. Optimization methods</span></a>
   </div>
 </li>
@@ -340,7 +340,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-12-model-data.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-12-model-data.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">12. Model-based vs data-driven imaging</span></a>
   </div>
 </li>
@@ -363,31 +363,28 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#models-are-not-enough" id="toc-models-are-not-enough" class="nav-link" data-scroll-target="#models-are-not-enough">Models Are Not Enough</a></li>
-  <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
-  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
-  <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
-  <li><a href="#stopping-criteria" id="toc-stopping-criteria" class="nav-link" data-scroll-target="#stopping-criteria">Stopping Criteria</a></li>
-  <li><a href="#nonsmooth-terms" id="toc-nonsmooth-terms" class="nav-link" data-scroll-target="#nonsmooth-terms">Nonsmooth Terms</a></li>
-  <li><a href="#subgradient-intuition" id="toc-subgradient-intuition" class="nav-link" data-scroll-target="#subgradient-intuition">Subgradient Intuition</a></li>
-  <li><a href="#proximal-operators" id="toc-proximal-operators" class="nav-link" data-scroll-target="#proximal-operators">Proximal Operators</a></li>
-  <li><a href="#soft-thresholding" id="toc-soft-thresholding" class="nav-link" data-scroll-target="#soft-thresholding">Soft Thresholding</a></li>
-  <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
-  <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
-  <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
+  <li><a href="#where-does-prior-knowledge-come-from" id="toc-where-does-prior-knowledge-come-from" class="nav-link" data-scroll-target="#where-does-prior-knowledge-come-from">Where Does Prior Knowledge Come From?</a></li>
+  <li><a href="#model-based-imaging" id="toc-model-based-imaging" class="nav-link" data-scroll-target="#model-based-imaging">Model-Based Imaging</a></li>
+  <li><a href="#data-driven-imaging" id="toc-data-driven-imaging" class="nav-link" data-scroll-target="#data-driven-imaging">Data-Driven Imaging</a></li>
+  <li><a href="#strengths-and-risks" id="toc-strengths-and-risks" class="nav-link" data-scroll-target="#strengths-and-risks">Strengths And Risks</a></li>
+  <li><a href="#neural-networks-as-operators" id="toc-neural-networks-as-operators" class="nav-link" data-scroll-target="#neural-networks-as-operators">Neural Networks As Operators</a></li>
+  <li><a href="#a-small-learned-patch-prior" id="toc-a-small-learned-patch-prior" class="nav-link" data-scroll-target="#a-small-learned-patch-prior">A Small Learned Patch Prior</a></li>
+  <li><a href="#capacity-and-generalization" id="toc-capacity-and-generalization" class="nav-link" data-scroll-target="#capacity-and-generalization">Capacity And Generalization</a></li>
+  <li><a href="#comparing-the-philosophies" id="toc-comparing-the-philosophies" class="nav-link" data-scroll-target="#comparing-the-philosophies">Comparing The Philosophies</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-12-model-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-12-model-data.html">12. Model-based vs data-driven imaging</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization Methods</h1>
-<p class="subtitle lead">Chapter 9</p>
+<h1 class="title">Model-Based vs Data-Driven Imaging</h1>
+<p class="subtitle lead">Chapter 12</p>
 </div>
 
 
@@ -404,264 +401,228 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-09-optimization-methods.html">Slides</a> | <a href="../notebooks/week09_optimization_methods.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-12-model-data.html">Slides</a> | <a href="../notebooks/week12_model_data.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>recognize convex optimization problems in imaging;</li>
-<li>use gradient descent for smooth energies;</li>
-<li>explain why step size matters;</li>
-<li>understand subgradient intuition for nonsmooth terms;</li>
-<li>describe proximal operators and ISTA.</li>
+<li>compare model-based and data-driven imaging;</li>
+<li>identify forward models, priors, solvers, and training data;</li>
+<li>interpret a neural network as a parameterized operator;</li>
+<li>explain a small learned patch prior;</li>
+<li>discuss generalization and failure modes.</li>
 </ul>
 </section>
-<section id="models-are-not-enough" class="level2">
-<h2 class="anchored" data-anchor-id="models-are-not-enough">Models Are Not Enough</h2>
-<p>A variational model defines a reconstruction as a minimizer:</p>
-<p><span class="math display">
-\min_u E(u).
-</span></p>
-<p>An optimization method gives a procedure for finding that minimizer:</p>
-<p><span class="math display">
-u^0,\ u^1,\ u^2,\ldots
-</span></p>
-<p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
-<p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
-</section>
-<section id="convexity" class="level2">
-<h2 class="anchored" data-anchor-id="convexity">Convexity</h2>
-<p>A set <span class="math inline">C</span> is convex if the segment between any two points in <span class="math inline">C</span> stays in <span class="math inline">C</span>:</p>
-<p><span class="math display">
-(1-t)x+ty\in C,\qquad 0\leq t\leq 1.
-</span></p>
-<p>Nonnegative intensity constraints and box constraints often form convex sets.</p>
-<p>A function <span class="math inline">E</span> is convex if</p>
-<p><span class="math display">
-E((1-t)x+ty)
-\leq
-(1-t)E(x)+tE(y).
-</span></p>
+<section id="where-does-prior-knowledge-come-from" class="level2">
+<h2 class="anchored" data-anchor-id="where-does-prior-knowledge-come-from">Where Does Prior Knowledge Come From?</h2>
+<p>Wavelets gave us a handcrafted representation. We chose the wavelet family, decomposition level, thresholding rule, and threshold strength.</p>
+<p>Data-driven imaging asks a different question: what if some of these choices are learned from examples?</p>
 <div class="figure">
-<p><img src="../assets/figures/week09-convexity.png" class="img-fluid" alt="Smooth convex, nonsmooth convex, and nonconvex energy curves"></p>
-<p>Convexity concerns the shape of the landscape; smoothness concerns the tools we can use.</p>
-</div>
-<p>For a convex energy:</p>
-<ul>
-<li>every local minimum is global;</li>
-<li>descent methods have a target worth reaching;</li>
-<li>optimality conditions are meaningful.</li>
-</ul>
-<p>TV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.</p>
-</section>
-<section id="gradient-descent" class="level2">
-<h2 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h2>
-<p>For a differentiable energy <span class="math inline">E</span>,</p>
-<p><span class="math display">
-u^{k+1}=u^k-\tau\nabla E(u^k).
-</span></p>
-<p>The parameter <span class="math inline">\tau&gt;0</span> is the step size, also called the learning rate.</p>
-<p>The gradient points toward fastest local increase, so <span class="math inline">-\nabla E(u^k)</span> points toward fastest local decrease.</p>
-<div class="figure">
-<p><img src="../assets/figures/week09-gradient-descent-path.png" class="img-fluid" alt="Gradient descent paths over contour lines of a quadratic energy"></p>
-<p>Gradient descent uses local slope information to move downhill.</p>
+<p><img src="../assets/figures/week12-two-philosophies.png" class="img-fluid" alt="Diagram comparing model-based imaging and data-driven imaging workflows"></p>
+<p>Model-based methods write assumptions; data-driven methods learn assumptions from examples.</p>
 </div>
 </section>
-<section id="step-size" class="level2">
-<h2 class="anchored" data-anchor-id="step-size">Step Size</h2>
-<p>Step size controls stability.</p>
-<p>If <span class="math inline">\tau</span> is too small:</p>
-<ul>
-<li>progress is safe but slow;</li>
-<li>many iterations are needed.</li>
-</ul>
-<p>If <span class="math inline">\tau</span> is too large:</p>
-<ul>
-<li>the method may oscillate;</li>
-<li>the energy can increase;</li>
-<li>the iterates may diverge.</li>
-</ul>
-<div class="figure">
-<p><img src="../assets/figures/week09-step-sizes.png" class="img-fluid" alt="Gradient descent energy curves for several step sizes"></p>
-<p>The same objective can behave very differently under different step sizes.</p>
-</div>
-<p>If <span class="math inline">\nabla E</span> is Lipschitz with constant <span class="math inline">L</span>, a typical safe range is</p>
+<section id="model-based-imaging" class="level2">
+<h2 class="anchored" data-anchor-id="model-based-imaging">Model-Based Imaging</h2>
+<p>A classical reconstruction often solves</p>
 <p><span class="math display">
-0&lt;\tau&lt;\frac{2}{L}.
-</span></p>
-<p>Often one uses</p>
-<p><span class="math display">
-\tau\leq \frac{1}{L}
-</span></p>
-<p>for stable monotone decrease.</p>
-</section>
-<section id="stopping-criteria" class="level2">
-<h2 class="anchored" data-anchor-id="stopping-criteria">Stopping Criteria</h2>
-<p>Common stopping rules include:</p>
-<ul>
-<li>maximum number of iterations;</li>
-<li>small change in energy;</li>
-<li>small change in the image;</li>
-<li>small gradient norm;</li>
-<li>visual or task-driven stopping.</li>
-</ul>
-<p>Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.</p>
-</section>
-<section id="nonsmooth-terms" class="level2">
-<h2 class="anchored" data-anchor-id="nonsmooth-terms">Nonsmooth Terms</h2>
-<p>Sparse and edge-preserving models often use terms such as</p>
-<p><span class="math display">
-|x|,
-\qquad
-\|x\|_1,
-\qquad
-\operatorname{TV}(u).
-</span></p>
-<p>These terms have corners. For <span class="math inline">x\neq 0</span>,</p>
-<p><span class="math display">
-\frac{d}{dx}|x|=\operatorname{sign}(x).
-</span></p>
-<p>At <span class="math inline">x=0</span>, there is no single derivative.</p>
-<p>The corner at zero is exactly what encourages sparsity.</p>
-</section>
-<section id="subgradient-intuition" class="level2">
-<h2 class="anchored" data-anchor-id="subgradient-intuition">Subgradient Intuition</h2>
-<p>At a nonsmooth point, there may be many valid slopes. For <span class="math inline">|x|</span> at zero,</p>
-<p><span class="math display">
-\partial |0|=[-1,1].
-</span></p>
-<p>This is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.</p>
-<p>Treating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.</p>
-</section>
-<section id="proximal-operators" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-operators">Proximal Operators</h2>
-<p>The proximal operator of a regularizer <span class="math inline">R</span> is</p>
-<p><span class="math display">
-\operatorname{prox}_{\tau R}(v)
+\hat{x}
 =
-\operatorname*{argmin}_u
-\frac12\|u-v\|_2^2+\tau R(u).
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R(x).
 </span></p>
-<p>It balances staying near <span class="math inline">v</span> with reducing the regularizer.</p>
-<p>This is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.</p>
+<p>Here <span class="math inline">D</span> is data fidelity and <span class="math inline">R</span> is the regularizer or prior.</p>
+<p>In a model-based method, we specify:</p>
+<ul>
+<li>the forward model <span class="math inline">A</span>;</li>
+<li>the noise model or data term;</li>
+<li>the regularizer;</li>
+<li>the parameter <span class="math inline">\lambda</span>;</li>
+<li>the optimization method.</li>
+</ul>
+<p>Examples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.</p>
+<p>Model-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.</p>
 </section>
-<section id="soft-thresholding" class="level2">
-<h2 class="anchored" data-anchor-id="soft-thresholding">Soft Thresholding</h2>
-<p>For <span class="math inline">R(u)=\lambda\|u\|_1</span>, the proximal operator is soft thresholding:</p>
+<section id="data-driven-imaging" class="level2">
+<h2 class="anchored" data-anchor-id="data-driven-imaging">Data-Driven Imaging</h2>
+<p>Instead of writing the reconstruction rule by hand, a data-driven method learns a function:</p>
 <p><span class="math display">
-\operatorname{prox}_{\tau\lambda\|\cdot\|_1}(v)
-=
-\operatorname{sign}(v)\max(|v|-\tau\lambda,0).
+\hat{x}=f_\theta(y).
 </span></p>
+<p>The parameters <span class="math inline">\theta</span> are chosen from training data.</p>
+<p>With supervised training pairs <span class="math inline">(y_i,x_i)</span>, one solves</p>
+<p><span class="math display">
+\min_\theta
+\sum_i
+\ell(f_\theta(y_i),x_i).
+</span></p>
+<p>The loss tells the network what counts as a good reconstruction on the training set.</p>
+<p>Data-driven methods still require choices:</p>
+<ul>
+<li>training data;</li>
+<li>architecture;</li>
+<li>loss function;</li>
+<li>optimizer;</li>
+<li>evaluation metric;</li>
+<li>deployment domain.</li>
+</ul>
+<p>The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.</p>
+</section>
+<section id="strengths-and-risks" class="level2">
+<h2 class="anchored" data-anchor-id="strengths-and-risks">Strengths And Risks</h2>
+<p>Data-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.</p>
+<p>They can fail when:</p>
+<ul>
+<li>the test distribution changes;</li>
+<li>training data is biased;</li>
+<li>the loss rewards the wrong thing;</li>
+<li>uncertainty is hidden;</li>
+<li>hallucinated structure looks plausible.</li>
+</ul>
+<p>The last point matters especially in medical and scientific imaging: plausible is not the same as measured.</p>
+</section>
+<section id="neural-networks-as-operators" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks-as-operators">Neural Networks As Operators</h2>
 <div class="figure">
-<p><img src="../assets/figures/week09-soft-threshold.png" class="img-fluid" alt="Absolute value nonsmoothness and soft-thresholding proximal operator"></p>
-<p>Soft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.</p>
+<p><img src="../assets/figures/week12-neural-operator.png" class="img-fluid" alt="Diagram of a neural network as a parameterized operator from input image to output image"></p>
+<p>A neural network is a parameterized map from input data to output image.</p>
 </div>
-<p>Soft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.</p>
-</section>
-<section id="proximal-gradient" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
-<p>Suppose the energy is split as</p>
+<p>At a high level, layers combine linear filtering or mixing, nonlinear activations, many learned parameters, and composition of simple operations.</p>
+<p>A composition of only linear layers is still linear. Nonlinear activations allow the map to adapt to image content.</p>
+<p>Some methods ignore the explicit forward model:</p>
 <p><span class="math display">
-E(u)=f(u)+R(u),
+\hat{x}=f_\theta(y).
 </span></p>
-<p>where <span class="math inline">f</span> is smooth and <span class="math inline">R</span> may be nonsmooth.</p>
-<p>Proximal gradient uses</p>
-<p><span class="math display">
-u^{k+1}
-=
-\operatorname{prox}_{\tau R}
-\left(u^k-\tau\nabla f(u^k)\right).
-</span></p>
-<p>The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.</p>
-</section>
-<section id="ista" class="level2">
-<h2 class="anchored" data-anchor-id="ista">ISTA</h2>
-<p>For the l1-regularized problem</p>
-<p><span class="math display">
-\min_x
-\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
-</span></p>
-<p>ISTA is</p>
+<p>Others include it inside an iterative reconstruction:</p>
 <p><span class="math display">
 x^{k+1}
 =
-S_{\tau\lambda}
-\left(x^k-\tau A^\top(Ax^k-y)\right),
+\text{learned step using } A,\ A^\top,\ y.
 </span></p>
-<p>where <span class="math inline">S_{\tau\lambda}</span> is soft thresholding.</p>
+<p>This second viewpoint leads naturally to plug-and-play and learned regularization.</p>
+</section>
+<section id="a-small-learned-patch-prior" class="level2">
+<h2 class="anchored" data-anchor-id="a-small-learned-patch-prior">A Small Learned Patch Prior</h2>
+<p>Learning does not require a large neural network. A simple patch PCA prior already illustrates the main idea.</p>
+<p>We extract many clean image patches and learn:</p>
+<ul>
+<li>a mean patch;</li>
+<li>principal patch directions;</li>
+<li>a low-dimensional patch model.</li>
+</ul>
+<div class="figure">
+<p><img src="../assets/figures/week12-pca-atoms.png" class="img-fluid" alt="Mean patch and learned PCA patch atoms from image patches"></p>
+<p>Patch PCA learns common directions of variation from examples.</p>
+</div>
+<p>For each noisy patch, denoising can:</p>
+<ol type="1">
+<li>subtract the learned mean patch;</li>
+<li>project onto the first few learned directions;</li>
+<li>reconstruct the patch;</li>
+<li>average overlapping reconstructed patches.</li>
+</ol>
+<p>This is data-driven even though it is not a neural network.</p>
+<div class="figure">
+<p><img src="../assets/figures/week12-denoising-comparison.png" class="img-fluid" alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"></p>
+<p>Handcrafted and learned priors can be compared on the same denoising task.</p>
+</div>
+</section>
+<section id="capacity-and-generalization" class="level2">
+<h2 class="anchored" data-anchor-id="capacity-and-generalization">Capacity And Generalization</h2>
+<p>The number of retained PCA components controls model capacity.</p>
+<div class="figure">
+<p><img src="../assets/figures/week12-capacity-curve.png" class="img-fluid" alt="Patch PCA singular spectrum and denoising RMSE versus number of components"></p>
+<p>Too few components oversmooth; too many components preserve noise.</p>
+</div>
+<p>If the learned prior is trained on one image family and tested on another, performance can change.</p>
+<div class="figure">
+<p><img src="../assets/figures/week12-distribution-shift.png" class="img-fluid" alt="Learned PCA denoising on a camera crop and a coins crop, showing distribution dependence"></p>
+<p>Generalization is central to learned imaging.</p>
+</div>
+<p>Distribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.</p>
+</section>
+<section id="comparing-the-philosophies" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-the-philosophies">Comparing The Philosophies</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Step</th>
-<th>Meaning</th>
+<th>Question</th>
+<th>Model-based</th>
+<th>Data-driven</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>compute <span class="math inline">Ax^k-y</span></td>
-<td>current data mismatch</td>
+<td>Prior comes from</td>
+<td>formulas and modeling</td>
+<td>examples and loss</td>
 </tr>
 <tr class="even">
-<td>apply <span class="math inline">A^\top</span></td>
-<td>move mismatch back to image or coefficient space</td>
+<td>Interpretability</td>
+<td>usually higher</td>
+<td>often lower</td>
 </tr>
 <tr class="odd">
-<td>gradient step</td>
-<td>improve data fidelity</td>
+<td>Data requirement</td>
+<td>lower</td>
+<td>higher</td>
 </tr>
 <tr class="even">
-<td>soft threshold</td>
-<td>impose sparsity</td>
+<td>Physics</td>
+<td>explicit</td>
+<td>sometimes implicit</td>
+</tr>
+<tr class="odd">
+<td>Failure mode</td>
+<td>wrong model or prior</td>
+<td>distribution shift or hallucination</td>
 </tr>
 </tbody>
 </table>
-<div class="figure">
-<p><img src="../assets/figures/week09-ista-sparse-signal.png" class="img-fluid" alt="Sparse signal reconstruction with ISTA and energy decrease"></p>
-<p>ISTA alternates between data correction and sparsity promotion.</p>
-</div>
-<div class="figure">
-<p><img src="../assets/figures/week09-ista-image.png" class="img-fluid" alt="Original image, blurred noisy observation, ISTA estimate, and sparse DCT coefficients"></p>
-<p>The same pattern appears in image reconstruction with transform-domain sparsity.</p>
-</div>
+<p>Many modern methods combine both philosophies: explicit forward model, learned denoiser or prior, iterative algorithm structure, and data-consistency steps.</p>
 </section>
-<section id="common-failure-modes" class="level2">
-<h2 class="anchored" data-anchor-id="common-failure-modes">Common Failure Modes</h2>
-<p>Optimization can fail for reasons that are easy to confuse with modeling failure:</p>
+<section id="evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
+<p>Pixel RMSE is not enough. We may also need:</p>
 <ul>
-<li>the step size is too large;</li>
-<li>the implemented objective is not the intended objective;</li>
-<li>stopping too early hides convergence;</li>
-<li>stopping too late wastes computation or overfits noise;</li>
-<li>a nonsmooth term is treated as if it were smooth.</li>
+<li>task accuracy;</li>
+<li>uncertainty estimates;</li>
+<li>robustness to distribution shift;</li>
+<li>consistency with measured data;</li>
+<li>expert review.</li>
 </ul>
-<p>The more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.</p>
+<p>This is the doorway to plug-and-play and learned regularization.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.</p>
+<p>The Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week09_optimization.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week12_model_data.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>Explain the difference between a variational model and an optimization method.</li>
-<li>For gradient descent, describe what happens when the step size is too small and when it is too large.</li>
-<li>Why does the absolute value penalty encourage exact zero values?</li>
-<li>Write the proximal operator definition for a regularizer <span class="math inline">R</span>.</li>
-<li>Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.</li>
+<li>What does a model-based method specify explicitly?</li>
+<li>What does a data-driven method learn from examples?</li>
+<li>Why is a neural network a nonlinear operator?</li>
+<li>What is distribution shift?</li>
+<li>Give one reason hallucinated structure is dangerous in scientific imaging.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Convexity makes minimization conceptually safer.</li>
-<li>Gradient descent solves smooth problems by local descent.</li>
-<li>Step size controls stability and speed.</li>
-<li>l1 and TV are convex but nonsmooth.</li>
-<li>Proximal operators are central for sparse and edge-preserving imaging.</li>
+<li>Model-based methods write assumptions explicitly.</li>
+<li>Data-driven methods learn assumptions from examples.</li>
+<li>Neural networks are parameterized nonlinear operators.</li>
+<li>Learned methods can be powerful but depend on training data.</li>
+<li>Modern imaging often combines physics, optimization, and learning.</li>
 </ul>
 
 
@@ -1076,7 +1037,7 @@ S_{\tau\lambda}
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-12-model-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

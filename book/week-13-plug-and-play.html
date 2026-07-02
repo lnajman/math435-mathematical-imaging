@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimization Methods – MATH 435: Mathematical Imaging</title>
+<title>Plug-and-Play and Learned Regularization – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-13-plug-and-play.html">13. Plug-and-play and learned regularization</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +311,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">9. Optimization methods</span></a>
   </div>
 </li>
@@ -346,7 +346,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-13-plug-and-play.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-13-plug-and-play.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">13. Plug-and-play and learned regularization</span></a>
   </div>
 </li>
@@ -363,31 +363,29 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#models-are-not-enough" id="toc-models-are-not-enough" class="nav-link" data-scroll-target="#models-are-not-enough">Models Are Not Enough</a></li>
-  <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
-  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
-  <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
-  <li><a href="#stopping-criteria" id="toc-stopping-criteria" class="nav-link" data-scroll-target="#stopping-criteria">Stopping Criteria</a></li>
-  <li><a href="#nonsmooth-terms" id="toc-nonsmooth-terms" class="nav-link" data-scroll-target="#nonsmooth-terms">Nonsmooth Terms</a></li>
-  <li><a href="#subgradient-intuition" id="toc-subgradient-intuition" class="nav-link" data-scroll-target="#subgradient-intuition">Subgradient Intuition</a></li>
-  <li><a href="#proximal-operators" id="toc-proximal-operators" class="nav-link" data-scroll-target="#proximal-operators">Proximal Operators</a></li>
-  <li><a href="#soft-thresholding" id="toc-soft-thresholding" class="nav-link" data-scroll-target="#soft-thresholding">Soft Thresholding</a></li>
+  <li><a href="#can-a-denoiser-be-a-prior" id="toc-can-a-denoiser-be-a-prior" class="nav-link" data-scroll-target="#can-a-denoiser-be-a-prior">Can A Denoiser Be A Prior?</a></li>
+  <li><a href="#proximal-algorithms" id="toc-proximal-algorithms" class="nav-link" data-scroll-target="#proximal-algorithms">Proximal Algorithms</a></li>
   <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
-  <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
-  <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
+  <li><a href="#plug-and-play-update" id="toc-plug-and-play-update" class="nav-link" data-scroll-target="#plug-and-play-update">Plug-and-Play Update</a></li>
+  <li><a href="#explicit-versus-implicit-prior" id="toc-explicit-versus-implicit-prior" class="nav-link" data-scroll-target="#explicit-versus-implicit-prior">Explicit Versus Implicit Prior</a></li>
+  <li><a href="#learned-regularization-views" id="toc-learned-regularization-views" class="nav-link" data-scroll-target="#learned-regularization-views">Learned Regularization Views</a></li>
+  <li><a href="#deblurring-example" id="toc-deblurring-example" class="nav-link" data-scroll-target="#deblurring-example">Deblurring Example</a></li>
+  <li><a href="#fixed-points" id="toc-fixed-points" class="nav-link" data-scroll-target="#fixed-points">Fixed Points</a></li>
+  <li><a href="#convergence-and-trust" id="toc-convergence-and-trust" class="nav-link" data-scroll-target="#convergence-and-trust">Convergence And Trust</a></li>
+  <li><a href="#failure-modes" id="toc-failure-modes" class="nav-link" data-scroll-target="#failure-modes">Failure Modes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-13-plug-and-play.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-13-plug-and-play.html">13. Plug-and-play and learned regularization</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization Methods</h1>
-<p class="subtitle lead">Chapter 9</p>
+<h1 class="title">Plug-and-Play and Learned Regularization</h1>
+<p class="subtitle lead">Chapter 13</p>
 </div>
 
 
@@ -404,264 +402,218 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-09-optimization-methods.html">Slides</a> | <a href="../notebooks/week09_optimization_methods.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-13-plug-and-play.html">Slides</a> | <a href="../notebooks/week13_plug_and_play.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>recognize convex optimization problems in imaging;</li>
-<li>use gradient descent for smooth energies;</li>
-<li>explain why step size matters;</li>
-<li>understand subgradient intuition for nonsmooth terms;</li>
-<li>describe proximal operators and ISTA.</li>
+<li>recall proximal algorithms for regularized inverse problems;</li>
+<li>define plug-and-play reconstruction;</li>
+<li>compare explicit and implicit regularization;</li>
+<li>interpret deblurring examples with handcrafted and learned denoisers;</li>
+<li>discuss fixed points, convergence, and trust.</li>
 </ul>
 </section>
-<section id="models-are-not-enough" class="level2">
-<h2 class="anchored" data-anchor-id="models-are-not-enough">Models Are Not Enough</h2>
-<p>A variational model defines a reconstruction as a minimizer:</p>
+<section id="can-a-denoiser-be-a-prior" class="level2">
+<h2 class="anchored" data-anchor-id="can-a-denoiser-be-a-prior">Can A Denoiser Be A Prior?</h2>
+<p>Plug-and-play is a hybrid idea. It keeps the measurement model</p>
 <p><span class="math display">
-\min_u E(u).
+y \approx Ax
 </span></p>
-<p>An optimization method gives a procedure for finding that minimizer:</p>
-<p><span class="math display">
-u^0,\ u^1,\ u^2,\ldots
-</span></p>
-<p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
-<p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
+<p>and inserts an image-restoration tool that knows what plausible images look like.</p>
+<p>The key question is: where should that image-restoration tool enter the algorithm?</p>
 </section>
-<section id="convexity" class="level2">
-<h2 class="anchored" data-anchor-id="convexity">Convexity</h2>
-<p>A set <span class="math inline">C</span> is convex if the segment between any two points in <span class="math inline">C</span> stays in <span class="math inline">C</span>:</p>
+<section id="proximal-algorithms" class="level2">
+<h2 class="anchored" data-anchor-id="proximal-algorithms">Proximal Algorithms</h2>
+<p>A standard variational model is</p>
 <p><span class="math display">
-(1-t)x+ty\in C,\qquad 0\leq t\leq 1.
-</span></p>
-<p>Nonnegative intensity constraints and box constraints often form convex sets.</p>
-<p>A function <span class="math inline">E</span> is convex if</p>
-<p><span class="math display">
-E((1-t)x+ty)
-\leq
-(1-t)E(x)+tE(y).
-</span></p>
-<div class="figure">
-<p><img src="../assets/figures/week09-convexity.png" class="img-fluid" alt="Smooth convex, nonsmooth convex, and nonconvex energy curves"></p>
-<p>Convexity concerns the shape of the landscape; smoothness concerns the tools we can use.</p>
-</div>
-<p>For a convex energy:</p>
-<ul>
-<li>every local minimum is global;</li>
-<li>descent methods have a target worth reaching;</li>
-<li>optimality conditions are meaningful.</li>
-</ul>
-<p>TV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.</p>
-</section>
-<section id="gradient-descent" class="level2">
-<h2 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h2>
-<p>For a differentiable energy <span class="math inline">E</span>,</p>
-<p><span class="math display">
-u^{k+1}=u^k-\tau\nabla E(u^k).
-</span></p>
-<p>The parameter <span class="math inline">\tau&gt;0</span> is the step size, also called the learning rate.</p>
-<p>The gradient points toward fastest local increase, so <span class="math inline">-\nabla E(u^k)</span> points toward fastest local decrease.</p>
-<div class="figure">
-<p><img src="../assets/figures/week09-gradient-descent-path.png" class="img-fluid" alt="Gradient descent paths over contour lines of a quadratic energy"></p>
-<p>Gradient descent uses local slope information to move downhill.</p>
-</div>
-</section>
-<section id="step-size" class="level2">
-<h2 class="anchored" data-anchor-id="step-size">Step Size</h2>
-<p>Step size controls stability.</p>
-<p>If <span class="math inline">\tau</span> is too small:</p>
-<ul>
-<li>progress is safe but slow;</li>
-<li>many iterations are needed.</li>
-</ul>
-<p>If <span class="math inline">\tau</span> is too large:</p>
-<ul>
-<li>the method may oscillate;</li>
-<li>the energy can increase;</li>
-<li>the iterates may diverge.</li>
-</ul>
-<div class="figure">
-<p><img src="../assets/figures/week09-step-sizes.png" class="img-fluid" alt="Gradient descent energy curves for several step sizes"></p>
-<p>The same objective can behave very differently under different step sizes.</p>
-</div>
-<p>If <span class="math inline">\nabla E</span> is Lipschitz with constant <span class="math inline">L</span>, a typical safe range is</p>
-<p><span class="math display">
-0&lt;\tau&lt;\frac{2}{L}.
-</span></p>
-<p>Often one uses</p>
-<p><span class="math display">
-\tau\leq \frac{1}{L}
-</span></p>
-<p>for stable monotone decrease.</p>
-</section>
-<section id="stopping-criteria" class="level2">
-<h2 class="anchored" data-anchor-id="stopping-criteria">Stopping Criteria</h2>
-<p>Common stopping rules include:</p>
-<ul>
-<li>maximum number of iterations;</li>
-<li>small change in energy;</li>
-<li>small change in the image;</li>
-<li>small gradient norm;</li>
-<li>visual or task-driven stopping.</li>
-</ul>
-<p>Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.</p>
-</section>
-<section id="nonsmooth-terms" class="level2">
-<h2 class="anchored" data-anchor-id="nonsmooth-terms">Nonsmooth Terms</h2>
-<p>Sparse and edge-preserving models often use terms such as</p>
-<p><span class="math display">
-|x|,
-\qquad
-\|x\|_1,
-\qquad
-\operatorname{TV}(u).
-</span></p>
-<p>These terms have corners. For <span class="math inline">x\neq 0</span>,</p>
-<p><span class="math display">
-\frac{d}{dx}|x|=\operatorname{sign}(x).
-</span></p>
-<p>At <span class="math inline">x=0</span>, there is no single derivative.</p>
-<p>The corner at zero is exactly what encourages sparsity.</p>
-</section>
-<section id="subgradient-intuition" class="level2">
-<h2 class="anchored" data-anchor-id="subgradient-intuition">Subgradient Intuition</h2>
-<p>At a nonsmooth point, there may be many valid slopes. For <span class="math inline">|x|</span> at zero,</p>
-<p><span class="math display">
-\partial |0|=[-1,1].
-</span></p>
-<p>This is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.</p>
-<p>Treating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.</p>
-</section>
-<section id="proximal-operators" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-operators">Proximal Operators</h2>
-<p>The proximal operator of a regularizer <span class="math inline">R</span> is</p>
-<p><span class="math display">
-\operatorname{prox}_{\tau R}(v)
+\hat{x}
 =
-\operatorname*{argmin}_u
-\frac12\|u-v\|_2^2+\tau R(u).
+\operatorname*{argmin}_x
+\frac{1}{2}\|Ax-y\|_2^2+\lambda R(x).
 </span></p>
-<p>It balances staying near <span class="math inline">v</span> with reducing the regularizer.</p>
-<p>This is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.</p>
-</section>
-<section id="soft-thresholding" class="level2">
-<h2 class="anchored" data-anchor-id="soft-thresholding">Soft Thresholding</h2>
-<p>For <span class="math inline">R(u)=\lambda\|u\|_1</span>, the proximal operator is soft thresholding:</p>
+<p>The data term uses the forward model. The regularizer encodes image structure.</p>
+<p>For</p>
 <p><span class="math display">
-\operatorname{prox}_{\tau\lambda\|\cdot\|_1}(v)
-=
-\operatorname{sign}(v)\max(|v|-\tau\lambda,0).
+D(x)=\frac{1}{2}\|Ax-y\|_2^2,
 </span></p>
-<div class="figure">
-<p><img src="../assets/figures/week09-soft-threshold.png" class="img-fluid" alt="Absolute value nonsmoothness and soft-thresholding proximal operator"></p>
-<p>Soft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.</p>
-</div>
-<p>Soft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.</p>
+<p>the gradient is</p>
+<p><span class="math display">
+\nabla D(x)=A^\top(Ax-y).
+</span></p>
+<p>A data-consistency step is</p>
+<p><span class="math display">
+z^k=x^k-\tau A^\top(Ax^k-y).
+</span></p>
+<p>The proximal operator of <span class="math inline">R</span> is</p>
+<p><span class="math display">
+\operatorname{prox}_{\lambda R}(z)
+=
+\operatorname*{argmin}_x
+\frac{1}{2}\|x-z\|_2^2+\lambda R(x).
+</span></p>
+<p>It asks for an image close to <span class="math inline">z</span> but preferred by the prior <span class="math inline">R</span>.</p>
 </section>
 <section id="proximal-gradient" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
-<p>Suppose the energy is split as</p>
+<p>Putting the steps together gives</p>
 <p><span class="math display">
-E(u)=f(u)+R(u),
+z^k=x^k-\tau A^\top(Ax^k-y),
 </span></p>
-<p>where <span class="math inline">f</span> is smooth and <span class="math inline">R</span> may be nonsmooth.</p>
-<p>Proximal gradient uses</p>
-<p><span class="math display">
-u^{k+1}
-=
-\operatorname{prox}_{\tau R}
-\left(u^k-\tau\nabla f(u^k)\right).
-</span></p>
-<p>The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.</p>
-</section>
-<section id="ista" class="level2">
-<h2 class="anchored" data-anchor-id="ista">ISTA</h2>
-<p>For the l1-regularized problem</p>
-<p><span class="math display">
-\min_x
-\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
-</span></p>
-<p>ISTA is</p>
 <p><span class="math display">
 x^{k+1}
 =
-S_{\tau\lambda}
-\left(x^k-\tau A^\top(Ax^k-y)\right),
+\operatorname{prox}_{\tau\lambda R}(z^k).
 </span></p>
-<p>where <span class="math inline">S_{\tau\lambda}</span> is soft thresholding.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Step</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>compute <span class="math inline">Ax^k-y</span></td>
-<td>current data mismatch</td>
-</tr>
-<tr class="even">
-<td>apply <span class="math inline">A^\top</span></td>
-<td>move mismatch back to image or coefficient space</td>
-</tr>
-<tr class="odd">
-<td>gradient step</td>
-<td>improve data fidelity</td>
-</tr>
-<tr class="even">
-<td>soft threshold</td>
-<td>impose sparsity</td>
-</tr>
-</tbody>
-</table>
+<p>The proximal step receives a corrupted intermediate image <span class="math inline">z^k</span> and returns a more regular image. This sounds like denoising.</p>
 <div class="figure">
-<p><img src="../assets/figures/week09-ista-sparse-signal.png" class="img-fluid" alt="Sparse signal reconstruction with ISTA and energy decrease"></p>
-<p>ISTA alternates between data correction and sparsity promotion.</p>
-</div>
-<div class="figure">
-<p><img src="../assets/figures/week09-ista-image.png" class="img-fluid" alt="Original image, blurred noisy observation, ISTA estimate, and sparse DCT coefficients"></p>
-<p>The same pattern appears in image reconstruction with transform-domain sparsity.</p>
+<p><img src="../assets/figures/week13-prox-vs-denoiser.png" class="img-fluid" alt="Comparison of a classical proximal step and a plug-and-play denoising step"></p>
+<p>Plug-and-play replaces a proximal map by a denoising operator.</p>
 </div>
 </section>
-<section id="common-failure-modes" class="level2">
-<h2 class="anchored" data-anchor-id="common-failure-modes">Common Failure Modes</h2>
-<p>Optimization can fail for reasons that are easy to confuse with modeling failure:</p>
+<section id="plug-and-play-update" class="level2">
+<h2 class="anchored" data-anchor-id="plug-and-play-update">Plug-and-Play Update</h2>
+<p>Plug-and-play reconstruction uses</p>
+<p><span class="math display">
+z^k=x^k-\tau A^\top(Ax^k-y),
+</span></p>
+<p><span class="math display">
+x^{k+1}=D_\sigma(z^k),
+</span></p>
+<p>where <span class="math inline">D_\sigma</span> is a denoising operator.</p>
+<div class="figure">
+<p><img src="../assets/figures/week13-pnp-loop.png" class="img-fluid" alt="Plug-and-play loop with data consistency step and denoiser step"></p>
+<p>PnP alternates between data consistency and denoising.</p>
+</div>
+<p>The denoiser can be Gaussian smoothing, median filtering, wavelet thresholding, non-local means, a learned neural-network denoiser, or a learned patch prior.</p>
+<p>The data-consistency step still uses the forward model <span class="math inline">A</span>, the adjoint <span class="math inline">A^\top</span>, the measured data <span class="math inline">y</span>, and the data term. PnP does not throw away physics; it uses physics between denoising steps.</p>
+</section>
+<section id="explicit-versus-implicit-prior" class="level2">
+<h2 class="anchored" data-anchor-id="explicit-versus-implicit-prior">Explicit Versus Implicit Prior</h2>
+<p>In classical proximal gradient, the regularizer <span class="math inline">R</span> is explicit:</p>
+<p><span class="math display">
+x^{k+1}
+=
+\operatorname{prox}_{\tau\lambda R}(z^k).
+</span></p>
+<p>In plug-and-play,</p>
+<p><span class="math display">
+x^{k+1}=D_\sigma(z^k).
+</span></p>
+<p>If <span class="math inline">D_\sigma</span> is not exactly a proximal operator, the iteration may not minimize a known objective. The prior is implicit: it is represented by the behavior of the denoiser.</p>
+<p>This gives flexibility, but it changes the theory.</p>
+</section>
+<section id="learned-regularization-views" class="level2">
+<h2 class="anchored" data-anchor-id="learned-regularization-views">Learned Regularization Views</h2>
+<p>Hybrid learned methods can be understood in several ways:</p>
 <ul>
-<li>the step size is too large;</li>
-<li>the implemented objective is not the intended objective;</li>
-<li>stopping too early hides convergence;</li>
-<li>stopping too late wastes computation or overfits noise;</li>
-<li>a nonsmooth term is treated as if it were smooth.</li>
+<li>learn a denoiser and use it inside an iterative method;</li>
+<li>learn a regularizer <span class="math inline">R_\theta(x)</span> and optimize with it;</li>
+<li>learn an unrolled reconstruction algorithm with data-consistency layers.</li>
 </ul>
-<p>The more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.</p>
+<p>An explicit learned regularizer has the form</p>
+<p><span class="math display">
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R_\theta(x).
+</span></p>
+<p>A learned-denoiser form uses</p>
+<p><span class="math display">
+x^{k+1}=D_\theta(z^k).
+</span></p>
+<p>The denoiser has learned image statistics from training data, so its training distribution matters.</p>
+</section>
+<section id="deblurring-example" class="level2">
+<h2 class="anchored" data-anchor-id="deblurring-example">Deblurring Example</h2>
+<p>Suppose</p>
+<p><span class="math display">
+y=Ax+\eta
+</span></p>
+<p>is a blurred and noisy image. We can compare Tikhonov deblurring, plug-and-play with Gaussian denoising, and plug-and-play with a learned PCA patch denoiser.</p>
+<div class="figure">
+<p><img src="../assets/figures/week13-pnp-deblurring.png" class="img-fluid" alt="Deblurring comparison with clean, observation, Tikhonov, Gaussian PnP, and learned PnP reconstructions"></p>
+<p>Different priors create different deblurring behavior.</p>
+</div>
+<p>Tikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.</p>
+<div class="figure">
+<p><img src="../assets/figures/week13-iteration-curve.png" class="img-fluid" alt="RMSE and fixed-point change versus plug-and-play iteration"></p>
+<p>Iteration curves help diagnose convergence and reconstruction quality in examples where ground truth is known.</p>
+</div>
+</section>
+<section id="fixed-points" class="level2">
+<h2 class="anchored" data-anchor-id="fixed-points">Fixed Points</h2>
+<p>PnP is often analyzed as a fixed-point iteration:</p>
+<p><span class="math display">
+x^\star
+=
+D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
+</span></p>
+<p>The fixed point balances data consistency with denoiser preference.</p>
+<div class="figure">
+<p><img src="../assets/figures/week13-strength-tradeoff.png" class="img-fluid" alt="RMSE and data residual as Gaussian denoiser strength changes"></p>
+<p>Denoising strength controls the tradeoff between stability and fidelity.</p>
+</div>
+<p>If denoising is too weak, noise and inversion artifacts remain. If denoising is too strong, details are removed and the result may move away from measured data.</p>
+</section>
+<section id="convergence-and-trust" class="level2">
+<h2 class="anchored" data-anchor-id="convergence-and-trust">Convergence And Trust</h2>
+<p>For convex <span class="math inline">R</span> and suitable step size, classical proximal gradient has a clear story:</p>
+<ul>
+<li>it minimizes a known objective;</li>
+<li>objective values can be monitored;</li>
+<li>convergence can be proved under standard assumptions.</li>
+</ul>
+<p>For a general denoiser:</p>
+<ul>
+<li>there may be no explicit <span class="math inline">R</span>;</li>
+<li>there may be no decreasing objective;</li>
+<li>convergence depends on properties of <span class="math inline">D_\sigma</span>;</li>
+<li>a fixed point may not be a minimizer.</li>
+</ul>
+<p>This does not make PnP unusable. It means validation becomes central.</p>
+</section>
+<section id="failure-modes" class="level2">
+<h2 class="anchored" data-anchor-id="failure-modes">Failure Modes</h2>
+<div class="figure">
+<p><img src="../assets/figures/week13-failure-mode.png" class="img-fluid" alt="Camera-trained learned denoiser applied to a moon image crop, showing distribution shift"></p>
+<p>A learned prior can fail when the test image has different statistics from the training images.</p>
+</div>
+<p>When using PnP, ask:</p>
+<ul>
+<li>Is the denoiser stable to small perturbations?</li>
+<li>Does the data residual remain reasonable?</li>
+<li>Does the result change much between iterations?</li>
+<li>Does the method pass tests on out-of-distribution images?</li>
+<li>Does it preserve task-critical structures?</li>
+</ul>
+<p>Practical learned imaging should report baseline comparisons, data-consistency errors, sensitivity to denoising strength, robustness to distribution shift, uncertainty when possible, and task-based evaluation.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.</p>
+<p>The Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week09_optimization.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week13_plug_and_play.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>Explain the difference between a variational model and an optimization method.</li>
-<li>For gradient descent, describe what happens when the step size is too small and when it is too large.</li>
-<li>Why does the absolute value penalty encourage exact zero values?</li>
-<li>Write the proximal operator definition for a regularizer <span class="math inline">R</span>.</li>
-<li>Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.</li>
+<li>What does a proximal operator do?</li>
+<li>What does plug-and-play replace in proximal gradient?</li>
+<li>Why might PnP not minimize a known objective?</li>
+<li>What is a fixed point of the PnP iteration?</li>
+<li>Give two safeguards for using learned denoisers in high-stakes imaging.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Convexity makes minimization conceptually safer.</li>
-<li>Gradient descent solves smooth problems by local descent.</li>
-<li>Step size controls stability and speed.</li>
-<li>l1 and TV are convex but nonsmooth.</li>
-<li>Proximal operators are central for sparse and edge-preserving imaging.</li>
+<li>Plug-and-play keeps the forward model and inserts a denoiser.</li>
+<li>The denoiser acts as an implicit prior.</li>
+<li>Learned denoisers can improve reconstructions when data match training.</li>
+<li>PnP needs careful validation because objective and convergence guarantees change.</li>
+<li>Always check both image quality and consistency with measurements.</li>
 </ul>
 
 
@@ -1076,7 +1028,7 @@ S_{\tau\lambda}
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-13-plug-and-play.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

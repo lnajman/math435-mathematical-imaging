@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimization Methods – MATH 435: Mathematical Imaging</title>
+<title>Sparse Reconstruction – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">10. Sparse reconstruction</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +311,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">9. Optimization methods</span></a>
   </div>
 </li>
@@ -328,7 +328,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-10-sparse-reconstruction.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-10-sparse-reconstruction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">10. Sparse reconstruction</span></a>
   </div>
 </li>
@@ -363,31 +363,28 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#models-are-not-enough" id="toc-models-are-not-enough" class="nav-link" data-scroll-target="#models-are-not-enough">Models Are Not Enough</a></li>
-  <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
-  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
-  <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
-  <li><a href="#stopping-criteria" id="toc-stopping-criteria" class="nav-link" data-scroll-target="#stopping-criteria">Stopping Criteria</a></li>
-  <li><a href="#nonsmooth-terms" id="toc-nonsmooth-terms" class="nav-link" data-scroll-target="#nonsmooth-terms">Nonsmooth Terms</a></li>
-  <li><a href="#subgradient-intuition" id="toc-subgradient-intuition" class="nav-link" data-scroll-target="#subgradient-intuition">Subgradient Intuition</a></li>
-  <li><a href="#proximal-operators" id="toc-proximal-operators" class="nav-link" data-scroll-target="#proximal-operators">Proximal Operators</a></li>
-  <li><a href="#soft-thresholding" id="toc-soft-thresholding" class="nav-link" data-scroll-target="#soft-thresholding">Soft Thresholding</a></li>
-  <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
-  <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
-  <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
+  <li><a href="#sparsity-as-a-prior" id="toc-sparsity-as-a-prior" class="nav-link" data-scroll-target="#sparsity-as-a-prior">Sparsity As A Prior</a></li>
+  <li><a href="#representation-matters" id="toc-representation-matters" class="nav-link" data-scroll-target="#representation-matters">Representation Matters</a></li>
+  <li><a href="#l2-regularization" id="toc-l2-regularization" class="nav-link" data-scroll-target="#l2-regularization">l2 Regularization</a></li>
+  <li><a href="#l1-regularization" id="toc-l1-regularization" class="nav-link" data-scroll-target="#l1-regularization">l1 Regularization</a></li>
+  <li><a href="#geometry-of-l1-and-l2" id="toc-geometry-of-l1-and-l2" class="nav-link" data-scroll-target="#geometry-of-l1-and-l2">Geometry Of l1 And l2</a></li>
+  <li><a href="#underdetermined-recovery" id="toc-underdetermined-recovery" class="nav-link" data-scroll-target="#underdetermined-recovery">Underdetermined Recovery</a></li>
+  <li><a href="#compressed-sensing-intuition" id="toc-compressed-sensing-intuition" class="nav-link" data-scroll-target="#compressed-sensing-intuition">Compressed Sensing Intuition</a></li>
+  <li><a href="#sparse-images" id="toc-sparse-images" class="nav-link" data-scroll-target="#sparse-images">Sparse Images</a></li>
+  <li><a href="#l1-versus-l2" id="toc-l1-versus-l2" class="nav-link" data-scroll-target="#l1-versus-l2">l1 Versus l2</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-10-sparse-reconstruction.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">10. Sparse reconstruction</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization Methods</h1>
-<p class="subtitle lead">Chapter 9</p>
+<h1 class="title">Sparse Reconstruction</h1>
+<p class="subtitle lead">Chapter 10</p>
 </div>
 
 
@@ -404,264 +401,212 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-09-optimization-methods.html">Slides</a> | <a href="../notebooks/week09_optimization_methods.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-10-sparse-reconstruction.html">Slides</a> | <a href="../notebooks/week10_sparse_reconstruction.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>recognize convex optimization problems in imaging;</li>
-<li>use gradient descent for smooth energies;</li>
-<li>explain why step size matters;</li>
-<li>understand subgradient intuition for nonsmooth terms;</li>
-<li>describe proximal operators and ISTA.</li>
+<li>define sparsity in a basis or transform;</li>
+<li>compare l1 and l2 regularization;</li>
+<li>explain why l1 can recover sparse signals;</li>
+<li>describe compressed sensing intuition;</li>
+<li>use a sparse DCT prior for image reconstruction.</li>
 </ul>
 </section>
-<section id="models-are-not-enough" class="level2">
-<h2 class="anchored" data-anchor-id="models-are-not-enough">Models Are Not Enough</h2>
-<p>A variational model defines a reconstruction as a minimizer:</p>
-<p><span class="math display">
-\min_u E(u).
-</span></p>
-<p>An optimization method gives a procedure for finding that minimizer:</p>
-<p><span class="math display">
-u^0,\ u^1,\ u^2,\ldots
-</span></p>
-<p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
-<p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
-</section>
-<section id="convexity" class="level2">
-<h2 class="anchored" data-anchor-id="convexity">Convexity</h2>
-<p>A set <span class="math inline">C</span> is convex if the segment between any two points in <span class="math inline">C</span> stays in <span class="math inline">C</span>:</p>
-<p><span class="math display">
-(1-t)x+ty\in C,\qquad 0\leq t\leq 1.
-</span></p>
-<p>Nonnegative intensity constraints and box constraints often form convex sets.</p>
-<p>A function <span class="math inline">E</span> is convex if</p>
-<p><span class="math display">
-E((1-t)x+ty)
-\leq
-(1-t)E(x)+tE(y).
-</span></p>
-<div class="figure">
-<p><img src="../assets/figures/week09-convexity.png" class="img-fluid" alt="Smooth convex, nonsmooth convex, and nonconvex energy curves"></p>
-<p>Convexity concerns the shape of the landscape; smoothness concerns the tools we can use.</p>
-</div>
-<p>For a convex energy:</p>
-<ul>
-<li>every local minimum is global;</li>
-<li>descent methods have a target worth reaching;</li>
-<li>optimality conditions are meaningful.</li>
-</ul>
-<p>TV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.</p>
-</section>
-<section id="gradient-descent" class="level2">
-<h2 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h2>
-<p>For a differentiable energy <span class="math inline">E</span>,</p>
-<p><span class="math display">
-u^{k+1}=u^k-\tau\nabla E(u^k).
-</span></p>
-<p>The parameter <span class="math inline">\tau&gt;0</span> is the step size, also called the learning rate.</p>
-<p>The gradient points toward fastest local increase, so <span class="math inline">-\nabla E(u^k)</span> points toward fastest local decrease.</p>
-<div class="figure">
-<p><img src="../assets/figures/week09-gradient-descent-path.png" class="img-fluid" alt="Gradient descent paths over contour lines of a quadratic energy"></p>
-<p>Gradient descent uses local slope information to move downhill.</p>
-</div>
-</section>
-<section id="step-size" class="level2">
-<h2 class="anchored" data-anchor-id="step-size">Step Size</h2>
-<p>Step size controls stability.</p>
-<p>If <span class="math inline">\tau</span> is too small:</p>
-<ul>
-<li>progress is safe but slow;</li>
-<li>many iterations are needed.</li>
-</ul>
-<p>If <span class="math inline">\tau</span> is too large:</p>
-<ul>
-<li>the method may oscillate;</li>
-<li>the energy can increase;</li>
-<li>the iterates may diverge.</li>
-</ul>
-<div class="figure">
-<p><img src="../assets/figures/week09-step-sizes.png" class="img-fluid" alt="Gradient descent energy curves for several step sizes"></p>
-<p>The same objective can behave very differently under different step sizes.</p>
-</div>
-<p>If <span class="math inline">\nabla E</span> is Lipschitz with constant <span class="math inline">L</span>, a typical safe range is</p>
-<p><span class="math display">
-0&lt;\tau&lt;\frac{2}{L}.
-</span></p>
-<p>Often one uses</p>
-<p><span class="math display">
-\tau\leq \frac{1}{L}
-</span></p>
-<p>for stable monotone decrease.</p>
-</section>
-<section id="stopping-criteria" class="level2">
-<h2 class="anchored" data-anchor-id="stopping-criteria">Stopping Criteria</h2>
-<p>Common stopping rules include:</p>
-<ul>
-<li>maximum number of iterations;</li>
-<li>small change in energy;</li>
-<li>small change in the image;</li>
-<li>small gradient norm;</li>
-<li>visual or task-driven stopping.</li>
-</ul>
-<p>Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.</p>
-</section>
-<section id="nonsmooth-terms" class="level2">
-<h2 class="anchored" data-anchor-id="nonsmooth-terms">Nonsmooth Terms</h2>
-<p>Sparse and edge-preserving models often use terms such as</p>
-<p><span class="math display">
-|x|,
-\qquad
-\|x\|_1,
-\qquad
-\operatorname{TV}(u).
-</span></p>
-<p>These terms have corners. For <span class="math inline">x\neq 0</span>,</p>
-<p><span class="math display">
-\frac{d}{dx}|x|=\operatorname{sign}(x).
-</span></p>
-<p>At <span class="math inline">x=0</span>, there is no single derivative.</p>
-<p>The corner at zero is exactly what encourages sparsity.</p>
-</section>
-<section id="subgradient-intuition" class="level2">
-<h2 class="anchored" data-anchor-id="subgradient-intuition">Subgradient Intuition</h2>
-<p>At a nonsmooth point, there may be many valid slopes. For <span class="math inline">|x|</span> at zero,</p>
-<p><span class="math display">
-\partial |0|=[-1,1].
-</span></p>
-<p>This is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.</p>
-<p>Treating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.</p>
-</section>
-<section id="proximal-operators" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-operators">Proximal Operators</h2>
-<p>The proximal operator of a regularizer <span class="math inline">R</span> is</p>
-<p><span class="math display">
-\operatorname{prox}_{\tau R}(v)
-=
-\operatorname*{argmin}_u
-\frac12\|u-v\|_2^2+\tau R(u).
-</span></p>
-<p>It balances staying near <span class="math inline">v</span> with reducing the regularizer.</p>
-<p>This is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.</p>
-</section>
-<section id="soft-thresholding" class="level2">
-<h2 class="anchored" data-anchor-id="soft-thresholding">Soft Thresholding</h2>
-<p>For <span class="math inline">R(u)=\lambda\|u\|_1</span>, the proximal operator is soft thresholding:</p>
-<p><span class="math display">
-\operatorname{prox}_{\tau\lambda\|\cdot\|_1}(v)
-=
-\operatorname{sign}(v)\max(|v|-\tau\lambda,0).
-</span></p>
-<div class="figure">
-<p><img src="../assets/figures/week09-soft-threshold.png" class="img-fluid" alt="Absolute value nonsmoothness and soft-thresholding proximal operator"></p>
-<p>Soft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.</p>
-</div>
-<p>Soft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.</p>
-</section>
-<section id="proximal-gradient" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
-<p>Suppose the energy is split as</p>
-<p><span class="math display">
-E(u)=f(u)+R(u),
-</span></p>
-<p>where <span class="math inline">f</span> is smooth and <span class="math inline">R</span> may be nonsmooth.</p>
-<p>Proximal gradient uses</p>
-<p><span class="math display">
-u^{k+1}
-=
-\operatorname{prox}_{\tau R}
-\left(u^k-\tau\nabla f(u^k)\right).
-</span></p>
-<p>The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.</p>
-</section>
-<section id="ista" class="level2">
-<h2 class="anchored" data-anchor-id="ista">ISTA</h2>
-<p>For the l1-regularized problem</p>
-<p><span class="math display">
-\min_x
-\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
-</span></p>
-<p>ISTA is</p>
+<section id="sparsity-as-a-prior" class="level2">
+<h2 class="anchored" data-anchor-id="sparsity-as-a-prior">Sparsity As A Prior</h2>
+<p>Week 9 introduced ISTA:</p>
 <p><span class="math display">
 x^{k+1}
 =
 S_{\tau\lambda}
-\left(x^k-\tau A^\top(Ax^k-y)\right),
+\left(x^k-\tau A^\top(Ax^k-y)\right).
 </span></p>
-<p>where <span class="math inline">S_{\tau\lambda}</span> is soft thresholding.</p>
+<p>The soft-thresholding step imposes a modeling assumption: many coefficients should be zero or nearly zero.</p>
+<p>A vector <span class="math inline">x\in\mathbb{R}^n</span> is <span class="math inline">k</span>-sparse if it has at most <span class="math inline">k</span> nonzero entries:</p>
+<p><span class="math display">
+\|x\|_0
+=
+\#\{i:x_i\neq 0\}.
+</span></p>
+<p>The notation <span class="math inline">\|\cdot\|_0</span> counts nonzeros; it is not a true norm.</p>
+<div class="figure">
+<p><img src="../assets/figures/week10-sparse-vs-dense.png" class="img-fluid" alt="Sparse signal and dense signal coefficient plots"></p>
+<p>Sparse vectors have only a few active coefficients; dense vectors spread information across many entries.</p>
+</div>
+</section>
+<section id="representation-matters" class="level2">
+<h2 class="anchored" data-anchor-id="representation-matters">Representation Matters</h2>
+<p>An image may not be sparse as pixels. It may be sparse, or approximately sparse, after a transform.</p>
+<p>Common representations include:</p>
+<ul>
+<li>Fourier coefficients;</li>
+<li>DCT coefficients;</li>
+<li>wavelet coefficients;</li>
+<li>learned dictionaries;</li>
+<li>gradient domain.</li>
+</ul>
+<p>Natural images often have many small transform coefficients and a few large ones. Sparse reconstruction does not require exact zeros everywhere; fast coefficient decay can be enough for useful approximation.</p>
+</section>
+<section id="l2-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="l2-regularization">l2 Regularization</h2>
+<p>Tikhonov-style regularization uses</p>
+<p><span class="math display">
+\frac12\|Ax-y\|_2^2
++
+\frac{\lambda}{2}\|x\|_2^2.
+</span></p>
+<p>The l2 penalty prefers small energy spread across coefficients. It is smooth and mathematically convenient, but it does not specifically ask for exact zeros.</p>
+<p>When many vectors fit the data, l2 often chooses a dense small-norm solution.</p>
+</section>
+<section id="l1-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="l1-regularization">l1 Regularization</h2>
+<p>Sparse reconstruction often uses</p>
+<p><span class="math display">
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
+</span></p>
+<p>where</p>
+<p><span class="math display">
+\|x\|_1=\sum_i |x_i|.
+</span></p>
+<p>The l1 penalty encourages exact zeros. It is convex but nonsmooth.</p>
+<p>The ideal sparse model might be</p>
+<p><span class="math display">
+\min_x \|x\|_0
+\quad\text{subject to}\quad
+Ax=y.
+</span></p>
+<p>This problem is combinatorial. The l1 norm is a convex relaxation that preserves much of the sparse behavior.</p>
+</section>
+<section id="geometry-of-l1-and-l2" class="level2">
+<h2 class="anchored" data-anchor-id="geometry-of-l1-and-l2">Geometry Of l1 And l2</h2>
+<div class="figure">
+<p><img src="../assets/figures/week10-l1-l2-geometry.png" class="img-fluid" alt="Geometry showing l1 diamond and l2 circle touching a data constraint"></p>
+<p>The corners of the l1 ball make sparse solutions more likely.</p>
+</div>
+<p>The l2 ball is round. The l1 ball has corners on coordinate axes. When a data constraint first touches an l1 ball, it often touches a corner, which means some coordinates are exactly zero.</p>
+<p>This geometric picture matches the algorithmic picture from soft thresholding.</p>
+</section>
+<section id="underdetermined-recovery" class="level2">
+<h2 class="anchored" data-anchor-id="underdetermined-recovery">Underdetermined Recovery</h2>
+<p>Suppose we observe</p>
+<p><span class="math display">
+y=Ax,
+</span></p>
+<p>where <span class="math inline">A</span> has fewer rows than columns. If <span class="math inline">m&lt;n</span>, there are usually many possible solutions.</p>
+<p>One classical choice is the minimum l2-norm solution:</p>
+<p><span class="math display">
+\min_x \|x\|_2
+\quad\text{subject to}\quad
+Ax=y.
+</span></p>
+<p>This fits the data, but it may be dense.</p>
+<p>The l1-regularized solution</p>
+<p><span class="math display">
+\min_x
+\frac12\|Ax-y\|_2^2+\lambda\|x\|_1
+</span></p>
+<p>balances data fit with sparse coefficients.</p>
+<div class="figure">
+<p><img src="../assets/figures/week10-l1-l2-recovery.png" class="img-fluid" alt="True sparse signal, l2 solution, and l1 solution from the same measurements"></p>
+<p>The same measurements can lead to very different reconstructions under different priors.</p>
+</div>
+<p>Both methods see the same <span class="math inline">A</span> and <span class="math inline">y</span>. The difference is the prior: l2 asks for a small vector, while l1 asks for a sparse explanation.</p>
+</section>
+<section id="compressed-sensing-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="compressed-sensing-intuition">Compressed Sensing Intuition</h2>
+<p>If <span class="math inline">x\in\mathbb{R}^{1000}</span> is exactly 5-sparse, it is not truly a 1000-degree-of-freedom object. We need to learn which 5 locations are active and the 5 active values.</p>
+<p>Sparse recovery can work with far fewer than <span class="math inline">n</span> measurements, but not usually as few as <span class="math inline">k</span>. We need enough measurements to identify support and amplitudes robustly.</p>
+<div class="figure">
+<p><img src="../assets/figures/week10-measurement-sweep.png" class="img-fluid" alt="Relative recovery error versus number of measurements for l1 and l2"></p>
+<p>l1 recovery can improve sharply once enough measurements are available.</p>
+</div>
+<p>Sparse recovery can fail even when the true signal is sparse. The representation must be appropriate, the measurement operator must mix information well, and the regularization weight must be chosen carefully.</p>
+</section>
+<section id="sparse-images" class="level2">
+<h2 class="anchored" data-anchor-id="sparse-images">Sparse Images</h2>
+<p>For images, sparsity is usually transform-domain sparsity.</p>
+<p>The Discrete Cosine Transform represents an image patch using cosine patterns. Many patches can be approximated using only a small fraction of DCT coefficients.</p>
+<div class="figure">
+<p><img src="../assets/figures/week10-dct-compression.png" class="img-fluid" alt="Image patch, DCT magnitude, and reconstructions using a small fraction of coefficients"></p>
+<p>Few large transform coefficients can preserve much of the visual structure.</p>
+</div>
+<p>Suppose we observe only a random subset of pixels. We can reconstruct using sparse DCT coefficients by solving</p>
+<p><span class="math display">
+\min_c
+\frac12\|M D^{-1}c-y\|_2^2+\lambda\|c\|_1.
+</span></p>
+<p>Here <span class="math inline">D^{-1}c</span> maps DCT coefficients back to an image, and <span class="math inline">M</span> keeps the observed pixels.</p>
+<div class="figure">
+<p><img src="../assets/figures/week10-sparse-image-reconstruction.png" class="img-fluid" alt="Sparse DCT reconstruction from random observed pixels"></p>
+<p>Sparse priors can fill in missing data when the transform model is appropriate.</p>
+</div>
+<p>This is not a universal promise. The representation, measurements, noise level, calibration, model mismatch, and regularization weight all matter.</p>
+</section>
+<section id="l1-versus-l2" class="level2">
+<h2 class="anchored" data-anchor-id="l1-versus-l2">l1 Versus l2</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Step</th>
-<th>Meaning</th>
+<th>Feature</th>
+<th>l2</th>
+<th>l1</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>compute <span class="math inline">Ax^k-y</span></td>
-<td>current data mismatch</td>
+<td>Geometry</td>
+<td>round</td>
+<td>corners</td>
 </tr>
 <tr class="even">
-<td>apply <span class="math inline">A^\top</span></td>
-<td>move mismatch back to image or coefficient space</td>
+<td>Typical coefficients</td>
+<td>many small values</td>
+<td>many zeros</td>
 </tr>
 <tr class="odd">
-<td>gradient step</td>
-<td>improve data fidelity</td>
+<td>Optimization</td>
+<td>smooth</td>
+<td>nonsmooth</td>
 </tr>
 <tr class="even">
-<td>soft threshold</td>
-<td>impose sparsity</td>
+<td>Prior</td>
+<td>small energy</td>
+<td>sparse explanation</td>
+</tr>
+<tr class="odd">
+<td>Useful when</td>
+<td>dense small errors</td>
+<td>few active structures</td>
 </tr>
 </tbody>
 </table>
-<div class="figure">
-<p><img src="../assets/figures/week09-ista-sparse-signal.png" class="img-fluid" alt="Sparse signal reconstruction with ISTA and energy decrease"></p>
-<p>ISTA alternates between data correction and sparsity promotion.</p>
-</div>
-<div class="figure">
-<p><img src="../assets/figures/week09-ista-image.png" class="img-fluid" alt="Original image, blurred noisy observation, ISTA estimate, and sparse DCT coefficients"></p>
-<p>The same pattern appears in image reconstruction with transform-domain sparsity.</p>
-</div>
-</section>
-<section id="common-failure-modes" class="level2">
-<h2 class="anchored" data-anchor-id="common-failure-modes">Common Failure Modes</h2>
-<p>Optimization can fail for reasons that are easy to confuse with modeling failure:</p>
-<ul>
-<li>the step size is too large;</li>
-<li>the implemented objective is not the intended objective;</li>
-<li>stopping too early hides convergence;</li>
-<li>stopping too late wastes computation or overfits noise;</li>
-<li>a nonsmooth term is treated as if it were smooth.</li>
-</ul>
-<p>The more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.</p>
+<p>The Week 10 notebook lets you change the number of measurements, the sparsity level, the l1 regularization weight, and the observed-pixel fraction in the image example.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week09_optimization.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week10_sparse_reconstruction.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>Explain the difference between a variational model and an optimization method.</li>
-<li>For gradient descent, describe what happens when the step size is too small and when it is too large.</li>
-<li>Why does the absolute value penalty encourage exact zero values?</li>
-<li>Write the proximal operator definition for a regularizer <span class="math inline">R</span>.</li>
-<li>Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.</li>
+<li>What does it mean for a vector to be <span class="math inline">k</span>-sparse?</li>
+<li>Why is sparsity representation-dependent for images?</li>
+<li>Explain why l1 regularization promotes exact zeros.</li>
+<li>Give one reason l1 recovery can fail even when the true signal is sparse.</li>
+<li>In the sparse DCT image model, what are the roles of <span class="math inline">M</span>, <span class="math inline">D^{-1}</span>, and <span class="math inline">c</span>?</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Convexity makes minimization conceptually safer.</li>
-<li>Gradient descent solves smooth problems by local descent.</li>
-<li>Step size controls stability and speed.</li>
-<li>l1 and TV are convex but nonsmooth.</li>
-<li>Proximal operators are central for sparse and edge-preserving imaging.</li>
+<li>Sparsity means few nonzero or significant coefficients.</li>
+<li>Images are sparse only after choosing a representation.</li>
+<li>l1 is a convex surrogate for sparse selection.</li>
+<li>l1 and l2 encode different priors.</li>
+<li>Sparse reconstruction works when the measurement model and sparse representation are compatible.</li>
 </ul>
 
 
@@ -1076,7 +1021,7 @@ S_{\tau\lambda}
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-10-sparse-reconstruction.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

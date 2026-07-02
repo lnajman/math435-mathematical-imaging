@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimization Methods – MATH 435: Mathematical Imaging</title>
+<title>Wavelets and Multiscale Representation – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-11-wavelets.html">11. Wavelets and multiscale representation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -311,7 +311,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-09-optimization-methods.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">9. Optimization methods</span></a>
   </div>
 </li>
@@ -334,7 +334,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-11-wavelets.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-11-wavelets.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">11. Wavelets and multiscale representation</span></a>
   </div>
 </li>
@@ -363,31 +363,27 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#models-are-not-enough" id="toc-models-are-not-enough" class="nav-link" data-scroll-target="#models-are-not-enough">Models Are Not Enough</a></li>
-  <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
-  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
-  <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
-  <li><a href="#stopping-criteria" id="toc-stopping-criteria" class="nav-link" data-scroll-target="#stopping-criteria">Stopping Criteria</a></li>
-  <li><a href="#nonsmooth-terms" id="toc-nonsmooth-terms" class="nav-link" data-scroll-target="#nonsmooth-terms">Nonsmooth Terms</a></li>
-  <li><a href="#subgradient-intuition" id="toc-subgradient-intuition" class="nav-link" data-scroll-target="#subgradient-intuition">Subgradient Intuition</a></li>
-  <li><a href="#proximal-operators" id="toc-proximal-operators" class="nav-link" data-scroll-target="#proximal-operators">Proximal Operators</a></li>
-  <li><a href="#soft-thresholding" id="toc-soft-thresholding" class="nav-link" data-scroll-target="#soft-thresholding">Soft Thresholding</a></li>
-  <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
-  <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
-  <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
+  <li><a href="#why-wavelets" id="toc-why-wavelets" class="nav-link" data-scroll-target="#why-wavelets">Why Wavelets?</a></li>
+  <li><a href="#haar-intuition" id="toc-haar-intuition" class="nav-link" data-scroll-target="#haar-intuition">Haar Intuition</a></li>
+  <li><a href="#multiscale-decomposition" id="toc-multiscale-decomposition" class="nav-link" data-scroll-target="#multiscale-decomposition">Multiscale Decomposition</a></li>
+  <li><a href="#two-dimensional-wavelets" id="toc-two-dimensional-wavelets" class="nav-link" data-scroll-target="#two-dimensional-wavelets">Two-Dimensional Wavelets</a></li>
+  <li><a href="#wavelet-sparsity" id="toc-wavelet-sparsity" class="nav-link" data-scroll-target="#wavelet-sparsity">Wavelet Sparsity</a></li>
+  <li><a href="#compression" id="toc-compression" class="nav-link" data-scroll-target="#compression">Compression</a></li>
+  <li><a href="#wavelet-denoising" id="toc-wavelet-denoising" class="nav-link" data-scroll-target="#wavelet-denoising">Wavelet Denoising</a></li>
+  <li><a href="#wavelets-versus-tv" id="toc-wavelets-versus-tv" class="nav-link" data-scroll-target="#wavelets-versus-tv">Wavelets Versus TV</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-11-wavelets.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-09-optimization-methods.html">9. Optimization methods</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-11-wavelets.html">11. Wavelets and multiscale representation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization Methods</h1>
-<p class="subtitle lead">Chapter 9</p>
+<h1 class="title">Wavelets and Multiscale Representation</h1>
+<p class="subtitle lead">Chapter 11</p>
 </div>
 
 
@@ -404,264 +400,200 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-09-optimization-methods.html">Slides</a> | <a href="../notebooks/week09_optimization_methods.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-11-wavelets.html">Slides</a> | <a href="../notebooks/week11_wavelets.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>recognize convex optimization problems in imaging;</li>
-<li>use gradient descent for smooth energies;</li>
-<li>explain why step size matters;</li>
-<li>understand subgradient intuition for nonsmooth terms;</li>
-<li>describe proximal operators and ISTA.</li>
+<li>explain wavelets as localized multiscale patterns;</li>
+<li>read a 2D wavelet decomposition;</li>
+<li>connect wavelet coefficients to sparsity;</li>
+<li>use thresholding for compression and denoising;</li>
+<li>compare wavelet denoising with ordinary smoothing.</li>
 </ul>
 </section>
-<section id="models-are-not-enough" class="level2">
-<h2 class="anchored" data-anchor-id="models-are-not-enough">Models Are Not Enough</h2>
-<p>A variational model defines a reconstruction as a minimizer:</p>
-<p><span class="math display">
-\min_u E(u).
-</span></p>
-<p>An optimization method gives a procedure for finding that minimizer:</p>
-<p><span class="math display">
-u^0,\ u^1,\ u^2,\ldots
-</span></p>
-<p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
-<p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
+<section id="why-wavelets" class="level2">
+<h2 class="anchored" data-anchor-id="why-wavelets">Why Wavelets?</h2>
+<p>Fourier analysis tells us which frequencies are present, but Fourier modes are global. A local edge affects many Fourier coefficients.</p>
+<p>Wavelets are local and multiscale. They can be shifted in position, scaled in size, and used to describe coarse and fine image structures.</p>
+<p>This makes wavelets a natural representation for localized edges and details.</p>
 </section>
-<section id="convexity" class="level2">
-<h2 class="anchored" data-anchor-id="convexity">Convexity</h2>
-<p>A set <span class="math inline">C</span> is convex if the segment between any two points in <span class="math inline">C</span> stays in <span class="math inline">C</span>:</p>
-<p><span class="math display">
-(1-t)x+ty\in C,\qquad 0\leq t\leq 1.
-</span></p>
-<p>Nonnegative intensity constraints and box constraints often form convex sets.</p>
-<p>A function <span class="math inline">E</span> is convex if</p>
-<p><span class="math display">
-E((1-t)x+ty)
-\leq
-(1-t)E(x)+tE(y).
-</span></p>
+<section id="haar-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="haar-intuition">Haar Intuition</h2>
+<p>The Haar wavelet is the simplest wavelet example.</p>
 <div class="figure">
-<p><img src="../assets/figures/week09-convexity.png" class="img-fluid" alt="Smooth convex, nonsmooth convex, and nonconvex energy curves"></p>
-<p>Convexity concerns the shape of the landscape; smoothness concerns the tools we can use.</p>
+<p><img src="../assets/figures/week11-haar-atoms.png" class="img-fluid" alt="Haar scaling function, Haar wavelet, and a shifted scaled Haar wavelet"></p>
+<p>The scaling function stores averages; the wavelet stores differences.</p>
 </div>
-<p>For a convex energy:</p>
-<ul>
-<li>every local minimum is global;</li>
-<li>descent methods have a target worth reaching;</li>
-<li>optimality conditions are meaningful.</li>
-</ul>
-<p>TV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.</p>
-</section>
-<section id="gradient-descent" class="level2">
-<h2 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h2>
-<p>For a differentiable energy <span class="math inline">E</span>,</p>
+<p>For two neighboring values <span class="math inline">a</span> and <span class="math inline">b</span>,</p>
 <p><span class="math display">
-u^{k+1}=u^k-\tau\nabla E(u^k).
-</span></p>
-<p>The parameter <span class="math inline">\tau&gt;0</span> is the step size, also called the learning rate.</p>
-<p>The gradient points toward fastest local increase, so <span class="math inline">-\nabla E(u^k)</span> points toward fastest local decrease.</p>
-<div class="figure">
-<p><img src="../assets/figures/week09-gradient-descent-path.png" class="img-fluid" alt="Gradient descent paths over contour lines of a quadratic energy"></p>
-<p>Gradient descent uses local slope information to move downhill.</p>
-</div>
-</section>
-<section id="step-size" class="level2">
-<h2 class="anchored" data-anchor-id="step-size">Step Size</h2>
-<p>Step size controls stability.</p>
-<p>If <span class="math inline">\tau</span> is too small:</p>
-<ul>
-<li>progress is safe but slow;</li>
-<li>many iterations are needed.</li>
-</ul>
-<p>If <span class="math inline">\tau</span> is too large:</p>
-<ul>
-<li>the method may oscillate;</li>
-<li>the energy can increase;</li>
-<li>the iterates may diverge.</li>
-</ul>
-<div class="figure">
-<p><img src="../assets/figures/week09-step-sizes.png" class="img-fluid" alt="Gradient descent energy curves for several step sizes"></p>
-<p>The same objective can behave very differently under different step sizes.</p>
-</div>
-<p>If <span class="math inline">\nabla E</span> is Lipschitz with constant <span class="math inline">L</span>, a typical safe range is</p>
-<p><span class="math display">
-0&lt;\tau&lt;\frac{2}{L}.
-</span></p>
-<p>Often one uses</p>
-<p><span class="math display">
-\tau\leq \frac{1}{L}
-</span></p>
-<p>for stable monotone decrease.</p>
-</section>
-<section id="stopping-criteria" class="level2">
-<h2 class="anchored" data-anchor-id="stopping-criteria">Stopping Criteria</h2>
-<p>Common stopping rules include:</p>
-<ul>
-<li>maximum number of iterations;</li>
-<li>small change in energy;</li>
-<li>small change in the image;</li>
-<li>small gradient norm;</li>
-<li>visual or task-driven stopping.</li>
-</ul>
-<p>Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.</p>
-</section>
-<section id="nonsmooth-terms" class="level2">
-<h2 class="anchored" data-anchor-id="nonsmooth-terms">Nonsmooth Terms</h2>
-<p>Sparse and edge-preserving models often use terms such as</p>
-<p><span class="math display">
-|x|,
+\text{average}=\frac{a+b}{2},
 \qquad
-\|x\|_1,
-\qquad
-\operatorname{TV}(u).
+\text{detail}=\frac{a-b}{2}.
 </span></p>
-<p>These terms have corners. For <span class="math inline">x\neq 0</span>,</p>
-<p><span class="math display">
-\frac{d}{dx}|x|=\operatorname{sign}(x).
-</span></p>
-<p>At <span class="math inline">x=0</span>, there is no single derivative.</p>
-<p>The corner at zero is exactly what encourages sparsity.</p>
+<p>The average stores coarse information. The detail stores local change.</p>
+<p>Repeating this idea on averages gives a multiscale decomposition: fine details first, then coarser details at larger scales.</p>
 </section>
-<section id="subgradient-intuition" class="level2">
-<h2 class="anchored" data-anchor-id="subgradient-intuition">Subgradient Intuition</h2>
-<p>At a nonsmooth point, there may be many valid slopes. For <span class="math inline">|x|</span> at zero,</p>
-<p><span class="math display">
-\partial |0|=[-1,1].
-</span></p>
-<p>This is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.</p>
-<p>Treating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.</p>
-</section>
-<section id="proximal-operators" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-operators">Proximal Operators</h2>
-<p>The proximal operator of a regularizer <span class="math inline">R</span> is</p>
-<p><span class="math display">
-\operatorname{prox}_{\tau R}(v)
-=
-\operatorname*{argmin}_u
-\frac12\|u-v\|_2^2+\tau R(u).
-</span></p>
-<p>It balances staying near <span class="math inline">v</span> with reducing the regularizer.</p>
-<p>This is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.</p>
-</section>
-<section id="soft-thresholding" class="level2">
-<h2 class="anchored" data-anchor-id="soft-thresholding">Soft Thresholding</h2>
-<p>For <span class="math inline">R(u)=\lambda\|u\|_1</span>, the proximal operator is soft thresholding:</p>
-<p><span class="math display">
-\operatorname{prox}_{\tau\lambda\|\cdot\|_1}(v)
-=
-\operatorname{sign}(v)\max(|v|-\tau\lambda,0).
-</span></p>
+<section id="multiscale-decomposition" class="level2">
+<h2 class="anchored" data-anchor-id="multiscale-decomposition">Multiscale Decomposition</h2>
 <div class="figure">
-<p><img src="../assets/figures/week09-soft-threshold.png" class="img-fluid" alt="Absolute value nonsmoothness and soft-thresholding proximal operator"></p>
-<p>Soft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.</p>
+<p><img src="../assets/figures/week11-1d-multiscale.png" class="img-fluid" alt="A 1D signal decomposed into coarse approximation and several wavelet detail scales"></p>
+<p>A signal can be decomposed into a coarse approximation plus details at several scales.</p>
 </div>
-<p>Soft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.</p>
+<p>The approximation contains the broad trend. Coarse details capture large jumps. Fine details capture narrow changes and oscillations.</p>
+<p>The transform does not create new information. It reorganizes information into coarse approximation plus details.</p>
+<p>For orthogonal wavelets, energy is preserved up to normalization.</p>
 </section>
-<section id="proximal-gradient" class="level2">
-<h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
-<p>Suppose the energy is split as</p>
-<p><span class="math display">
-E(u)=f(u)+R(u),
-</span></p>
-<p>where <span class="math inline">f</span> is smooth and <span class="math inline">R</span> may be nonsmooth.</p>
-<p>Proximal gradient uses</p>
-<p><span class="math display">
-u^{k+1}
-=
-\operatorname{prox}_{\tau R}
-\left(u^k-\tau\nabla f(u^k)\right).
-</span></p>
-<p>The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.</p>
-</section>
-<section id="ista" class="level2">
-<h2 class="anchored" data-anchor-id="ista">ISTA</h2>
-<p>For the l1-regularized problem</p>
-<p><span class="math display">
-\min_x
-\frac12\|Ax-y\|_2^2+\lambda\|x\|_1,
-</span></p>
-<p>ISTA is</p>
-<p><span class="math display">
-x^{k+1}
-=
-S_{\tau\lambda}
-\left(x^k-\tau A^\top(Ax^k-y)\right),
-</span></p>
-<p>where <span class="math inline">S_{\tau\lambda}</span> is soft thresholding.</p>
+<section id="two-dimensional-wavelets" class="level2">
+<h2 class="anchored" data-anchor-id="two-dimensional-wavelets">Two-Dimensional Wavelets</h2>
+<p>For images, the wavelet transform is applied along rows and columns. At each scale, we get:</p>
+<ul>
+<li>approximation coefficients;</li>
+<li>horizontal detail coefficients;</li>
+<li>vertical detail coefficients;</li>
+<li>diagonal detail coefficients.</li>
+</ul>
+<div class="figure">
+<p><img src="../assets/figures/week11-image-subbands.png" class="img-fluid" alt="Image patch and 2-level wavelet coefficient layout"></p>
+<p>The coefficient layout separates coarse image content from directional details.</p>
+</div>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Step</th>
-<th>Meaning</th>
+<th>Subband</th>
+<th>Rough meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>compute <span class="math inline">Ax^k-y</span></td>
-<td>current data mismatch</td>
+<td>LL</td>
+<td>coarse approximation</td>
 </tr>
 <tr class="even">
-<td>apply <span class="math inline">A^\top</span></td>
-<td>move mismatch back to image or coefficient space</td>
+<td>LH</td>
+<td>horizontal-type detail</td>
 </tr>
 <tr class="odd">
-<td>gradient step</td>
-<td>improve data fidelity</td>
+<td>HL</td>
+<td>vertical-type detail</td>
 </tr>
 <tr class="even">
-<td>soft threshold</td>
-<td>impose sparsity</td>
+<td>HH</td>
+<td>diagonal or corner-like detail</td>
 </tr>
 </tbody>
 </table>
+<p>Naming conventions vary by library, but the main idea is directional detail at multiple scales.</p>
+</section>
+<section id="wavelet-sparsity" class="level2">
+<h2 class="anchored" data-anchor-id="wavelet-sparsity">Wavelet Sparsity</h2>
+<p>Many image regions are locally smooth. Only edges and texture create large detail coefficients.</p>
 <div class="figure">
-<p><img src="../assets/figures/week09-ista-sparse-signal.png" class="img-fluid" alt="Sparse signal reconstruction with ISTA and energy decrease"></p>
-<p>ISTA alternates between data correction and sparsity promotion.</p>
+<p><img src="../assets/figures/week11-coefficient-decay.png" class="img-fluid" alt="Sorted coefficient magnitudes for pixels, DCT, and wavelet representations"></p>
+<p>Wavelet coefficients often decay quickly for piecewise-smooth images.</p>
 </div>
+<p>This is why wavelets are useful for sparse imaging: they represent many natural images with many small coefficients and a few large ones.</p>
+</section>
+<section id="compression" class="level2">
+<h2 class="anchored" data-anchor-id="compression">Compression</h2>
+<p>Compression keeps only the most important coefficients.</p>
 <div class="figure">
-<p><img src="../assets/figures/week09-ista-image.png" class="img-fluid" alt="Original image, blurred noisy observation, ISTA estimate, and sparse DCT coefficients"></p>
-<p>The same pattern appears in image reconstruction with transform-domain sparsity.</p>
+<p><img src="../assets/figures/week11-wavelet-compression.png" class="img-fluid" alt="Original image and wavelet reconstructions keeping different fractions of largest coefficients"></p>
+<p>Keeping a small fraction of large coefficients can preserve recognizable structure.</p>
+</div>
+<p>Hard thresholding keeps a coefficient only if it is large enough:</p>
+<p><span class="math display">
+H_T(c)=
+\begin{cases}
+c, &amp; |c|\geq T,\\
+0, &amp; |c|&lt;T.
+\end{cases}
+</span></p>
+<p>Hard thresholding is useful for compression, but it can create artifacts.</p>
+<p>Soft thresholding shrinks coefficients:</p>
+<p><span class="math display">
+S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
+</span></p>
+<p>Soft thresholding is the proximal operator behind l1 regularization.</p>
+</section>
+<section id="wavelet-denoising" class="level2">
+<h2 class="anchored" data-anchor-id="wavelet-denoising">Wavelet Denoising</h2>
+<p>Noise often creates many small detail coefficients. Wavelet denoising:</p>
+<ol type="1">
+<li>transforms the noisy image;</li>
+<li>thresholds detail coefficients;</li>
+<li>reconstructs the image.</li>
+</ol>
+<div class="figure">
+<p><img src="../assets/figures/week11-wavelet-denoising.png" class="img-fluid" alt="Original, noisy, Gaussian-smoothed, and wavelet-denoised images"></p>
+<p>Wavelet denoising can remove noise while preserving localized structure.</p>
+</div>
+<p>The threshold controls the tradeoff.</p>
+<div class="figure">
+<p><img src="../assets/figures/week11-threshold-sweep.png" class="img-fluid" alt="Wavelet denoising with several threshold strengths"></p>
+<p>Small thresholds leave noise; large thresholds remove real detail.</p>
 </div>
 </section>
-<section id="common-failure-modes" class="level2">
-<h2 class="anchored" data-anchor-id="common-failure-modes">Common Failure Modes</h2>
-<p>Optimization can fail for reasons that are easy to confuse with modeling failure:</p>
-<ul>
-<li>the step size is too large;</li>
-<li>the implemented objective is not the intended objective;</li>
-<li>stopping too early hides convergence;</li>
-<li>stopping too late wastes computation or overfits noise;</li>
-<li>a nonsmooth term is treated as if it were smooth.</li>
-</ul>
-<p>The more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.</p>
+<section id="wavelets-versus-tv" class="level2">
+<h2 class="anchored" data-anchor-id="wavelets-versus-tv">Wavelets Versus TV</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Prior</th>
+<th>Typical strength</th>
+<th>Typical artifact</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TV</td>
+<td>sparse gradients</td>
+<td>sharp edges</td>
+<td>staircasing</td>
+</tr>
+<tr class="even">
+<td>wavelets</td>
+<td>sparse multiscale coefficients</td>
+<td>localized detail</td>
+<td>ringing or texture loss</td>
+</tr>
+</tbody>
+</table>
+<p>Both are sparse priors, but they encode different structure.</p>
+<p>Wavelets are not automatic truth machines. The wavelet family, boundary handling, threshold value, texture structure, and forward model all matter.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.</p>
+<p>The Week 11 notebook lets you change the wavelet family, number of decomposition levels, retained coefficient fraction, and denoising threshold.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week09_optimization.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week11_wavelets.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>Explain the difference between a variational model and an optimization method.</li>
-<li>For gradient descent, describe what happens when the step size is too small and when it is too large.</li>
-<li>Why does the absolute value penalty encourage exact zero values?</li>
-<li>Write the proximal operator definition for a regularizer <span class="math inline">R</span>.</li>
-<li>Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.</li>
+<li>What makes wavelets different from Fourier modes?</li>
+<li>Compute the Haar average and detail for the pair <span class="math inline">(8,6)</span>.</li>
+<li>What information does a detail coefficient store?</li>
+<li>Why can wavelet coefficients be sparse for piecewise-smooth images?</li>
+<li>Compare hard thresholding and soft thresholding.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Convexity makes minimization conceptually safer.</li>
-<li>Gradient descent solves smooth problems by local descent.</li>
-<li>Step size controls stability and speed.</li>
-<li>l1 and TV are convex but nonsmooth.</li>
-<li>Proximal operators are central for sparse and edge-preserving imaging.</li>
+<li>Wavelets represent images across position, scale, and direction.</li>
+<li>A wavelet transform splits images into coarse approximation and detail subbands.</li>
+<li>Many images are approximately sparse in wavelet coefficients.</li>
+<li>Thresholding gives compression and denoising algorithms.</li>
+<li>Representation choice controls the success of sparse reconstruction.</li>
 </ul>
 
 
@@ -1076,7 +1008,7 @@ S_{\tau\lambda}
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-09-optimization-methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-11-wavelets.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
