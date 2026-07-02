@@ -1649,11 +1649,465 @@ def week04_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week05_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 5 - Ill-Posed Inverse Problems
+
+            This notebook accompanies the fifth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - explain Hadamard's three conditions for well-posedness;
+            - construct a simple non-uniqueness example;
+            - inspect singular values of blur operators;
+            - see how small singular values amplify noise;
+            - experiment with truncated SVD as a first stabilization idea.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def normalize01(values):
+                values = np.asarray(values, dtype=float)
+                vmin = values.min()
+                vmax = values.max()
+                if vmax == vmin:
+                    return np.zeros_like(values)
+                return (values - vmin) / (vmax - vmin)
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def gaussian_kernel1d(radius, sigma):
+                axis = np.arange(-radius, radius + 1)
+                kernel = np.exp(-(axis**2) / (2 * sigma**2))
+                return kernel / kernel.sum()
+
+
+            def convolution_matrix(n, sigma, radius=None):
+                if radius is None:
+                    radius = max(3, int(np.ceil(4 * sigma)))
+                kernel = gaussian_kernel1d(radius, sigma)
+                matrix = np.zeros((n, n))
+                for col in range(n):
+                    impulse = np.zeros(n)
+                    impulse[col] = 1.0
+                    matrix[:, col] = np.convolve(impulse, kernel, mode="same")
+                return matrix
+
+
+            def test_signal(n):
+                t = np.linspace(0, 1, n, endpoint=False)
+                signal = (
+                    0.55 * np.sin(2 * np.pi * 3 * t)
+                    + 0.28 * np.sin(2 * np.pi * 13 * t)
+                    + 0.22 * (t > 0.45)
+                    - 0.18 * (t > 0.72)
+                )
+                return signal / np.max(np.abs(signal))
+
+
+            def truncated_svd_solution(matrix, y, keep):
+                u, singular_values, vh = np.linalg.svd(matrix, full_matrices=False)
+                coefficients = u.T @ y
+                filtered = np.zeros_like(coefficients)
+                filtered[:keep] = coefficients[:keep] / singular_values[:keep]
+                return vh.T @ filtered
+
+
+            def show_heatmaps(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin,
+                            zmax=zmax,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Hadamard's Checklist
+
+            An inverse problem is well posed when it has:
+
+            1. existence: at least one solution;
+            2. uniqueness: at most one solution;
+            3. stability: small data errors produce small solution errors.
+
+            Imaging inverse problems often fail uniqueness or stability.
+            """
+        ),
+        code(
+            """
+            hadamard = {
+                "existence": "at least one solution matches the data",
+                "uniqueness": "only one solution matches the data",
+                "stability": "small data changes cause small solution changes",
+            }
+
+            for name, meaning in hadamard.items():
+                print(f"{name:10s}: {meaning}")
+            """
+        ),
+        md(
+            """
+            ### 2. Non-Uniqueness from Missing Pixels
+
+            If an operator records only some pixels, different hidden regions can produce the same observed data.
+
+            This is a linear projection of an already formed image. It is not the same as a full physical model of scene occlusion.
+            """
+        ),
+        code(
+            """
+            image = data.camera().astype(float) / 255.0
+            image = image[70:326, 100:356]
+
+            texture = data.coins().astype(float) / 255.0
+            texture = normalize01(texture[30:286, 30:286])
+
+            mask = np.ones_like(image, dtype=bool)
+            mask[80:176, 92:180] = False
+
+            candidate_1 = image.copy()
+            candidate_2 = image.copy()
+            candidate_2[~mask] = texture[~mask]
+
+            observation_1 = candidate_1[mask]
+            observation_2 = candidate_2[mask]
+
+            observed_display = image.copy()
+            observed_display[~mask] = 1.0
+
+            show_heatmaps(
+                [candidate_1, candidate_2, observed_display, mask.astype(float)],
+                ["candidate 1", "candidate 2", "observed pixels", "mask"],
+                height=430,
+            )
+
+            print("observations equal:", np.array_equal(observation_1, observation_2))
+            print("observed entries:", observation_1.size)
+            print("missing entries:", np.size(mask) - observation_1.size)
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change the missing region in the mask.
+
+            Does the equality of the two observation vectors still hold?
+            """
+        ),
+        code(
+            """
+            # TODO: change these slice coordinates.
+            row_start = 70
+            row_stop = 155
+            col_start = 70
+            col_stop = 165
+
+            experiment_mask = np.ones_like(image, dtype=bool)
+            experiment_mask[row_start:row_stop, col_start:col_stop] = False
+
+            experiment_1 = candidate_1[experiment_mask]
+            experiment_2 = candidate_2[experiment_mask]
+
+            print("observations equal:", np.array_equal(experiment_1, experiment_2))
+            print("observed fraction:", round(float(experiment_mask.mean()), 3))
+            """
+        ),
+        md(
+            """
+            ### 3. One-Dimensional Stability Warning
+
+            The scalar equation `y = epsilon * x` has inverse `x = y / epsilon`.
+
+            If `epsilon` is tiny, data errors are magnified.
+            """
+        ),
+        code(
+            """
+            epsilons = np.array([1, 0.1, 0.01, 0.001])
+            data_error = 1e-4
+
+            for epsilon in epsilons:
+                solution_error = data_error / epsilon
+                print(f"epsilon={epsilon:g}, data error={data_error:g}, solution error={solution_error:g}")
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change `data_error`. Which values of `epsilon` make the inverse unreliable?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            data_error = 5e-5
+
+            fig = go.Figure(
+                go.Scatter(
+                    x=epsilons,
+                    y=data_error / epsilons,
+                    mode="lines+markers",
+                )
+            )
+            fig.update_layout(
+                title="Error magnification by division",
+                xaxis_title="epsilon",
+                yaxis_title="solution error",
+                xaxis_type="log",
+                yaxis_type="log",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### 4. Singular Values of Blur
+
+            Singular values tell us which directions are strongly or weakly transmitted by a linear operator.
+
+            For a blur matrix, stronger blur creates smaller singular values.
+            """
+        ),
+        code(
+            """
+            n = 90
+            blur_sigmas = [1.2, 2.4, 4.8]
+
+            fig = go.Figure()
+            for sigma in blur_sigmas:
+                matrix = convolution_matrix(n, sigma)
+                singular_values = np.linalg.svd(matrix, compute_uv=False)
+                fig.add_trace(
+                    go.Scatter(
+                        y=singular_values,
+                        mode="lines",
+                        name=f"sigma={sigma}",
+                    )
+                )
+                print(
+                    f"sigma={sigma}",
+                    "condition number=",
+                    f"{singular_values[0] / singular_values[-1]:.3e}",
+                )
+
+            fig.update_layout(
+                title="Singular values of blur matrices",
+                xaxis_title="index",
+                yaxis_title="singular value",
+                yaxis_type="log",
+                height=420,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Add a new blur strength to `blur_sigmas`.
+
+            What happens to the singular-value decay and the condition number?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            sigma = 3.2
+
+            matrix = convolution_matrix(n, sigma)
+            singular_values = np.linalg.svd(matrix, compute_uv=False)
+
+            print("largest singular value:", round(float(singular_values[0]), 6))
+            print("smallest singular value:", f"{singular_values[-1]:.3e}")
+            print("condition number:", f"{singular_values[0] / singular_values[-1]:.3e}")
+            """
+        ),
+        md(
+            """
+            ### 5. Noise Amplification by an Inverse
+
+            We now blur a signal, add a very small amount of noise, and compare direct inversion with truncated SVD.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43505)
+            n = 128
+            clean = test_signal(n)
+
+            blur_sigma = 2.4
+            noise_level = 1e-5
+            keep = 32
+
+            matrix = convolution_matrix(n, blur_sigma)
+            blurred = matrix @ clean
+            noisy = blurred + noise_level * rng.standard_normal(n)
+
+            unstable = np.linalg.pinv(matrix, rcond=1e-8) @ noisy
+            truncated = truncated_svd_solution(matrix, noisy, keep=keep)
+
+            x_axis = np.arange(n)
+            fig = make_subplots(
+                rows=1,
+                cols=4,
+                subplot_titles=["true signal", "blurred + noise", "unstable inverse", "truncated SVD"],
+            )
+            for index, values in enumerate([clean, noisy, unstable, truncated], start=1):
+                fig.add_trace(go.Scatter(x=x_axis, y=values, mode="lines"), row=1, col=index)
+                fig.update_xaxes(showticklabels=False, row=1, col=index)
+            fig.update_yaxes(range=[-1.5, 1.5], row=1, col=1)
+            fig.update_yaxes(range=[-1.5, 1.5], row=1, col=2)
+            fig.update_yaxes(range=[-8, 8], row=1, col=3)
+            fig.update_yaxes(range=[-1.5, 1.5], row=1, col=4)
+            fig.update_layout(height=390, showlegend=False, margin=dict(l=20, r=20, t=60, b=35))
+            fig.show()
+
+            print("blurred RMSE:", round(rmse(blurred, clean), 4))
+            print("unstable inverse RMSE:", round(rmse(unstable, clean), 4))
+            print("truncated SVD RMSE:", round(rmse(truncated, clean), 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Change `noise_level` and `keep`.
+
+            What happens if you keep too few singular values? What happens if you keep too many?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            noise_level = 1e-4
+            keep_values = [12, 24, 36, 60]
+
+            rng = np.random.default_rng(43505)
+            noisy = blurred + noise_level * rng.standard_normal(n)
+
+            for keep in keep_values:
+                estimate = truncated_svd_solution(matrix, noisy, keep=keep)
+                print(f"keep={keep:2d}, RMSE={rmse(estimate, clean):.4f}")
+            """
+        ),
+        md(
+            """
+            ### 6. SVD Coefficients
+
+            In SVD coordinates, inversion divides by singular values.
+
+            Noise in a direction with a small singular value can become dominant.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43505)
+            matrix = convolution_matrix(128, 3.2)
+            clean = test_signal(128)
+            blurred = matrix @ clean
+            noise = 0.012 * rng.standard_normal(128)
+            noisy = blurred + noise
+
+            u, singular_values, vh = np.linalg.svd(matrix, full_matrices=False)
+            clean_coefficients = np.abs(u.T @ blurred)
+            noisy_coefficients = np.abs(u.T @ noisy)
+            amplified_noise = np.abs(u.T @ noise) / singular_values
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["singular values", "coefficient magnitudes"])
+            fig.add_trace(go.Scatter(y=singular_values, mode="lines", name="singular values"), row=1, col=1)
+            fig.add_trace(go.Scatter(y=clean_coefficients + 1e-14, mode="lines", name="clean data"), row=1, col=2)
+            fig.add_trace(go.Scatter(y=noisy_coefficients + 1e-14, mode="lines", name="noisy data"), row=1, col=2)
+            fig.add_trace(go.Scatter(y=amplified_noise + 1e-14, mode="lines", name="noise divided by s_i"), row=1, col=2)
+            fig.update_yaxes(type="log", row=1, col=1)
+            fig.update_yaxes(type="log", row=1, col=2)
+            fig.update_xaxes(title_text="index", row=1, col=1)
+            fig.update_xaxes(title_text="index", row=1, col=2)
+            fig.update_layout(height=420, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. What are Hadamard's three conditions?
+            2. What is a nullspace?
+            3. Why do small singular values create unstable inverses?
+            4. What is the tradeoff in truncated SVD?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 6 will replace the hard cutoff in truncated SVD with Tikhonov regularization:
+
+            ```text
+            minimize ||Ax - y||_2^2 + lambda ||x||_2^2
+            ```
+
+            The central question becomes how `lambda` controls the bias-stability tradeoff.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
     write_notebook("week03_fourier_imaging.ipynb", week03_cells())
     write_notebook("week04_noise_likelihood.ipynb", week04_cells())
+    write_notebook("week05_ill_posed_inverse_problems.ipynb", week05_cells())
 
 
 if __name__ == "__main__":

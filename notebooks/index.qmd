@@ -12,6 +12,7 @@ Use the Google Colab links if you want to work in a browser without installing P
 | 2 | Convolution and blur | [Download](week02_convolution_blur.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
 | 3 | Fourier transform in imaging | [Download](week03_fourier_imaging.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) |
 | 4 | Noise models and likelihoods | [Download](week04_noise_likelihood.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb) |
+| 5 | Ill-posed inverse problems | [Download](week05_ill_posed_inverse_problems.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) |
 
 ## Working Locally
 

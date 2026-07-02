@@ -1,0 +1,591 @@
+---
+title: "Ill-Posed Inverse Problems"
+subtitle: "MATH 435: Mathematical Imaging - Week 5"
+author: "Laurent Najman"
+date: "Week 5"
+format:
+  revealjs:
+    incremental: false
+execute:
+  enabled: false
+---
+
+## Opening Question {.inverse-slide}
+
+::: {.section-kicker}
+When inversion goes wrong
+:::
+
+Can a problem have a solution, a unique solution, and still be impossible to solve reliably?
+
+## Today
+
+::: {.checklist}
+- State Hadamard's three conditions for well-posedness.
+- Identify non-uniqueness in missing-data imaging.
+- Explain stability and instability.
+- Interpret small singular values.
+- Connect inverse filtering to SVD noise amplification.
+:::
+
+## 75-Minute Plan
+
+| Time | Work |
+|---:|---|
+| 0-8 min | recap likelihood and data fidelity |
+| 8-20 min | Hadamard well-posedness |
+| 20-32 min | non-uniqueness and missing information |
+| 32-48 min | stability and inverse sensitivity |
+| 48-62 min | singular values and conceptual SVD |
+| 62-70 min | notebook activity |
+| 70-75 min | synthesis and exit checkpoint |
+
+## Bridge from Week 4
+
+Week 4 gave us a data term:
+
+$$
+D(y, f(x)).
+$$
+
+::: {.question-box}
+If a candidate image fits the data well, does that mean it is the correct image?
+:::
+
+## The Inverse Problem
+
+Forward problem:
+
+$$
+x \longmapsto y = f(x).
+$$
+
+Inverse problem:
+
+$$
+y \longmapsto x.
+$$
+
+::: {.definition-box}
+The inverse problem asks us to recover a cause from an observed effect.
+:::
+
+## Linear Models Are a Special Case
+
+When the imaging model is linear:
+
+$$
+y = A x.
+$$
+
+Examples include idealized blur, Fourier sampling, and recorded-pixel selection after image formation.
+
+::: {.caption}
+Physical scene occlusion is different: hidden content may never reach the sensor.
+:::
+
+## Part 1: Well-Posedness {.section-slide}
+
+::: {.section-kicker}
+Hadamard's checklist
+:::
+
+Three ways to fail
+
+## Hadamard Well-Posedness
+
+::: {.figure-frame}
+![](../assets/figures/week05-hadamard-checks.png){fig-alt="Existence, uniqueness, and stability as the three Hadamard conditions"}
+:::
+
+## The Three Questions
+
+::: {.three-col}
+::: {.definition-box}
+::: {.tag}
+Existence
+:::
+
+Does at least one solution fit the data?
+:::
+
+::: {.model-box}
+::: {.tag}
+Uniqueness
+:::
+
+Is there only one such solution?
+:::
+
+::: {.question-box}
+::: {.tag}
+Stability
+:::
+
+Do small data errors cause small solution errors?
+:::
+:::
+
+## Activity 1: Classify the Failure
+
+::: {.time-tag}
+5 minutes
+:::
+
+::: {.exercise-box}
+For each case, which Hadamard condition may fail?
+
+1. The data are inconsistent with the model.
+2. A missing square can contain many different textures.
+3. A tiny amount of noise creates a wildly different reconstruction.
+:::
+
+## Well-Posed Does Not Mean Easy
+
+A well-posed problem may still be computationally expensive.
+
+An ill-posed problem may be small and fast but mathematically unreliable.
+
+::: {.takeaway-box}
+Well-posedness is about the behavior of the map from data to solution.
+:::
+
+## Part 2: Non-Uniqueness {.section-slide}
+
+::: {.section-kicker}
+Data do not always determine the image
+:::
+
+Many causes, same observation
+
+## Missing Data Example
+
+::: {.figure-frame}
+![](../assets/figures/week05-nonuniqueness.png){fig-alt="Two candidate images, the same observed pixels, and a sampling mask"}
+:::
+
+## Same Observation, Different Images
+
+Let $M$ be a recorded-pixel selection mask.
+
+$$
+y = Mx.
+$$
+
+If two images differ only where $M$ does not observe, then
+
+$$
+Mx_1 = Mx_2.
+$$
+
+::: {.takeaway-box}
+The recorded data alone cannot choose between $x_1$ and $x_2$.
+:::
+
+## Important Distinction
+
+::: {.two-col}
+::: {.definition-box}
+Recorded-pixel masking:
+
+a linear projection of an already formed image.
+:::
+
+::: {.model-box}
+Physical occlusion:
+
+hidden scene content may not be measured at all.
+:::
+:::
+
+::: {.caption}
+Both can create missing information, but they are not the same physical model.
+:::
+
+## Nullspace Language
+
+For a linear operator $A$,
+
+$$
+\mathcal{N}(A)=\{z:Az=0\}.
+$$
+
+If $z\in \mathcal{N}(A)$, then
+
+$$
+A(x+z)=Ax.
+$$
+
+::: {.definition-box}
+The nullspace contains invisible changes.
+:::
+
+## Activity 2: Invisible Changes
+
+::: {.time-tag}
+5 minutes
+:::
+
+::: {.exercise-box}
+Suppose an operator observes only every second pixel.
+
+Describe one nonzero image vector $z$ such that $Az=0$.
+:::
+
+## Consequence for Reconstruction
+
+If $A$ has a nontrivial nullspace, data fidelity cannot identify a unique image:
+
+$$
+D(y, Ax)
+=
+D(y, A(x+z)).
+$$
+
+::: {.question-box}
+What extra information could help choose one completion?
+:::
+
+## Part 3: Stability {.section-slide}
+
+::: {.section-kicker}
+Small errors, large consequences
+:::
+
+The central inverse problem issue
+
+## Stability
+
+An inverse map is stable if nearby data give nearby solutions.
+
+Informally:
+
+$$
+\|y_1-y_2\| \text{ small}
+\quad\Rightarrow\quad
+\|x_1-x_2\| \text{ small}.
+$$
+
+::: {.caption}
+Stability is the reason noise matters mathematically.
+:::
+
+## One-Dimensional Warning
+
+Consider
+
+$$
+y = \varepsilon x.
+$$
+
+The inverse is
+
+$$
+x = y/\varepsilon.
+$$
+
+If $\varepsilon$ is small, tiny errors in $y$ become large errors in $x$.
+
+## Activity 3: Sensitivity
+
+::: {.time-tag}
+4 minutes
+:::
+
+::: {.exercise-box}
+Let $\varepsilon=0.001$ and suppose the data error is $10^{-4}$.
+
+What is the error after inversion?
+:::
+
+## Imaging Version
+
+Blur suppresses some directions in image space.
+
+Deblurring tries to divide by those suppressions.
+
+::: {.takeaway-box}
+The unstable directions are the directions that the forward model almost erases.
+:::
+
+## Instability Picture
+
+::: {.figure-frame}
+![](../assets/figures/week05-noise-amplification.png){fig-alt="True signal, blurred noisy signal, unstable inverse, and truncated SVD reconstruction"}
+:::
+
+## What Failed?
+
+In the instability picture:
+
+::: {.checklist}
+- a solution exists;
+- the model is known;
+- the data error is tiny;
+- the direct inverse is still useless.
+:::
+
+::: {.takeaway-box}
+This is a stability failure.
+:::
+
+## Part 4: Singular Values {.section-slide}
+
+::: {.section-kicker}
+A coordinate system for sensitivity
+:::
+
+Conceptual SVD
+
+## SVD Idea
+
+For a linear operator $A$,
+
+$$
+A v_i = \sigma_i u_i.
+$$
+
+::: {.definition-box}
+The singular value $\sigma_i$ tells how strongly $A$ transmits the input direction $v_i$.
+:::
+
+## Large and Small Singular Values
+
+::: {.two-col}
+::: {.model-box}
+Large $\sigma_i$:
+
+the direction is visible in the data.
+:::
+
+::: {.question-box}
+Small $\sigma_i$:
+
+the direction is weakly visible or nearly invisible.
+:::
+:::
+
+## Inverting in SVD Coordinates
+
+If
+
+$$
+y = A x
+$$
+
+and
+
+$$
+y = \sum_i \alpha_i u_i,
+$$
+
+then the formal inverse is
+
+$$
+x = \sum_i \frac{\alpha_i}{\sigma_i} v_i.
+$$
+
+## Where Noise Enters
+
+With noisy data:
+
+$$
+y^\delta = Ax + \eta.
+$$
+
+The inverse includes
+
+$$
+\frac{\langle \eta,u_i\rangle}{\sigma_i}.
+$$
+
+::: {.takeaway-box}
+Small singular values divide noise by a small number.
+:::
+
+## Singular Values of Blur
+
+::: {.figure-frame}
+![](../assets/figures/week05-singular-values.png){fig-alt="Decaying singular values of blur operators with several blur strengths"}
+:::
+
+## Reading the Plot
+
+::: {.checklist}
+- Stronger blur gives faster singular-value decay.
+- Later singular vectors often represent oscillatory detail.
+- Small singular values mean details are weakly observed.
+- Inversion becomes sensitive where singular values are small.
+:::
+
+## Coefficient View
+
+::: {.figure-frame}
+![](../assets/figures/week05-svd-coefficients.png){fig-alt="Singular values and SVD coefficients showing noise divided by small singular values"}
+:::
+
+## Activity 4: SVD Diagnosis
+
+::: {.time-tag}
+6 minutes
+:::
+
+::: {.exercise-box}
+You see singular values:
+
+$$
+1,\; 0.7,\; 0.3,\; 0.02,\; 0.0001.
+$$
+
+Which directions are dangerous to invert? Why?
+:::
+
+## Condition Number
+
+For an invertible matrix,
+
+$$
+\kappa(A)=\frac{\sigma_{\max}}{\sigma_{\min}}.
+$$
+
+::: {.definition-box}
+A large condition number means there is a direction that is transmitted much more weakly than another.
+:::
+
+## Condition Number Is Not the Whole Story
+
+A large condition number warns us about worst-case sensitivity.
+
+But in imaging we also care about:
+
+::: {.checklist}
+- where the noise lives;
+- whether small singular directions contain important image details;
+- how the reconstruction will be used.
+:::
+
+## Part 5: Stabilization Idea {.section-slide}
+
+::: {.section-kicker}
+Not solving yet
+:::
+
+Just seeing the need
+
+## A First Stabilization Idea
+
+If small $\sigma_i$ amplify noise, one crude idea is:
+
+$$
+\frac{\alpha_i}{\sigma_i}
+\quad\text{only for sufficiently large } \sigma_i.
+$$
+
+::: {.definition-box}
+This is the idea behind truncated SVD.
+:::
+
+## What Truncated SVD Does
+
+::: {.two-col}
+::: {.model-box}
+Keeps stable directions that are well observed.
+:::
+
+::: {.question-box}
+Discards unstable directions that may contain detail.
+:::
+:::
+
+::: {.caption}
+This is already a bias-stability tradeoff.
+:::
+
+## Preview of Regularization
+
+Next week, instead of a hard cutoff, we will solve problems like
+
+$$
+\min_x
+\|Ax-y\|_2^2 + \lambda \|x\|_2^2.
+$$
+
+::: {.takeaway-box}
+Regularization is a controlled way to trade exact data fit for stability.
+:::
+
+## Code Demo: Run Week 5 Examples {.code-small}
+
+From the repository root:
+
+```bash
+python3 examples/week05_ill_posed.py
+python3 examples/make_week05_figures.py
+python3 scripts/build_notebooks.py
+./scripts/quarto render
+```
+
+## In-Class Notebook Activity
+
+::: {.time-tag}
+8 minutes
+:::
+
+::: {.exercise-box}
+Open the Week 5 notebook.
+
+1. Change the blur strength.
+2. Change the noise level.
+3. Change the number of singular values kept.
+4. Record when reconstruction improves and when it fails.
+:::
+
+## Quiz-Style Check
+
+::: {.exercise-box}
+For each statement, identify the issue:
+
+1. No image matches the measured data exactly.
+2. Many images match the same data.
+3. A tiny measurement error creates a huge reconstruction error.
+4. A singular value is nearly zero.
+:::
+
+## End-of-Class Checkpoint
+
+::: {.exercise-box}
+Answer in one sentence each:
+
+1. What are Hadamard's three conditions?
+2. What is a nullspace?
+3. Why do small singular values cause instability?
+4. What does truncated SVD trade away?
+:::
+
+## Suggested Answers
+
+| Question | Short answer |
+|---|---|
+| Hadamard conditions | existence, uniqueness, stability |
+| nullspace | changes that the operator maps to zero |
+| small singular values | inverse divides by them and amplifies noise |
+| truncated SVD | trades fine detail or bias for stability |
+
+## What Students Should Remember
+
+::: {.takeaway-box}
+- Ill-posedness is not just "hard"; it is a structural failure.
+- Missing information causes non-uniqueness.
+- Small singular values cause instability.
+- A direct inverse may fit the model and still be useless.
+- Regularization is motivated by the need for stable reconstruction.
+:::
+
+## Next Time
+
+Tikhonov regularization:
+
+- $\ell_2$ regularization;
+- filter factors;
+- parameter effects;
+- bias-stability tradeoff.
