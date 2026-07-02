@@ -2163,567 +2163,767 @@
     "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html",
-    "href": "book/week-05-ill-posed-inverse-problems.html",
-    "title": "Ill-Posed Inverse Problems",
+    "objectID": "book/week-08-total-variation.html",
+    "href": "book/week-08-total-variation.html",
+    "title": "Total Variation Regularization",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#learning-goals",
+    "href": "book/week-08-total-variation.html#learning-goals",
+    "title": "Total Variation Regularization",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndefine Total Variation;\ncompare TV with quadratic smoothness;\nexplain why TV preserves edges better;\nidentify staircasing artifacts;\nuse TV as a modeling prior for image denoising.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#edges-are-not-noise",
+    "href": "book/week-08-total-variation.html#edges-are-not-noise",
+    "title": "Total Variation Regularization",
+    "section": "Edges Are Not Noise",
+    "text": "Edges Are Not Noise\nQuadratic smoothing uses\n\nE(u)\n=\n\\frac12\\|u-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2.\n\nThis removes noise, but it also penalizes true edges. Edges and noise both create local changes, so a model must distinguish between unwanted oscillation and meaningful discontinuity.\nTotal Variation changes the regularizer.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#continuous-total-variation",
+    "href": "book/week-08-total-variation.html#continuous-total-variation",
+    "title": "Total Variation Regularization",
+    "section": "Continuous Total Variation",
+    "text": "Continuous Total Variation\nFor a grayscale image u:\\Omega\\to\\mathbb{R},\n\n\\operatorname{TV}(u)\n=\n\\int_\\Omega |\\nabla u(x)|\\,dx.\n\nTV measures the total amount of change in the image.\nFor a pixel grid, the isotropic discrete TV is\n\n\\operatorname{TV}(u)\n=\n\\sum_i\n\\sqrt{(D_xu_i)^2+(D_yu_i)^2}.\n\nHere D_x and D_y are finite differences in horizontal and vertical directions.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#tv-denoising",
+    "href": "book/week-08-total-variation.html#tv-denoising",
+    "title": "Total Variation Regularization",
+    "section": "TV Denoising",
+    "text": "TV Denoising\nThe classical Rudin-Osher-Fatemi model is\n\nu_\\lambda\n=\n\\operatorname*{argmin}_u\n\\frac12\\|u-y\\|_2^2\n+\n\\lambda\\,\\operatorname{TV}(u).\n\nThe data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.\nThis regularizer says: among images that fit the data, prefer images with small total variation.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#l2-versus-tv-penalties",
+    "href": "book/week-08-total-variation.html#l2-versus-tv-penalties",
+    "title": "Total Variation Regularization",
+    "section": "l2 Versus TV Penalties",
+    "text": "l2 Versus TV Penalties\nFor a one-dimensional gradient value g, compare:\n\n\\text{quadratic penalty}=\\frac12 g^2,\n\\qquad\n\\text{TV penalty}=|g|.\n\n\n\nLarge gradients are much more expensive under a quadratic penalty than under TV.\n\nFor example, if g=4, then \\frac12g^2=8, while |g|=4. The difference becomes larger as |g| grows.\nThis is the basic reason TV preserves edges better: it penalizes the existence of change, but it is less aggressive toward large jumps than a squared-gradient model.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#nonsmoothness",
+    "href": "book/week-08-total-variation.html#nonsmoothness",
+    "title": "Total Variation Regularization",
+    "section": "Nonsmoothness",
+    "text": "Nonsmoothness\nThe function |g| is not differentiable at g=0. This is not a minor technicality. It changes the optimization problem.\nQuadratic smoothing leads to smooth linear equations. TV denoising is convex but nonsmooth. That makes it powerful for edge preservation and more delicate to solve.\nOptimization methods for nonsmooth convex problems appear in the next chapter.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#one-dimensional-edge-preservation",
+    "href": "book/week-08-total-variation.html#one-dimensional-edge-preservation",
+    "title": "Total Variation Regularization",
+    "section": "One-Dimensional Edge Preservation",
+    "text": "One-Dimensional Edge Preservation\nTV is easiest to understand on a step signal.\n\n\nQuadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.\n\nTV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.\nThis is useful when the image contains objects separated by edges.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#image-denoising",
+    "href": "book/week-08-total-variation.html#image-denoising",
+    "title": "Total Variation Regularization",
+    "section": "Image Denoising",
+    "text": "Image Denoising\nThe contrast between quadratic smoothing and TV also appears on images.\n\n\nTV removes noise while preserving stronger edge sets better than quadratic smoothing.\n\nGradient maps make the behavior easier to see.\n\n\nNoise creates many small gradients. TV suppresses weak fluctuations while retaining stronger edges.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#choosing-the-tv-weight",
+    "href": "book/week-08-total-variation.html#choosing-the-tv-weight",
+    "title": "Total Variation Regularization",
+    "section": "Choosing The TV Weight",
+    "text": "Choosing The TV Weight\nIn\n\n\\frac12\\|u-y\\|_2^2+\\lambda\\operatorname{TV}(u),\n\nlarger \\lambda means:\n\nstronger denoising;\nfewer small variations;\ngreater risk of losing detail.\n\n\n\nThe best value of \\lambda depends on the task.\n\nFor a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#staircasing",
+    "href": "book/week-08-total-variation.html#staircasing",
+    "title": "Total Variation Regularization",
+    "section": "Staircasing",
+    "text": "Staircasing\nTV favors sparse gradients. That means many locations with zero gradient and a smaller number of jumps.\n\n\nTV can turn smooth variation into piecewise-flat plateaus.\n\nThis staircasing effect is the signature artifact of TV. TV preserves edges, but it can create artificial plateaus in regions that should vary smoothly.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#strengths-and-weaknesses",
+    "href": "book/week-08-total-variation.html#strengths-and-weaknesses",
+    "title": "Total Variation Regularization",
+    "section": "Strengths And Weaknesses",
+    "text": "Strengths And Weaknesses\n\n\n\n\n\n\n\n\nProperty\nl2 smoothing\nTV\n\n\n\n\nNoise removal\nyes\nyes\n\n\nEdge preservation\nweak\nstrong\n\n\nOptimization\nsmooth linear problem\nnonsmooth convex problem\n\n\nTypical artifact\nblur\nstaircasing\n\n\nBest for\nsmooth images\npiecewise-smooth or piecewise-constant images\n\n\n\nTV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.\nThis is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#course-checkpoint",
+    "href": "book/week-08-total-variation.html#course-checkpoint",
+    "title": "Total Variation Regularization",
+    "section": "Course Checkpoint",
+    "text": "Course Checkpoint\nAt this point in the course, students should be able to connect:\n\nimage arrays and forward models;\nconvolution, blur, and Fourier interpretation;\nnoise models and likelihoods;\nill-posedness and singular values;\nTikhonov, variational energies, and TV.\n\nTV is the bridge from smooth quadratic models to nonsmooth optimization and sparse reconstruction.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#computation",
+    "href": "book/week-08-total-variation.html#computation",
+    "title": "Total Variation Regularization",
+    "section": "Computation",
+    "text": "Computation\nThe Week 8 notebook lets you change the TV weight, compare TV and l2 smoothing, inspect gradient maps, and find staircasing examples.\nRun:\npython3 examples/week08_total_variation.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#exercises",
+    "href": "book/week-08-total-variation.html#exercises",
+    "title": "Total Variation Regularization",
+    "section": "Exercises",
+    "text": "Exercises\n\nWrite the continuous definition of \\operatorname{TV}(u).\nWrite the discrete isotropic TV formula using D_xu_i and D_yu_i.\nCompare the quadratic and TV costs for gradient values g=1 and g=4.\nExplain why TV preserves edges better than quadratic smoothing.\nDescribe staircasing and give one situation where it would be undesirable.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#takeaways",
+    "href": "book/week-08-total-variation.html#takeaways",
+    "title": "Total Variation Regularization",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nTotal Variation uses \\operatorname{TV}(u)=\\int_\\Omega |\\nabla u|\\,dx.\nTV favors images with small total change.\nCompared with l2 smoothing, TV preserves stronger edges.\nTV is convex but nonsmooth.\nTV can create staircasing artifacts, so it is not always the right prior.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-06-tikhonov-regularization.html",
+    "href": "book/week-06-tikhonov-regularization.html",
+    "title": "Tikhonov Regularization",
     "section": "",
     "text": "Slides | Notebook | Open in Colab",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#learning-goals",
-    "href": "book/week-05-ill-posed-inverse-problems.html#learning-goals",
-    "title": "Ill-Posed Inverse Problems",
+    "objectID": "book/week-06-tikhonov-regularization.html#learning-goals",
+    "href": "book/week-06-tikhonov-regularization.html#learning-goals",
+    "title": "Tikhonov Regularization",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nstate Hadamard’s three conditions for well-posedness;\nidentify non-uniqueness in missing-data imaging;\ndistinguish missing recorded pixels from physical occlusion;\nexplain stability and instability;\ninterpret small singular values as noise-amplifying directions.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nformulate Tikhonov regularization;\nderive the normal equations;\ninterpret the regularization parameter \\lambda;\nread Tikhonov filter factors;\nexplain the bias-stability tradeoff.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#the-inverse-problem",
-    "href": "book/week-05-ill-posed-inverse-problems.html#the-inverse-problem",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "The Inverse Problem",
-    "text": "The Inverse Problem\nA forward problem maps a cause to an effect:\n\nx \\longmapsto y = f(x).\n\nAn inverse problem asks us to recover a cause from an observed effect:\n\ny \\longmapsto x.\n\nIn imaging, x may be an unknown image or scene, and y may be a blurred, noisy, incomplete, or transformed measurement.\nWhen the imaging model is linear, we write\n\ny = Ax.\n\nLinear models include idealized blur, Fourier sampling, and recorded-pixel selection after image formation. But physical scene occlusion is different: hidden content may never reach the sensor, so the inverse problem is not simply “undoing a linear operator.”",
+    "objectID": "book/week-06-tikhonov-regularization.html#why-regularize",
+    "href": "book/week-06-tikhonov-regularization.html#why-regularize",
+    "title": "Tikhonov Regularization",
+    "section": "Why Regularize?",
+    "text": "Why Regularize?\nChapter 5 showed that direct inversion can amplify noise through terms such as\n\n\\frac{\\langle \\eta,u_i\\rangle}{\\sigma_i}.\n\nWhen \\sigma_i is small, division by \\sigma_i is dangerous. Regularization changes the inverse problem so that weakly observed directions are not trusted blindly.\nFor a linear imaging model\n\ny=Ax+\\eta,\n\nthe Gaussian least-squares data fit is\n\n\\|Ax-y\\|_2^2.\n\nIf A is ill-conditioned, least squares can fit noise. Data fit alone does not know which data components are reliable.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#hadamard-well-posedness",
-    "href": "book/week-05-ill-posed-inverse-problems.html#hadamard-well-posedness",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Hadamard Well-Posedness",
-    "text": "Hadamard Well-Posedness\nHadamard called a problem well posed if three conditions hold:\n\n\nExistence, uniqueness, and stability are three different ways an inverse problem can fail.\n\nThe three questions are:\n\n\n\nCondition\nQuestion\n\n\n\n\nExistence\nDoes at least one solution fit the data?\n\n\nUniqueness\nIs there only one such solution?\n\n\nStability\nDo small data errors cause small solution errors?\n\n\n\nA well-posed problem may still be computationally expensive. An ill-posed problem may be small and fast but mathematically unreliable.\nWell-posedness is about the behavior of the map from data to solution.",
+    "objectID": "book/week-06-tikhonov-regularization.html#tikhonov-regularization",
+    "href": "book/week-06-tikhonov-regularization.html#tikhonov-regularization",
+    "title": "Tikhonov Regularization",
+    "section": "Tikhonov Regularization",
+    "text": "Tikhonov Regularization\nThe simplest Tikhonov model is\n\nx_\\lambda\n=\n\\operatorname*{argmin}_x\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\nThe parameter \\lambda&gt;0 controls the strength of regularization.\nThe objective has two terms:\n\n\n\n\n\n\n\nTerm\nRole\n\n\n\n\n\\|Ax-y\\|_2^2\nprefer reconstructions that explain the measurements\n\n\n\\lambda\\|x\\|_2^2\nprefer smaller-energy solutions\n\n\n\nIf two images explain the data similarly, Tikhonov prefers the one with smaller norm.\n\n\nChanging \\lambda moves the reconstruction along a path from unstable to over-damped.\n\nVery small \\lambda leaves unstable directions barely damped. Moderate \\lambda can control noise while preserving structure. Large \\lambda over-damps the solution.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#existence",
-    "href": "book/week-05-ill-posed-inverse-problems.html#existence",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Existence",
-    "text": "Existence\nExistence can fail when the data are inconsistent with the model. For example, suppose a model claims that all measured intensities must be nonnegative and below one, but the data contain values outside that range. Or suppose we demand exact agreement with noisy measurements that no model image can produce.\nIn practice, noise and model error often make exact existence too strict. This is one reason reconstruction methods use data fidelity terms rather than exact constraints.",
+    "objectID": "book/week-06-tikhonov-regularization.html#deriving-the-normal-equations",
+    "href": "book/week-06-tikhonov-regularization.html#deriving-the-normal-equations",
+    "title": "Tikhonov Regularization",
+    "section": "Deriving The Normal Equations",
+    "text": "Deriving The Normal Equations\nLet\n\nJ(x)=\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\nExpanding,\n\nJ(x)=(Ax-y)^T(Ax-y)+\\lambda x^T x.\n\nThe gradient is\n\n\\nabla J(x)=2A^T(Ax-y)+2\\lambda x.\n\nAt a minimizer,\n\n\\nabla J(x_\\lambda)=0.\n\nSetting the gradient to zero gives\n\nA^T(Ax_\\lambda-y)+\\lambda x_\\lambda=0.\n\nTherefore,\n\n(A^TA+\\lambda I)x_\\lambda=A^Ty.\n\nThese are the Tikhonov normal equations.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#non-uniqueness",
-    "href": "book/week-05-ill-posed-inverse-problems.html#non-uniqueness",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Non-Uniqueness",
-    "text": "Non-Uniqueness\nNon-uniqueness means several different images explain the same observation.\n\n\nDifferent images can agree on all observed pixels.\n\nLet M be a recorded-pixel selection mask:\n\ny = Mx.\n\nIf two images differ only where M does not observe, then\n\nMx_1 = Mx_2.\n\nThe recorded data alone cannot choose between x_1 and x_2.",
+    "objectID": "book/week-06-tikhonov-regularization.html#closed-form-solution",
+    "href": "book/week-06-tikhonov-regularization.html#closed-form-solution",
+    "title": "Tikhonov Regularization",
+    "section": "Closed-Form Solution",
+    "text": "Closed-Form Solution\nIf \\lambda&gt;0,\n\nx_\\lambda\n=\n(A^TA+\\lambda I)^{-1}A^Ty.\n\nTikhonov replaces an unstable inverse by a stabilized linear solve.\nIf A has singular values \\sigma_i, then A^TA has eigenvalues \\sigma_i^2. Tikhonov shifts them:\n\n\\sigma_i^2\n\\quad\\longmapsto\\quad\n\\sigma_i^2+\\lambda.\n\nSmall eigenvalues are lifted away from zero.\nFor small educational examples, the direct matrix form is:\nlhs = A.T @ A + lam * np.eye(n)\nrhs = A.T @ y\nx_lam = np.linalg.solve(lhs, rhs)\nFor large imaging problems, one usually avoids forming dense matrices explicitly and uses iterative methods or operator implementations.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#masking-versus-occlusion",
-    "href": "book/week-05-ill-posed-inverse-problems.html#masking-versus-occlusion",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Masking Versus Occlusion",
-    "text": "Masking Versus Occlusion\nIt is important to separate two ideas.\n\n\n\n\n\n\n\n\nSituation\nMathematical description\nInterpretation\n\n\n\n\nRecorded-pixel masking\na linear projection of an already formed image\npixels are missing from the stored image\n\n\nPhysical occlusion\nhidden scene content may not be measured at all\nthe sensor never received that information\n\n\n\nBoth create missing information, but they are not the same physical model. If a person is hidden behind a tree in a single image, the hidden content is not encoded in the pixels behind the tree. No inverse algorithm can recover exact information that was never measured.",
+    "objectID": "book/week-06-tikhonov-regularization.html#svd-interpretation",
+    "href": "book/week-06-tikhonov-regularization.html#svd-interpretation",
+    "title": "Tikhonov Regularization",
+    "section": "SVD Interpretation",
+    "text": "SVD Interpretation\nLet\n\nA v_i = \\sigma_i u_i.\n\nThen Tikhonov can be written as\n\nx_\\lambda\n=\n\\sum_i\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}\n\\langle y,u_i\\rangle v_i.\n\nCompare this with direct inversion, whose factor is\n\n\\frac{1}{\\sigma_i}.\n\nTikhonov replaces it with\n\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}.\n\nWhen \\sigma_i is small, Tikhonov avoids division by a tiny number.\n\n\nFilter factors show how each singular direction is damped.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#nullspace-language",
-    "href": "book/week-05-ill-posed-inverse-problems.html#nullspace-language",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Nullspace Language",
-    "text": "Nullspace Language\nFor a linear operator A, the nullspace is\n\n\\mathcal{N}(A)=\\{z:Az=0\\}.\n\nIf z\\in \\mathcal{N}(A), then\n\nA(x+z)=Ax.\n\nThe nullspace contains invisible changes. If A has a nontrivial nullspace, data fidelity cannot identify a unique image:\n\nD(y,Ax)=D(y,A(x+z)).\n\nTo choose between possible reconstructions, we need extra information: smoothness, sparsity, edge preservation, training data, physical constraints, or some other modeling assumption.",
+    "objectID": "book/week-06-tikhonov-regularization.html#reading-filter-factors",
+    "href": "book/week-06-tikhonov-regularization.html#reading-filter-factors",
+    "title": "Tikhonov Regularization",
+    "section": "Reading Filter Factors",
+    "text": "Reading Filter Factors\nFilter factors reveal the effect of \\lambda:\n\nsmall \\lambda behaves more like the direct inverse;\nlarger \\lambda damps weak singular directions;\nstrong damping reduces noise but also removes detail.\n\nFor example, if \\sigma=0.001, direct inversion uses 1/\\sigma=1000. With \\lambda=0.01, Tikhonov uses\n\n\\frac{0.001}{0.001^2+0.01}\n\\approx 0.1.\n\nThe unstable amplification is replaced by strong damping.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#stability",
-    "href": "book/week-05-ill-posed-inverse-problems.html#stability",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Stability",
-    "text": "Stability\nAn inverse map is stable if nearby data give nearby solutions. Informally,\n\n\\|y_1-y_2\\| \\text{ small}\n\\quad\\Rightarrow\\quad\n\\|x_1-x_2\\| \\text{ small}.\n\nStability is the reason noise matters mathematically.\nConsider the one-dimensional model\n\ny=\\varepsilon x.\n\nThe inverse is\n\nx = y/\\varepsilon.\n\nIf \\varepsilon is small, tiny errors in y become large errors in x.",
+    "objectID": "book/week-06-tikhonov-regularization.html#choosing-lambda",
+    "href": "book/week-06-tikhonov-regularization.html#choosing-lambda",
+    "title": "Tikhonov Regularization",
+    "section": "Choosing Lambda",
+    "text": "Choosing Lambda\nThe parameter \\lambda is the lesson.\nSmall \\lambda gives better data fit but more noise amplification. Large \\lambda gives more stability but more bias and blur.\n\n\nThe best parameter balances data fit and regularization.\n\nThe true image is usually unknown, so an RMSE curve is a teaching diagnostic rather than a practical parameter-choice method. In practice, parameter choice may use validation data, discrepancy principles, cross-validation, L-curve heuristics, or domain-specific performance criteria.\n\n\nThe visually best value of \\lambda depends on the task and risk.\n\nIn a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#imaging-instability",
-    "href": "book/week-05-ill-posed-inverse-problems.html#imaging-instability",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Imaging Instability",
-    "text": "Imaging Instability\nBlur suppresses some directions in image space. Deblurring tries to divide by those suppressions.\nThe unstable directions are the directions that the forward model almost erases.\n\n\nA direct inverse can be mathematically defined and still useless in the presence of noise.\n\nIn this picture:\n\na solution exists;\nthe model is known;\nthe data error is tiny;\nthe direct inverse is still unstable.\n\nThis is a stability failure.",
+    "objectID": "book/week-06-tikhonov-regularization.html#bias-and-variance",
+    "href": "book/week-06-tikhonov-regularization.html#bias-and-variance",
+    "title": "Tikhonov Regularization",
+    "section": "Bias And Variance",
+    "text": "Bias And Variance\nImagine repeating the noisy measurement many times.\nBias is systematic error from the average reconstruction. Variance is random variation across noise realizations.\n\n\nRegularization trades variance for bias.\n\nIncreasing \\lambda usually reduces variance and increases bias. The best mean squared error often lies between the extremes.\nThe error can be large for two opposite reasons:\n\nif \\lambda is too small, noise amplification remains;\nif \\lambda is too large, the reconstruction is over-smoothed and biased.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#singular-values",
-    "href": "book/week-05-ill-posed-inverse-problems.html#singular-values",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Singular Values",
-    "text": "Singular Values\nThe singular value decomposition gives a coordinate system for sensitivity.\nFor a linear operator A,\n\nA v_i = \\sigma_i u_i.\n\nThe singular value \\sigma_i tells how strongly A transmits the input direction v_i.\nLarge singular values correspond to directions that are visible in the data. Small singular values correspond to directions that are weakly visible or nearly invisible.",
+    "objectID": "book/week-06-tikhonov-regularization.html#what-tikhonov-does-not-solve",
+    "href": "book/week-06-tikhonov-regularization.html#what-tikhonov-does-not-solve",
+    "title": "Tikhonov Regularization",
+    "section": "What Tikhonov Does Not Solve",
+    "text": "What Tikhonov Does Not Solve\nTikhonov is a first regularization method, not the final answer to imaging.\nIt tends to prefer small-energy solutions, which may over-smooth edges or texture. It also depends on a linear model and a quadratic penalty in its basic form.\nLater chapters introduce more expressive regularizers, including variational penalties, total variation, sparsity, wavelets, and learned priors.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#inverting-in-svd-coordinates",
-    "href": "book/week-05-ill-posed-inverse-problems.html#inverting-in-svd-coordinates",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Inverting In SVD Coordinates",
-    "text": "Inverting In SVD Coordinates\nIf\n\ny=Ax\n\nand\n\ny=\\sum_i \\alpha_i u_i,\n\nthen the formal inverse is\n\nx=\\sum_i \\frac{\\alpha_i}{\\sigma_i}v_i.\n\nWith noisy data\n\ny^\\delta=Ax+\\eta,\n\nthe inverse includes terms of the form\n\n\\frac{\\langle \\eta,u_i\\rangle}{\\sigma_i}.\n\nSmall singular values divide noise by a small number.\n\n\nStronger blur typically makes singular values decay faster.",
-    "crumbs": [
-      "Book",
-      "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
-    ]
-  },
-  {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#reading-singular-value-plots",
-    "href": "book/week-05-ill-posed-inverse-problems.html#reading-singular-value-plots",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Reading Singular-Value Plots",
-    "text": "Reading Singular-Value Plots\nSingular values help diagnose instability:\n\nstronger blur gives faster singular-value decay;\nlater singular vectors often represent oscillatory detail;\nsmall singular values mean details are weakly observed;\ninversion becomes sensitive where singular values are small.\n\n\n\nThe dangerous coefficients are those where noise is divided by small singular values.",
-    "crumbs": [
-      "Book",
-      "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
-    ]
-  },
-  {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#condition-number",
-    "href": "book/week-05-ill-posed-inverse-problems.html#condition-number",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Condition Number",
-    "text": "Condition Number\nFor an invertible matrix,\n\n\\kappa(A)=\\frac{\\sigma_{\\max}}{\\sigma_{\\min}}.\n\nA large condition number means there is a direction that is transmitted much more weakly than another.\nThe condition number warns us about worst-case sensitivity, but it is not the whole story. In imaging we also care about:\n\nwhere the noise lives;\nwhether small singular directions contain important image details;\nhow the reconstruction will be used.",
-    "crumbs": [
-      "Book",
-      "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
-    ]
-  },
-  {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#stabilization-idea",
-    "href": "book/week-05-ill-posed-inverse-problems.html#stabilization-idea",
-    "title": "Ill-Posed Inverse Problems",
-    "section": "Stabilization Idea",
-    "text": "Stabilization Idea\nIf small \\sigma_i amplify noise, one crude stabilization idea is:\n\n\\frac{\\alpha_i}{\\sigma_i}\n\\quad\\text{only for sufficiently large } \\sigma_i.\n\nThis is the idea behind truncated SVD.\nTruncated SVD keeps stable directions that are well observed and discards unstable directions that may contain detail. This is already a bias-stability tradeoff.\nThe next chapter replaces a hard cutoff with Tikhonov regularization:\n\n\\min_x\n\\|Ax-y\\|_2^2 + \\lambda\\|x\\|_2^2.",
-    "crumbs": [
-      "Book",
-      "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
-    ]
-  },
-  {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#computation",
-    "href": "book/week-05-ill-posed-inverse-problems.html#computation",
-    "title": "Ill-Posed Inverse Problems",
+    "objectID": "book/week-06-tikhonov-regularization.html#computation",
+    "href": "book/week-06-tikhonov-regularization.html#computation",
+    "title": "Tikhonov Regularization",
     "section": "Computation",
-    "text": "Computation\nThe Week 5 notebook lets you vary blur strength, noise level, and the number of singular values kept.\nRun:\npython3 examples/week05_ill_posed.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 6 notebook lets you change blur strength, noise level, and \\lambda, then observe the resulting bias-stability tradeoff.\nRun:\npython3 examples/week06_tikhonov.py\nor open the notebook in Colab from the link at the top of this chapter.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#exercises",
-    "href": "book/week-05-ill-posed-inverse-problems.html#exercises",
-    "title": "Ill-Posed Inverse Problems",
+    "objectID": "book/week-06-tikhonov-regularization.html#exercises",
+    "href": "book/week-06-tikhonov-regularization.html#exercises",
+    "title": "Tikhonov Regularization",
     "section": "Exercises",
-    "text": "Exercises\n\nGive an example of an inverse problem where existence fails.\nGive an example of an inverse problem where uniqueness fails.\nExplain why a missing square in an image creates many possible completions.\nFor singular values 1,0.7,0.3,0.02,0.0001, identify the dangerous directions to invert.\nExplain in your own words why direct deblurring can fail even when the blur model is known.",
+    "text": "Exercises\n\nPredict what happens to the Tikhonov objective when \\lambda\\to 0 and when \\lambda\\to\\infty.\nDerive the normal equations for \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nIf singular values are 1,0.1,0.001, compare the smallest eigenvalue of A^TA with that of A^TA+\\lambda I for \\lambda=0.01.\nFor \\sigma=0.001 and \\lambda=0.01, compare 1/\\sigma with \\sigma/(\\sigma^2+\\lambda).\nExplain why increasing \\lambda can both improve and damage a reconstruction.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-05-ill-posed-inverse-problems.html#takeaways",
-    "href": "book/week-05-ill-posed-inverse-problems.html#takeaways",
-    "title": "Ill-Posed Inverse Problems",
+    "objectID": "book/week-06-tikhonov-regularization.html#takeaways",
+    "href": "book/week-06-tikhonov-regularization.html#takeaways",
+    "title": "Tikhonov Regularization",
     "section": "Takeaways",
-    "text": "Takeaways\n\nIll-posedness is a structural issue, not merely a computational inconvenience.\nHadamard’s conditions are existence, uniqueness, and stability.\nMissing information causes non-uniqueness.\nSmall singular values cause instability because inverse formulas divide by them.\nRegularization is motivated by the need for stable reconstruction.",
+    "text": "Takeaways\n\nTikhonov solves \\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nThe normal equations are (A^TA+\\lambda I)x=A^Ty.\nIn SVD coordinates, Tikhonov damps weak singular directions.\n\\lambda controls a bias-stability tradeoff.\nRegularization is a modeling choice, not magic.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "5. Ill-posed inverse problems"
+      "6. Tikhonov regularization"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html",
-    "href": "book/week-03-fourier-imaging.html",
-    "title": "Fourier Transform in Imaging",
+    "objectID": "book/week-04-noise-likelihood.html",
+    "href": "book/week-04-noise-likelihood.html",
+    "title": "Noise Models and Likelihoods",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#learning-goals",
+    "href": "book/week-04-noise-likelihood.html#learning-goals",
+    "title": "Noise Models and Likelihoods",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndistinguish deterministic degradation from random noise;\nmodel additive Gaussian noise;\nmodel photon-counting Poisson noise;\ncompare absolute and relative noise behavior;\nderive likelihood-based data terms for reconstruction.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#why-noise-models-matter",
+    "href": "book/week-04-noise-likelihood.html#why-noise-models-matter",
+    "title": "Noise Models and Likelihoods",
+    "section": "Why Noise Models Matter",
+    "text": "Why Noise Models Matter\nIn the first chapters we wrote idealized forward models such as blur or Fourier filtering. Real measurements also contain random variation.\nA common observation model is\n\ny = f(x) + \\eta,\n\nwhere x is the unknown scene or image, f is the forward imaging process, y is the recorded data, and \\eta is noise.\nWhen the forward model is linear, this becomes\n\ny = Ax + \\eta.\n\nLinearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace Ax by a general prediction f(x).",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#seeing-noise-before-modeling-it",
+    "href": "book/week-04-noise-likelihood.html#seeing-noise-before-modeling-it",
+    "title": "Noise Models and Likelihoods",
+    "section": "Seeing Noise Before Modeling It",
+    "text": "Seeing Noise Before Modeling It\nThe same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.\n\n\nDifferent noise models create different visual artifacts.\n\nFor a pixel i, the recorded value y_i is a random variable. A noise model specifies the probability law of y_i when the unknown true value is x_i.\nA useful noise model answers:\n\nwhat recorded values are likely;\nhow large typical errors are;\nwhether the variance depends on intensity;\nwhat cost should penalize disagreement with data.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#gaussian-noise",
+    "href": "book/week-04-noise-likelihood.html#gaussian-noise",
+    "title": "Noise Models and Likelihoods",
+    "section": "Gaussian Noise",
+    "text": "Gaussian Noise\nThe simplest model is additive Gaussian noise:\n\ny_i = x_i + \\eta_i,\n\\qquad\n\\eta_i \\sim \\mathcal{N}(0,\\sigma^2).\n\nThe parameter \\sigma is the standard deviation of the noise. Under this model,\n\n\\mathbb{E}[y_i\\mid x_i] = x_i,\n\\qquad\n\\mathrm{Var}(y_i\\mid x_i)=\\sigma^2.\n\nThe variance is constant: it does not depend on x_i.\n\n\nGaussian residuals are centered and symmetric, while Poisson counts change shape with intensity.\n\nFor one pixel,\n\np(y_i\\mid x_i)\n=\n\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\n\\exp\\left(\n-\\frac{(y_i-x_i)^2}{2\\sigma^2}\n\\right).\n\nIf pixel errors are independent, then\n\np(y\\mid x)=\\prod_i p(y_i\\mid x_i).\n\nTaking negative logarithms gives\n\n-\\log p(y\\mid x)\n=\n\\frac{1}{2\\sigma^2}\\sum_i (y_i-x_i)^2\n+ \\text{constant}.\n\nThus Gaussian noise leads naturally to least squares.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#gaussian-data-fidelity",
+    "href": "book/week-04-noise-likelihood.html#gaussian-data-fidelity",
+    "title": "Noise Models and Likelihoods",
+    "section": "Gaussian Data Fidelity",
+    "text": "Gaussian Data Fidelity\nFor direct observation y=x+\\eta, maximum likelihood gives\n\n\\operatorname*{argmin}_x\n\\frac{1}{2}\\|y-x\\|_2^2\n= y.\n\nFor a linear forward model\n\ny = Ax + \\eta,\n\\qquad\n\\eta\\sim\\mathcal{N}(0,\\sigma^2 I),\n\nthe Gaussian negative log-likelihood is\n\n\\frac{1}{2\\sigma^2}\\|Ax-y\\|_2^2.\n\nFor a general nonlinear forward model\n\ny = f(x)+\\eta,\n\nthe corresponding Gaussian data term is\n\n\\frac{1}{2\\sigma^2}\\|f(x)-y\\|_2^2.\n\nThe squared error is therefore not just a convenient algebraic choice. It is the data fidelity term associated with a particular statistical assumption.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#gaussian-limitations",
+    "href": "book/week-04-noise-likelihood.html#gaussian-limitations",
+    "title": "Noise Models and Likelihoods",
+    "section": "Gaussian Limitations",
+    "text": "Gaussian Limitations\nGaussian noise is useful and mathematically friendly, but it is not always physically faithful. An additive Gaussian model can produce negative intensities or values above the sensor maximum. In practice we often clip values, but clipping changes the statistical model.\nThis is a general lesson: a simple model can be useful without being literally complete.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#poisson-noise",
+    "href": "book/week-04-noise-likelihood.html#poisson-noise",
+    "title": "Noise Models and Likelihoods",
+    "section": "Poisson Noise",
+    "text": "Poisson Noise\nLight arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.\nLet z_i be the photon count at pixel i:\n\nz_i \\sim \\operatorname{Poisson}(\\lambda_i).\n\nThe Poisson law is\n\n\\mathbb{P}(z_i=k\\mid \\lambda_i)\n= e^{-\\lambda_i}\\frac{\\lambda_i^k}{k!}.\n\nFor a Poisson random variable,\n\n\\mathbb{E}[z_i]=\\lambda_i,\n\\qquad\n\\mathrm{Var}(z_i)=\\lambda_i.\n\nThe standard deviation is \\sqrt{\\lambda_i}. Absolute noise increases with brightness, but relative noise decreases:\n\n\\frac{\\sqrt{\\lambda_i}}{\\lambda_i}\n=\n\\frac{1}{\\sqrt{\\lambda_i}}.\n\nThis is why low-light imaging is difficult. A pixel receiving 5 photons is much less reliable, relatively speaking, than a pixel receiving 500 photons.\n\n\nSignal-to-noise behavior depends strongly on the noise model.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#from-counts-to-intensities",
+    "href": "book/week-04-noise-likelihood.html#from-counts-to-intensities",
+    "title": "Noise Models and Likelihoods",
+    "section": "From Counts To Intensities",
+    "text": "From Counts To Intensities\nDigital images often store normalized intensities in [0,1]. If \\alpha is the maximum expected photon count, a simple count model is\n\nz_i \\sim \\operatorname{Poisson}(\\alpha x_i),\n\\qquad\ny_i = z_i/\\alpha.\n\nThe normalized value y_i is still random. Increasing exposure increases \\alpha, which improves relative precision when the model is valid.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#poisson-likelihood",
+    "href": "book/week-04-noise-likelihood.html#poisson-likelihood",
+    "title": "Noise Models and Likelihoods",
+    "section": "Poisson Likelihood",
+    "text": "Poisson Likelihood\nFor independent photon counts,\n\np(z\\mid x)\n=\n\\prod_i\ne^{-\\alpha x_i}\n\\frac{(\\alpha x_i)^{z_i}}{z_i!}.\n\nIgnoring constants independent of x,\n\n-\\log p(z\\mid x)\n=\n\\sum_i\n\\alpha x_i - z_i\\log(\\alpha x_i).\n\nFor a general positive forward model f_i(x)&gt;0,\n\nz_i \\sim \\operatorname{Poisson}(f_i(x))\n\nand\n\n-\\log p(z\\mid x)\n=\n\\sum_i f_i(x) - z_i\\log(f_i(x))\n+ \\text{constant}.\n\nThis is not a least-squares data term.\n\n\nLikelihood curves encode how each model penalizes disagreement with the data.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#gaussian-versus-poisson",
+    "href": "book/week-04-noise-likelihood.html#gaussian-versus-poisson",
+    "title": "Noise Models and Likelihoods",
+    "section": "Gaussian Versus Poisson",
+    "text": "Gaussian Versus Poisson\n\n\n\nFeature\nGaussian\nPoisson\n\n\n\n\nData type\ncontinuous intensity\ninteger counts\n\n\nVariance\nconstant \\sigma^2\nequals mean\n\n\nTypical fidelity\nsquared error\ncount likelihood\n\n\nNatural for\nread noise, aggregate errors\nphoton-limited imaging\n\n\nConstraint\noften unconstrained\npositive mean\n\n\n\nThe choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#repeated-measurements",
+    "href": "book/week-04-noise-likelihood.html#repeated-measurements",
+    "title": "Noise Models and Likelihoods",
+    "section": "Repeated Measurements",
+    "text": "Repeated Measurements\nIf\n\ny^{(j)} = x + \\eta^{(j)},\n\\qquad\n\\eta^{(j)}\\sim\\mathcal{N}(0,\\sigma^2),\n\nand the noise samples are independent, then the average\n\n\\bar{y}=\\frac{1}{m}\\sum_{j=1}^m y^{(j)}\n\nhas noise standard deviation \\sigma/\\sqrt{m}.\n\n\nIndependent random noise can average out.\n\nAveraging cannot recover information that never reached the sensor. If scene content is physically hidden behind an occluder, repeated photographs from the same viewpoint do not reveal the hidden object. This is different from reducing random fluctuations in recorded pixels.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#from-likelihood-to-reconstruction",
+    "href": "book/week-04-noise-likelihood.html#from-likelihood-to-reconstruction",
+    "title": "Noise Models and Likelihoods",
+    "section": "From Likelihood To Reconstruction",
+    "text": "From Likelihood To Reconstruction\nGiven data y, maximum likelihood estimates x by\n\n\\operatorname*{argmax}_x p(y\\mid x),\n\nor equivalently\n\n\\operatorname*{argmin}_x -\\log p(y\\mid x).\n\nMaximum likelihood uses the data model, but it is often not enough. In inverse problems, many images may agree almost equally well with noisy data.\nA common regularized reconstruction form is\n\n\\operatorname*{argmin}_x\nD(y,f(x)) + \\lambda R(x).\n\nHere D is the data fidelity term from the noise model, and R is a regularizer encoding prior information or desired structure.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#computation",
+    "href": "book/week-04-noise-likelihood.html#computation",
+    "title": "Noise Models and Likelihoods",
+    "section": "Computation",
+    "text": "Computation\nThe Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.\nRun:\npython3 examples/week04_noise_likelihood.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#exercises",
+    "href": "book/week-04-noise-likelihood.html#exercises",
+    "title": "Noise Models and Likelihoods",
+    "section": "Exercises",
+    "text": "Exercises\n\nFor y_i=x_i+\\eta_i with \\eta_i\\sim\\mathcal{N}(0,\\sigma^2), compute \\mathbb{E}[y_i\\mid x_i] and \\mathrm{Var}(y_i\\mid x_i).\nFor a Poisson pixel with expected count \\lambda=25, compute the standard deviation and approximate SNR.\nExplain why Poisson relative noise improves as the photon count increases.\nCompare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.\nGive one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#takeaways",
+    "href": "book/week-04-noise-likelihood.html#takeaways",
+    "title": "Noise Models and Likelihoods",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nNoise models connect physical measurement assumptions to mathematical data terms.\nGaussian additive noise leads to squared-error fidelity.\nPoisson photon-counting noise has variance equal to its mean.\nLow-light images are difficult because relative photon noise is high.\nLikelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html",
+    "href": "book/week-02-convolution-blur.html",
+    "title": "Convolution and Blur",
     "section": "",
     "text": "Slides | Notebook | Open in Colab",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#learning-goals",
-    "href": "book/week-03-fourier-imaging.html#learning-goals",
-    "title": "Fourier Transform in Imaging",
+    "objectID": "book/week-02-convolution-blur.html#learning-goals",
+    "href": "book/week-02-convolution-blur.html#learning-goals",
+    "title": "Convolution and Blur",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret a signal as a sum of oscillations;\nread a 2D Fourier magnitude spectrum;\ndistinguish Fourier magnitude and phase;\nstate the convolution theorem;\nexplain blur and inverse filtering in the frequency domain.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ncompute a simple 1D convolution;\ninterpret a blur kernel as a point spread function;\nexplain why fixed blur is a linear operator;\ndescribe the role of boundary conditions;\nexplain why deblurring is unstable.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#the-big-idea",
-    "href": "book/week-03-fourier-imaging.html#the-big-idea",
-    "title": "Fourier Transform in Imaging",
-    "section": "The Big Idea",
-    "text": "The Big Idea\nFourier analysis rewrites a signal or image as a combination of oscillations.\nLow frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.\nFor imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.",
+    "objectID": "book/week-02-convolution-blur.html#local-weighted-averages",
+    "href": "book/week-02-convolution-blur.html#local-weighted-averages",
+    "title": "Convolution and Blur",
+    "section": "Local Weighted Averages",
+    "text": "Local Weighted Averages\nConvolution begins with a local rule. For a one-dimensional signal x, define\n\ny_i = \\frac{1}{4}x_{i-1}+\\frac{1}{2}x_i+\\frac{1}{4}x_{i+1}.\n\nThe output at index i is a weighted average of nearby input values. The weights\n\nh =\n\\begin{bmatrix}\n\\frac{1}{4} & \\frac{1}{2} & \\frac{1}{4}\n\\end{bmatrix}\n\nform a convolution kernel.\nIf the weights are nonnegative and sum to 1, the operation preserves average brightness for constant signals.\n\n\nConvolution spreads a local peak into neighboring positions.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#one-dimensional-frequencies",
-    "href": "book/week-03-fourier-imaging.html#one-dimensional-frequencies",
-    "title": "Fourier Transform in Imaging",
-    "section": "One-Dimensional Frequencies",
-    "text": "One-Dimensional Frequencies\nA basic length-N oscillation is\n\ns_k[n] = \\sin(2\\pi k n/N).\n\nThe integer k is the frequency index. A larger k means more oscillations over the same interval.\n\n\nThe Fourier magnitude reveals which oscillations are present.",
+    "objectID": "book/week-02-convolution-blur.html#the-convolution-formula",
+    "href": "book/week-02-convolution-blur.html#the-convolution-formula",
+    "title": "Convolution and Blur",
+    "section": "The Convolution Formula",
+    "text": "The Convolution Formula\nOne common discrete convention is\n\n(h*x)_i = \\sum_k h_k x_{i-k}.\n\nFor symmetric kernels, convolution and correlation produce the same result. For nonsymmetric kernels, the reversal in the index convention matters.\nFor a fixed kernel h, convolution is linear:\n\nh*(a x + b z) = a(h*x)+b(h*z).\n\nIt is also shift-invariant: the same local rule is applied at every position.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#the-discrete-fourier-transform",
-    "href": "book/week-03-fourier-imaging.html#the-discrete-fourier-transform",
-    "title": "Fourier Transform in Imaging",
-    "section": "The Discrete Fourier Transform",
-    "text": "The Discrete Fourier Transform\nFor a length-N signal x, the discrete Fourier transform is\n\n\\widehat{x}[k]\n=\n\\sum_{n=0}^{N-1}\nx[n]e^{-2\\pi i kn/N}.\n\nEach coefficient \\widehat{x}[k] measures how much frequency k is present.\nFourier coefficients are complex:\n\n\\widehat{x}[k] = a_k + i b_k.\n\nTheir magnitude and phase are\n\n|\\widehat{x}[k]|\n\\qquad\\text{and}\\qquad\n\\arg(\\widehat{x}[k]).\n\nMagnitude measures strength. Phase measures alignment.",
+    "objectID": "book/week-02-convolution-blur.html#two-dimensional-convolution",
+    "href": "book/week-02-convolution-blur.html#two-dimensional-convolution",
+    "title": "Convolution and Blur",
+    "section": "Two-Dimensional Convolution",
+    "text": "Two-Dimensional Convolution\nFor an image x[i,j] and a 2D kernel h[a,b],\n\ny[i,j]\n=\n(h*x)[i,j]\n=\n\\sum_{a,b} h[a,b]\\,x[i-a,j-b].\n\nThe output pixel is a weighted combination of nearby input pixels.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#two-dimensional-fourier-transform",
-    "href": "book/week-03-fourier-imaging.html#two-dimensional-fourier-transform",
-    "title": "Fourier Transform in Imaging",
-    "section": "Two-Dimensional Fourier Transform",
-    "text": "Two-Dimensional Fourier Transform\nFor an image x[m,n], the 2D Fourier transform uses horizontal and vertical frequency indices:\n\n\\widehat{x}[u,v]\n=\n\\sum_{m,n}\nx[m,n]e^{-2\\pi i(um/M+vn/N)}.\n\nThe coefficient \\widehat{x}[u,v] measures an oscillation with horizontal frequency u and vertical frequency v.\n\n\nThe centered log magnitude is a common way to display an image spectrum.",
+    "objectID": "book/week-02-convolution-blur.html#point-spread-function",
+    "href": "book/week-02-convolution-blur.html#point-spread-function",
+    "title": "Convolution and Blur",
+    "section": "Point Spread Function",
+    "text": "Point Spread Function\nThe point spread function (PSF) describes how an imaging system records a single ideal bright point.\nIf a point is recorded as a small Gaussian blob, then the image is blurred by approximately the same Gaussian pattern at every location. Under that assumption, the imaging model is convolution.\n\n\nCommon kernels model different kinds of blur.\n\n\n\n\nKernel\nEffect\nPossible interpretation\n\n\n\n\nidentity\nno blur\nideal sampling\n\n\nbox average\nlocal averaging\nsimple smoothing\n\n\nGaussian\nsmooth blur\ndefocus or optics\n\n\nmotion\ndirectional streak\ncamera or object motion",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#reading-a-spectrum",
-    "href": "book/week-03-fourier-imaging.html#reading-a-spectrum",
-    "title": "Fourier Transform in Imaging",
-    "section": "Reading A Spectrum",
-    "text": "Reading A Spectrum\nIn a centered spectrum:\n\nthe center corresponds to zero frequency and slow variation;\npoints far from the center correspond to fine oscillations;\ndirection in the spectrum corresponds to orientation in the image.\n\nStrong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.",
+    "objectID": "book/week-02-convolution-blur.html#blur-as-a-forward-operator",
+    "href": "book/week-02-convolution-blur.html#blur-as-a-forward-operator",
+    "title": "Convolution and Blur",
+    "section": "Blur As A Forward Operator",
+    "text": "Blur As A Forward Operator\nIf h is fixed, then blur can be written as\n\ny = h*x.\n\nAfter vectorization, this becomes\n\ny = Ax,\n\nwhere A is the matrix that represents convolution by h under the chosen boundary convention.\n\n\n\n\n\n\nNote\n\n\n\nA fixed blur is linear. This does not mean every image formation process is linear. It means this particular controlled model is linear.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#magnitude-and-phase",
-    "href": "book/week-03-fourier-imaging.html#magnitude-and-phase",
-    "title": "Fourier Transform in Imaging",
-    "section": "Magnitude And Phase",
-    "text": "Magnitude And Phase\nEvery Fourier coefficient can be written as\n\n\\widehat{x}[u,v]\n=\n|\\widehat{x}[u,v]|e^{i\\phi[u,v]}.\n\nMagnitude says how much of a frequency is present. Phase says where that frequency is aligned.\n\n\nPhase carries much of the recognizable geometry of an image.\n\nMagnitude is visually important, but phase is often crucial for the location of edges and structures.",
+    "objectID": "book/week-02-convolution-blur.html#real-image-blur",
+    "href": "book/week-02-convolution-blur.html#real-image-blur",
+    "title": "Convolution and Blur",
+    "section": "Real Image Blur",
+    "text": "Real Image Blur\n\n\nDifferent kernels remove different details from the same image.\n\nBlur reduces local contrast. Edges become less sharp, fine textures disappear, and point-like structures spread into neighborhoods.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#the-convolution-theorem",
-    "href": "book/week-03-fourier-imaging.html#the-convolution-theorem",
-    "title": "Fourier Transform in Imaging",
-    "section": "The Convolution Theorem",
-    "text": "The Convolution Theorem\nThe reason Fourier analysis is central to imaging is the convolution theorem:\n\n\\widehat{h*x}[u,v]\n=\n\\widehat{h}[u,v]\\widehat{x}[u,v].\n\nConvolution in the image domain becomes multiplication in the Fourier domain.\nIf\n\ny = h*x,\n\nthen\n\n\\widehat{y} = \\widehat{h}\\,\\widehat{x}.",
+    "objectID": "book/week-02-convolution-blur.html#boundary-conditions",
+    "href": "book/week-02-convolution-blur.html#boundary-conditions",
+    "title": "Convolution and Blur",
+    "section": "Boundary Conditions",
+    "text": "Boundary Conditions\nNear the edge of an image, a convolution kernel asks for values outside the recorded grid. Boundary conditions decide what those values mean.\nCommon choices include:\n\n\n\nBoundary condition\nMeaning\n\n\n\n\nzero padding\noutside pixels are zero\n\n\nreflection\nimage reflects at the boundary\n\n\nperiodic\nimage wraps around\n\n\nnearest\noutside pixels copy the nearest boundary value\n\n\n\n\n\nThe same kernel can produce different edge behavior depending on the boundary rule.\n\nBoundary choices are part of the mathematical model. They should not be treated as harmless implementation details.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#blur-in-frequency-space",
-    "href": "book/week-03-fourier-imaging.html#blur-in-frequency-space",
-    "title": "Fourier Transform in Imaging",
-    "section": "Blur In Frequency Space",
-    "text": "Blur In Frequency Space\nA blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means\n\n|\\widehat{y}[u,v]|\n=\n|\\widehat{h}[u,v]|\\ |\\widehat{x}[u,v]|\n\nis much smaller where |\\widehat{h}[u,v]| is small.\n\n\nBlur is easier to analyze after the Fourier transform because frequencies are multiplied independently.",
+    "objectID": "book/week-02-convolution-blur.html#why-deblurring-is-hard",
+    "href": "book/week-02-convolution-blur.html#why-deblurring-is-hard",
+    "title": "Convolution and Blur",
+    "section": "Why Deblurring Is Hard",
+    "text": "Why Deblurring Is Hard\nDeblurring asks for an image x from a blurred observation y:\n\ny = Ax + \\eta.\n\nIf blur attenuates fine details, then trying to invert the blur must amplify the components that were weakened. Unfortunately, noise is also amplified in those same directions.\n\n\nNaive inversion can turn small noise into large oscillations.\n\nThis is the first appearance of a central course theme: reconstruction is not only inversion. It is stabilized inversion.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#low-pass-and-high-pass-filtering",
-    "href": "book/week-03-fourier-imaging.html#low-pass-and-high-pass-filtering",
-    "title": "Fourier Transform in Imaging",
-    "section": "Low-Pass And High-Pass Filtering",
-    "text": "Low-Pass And High-Pass Filtering\nA low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.\n\n\nFrequency filtering gives direct control over coarse and fine image components.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "3. Fourier transform in imaging"
-    ]
-  },
-  {
-    "objectID": "book/week-03-fourier-imaging.html#why-inverse-filtering-is-dangerous",
-    "href": "book/week-03-fourier-imaging.html#why-inverse-filtering-is-dangerous",
-    "title": "Fourier Transform in Imaging",
-    "section": "Why Inverse Filtering Is Dangerous",
-    "text": "Why Inverse Filtering Is Dangerous\nIf \\widehat{h}[u,v] is nonzero, a formal inverse filter would use\n\n\\widehat{x}[u,v]\n=\n\\frac{\\widehat{y}[u,v]}{\\widehat{h}[u,v]}.\n\nBut when |\\widehat{h}[u,v]| is small, division by \\widehat{h} amplifies noise.\n\n\nInverse filtering recovers some detail but can amplify noise dramatically.\n\nThis frequency-domain view explains why regularization will be necessary in later chapters.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "3. Fourier transform in imaging"
-    ]
-  },
-  {
-    "objectID": "book/week-03-fourier-imaging.html#computation",
-    "href": "book/week-03-fourier-imaging.html#computation",
-    "title": "Fourier Transform in Imaging",
+    "objectID": "book/week-02-convolution-blur.html#computation",
+    "href": "book/week-02-convolution-blur.html#computation",
+    "title": "Convolution and Blur",
     "section": "Computation",
-    "text": "Computation\nThe Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.\nRun:\npython3 examples/week03_fourier_imaging.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 2 notebook lets you change kernels, boundary modes, and deblurring stabilizers.\nRun:\npython3 examples/week02_convolution_blur.py\nor open the notebook in Colab from the link at the top of this chapter.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#exercises",
-    "href": "book/week-03-fourier-imaging.html#exercises",
-    "title": "Fourier Transform in Imaging",
+    "objectID": "book/week-02-convolution-blur.html#exercises",
+    "href": "book/week-02-convolution-blur.html#exercises",
+    "title": "Convolution and Blur",
     "section": "Exercises",
-    "text": "Exercises\n\nFor x[n]=\\sin(2\\pi 5n/N)+0.5\\sin(2\\pi 20n/N), where should the Fourier magnitude be large?\nIn a centered 2D spectrum, what does the center represent?\nWhich carries more geometric information in a natural image: magnitude or phase?\nUse the convolution theorem to explain why blur attenuates high frequencies.\nExplain why inverse filtering amplifies noise.",
+    "text": "Exercises\n\nCompute one output value for the kernel [1/4,1/2,1/4] and the signal [0,0,1,3,2,0,0].\nExplain why a normalized blur kernel preserves constant images.\nCompare zero-padding and reflection near an image boundary.\nExplain in your own words why deblurring amplifies noise.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-03-fourier-imaging.html#takeaways",
-    "href": "book/week-03-fourier-imaging.html#takeaways",
-    "title": "Fourier Transform in Imaging",
+    "objectID": "book/week-02-convolution-blur.html#takeaways",
+    "href": "book/week-02-convolution-blur.html#takeaways",
+    "title": "Convolution and Blur",
     "section": "Takeaways",
-    "text": "Takeaways\n\nFourier analysis represents images using oscillations.\nLow frequencies describe coarse structure; high frequencies describe fine detail.\nFourier coefficients have magnitude and phase.\nConvolution becomes multiplication in the Fourier domain.\nBlur suppresses frequencies, and inverse filtering can amplify noise.",
+    "text": "Takeaways\n\nConvolution is a local weighted averaging rule.\nA point spread function models how one ideal point is spread by the imaging system.\nFixed blur is linear and can be written as y=Ax.\nBoundary conditions are modeling choices.\nDeblurring is unstable because blur weakens information that inversion tries to recover.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "3. Fourier transform in imaging"
+      "2. Convolution and blur"
     ]
   },
   {
-    "objectID": "book/week-01-image-formation.html",
-    "href": "book/week-01-image-formation.html",
-    "title": "Images as Mathematical Objects",
+    "objectID": "book/index.html",
+    "href": "book/index.html",
+    "title": "Mathematical Imaging",
     "section": "",
-    "text": "Slides | Notebook | Open in Colab",
+    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for 75-minute class meetings; the book is designed for slower reading, review, and project preparation.\nThe book grows from the stabilized course materials. Each chapter connects:",
     "crumbs": [
       "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
+      "Book home"
     ]
   },
   {
-    "objectID": "book/week-01-image-formation.html#learning-goals",
-    "href": "book/week-01-image-formation.html#learning-goals",
-    "title": "Images as Mathematical Objects",
-    "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndescribe an image as a function, an array, and a vector;\nexplain why vectorization is useful for linear algebra;\nwrite a first forward model y=Ax+\\eta;\ndistinguish recorded missing pixels from hidden scene content;\nrun a small NumPy experiment with image arrays and masks.",
+    "objectID": "book/index.html#how-to-use-this-book",
+    "href": "book/index.html#how-to-use-this-book",
+    "title": "Mathematical Imaging",
+    "section": "How To Use This Book",
+    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure and the notebook for experiments.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat can go wrong?",
     "crumbs": [
       "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
+      "Book home"
     ]
   },
   {
-    "objectID": "book/week-01-image-formation.html#images-as-functions",
-    "href": "book/week-01-image-formation.html#images-as-functions",
-    "title": "Images as Mathematical Objects",
-    "section": "Images As Functions",
-    "text": "Images As Functions\nAt the mathematical level, a grayscale image is often modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}.\n\nThe domain \\Omega is the region being imaged. The value u(s,t) is the intensity at location (s,t). This continuous model is useful because many imaging systems are described physically before they are discretized.\nFor a color image, the value has several components:\n\nu : \\Omega \\to \\mathbb{R}^3.\n\nFor a video, a 3D volume, or a multispectral image, the range and the domain can have even more dimensions. The same principle remains: an image is data organized over space, and sometimes over time, wavelength, or slice index.",
+    "objectID": "book/index.html#current-chapters",
+    "href": "book/index.html#current-chapters",
+    "title": "Mathematical Imaging",
+    "section": "Current Chapters",
+    "text": "Current Chapters\n\n\n\nChapter\nTopic\nSlides\nNotebook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\n\n\n4\nNoise models and likelihoods\nslides\nnotebook / Colab\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab\n\n\n7\nVariational formulation\nslides\nnotebook / Colab\n\n\n8\nTotal Variation regularization\nslides\nnotebook / Colab\n\n\n9\nOptimization methods\nslides\nnotebook / Colab",
     "crumbs": [
       "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
+      "Book home"
     ]
   },
   {
-    "objectID": "book/week-01-image-formation.html#images-as-arrays",
-    "href": "book/week-01-image-formation.html#images-as-arrays",
-    "title": "Images as Mathematical Objects",
-    "section": "Images As Arrays",
-    "text": "Images As Arrays\nA digital image is sampled on a grid. If the image has m rows and n columns, we write\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n}\\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n}\\\\\n\\vdots & \\vdots & \\ddots & \\vdots\\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}.\n\nThe array is the natural form for display and local operations. Neighboring entries in the array correspond to neighboring pixels.\n\n\n\n\n\n\nNote\n\n\n\nThe displayed photograph is not the mathematical object by itself. The mathematical object is the numerical array that the display visualizes.\n\n\n\n\nReal image data can be inspected as an array, a pixel crop, or a vector.",
+    "objectID": "book/index.html#roadmap",
+    "href": "book/index.html#roadmap",
+    "title": "Mathematical Imaging",
+    "section": "Roadmap",
+    "text": "Roadmap\nThe complete book will follow the course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14-15\nRobustness, ethics, project reporting, oral defense\n\n\n\nThe first writing pass now contains Chapters 1-9. Later passes will convert the remaining weekly materials into full chapters.",
     "crumbs": [
       "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
+      "Book home"
     ]
   },
   {
-    "objectID": "book/week-01-image-formation.html#images-as-vectors",
-    "href": "book/week-01-image-formation.html#images-as-vectors",
-    "title": "Images as Mathematical Objects",
-    "section": "Images As Vectors",
-    "text": "Images As Vectors\nFor linear algebra, we often reshape the image matrix U into a vector\n\nx = \\operatorname{vec}(U) \\in \\mathbb{R}^{mn}.\n\nIf row-major order is used, the rows of U are read from left to right:\n\nU =\n\\begin{bmatrix}\n10 & 20 & 30\\\\\n40 & 50 & 60\n\\end{bmatrix}\n\\quad\\Longrightarrow\\quad\n\\operatorname{vec}(U)=\n\\begin{bmatrix}\n10 & 20 & 30 & 40 & 50 & 60\n\\end{bmatrix}^{T}.\n\nVectorization does not change the information. It changes the shape so that matrix-vector notation can be used.",
+    "objectID": "book/index.html#notation",
+    "href": "book/index.html#notation",
+    "title": "Mathematical Imaging",
+    "section": "Notation",
+    "text": "Notation\nWe will use:\n\nu for a continuous image function;\nU for a discrete image array;\nx=\\operatorname{vec}(U) for a vectorized image;\nA for a forward operator;\ny for measured data;\n\\eta for noise;\n\\hat{x} for a reconstruction.\n\nThe meaning of A changes from chapter to chapter: it may be a mask, a blur, a Fourier sampling operator, or a more general measurement model.",
     "crumbs": [
       "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
+      "Book home"
     ]
-  },
-  {
-    "objectID": "book/week-01-image-formation.html#forward-models",
-    "href": "book/week-01-image-formation.html#forward-models",
-    "title": "Images as Mathematical Objects",
-    "section": "Forward Models",
-    "text": "Forward Models\nOnce the unknown image is written as a vector x, a controlled measurement process can often be written as\n\ny = Ax + \\eta.\n\nHere:\n\nx is the unknown image;\nA is the forward operator;\ny is the recorded data;\n\\eta is noise or measurement error.\n\nThis formula is a modeling template, not a claim that every visual process is linear. It is useful when the imaging system is controlled and the measurement rule is known well enough to write down.\nExamples of forward operators include:\n\n\n\nOperator\nWhat it does\n\n\n\n\nidentity\nrecords every pixel directly\n\n\nmask\nrecords only selected pixels\n\n\nblur\nspreads each pixel to its neighbors\n\n\nFourier sampling\nrecords frequency coefficients\n\n\nprojection\nrecords line integrals or summaries",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
-    ]
-  },
-  {
-    "objectID": "book/week-01-image-formation.html#masking-recorded-pixels",
-    "href": "book/week-01-image-formation.html#masking-recorded-pixels",
-    "title": "Images as Mathematical Objects",
-    "section": "Masking Recorded Pixels",
-    "text": "Masking Recorded Pixels\nA binary mask models which recorded pixels are available. If M selects a subset of entries of x, then\n\ny = Mx\n\nrecords only those entries.\n\n\nMasking recorded pixels creates missing entries in the digital observation.\n\nThe inverse problem is then to infer something about the missing values from the observed ones and from assumptions about images.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
-    ]
-  },
-  {
-    "objectID": "book/week-01-image-formation.html#missing-pixels-versus-occlusion",
-    "href": "book/week-01-image-formation.html#missing-pixels-versus-occlusion",
-    "title": "Images as Mathematical Objects",
-    "section": "Missing Pixels Versus Occlusion",
-    "text": "Missing Pixels Versus Occlusion\nIt is important to distinguish two situations:\n\nA pixel was recorded but then removed or masked.\nA part of the physical scene was hidden from the sensor.\n\nThe first case is a missing-data problem in the recorded image. The second is a visibility problem in the physical scene.\nIf a person is behind a tree, the camera did not record the hidden part of the person. No mathematical method can recover information that was never measured without adding assumptions from outside the measurement. This is one reason image inverse problems are different from many idealized signal separation problems.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
-    ]
-  },
-  {
-    "objectID": "book/week-01-image-formation.html#computation",
-    "href": "book/week-01-image-formation.html#computation",
-    "title": "Images as Mathematical Objects",
-    "section": "Computation",
-    "text": "Computation\nThe Week 1 notebook asks you to inspect image arrays, reshape them, and apply simple masks.\nRun:\npython3 examples/week01_image_arrays.py\nor open the notebook in Colab from the link at the top of this chapter.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
-    ]
-  },
-  {
-    "objectID": "book/week-01-image-formation.html#exercises",
-    "href": "book/week-01-image-formation.html#exercises",
-    "title": "Images as Mathematical Objects",
-    "section": "Exercises",
-    "text": "Exercises\n\nWrite the row-major vectorization of a 3 \\times 4 image array with entries 1,\\ldots,12.\nGive an example of a forward operator A that is linear.\nGive an example from real imaging where the physical process is not well described by a linear operator.\nExplain why a mask can model missing recorded pixels but not seeing behind an occluder.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
-    ]
-  },
-  {
-    "objectID": "book/week-01-image-formation.html#takeaways",
-    "href": "book/week-01-image-formation.html#takeaways",
-    "title": "Images as Mathematical Objects",
-    "section": "Takeaways",
-    "text": "Takeaways\n\nAn image can be viewed as a function, an array, or a vector.\nVectorization lets us write imaging models using linear algebra.\nThe forward model y=Ax+\\eta separates the unknown image, the measurement rule, and noise.\nMissing data in an array is not the same as hidden information in the physical scene.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "1. Images as mathematical objects"
-    ]
-  },
-  {
-    "objectID": "notebooks/index.html",
-    "href": "notebooks/index.html",
-    "title": "Notebooks",
-    "section": "",
-    "text": "The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.\nUse the Google Colab links if you want to work in a browser without installing Python locally."
-  },
-  {
-    "objectID": "notebooks/index.html#working-locally",
-    "href": "notebooks/index.html#working-locally",
-    "title": "Notebooks",
-    "section": "Working Locally",
-    "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
-  },
-  {
-    "objectID": "index.html#current-focus",
-    "href": "index.html#current-focus",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Current Focus",
-    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
-  },
-  {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
   },
   {
     "objectID": "syllabus.html",
@@ -2971,574 +3171,950 @@
     "text": "Week 15 – Oral Defenses\nActivities\n\nIndividual oral defense per student\nEvaluation of:\n\nModeling understanding\nParameter reasoning\nInterpretation of results\nTeam collaboration\n\n\nLearning Goal\nStudents demonstrate independent mastery of project content."
   },
   {
-    "objectID": "book/index.html",
-    "href": "book/index.html",
-    "title": "Mathematical Imaging",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
     "section": "",
-    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for 75-minute class meetings; the book is designed for slower reading, review, and project preparation.\nThe book grows from the stabilized course materials. Each chapter connects:",
-    "crumbs": [
-      "Book",
-      "Book home"
-    ]
+    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
   },
   {
-    "objectID": "book/index.html#how-to-use-this-book",
-    "href": "book/index.html#how-to-use-this-book",
-    "title": "Mathematical Imaging",
-    "section": "How To Use This Book",
-    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure and the notebook for experiments.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat can go wrong?",
-    "crumbs": [
-      "Book",
-      "Book home"
-    ]
+    "objectID": "index.html#current-focus",
+    "href": "index.html#current-focus",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Current Focus",
+    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
   },
   {
-    "objectID": "book/index.html#current-chapters",
-    "href": "book/index.html#current-chapters",
-    "title": "Mathematical Imaging",
-    "section": "Current Chapters",
-    "text": "Current Chapters\n\n\n\nChapter\nTopic\nSlides\nNotebook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\n\n\n4\nNoise models and likelihoods\nslides\nnotebook / Colab\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab",
-    "crumbs": [
-      "Book",
-      "Book home"
-    ]
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
   },
   {
-    "objectID": "book/index.html#roadmap",
-    "href": "book/index.html#roadmap",
-    "title": "Mathematical Imaging",
-    "section": "Roadmap",
-    "text": "Roadmap\nThe complete book will follow the course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14-15\nRobustness, ethics, project reporting, oral defense\n\n\n\nThe first writing pass now contains Chapters 1-6. Later passes will convert the remaining weekly materials into full chapters.",
-    "crumbs": [
-      "Book",
-      "Book home"
-    ]
+    "objectID": "notebooks/index.html",
+    "href": "notebooks/index.html",
+    "title": "Notebooks",
+    "section": "",
+    "text": "The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.\nUse the Google Colab links if you want to work in a browser without installing Python locally."
   },
   {
-    "objectID": "book/index.html#notation",
-    "href": "book/index.html#notation",
-    "title": "Mathematical Imaging",
-    "section": "Notation",
-    "text": "Notation\nWe will use:\n\nu for a continuous image function;\nU for a discrete image array;\nx=\\operatorname{vec}(U) for a vectorized image;\nA for a forward operator;\ny for measured data;\n\\eta for noise;\n\\hat{x} for a reconstruction.\n\nThe meaning of A changes from chapter to chapter: it may be a mask, a blur, a Fourier sampling operator, or a more general measurement model.",
-    "crumbs": [
-      "Book",
-      "Book home"
-    ]
+    "objectID": "notebooks/index.html#working-locally",
+    "href": "notebooks/index.html#working-locally",
+    "title": "Notebooks",
+    "section": "Working Locally",
+    "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
   },
   {
-    "objectID": "book/week-02-convolution-blur.html",
-    "href": "book/week-02-convolution-blur.html",
-    "title": "Convolution and Blur",
+    "objectID": "book/week-01-image-formation.html",
+    "href": "book/week-01-image-formation.html",
+    "title": "Images as Mathematical Objects",
     "section": "",
     "text": "Slides | Notebook | Open in Colab",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#learning-goals",
-    "href": "book/week-02-convolution-blur.html#learning-goals",
-    "title": "Convolution and Blur",
+    "objectID": "book/week-01-image-formation.html#learning-goals",
+    "href": "book/week-01-image-formation.html#learning-goals",
+    "title": "Images as Mathematical Objects",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ncompute a simple 1D convolution;\ninterpret a blur kernel as a point spread function;\nexplain why fixed blur is a linear operator;\ndescribe the role of boundary conditions;\nexplain why deblurring is unstable.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndescribe an image as a function, an array, and a vector;\nexplain why vectorization is useful for linear algebra;\nwrite a first forward model y=Ax+\\eta;\ndistinguish recorded missing pixels from hidden scene content;\nrun a small NumPy experiment with image arrays and masks.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#local-weighted-averages",
-    "href": "book/week-02-convolution-blur.html#local-weighted-averages",
-    "title": "Convolution and Blur",
-    "section": "Local Weighted Averages",
-    "text": "Local Weighted Averages\nConvolution begins with a local rule. For a one-dimensional signal x, define\n\ny_i = \\frac{1}{4}x_{i-1}+\\frac{1}{2}x_i+\\frac{1}{4}x_{i+1}.\n\nThe output at index i is a weighted average of nearby input values. The weights\n\nh =\n\\begin{bmatrix}\n\\frac{1}{4} & \\frac{1}{2} & \\frac{1}{4}\n\\end{bmatrix}\n\nform a convolution kernel.\nIf the weights are nonnegative and sum to 1, the operation preserves average brightness for constant signals.\n\n\nConvolution spreads a local peak into neighboring positions.",
+    "objectID": "book/week-01-image-formation.html#images-as-functions",
+    "href": "book/week-01-image-formation.html#images-as-functions",
+    "title": "Images as Mathematical Objects",
+    "section": "Images As Functions",
+    "text": "Images As Functions\nAt the mathematical level, a grayscale image is often modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}.\n\nThe domain \\Omega is the region being imaged. The value u(s,t) is the intensity at location (s,t). This continuous model is useful because many imaging systems are described physically before they are discretized.\nFor a color image, the value has several components:\n\nu : \\Omega \\to \\mathbb{R}^3.\n\nFor a video, a 3D volume, or a multispectral image, the range and the domain can have even more dimensions. The same principle remains: an image is data organized over space, and sometimes over time, wavelength, or slice index.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#the-convolution-formula",
-    "href": "book/week-02-convolution-blur.html#the-convolution-formula",
-    "title": "Convolution and Blur",
-    "section": "The Convolution Formula",
-    "text": "The Convolution Formula\nOne common discrete convention is\n\n(h*x)_i = \\sum_k h_k x_{i-k}.\n\nFor symmetric kernels, convolution and correlation produce the same result. For nonsymmetric kernels, the reversal in the index convention matters.\nFor a fixed kernel h, convolution is linear:\n\nh*(a x + b z) = a(h*x)+b(h*z).\n\nIt is also shift-invariant: the same local rule is applied at every position.",
+    "objectID": "book/week-01-image-formation.html#images-as-arrays",
+    "href": "book/week-01-image-formation.html#images-as-arrays",
+    "title": "Images as Mathematical Objects",
+    "section": "Images As Arrays",
+    "text": "Images As Arrays\nA digital image is sampled on a grid. If the image has m rows and n columns, we write\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n}\\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n}\\\\\n\\vdots & \\vdots & \\ddots & \\vdots\\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}.\n\nThe array is the natural form for display and local operations. Neighboring entries in the array correspond to neighboring pixels.\n\n\n\n\n\n\nNote\n\n\n\nThe displayed photograph is not the mathematical object by itself. The mathematical object is the numerical array that the display visualizes.\n\n\n\n\nReal image data can be inspected as an array, a pixel crop, or a vector.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#two-dimensional-convolution",
-    "href": "book/week-02-convolution-blur.html#two-dimensional-convolution",
-    "title": "Convolution and Blur",
-    "section": "Two-Dimensional Convolution",
-    "text": "Two-Dimensional Convolution\nFor an image x[i,j] and a 2D kernel h[a,b],\n\ny[i,j]\n=\n(h*x)[i,j]\n=\n\\sum_{a,b} h[a,b]\\,x[i-a,j-b].\n\nThe output pixel is a weighted combination of nearby input pixels.",
+    "objectID": "book/week-01-image-formation.html#images-as-vectors",
+    "href": "book/week-01-image-formation.html#images-as-vectors",
+    "title": "Images as Mathematical Objects",
+    "section": "Images As Vectors",
+    "text": "Images As Vectors\nFor linear algebra, we often reshape the image matrix U into a vector\n\nx = \\operatorname{vec}(U) \\in \\mathbb{R}^{mn}.\n\nIf row-major order is used, the rows of U are read from left to right:\n\nU =\n\\begin{bmatrix}\n10 & 20 & 30\\\\\n40 & 50 & 60\n\\end{bmatrix}\n\\quad\\Longrightarrow\\quad\n\\operatorname{vec}(U)=\n\\begin{bmatrix}\n10 & 20 & 30 & 40 & 50 & 60\n\\end{bmatrix}^{T}.\n\nVectorization does not change the information. It changes the shape so that matrix-vector notation can be used.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#point-spread-function",
-    "href": "book/week-02-convolution-blur.html#point-spread-function",
-    "title": "Convolution and Blur",
-    "section": "Point Spread Function",
-    "text": "Point Spread Function\nThe point spread function (PSF) describes how an imaging system records a single ideal bright point.\nIf a point is recorded as a small Gaussian blob, then the image is blurred by approximately the same Gaussian pattern at every location. Under that assumption, the imaging model is convolution.\n\n\nCommon kernels model different kinds of blur.\n\n\n\n\nKernel\nEffect\nPossible interpretation\n\n\n\n\nidentity\nno blur\nideal sampling\n\n\nbox average\nlocal averaging\nsimple smoothing\n\n\nGaussian\nsmooth blur\ndefocus or optics\n\n\nmotion\ndirectional streak\ncamera or object motion",
+    "objectID": "book/week-01-image-formation.html#forward-models",
+    "href": "book/week-01-image-formation.html#forward-models",
+    "title": "Images as Mathematical Objects",
+    "section": "Forward Models",
+    "text": "Forward Models\nOnce the unknown image is written as a vector x, a controlled measurement process can often be written as\n\ny = Ax + \\eta.\n\nHere:\n\nx is the unknown image;\nA is the forward operator;\ny is the recorded data;\n\\eta is noise or measurement error.\n\nThis formula is a modeling template, not a claim that every visual process is linear. It is useful when the imaging system is controlled and the measurement rule is known well enough to write down.\nExamples of forward operators include:\n\n\n\nOperator\nWhat it does\n\n\n\n\nidentity\nrecords every pixel directly\n\n\nmask\nrecords only selected pixels\n\n\nblur\nspreads each pixel to its neighbors\n\n\nFourier sampling\nrecords frequency coefficients\n\n\nprojection\nrecords line integrals or summaries",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#blur-as-a-forward-operator",
-    "href": "book/week-02-convolution-blur.html#blur-as-a-forward-operator",
-    "title": "Convolution and Blur",
-    "section": "Blur As A Forward Operator",
-    "text": "Blur As A Forward Operator\nIf h is fixed, then blur can be written as\n\ny = h*x.\n\nAfter vectorization, this becomes\n\ny = Ax,\n\nwhere A is the matrix that represents convolution by h under the chosen boundary convention.\n\n\n\n\n\n\nNote\n\n\n\nA fixed blur is linear. This does not mean every image formation process is linear. It means this particular controlled model is linear.",
+    "objectID": "book/week-01-image-formation.html#masking-recorded-pixels",
+    "href": "book/week-01-image-formation.html#masking-recorded-pixels",
+    "title": "Images as Mathematical Objects",
+    "section": "Masking Recorded Pixels",
+    "text": "Masking Recorded Pixels\nA binary mask models which recorded pixels are available. If M selects a subset of entries of x, then\n\ny = Mx\n\nrecords only those entries.\n\n\nMasking recorded pixels creates missing entries in the digital observation.\n\nThe inverse problem is then to infer something about the missing values from the observed ones and from assumptions about images.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#real-image-blur",
-    "href": "book/week-02-convolution-blur.html#real-image-blur",
-    "title": "Convolution and Blur",
-    "section": "Real Image Blur",
-    "text": "Real Image Blur\n\n\nDifferent kernels remove different details from the same image.\n\nBlur reduces local contrast. Edges become less sharp, fine textures disappear, and point-like structures spread into neighborhoods.",
+    "objectID": "book/week-01-image-formation.html#missing-pixels-versus-occlusion",
+    "href": "book/week-01-image-formation.html#missing-pixels-versus-occlusion",
+    "title": "Images as Mathematical Objects",
+    "section": "Missing Pixels Versus Occlusion",
+    "text": "Missing Pixels Versus Occlusion\nIt is important to distinguish two situations:\n\nA pixel was recorded but then removed or masked.\nA part of the physical scene was hidden from the sensor.\n\nThe first case is a missing-data problem in the recorded image. The second is a visibility problem in the physical scene.\nIf a person is behind a tree, the camera did not record the hidden part of the person. No mathematical method can recover information that was never measured without adding assumptions from outside the measurement. This is one reason image inverse problems are different from many idealized signal separation problems.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#boundary-conditions",
-    "href": "book/week-02-convolution-blur.html#boundary-conditions",
-    "title": "Convolution and Blur",
-    "section": "Boundary Conditions",
-    "text": "Boundary Conditions\nNear the edge of an image, a convolution kernel asks for values outside the recorded grid. Boundary conditions decide what those values mean.\nCommon choices include:\n\n\n\nBoundary condition\nMeaning\n\n\n\n\nzero padding\noutside pixels are zero\n\n\nreflection\nimage reflects at the boundary\n\n\nperiodic\nimage wraps around\n\n\nnearest\noutside pixels copy the nearest boundary value\n\n\n\n\n\nThe same kernel can produce different edge behavior depending on the boundary rule.\n\nBoundary choices are part of the mathematical model. They should not be treated as harmless implementation details.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "2. Convolution and blur"
-    ]
-  },
-  {
-    "objectID": "book/week-02-convolution-blur.html#why-deblurring-is-hard",
-    "href": "book/week-02-convolution-blur.html#why-deblurring-is-hard",
-    "title": "Convolution and Blur",
-    "section": "Why Deblurring Is Hard",
-    "text": "Why Deblurring Is Hard\nDeblurring asks for an image x from a blurred observation y:\n\ny = Ax + \\eta.\n\nIf blur attenuates fine details, then trying to invert the blur must amplify the components that were weakened. Unfortunately, noise is also amplified in those same directions.\n\n\nNaive inversion can turn small noise into large oscillations.\n\nThis is the first appearance of a central course theme: reconstruction is not only inversion. It is stabilized inversion.",
-    "crumbs": [
-      "Book",
-      "Part I: Foundations",
-      "2. Convolution and blur"
-    ]
-  },
-  {
-    "objectID": "book/week-02-convolution-blur.html#computation",
-    "href": "book/week-02-convolution-blur.html#computation",
-    "title": "Convolution and Blur",
+    "objectID": "book/week-01-image-formation.html#computation",
+    "href": "book/week-01-image-formation.html#computation",
+    "title": "Images as Mathematical Objects",
     "section": "Computation",
-    "text": "Computation\nThe Week 2 notebook lets you change kernels, boundary modes, and deblurring stabilizers.\nRun:\npython3 examples/week02_convolution_blur.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 1 notebook asks you to inspect image arrays, reshape them, and apply simple masks.\nRun:\npython3 examples/week01_image_arrays.py\nor open the notebook in Colab from the link at the top of this chapter.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#exercises",
-    "href": "book/week-02-convolution-blur.html#exercises",
-    "title": "Convolution and Blur",
+    "objectID": "book/week-01-image-formation.html#exercises",
+    "href": "book/week-01-image-formation.html#exercises",
+    "title": "Images as Mathematical Objects",
     "section": "Exercises",
-    "text": "Exercises\n\nCompute one output value for the kernel [1/4,1/2,1/4] and the signal [0,0,1,3,2,0,0].\nExplain why a normalized blur kernel preserves constant images.\nCompare zero-padding and reflection near an image boundary.\nExplain in your own words why deblurring amplifies noise.",
+    "text": "Exercises\n\nWrite the row-major vectorization of a 3 \\times 4 image array with entries 1,\\ldots,12.\nGive an example of a forward operator A that is linear.\nGive an example from real imaging where the physical process is not well described by a linear operator.\nExplain why a mask can model missing recorded pixels but not seeing behind an occluder.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-02-convolution-blur.html#takeaways",
-    "href": "book/week-02-convolution-blur.html#takeaways",
-    "title": "Convolution and Blur",
+    "objectID": "book/week-01-image-formation.html#takeaways",
+    "href": "book/week-01-image-formation.html#takeaways",
+    "title": "Images as Mathematical Objects",
     "section": "Takeaways",
-    "text": "Takeaways\n\nConvolution is a local weighted averaging rule.\nA point spread function models how one ideal point is spread by the imaging system.\nFixed blur is linear and can be written as y=Ax.\nBoundary conditions are modeling choices.\nDeblurring is unstable because blur weakens information that inversion tries to recover.",
+    "text": "Takeaways\n\nAn image can be viewed as a function, an array, or a vector.\nVectorization lets us write imaging models using linear algebra.\nThe forward model y=Ax+\\eta separates the unknown image, the measurement rule, and noise.\nMissing data in an array is not the same as hidden information in the physical scene.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
-      "2. Convolution and blur"
+      "1. Images as mathematical objects"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html",
-    "href": "book/week-04-noise-likelihood.html",
-    "title": "Noise Models and Likelihoods",
+    "objectID": "book/week-03-fourier-imaging.html",
+    "href": "book/week-03-fourier-imaging.html",
+    "title": "Fourier Transform in Imaging",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#learning-goals",
+    "href": "book/week-03-fourier-imaging.html#learning-goals",
+    "title": "Fourier Transform in Imaging",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret a signal as a sum of oscillations;\nread a 2D Fourier magnitude spectrum;\ndistinguish Fourier magnitude and phase;\nstate the convolution theorem;\nexplain blur and inverse filtering in the frequency domain.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#the-big-idea",
+    "href": "book/week-03-fourier-imaging.html#the-big-idea",
+    "title": "Fourier Transform in Imaging",
+    "section": "The Big Idea",
+    "text": "The Big Idea\nFourier analysis rewrites a signal or image as a combination of oscillations.\nLow frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.\nFor imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#one-dimensional-frequencies",
+    "href": "book/week-03-fourier-imaging.html#one-dimensional-frequencies",
+    "title": "Fourier Transform in Imaging",
+    "section": "One-Dimensional Frequencies",
+    "text": "One-Dimensional Frequencies\nA basic length-N oscillation is\n\ns_k[n] = \\sin(2\\pi k n/N).\n\nThe integer k is the frequency index. A larger k means more oscillations over the same interval.\n\n\nThe Fourier magnitude reveals which oscillations are present.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#the-discrete-fourier-transform",
+    "href": "book/week-03-fourier-imaging.html#the-discrete-fourier-transform",
+    "title": "Fourier Transform in Imaging",
+    "section": "The Discrete Fourier Transform",
+    "text": "The Discrete Fourier Transform\nFor a length-N signal x, the discrete Fourier transform is\n\n\\widehat{x}[k]\n=\n\\sum_{n=0}^{N-1}\nx[n]e^{-2\\pi i kn/N}.\n\nEach coefficient \\widehat{x}[k] measures how much frequency k is present.\nFourier coefficients are complex:\n\n\\widehat{x}[k] = a_k + i b_k.\n\nTheir magnitude and phase are\n\n|\\widehat{x}[k]|\n\\qquad\\text{and}\\qquad\n\\arg(\\widehat{x}[k]).\n\nMagnitude measures strength. Phase measures alignment.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#two-dimensional-fourier-transform",
+    "href": "book/week-03-fourier-imaging.html#two-dimensional-fourier-transform",
+    "title": "Fourier Transform in Imaging",
+    "section": "Two-Dimensional Fourier Transform",
+    "text": "Two-Dimensional Fourier Transform\nFor an image x[m,n], the 2D Fourier transform uses horizontal and vertical frequency indices:\n\n\\widehat{x}[u,v]\n=\n\\sum_{m,n}\nx[m,n]e^{-2\\pi i(um/M+vn/N)}.\n\nThe coefficient \\widehat{x}[u,v] measures an oscillation with horizontal frequency u and vertical frequency v.\n\n\nThe centered log magnitude is a common way to display an image spectrum.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#reading-a-spectrum",
+    "href": "book/week-03-fourier-imaging.html#reading-a-spectrum",
+    "title": "Fourier Transform in Imaging",
+    "section": "Reading A Spectrum",
+    "text": "Reading A Spectrum\nIn a centered spectrum:\n\nthe center corresponds to zero frequency and slow variation;\npoints far from the center correspond to fine oscillations;\ndirection in the spectrum corresponds to orientation in the image.\n\nStrong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#magnitude-and-phase",
+    "href": "book/week-03-fourier-imaging.html#magnitude-and-phase",
+    "title": "Fourier Transform in Imaging",
+    "section": "Magnitude And Phase",
+    "text": "Magnitude And Phase\nEvery Fourier coefficient can be written as\n\n\\widehat{x}[u,v]\n=\n|\\widehat{x}[u,v]|e^{i\\phi[u,v]}.\n\nMagnitude says how much of a frequency is present. Phase says where that frequency is aligned.\n\n\nPhase carries much of the recognizable geometry of an image.\n\nMagnitude is visually important, but phase is often crucial for the location of edges and structures.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#the-convolution-theorem",
+    "href": "book/week-03-fourier-imaging.html#the-convolution-theorem",
+    "title": "Fourier Transform in Imaging",
+    "section": "The Convolution Theorem",
+    "text": "The Convolution Theorem\nThe reason Fourier analysis is central to imaging is the convolution theorem:\n\n\\widehat{h*x}[u,v]\n=\n\\widehat{h}[u,v]\\widehat{x}[u,v].\n\nConvolution in the image domain becomes multiplication in the Fourier domain.\nIf\n\ny = h*x,\n\nthen\n\n\\widehat{y} = \\widehat{h}\\,\\widehat{x}.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#blur-in-frequency-space",
+    "href": "book/week-03-fourier-imaging.html#blur-in-frequency-space",
+    "title": "Fourier Transform in Imaging",
+    "section": "Blur In Frequency Space",
+    "text": "Blur In Frequency Space\nA blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means\n\n|\\widehat{y}[u,v]|\n=\n|\\widehat{h}[u,v]|\\ |\\widehat{x}[u,v]|\n\nis much smaller where |\\widehat{h}[u,v]| is small.\n\n\nBlur is easier to analyze after the Fourier transform because frequencies are multiplied independently.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#low-pass-and-high-pass-filtering",
+    "href": "book/week-03-fourier-imaging.html#low-pass-and-high-pass-filtering",
+    "title": "Fourier Transform in Imaging",
+    "section": "Low-Pass And High-Pass Filtering",
+    "text": "Low-Pass And High-Pass Filtering\nA low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.\n\n\nFrequency filtering gives direct control over coarse and fine image components.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#why-inverse-filtering-is-dangerous",
+    "href": "book/week-03-fourier-imaging.html#why-inverse-filtering-is-dangerous",
+    "title": "Fourier Transform in Imaging",
+    "section": "Why Inverse Filtering Is Dangerous",
+    "text": "Why Inverse Filtering Is Dangerous\nIf \\widehat{h}[u,v] is nonzero, a formal inverse filter would use\n\n\\widehat{x}[u,v]\n=\n\\frac{\\widehat{y}[u,v]}{\\widehat{h}[u,v]}.\n\nBut when |\\widehat{h}[u,v]| is small, division by \\widehat{h} amplifies noise.\n\n\nInverse filtering recovers some detail but can amplify noise dramatically.\n\nThis frequency-domain view explains why regularization will be necessary in later chapters.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#computation",
+    "href": "book/week-03-fourier-imaging.html#computation",
+    "title": "Fourier Transform in Imaging",
+    "section": "Computation",
+    "text": "Computation\nThe Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.\nRun:\npython3 examples/week03_fourier_imaging.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#exercises",
+    "href": "book/week-03-fourier-imaging.html#exercises",
+    "title": "Fourier Transform in Imaging",
+    "section": "Exercises",
+    "text": "Exercises\n\nFor x[n]=\\sin(2\\pi 5n/N)+0.5\\sin(2\\pi 20n/N), where should the Fourier magnitude be large?\nIn a centered 2D spectrum, what does the center represent?\nWhich carries more geometric information in a natural image: magnitude or phase?\nUse the convolution theorem to explain why blur attenuates high frequencies.\nExplain why inverse filtering amplifies noise.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#takeaways",
+    "href": "book/week-03-fourier-imaging.html#takeaways",
+    "title": "Fourier Transform in Imaging",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nFourier analysis represents images using oscillations.\nLow frequencies describe coarse structure; high frequencies describe fine detail.\nFourier coefficients have magnitude and phase.\nConvolution becomes multiplication in the Fourier domain.\nBlur suppresses frequencies, and inverse filtering can amplify noise.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-05-ill-posed-inverse-problems.html",
+    "href": "book/week-05-ill-posed-inverse-problems.html",
+    "title": "Ill-Posed Inverse Problems",
     "section": "",
     "text": "Slides | Notebook | Open in Colab",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#learning-goals",
-    "href": "book/week-04-noise-likelihood.html#learning-goals",
-    "title": "Noise Models and Likelihoods",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#learning-goals",
+    "href": "book/week-05-ill-posed-inverse-problems.html#learning-goals",
+    "title": "Ill-Posed Inverse Problems",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndistinguish deterministic degradation from random noise;\nmodel additive Gaussian noise;\nmodel photon-counting Poisson noise;\ncompare absolute and relative noise behavior;\nderive likelihood-based data terms for reconstruction.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nstate Hadamard’s three conditions for well-posedness;\nidentify non-uniqueness in missing-data imaging;\ndistinguish missing recorded pixels from physical occlusion;\nexplain stability and instability;\ninterpret small singular values as noise-amplifying directions.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#why-noise-models-matter",
-    "href": "book/week-04-noise-likelihood.html#why-noise-models-matter",
-    "title": "Noise Models and Likelihoods",
-    "section": "Why Noise Models Matter",
-    "text": "Why Noise Models Matter\nIn the first chapters we wrote idealized forward models such as blur or Fourier filtering. Real measurements also contain random variation.\nA common observation model is\n\ny = f(x) + \\eta,\n\nwhere x is the unknown scene or image, f is the forward imaging process, y is the recorded data, and \\eta is noise.\nWhen the forward model is linear, this becomes\n\ny = Ax + \\eta.\n\nLinearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace Ax by a general prediction f(x).",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#the-inverse-problem",
+    "href": "book/week-05-ill-posed-inverse-problems.html#the-inverse-problem",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "The Inverse Problem",
+    "text": "The Inverse Problem\nA forward problem maps a cause to an effect:\n\nx \\longmapsto y = f(x).\n\nAn inverse problem asks us to recover a cause from an observed effect:\n\ny \\longmapsto x.\n\nIn imaging, x may be an unknown image or scene, and y may be a blurred, noisy, incomplete, or transformed measurement.\nWhen the imaging model is linear, we write\n\ny = Ax.\n\nLinear models include idealized blur, Fourier sampling, and recorded-pixel selection after image formation. But physical scene occlusion is different: hidden content may never reach the sensor, so the inverse problem is not simply “undoing a linear operator.”",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#seeing-noise-before-modeling-it",
-    "href": "book/week-04-noise-likelihood.html#seeing-noise-before-modeling-it",
-    "title": "Noise Models and Likelihoods",
-    "section": "Seeing Noise Before Modeling It",
-    "text": "Seeing Noise Before Modeling It\nThe same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.\n\n\nDifferent noise models create different visual artifacts.\n\nFor a pixel i, the recorded value y_i is a random variable. A noise model specifies the probability law of y_i when the unknown true value is x_i.\nA useful noise model answers:\n\nwhat recorded values are likely;\nhow large typical errors are;\nwhether the variance depends on intensity;\nwhat cost should penalize disagreement with data.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#hadamard-well-posedness",
+    "href": "book/week-05-ill-posed-inverse-problems.html#hadamard-well-posedness",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Hadamard Well-Posedness",
+    "text": "Hadamard Well-Posedness\nHadamard called a problem well posed if three conditions hold:\n\n\nExistence, uniqueness, and stability are three different ways an inverse problem can fail.\n\nThe three questions are:\n\n\n\nCondition\nQuestion\n\n\n\n\nExistence\nDoes at least one solution fit the data?\n\n\nUniqueness\nIs there only one such solution?\n\n\nStability\nDo small data errors cause small solution errors?\n\n\n\nA well-posed problem may still be computationally expensive. An ill-posed problem may be small and fast but mathematically unreliable.\nWell-posedness is about the behavior of the map from data to solution.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#gaussian-noise",
-    "href": "book/week-04-noise-likelihood.html#gaussian-noise",
-    "title": "Noise Models and Likelihoods",
-    "section": "Gaussian Noise",
-    "text": "Gaussian Noise\nThe simplest model is additive Gaussian noise:\n\ny_i = x_i + \\eta_i,\n\\qquad\n\\eta_i \\sim \\mathcal{N}(0,\\sigma^2).\n\nThe parameter \\sigma is the standard deviation of the noise. Under this model,\n\n\\mathbb{E}[y_i\\mid x_i] = x_i,\n\\qquad\n\\mathrm{Var}(y_i\\mid x_i)=\\sigma^2.\n\nThe variance is constant: it does not depend on x_i.\n\n\nGaussian residuals are centered and symmetric, while Poisson counts change shape with intensity.\n\nFor one pixel,\n\np(y_i\\mid x_i)\n=\n\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\n\\exp\\left(\n-\\frac{(y_i-x_i)^2}{2\\sigma^2}\n\\right).\n\nIf pixel errors are independent, then\n\np(y\\mid x)=\\prod_i p(y_i\\mid x_i).\n\nTaking negative logarithms gives\n\n-\\log p(y\\mid x)\n=\n\\frac{1}{2\\sigma^2}\\sum_i (y_i-x_i)^2\n+ \\text{constant}.\n\nThus Gaussian noise leads naturally to least squares.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#existence",
+    "href": "book/week-05-ill-posed-inverse-problems.html#existence",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Existence",
+    "text": "Existence\nExistence can fail when the data are inconsistent with the model. For example, suppose a model claims that all measured intensities must be nonnegative and below one, but the data contain values outside that range. Or suppose we demand exact agreement with noisy measurements that no model image can produce.\nIn practice, noise and model error often make exact existence too strict. This is one reason reconstruction methods use data fidelity terms rather than exact constraints.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#gaussian-data-fidelity",
-    "href": "book/week-04-noise-likelihood.html#gaussian-data-fidelity",
-    "title": "Noise Models and Likelihoods",
-    "section": "Gaussian Data Fidelity",
-    "text": "Gaussian Data Fidelity\nFor direct observation y=x+\\eta, maximum likelihood gives\n\n\\operatorname*{argmin}_x\n\\frac{1}{2}\\|y-x\\|_2^2\n= y.\n\nFor a linear forward model\n\ny = Ax + \\eta,\n\\qquad\n\\eta\\sim\\mathcal{N}(0,\\sigma^2 I),\n\nthe Gaussian negative log-likelihood is\n\n\\frac{1}{2\\sigma^2}\\|Ax-y\\|_2^2.\n\nFor a general nonlinear forward model\n\ny = f(x)+\\eta,\n\nthe corresponding Gaussian data term is\n\n\\frac{1}{2\\sigma^2}\\|f(x)-y\\|_2^2.\n\nThe squared error is therefore not just a convenient algebraic choice. It is the data fidelity term associated with a particular statistical assumption.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#non-uniqueness",
+    "href": "book/week-05-ill-posed-inverse-problems.html#non-uniqueness",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Non-Uniqueness",
+    "text": "Non-Uniqueness\nNon-uniqueness means several different images explain the same observation.\n\n\nDifferent images can agree on all observed pixels.\n\nLet M be a recorded-pixel selection mask:\n\ny = Mx.\n\nIf two images differ only where M does not observe, then\n\nMx_1 = Mx_2.\n\nThe recorded data alone cannot choose between x_1 and x_2.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#gaussian-limitations",
-    "href": "book/week-04-noise-likelihood.html#gaussian-limitations",
-    "title": "Noise Models and Likelihoods",
-    "section": "Gaussian Limitations",
-    "text": "Gaussian Limitations\nGaussian noise is useful and mathematically friendly, but it is not always physically faithful. An additive Gaussian model can produce negative intensities or values above the sensor maximum. In practice we often clip values, but clipping changes the statistical model.\nThis is a general lesson: a simple model can be useful without being literally complete.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#masking-versus-occlusion",
+    "href": "book/week-05-ill-posed-inverse-problems.html#masking-versus-occlusion",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Masking Versus Occlusion",
+    "text": "Masking Versus Occlusion\nIt is important to separate two ideas.\n\n\n\n\n\n\n\n\nSituation\nMathematical description\nInterpretation\n\n\n\n\nRecorded-pixel masking\na linear projection of an already formed image\npixels are missing from the stored image\n\n\nPhysical occlusion\nhidden scene content may not be measured at all\nthe sensor never received that information\n\n\n\nBoth create missing information, but they are not the same physical model. If a person is hidden behind a tree in a single image, the hidden content is not encoded in the pixels behind the tree. No inverse algorithm can recover exact information that was never measured.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#poisson-noise",
-    "href": "book/week-04-noise-likelihood.html#poisson-noise",
-    "title": "Noise Models and Likelihoods",
-    "section": "Poisson Noise",
-    "text": "Poisson Noise\nLight arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.\nLet z_i be the photon count at pixel i:\n\nz_i \\sim \\operatorname{Poisson}(\\lambda_i).\n\nThe Poisson law is\n\n\\mathbb{P}(z_i=k\\mid \\lambda_i)\n= e^{-\\lambda_i}\\frac{\\lambda_i^k}{k!}.\n\nFor a Poisson random variable,\n\n\\mathbb{E}[z_i]=\\lambda_i,\n\\qquad\n\\mathrm{Var}(z_i)=\\lambda_i.\n\nThe standard deviation is \\sqrt{\\lambda_i}. Absolute noise increases with brightness, but relative noise decreases:\n\n\\frac{\\sqrt{\\lambda_i}}{\\lambda_i}\n=\n\\frac{1}{\\sqrt{\\lambda_i}}.\n\nThis is why low-light imaging is difficult. A pixel receiving 5 photons is much less reliable, relatively speaking, than a pixel receiving 500 photons.\n\n\nSignal-to-noise behavior depends strongly on the noise model.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#nullspace-language",
+    "href": "book/week-05-ill-posed-inverse-problems.html#nullspace-language",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Nullspace Language",
+    "text": "Nullspace Language\nFor a linear operator A, the nullspace is\n\n\\mathcal{N}(A)=\\{z:Az=0\\}.\n\nIf z\\in \\mathcal{N}(A), then\n\nA(x+z)=Ax.\n\nThe nullspace contains invisible changes. If A has a nontrivial nullspace, data fidelity cannot identify a unique image:\n\nD(y,Ax)=D(y,A(x+z)).\n\nTo choose between possible reconstructions, we need extra information: smoothness, sparsity, edge preservation, training data, physical constraints, or some other modeling assumption.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#from-counts-to-intensities",
-    "href": "book/week-04-noise-likelihood.html#from-counts-to-intensities",
-    "title": "Noise Models and Likelihoods",
-    "section": "From Counts To Intensities",
-    "text": "From Counts To Intensities\nDigital images often store normalized intensities in [0,1]. If \\alpha is the maximum expected photon count, a simple count model is\n\nz_i \\sim \\operatorname{Poisson}(\\alpha x_i),\n\\qquad\ny_i = z_i/\\alpha.\n\nThe normalized value y_i is still random. Increasing exposure increases \\alpha, which improves relative precision when the model is valid.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#stability",
+    "href": "book/week-05-ill-posed-inverse-problems.html#stability",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Stability",
+    "text": "Stability\nAn inverse map is stable if nearby data give nearby solutions. Informally,\n\n\\|y_1-y_2\\| \\text{ small}\n\\quad\\Rightarrow\\quad\n\\|x_1-x_2\\| \\text{ small}.\n\nStability is the reason noise matters mathematically.\nConsider the one-dimensional model\n\ny=\\varepsilon x.\n\nThe inverse is\n\nx = y/\\varepsilon.\n\nIf \\varepsilon is small, tiny errors in y become large errors in x.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#poisson-likelihood",
-    "href": "book/week-04-noise-likelihood.html#poisson-likelihood",
-    "title": "Noise Models and Likelihoods",
-    "section": "Poisson Likelihood",
-    "text": "Poisson Likelihood\nFor independent photon counts,\n\np(z\\mid x)\n=\n\\prod_i\ne^{-\\alpha x_i}\n\\frac{(\\alpha x_i)^{z_i}}{z_i!}.\n\nIgnoring constants independent of x,\n\n-\\log p(z\\mid x)\n=\n\\sum_i\n\\alpha x_i - z_i\\log(\\alpha x_i).\n\nFor a general positive forward model f_i(x)&gt;0,\n\nz_i \\sim \\operatorname{Poisson}(f_i(x))\n\nand\n\n-\\log p(z\\mid x)\n=\n\\sum_i f_i(x) - z_i\\log(f_i(x))\n+ \\text{constant}.\n\nThis is not a least-squares data term.\n\n\nLikelihood curves encode how each model penalizes disagreement with the data.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#imaging-instability",
+    "href": "book/week-05-ill-posed-inverse-problems.html#imaging-instability",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Imaging Instability",
+    "text": "Imaging Instability\nBlur suppresses some directions in image space. Deblurring tries to divide by those suppressions.\nThe unstable directions are the directions that the forward model almost erases.\n\n\nA direct inverse can be mathematically defined and still useless in the presence of noise.\n\nIn this picture:\n\na solution exists;\nthe model is known;\nthe data error is tiny;\nthe direct inverse is still unstable.\n\nThis is a stability failure.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#gaussian-versus-poisson",
-    "href": "book/week-04-noise-likelihood.html#gaussian-versus-poisson",
-    "title": "Noise Models and Likelihoods",
-    "section": "Gaussian Versus Poisson",
-    "text": "Gaussian Versus Poisson\n\n\n\nFeature\nGaussian\nPoisson\n\n\n\n\nData type\ncontinuous intensity\ninteger counts\n\n\nVariance\nconstant \\sigma^2\nequals mean\n\n\nTypical fidelity\nsquared error\ncount likelihood\n\n\nNatural for\nread noise, aggregate errors\nphoton-limited imaging\n\n\nConstraint\noften unconstrained\npositive mean\n\n\n\nThe choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#singular-values",
+    "href": "book/week-05-ill-posed-inverse-problems.html#singular-values",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Singular Values",
+    "text": "Singular Values\nThe singular value decomposition gives a coordinate system for sensitivity.\nFor a linear operator A,\n\nA v_i = \\sigma_i u_i.\n\nThe singular value \\sigma_i tells how strongly A transmits the input direction v_i.\nLarge singular values correspond to directions that are visible in the data. Small singular values correspond to directions that are weakly visible or nearly invisible.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#repeated-measurements",
-    "href": "book/week-04-noise-likelihood.html#repeated-measurements",
-    "title": "Noise Models and Likelihoods",
-    "section": "Repeated Measurements",
-    "text": "Repeated Measurements\nIf\n\ny^{(j)} = x + \\eta^{(j)},\n\\qquad\n\\eta^{(j)}\\sim\\mathcal{N}(0,\\sigma^2),\n\nand the noise samples are independent, then the average\n\n\\bar{y}=\\frac{1}{m}\\sum_{j=1}^m y^{(j)}\n\nhas noise standard deviation \\sigma/\\sqrt{m}.\n\n\nIndependent random noise can average out.\n\nAveraging cannot recover information that never reached the sensor. If scene content is physically hidden behind an occluder, repeated photographs from the same viewpoint do not reveal the hidden object. This is different from reducing random fluctuations in recorded pixels.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#inverting-in-svd-coordinates",
+    "href": "book/week-05-ill-posed-inverse-problems.html#inverting-in-svd-coordinates",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Inverting In SVD Coordinates",
+    "text": "Inverting In SVD Coordinates\nIf\n\ny=Ax\n\nand\n\ny=\\sum_i \\alpha_i u_i,\n\nthen the formal inverse is\n\nx=\\sum_i \\frac{\\alpha_i}{\\sigma_i}v_i.\n\nWith noisy data\n\ny^\\delta=Ax+\\eta,\n\nthe inverse includes terms of the form\n\n\\frac{\\langle \\eta,u_i\\rangle}{\\sigma_i}.\n\nSmall singular values divide noise by a small number.\n\n\nStronger blur typically makes singular values decay faster.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#from-likelihood-to-reconstruction",
-    "href": "book/week-04-noise-likelihood.html#from-likelihood-to-reconstruction",
-    "title": "Noise Models and Likelihoods",
-    "section": "From Likelihood To Reconstruction",
-    "text": "From Likelihood To Reconstruction\nGiven data y, maximum likelihood estimates x by\n\n\\operatorname*{argmax}_x p(y\\mid x),\n\nor equivalently\n\n\\operatorname*{argmin}_x -\\log p(y\\mid x).\n\nMaximum likelihood uses the data model, but it is often not enough. In inverse problems, many images may agree almost equally well with noisy data.\nA common regularized reconstruction form is\n\n\\operatorname*{argmin}_x\nD(y,f(x)) + \\lambda R(x).\n\nHere D is the data fidelity term from the noise model, and R is a regularizer encoding prior information or desired structure.",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#reading-singular-value-plots",
+    "href": "book/week-05-ill-posed-inverse-problems.html#reading-singular-value-plots",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Reading Singular-Value Plots",
+    "text": "Reading Singular-Value Plots\nSingular values help diagnose instability:\n\nstronger blur gives faster singular-value decay;\nlater singular vectors often represent oscillatory detail;\nsmall singular values mean details are weakly observed;\ninversion becomes sensitive where singular values are small.\n\n\n\nThe dangerous coefficients are those where noise is divided by small singular values.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#computation",
-    "href": "book/week-04-noise-likelihood.html#computation",
-    "title": "Noise Models and Likelihoods",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#condition-number",
+    "href": "book/week-05-ill-posed-inverse-problems.html#condition-number",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Condition Number",
+    "text": "Condition Number\nFor an invertible matrix,\n\n\\kappa(A)=\\frac{\\sigma_{\\max}}{\\sigma_{\\min}}.\n\nA large condition number means there is a direction that is transmitted much more weakly than another.\nThe condition number warns us about worst-case sensitivity, but it is not the whole story. In imaging we also care about:\n\nwhere the noise lives;\nwhether small singular directions contain important image details;\nhow the reconstruction will be used.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "5. Ill-posed inverse problems"
+    ]
+  },
+  {
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#stabilization-idea",
+    "href": "book/week-05-ill-posed-inverse-problems.html#stabilization-idea",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Stabilization Idea",
+    "text": "Stabilization Idea\nIf small \\sigma_i amplify noise, one crude stabilization idea is:\n\n\\frac{\\alpha_i}{\\sigma_i}\n\\quad\\text{only for sufficiently large } \\sigma_i.\n\nThis is the idea behind truncated SVD.\nTruncated SVD keeps stable directions that are well observed and discards unstable directions that may contain detail. This is already a bias-stability tradeoff.\nThe next chapter replaces a hard cutoff with Tikhonov regularization:\n\n\\min_x\n\\|Ax-y\\|_2^2 + \\lambda\\|x\\|_2^2.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "5. Ill-posed inverse problems"
+    ]
+  },
+  {
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#computation",
+    "href": "book/week-05-ill-posed-inverse-problems.html#computation",
+    "title": "Ill-Posed Inverse Problems",
     "section": "Computation",
-    "text": "Computation\nThe Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.\nRun:\npython3 examples/week04_noise_likelihood.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 5 notebook lets you vary blur strength, noise level, and the number of singular values kept.\nRun:\npython3 examples/week05_ill_posed.py\nor open the notebook in Colab from the link at the top of this chapter.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#exercises",
-    "href": "book/week-04-noise-likelihood.html#exercises",
-    "title": "Noise Models and Likelihoods",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#exercises",
+    "href": "book/week-05-ill-posed-inverse-problems.html#exercises",
+    "title": "Ill-Posed Inverse Problems",
     "section": "Exercises",
-    "text": "Exercises\n\nFor y_i=x_i+\\eta_i with \\eta_i\\sim\\mathcal{N}(0,\\sigma^2), compute \\mathbb{E}[y_i\\mid x_i] and \\mathrm{Var}(y_i\\mid x_i).\nFor a Poisson pixel with expected count \\lambda=25, compute the standard deviation and approximate SNR.\nExplain why Poisson relative noise improves as the photon count increases.\nCompare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.\nGive one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.",
+    "text": "Exercises\n\nGive an example of an inverse problem where existence fails.\nGive an example of an inverse problem where uniqueness fails.\nExplain why a missing square in an image creates many possible completions.\nFor singular values 1,0.7,0.3,0.02,0.0001, identify the dangerous directions to invert.\nExplain in your own words why direct deblurring can fail even when the blur model is known.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-04-noise-likelihood.html#takeaways",
-    "href": "book/week-04-noise-likelihood.html#takeaways",
-    "title": "Noise Models and Likelihoods",
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#takeaways",
+    "href": "book/week-05-ill-posed-inverse-problems.html#takeaways",
+    "title": "Ill-Posed Inverse Problems",
     "section": "Takeaways",
-    "text": "Takeaways\n\nNoise models connect physical measurement assumptions to mathematical data terms.\nGaussian additive noise leads to squared-error fidelity.\nPoisson photon-counting noise has variance equal to its mean.\nLow-light images are difficult because relative photon noise is high.\nLikelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.",
+    "text": "Takeaways\n\nIll-posedness is a structural issue, not merely a computational inconvenience.\nHadamard’s conditions are existence, uniqueness, and stability.\nMissing information causes non-uniqueness.\nSmall singular values cause instability because inverse formulas divide by them.\nRegularization is motivated by the need for stable reconstruction.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
-      "4. Noise models and likelihoods"
+      "5. Ill-posed inverse problems"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html",
-    "href": "book/week-06-tikhonov-regularization.html",
-    "title": "Tikhonov Regularization",
+    "objectID": "book/week-07-variational-formulation.html",
+    "href": "book/week-07-variational-formulation.html",
+    "title": "Variational Formulation",
     "section": "",
     "text": "Slides | Notebook | Open in Colab",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#learning-goals",
-    "href": "book/week-06-tikhonov-regularization.html#learning-goals",
-    "title": "Tikhonov Regularization",
+    "objectID": "book/week-07-variational-formulation.html#learning-goals",
+    "href": "book/week-07-variational-formulation.html#learning-goals",
+    "title": "Variational Formulation",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nformulate Tikhonov regularization;\nderive the normal equations;\ninterpret the regularization parameter \\lambda;\nread Tikhonov filter factors;\nexplain the bias-stability tradeoff.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret reconstruction as energy minimization;\nseparate data fidelity and regularization;\nexplain why convexity matters;\nderive the Euler-Lagrange equation for a quadratic smoothing model;\nconnect optimality equations to gradient descent.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#why-regularize",
-    "href": "book/week-06-tikhonov-regularization.html#why-regularize",
-    "title": "Tikhonov Regularization",
-    "section": "Why Regularize?",
-    "text": "Why Regularize?\nChapter 5 showed that direct inversion can amplify noise through terms such as\n\n\\frac{\\langle \\eta,u_i\\rangle}{\\sigma_i}.\n\nWhen \\sigma_i is small, division by \\sigma_i is dangerous. Regularization changes the inverse problem so that weakly observed directions are not trusted blindly.\nFor a linear imaging model\n\ny=Ax+\\eta,\n\nthe Gaussian least-squares data fit is\n\n\\|Ax-y\\|_2^2.\n\nIf A is ill-conditioned, least squares can fit noise. Data fit alone does not know which data components are reliable.",
+    "objectID": "book/week-07-variational-formulation.html#from-one-model-to-a-framework",
+    "href": "book/week-07-variational-formulation.html#from-one-model-to-a-framework",
+    "title": "Variational Formulation",
+    "section": "From One Model To A Framework",
+    "text": "From One Model To A Framework\nTikhonov regularization solves\n\n\\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\nThis is one example of a larger modeling principle: choose an energy and minimize it.\nIn variational reconstruction, we write\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x E(x).\n\nOften the energy has the form\n\nE(x)=D(y,f(x))+\\lambda R(x).\n\nThe data fidelity term D(y,f(x)) measures agreement with the observations. The regularizer R(x) encodes preferred image structure.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#tikhonov-regularization",
-    "href": "book/week-06-tikhonov-regularization.html#tikhonov-regularization",
-    "title": "Tikhonov Regularization",
-    "section": "Tikhonov Regularization",
-    "text": "Tikhonov Regularization\nThe simplest Tikhonov model is\n\nx_\\lambda\n=\n\\operatorname*{argmin}_x\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\nThe parameter \\lambda&gt;0 controls the strength of regularization.\nThe objective has two terms:\n\n\n\n\n\n\n\nTerm\nRole\n\n\n\n\n\\|Ax-y\\|_2^2\nprefer reconstructions that explain the measurements\n\n\n\\lambda\\|x\\|_2^2\nprefer smaller-energy solutions\n\n\n\nIf two images explain the data similarly, Tikhonov prefers the one with smaller norm.\n\n\nChanging \\lambda moves the reconstruction along a path from unstable to over-damped.\n\nVery small \\lambda leaves unstable directions barely damped. Moderate \\lambda can control noise while preserving structure. Large \\lambda over-damps the solution.",
+    "objectID": "book/week-07-variational-formulation.html#energy-as-a-model",
+    "href": "book/week-07-variational-formulation.html#energy-as-a-model",
+    "title": "Variational Formulation",
+    "section": "Energy As A Model",
+    "text": "Energy As A Model\nAn energy is not only a numerical function. It is a modeling statement.\n\n\nThe minimizer balances data agreement with regularity.\n\nThis viewpoint separates three choices:\n\nthe data model decides the fidelity term;\nthe image prior decides the regularizer;\nthe optimization method decides how the energy is minimized.\n\nExamples from previous chapters fit this pattern.\n\n\n\nModel\nEnergy\n\n\n\n\nGaussian direct denoising\n\\|x-y\\|_2^2\n\n\nTikhonov\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2\n\n\nQuadratic smoothing\n\\|u-y\\|_2^2+\\lambda\\|\\nabla u\\|_2^2\n\n\nPoisson data\n\\sum_i f_i(x)-z_i\\log f_i(x)",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#deriving-the-normal-equations",
-    "href": "book/week-06-tikhonov-regularization.html#deriving-the-normal-equations",
-    "title": "Tikhonov Regularization",
-    "section": "Deriving The Normal Equations",
-    "text": "Deriving The Normal Equations\nLet\n\nJ(x)=\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\nExpanding,\n\nJ(x)=(Ax-y)^T(Ax-y)+\\lambda x^T x.\n\nThe gradient is\n\n\\nabla J(x)=2A^T(Ax-y)+2\\lambda x.\n\nAt a minimizer,\n\n\\nabla J(x_\\lambda)=0.\n\nSetting the gradient to zero gives\n\nA^T(Ax_\\lambda-y)+\\lambda x_\\lambda=0.\n\nTherefore,\n\n(A^TA+\\lambda I)x_\\lambda=A^Ty.\n\nThese are the Tikhonov normal equations.",
+    "objectID": "book/week-07-variational-formulation.html#a-first-variational-denoising-model",
+    "href": "book/week-07-variational-formulation.html#a-first-variational-denoising-model",
+    "title": "Variational Formulation",
+    "section": "A First Variational Denoising Model",
+    "text": "A First Variational Denoising Model\nFor a noisy image y, consider\n\nE(u)\n=\n\\frac12\\|u-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2.\n\nThe first term keeps u close to the observed image. The second term penalizes changes between neighboring pixels.\nThe parameter \\lambda controls the strength of smoothing:\n\nsmall \\lambda: the reconstruction stays close to the data;\nlarge \\lambda: the reconstruction becomes smoother;\ntoo large \\lambda: meaningful edges are blurred.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#closed-form-solution",
-    "href": "book/week-06-tikhonov-regularization.html#closed-form-solution",
-    "title": "Tikhonov Regularization",
-    "section": "Closed-Form Solution",
-    "text": "Closed-Form Solution\nIf \\lambda&gt;0,\n\nx_\\lambda\n=\n(A^TA+\\lambda I)^{-1}A^Ty.\n\nTikhonov replaces an unstable inverse by a stabilized linear solve.\nIf A has singular values \\sigma_i, then A^TA has eigenvalues \\sigma_i^2. Tikhonov shifts them:\n\n\\sigma_i^2\n\\quad\\longmapsto\\quad\n\\sigma_i^2+\\lambda.\n\nSmall eigenvalues are lifted away from zero.\nFor small educational examples, the direct matrix form is:\nlhs = A.T @ A + lam * np.eye(n)\nrhs = A.T @ y\nx_lam = np.linalg.solve(lhs, rhs)\nFor large imaging problems, one usually avoids forming dense matrices explicitly and uses iterative methods or operator implementations.",
+    "objectID": "book/week-07-variational-formulation.html#convexity",
+    "href": "book/week-07-variational-formulation.html#convexity",
+    "title": "Variational Formulation",
+    "section": "Convexity",
+    "text": "Convexity\nConvexity is a geometric property of an energy. Informally, a function is convex if the line segment between two points on its graph stays above the graph.\n\n\nConvex energies have no deceptive local minima.\n\nFor a convex energy:\n\nevery local minimizer is global;\nfirst-order optimality conditions are meaningful;\nmany algorithms have reliable behavior.\n\nConvex does not always mean easy, but it removes a major ambiguity. The quadratic denoising energy\n\nE(u)\n=\n\\frac12\\|u-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2\n\nis convex for \\lambda\\ge 0.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#svd-interpretation",
-    "href": "book/week-06-tikhonov-regularization.html#svd-interpretation",
-    "title": "Tikhonov Regularization",
-    "section": "SVD Interpretation",
-    "text": "SVD Interpretation\nLet\n\nA v_i = \\sigma_i u_i.\n\nThen Tikhonov can be written as\n\nx_\\lambda\n=\n\\sum_i\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}\n\\langle y,u_i\\rangle v_i.\n\nCompare this with direct inversion, whose factor is\n\n\\frac{1}{\\sigma_i}.\n\nTikhonov replaces it with\n\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}.\n\nWhen \\sigma_i is small, Tikhonov avoids division by a tiny number.\n\n\nFilter factors show how each singular direction is damped.",
+    "objectID": "book/week-07-variational-formulation.html#euler-lagrange-equation",
+    "href": "book/week-07-variational-formulation.html#euler-lagrange-equation",
+    "title": "Variational Formulation",
+    "section": "Euler-Lagrange Equation",
+    "text": "Euler-Lagrange Equation\nWe now derive the optimality condition for a continuous denoising energy:\n\nE(u)\n=\n\\frac12\\int_\\Omega (u-y)^2\\,dx\n+\n\\frac{\\lambda}{2}\\int_\\Omega |\\nabla u|^2\\,dx.\n\nThe unknown u is the reconstruction, and y is the noisy image.\nTo test optimality, perturb u in a direction v:\n\nu_\\epsilon = u+\\epsilon v.\n\nAt a minimizer, the derivative with respect to \\epsilon must vanish at \\epsilon=0:\n\n\\left.\n\\frac{d}{d\\epsilon}E(u+\\epsilon v)\n\\right|_{\\epsilon=0}\n=0.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#reading-filter-factors",
-    "href": "book/week-06-tikhonov-regularization.html#reading-filter-factors",
-    "title": "Tikhonov Regularization",
-    "section": "Reading Filter Factors",
-    "text": "Reading Filter Factors\nFilter factors reveal the effect of \\lambda:\n\nsmall \\lambda behaves more like the direct inverse;\nlarger \\lambda damps weak singular directions;\nstrong damping reduces noise but also removes detail.\n\nFor example, if \\sigma=0.001, direct inversion uses 1/\\sigma=1000. With \\lambda=0.01, Tikhonov uses\n\n\\frac{0.001}{0.001^2+0.01}\n\\approx 0.1.\n\nThe unstable amplification is replaced by strong damping.",
+    "objectID": "book/week-07-variational-formulation.html#variation-of-the-data-term",
+    "href": "book/week-07-variational-formulation.html#variation-of-the-data-term",
+    "title": "Variational Formulation",
+    "section": "Variation Of The Data Term",
+    "text": "Variation Of The Data Term\nFor the data term,\n\n\\frac12\\int_\\Omega (u+\\epsilon v-y)^2\\,dx.\n\nDifferentiating at \\epsilon=0 gives\n\n\\int_\\Omega (u-y)v\\,dx.\n\nThis says that the data term pushes u toward y.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#choosing-lambda",
-    "href": "book/week-06-tikhonov-regularization.html#choosing-lambda",
-    "title": "Tikhonov Regularization",
-    "section": "Choosing Lambda",
-    "text": "Choosing Lambda\nThe parameter \\lambda is the lesson.\nSmall \\lambda gives better data fit but more noise amplification. Large \\lambda gives more stability but more bias and blur.\n\n\nThe best parameter balances data fit and regularization.\n\nThe true image is usually unknown, so an RMSE curve is a teaching diagnostic rather than a practical parameter-choice method. In practice, parameter choice may use validation data, discrepancy principles, cross-validation, L-curve heuristics, or domain-specific performance criteria.\n\n\nThe visually best value of \\lambda depends on the task and risk.\n\nIn a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.",
+    "objectID": "book/week-07-variational-formulation.html#variation-of-the-regularizer",
+    "href": "book/week-07-variational-formulation.html#variation-of-the-regularizer",
+    "title": "Variational Formulation",
+    "section": "Variation Of The Regularizer",
+    "text": "Variation Of The Regularizer\nFor the smoothness term,\n\n\\frac{\\lambda}{2}\\int_\\Omega |\\nabla(u+\\epsilon v)|^2\\,dx,\n\nthe derivative at \\epsilon=0 is\n\n\\lambda\\int_\\Omega \\nabla u\\cdot \\nabla v\\,dx.\n\nUsing integration by parts and ignoring boundary terms in this guided derivation,\n\n\\int_\\Omega \\nabla u\\cdot \\nabla v\\,dx\n=\n-\\int_\\Omega (\\Delta u)v\\,dx.\n\nThe first variation becomes\n\n\\int_\\Omega \\left[(u-y)-\\lambda\\Delta u\\right]v\\,dx.\n\nSince this must hold for all perturbations v,\n\n(u-y)-\\lambda\\Delta u=0.\n\nEquivalently,\n\nu-\\lambda\\Delta u=y.\n\nThe minimizer solves a differential equation.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#bias-and-variance",
-    "href": "book/week-06-tikhonov-regularization.html#bias-and-variance",
-    "title": "Tikhonov Regularization",
-    "section": "Bias And Variance",
-    "text": "Bias And Variance\nImagine repeating the noisy measurement many times.\nBias is systematic error from the average reconstruction. Variance is random variation across noise realizations.\n\n\nRegularization trades variance for bias.\n\nIncreasing \\lambda usually reduces variance and increases bias. The best mean squared error often lies between the extremes.\nThe error can be large for two opposite reasons:\n\nif \\lambda is too small, noise amplification remains;\nif \\lambda is too large, the reconstruction is over-smoothed and biased.",
+    "objectID": "book/week-07-variational-formulation.html#discrete-version",
+    "href": "book/week-07-variational-formulation.html#discrete-version",
+    "title": "Variational Formulation",
+    "section": "Discrete Version",
+    "text": "Discrete Version\nOn a pixel grid, the same idea leads to\n\n(u-y)+\\lambda L u=0,\n\nwhere L is a discrete negative Laplacian.\nFor a finite-difference operator D, the energy\n\nE(u)\n=\n\\frac12\\|u-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|Du\\|_2^2\n\nhas optimality condition\n\n(u-y)+\\lambda D^TDu=0.\n\n\n\nFinite differences turn the continuous optimality equation into a grid equation.\n\nThis is Tikhonov with a different penalty: instead of penalizing \\|x\\|_2^2, we penalize squared image gradients.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#what-tikhonov-does-not-solve",
-    "href": "book/week-06-tikhonov-regularization.html#what-tikhonov-does-not-solve",
-    "title": "Tikhonov Regularization",
-    "section": "What Tikhonov Does Not Solve",
-    "text": "What Tikhonov Does Not Solve\nTikhonov is a first regularization method, not the final answer to imaging.\nIt tends to prefer small-energy solutions, which may over-smooth edges or texture. It also depends on a linear model and a quadratic penalty in its basic form.\nLater chapters introduce more expressive regularizers, including variational penalties, total variation, sparsity, wavelets, and learned priors.",
+    "objectID": "book/week-07-variational-formulation.html#gradient-descent",
+    "href": "book/week-07-variational-formulation.html#gradient-descent",
+    "title": "Variational Formulation",
+    "section": "Gradient Descent",
+    "text": "Gradient Descent\nThe optimality equation gives a condition that the minimizer must satisfy. Gradient descent gives an iterative way to approach it.\nFor an energy E(u),\n\nu^{k+1}=u^k-\\tau\\nabla E(u^k).\n\nThe parameter \\tau is the step size.\n\n\nGradient descent moves locally downhill on the energy landscape.\n\nFor quadratic denoising,\n\n\\nabla E(u)\n=\n(u-y)+\\lambda L u.\n\nTherefore,\n\nu^{k+1}\n=\nu^k-\\tau\\left[(u^k-y)+\\lambda L u^k\\right].\n\nIf \\tau is too large, gradient descent can overshoot or diverge even for a convex quadratic.\n\n\nThe energy can decrease while image quality first improves and then becomes too smooth.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#computation",
-    "href": "book/week-06-tikhonov-regularization.html#computation",
-    "title": "Tikhonov Regularization",
+    "objectID": "book/week-07-variational-formulation.html#real-image-denoising",
+    "href": "book/week-07-variational-formulation.html#real-image-denoising",
+    "title": "Variational Formulation",
+    "section": "Real Image Denoising",
+    "text": "Real Image Denoising\nQuadratic smoothing is transparent and useful. It is convex, its optimality condition is linear, and it reduces Gaussian-like noise.\n\n\nQuadratic smoothing reduces noise, but it also blurs edges.\n\nThe weakness is also clear: edges are large gradients, and the term \\|\\nabla u\\|_2^2 penalizes large gradients strongly. The next chapter replaces squared gradients with gradient magnitudes to better preserve edges.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
+    "objectID": "book/week-07-variational-formulation.html#computation",
+    "href": "book/week-07-variational-formulation.html#computation",
+    "title": "Variational Formulation",
     "section": "Computation",
-    "text": "Computation\nThe Week 6 notebook lets you change blur strength, noise level, and \\lambda, then observe the resulting bias-stability tradeoff.\nRun:\npython3 examples/week06_tikhonov.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 7 notebook lets you change \\lambda, vary the gradient descent step size, and compare a closed-form solution with gradient descent iterates.\nRun:\npython3 examples/week07_variational.py\nor open the notebook in Colab from the link at the top of this chapter.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#exercises",
-    "href": "book/week-06-tikhonov-regularization.html#exercises",
-    "title": "Tikhonov Regularization",
+    "objectID": "book/week-07-variational-formulation.html#exercises",
+    "href": "book/week-07-variational-formulation.html#exercises",
+    "title": "Variational Formulation",
     "section": "Exercises",
-    "text": "Exercises\n\nPredict what happens to the Tikhonov objective when \\lambda\\to 0 and when \\lambda\\to\\infty.\nDerive the normal equations for \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nIf singular values are 1,0.1,0.001, compare the smallest eigenvalue of A^TA with that of A^TA+\\lambda I for \\lambda=0.01.\nFor \\sigma=0.001 and \\lambda=0.01, compare 1/\\sigma with \\sigma/(\\sigma^2+\\lambda).\nExplain why increasing \\lambda can both improve and damage a reconstruction.",
+    "text": "Exercises\n\nIn E(u)=\\frac12\\|u-y\\|_2^2+\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2, identify the data term, regularizer, and parameter.\nExplain why convexity is useful for minimization.\nDerive the variation of the data term \\frac12\\int_\\Omega (u-y)^2\\,dx.\nExplain why the Euler-Lagrange equation for quadratic denoising is u-\\lambda\\Delta u=y.\nIn gradient descent, what can go wrong if the step size is too large?",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
     ]
   },
   {
-    "objectID": "book/week-06-tikhonov-regularization.html#takeaways",
-    "href": "book/week-06-tikhonov-regularization.html#takeaways",
-    "title": "Tikhonov Regularization",
+    "objectID": "book/week-07-variational-formulation.html#takeaways",
+    "href": "book/week-07-variational-formulation.html#takeaways",
+    "title": "Variational Formulation",
     "section": "Takeaways",
-    "text": "Takeaways\n\nTikhonov solves \\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nThe normal equations are (A^TA+\\lambda I)x=A^Ty.\nIn SVD coordinates, Tikhonov damps weak singular directions.\n\\lambda controls a bias-stability tradeoff.\nRegularization is a modeling choice, not magic.",
+    "text": "Takeaways\n\nVariational imaging models define reconstruction by energy minimization.\nEnergies combine data fidelity and regularization.\nConvexity gives a safer optimization landscape.\nEuler-Lagrange equations express first-order optimality.\nQuadratic smoothness is clear and useful, but it blurs edges.",
     "crumbs": [
       "Book",
-      "Part II: Noise and Regularization",
-      "6. Tikhonov regularization"
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html",
+    "href": "book/week-09-optimization-methods.html",
+    "title": "Optimization Methods",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#learning-goals",
+    "href": "book/week-09-optimization-methods.html#learning-goals",
+    "title": "Optimization Methods",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nrecognize convex optimization problems in imaging;\nuse gradient descent for smooth energies;\nexplain why step size matters;\nunderstand subgradient intuition for nonsmooth terms;\ndescribe proximal operators and ISTA.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#models-are-not-enough",
+    "href": "book/week-09-optimization-methods.html#models-are-not-enough",
+    "title": "Optimization Methods",
+    "section": "Models Are Not Enough",
+    "text": "Models Are Not Enough\nA variational model defines a reconstruction as a minimizer:\n\n\\min_u E(u).\n\nAn optimization method gives a procedure for finding that minimizer:\n\nu^0,\\ u^1,\\ u^2,\\ldots\n\nRegularization chooses the model. Optimization chooses how the model is solved.\nThis distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#convexity",
+    "href": "book/week-09-optimization-methods.html#convexity",
+    "title": "Optimization Methods",
+    "section": "Convexity",
+    "text": "Convexity\nA set C is convex if the segment between any two points in C stays in C:\n\n(1-t)x+ty\\in C,\\qquad 0\\leq t\\leq 1.\n\nNonnegative intensity constraints and box constraints often form convex sets.\nA function E is convex if\n\nE((1-t)x+ty)\n\\leq\n(1-t)E(x)+tE(y).\n\n\n\nConvexity concerns the shape of the landscape; smoothness concerns the tools we can use.\n\nFor a convex energy:\n\nevery local minimum is global;\ndescent methods have a target worth reaching;\noptimality conditions are meaningful.\n\nTV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#gradient-descent",
+    "href": "book/week-09-optimization-methods.html#gradient-descent",
+    "title": "Optimization Methods",
+    "section": "Gradient Descent",
+    "text": "Gradient Descent\nFor a differentiable energy E,\n\nu^{k+1}=u^k-\\tau\\nabla E(u^k).\n\nThe parameter \\tau&gt;0 is the step size, also called the learning rate.\nThe gradient points toward fastest local increase, so -\\nabla E(u^k) points toward fastest local decrease.\n\n\nGradient descent uses local slope information to move downhill.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#step-size",
+    "href": "book/week-09-optimization-methods.html#step-size",
+    "title": "Optimization Methods",
+    "section": "Step Size",
+    "text": "Step Size\nStep size controls stability.\nIf \\tau is too small:\n\nprogress is safe but slow;\nmany iterations are needed.\n\nIf \\tau is too large:\n\nthe method may oscillate;\nthe energy can increase;\nthe iterates may diverge.\n\n\n\nThe same objective can behave very differently under different step sizes.\n\nIf \\nabla E is Lipschitz with constant L, a typical safe range is\n\n0&lt;\\tau&lt;\\frac{2}{L}.\n\nOften one uses\n\n\\tau\\leq \\frac{1}{L}\n\nfor stable monotone decrease.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#stopping-criteria",
+    "href": "book/week-09-optimization-methods.html#stopping-criteria",
+    "title": "Optimization Methods",
+    "section": "Stopping Criteria",
+    "text": "Stopping Criteria\nCommon stopping rules include:\n\nmaximum number of iterations;\nsmall change in energy;\nsmall change in the image;\nsmall gradient norm;\nvisual or task-driven stopping.\n\nStopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#nonsmooth-terms",
+    "href": "book/week-09-optimization-methods.html#nonsmooth-terms",
+    "title": "Optimization Methods",
+    "section": "Nonsmooth Terms",
+    "text": "Nonsmooth Terms\nSparse and edge-preserving models often use terms such as\n\n|x|,\n\\qquad\n\\|x\\|_1,\n\\qquad\n\\operatorname{TV}(u).\n\nThese terms have corners. For x\\neq 0,\n\n\\frac{d}{dx}|x|=\\operatorname{sign}(x).\n\nAt x=0, there is no single derivative.\nThe corner at zero is exactly what encourages sparsity.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#subgradient-intuition",
+    "href": "book/week-09-optimization-methods.html#subgradient-intuition",
+    "title": "Optimization Methods",
+    "section": "Subgradient Intuition",
+    "text": "Subgradient Intuition\nAt a nonsmooth point, there may be many valid slopes. For |x| at zero,\n\n\\partial |0|=[-1,1].\n\nThis is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.\nTreating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#proximal-operators",
+    "href": "book/week-09-optimization-methods.html#proximal-operators",
+    "title": "Optimization Methods",
+    "section": "Proximal Operators",
+    "text": "Proximal Operators\nThe proximal operator of a regularizer R is\n\n\\operatorname{prox}_{\\tau R}(v)\n=\n\\operatorname*{argmin}_u\n\\frac12\\|u-v\\|_2^2+\\tau R(u).\n\nIt balances staying near v with reducing the regularizer.\nThis is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#soft-thresholding",
+    "href": "book/week-09-optimization-methods.html#soft-thresholding",
+    "title": "Optimization Methods",
+    "section": "Soft Thresholding",
+    "text": "Soft Thresholding\nFor R(u)=\\lambda\\|u\\|_1, the proximal operator is soft thresholding:\n\n\\operatorname{prox}_{\\tau\\lambda\\|\\cdot\\|_1}(v)\n=\n\\operatorname{sign}(v)\\max(|v|-\\tau\\lambda,0).\n\n\n\nSoft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.\n\nSoft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#proximal-gradient",
+    "href": "book/week-09-optimization-methods.html#proximal-gradient",
+    "title": "Optimization Methods",
+    "section": "Proximal Gradient",
+    "text": "Proximal Gradient\nSuppose the energy is split as\n\nE(u)=f(u)+R(u),\n\nwhere f is smooth and R may be nonsmooth.\nProximal gradient uses\n\nu^{k+1}\n=\n\\operatorname{prox}_{\\tau R}\n\\left(u^k-\\tau\\nabla f(u^k)\\right).\n\nThe gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#ista",
+    "href": "book/week-09-optimization-methods.html#ista",
+    "title": "Optimization Methods",
+    "section": "ISTA",
+    "text": "ISTA\nFor the l1-regularized problem\n\n\\min_x\n\\frac12\\|Ax-y\\|_2^2+\\lambda\\|x\\|_1,\n\nISTA is\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right),\n\nwhere S_{\\tau\\lambda} is soft thresholding.\n\n\n\nStep\nMeaning\n\n\n\n\ncompute Ax^k-y\ncurrent data mismatch\n\n\napply A^\\top\nmove mismatch back to image or coefficient space\n\n\ngradient step\nimprove data fidelity\n\n\nsoft threshold\nimpose sparsity\n\n\n\n\n\nISTA alternates between data correction and sparsity promotion.\n\n\n\nThe same pattern appears in image reconstruction with transform-domain sparsity.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#common-failure-modes",
+    "href": "book/week-09-optimization-methods.html#common-failure-modes",
+    "title": "Optimization Methods",
+    "section": "Common Failure Modes",
+    "text": "Common Failure Modes\nOptimization can fail for reasons that are easy to confuse with modeling failure:\n\nthe step size is too large;\nthe implemented objective is not the intended objective;\nstopping too early hides convergence;\nstopping too late wastes computation or overfits noise;\na nonsmooth term is treated as if it were smooth.\n\nThe more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#computation",
+    "href": "book/week-09-optimization-methods.html#computation",
+    "title": "Optimization Methods",
+    "section": "Computation",
+    "text": "Computation\nThe Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.\nRun:\npython3 examples/week09_optimization.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#exercises",
+    "href": "book/week-09-optimization-methods.html#exercises",
+    "title": "Optimization Methods",
+    "section": "Exercises",
+    "text": "Exercises\n\nExplain the difference between a variational model and an optimization method.\nFor gradient descent, describe what happens when the step size is too small and when it is too large.\nWhy does the absolute value penalty encourage exact zero values?\nWrite the proximal operator definition for a regularizer R.\nExplain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#takeaways",
+    "href": "book/week-09-optimization-methods.html#takeaways",
+    "title": "Optimization Methods",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nConvexity makes minimization conceptually safer.\nGradient descent solves smooth problems by local descent.\nStep size controls stability and speed.\nl1 and TV are convex but nonsmooth.\nProximal operators are central for sparse and edge-preserving imaging.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
     ]
   },
   {

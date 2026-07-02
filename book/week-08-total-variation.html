@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Noise Models and Likelihoods – MATH 435: Mathematical Imaging</title>
+<title>Total Variation Regularization – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">4. Noise models and likelihoods</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-08-total-variation.html">8. Total Variation regularization</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -270,7 +270,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-04-noise-likelihood.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-04-noise-likelihood.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4. Noise models and likelihoods</span></a>
   </div>
 </li>
@@ -305,7 +305,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-08-total-variation.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-08-total-variation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">8. Total Variation regularization</span></a>
   </div>
 </li>
@@ -328,30 +328,30 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#why-noise-models-matter" id="toc-why-noise-models-matter" class="nav-link" data-scroll-target="#why-noise-models-matter">Why Noise Models Matter</a></li>
-  <li><a href="#seeing-noise-before-modeling-it" id="toc-seeing-noise-before-modeling-it" class="nav-link" data-scroll-target="#seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</a></li>
-  <li><a href="#gaussian-noise" id="toc-gaussian-noise" class="nav-link" data-scroll-target="#gaussian-noise">Gaussian Noise</a></li>
-  <li><a href="#gaussian-data-fidelity" id="toc-gaussian-data-fidelity" class="nav-link" data-scroll-target="#gaussian-data-fidelity">Gaussian Data Fidelity</a></li>
-  <li><a href="#gaussian-limitations" id="toc-gaussian-limitations" class="nav-link" data-scroll-target="#gaussian-limitations">Gaussian Limitations</a></li>
-  <li><a href="#poisson-noise" id="toc-poisson-noise" class="nav-link" data-scroll-target="#poisson-noise">Poisson Noise</a></li>
-  <li><a href="#from-counts-to-intensities" id="toc-from-counts-to-intensities" class="nav-link" data-scroll-target="#from-counts-to-intensities">From Counts To Intensities</a></li>
-  <li><a href="#poisson-likelihood" id="toc-poisson-likelihood" class="nav-link" data-scroll-target="#poisson-likelihood">Poisson Likelihood</a></li>
-  <li><a href="#gaussian-versus-poisson" id="toc-gaussian-versus-poisson" class="nav-link" data-scroll-target="#gaussian-versus-poisson">Gaussian Versus Poisson</a></li>
-  <li><a href="#repeated-measurements" id="toc-repeated-measurements" class="nav-link" data-scroll-target="#repeated-measurements">Repeated Measurements</a></li>
-  <li><a href="#from-likelihood-to-reconstruction" id="toc-from-likelihood-to-reconstruction" class="nav-link" data-scroll-target="#from-likelihood-to-reconstruction">From Likelihood To Reconstruction</a></li>
+  <li><a href="#edges-are-not-noise" id="toc-edges-are-not-noise" class="nav-link" data-scroll-target="#edges-are-not-noise">Edges Are Not Noise</a></li>
+  <li><a href="#continuous-total-variation" id="toc-continuous-total-variation" class="nav-link" data-scroll-target="#continuous-total-variation">Continuous Total Variation</a></li>
+  <li><a href="#tv-denoising" id="toc-tv-denoising" class="nav-link" data-scroll-target="#tv-denoising">TV Denoising</a></li>
+  <li><a href="#l2-versus-tv-penalties" id="toc-l2-versus-tv-penalties" class="nav-link" data-scroll-target="#l2-versus-tv-penalties">l2 Versus TV Penalties</a></li>
+  <li><a href="#nonsmoothness" id="toc-nonsmoothness" class="nav-link" data-scroll-target="#nonsmoothness">Nonsmoothness</a></li>
+  <li><a href="#one-dimensional-edge-preservation" id="toc-one-dimensional-edge-preservation" class="nav-link" data-scroll-target="#one-dimensional-edge-preservation">One-Dimensional Edge Preservation</a></li>
+  <li><a href="#image-denoising" id="toc-image-denoising" class="nav-link" data-scroll-target="#image-denoising">Image Denoising</a></li>
+  <li><a href="#choosing-the-tv-weight" id="toc-choosing-the-tv-weight" class="nav-link" data-scroll-target="#choosing-the-tv-weight">Choosing The TV Weight</a></li>
+  <li><a href="#staircasing" id="toc-staircasing" class="nav-link" data-scroll-target="#staircasing">Staircasing</a></li>
+  <li><a href="#strengths-and-weaknesses" id="toc-strengths-and-weaknesses" class="nav-link" data-scroll-target="#strengths-and-weaknesses">Strengths And Weaknesses</a></li>
+  <li><a href="#course-checkpoint" id="toc-course-checkpoint" class="nav-link" data-scroll-target="#course-checkpoint">Course Checkpoint</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-04-noise-likelihood.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-08-total-variation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">4. Noise models and likelihoods</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-07-variational-formulation.html">Part III: Variational Models and Optimization</a></li><li class="breadcrumb-item"><a href="../book/week-08-total-variation.html">8. Total Variation regularization</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Noise Models and Likelihoods</h1>
-<p class="subtitle lead">Chapter 4</p>
+<h1 class="title">Total Variation Regularization</h1>
+<p class="subtitle lead">Chapter 8</p>
 </div>
 
 
@@ -368,298 +368,217 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-04-noise-likelihood.html">Slides</a> | <a href="../notebooks/week04_noise_likelihood.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-08-total-variation.html">Slides</a> | <a href="../notebooks/week08_total_variation.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>distinguish deterministic degradation from random noise;</li>
-<li>model additive Gaussian noise;</li>
-<li>model photon-counting Poisson noise;</li>
-<li>compare absolute and relative noise behavior;</li>
-<li>derive likelihood-based data terms for reconstruction.</li>
+<li>define Total Variation;</li>
+<li>compare TV with quadratic smoothness;</li>
+<li>explain why TV preserves edges better;</li>
+<li>identify staircasing artifacts;</li>
+<li>use TV as a modeling prior for image denoising.</li>
 </ul>
 </section>
-<section id="why-noise-models-matter" class="level2">
-<h2 class="anchored" data-anchor-id="why-noise-models-matter">Why Noise Models Matter</h2>
-<p>In the first chapters we wrote idealized forward models such as blur or Fourier filtering. Real measurements also contain random variation.</p>
-<p>A common observation model is</p>
+<section id="edges-are-not-noise" class="level2">
+<h2 class="anchored" data-anchor-id="edges-are-not-noise">Edges Are Not Noise</h2>
+<p>Quadratic smoothing uses</p>
 <p><span class="math display">
-y = f(x) + \eta,
-</span></p>
-<p>where <span class="math inline">x</span> is the unknown scene or image, <span class="math inline">f</span> is the forward imaging process, <span class="math inline">y</span> is the recorded data, and <span class="math inline">\eta</span> is noise.</p>
-<p>When the forward model is linear, this becomes</p>
-<p><span class="math display">
-y = Ax + \eta.
-</span></p>
-<p>Linearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace <span class="math inline">Ax</span> by a general prediction <span class="math inline">f(x)</span>.</p>
-</section>
-<section id="seeing-noise-before-modeling-it" class="level2">
-<h2 class="anchored" data-anchor-id="seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</h2>
-<p>The same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.</p>
-<div class="figure">
-<p><img src="../assets/figures/week04-noise-models.png" class="img-fluid" alt="Clean image, Gaussian noisy image, low-light Poisson noisy image, and higher-photon Poisson noisy image"></p>
-<p>Different noise models create different visual artifacts.</p>
-</div>
-<p>For a pixel <span class="math inline">i</span>, the recorded value <span class="math inline">y_i</span> is a random variable. A noise model specifies the probability law of <span class="math inline">y_i</span> when the unknown true value is <span class="math inline">x_i</span>.</p>
-<p>A useful noise model answers:</p>
-<ul>
-<li>what recorded values are likely;</li>
-<li>how large typical errors are;</li>
-<li>whether the variance depends on intensity;</li>
-<li>what cost should penalize disagreement with data.</li>
-</ul>
-</section>
-<section id="gaussian-noise" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-noise">Gaussian Noise</h2>
-<p>The simplest model is additive Gaussian noise:</p>
-<p><span class="math display">
-y_i = x_i + \eta_i,
-\qquad
-\eta_i \sim \mathcal{N}(0,\sigma^2).
-</span></p>
-<p>The parameter <span class="math inline">\sigma</span> is the standard deviation of the noise. Under this model,</p>
-<p><span class="math display">
-\mathbb{E}[y_i\mid x_i] = x_i,
-\qquad
-\mathrm{Var}(y_i\mid x_i)=\sigma^2.
-</span></p>
-<p>The variance is constant: it does not depend on <span class="math inline">x_i</span>.</p>
-<div class="figure">
-<p><img src="../assets/figures/week04-noise-histograms.png" class="img-fluid" alt="Histogram of Gaussian residuals and histograms of Poisson counts for several intensities"></p>
-<p>Gaussian residuals are centered and symmetric, while Poisson counts change shape with intensity.</p>
-</div>
-<p>For one pixel,</p>
-<p><span class="math display">
-p(y_i\mid x_i)
+E(u)
 =
-\frac{1}{\sqrt{2\pi\sigma^2}}
-\exp\left(
--\frac{(y_i-x_i)^2}{2\sigma^2}
-\right).
+\frac12\|u-y\|_2^2
++
+\frac{\lambda}{2}\|\nabla u\|_2^2.
 </span></p>
-<p>If pixel errors are independent, then</p>
+<p>This removes noise, but it also penalizes true edges. Edges and noise both create local changes, so a model must distinguish between unwanted oscillation and meaningful discontinuity.</p>
+<p>Total Variation changes the regularizer.</p>
+</section>
+<section id="continuous-total-variation" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-total-variation">Continuous Total Variation</h2>
+<p>For a grayscale image <span class="math inline">u:\Omega\to\mathbb{R}</span>,</p>
 <p><span class="math display">
-p(y\mid x)=\prod_i p(y_i\mid x_i).
-</span></p>
-<p>Taking negative logarithms gives</p>
-<p><span class="math display">
--\log p(y\mid x)
+\operatorname{TV}(u)
 =
-\frac{1}{2\sigma^2}\sum_i (y_i-x_i)^2
-+ \text{constant}.
+\int_\Omega |\nabla u(x)|\,dx.
 </span></p>
-<p>Thus Gaussian noise leads naturally to least squares.</p>
-</section>
-<section id="gaussian-data-fidelity" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-data-fidelity">Gaussian Data Fidelity</h2>
-<p>For direct observation <span class="math inline">y=x+\eta</span>, maximum likelihood gives</p>
+<p>TV measures the total amount of change in the image.</p>
+<p>For a pixel grid, the isotropic discrete TV is</p>
 <p><span class="math display">
-\operatorname*{argmin}_x
-\frac{1}{2}\|y-x\|_2^2
-= y.
-</span></p>
-<p>For a linear forward model</p>
-<p><span class="math display">
-y = Ax + \eta,
-\qquad
-\eta\sim\mathcal{N}(0,\sigma^2 I),
-</span></p>
-<p>the Gaussian negative log-likelihood is</p>
-<p><span class="math display">
-\frac{1}{2\sigma^2}\|Ax-y\|_2^2.
-</span></p>
-<p>For a general nonlinear forward model</p>
-<p><span class="math display">
-y = f(x)+\eta,
-</span></p>
-<p>the corresponding Gaussian data term is</p>
-<p><span class="math display">
-\frac{1}{2\sigma^2}\|f(x)-y\|_2^2.
-</span></p>
-<p>The squared error is therefore not just a convenient algebraic choice. It is the data fidelity term associated with a particular statistical assumption.</p>
-</section>
-<section id="gaussian-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-limitations">Gaussian Limitations</h2>
-<p>Gaussian noise is useful and mathematically friendly, but it is not always physically faithful. An additive Gaussian model can produce negative intensities or values above the sensor maximum. In practice we often clip values, but clipping changes the statistical model.</p>
-<p>This is a general lesson: a simple model can be useful without being literally complete.</p>
-</section>
-<section id="poisson-noise" class="level2">
-<h2 class="anchored" data-anchor-id="poisson-noise">Poisson Noise</h2>
-<p>Light arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.</p>
-<p>Let <span class="math inline">z_i</span> be the photon count at pixel <span class="math inline">i</span>:</p>
-<p><span class="math display">
-z_i \sim \operatorname{Poisson}(\lambda_i).
-</span></p>
-<p>The Poisson law is</p>
-<p><span class="math display">
-\mathbb{P}(z_i=k\mid \lambda_i)
-= e^{-\lambda_i}\frac{\lambda_i^k}{k!}.
-</span></p>
-<p>For a Poisson random variable,</p>
-<p><span class="math display">
-\mathbb{E}[z_i]=\lambda_i,
-\qquad
-\mathrm{Var}(z_i)=\lambda_i.
-</span></p>
-<p>The standard deviation is <span class="math inline">\sqrt{\lambda_i}</span>. Absolute noise increases with brightness, but relative noise decreases:</p>
-<p><span class="math display">
-\frac{\sqrt{\lambda_i}}{\lambda_i}
-=
-\frac{1}{\sqrt{\lambda_i}}.
-</span></p>
-<p>This is why low-light imaging is difficult. A pixel receiving 5 photons is much less reliable, relatively speaking, than a pixel receiving 500 photons.</p>
-<div class="figure">
-<p><img src="../assets/figures/week04-snr-curves.png" class="img-fluid" alt="Gaussian and Poisson signal-to-noise ratio curves"></p>
-<p>Signal-to-noise behavior depends strongly on the noise model.</p>
-</div>
-</section>
-<section id="from-counts-to-intensities" class="level2">
-<h2 class="anchored" data-anchor-id="from-counts-to-intensities">From Counts To Intensities</h2>
-<p>Digital images often store normalized intensities in <span class="math inline">[0,1]</span>. If <span class="math inline">\alpha</span> is the maximum expected photon count, a simple count model is</p>
-<p><span class="math display">
-z_i \sim \operatorname{Poisson}(\alpha x_i),
-\qquad
-y_i = z_i/\alpha.
-</span></p>
-<p>The normalized value <span class="math inline">y_i</span> is still random. Increasing exposure increases <span class="math inline">\alpha</span>, which improves relative precision when the model is valid.</p>
-</section>
-<section id="poisson-likelihood" class="level2">
-<h2 class="anchored" data-anchor-id="poisson-likelihood">Poisson Likelihood</h2>
-<p>For independent photon counts,</p>
-<p><span class="math display">
-p(z\mid x)
-=
-\prod_i
-e^{-\alpha x_i}
-\frac{(\alpha x_i)^{z_i}}{z_i!}.
-</span></p>
-<p>Ignoring constants independent of <span class="math inline">x</span>,</p>
-<p><span class="math display">
--\log p(z\mid x)
+\operatorname{TV}(u)
 =
 \sum_i
-\alpha x_i - z_i\log(\alpha x_i).
+\sqrt{(D_xu_i)^2+(D_yu_i)^2}.
 </span></p>
-<p>For a general positive forward model <span class="math inline">f_i(x)&gt;0</span>,</p>
+<p>Here <span class="math inline">D_x</span> and <span class="math inline">D_y</span> are finite differences in horizontal and vertical directions.</p>
+</section>
+<section id="tv-denoising" class="level2">
+<h2 class="anchored" data-anchor-id="tv-denoising">TV Denoising</h2>
+<p>The classical Rudin-Osher-Fatemi model is</p>
 <p><span class="math display">
-z_i \sim \operatorname{Poisson}(f_i(x))
-</span></p>
-<p>and</p>
-<p><span class="math display">
--\log p(z\mid x)
+u_\lambda
 =
-\sum_i f_i(x) - z_i\log(f_i(x))
-+ \text{constant}.
+\operatorname*{argmin}_u
+\frac12\|u-y\|_2^2
++
+\lambda\,\operatorname{TV}(u).
 </span></p>
-<p>This is not a least-squares data term.</p>
+<p>The data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.</p>
+<p>This regularizer says: among images that fit the data, prefer images with small total variation.</p>
+</section>
+<section id="l2-versus-tv-penalties" class="level2">
+<h2 class="anchored" data-anchor-id="l2-versus-tv-penalties">l2 Versus TV Penalties</h2>
+<p>For a one-dimensional gradient value <span class="math inline">g</span>, compare:</p>
+<p><span class="math display">
+\text{quadratic penalty}=\frac12 g^2,
+\qquad
+\text{TV penalty}=|g|.
+</span></p>
 <div class="figure">
-<p><img src="../assets/figures/week04-likelihood-curves.png" class="img-fluid" alt="Gaussian and Poisson negative log-likelihood curves for one pixel"></p>
-<p>Likelihood curves encode how each model penalizes disagreement with the data.</p>
+<p><img src="../assets/figures/week08-penalties.png" class="img-fluid" alt="Quadratic and TV penalties for a gradient value and their derivative behavior"></p>
+<p>Large gradients are much more expensive under a quadratic penalty than under TV.</p>
+</div>
+<p>For example, if <span class="math inline">g=4</span>, then <span class="math inline">\frac12g^2=8</span>, while <span class="math inline">|g|=4</span>. The difference becomes larger as <span class="math inline">|g|</span> grows.</p>
+<p>This is the basic reason TV preserves edges better: it penalizes the existence of change, but it is less aggressive toward large jumps than a squared-gradient model.</p>
+</section>
+<section id="nonsmoothness" class="level2">
+<h2 class="anchored" data-anchor-id="nonsmoothness">Nonsmoothness</h2>
+<p>The function <span class="math inline">|g|</span> is not differentiable at <span class="math inline">g=0</span>. This is not a minor technicality. It changes the optimization problem.</p>
+<p>Quadratic smoothing leads to smooth linear equations. TV denoising is convex but nonsmooth. That makes it powerful for edge preservation and more delicate to solve.</p>
+<p>Optimization methods for nonsmooth convex problems appear in the next chapter.</p>
+</section>
+<section id="one-dimensional-edge-preservation" class="level2">
+<h2 class="anchored" data-anchor-id="one-dimensional-edge-preservation">One-Dimensional Edge Preservation</h2>
+<p>TV is easiest to understand on a step signal.</p>
+<div class="figure">
+<p><img src="../assets/figures/week08-step-l2-tv.png" class="img-fluid" alt="Noisy step signal denoised by quadratic smoothing and TV"></p>
+<p>Quadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.</p>
+</div>
+<p>TV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.</p>
+<p>This is useful when the image contains objects separated by edges.</p>
+</section>
+<section id="image-denoising" class="level2">
+<h2 class="anchored" data-anchor-id="image-denoising">Image Denoising</h2>
+<p>The contrast between quadratic smoothing and TV also appears on images.</p>
+<div class="figure">
+<p><img src="../assets/figures/week08-image-l2-tv.png" class="img-fluid" alt="Original image, noisy image, l2 smoothed image, and TV denoised image"></p>
+<p>TV removes noise while preserving stronger edge sets better than quadratic smoothing.</p>
+</div>
+<p>Gradient maps make the behavior easier to see.</p>
+<div class="figure">
+<p><img src="../assets/figures/week08-gradient-maps.png" class="img-fluid" alt="Gradient magnitude maps of original, noisy, l2 smoothed, and TV denoised images"></p>
+<p>Noise creates many small gradients. TV suppresses weak fluctuations while retaining stronger edges.</p>
 </div>
 </section>
-<section id="gaussian-versus-poisson" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-versus-poisson">Gaussian Versus Poisson</h2>
+<section id="choosing-the-tv-weight" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-the-tv-weight">Choosing The TV Weight</h2>
+<p>In</p>
+<p><span class="math display">
+\frac12\|u-y\|_2^2+\lambda\operatorname{TV}(u),
+</span></p>
+<p>larger <span class="math inline">\lambda</span> means:</p>
+<ul>
+<li>stronger denoising;</li>
+<li>fewer small variations;</li>
+<li>greater risk of losing detail.</li>
+</ul>
+<div class="figure">
+<p><img src="../assets/figures/week08-parameter-effects.png" class="img-fluid" alt="TV denoising with several regularization weights"></p>
+<p>The best value of <span class="math inline">\lambda</span> depends on the task.</p>
+</div>
+<p>For a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.</p>
+</section>
+<section id="staircasing" class="level2">
+<h2 class="anchored" data-anchor-id="staircasing">Staircasing</h2>
+<p>TV favors sparse gradients. That means many locations with zero gradient and a smaller number of jumps.</p>
+<div class="figure">
+<p><img src="../assets/figures/week08-staircasing.png" class="img-fluid" alt="Smooth noisy signal denoised by l2 smoothing and TV, showing TV staircasing"></p>
+<p>TV can turn smooth variation into piecewise-flat plateaus.</p>
+</div>
+<p>This staircasing effect is the signature artifact of TV. TV preserves edges, but it can create artificial plateaus in regions that should vary smoothly.</p>
+</section>
+<section id="strengths-and-weaknesses" class="level2">
+<h2 class="anchored" data-anchor-id="strengths-and-weaknesses">Strengths And Weaknesses</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Feature</th>
-<th>Gaussian</th>
-<th>Poisson</th>
+<th>Property</th>
+<th>l2 smoothing</th>
+<th>TV</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Data type</td>
-<td>continuous intensity</td>
-<td>integer counts</td>
+<td>Noise removal</td>
+<td>yes</td>
+<td>yes</td>
 </tr>
 <tr class="even">
-<td>Variance</td>
-<td>constant <span class="math inline">\sigma^2</span></td>
-<td>equals mean</td>
+<td>Edge preservation</td>
+<td>weak</td>
+<td>strong</td>
 </tr>
 <tr class="odd">
-<td>Typical fidelity</td>
-<td>squared error</td>
-<td>count likelihood</td>
+<td>Optimization</td>
+<td>smooth linear problem</td>
+<td>nonsmooth convex problem</td>
 </tr>
 <tr class="even">
-<td>Natural for</td>
-<td>read noise, aggregate errors</td>
-<td>photon-limited imaging</td>
+<td>Typical artifact</td>
+<td>blur</td>
+<td>staircasing</td>
 </tr>
 <tr class="odd">
-<td>Constraint</td>
-<td>often unconstrained</td>
-<td>positive mean</td>
+<td>Best for</td>
+<td>smooth images</td>
+<td>piecewise-smooth or piecewise-constant images</td>
 </tr>
 </tbody>
 </table>
-<p>The choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.</p>
+<p>TV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.</p>
+<p>This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.</p>
 </section>
-<section id="repeated-measurements" class="level2">
-<h2 class="anchored" data-anchor-id="repeated-measurements">Repeated Measurements</h2>
-<p>If</p>
-<p><span class="math display">
-y^{(j)} = x + \eta^{(j)},
-\qquad
-\eta^{(j)}\sim\mathcal{N}(0,\sigma^2),
-</span></p>
-<p>and the noise samples are independent, then the average</p>
-<p><span class="math display">
-\bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
-</span></p>
-<p>has noise standard deviation <span class="math inline">\sigma/\sqrt{m}</span>.</p>
-<div class="figure">
-<p><img src="../assets/figures/week04-averaging.png" class="img-fluid" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"></p>
-<p>Independent random noise can average out.</p>
-</div>
-<p>Averaging cannot recover information that never reached the sensor. If scene content is physically hidden behind an occluder, repeated photographs from the same viewpoint do not reveal the hidden object. This is different from reducing random fluctuations in recorded pixels.</p>
-</section>
-<section id="from-likelihood-to-reconstruction" class="level2">
-<h2 class="anchored" data-anchor-id="from-likelihood-to-reconstruction">From Likelihood To Reconstruction</h2>
-<p>Given data <span class="math inline">y</span>, maximum likelihood estimates <span class="math inline">x</span> by</p>
-<p><span class="math display">
-\operatorname*{argmax}_x p(y\mid x),
-</span></p>
-<p>or equivalently</p>
-<p><span class="math display">
-\operatorname*{argmin}_x -\log p(y\mid x).
-</span></p>
-<p>Maximum likelihood uses the data model, but it is often not enough. In inverse problems, many images may agree almost equally well with noisy data.</p>
-<p>A common regularized reconstruction form is</p>
-<p><span class="math display">
-\operatorname*{argmin}_x
-D(y,f(x)) + \lambda R(x).
-</span></p>
-<p>Here <span class="math inline">D</span> is the data fidelity term from the noise model, and <span class="math inline">R</span> is a regularizer encoding prior information or desired structure.</p>
+<section id="course-checkpoint" class="level2">
+<h2 class="anchored" data-anchor-id="course-checkpoint">Course Checkpoint</h2>
+<p>At this point in the course, students should be able to connect:</p>
+<ul>
+<li>image arrays and forward models;</li>
+<li>convolution, blur, and Fourier interpretation;</li>
+<li>noise models and likelihoods;</li>
+<li>ill-posedness and singular values;</li>
+<li>Tikhonov, variational energies, and TV.</li>
+</ul>
+<p>TV is the bridge from smooth quadratic models to nonsmooth optimization and sparse reconstruction.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.</p>
+<p>The Week 8 notebook lets you change the TV weight, compare TV and l2 smoothing, inspect gradient maps, and find staircasing examples.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week04_noise_likelihood.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week08_total_variation.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>For <span class="math inline">y_i=x_i+\eta_i</span> with <span class="math inline">\eta_i\sim\mathcal{N}(0,\sigma^2)</span>, compute <span class="math inline">\mathbb{E}[y_i\mid x_i]</span> and <span class="math inline">\mathrm{Var}(y_i\mid x_i)</span>.</li>
-<li>For a Poisson pixel with expected count <span class="math inline">\lambda=25</span>, compute the standard deviation and approximate SNR.</li>
-<li>Explain why Poisson relative noise improves as the photon count increases.</li>
-<li>Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.</li>
-<li>Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.</li>
+<li>Write the continuous definition of <span class="math inline">\operatorname{TV}(u)</span>.</li>
+<li>Write the discrete isotropic TV formula using <span class="math inline">D_xu_i</span> and <span class="math inline">D_yu_i</span>.</li>
+<li>Compare the quadratic and TV costs for gradient values <span class="math inline">g=1</span> and <span class="math inline">g=4</span>.</li>
+<li>Explain why TV preserves edges better than quadratic smoothing.</li>
+<li>Describe staircasing and give one situation where it would be undesirable.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Noise models connect physical measurement assumptions to mathematical data terms.</li>
-<li>Gaussian additive noise leads to squared-error fidelity.</li>
-<li>Poisson photon-counting noise has variance equal to its mean.</li>
-<li>Low-light images are difficult because relative photon noise is high.</li>
-<li>Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.</li>
+<li>Total Variation uses <span class="math inline">\operatorname{TV}(u)=\int_\Omega |\nabla u|\,dx</span>.</li>
+<li>TV favors images with small total change.</li>
+<li>Compared with l2 smoothing, TV preserves stronger edges.</li>
+<li>TV is convex but nonsmooth.</li>
+<li>TV can create staircasing artifacts, so it is not always the right prior.</li>
 </ul>
 
 
@@ -1074,7 +993,7 @@ D(y,f(x)) + \lambda R(x).
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-04-noise-likelihood.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-08-total-variation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
