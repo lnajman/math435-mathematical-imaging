@@ -4245,6 +4245,412 @@ def week10_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week11_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 11 - Wavelets and Multiscale Representation
+
+            This notebook accompanies the eleventh MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - explain wavelets as localized multiscale patterns;
+            - inspect 1D and 2D wavelet decompositions;
+            - connect wavelet coefficients to sparsity;
+            - compress an image by keeping large wavelet coefficients;
+            - denoise an image by thresholding wavelet detail coefficients.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, PyWavelets, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            import pywt
+            from scipy.fft import dctn
+            from scipy.ndimage import gaussian_filter
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def show_image_grid(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin if colorscale == "Gray" else None,
+                            zmax=zmax if colorscale == "Gray" else None,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+
+
+            def wavelet_compress(image, fraction, wavelet="db2", level=3):
+                coeffs = pywt.wavedec2(image, wavelet=wavelet, level=level, mode="periodization")
+                array, slices = pywt.coeffs_to_array(coeffs)
+                keep = max(1, int(fraction * array.size))
+                threshold = np.partition(np.abs(array).ravel(), -keep)[-keep]
+                compressed_array = np.where(np.abs(array) >= threshold, array, 0.0)
+                compressed_coeffs = pywt.array_to_coeffs(compressed_array, slices, output_format="wavedec2")
+                reconstruction = pywt.waverec2(compressed_coeffs, wavelet=wavelet, mode="periodization")
+                return np.clip(reconstruction[: image.shape[0], : image.shape[1]], 0.0, 1.0), keep
+
+
+            def estimate_noise_sigma(coeffs):
+                finest_diagonal = coeffs[-1][2]
+                return float(np.median(np.abs(finest_diagonal)) / 0.6745)
+
+
+            def wavelet_denoise(noisy, wavelet="db2", level=3, threshold_scale=1.0):
+                coeffs = pywt.wavedec2(noisy, wavelet=wavelet, level=level, mode="periodization")
+                sigma = estimate_noise_sigma(coeffs)
+                threshold = threshold_scale * sigma * np.sqrt(2.0 * np.log(noisy.size))
+                denoised_coeffs = [coeffs[0]]
+                for horizontal, vertical, diagonal in coeffs[1:]:
+                    denoised_coeffs.append(
+                        tuple(pywt.threshold(detail, threshold, mode="soft") for detail in (horizontal, vertical, diagonal))
+                    )
+                reconstruction = pywt.waverec2(denoised_coeffs, wavelet=wavelet, mode="periodization")
+                return np.clip(reconstruction[: noisy.shape[0], : noisy.shape[1]], 0.0, 1.0), threshold
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Haar Atoms
+
+            The Haar wavelet starts with a local average and a local difference.
+            """
+        ),
+        code(
+            """
+            x = np.linspace(0, 1, 800, endpoint=False)
+            scaling = np.ones_like(x)
+            haar = np.where(x < 0.5, 1.0, -1.0)
+            shifted = np.zeros_like(x)
+            mask = (x >= 0.25) & (x < 0.75)
+            shifted[mask] = np.where(x[mask] < 0.5, 1.0, -1.0)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=scaling, mode="lines", name="scaling"))
+            fig.add_trace(go.Scatter(x=x, y=haar, mode="lines", name="Haar wavelet"))
+            fig.add_trace(go.Scatter(x=x, y=shifted, mode="lines", name="shifted and scaled"))
+            fig.update_layout(
+                title="Localized Haar patterns",
+                xaxis_title="position",
+                yaxis_title="amplitude",
+                height=380,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            For two values `a` and `b`, compute the Haar average and detail.
+
+            Change the values below. Which pair has the larger local change?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            a = 8
+            b = 6
+
+            average = 0.5 * (a + b)
+            detail = 0.5 * (a - b)
+
+            print("average:", average)
+            print("detail:", detail)
+            """
+        ),
+        md(
+            """
+            ### 2. 1D Multiscale Decomposition
+
+            A wavelet transform represents a signal as a coarse approximation plus details at several scales.
+            """
+        ),
+        code(
+            """
+            def reconstruct_1d_component(coeffs, keep_index, wavelet, length):
+                selected = []
+                for index, coeff in enumerate(coeffs):
+                    selected.append(coeff if index == keep_index else np.zeros_like(coeff))
+                return pywt.waverec(selected, wavelet=wavelet, mode="periodization")[:length]
+
+
+            n = 256
+            x = np.linspace(0, 1, n, endpoint=False)
+            signal = 0.35 + 0.45 * (x > 0.34) - 0.25 * (x > 0.68)
+            signal += 0.15 * np.sin(2 * np.pi * 6 * x) * ((x > 0.48) & (x < 0.9))
+            signal += 0.12 * np.exp(-((x - 0.16) / 0.035) ** 2)
+
+            coeffs_1d = pywt.wavedec(signal, wavelet="haar", level=3, mode="periodization")
+            approximation = reconstruct_1d_component(coeffs_1d, 0, "haar", n)
+            detail3 = reconstruct_1d_component(coeffs_1d, 1, "haar", n)
+            detail2 = reconstruct_1d_component(coeffs_1d, 2, "haar", n)
+            detail1 = reconstruct_1d_component(coeffs_1d, 3, "haar", n)
+
+            fig = make_subplots(rows=5, cols=1, shared_xaxes=True, subplot_titles=["signal", "A3 coarse approximation", "D3 detail", "D2 detail", "D1 detail"])
+            for row, (values, name) in enumerate(
+                [(signal, "signal"), (approximation, "A3"), (detail3, "D3"), (detail2, "D2"), (detail1, "D1")],
+                start=1,
+            ):
+                fig.add_trace(go.Scatter(x=x, y=values, mode="lines", name=name), row=row, col=1)
+            fig.update_layout(height=720, margin=dict(l=20, r=20, t=80, b=45), showlegend=False)
+            fig.show()
+
+            reconstruction = approximation + detail3 + detail2 + detail1
+            print("reconstruction RMSE:", rmse(reconstruction, signal))
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change the wavelet level. What changes when you use more or fewer scales?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            level = 4
+
+            coeffs_experiment = pywt.wavedec(signal, wavelet="haar", level=level, mode="periodization")
+            reconstructed = pywt.waverec(coeffs_experiment, wavelet="haar", mode="periodization")[:n]
+
+            print("number of coefficient groups:", len(coeffs_experiment))
+            print("coarsest approximation length:", len(coeffs_experiment[0]))
+            print("perfect reconstruction RMSE:", rmse(reconstructed, signal))
+            """
+        ),
+        md(
+            """
+            ### 3. 2D Wavelet Subbands
+
+            For images, wavelets produce a coarse approximation plus horizontal, vertical, and diagonal detail subbands.
+            """
+        ),
+        code(
+            """
+            image = data.camera().astype(float)[80:208, 128:256] / 255.0
+            coeffs_2d = pywt.wavedec2(image, wavelet="haar", level=2, mode="periodization")
+            coeff_array, coeff_slices = pywt.coeffs_to_array(coeffs_2d)
+            signed_log_coefficients = np.sign(coeff_array) * np.log1p(np.abs(coeff_array))
+
+            show_image_grid(
+                [image, signed_log_coefficients],
+                ["image patch", "signed log wavelet coefficients"],
+                colorscales=["Gray", "RdBu"],
+                height=460,
+            )
+
+            print("image shape:", image.shape)
+            print("coefficient array shape:", coeff_array.shape)
+            print("coefficient groups:", len(coeffs_2d))
+            """
+        ),
+        md(
+            """
+            ### 4. Coefficient Decay
+
+            A sparse representation has a few large coefficients and many small ones.
+            """
+        ),
+        code(
+            """
+            pixels = np.abs(image.ravel())
+            dct_values = np.abs(dctn(image, norm="ortho").ravel())
+            wavelet_values = np.abs(coeff_array.ravel())
+
+            fig = go.Figure()
+            for values, name in [(pixels, "pixels"), (dct_values, "DCT"), (wavelet_values, "wavelet")]:
+                sorted_values = np.sort(values)[::-1]
+                fig.add_trace(go.Scatter(y=sorted_values + 1e-8, mode="lines", name=name))
+            fig.update_layout(
+                title="Sorted coefficient magnitudes",
+                xaxis_title="sorted coefficient index",
+                yaxis_title="magnitude",
+                yaxis_type="log",
+                height=420,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### 5. Wavelet Compression
+
+            We keep only the largest wavelet coefficients and set the rest to zero.
+            """
+        ),
+        code(
+            """
+            fractions = [0.10, 0.03, 0.01]
+            reconstructions = []
+            titles = []
+            for fraction in fractions:
+                reconstruction, keep = wavelet_compress(image, fraction=fraction, wavelet="db2", level=3)
+                reconstructions.append(reconstruction)
+                titles.append(f"{100*fraction:.0f}% kept, RMSE={rmse(reconstruction, image):.3f}")
+
+            show_image_grid(
+                [image] + reconstructions,
+                ["original"] + titles,
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Change `keep_fraction` and `wavelet_name`.
+
+            Try `haar`, `db2`, or `sym4`.
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            keep_fraction = 0.02
+            wavelet_name = "db2"
+
+            compressed, keep = wavelet_compress(image, fraction=keep_fraction, wavelet=wavelet_name, level=3)
+            show_image_grid([image, compressed], ["original", f"{wavelet_name}, {100*keep_fraction:.1f}% kept"], height=400)
+
+            print("kept coefficients:", keep)
+            print("RMSE:", round(rmse(compressed, image), 4))
+            """
+        ),
+        md(
+            """
+            ### 6. Wavelet Threshold Denoising
+
+            Noise often creates many small detail coefficients. We threshold those details and reconstruct.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43511)
+            noisy = np.clip(image + 0.08 * rng.standard_normal(image.shape), 0.0, 1.0)
+            gaussian = np.clip(gaussian_filter(noisy, sigma=1.0, mode="reflect"), 0.0, 1.0)
+            wavelet_result, threshold = wavelet_denoise(noisy, wavelet="db2", level=3, threshold_scale=0.30)
+
+            show_image_grid(
+                [image, noisy, gaussian, wavelet_result],
+                [
+                    "original",
+                    f"noisy, RMSE={rmse(noisy, image):.3f}",
+                    f"Gaussian, RMSE={rmse(gaussian, image):.3f}",
+                    f"wavelet, RMSE={rmse(wavelet_result, image):.3f}",
+                ],
+                height=430,
+            )
+
+            print("threshold:", round(threshold, 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Change the threshold scale. What happens to noise and fine details?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            threshold_scale = 0.6
+
+            denoised, threshold = wavelet_denoise(noisy, wavelet="db2", level=3, threshold_scale=threshold_scale)
+
+            show_image_grid(
+                [noisy, denoised],
+                ["noisy", f"threshold scale={threshold_scale:g}"],
+                height=400,
+            )
+            print("threshold:", round(threshold, 4))
+            print("RMSE:", round(rmse(denoised, image), 4))
+            """
+        ),
+        md(
+            """
+            ### 7. Threshold Sweep
+
+            The denoising threshold controls the noise-detail tradeoff.
+            """
+        ),
+        code(
+            """
+            scales = [0.20, 0.30, 0.60]
+            sweep_images = [noisy]
+            sweep_titles = ["noisy"]
+            for scale in scales:
+                denoised, threshold = wavelet_denoise(noisy, wavelet="db2", level=3, threshold_scale=scale)
+                sweep_images.append(denoised)
+                sweep_titles.append(f"scale={scale:g}, RMSE={rmse(denoised, image):.3f}")
+
+            show_image_grid(sweep_images, sweep_titles, height=430)
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. How is a wavelet different from a Fourier mode?
+            2. What is the difference between an approximation coefficient and a detail coefficient?
+            3. Why are wavelet coefficients often sparse for images?
+            4. Why does denoising by thresholding involve a tradeoff?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 12 compares model-based and data-driven imaging: handcrafted priors such as TV and wavelets versus learned priors.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -4256,6 +4662,7 @@ def main() -> None:
     write_notebook("week08_total_variation.ipynb", week08_cells())
     write_notebook("week09_optimization_methods.ipynb", week09_cells())
     write_notebook("week10_sparse_reconstruction.ipynb", week10_cells())
+    write_notebook("week11_wavelets.ipynb", week11_cells())
 
 
 if __name__ == "__main__":

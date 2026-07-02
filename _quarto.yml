@@ -20,6 +20,7 @@ project:
     - slides/week-08-total-variation.qmd
     - slides/week-09-optimization-methods.qmd
     - slides/week-10-sparse-reconstruction.qmd
+    - slides/week-11-wavelets.qmd
     - project/index.qmd
 
 website:

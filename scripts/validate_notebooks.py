@@ -19,6 +19,7 @@ NOTEBOOKS = [
     ROOT / "notebooks" / "week08_total_variation.ipynb",
     ROOT / "notebooks" / "week09_optimization_methods.ipynb",
     ROOT / "notebooks" / "week10_sparse_reconstruction.ipynb",
+    ROOT / "notebooks" / "week11_wavelets.ipynb",
 ]
 OUTPUT_DIR = Path("/private/tmp/math435-notebook-validation")
 
