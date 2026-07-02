@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Fourier Transform in Imaging – MATH 435: Mathematical Imaging</title>
+<title>Noise Models and Likelihoods – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="../book/week-03-fourier-imaging.html">3. Fourier transform in imaging</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">4. Noise models and likelihoods</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -253,7 +253,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-03-fourier-imaging.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-03-fourier-imaging.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Fourier transform in imaging</span></a>
   </div>
 </li>
@@ -270,7 +270,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-04-noise-likelihood.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-04-noise-likelihood.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">4. Noise models and likelihoods</span></a>
   </div>
 </li>
@@ -299,29 +299,30 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#the-big-idea" id="toc-the-big-idea" class="nav-link" data-scroll-target="#the-big-idea">The Big Idea</a></li>
-  <li><a href="#one-dimensional-frequencies" id="toc-one-dimensional-frequencies" class="nav-link" data-scroll-target="#one-dimensional-frequencies">One-Dimensional Frequencies</a></li>
-  <li><a href="#the-discrete-fourier-transform" id="toc-the-discrete-fourier-transform" class="nav-link" data-scroll-target="#the-discrete-fourier-transform">The Discrete Fourier Transform</a></li>
-  <li><a href="#two-dimensional-fourier-transform" id="toc-two-dimensional-fourier-transform" class="nav-link" data-scroll-target="#two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</a></li>
-  <li><a href="#reading-a-spectrum" id="toc-reading-a-spectrum" class="nav-link" data-scroll-target="#reading-a-spectrum">Reading A Spectrum</a></li>
-  <li><a href="#magnitude-and-phase" id="toc-magnitude-and-phase" class="nav-link" data-scroll-target="#magnitude-and-phase">Magnitude And Phase</a></li>
-  <li><a href="#the-convolution-theorem" id="toc-the-convolution-theorem" class="nav-link" data-scroll-target="#the-convolution-theorem">The Convolution Theorem</a></li>
-  <li><a href="#blur-in-frequency-space" id="toc-blur-in-frequency-space" class="nav-link" data-scroll-target="#blur-in-frequency-space">Blur In Frequency Space</a></li>
-  <li><a href="#low-pass-and-high-pass-filtering" id="toc-low-pass-and-high-pass-filtering" class="nav-link" data-scroll-target="#low-pass-and-high-pass-filtering">Low-Pass And High-Pass Filtering</a></li>
-  <li><a href="#why-inverse-filtering-is-dangerous" id="toc-why-inverse-filtering-is-dangerous" class="nav-link" data-scroll-target="#why-inverse-filtering-is-dangerous">Why Inverse Filtering Is Dangerous</a></li>
+  <li><a href="#why-noise-models-matter" id="toc-why-noise-models-matter" class="nav-link" data-scroll-target="#why-noise-models-matter">Why Noise Models Matter</a></li>
+  <li><a href="#seeing-noise-before-modeling-it" id="toc-seeing-noise-before-modeling-it" class="nav-link" data-scroll-target="#seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</a></li>
+  <li><a href="#gaussian-noise" id="toc-gaussian-noise" class="nav-link" data-scroll-target="#gaussian-noise">Gaussian Noise</a></li>
+  <li><a href="#gaussian-data-fidelity" id="toc-gaussian-data-fidelity" class="nav-link" data-scroll-target="#gaussian-data-fidelity">Gaussian Data Fidelity</a></li>
+  <li><a href="#gaussian-limitations" id="toc-gaussian-limitations" class="nav-link" data-scroll-target="#gaussian-limitations">Gaussian Limitations</a></li>
+  <li><a href="#poisson-noise" id="toc-poisson-noise" class="nav-link" data-scroll-target="#poisson-noise">Poisson Noise</a></li>
+  <li><a href="#from-counts-to-intensities" id="toc-from-counts-to-intensities" class="nav-link" data-scroll-target="#from-counts-to-intensities">From Counts To Intensities</a></li>
+  <li><a href="#poisson-likelihood" id="toc-poisson-likelihood" class="nav-link" data-scroll-target="#poisson-likelihood">Poisson Likelihood</a></li>
+  <li><a href="#gaussian-versus-poisson" id="toc-gaussian-versus-poisson" class="nav-link" data-scroll-target="#gaussian-versus-poisson">Gaussian Versus Poisson</a></li>
+  <li><a href="#repeated-measurements" id="toc-repeated-measurements" class="nav-link" data-scroll-target="#repeated-measurements">Repeated Measurements</a></li>
+  <li><a href="#from-likelihood-to-reconstruction" id="toc-from-likelihood-to-reconstruction" class="nav-link" data-scroll-target="#from-likelihood-to-reconstruction">From Likelihood To Reconstruction</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-03-fourier-imaging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-04-noise-likelihood.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="../book/week-03-fourier-imaging.html">3. Fourier transform in imaging</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">4. Noise models and likelihoods</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Fourier Transform in Imaging</h1>
-<p class="subtitle lead">Chapter 3</p>
+<h1 class="title">Noise Models and Likelihoods</h1>
+<p class="subtitle lead">Chapter 4</p>
 </div>
 
 
@@ -338,178 +339,298 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-03-fourier-imaging.html">Slides</a> | <a href="../notebooks/week03_fourier_imaging.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-04-noise-likelihood.html">Slides</a> | <a href="../notebooks/week04_noise_likelihood.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>interpret a signal as a sum of oscillations;</li>
-<li>read a 2D Fourier magnitude spectrum;</li>
-<li>distinguish Fourier magnitude and phase;</li>
-<li>state the convolution theorem;</li>
-<li>explain blur and inverse filtering in the frequency domain.</li>
+<li>distinguish deterministic degradation from random noise;</li>
+<li>model additive Gaussian noise;</li>
+<li>model photon-counting Poisson noise;</li>
+<li>compare absolute and relative noise behavior;</li>
+<li>derive likelihood-based data terms for reconstruction.</li>
 </ul>
 </section>
-<section id="the-big-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-big-idea">The Big Idea</h2>
-<p>Fourier analysis rewrites a signal or image as a combination of oscillations.</p>
-<p>Low frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.</p>
-<p>For imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.</p>
-</section>
-<section id="one-dimensional-frequencies" class="level2">
-<h2 class="anchored" data-anchor-id="one-dimensional-frequencies">One-Dimensional Frequencies</h2>
-<p>A basic length-<span class="math inline">N</span> oscillation is</p>
+<section id="why-noise-models-matter" class="level2">
+<h2 class="anchored" data-anchor-id="why-noise-models-matter">Why Noise Models Matter</h2>
+<p>In the first chapters we wrote idealized forward models such as blur or Fourier filtering. Real measurements also contain random variation.</p>
+<p>A common observation model is</p>
 <p><span class="math display">
-s_k[n] = \sin(2\pi k n/N).
+y = f(x) + \eta,
 </span></p>
-<p>The integer <span class="math inline">k</span> is the frequency index. A larger <span class="math inline">k</span> means more oscillations over the same interval.</p>
+<p>where <span class="math inline">x</span> is the unknown scene or image, <span class="math inline">f</span> is the forward imaging process, <span class="math inline">y</span> is the recorded data, and <span class="math inline">\eta</span> is noise.</p>
+<p>When the forward model is linear, this becomes</p>
+<p><span class="math display">
+y = Ax + \eta.
+</span></p>
+<p>Linearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace <span class="math inline">Ax</span> by a general prediction <span class="math inline">f(x)</span>.</p>
+</section>
+<section id="seeing-noise-before-modeling-it" class="level2">
+<h2 class="anchored" data-anchor-id="seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</h2>
+<p>The same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.</p>
 <div class="figure">
-<p><img src="../assets/figures/week03-1d-frequencies.png" class="img-fluid" alt="Low frequency sine, high frequency sine, their sum, and Fourier magnitude"></p>
-<p>The Fourier magnitude reveals which oscillations are present.</p>
+<p><img src="../assets/figures/week04-noise-models.png" class="img-fluid" alt="Clean image, Gaussian noisy image, low-light Poisson noisy image, and higher-photon Poisson noisy image"></p>
+<p>Different noise models create different visual artifacts.</p>
 </div>
-</section>
-<section id="the-discrete-fourier-transform" class="level2">
-<h2 class="anchored" data-anchor-id="the-discrete-fourier-transform">The Discrete Fourier Transform</h2>
-<p>For a length-<span class="math inline">N</span> signal <span class="math inline">x</span>, the discrete Fourier transform is</p>
-<p><span class="math display">
-\widehat{x}[k]
-=
-\sum_{n=0}^{N-1}
-x[n]e^{-2\pi i kn/N}.
-</span></p>
-<p>Each coefficient <span class="math inline">\widehat{x}[k]</span> measures how much frequency <span class="math inline">k</span> is present.</p>
-<p>Fourier coefficients are complex:</p>
-<p><span class="math display">
-\widehat{x}[k] = a_k + i b_k.
-</span></p>
-<p>Their magnitude and phase are</p>
-<p><span class="math display">
-|\widehat{x}[k]|
-\qquad\text{and}\qquad
-\arg(\widehat{x}[k]).
-</span></p>
-<p>Magnitude measures strength. Phase measures alignment.</p>
-</section>
-<section id="two-dimensional-fourier-transform" class="level2">
-<h2 class="anchored" data-anchor-id="two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</h2>
-<p>For an image <span class="math inline">x[m,n]</span>, the 2D Fourier transform uses horizontal and vertical frequency indices:</p>
-<p><span class="math display">
-\widehat{x}[u,v]
-=
-\sum_{m,n}
-x[m,n]e^{-2\pi i(um/M+vn/N)}.
-</span></p>
-<p>The coefficient <span class="math inline">\widehat{x}[u,v]</span> measures an oscillation with horizontal frequency <span class="math inline">u</span> and vertical frequency <span class="math inline">v</span>.</p>
-<div class="figure">
-<p><img src="../assets/figures/week03-image-spectrum.png" class="img-fluid" alt="Real image and centered log Fourier magnitude"></p>
-<p>The centered log magnitude is a common way to display an image spectrum.</p>
-</div>
-</section>
-<section id="reading-a-spectrum" class="level2">
-<h2 class="anchored" data-anchor-id="reading-a-spectrum">Reading A Spectrum</h2>
-<p>In a centered spectrum:</p>
+<p>For a pixel <span class="math inline">i</span>, the recorded value <span class="math inline">y_i</span> is a random variable. A noise model specifies the probability law of <span class="math inline">y_i</span> when the unknown true value is <span class="math inline">x_i</span>.</p>
+<p>A useful noise model answers:</p>
 <ul>
-<li>the center corresponds to zero frequency and slow variation;</li>
-<li>points far from the center correspond to fine oscillations;</li>
-<li>direction in the spectrum corresponds to orientation in the image.</li>
+<li>what recorded values are likely;</li>
+<li>how large typical errors are;</li>
+<li>whether the variance depends on intensity;</li>
+<li>what cost should penalize disagreement with data.</li>
 </ul>
-<p>Strong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.</p>
 </section>
-<section id="magnitude-and-phase" class="level2">
-<h2 class="anchored" data-anchor-id="magnitude-and-phase">Magnitude And Phase</h2>
-<p>Every Fourier coefficient can be written as</p>
+<section id="gaussian-noise" class="level2">
+<h2 class="anchored" data-anchor-id="gaussian-noise">Gaussian Noise</h2>
+<p>The simplest model is additive Gaussian noise:</p>
 <p><span class="math display">
-\widehat{x}[u,v]
-=
-|\widehat{x}[u,v]|e^{i\phi[u,v]}.
+y_i = x_i + \eta_i,
+\qquad
+\eta_i \sim \mathcal{N}(0,\sigma^2).
 </span></p>
-<p>Magnitude says how much of a frequency is present. Phase says where that frequency is aligned.</p>
+<p>The parameter <span class="math inline">\sigma</span> is the standard deviation of the noise. Under this model,</p>
+<p><span class="math display">
+\mathbb{E}[y_i\mid x_i] = x_i,
+\qquad
+\mathrm{Var}(y_i\mid x_i)=\sigma^2.
+</span></p>
+<p>The variance is constant: it does not depend on <span class="math inline">x_i</span>.</p>
 <div class="figure">
-<p><img src="../assets/figures/week03-magnitude-phase.png" class="img-fluid" alt="Original image, Fourier magnitude, magnitude-only reconstruction, and phase-only reconstruction"></p>
-<p>Phase carries much of the recognizable geometry of an image.</p>
+<p><img src="../assets/figures/week04-noise-histograms.png" class="img-fluid" alt="Histogram of Gaussian residuals and histograms of Poisson counts for several intensities"></p>
+<p>Gaussian residuals are centered and symmetric, while Poisson counts change shape with intensity.</p>
 </div>
-<p>Magnitude is visually important, but phase is often crucial for the location of edges and structures.</p>
-</section>
-<section id="the-convolution-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="the-convolution-theorem">The Convolution Theorem</h2>
-<p>The reason Fourier analysis is central to imaging is the convolution theorem:</p>
+<p>For one pixel,</p>
 <p><span class="math display">
-\widehat{h*x}[u,v]
+p(y_i\mid x_i)
 =
-\widehat{h}[u,v]\widehat{x}[u,v].
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(
+-\frac{(y_i-x_i)^2}{2\sigma^2}
+\right).
 </span></p>
-<p>Convolution in the image domain becomes multiplication in the Fourier domain.</p>
+<p>If pixel errors are independent, then</p>
+<p><span class="math display">
+p(y\mid x)=\prod_i p(y_i\mid x_i).
+</span></p>
+<p>Taking negative logarithms gives</p>
+<p><span class="math display">
+-\log p(y\mid x)
+=
+\frac{1}{2\sigma^2}\sum_i (y_i-x_i)^2
++ \text{constant}.
+</span></p>
+<p>Thus Gaussian noise leads naturally to least squares.</p>
+</section>
+<section id="gaussian-data-fidelity" class="level2">
+<h2 class="anchored" data-anchor-id="gaussian-data-fidelity">Gaussian Data Fidelity</h2>
+<p>For direct observation <span class="math inline">y=x+\eta</span>, maximum likelihood gives</p>
+<p><span class="math display">
+\operatorname*{argmin}_x
+\frac{1}{2}\|y-x\|_2^2
+= y.
+</span></p>
+<p>For a linear forward model</p>
+<p><span class="math display">
+y = Ax + \eta,
+\qquad
+\eta\sim\mathcal{N}(0,\sigma^2 I),
+</span></p>
+<p>the Gaussian negative log-likelihood is</p>
+<p><span class="math display">
+\frac{1}{2\sigma^2}\|Ax-y\|_2^2.
+</span></p>
+<p>For a general nonlinear forward model</p>
+<p><span class="math display">
+y = f(x)+\eta,
+</span></p>
+<p>the corresponding Gaussian data term is</p>
+<p><span class="math display">
+\frac{1}{2\sigma^2}\|f(x)-y\|_2^2.
+</span></p>
+<p>The squared error is therefore not just a convenient algebraic choice. It is the data fidelity term associated with a particular statistical assumption.</p>
+</section>
+<section id="gaussian-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="gaussian-limitations">Gaussian Limitations</h2>
+<p>Gaussian noise is useful and mathematically friendly, but it is not always physically faithful. An additive Gaussian model can produce negative intensities or values above the sensor maximum. In practice we often clip values, but clipping changes the statistical model.</p>
+<p>This is a general lesson: a simple model can be useful without being literally complete.</p>
+</section>
+<section id="poisson-noise" class="level2">
+<h2 class="anchored" data-anchor-id="poisson-noise">Poisson Noise</h2>
+<p>Light arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.</p>
+<p>Let <span class="math inline">z_i</span> be the photon count at pixel <span class="math inline">i</span>:</p>
+<p><span class="math display">
+z_i \sim \operatorname{Poisson}(\lambda_i).
+</span></p>
+<p>The Poisson law is</p>
+<p><span class="math display">
+\mathbb{P}(z_i=k\mid \lambda_i)
+= e^{-\lambda_i}\frac{\lambda_i^k}{k!}.
+</span></p>
+<p>For a Poisson random variable,</p>
+<p><span class="math display">
+\mathbb{E}[z_i]=\lambda_i,
+\qquad
+\mathrm{Var}(z_i)=\lambda_i.
+</span></p>
+<p>The standard deviation is <span class="math inline">\sqrt{\lambda_i}</span>. Absolute noise increases with brightness, but relative noise decreases:</p>
+<p><span class="math display">
+\frac{\sqrt{\lambda_i}}{\lambda_i}
+=
+\frac{1}{\sqrt{\lambda_i}}.
+</span></p>
+<p>This is why low-light imaging is difficult. A pixel receiving 5 photons is much less reliable, relatively speaking, than a pixel receiving 500 photons.</p>
+<div class="figure">
+<p><img src="../assets/figures/week04-snr-curves.png" class="img-fluid" alt="Gaussian and Poisson signal-to-noise ratio curves"></p>
+<p>Signal-to-noise behavior depends strongly on the noise model.</p>
+</div>
+</section>
+<section id="from-counts-to-intensities" class="level2">
+<h2 class="anchored" data-anchor-id="from-counts-to-intensities">From Counts To Intensities</h2>
+<p>Digital images often store normalized intensities in <span class="math inline">[0,1]</span>. If <span class="math inline">\alpha</span> is the maximum expected photon count, a simple count model is</p>
+<p><span class="math display">
+z_i \sim \operatorname{Poisson}(\alpha x_i),
+\qquad
+y_i = z_i/\alpha.
+</span></p>
+<p>The normalized value <span class="math inline">y_i</span> is still random. Increasing exposure increases <span class="math inline">\alpha</span>, which improves relative precision when the model is valid.</p>
+</section>
+<section id="poisson-likelihood" class="level2">
+<h2 class="anchored" data-anchor-id="poisson-likelihood">Poisson Likelihood</h2>
+<p>For independent photon counts,</p>
+<p><span class="math display">
+p(z\mid x)
+=
+\prod_i
+e^{-\alpha x_i}
+\frac{(\alpha x_i)^{z_i}}{z_i!}.
+</span></p>
+<p>Ignoring constants independent of <span class="math inline">x</span>,</p>
+<p><span class="math display">
+-\log p(z\mid x)
+=
+\sum_i
+\alpha x_i - z_i\log(\alpha x_i).
+</span></p>
+<p>For a general positive forward model <span class="math inline">f_i(x)&gt;0</span>,</p>
+<p><span class="math display">
+z_i \sim \operatorname{Poisson}(f_i(x))
+</span></p>
+<p>and</p>
+<p><span class="math display">
+-\log p(z\mid x)
+=
+\sum_i f_i(x) - z_i\log(f_i(x))
++ \text{constant}.
+</span></p>
+<p>This is not a least-squares data term.</p>
+<div class="figure">
+<p><img src="../assets/figures/week04-likelihood-curves.png" class="img-fluid" alt="Gaussian and Poisson negative log-likelihood curves for one pixel"></p>
+<p>Likelihood curves encode how each model penalizes disagreement with the data.</p>
+</div>
+</section>
+<section id="gaussian-versus-poisson" class="level2">
+<h2 class="anchored" data-anchor-id="gaussian-versus-poisson">Gaussian Versus Poisson</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Gaussian</th>
+<th>Poisson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data type</td>
+<td>continuous intensity</td>
+<td>integer counts</td>
+</tr>
+<tr class="even">
+<td>Variance</td>
+<td>constant <span class="math inline">\sigma^2</span></td>
+<td>equals mean</td>
+</tr>
+<tr class="odd">
+<td>Typical fidelity</td>
+<td>squared error</td>
+<td>count likelihood</td>
+</tr>
+<tr class="even">
+<td>Natural for</td>
+<td>read noise, aggregate errors</td>
+<td>photon-limited imaging</td>
+</tr>
+<tr class="odd">
+<td>Constraint</td>
+<td>often unconstrained</td>
+<td>positive mean</td>
+</tr>
+</tbody>
+</table>
+<p>The choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.</p>
+</section>
+<section id="repeated-measurements" class="level2">
+<h2 class="anchored" data-anchor-id="repeated-measurements">Repeated Measurements</h2>
 <p>If</p>
 <p><span class="math display">
-y = h*x,
+y^{(j)} = x + \eta^{(j)},
+\qquad
+\eta^{(j)}\sim\mathcal{N}(0,\sigma^2),
 </span></p>
-<p>then</p>
+<p>and the noise samples are independent, then the average</p>
 <p><span class="math display">
-\widehat{y} = \widehat{h}\,\widehat{x}.
+\bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
 </span></p>
+<p>has noise standard deviation <span class="math inline">\sigma/\sqrt{m}</span>.</p>
+<div class="figure">
+<p><img src="../assets/figures/week04-averaging.png" class="img-fluid" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"></p>
+<p>Independent random noise can average out.</p>
+</div>
+<p>Averaging cannot recover information that never reached the sensor. If scene content is physically hidden behind an occluder, repeated photographs from the same viewpoint do not reveal the hidden object. This is different from reducing random fluctuations in recorded pixels.</p>
 </section>
-<section id="blur-in-frequency-space" class="level2">
-<h2 class="anchored" data-anchor-id="blur-in-frequency-space">Blur In Frequency Space</h2>
-<p>A blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means</p>
+<section id="from-likelihood-to-reconstruction" class="level2">
+<h2 class="anchored" data-anchor-id="from-likelihood-to-reconstruction">From Likelihood To Reconstruction</h2>
+<p>Given data <span class="math inline">y</span>, maximum likelihood estimates <span class="math inline">x</span> by</p>
 <p><span class="math display">
-|\widehat{y}[u,v]|
-=
-|\widehat{h}[u,v]|\ |\widehat{x}[u,v]|
+\operatorname*{argmax}_x p(y\mid x),
 </span></p>
-<p>is much smaller where <span class="math inline">|\widehat{h}[u,v]|</span> is small.</p>
-<div class="figure">
-<p><img src="../assets/figures/week03-convolution-theorem.png" class="img-fluid" alt="Convolution theorem for a blurred signal or image"></p>
-<p>Blur is easier to analyze after the Fourier transform because frequencies are multiplied independently.</p>
-</div>
-</section>
-<section id="low-pass-and-high-pass-filtering" class="level2">
-<h2 class="anchored" data-anchor-id="low-pass-and-high-pass-filtering">Low-Pass And High-Pass Filtering</h2>
-<p>A low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.</p>
-<div class="figure">
-<p><img src="../assets/figures/week03-low-high-pass.png" class="img-fluid" alt="Low-pass and high-pass Fourier filtering on an image"></p>
-<p>Frequency filtering gives direct control over coarse and fine image components.</p>
-</div>
-</section>
-<section id="why-inverse-filtering-is-dangerous" class="level2">
-<h2 class="anchored" data-anchor-id="why-inverse-filtering-is-dangerous">Why Inverse Filtering Is Dangerous</h2>
-<p>If <span class="math inline">\widehat{h}[u,v]</span> is nonzero, a formal inverse filter would use</p>
+<p>or equivalently</p>
 <p><span class="math display">
-\widehat{x}[u,v]
-=
-\frac{\widehat{y}[u,v]}{\widehat{h}[u,v]}.
+\operatorname*{argmin}_x -\log p(y\mid x).
 </span></p>
-<p>But when <span class="math inline">|\widehat{h}[u,v]|</span> is small, division by <span class="math inline">\widehat{h}</span> amplifies noise.</p>
-<div class="figure">
-<p><img src="../assets/figures/week03-inverse-filtering.png" class="img-fluid" alt="Inverse filtering with noise amplification"></p>
-<p>Inverse filtering recovers some detail but can amplify noise dramatically.</p>
-</div>
-<p>This frequency-domain view explains why regularization will be necessary in later chapters.</p>
+<p>Maximum likelihood uses the data model, but it is often not enough. In inverse problems, many images may agree almost equally well with noisy data.</p>
+<p>A common regularized reconstruction form is</p>
+<p><span class="math display">
+\operatorname*{argmin}_x
+D(y,f(x)) + \lambda R(x).
+</span></p>
+<p>Here <span class="math inline">D</span> is the data fidelity term from the noise model, and <span class="math inline">R</span> is a regularizer encoding prior information or desired structure.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.</p>
+<p>The Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week03_fourier_imaging.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week04_noise_likelihood.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>For <span class="math inline">x[n]=\sin(2\pi 5n/N)+0.5\sin(2\pi 20n/N)</span>, where should the Fourier magnitude be large?</li>
-<li>In a centered 2D spectrum, what does the center represent?</li>
-<li>Which carries more geometric information in a natural image: magnitude or phase?</li>
-<li>Use the convolution theorem to explain why blur attenuates high frequencies.</li>
-<li>Explain why inverse filtering amplifies noise.</li>
+<li>For <span class="math inline">y_i=x_i+\eta_i</span> with <span class="math inline">\eta_i\sim\mathcal{N}(0,\sigma^2)</span>, compute <span class="math inline">\mathbb{E}[y_i\mid x_i]</span> and <span class="math inline">\mathrm{Var}(y_i\mid x_i)</span>.</li>
+<li>For a Poisson pixel with expected count <span class="math inline">\lambda=25</span>, compute the standard deviation and approximate SNR.</li>
+<li>Explain why Poisson relative noise improves as the photon count increases.</li>
+<li>Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.</li>
+<li>Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Fourier analysis represents images using oscillations.</li>
-<li>Low frequencies describe coarse structure; high frequencies describe fine detail.</li>
-<li>Fourier coefficients have magnitude and phase.</li>
-<li>Convolution becomes multiplication in the Fourier domain.</li>
-<li>Blur suppresses frequencies, and inverse filtering can amplify noise.</li>
+<li>Noise models connect physical measurement assumptions to mathematical data terms.</li>
+<li>Gaussian additive noise leads to squared-error fidelity.</li>
+<li>Poisson photon-counting noise has variance equal to its mean.</li>
+<li>Low-light images are difficult because relative photon noise is high.</li>
+<li>Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.</li>
 </ul>
 
 
@@ -924,7 +1045,7 @@ y = h*x,
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-03-fourier-imaging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-04-noise-likelihood.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

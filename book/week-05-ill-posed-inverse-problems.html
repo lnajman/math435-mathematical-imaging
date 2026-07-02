@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Fourier Transform in Imaging – MATH 435: Mathematical Imaging</title>
+<title>Ill-Posed Inverse Problems – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -204,7 +204,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="../book/week-03-fourier-imaging.html">3. Fourier transform in imaging</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-05-ill-posed-inverse-problems.html">5. Ill-posed inverse problems</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -253,7 +253,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-03-fourier-imaging.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-03-fourier-imaging.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3. Fourier transform in imaging</span></a>
   </div>
 </li>
@@ -276,7 +276,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-05-ill-posed-inverse-problems.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/week-05-ill-posed-inverse-problems.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">5. Ill-posed inverse problems</span></a>
   </div>
 </li>
@@ -299,29 +299,32 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#the-big-idea" id="toc-the-big-idea" class="nav-link" data-scroll-target="#the-big-idea">The Big Idea</a></li>
-  <li><a href="#one-dimensional-frequencies" id="toc-one-dimensional-frequencies" class="nav-link" data-scroll-target="#one-dimensional-frequencies">One-Dimensional Frequencies</a></li>
-  <li><a href="#the-discrete-fourier-transform" id="toc-the-discrete-fourier-transform" class="nav-link" data-scroll-target="#the-discrete-fourier-transform">The Discrete Fourier Transform</a></li>
-  <li><a href="#two-dimensional-fourier-transform" id="toc-two-dimensional-fourier-transform" class="nav-link" data-scroll-target="#two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</a></li>
-  <li><a href="#reading-a-spectrum" id="toc-reading-a-spectrum" class="nav-link" data-scroll-target="#reading-a-spectrum">Reading A Spectrum</a></li>
-  <li><a href="#magnitude-and-phase" id="toc-magnitude-and-phase" class="nav-link" data-scroll-target="#magnitude-and-phase">Magnitude And Phase</a></li>
-  <li><a href="#the-convolution-theorem" id="toc-the-convolution-theorem" class="nav-link" data-scroll-target="#the-convolution-theorem">The Convolution Theorem</a></li>
-  <li><a href="#blur-in-frequency-space" id="toc-blur-in-frequency-space" class="nav-link" data-scroll-target="#blur-in-frequency-space">Blur In Frequency Space</a></li>
-  <li><a href="#low-pass-and-high-pass-filtering" id="toc-low-pass-and-high-pass-filtering" class="nav-link" data-scroll-target="#low-pass-and-high-pass-filtering">Low-Pass And High-Pass Filtering</a></li>
-  <li><a href="#why-inverse-filtering-is-dangerous" id="toc-why-inverse-filtering-is-dangerous" class="nav-link" data-scroll-target="#why-inverse-filtering-is-dangerous">Why Inverse Filtering Is Dangerous</a></li>
+  <li><a href="#the-inverse-problem" id="toc-the-inverse-problem" class="nav-link" data-scroll-target="#the-inverse-problem">The Inverse Problem</a></li>
+  <li><a href="#hadamard-well-posedness" id="toc-hadamard-well-posedness" class="nav-link" data-scroll-target="#hadamard-well-posedness">Hadamard Well-Posedness</a></li>
+  <li><a href="#existence" id="toc-existence" class="nav-link" data-scroll-target="#existence">Existence</a></li>
+  <li><a href="#non-uniqueness" id="toc-non-uniqueness" class="nav-link" data-scroll-target="#non-uniqueness">Non-Uniqueness</a></li>
+  <li><a href="#masking-versus-occlusion" id="toc-masking-versus-occlusion" class="nav-link" data-scroll-target="#masking-versus-occlusion">Masking Versus Occlusion</a></li>
+  <li><a href="#nullspace-language" id="toc-nullspace-language" class="nav-link" data-scroll-target="#nullspace-language">Nullspace Language</a></li>
+  <li><a href="#stability" id="toc-stability" class="nav-link" data-scroll-target="#stability">Stability</a></li>
+  <li><a href="#imaging-instability" id="toc-imaging-instability" class="nav-link" data-scroll-target="#imaging-instability">Imaging Instability</a></li>
+  <li><a href="#singular-values" id="toc-singular-values" class="nav-link" data-scroll-target="#singular-values">Singular Values</a></li>
+  <li><a href="#inverting-in-svd-coordinates" id="toc-inverting-in-svd-coordinates" class="nav-link" data-scroll-target="#inverting-in-svd-coordinates">Inverting In SVD Coordinates</a></li>
+  <li><a href="#reading-singular-value-plots" id="toc-reading-singular-value-plots" class="nav-link" data-scroll-target="#reading-singular-value-plots">Reading Singular-Value Plots</a></li>
+  <li><a href="#condition-number" id="toc-condition-number" class="nav-link" data-scroll-target="#condition-number">Condition Number</a></li>
+  <li><a href="#stabilization-idea" id="toc-stabilization-idea" class="nav-link" data-scroll-target="#stabilization-idea">Stabilization Idea</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-03-fourier-imaging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-05-ill-posed-inverse-problems.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="../book/week-03-fourier-imaging.html">3. Fourier transform in imaging</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-04-noise-likelihood.html">Part II: Noise and Regularization</a></li><li class="breadcrumb-item"><a href="../book/week-05-ill-posed-inverse-problems.html">5. Ill-posed inverse problems</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Fourier Transform in Imaging</h1>
-<p class="subtitle lead">Chapter 3</p>
+<h1 class="title">Ill-Posed Inverse Problems</h1>
+<p class="subtitle lead">Chapter 5</p>
 </div>
 
 
@@ -338,178 +341,279 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-03-fourier-imaging.html">Slides</a> | <a href="../notebooks/week03_fourier_imaging.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb">Open in Colab</a></p>
+<p><a href="../slides/week-05-ill-posed-inverse-problems.html">Slides</a> | <a href="../notebooks/week05_ill_posed_inverse_problems.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb">Open in Colab</a></p>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>interpret a signal as a sum of oscillations;</li>
-<li>read a 2D Fourier magnitude spectrum;</li>
-<li>distinguish Fourier magnitude and phase;</li>
-<li>state the convolution theorem;</li>
-<li>explain blur and inverse filtering in the frequency domain.</li>
+<li>state Hadamard’s three conditions for well-posedness;</li>
+<li>identify non-uniqueness in missing-data imaging;</li>
+<li>distinguish missing recorded pixels from physical occlusion;</li>
+<li>explain stability and instability;</li>
+<li>interpret small singular values as noise-amplifying directions.</li>
 </ul>
 </section>
-<section id="the-big-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-big-idea">The Big Idea</h2>
-<p>Fourier analysis rewrites a signal or image as a combination of oscillations.</p>
-<p>Low frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.</p>
-<p>For imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.</p>
-</section>
-<section id="one-dimensional-frequencies" class="level2">
-<h2 class="anchored" data-anchor-id="one-dimensional-frequencies">One-Dimensional Frequencies</h2>
-<p>A basic length-<span class="math inline">N</span> oscillation is</p>
+<section id="the-inverse-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-inverse-problem">The Inverse Problem</h2>
+<p>A forward problem maps a cause to an effect:</p>
 <p><span class="math display">
-s_k[n] = \sin(2\pi k n/N).
+x \longmapsto y = f(x).
 </span></p>
-<p>The integer <span class="math inline">k</span> is the frequency index. A larger <span class="math inline">k</span> means more oscillations over the same interval.</p>
+<p>An inverse problem asks us to recover a cause from an observed effect:</p>
+<p><span class="math display">
+y \longmapsto x.
+</span></p>
+<p>In imaging, <span class="math inline">x</span> may be an unknown image or scene, and <span class="math inline">y</span> may be a blurred, noisy, incomplete, or transformed measurement.</p>
+<p>When the imaging model is linear, we write</p>
+<p><span class="math display">
+y = Ax.
+</span></p>
+<p>Linear models include idealized blur, Fourier sampling, and recorded-pixel selection after image formation. But physical scene occlusion is different: hidden content may never reach the sensor, so the inverse problem is not simply “undoing a linear operator.”</p>
+</section>
+<section id="hadamard-well-posedness" class="level2">
+<h2 class="anchored" data-anchor-id="hadamard-well-posedness">Hadamard Well-Posedness</h2>
+<p>Hadamard called a problem well posed if three conditions hold:</p>
 <div class="figure">
-<p><img src="../assets/figures/week03-1d-frequencies.png" class="img-fluid" alt="Low frequency sine, high frequency sine, their sum, and Fourier magnitude"></p>
-<p>The Fourier magnitude reveals which oscillations are present.</p>
+<p><img src="../assets/figures/week05-hadamard-checks.png" class="img-fluid" alt="Existence, uniqueness, and stability as the three Hadamard conditions"></p>
+<p>Existence, uniqueness, and stability are three different ways an inverse problem can fail.</p>
 </div>
+<p>The three questions are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Condition</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Existence</td>
+<td>Does at least one solution fit the data?</td>
+</tr>
+<tr class="even">
+<td>Uniqueness</td>
+<td>Is there only one such solution?</td>
+</tr>
+<tr class="odd">
+<td>Stability</td>
+<td>Do small data errors cause small solution errors?</td>
+</tr>
+</tbody>
+</table>
+<p>A well-posed problem may still be computationally expensive. An ill-posed problem may be small and fast but mathematically unreliable.</p>
+<p>Well-posedness is about the behavior of the map from data to solution.</p>
 </section>
-<section id="the-discrete-fourier-transform" class="level2">
-<h2 class="anchored" data-anchor-id="the-discrete-fourier-transform">The Discrete Fourier Transform</h2>
-<p>For a length-<span class="math inline">N</span> signal <span class="math inline">x</span>, the discrete Fourier transform is</p>
-<p><span class="math display">
-\widehat{x}[k]
-=
-\sum_{n=0}^{N-1}
-x[n]e^{-2\pi i kn/N}.
-</span></p>
-<p>Each coefficient <span class="math inline">\widehat{x}[k]</span> measures how much frequency <span class="math inline">k</span> is present.</p>
-<p>Fourier coefficients are complex:</p>
-<p><span class="math display">
-\widehat{x}[k] = a_k + i b_k.
-</span></p>
-<p>Their magnitude and phase are</p>
-<p><span class="math display">
-|\widehat{x}[k]|
-\qquad\text{and}\qquad
-\arg(\widehat{x}[k]).
-</span></p>
-<p>Magnitude measures strength. Phase measures alignment.</p>
+<section id="existence" class="level2">
+<h2 class="anchored" data-anchor-id="existence">Existence</h2>
+<p>Existence can fail when the data are inconsistent with the model. For example, suppose a model claims that all measured intensities must be nonnegative and below one, but the data contain values outside that range. Or suppose we demand exact agreement with noisy measurements that no model image can produce.</p>
+<p>In practice, noise and model error often make exact existence too strict. This is one reason reconstruction methods use data fidelity terms rather than exact constraints.</p>
 </section>
-<section id="two-dimensional-fourier-transform" class="level2">
-<h2 class="anchored" data-anchor-id="two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</h2>
-<p>For an image <span class="math inline">x[m,n]</span>, the 2D Fourier transform uses horizontal and vertical frequency indices:</p>
-<p><span class="math display">
-\widehat{x}[u,v]
-=
-\sum_{m,n}
-x[m,n]e^{-2\pi i(um/M+vn/N)}.
-</span></p>
-<p>The coefficient <span class="math inline">\widehat{x}[u,v]</span> measures an oscillation with horizontal frequency <span class="math inline">u</span> and vertical frequency <span class="math inline">v</span>.</p>
+<section id="non-uniqueness" class="level2">
+<h2 class="anchored" data-anchor-id="non-uniqueness">Non-Uniqueness</h2>
+<p>Non-uniqueness means several different images explain the same observation.</p>
 <div class="figure">
-<p><img src="../assets/figures/week03-image-spectrum.png" class="img-fluid" alt="Real image and centered log Fourier magnitude"></p>
-<p>The centered log magnitude is a common way to display an image spectrum.</p>
+<p><img src="../assets/figures/week05-nonuniqueness.png" class="img-fluid" alt="Two candidate images, the same observed pixels, and a sampling mask"></p>
+<p>Different images can agree on all observed pixels.</p>
 </div>
+<p>Let <span class="math inline">M</span> be a recorded-pixel selection mask:</p>
+<p><span class="math display">
+y = Mx.
+</span></p>
+<p>If two images differ only where <span class="math inline">M</span> does not observe, then</p>
+<p><span class="math display">
+Mx_1 = Mx_2.
+</span></p>
+<p>The recorded data alone cannot choose between <span class="math inline">x_1</span> and <span class="math inline">x_2</span>.</p>
 </section>
-<section id="reading-a-spectrum" class="level2">
-<h2 class="anchored" data-anchor-id="reading-a-spectrum">Reading A Spectrum</h2>
-<p>In a centered spectrum:</p>
+<section id="masking-versus-occlusion" class="level2">
+<h2 class="anchored" data-anchor-id="masking-versus-occlusion">Masking Versus Occlusion</h2>
+<p>It is important to separate two ideas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Mathematical description</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recorded-pixel masking</td>
+<td>a linear projection of an already formed image</td>
+<td>pixels are missing from the stored image</td>
+</tr>
+<tr class="even">
+<td>Physical occlusion</td>
+<td>hidden scene content may not be measured at all</td>
+<td>the sensor never received that information</td>
+</tr>
+</tbody>
+</table>
+<p>Both create missing information, but they are not the same physical model. If a person is hidden behind a tree in a single image, the hidden content is not encoded in the pixels behind the tree. No inverse algorithm can recover exact information that was never measured.</p>
+</section>
+<section id="nullspace-language" class="level2">
+<h2 class="anchored" data-anchor-id="nullspace-language">Nullspace Language</h2>
+<p>For a linear operator <span class="math inline">A</span>, the nullspace is</p>
+<p><span class="math display">
+\mathcal{N}(A)=\{z:Az=0\}.
+</span></p>
+<p>If <span class="math inline">z\in \mathcal{N}(A)</span>, then</p>
+<p><span class="math display">
+A(x+z)=Ax.
+</span></p>
+<p>The nullspace contains invisible changes. If <span class="math inline">A</span> has a nontrivial nullspace, data fidelity cannot identify a unique image:</p>
+<p><span class="math display">
+D(y,Ax)=D(y,A(x+z)).
+</span></p>
+<p>To choose between possible reconstructions, we need extra information: smoothness, sparsity, edge preservation, training data, physical constraints, or some other modeling assumption.</p>
+</section>
+<section id="stability" class="level2">
+<h2 class="anchored" data-anchor-id="stability">Stability</h2>
+<p>An inverse map is stable if nearby data give nearby solutions. Informally,</p>
+<p><span class="math display">
+\|y_1-y_2\| \text{ small}
+\quad\Rightarrow\quad
+\|x_1-x_2\| \text{ small}.
+</span></p>
+<p>Stability is the reason noise matters mathematically.</p>
+<p>Consider the one-dimensional model</p>
+<p><span class="math display">
+y=\varepsilon x.
+</span></p>
+<p>The inverse is</p>
+<p><span class="math display">
+x = y/\varepsilon.
+</span></p>
+<p>If <span class="math inline">\varepsilon</span> is small, tiny errors in <span class="math inline">y</span> become large errors in <span class="math inline">x</span>.</p>
+</section>
+<section id="imaging-instability" class="level2">
+<h2 class="anchored" data-anchor-id="imaging-instability">Imaging Instability</h2>
+<p>Blur suppresses some directions in image space. Deblurring tries to divide by those suppressions.</p>
+<p>The unstable directions are the directions that the forward model almost erases.</p>
+<div class="figure">
+<p><img src="../assets/figures/week05-noise-amplification.png" class="img-fluid" alt="True signal, blurred noisy signal, unstable inverse, and truncated SVD reconstruction"></p>
+<p>A direct inverse can be mathematically defined and still useless in the presence of noise.</p>
+</div>
+<p>In this picture:</p>
 <ul>
-<li>the center corresponds to zero frequency and slow variation;</li>
-<li>points far from the center correspond to fine oscillations;</li>
-<li>direction in the spectrum corresponds to orientation in the image.</li>
+<li>a solution exists;</li>
+<li>the model is known;</li>
+<li>the data error is tiny;</li>
+<li>the direct inverse is still unstable.</li>
 </ul>
-<p>Strong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.</p>
+<p>This is a stability failure.</p>
 </section>
-<section id="magnitude-and-phase" class="level2">
-<h2 class="anchored" data-anchor-id="magnitude-and-phase">Magnitude And Phase</h2>
-<p>Every Fourier coefficient can be written as</p>
+<section id="singular-values" class="level2">
+<h2 class="anchored" data-anchor-id="singular-values">Singular Values</h2>
+<p>The singular value decomposition gives a coordinate system for sensitivity.</p>
+<p>For a linear operator <span class="math inline">A</span>,</p>
 <p><span class="math display">
-\widehat{x}[u,v]
-=
-|\widehat{x}[u,v]|e^{i\phi[u,v]}.
+A v_i = \sigma_i u_i.
 </span></p>
-<p>Magnitude says how much of a frequency is present. Phase says where that frequency is aligned.</p>
-<div class="figure">
-<p><img src="../assets/figures/week03-magnitude-phase.png" class="img-fluid" alt="Original image, Fourier magnitude, magnitude-only reconstruction, and phase-only reconstruction"></p>
-<p>Phase carries much of the recognizable geometry of an image.</p>
-</div>
-<p>Magnitude is visually important, but phase is often crucial for the location of edges and structures.</p>
+<p>The singular value <span class="math inline">\sigma_i</span> tells how strongly <span class="math inline">A</span> transmits the input direction <span class="math inline">v_i</span>.</p>
+<p>Large singular values correspond to directions that are visible in the data. Small singular values correspond to directions that are weakly visible or nearly invisible.</p>
 </section>
-<section id="the-convolution-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="the-convolution-theorem">The Convolution Theorem</h2>
-<p>The reason Fourier analysis is central to imaging is the convolution theorem:</p>
-<p><span class="math display">
-\widehat{h*x}[u,v]
-=
-\widehat{h}[u,v]\widehat{x}[u,v].
-</span></p>
-<p>Convolution in the image domain becomes multiplication in the Fourier domain.</p>
+<section id="inverting-in-svd-coordinates" class="level2">
+<h2 class="anchored" data-anchor-id="inverting-in-svd-coordinates">Inverting In SVD Coordinates</h2>
 <p>If</p>
 <p><span class="math display">
-y = h*x,
+y=Ax
 </span></p>
-<p>then</p>
+<p>and</p>
 <p><span class="math display">
-\widehat{y} = \widehat{h}\,\widehat{x}.
+y=\sum_i \alpha_i u_i,
 </span></p>
-</section>
-<section id="blur-in-frequency-space" class="level2">
-<h2 class="anchored" data-anchor-id="blur-in-frequency-space">Blur In Frequency Space</h2>
-<p>A blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means</p>
+<p>then the formal inverse is</p>
 <p><span class="math display">
-|\widehat{y}[u,v]|
-=
-|\widehat{h}[u,v]|\ |\widehat{x}[u,v]|
+x=\sum_i \frac{\alpha_i}{\sigma_i}v_i.
 </span></p>
-<p>is much smaller where <span class="math inline">|\widehat{h}[u,v]|</span> is small.</p>
+<p>With noisy data</p>
+<p><span class="math display">
+y^\delta=Ax+\eta,
+</span></p>
+<p>the inverse includes terms of the form</p>
+<p><span class="math display">
+\frac{\langle \eta,u_i\rangle}{\sigma_i}.
+</span></p>
+<p>Small singular values divide noise by a small number.</p>
 <div class="figure">
-<p><img src="../assets/figures/week03-convolution-theorem.png" class="img-fluid" alt="Convolution theorem for a blurred signal or image"></p>
-<p>Blur is easier to analyze after the Fourier transform because frequencies are multiplied independently.</p>
+<p><img src="../assets/figures/week05-singular-values.png" class="img-fluid" alt="Decaying singular values of blur operators with several blur strengths"></p>
+<p>Stronger blur typically makes singular values decay faster.</p>
 </div>
 </section>
-<section id="low-pass-and-high-pass-filtering" class="level2">
-<h2 class="anchored" data-anchor-id="low-pass-and-high-pass-filtering">Low-Pass And High-Pass Filtering</h2>
-<p>A low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.</p>
+<section id="reading-singular-value-plots" class="level2">
+<h2 class="anchored" data-anchor-id="reading-singular-value-plots">Reading Singular-Value Plots</h2>
+<p>Singular values help diagnose instability:</p>
+<ul>
+<li>stronger blur gives faster singular-value decay;</li>
+<li>later singular vectors often represent oscillatory detail;</li>
+<li>small singular values mean details are weakly observed;</li>
+<li>inversion becomes sensitive where singular values are small.</li>
+</ul>
 <div class="figure">
-<p><img src="../assets/figures/week03-low-high-pass.png" class="img-fluid" alt="Low-pass and high-pass Fourier filtering on an image"></p>
-<p>Frequency filtering gives direct control over coarse and fine image components.</p>
+<p><img src="../assets/figures/week05-svd-coefficients.png" class="img-fluid" alt="Singular values and SVD coefficients showing noise divided by small singular values"></p>
+<p>The dangerous coefficients are those where noise is divided by small singular values.</p>
 </div>
 </section>
-<section id="why-inverse-filtering-is-dangerous" class="level2">
-<h2 class="anchored" data-anchor-id="why-inverse-filtering-is-dangerous">Why Inverse Filtering Is Dangerous</h2>
-<p>If <span class="math inline">\widehat{h}[u,v]</span> is nonzero, a formal inverse filter would use</p>
+<section id="condition-number" class="level2">
+<h2 class="anchored" data-anchor-id="condition-number">Condition Number</h2>
+<p>For an invertible matrix,</p>
 <p><span class="math display">
-\widehat{x}[u,v]
-=
-\frac{\widehat{y}[u,v]}{\widehat{h}[u,v]}.
+\kappa(A)=\frac{\sigma_{\max}}{\sigma_{\min}}.
 </span></p>
-<p>But when <span class="math inline">|\widehat{h}[u,v]|</span> is small, division by <span class="math inline">\widehat{h}</span> amplifies noise.</p>
-<div class="figure">
-<p><img src="../assets/figures/week03-inverse-filtering.png" class="img-fluid" alt="Inverse filtering with noise amplification"></p>
-<p>Inverse filtering recovers some detail but can amplify noise dramatically.</p>
-</div>
-<p>This frequency-domain view explains why regularization will be necessary in later chapters.</p>
+<p>A large condition number means there is a direction that is transmitted much more weakly than another.</p>
+<p>The condition number warns us about worst-case sensitivity, but it is not the whole story. In imaging we also care about:</p>
+<ul>
+<li>where the noise lives;</li>
+<li>whether small singular directions contain important image details;</li>
+<li>how the reconstruction will be used.</li>
+</ul>
+</section>
+<section id="stabilization-idea" class="level2">
+<h2 class="anchored" data-anchor-id="stabilization-idea">Stabilization Idea</h2>
+<p>If small <span class="math inline">\sigma_i</span> amplify noise, one crude stabilization idea is:</p>
+<p><span class="math display">
+\frac{\alpha_i}{\sigma_i}
+\quad\text{only for sufficiently large } \sigma_i.
+</span></p>
+<p>This is the idea behind truncated SVD.</p>
+<p>Truncated SVD keeps stable directions that are well observed and discards unstable directions that may contain detail. This is already a bias-stability tradeoff.</p>
+<p>The next chapter replaces a hard cutoff with Tikhonov regularization:</p>
+<p><span class="math display">
+\min_x
+\|Ax-y\|_2^2 + \lambda\|x\|_2^2.
+</span></p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.</p>
+<p>The Week 5 notebook lets you vary blur strength, noise level, and the number of singular values kept.</p>
 <p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week03_fourier_imaging.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week05_ill_posed.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <ol type="1">
-<li>For <span class="math inline">x[n]=\sin(2\pi 5n/N)+0.5\sin(2\pi 20n/N)</span>, where should the Fourier magnitude be large?</li>
-<li>In a centered 2D spectrum, what does the center represent?</li>
-<li>Which carries more geometric information in a natural image: magnitude or phase?</li>
-<li>Use the convolution theorem to explain why blur attenuates high frequencies.</li>
-<li>Explain why inverse filtering amplifies noise.</li>
+<li>Give an example of an inverse problem where existence fails.</li>
+<li>Give an example of an inverse problem where uniqueness fails.</li>
+<li>Explain why a missing square in an image creates many possible completions.</li>
+<li>For singular values <span class="math inline">1,0.7,0.3,0.02,0.0001</span>, identify the dangerous directions to invert.</li>
+<li>Explain in your own words why direct deblurring can fail even when the blur model is known.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
-<li>Fourier analysis represents images using oscillations.</li>
-<li>Low frequencies describe coarse structure; high frequencies describe fine detail.</li>
-<li>Fourier coefficients have magnitude and phase.</li>
-<li>Convolution becomes multiplication in the Fourier domain.</li>
-<li>Blur suppresses frequencies, and inverse filtering can amplify noise.</li>
+<li>Ill-posedness is a structural issue, not merely a computational inconvenience.</li>
+<li>Hadamard’s conditions are existence, uniqueness, and stability.</li>
+<li>Missing information causes non-uniqueness.</li>
+<li>Small singular values cause instability because inverse formulas divide by them.</li>
+<li>Regularization is motivated by the need for stable reconstruction.</li>
 </ul>
 
 
@@ -924,7 +1028,7 @@ y = h*x,
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-03-fourier-imaging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-05-ill-posed-inverse-problems.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
