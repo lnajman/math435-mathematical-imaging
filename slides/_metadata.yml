@@ -2,10 +2,15 @@ format:
   revealjs:
     theme: default
     css: ../assets/css/slides.css
+    width: 1280
+    height: 720
+    margin: 0.08
     slide-number: true
     preview-links: auto
     code-line-numbers: true
     code-overflow: wrap
+    transition: fade
+    background-transition: fade
     chalkboard: false
     footer: "MATH 435: Mathematical Imaging"
     html-math-method: katex

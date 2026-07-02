@@ -1,0 +1,67 @@
+"""Generate static figures for Week 1 slides."""
+
+from pathlib import Path
+
+import os
+
+os.environ.setdefault("MPLCONFIGDIR", str(Path(".matplotlib").resolve()))
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def make_sampling_vectorization(path: Path) -> None:
+    n = 18
+    grid = np.linspace(-2.5, 2.5, n)
+    x, y = np.meshgrid(grid, grid)
+    image = np.exp(-0.55 * (x**2 + y**2)) + 0.45 * np.exp(
+        -1.8 * ((x - 1.05) ** 2 + (y + 0.75) ** 2)
+    )
+    image += 0.18 * np.sin(2.5 * x) * np.cos(1.8 * y)
+    image = (image - image.min()) / (image.max() - image.min())
+
+    vector = image.reshape(-1)
+
+    fig = plt.figure(figsize=(12.8, 5.0), dpi=150)
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.0, 1.0, 0.78], wspace=0.34)
+
+    ax0 = fig.add_subplot(gs[0, 0])
+    fine = 220
+    fine_grid = np.linspace(-2.5, 2.5, fine)
+    xf, yf = np.meshgrid(fine_grid, fine_grid)
+    smooth = np.exp(-0.55 * (xf**2 + yf**2)) + 0.45 * np.exp(
+        -1.8 * ((xf - 1.05) ** 2 + (yf + 0.75) ** 2)
+    )
+    smooth += 0.18 * np.sin(2.5 * xf) * np.cos(1.8 * yf)
+    smooth = (smooth - smooth.min()) / (smooth.max() - smooth.min())
+    ax0.imshow(smooth, cmap="viridis", origin="lower")
+    ax0.set_title("continuous model", fontsize=15, color="#1f4f63", pad=10)
+    ax0.set_xticks([])
+    ax0.set_yticks([])
+
+    ax1 = fig.add_subplot(gs[0, 1])
+    ax1.imshow(image, cmap="viridis", origin="lower", interpolation="nearest")
+    ax1.set_title("sampled image", fontsize=15, color="#1f4f63", pad=10)
+    ax1.set_xticks(np.arange(-0.5, n, 1), minor=True)
+    ax1.set_yticks(np.arange(-0.5, n, 1), minor=True)
+    ax1.grid(which="minor", color="white", linewidth=0.55, alpha=0.7)
+    ax1.tick_params(which="both", bottom=False, left=False, labelbottom=False, labelleft=False)
+
+    ax2 = fig.add_subplot(gs[0, 2])
+    ax2.imshow(vector[:, None], cmap="viridis", aspect="auto", origin="lower")
+    ax2.set_title("vector x", fontsize=15, color="#1f4f63", pad=10)
+    ax2.set_xticks([])
+    ax2.set_yticks([])
+    ax2.set_ylabel("pixel index", fontsize=11, color="#65717a")
+
+    fig.text(0.5, 0.03, "sampling and vectorization:  u(x,y)  ->  U[i,j]  ->  x = vec(U)",
+             ha="center", va="center", fontsize=14, color="#202428")
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    output = Path("assets/figures/week01-sampling-vectorization.png")
+    make_sampling_vectorization(output)

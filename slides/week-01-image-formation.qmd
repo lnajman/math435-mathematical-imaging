@@ -10,34 +10,82 @@ execute:
   enabled: false
 ---
 
+## Opening Question {.inverse-slide}
+
+::: {.section-kicker}
+Mathematical imaging begins here
+:::
+
+If a scanner gives us imperfect data, what exactly are we trying to recover?
+
 ## Today
 
-- What is an image mathematically?
-- Continuous images, discrete images, and pixels
-- Images as vectors
-- Imaging as a forward model
-- First computational representation in Python
+::: {.checklist}
+- Model an image as a function, an array, and a vector.
+- Connect pixel grids to linear algebra.
+- Introduce the forward model $y = Ax + \eta$.
+- Separate image formation from image reconstruction.
+- Write the first NumPy representations.
+:::
+
+## The Course Pattern
+
+```{mermaid}
+flowchart LR
+  P["physics or sensing"] --> A["forward operator A"]
+  A --> Y["data y"]
+  Y --> R["reconstruction method"]
+  R --> X["image estimate x-hat"]
+```
+
+::: {.caption}
+Most of the course studies the middle two arrows: how data are produced, and how reconstruction stabilizes the inverse problem.
+:::
 
 ## What Is an Image?
 
-At the mathematical level, an image is often modeled as a function
+::: {.definition-box}
+::: {.tag}
+Continuous model
+:::
+
+At the mathematical level, a grayscale image is often modeled as a function
 
 $$
-u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}
+u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}.
 $$
 
-where:
+The value $u(x,y)$ is the intensity at location $(x,y)$.
+:::
 
-- $\Omega$ is the spatial domain
-- $u(x,y)$ is the intensity at location $(x,y)$
-- color images use several channels, for example $u : \Omega \to \mathbb{R}^3$
+## Color and Multichannel Images
+
+::: {.two-col}
+::: {.model-box}
+For color images, the value at each point has several components:
+
+$$
+u : \Omega \to \mathbb{R}^3.
+$$
+
+Each location stores red, green, and blue intensities.
+:::
+
+::: {.question-box}
+::: {.tag}
+Question
+:::
+
+What changes mathematically when a medical image has many channels, time frames, or slices?
+:::
+:::
 
 ## From Continuous to Discrete
 
 Digital images are sampled on a grid:
 
 $$
-u_{i,j} \approx u(x_i, y_j)
+u_{i,j} \approx u(x_i, y_j).
 $$
 
 For an image with $m$ rows and $n$ columns:
@@ -49,86 +97,60 @@ u_{1,1} & u_{1,2} & \cdots & u_{1,n} \\
 u_{2,1} & u_{2,2} & \cdots & u_{2,n} \\
 \vdots & \vdots & \ddots & \vdots \\
 u_{m,1} & u_{m,2} & \cdots & u_{m,n}
-\end{bmatrix}
+\end{bmatrix}.
 $$
 
-## Pixel Grid
+## Sampling and Vectorization
 
-```{mermaid}
-flowchart LR
-  A["Continuous scene<br/>u(x,y)"] --> B["Sensor sampling"]
-  B --> C["Pixel grid<br/>m x n array"]
-  C --> D["Computation<br/>matrix/vector model"]
-```
+::: {.figure-frame}
+![](../assets/figures/week01-sampling-vectorization.png){fig-alt="Synthetic image shown as a smooth field, a pixel grid, and a vector"}
+:::
 
 ## Matrix or Vector?
 
-For visualization, a grayscale image is naturally a matrix:
+::: {.two-col}
+::: {.definition-box}
+::: {.tag}
+Visualization
+:::
+
+For display, a grayscale image is naturally a matrix:
 
 $$
-U \in \mathbb{R}^{m \times n}
+U \in \mathbb{R}^{m \times n}.
 $$
+:::
 
-For linear algebra, we often reshape it as a vector:
+::: {.model-box}
+::: {.tag}
+Computation
+:::
 
-$$
-x = \operatorname{vec}(U) \in \mathbb{R}^{mn}
-$$
-
-This lets imaging problems use the tools of linear systems.
-
-## A First Forward Model
-
-The central model of the course is:
+For linear algebra, reshape the image as
 
 $$
-y = A x + \eta
+x = \operatorname{vec}(U) \in \mathbb{R}^{mn}.
 $$
+:::
+:::
 
-where:
+## Why Vectorize?
 
-- $x$ is the unknown clean image
-- $A$ is the forward imaging operator
-- $y$ is the observed data
-- $\eta$ is noise or modeling error
-
-## Examples of Forward Operators
-
-| Operator | Meaning |
-|---|---|
-| $A = I$ | direct observation |
-| convolution matrix | blur |
-| subsampling matrix | missing pixels or lower resolution |
-| Fourier sampling | MRI-style acquisition |
-| projection operator | tomography |
-
-## Why This View Matters
-
-Most imaging problems are inverse problems:
+Once $U$ is written as a vector $x$, we can use matrices to represent imaging operations:
 
 $$
-\text{given } y,\quad \text{recover } x
+x \mapsto Ax.
 $$
 
-The naive answer would be:
+Examples:
 
-$$
-x = A^{-1}y
-$$
+- masking pixels;
+- blurring;
+- sampling Fourier coefficients;
+- projecting along lines;
+- combining channels or frames.
 
-But in real imaging, this often fails.
-
-## Why Inversion Fails
-
-Three recurring difficulties:
-
-1. $A$ may not be invertible.
-2. $A$ may be badly conditioned.
-3. Noise $\eta$ may be amplified by inversion.
-
-This is the reason regularization is not a technical detail. It is the heart of reconstruction.
-
-## Python Representation
+## First NumPy Representation {.code-small}
 
 ```{python}
 import numpy as np
@@ -143,9 +165,13 @@ print(U)
 print(x)
 ```
 
-## Row-Major Detail
+::: {.caption}
+The same image can be an array for display and a vector for linear algebra.
+:::
 
-NumPy stores arrays in row-major order by default:
+## Vectorization Convention
+
+NumPy uses row-major order by default:
 
 ```{python}
 U = np.array([[1, 2, 3],
@@ -155,9 +181,95 @@ print(U.reshape(-1))
 # [1 2 3 4 5 6]
 ```
 
-When implementing formulas, always state your vectorization convention.
+::: {.exercise-box}
+When translating formulas into code, always state your vectorization convention.
+:::
+
+## The Forward Model {.section-slide}
+
+::: {.section-kicker}
+The central equation
+:::
+
+From image formation to inverse problems
+
+## The Central Model
+
+::: {.model-box}
+::: {.tag}
+Forward model
+:::
+
+$$
+y = A x + \eta.
+$$
+
+- $x$: unknown clean image;
+- $A$: forward imaging operator;
+- $y$: observed data;
+- $\eta$: noise or modeling error.
+:::
+
+## What Does $A$ Mean?
+
+| Operator | Imaging meaning | Typical difficulty |
+|---|---|---|
+| $I$ | direct observation | noise |
+| masking | missing pixels | incomplete data |
+| convolution | blur | lost high frequencies |
+| Fourier sampling | MRI-style acquisition | indirect measurements |
+| projection | tomography | incomplete angles |
+
+## Image Formation vs Reconstruction
+
+::: {.two-col}
+::: {.model-box}
+::: {.tag}
+Forward problem
+:::
+
+Given $x$, predict the measured data:
+
+$$
+y = Ax + \eta.
+$$
+
+Usually stable.
+:::
+
+::: {.definition-box}
+::: {.tag}
+Inverse problem
+:::
+
+Given $y$, estimate the unknown image:
+
+$$
+\hat{x} \approx x.
+$$
+
+Often unstable.
+:::
+:::
+
+## Why the Inverse Problem Is Hard
+
+The naive answer would be:
+
+$$
+x = A^{-1}y.
+$$
+
+But this can fail because:
+
+1. $A$ may not be invertible.
+2. $A$ may be badly conditioned.
+3. Noise can be amplified by inversion.
+4. Many plausible images may explain the same data.
 
 ## A Toy Masking Operator
+
+Suppose only some pixels are measured.
 
 ```{python}
 import numpy as np
@@ -171,38 +283,102 @@ print("unknown image vector:", x)
 print("observed entries:", y)
 ```
 
-This is a very simple forward model: only some pixels are observed.
+## Matrix View of Masking
 
-## In-Class Question
+::: {.large-math}
+$$
+y = Mx
+$$
+:::
 
-Suppose $A$ keeps only every other pixel.
+Here $M$ selects rows from the identity matrix.
 
-What information has been lost?
+::: {.question-box}
+If $M$ has fewer rows than columns, can there be a unique inverse?
+:::
 
-What kinds of assumptions might help recover a plausible image?
+## In-Class Exercise
 
-## Modeling Habit
+::: {.exercise-box}
+::: {.tag}
+Think, then discuss
+:::
 
-For every imaging problem, ask:
+Suppose an operator keeps only every other pixel.
 
-1. What is the unknown?
-2. What is measured?
-3. What is the forward operator?
-4. What noise model is reasonable?
+1. What information has been lost?
+2. Can interpolation recover the original image exactly?
+3. What assumptions could make recovery plausible?
+:::
+
+## Prior Knowledge
+
+Reconstruction needs information not present in the data alone.
+
+Common priors in this course:
+
+- small energy or smoothness;
+- sparse representation;
+- piecewise smoothness with edges;
+- physical constraints;
+- learned or data-driven regularity.
+
+## Modeling Habit {.section-slide}
+
+::: {.section-kicker}
+A practical checklist
+:::
+
+Ask these questions for every problem.
+
+## The Five Questions
+
+::: {.takeaway-box}
+1. What is the unknown $x$?
+2. What is measured as data $y$?
+3. What is the forward operator $A$?
+4. What noise model is reasonable for $\eta$?
 5. What prior knowledge should guide reconstruction?
+:::
 
-## Takeaways
+## Mini-Case: Blurred Photograph
 
-- A digital image can be treated as both an array and a vector.
-- Image formation can often be written as $y = Ax + \eta$.
-- Reconstruction asks for $x$ from incomplete, blurred, noisy, or indirect data.
-- The inverse problem viewpoint will organize the whole course.
+::: {.two-col}
+::: {.model-box}
+The data are a blurred and noisy image:
+
+$$
+y = h * x + \eta.
+$$
+
+The operator $A$ is convolution by the point spread function $h$.
+:::
+
+::: {.question-box}
+::: {.tag}
+Preview
+:::
+
+Next week, we will make this precise and compute it.
+:::
+:::
+
+## What Students Should Remember
+
+::: {.takeaway-box}
+- A digital image can be treated as a function, matrix, or vector.
+- Linear operators let us write imaging systems as $y = Ax + \eta$.
+- Reconstruction is difficult because the inverse map may be unstable or nonunique.
+- Regularization adds mathematical prior knowledge to stabilize recovery.
+:::
 
 ## Next Time
 
 Convolution and blur:
 
-- 1D and 2D convolution
-- point spread functions
-- boundary conditions
-- blur as a linear operator
+- 1D and 2D convolution;
+- point spread functions;
+- boundary conditions;
+- blur as a linear operator;
+- first deblurring experiment.
+

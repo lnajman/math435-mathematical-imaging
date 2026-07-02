@@ -7,6 +7,7 @@ project:
     - index.qmd
     - syllabus.qmd
     - slides/index.qmd
+    - slides/template.qmd
     - slides/week-01-image-formation.qmd
     - project/index.qmd
 
@@ -42,4 +43,3 @@ execute:
   freeze: auto
   warning: false
   message: false
-
