@@ -3,9 +3,11 @@ project:
   output-dir: _site
   resources:
     - examples/
+    - notebooks/*.ipynb
   render:
     - index.qmd
     - syllabus.qmd
+    - notebooks/index.qmd
     - slides/index.qmd
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
@@ -22,6 +24,8 @@ website:
         text: Home
       - href: slides/index.qmd
         text: Slides
+      - href: notebooks/index.qmd
+        text: Notebooks
       - href: syllabus.qmd
         text: Syllabus
       - href: project/index.qmd

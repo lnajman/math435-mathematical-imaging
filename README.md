@@ -30,9 +30,24 @@ python3 examples/week01_image_arrays.py
 python3 examples/make_week01_figures.py
 ```
 
+## Student Notebooks
+
+Student notebooks live in `notebooks/` and are linked from the course site with Google Colab launch links. Rebuild the notebooks after editing `scripts/build_notebooks.py`:
+
+```bash
+python3 scripts/build_notebooks.py
+```
+
+Validate the notebooks by executing temporary copies:
+
+```bash
+python3 scripts/validate_notebooks.py
+```
+
 ## Repository Layout
 
 - `slides/`: lecture slides, one Quarto Reveal.js deck per lecture or week.
+- `notebooks/`: student-facing Jupyter notebooks with Plotly exercises and Colab links.
 - `examples/`: reusable Python examples for demonstrations and assignments.
 - `assignments/`: homework and quiz-facing material.
 - `project/`: modeling project description, datasets, rubrics, and milestones.
