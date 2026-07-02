@@ -190,6 +190,18 @@
   text-transform: uppercase;
 }
 
+.time-tag {
+  background: #eef6f8;
+  border: 1px solid #c8dde4;
+  border-radius: 999px;
+  color: var(--course-blue);
+  display: inline-block;
+  font-size: 0.52em;
+  font-weight: 700;
+  margin-bottom: 0.55em;
+  padding: 0.2em 0.65em;
+}
+
 .figure-frame {
   background: #ffffff;
   border: 1px solid var(--course-line);

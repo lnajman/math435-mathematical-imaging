@@ -133,6 +133,13 @@
     "text": "Today\n\n\nModel an image as a function, an array, and a vector.\nConnect pixel grids to linear algebra.\nIntroduce the forward model y = Ax + \\eta.\nSeparate image formation from image reconstruction.\nWrite the first NumPy representations."
   },
   {
+    "objectID": "slides/week-01-image-formation.html#minute-plan",
+    "href": "slides/week-01-image-formation.html#minute-plan",
+    "title": "Images as Mathematical Objects",
+    "section": "75-Minute Plan",
+    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-10 min\nmotivation and course pattern\n\n\n10-30 min\nimage models, pixels, vectorization\n\n\n30-45 min\nhand activity and NumPy representation\n\n\n45-60 min\nforward model and inverse problem\n\n\n60-72 min\nmasking example with a real image\n\n\n72-75 min\nexit checkpoint"
+  },
+  {
     "objectID": "slides/week-01-image-formation.html#the-course-pattern",
     "href": "slides/week-01-image-formation.html#the-course-pattern",
     "title": "Images as Mathematical Objects",
@@ -159,6 +166,20 @@
     "title": "Images as Mathematical Objects",
     "section": "From Continuous to Discrete",
     "text": "From Continuous to Discrete\nDigital images are sampled on a grid:\n\nu_{i,j} \\approx u(x_i, y_j).\n\nFor an image with m rows and n columns:\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n} \\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n} \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#activity-1-vectorize-by-hand",
+    "href": "slides/week-01-image-formation.html#activity-1-vectorize-by-hand",
+    "title": "Images as Mathematical Objects",
+    "section": "Activity 1: Vectorize by Hand",
+    "text": "Activity 1: Vectorize by Hand\n\n8 minutes\n\n\nGiven\n\nU =\n\\begin{bmatrix}\n10 & 20 & 30 & 40 \\\\\n50 & 60 & 70 & 80 \\\\\n90 & 100 & 110 & 120\n\\end{bmatrix},\n\nwrite \\operatorname{vec}(U) using row-major order."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#activity-1-debrief",
+    "href": "slides/week-01-image-formation.html#activity-1-debrief",
+    "title": "Images as Mathematical Objects",
+    "section": "Activity 1 Debrief",
+    "text": "Activity 1 Debrief\nRow-major order reads rows from left to right:\n\n\\operatorname{vec}(U) =\n\\begin{bmatrix}\n10 & 20 & 30 & 40 & 50 & 60 & 70 & 80 & 90 & 100 & 110 & 120\n\\end{bmatrix}^{T}.\n\n\nHow would the vector change under column-major order?"
   },
   {
     "objectID": "slides/week-01-image-formation.html#a-real-image-as-data",
@@ -194,6 +215,20 @@
     "title": "Images as Mathematical Objects",
     "section": "Vectorization Convention",
     "text": "Vectorization Convention\nNumPy uses row-major order by default:\n\nU = np.array([[1, 2, 3],\n              [4, 5, 6]])\n\nprint(U.reshape(-1))\n# [1 2 3 4 5 6]\n\n\nWhen translating formulas into code, always state your vectorization convention."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#indexing-matters",
+    "href": "slides/week-01-image-formation.html#indexing-matters",
+    "title": "Images as Mathematical Objects",
+    "section": "Indexing Matters",
+    "text": "Indexing Matters\n\n\nFor an image U \\in \\mathbb{R}^{m \\times n}, a pixel has two indices:\n\nU_{i,j}.\n\n\n\nAfter vectorization, the same pixel has one index:\n\nx_k.\n\nFor row-major order, k = (i-1)n + j."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#micro-check",
+    "href": "slides/week-01-image-formation.html#micro-check",
+    "title": "Images as Mathematical Objects",
+    "section": "Micro-Check",
+    "text": "Micro-Check\n\n\n2 minutes\n\nFor a 4 \\times 5 image, where does pixel (i,j) = (3,2) appear in row-major vectorization?\n\nk = (i-1)n + j"
   },
   {
     "objectID": "slides/week-01-image-formation.html#the-forward-model",
@@ -245,11 +280,46 @@
     "text": "Matrix View of Masking\n\n\ny = Mx\n\n\nHere M selects rows from the identity matrix.\n\nIf M has fewer rows than columns, can there be a unique inverse?"
   },
   {
-    "objectID": "slides/week-01-image-formation.html#in-class-exercise",
-    "href": "slides/week-01-image-formation.html#in-class-exercise",
+    "objectID": "slides/week-01-image-formation.html#worked-masking-matrix",
+    "href": "slides/week-01-image-formation.html#worked-masking-matrix",
     "title": "Images as Mathematical Objects",
-    "section": "In-Class Exercise",
-    "text": "In-Class Exercise\n\n\nThink, then discuss\n\nSuppose an operator keeps only every other pixel.\n\nWhat information has been lost?\nCan interpolation recover the original image exactly?\nWhat assumptions could make recovery plausible?"
+    "section": "Worked Masking Matrix",
+    "text": "Worked Masking Matrix\nLet\n\nx =\n\\begin{bmatrix}\nx_1 \\\\ x_2 \\\\ x_3 \\\\ x_4 \\\\ x_5\n\\end{bmatrix}\n\nand suppose we observe only entries 1, 3, and 5:\n\ny =\n\\begin{bmatrix}\nx_1 \\\\ x_3 \\\\ x_5\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n1 & 0 & 0 & 0 & 0 \\\\\n0 & 0 & 1 & 0 & 0 \\\\\n0 & 0 & 0 & 0 & 1\n\\end{bmatrix}\nx."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#what-is-lost",
+    "href": "slides/week-01-image-formation.html#what-is-lost",
+    "title": "Images as Mathematical Objects",
+    "section": "What Is Lost?",
+    "text": "What Is Lost?\n\n\nThe matrix M has shape 3 \\times 5.\nIt cannot have an inverse that recovers all five unknowns from three measurements.\n\n\n\nClass question\n\nCan you describe two different vectors x that produce the same y?"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#a-real-masking-operator",
+    "href": "slides/week-01-image-formation.html#a-real-masking-operator",
+    "title": "Images as Mathematical Objects",
+    "section": "A Real Masking Operator",
+    "text": "A Real Masking Operator"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#python-demo-masking-a-real-image",
+    "href": "slides/week-01-image-formation.html#python-demo-masking-a-real-image",
+    "title": "Images as Mathematical Objects",
+    "section": "Python Demo: Masking a Real Image",
+    "text": "Python Demo: Masking a Real Image\n\nfrom skimage import data\nimport numpy as np\n\nimage = data.camera().astype(float) / 255\n\nmask = np.zeros_like(image, dtype=bool)\nmask[::2, ::2] = True\n\ny = image[mask]\nzero_filled = np.where(mask, image, 0)\n\nprint(image.shape)\nprint(y.shape)"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#in-class-exercise-2",
+    "href": "slides/week-01-image-formation.html#in-class-exercise-2",
+    "title": "Images as Mathematical Objects",
+    "section": "In-Class Exercise 2",
+    "text": "In-Class Exercise 2\n\n\nThink, then discuss\n\nSuppose an operator keeps only every other pixel.\n\nWhat information has been lost?\nCan interpolation recover the original image exactly?\nWhat assumptions could make recovery plausible?"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#why-assumptions-enter",
+    "href": "slides/week-01-image-formation.html#why-assumptions-enter",
+    "title": "Images as Mathematical Objects",
+    "section": "Why Assumptions Enter",
+    "text": "Why Assumptions Enter\n\nThe missing pixels are not hidden somewhere in y.\nTo choose one reconstruction among many possible images, we need a principle:\n\n\\text{data fit} + \\text{prior knowledge}."
   },
   {
     "objectID": "slides/week-01-image-formation.html#prior-knowledge",
@@ -278,6 +348,20 @@
     "title": "Images as Mathematical Objects",
     "section": "Mini-Case: Blurred Photograph",
     "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext week, we will make this precise and compute it."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#end-of-class-checkpoint",
+    "href": "slides/week-01-image-formation.html#end-of-class-checkpoint",
+    "title": "Images as Mathematical Objects",
+    "section": "End-of-Class Checkpoint",
+    "text": "End-of-Class Checkpoint\n\n\nExit ticket\n\nFor each situation, identify x, y, A, and one reasonable prior:\n\na blurred phone photograph;\na CT scan with few projection angles;\nan old photograph with scratches and missing regions."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#suggested-answers",
+    "href": "slides/week-01-image-formation.html#suggested-answers",
+    "title": "Images as Mathematical Objects",
+    "section": "Suggested Answers",
+    "text": "Suggested Answers\n\n\n\n\n\n\n\n\nSituation\nA\nPossible prior\n\n\n\n\nblurred photo\nconvolution\nsharp edges, natural-image smoothness\n\n\nfew-angle CT\nprojection operator\npiecewise smooth anatomy\n\n\nmissing regions\nmasking operator\ntexture or geometric continuation"
   },
   {
     "objectID": "slides/week-01-image-formation.html#what-students-should-remember",

@@ -249,6 +249,43 @@ Laurent Najman
 </ul>
 </div>
 </section>
+<section id="minute-plan" class="slide level2">
+<h2>75-Minute Plan</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Time</th>
+<th>Work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0-10 min</td>
+<td>motivation and course pattern</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10-30 min</td>
+<td>image models, pixels, vectorization</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">30-45 min</td>
+<td>hand activity and NumPy representation</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">45-60 min</td>
+<td>forward model and inverse problem</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">60-72 min</td>
+<td>masking example with a real image</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">72-75 min</td>
+<td>exit checkpoint</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="the-course-pattern" class="slide level2">
 <h2>The Course Pattern</h2>
 <div class="cell" data-reveal="true" data-layout-align="default">
@@ -319,6 +356,37 @@ u_{m,1} &amp; u_{m,2} &amp; \cdots &amp; u_{m,n}
 \end{bmatrix}.
 </span></p>
 </section>
+<section id="activity-1-vectorize-by-hand" class="slide level2">
+<h2>Activity 1: Vectorize by Hand</h2>
+<div class="time-tag">
+<p>8 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Given</p>
+<p><span class="math display">
+U =
+\begin{bmatrix}
+10 &amp; 20 &amp; 30 &amp; 40 \\
+50 &amp; 60 &amp; 70 &amp; 80 \\
+90 &amp; 100 &amp; 110 &amp; 120
+\end{bmatrix},
+</span></p>
+<p>write <span class="math inline">\operatorname{vec}(U)</span> using row-major order.</p>
+</div>
+</section>
+<section id="activity-1-debrief" class="slide level2">
+<h2>Activity 1 Debrief</h2>
+<p>Row-major order reads rows from left to right:</p>
+<p><span class="math display">
+\operatorname{vec}(U) =
+\begin{bmatrix}
+10 &amp; 20 &amp; 30 &amp; 40 &amp; 50 &amp; 60 &amp; 70 &amp; 80 &amp; 90 &amp; 100 &amp; 110 &amp; 120
+\end{bmatrix}^{T}.
+</span></p>
+<div class="question-box">
+<p>How would the vector change under column-major order?</p>
+</div>
+</section>
 <section id="a-real-image-as-data" class="slide level2">
 <h2>A Real Image as Data</h2>
 <div class="figure-frame">
@@ -368,7 +436,7 @@ x \mapsto Ax.
 </section>
 <section id="first-numpy-representation" class="slide level2 code-small">
 <h2>First NumPy Representation</h2>
-<div id="ff2d5ea4" class="cell">
+<div id="28e72618" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
@@ -387,7 +455,7 @@ x \mapsto Ax.
 <section id="vectorization-convention" class="slide level2">
 <h2>Vectorization Convention</h2>
 <p>NumPy uses row-major order by default:</p>
-<div id="25bdcc3d" class="cell">
+<div id="7a442d35" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
 <span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
 <span id="cb3-3"><a></a></span>
@@ -396,6 +464,36 @@ x \mapsto Ax.
 </div>
 <div class="exercise-box">
 <p>When translating formulas into code, always state your vectorization convention.</p>
+</div>
+</section>
+<section id="indexing-matters" class="slide level2">
+<h2>Indexing Matters</h2>
+<div class="two-col">
+<div class="model-box">
+<p>For an image <span class="math inline">U \in \mathbb{R}^{m \times n}</span>, a pixel has two indices:</p>
+<p><span class="math display">
+U_{i,j}.
+</span></p>
+</div>
+<div class="definition-box">
+<p>After vectorization, the same pixel has one index:</p>
+<p><span class="math display">
+x_k.
+</span></p>
+<p>For row-major order, <span class="math inline">k = (i-1)n + j</span>.</p>
+</div>
+</div>
+</section>
+<section id="micro-check" class="slide level2">
+<h2>Micro-Check</h2>
+<div class="exercise-box">
+<div class="tag">
+<p>2 minutes</p>
+</div>
+<p>For a <span class="math inline">4 \times 5</span> image, where does pixel <span class="math inline">(i,j) = (3,2)</span> appear in row-major vectorization?</p>
+<p><span class="math display">
+k = (i-1)n + j
+</span></p>
 </div>
 </section>
 <section id="the-forward-model" class="slide level2 section-slide">
@@ -503,7 +601,7 @@ x = A^{-1}y.
 <section id="a-toy-masking-operator" class="slide level2">
 <h2>A Toy Masking Operator</h2>
 <p>Suppose only some pixels are measured.</p>
-<div id="0f90682f" class="cell">
+<div id="7bb4419a" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
@@ -527,8 +625,71 @@ y = Mx
 <p>If <span class="math inline">M</span> has fewer rows than columns, can there be a unique inverse?</p>
 </div>
 </section>
-<section id="in-class-exercise" class="slide level2">
-<h2>In-Class Exercise</h2>
+<section id="worked-masking-matrix" class="slide level2">
+<h2>Worked Masking Matrix</h2>
+<p>Let</p>
+<p><span class="math display">
+x =
+\begin{bmatrix}
+x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
+\end{bmatrix}
+</span></p>
+<p>and suppose we observe only entries 1, 3, and 5:</p>
+<p><span class="math display">
+y =
+\begin{bmatrix}
+x_1 \\ x_3 \\ x_5
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+x.
+</span></p>
+</section>
+<section id="what-is-lost" class="slide level2">
+<h2>What Is Lost?</h2>
+<div class="two-col">
+<div class="definition-box">
+<p>The matrix <span class="math inline">M</span> has shape <span class="math inline">3 \times 5</span>.</p>
+<p>It cannot have an inverse that recovers all five unknowns from three measurements.</p>
+</div>
+<div class="question-box">
+<div class="tag">
+<p>Class question</p>
+</div>
+<p>Can you describe two different vectors <span class="math inline">x</span> that produce the same <span class="math inline">y</span>?</p>
+</div>
+</div>
+</section>
+<section id="a-real-masking-operator" class="slide level2">
+<h2>A Real Masking Operator</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week01-real-image-masking.png" alt="Real image, sampling mask, observed pixels, and zero-filled view"></p>
+</div>
+</section>
+<section id="python-demo-masking-a-real-image" class="slide level2 code-small">
+<h2>Python Demo: Masking a Real Image</h2>
+<div id="2e573861" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
+<span id="cb5-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a></a></span>
+<span id="cb5-4"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
+<span id="cb5-5"><a></a></span>
+<span id="cb5-6"><a></a>mask <span class="op">=</span> np.zeros_like(image, dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb5-7"><a></a>mask[::<span class="dv">2</span>, ::<span class="dv">2</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb5-8"><a></a></span>
+<span id="cb5-9"><a></a>y <span class="op">=</span> image[mask]</span>
+<span id="cb5-10"><a></a>zero_filled <span class="op">=</span> np.where(mask, image, <span class="dv">0</span>)</span>
+<span id="cb5-11"><a></a></span>
+<span id="cb5-12"><a></a><span class="bu">print</span>(image.shape)</span>
+<span id="cb5-13"><a></a><span class="bu">print</span>(y.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="in-class-exercise-2" class="slide level2">
+<h2>In-Class Exercise 2</h2>
 <div class="exercise-box">
 <div class="tag">
 <p>Think, then discuss</p>
@@ -539,6 +700,16 @@ y = Mx
 <li>Can interpolation recover the original image exactly?</li>
 <li>What assumptions could make recovery plausible?</li>
 </ol>
+</div>
+</section>
+<section id="why-assumptions-enter" class="slide level2">
+<h2>Why Assumptions Enter</h2>
+<div class="takeaway-box">
+<p>The missing pixels are not hidden somewhere in <span class="math inline">y</span>.</p>
+<p>To choose one reconstruction among many possible images, we need a principle:</p>
+<p><span class="math display">
+\text{data fit} + \text{prior knowledge}.
+</span></p>
 </div>
 </section>
 <section id="prior-knowledge" class="slide level2">
@@ -589,6 +760,54 @@ y = h * x + \eta.
 <p>Next week, we will make this precise and compute it.</p>
 </div>
 </div>
+</section>
+<section id="end-of-class-checkpoint" class="slide level2">
+<h2>End-of-Class Checkpoint</h2>
+<div class="exercise-box">
+<div class="tag">
+<p>Exit ticket</p>
+</div>
+<p>For each situation, identify <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and one reasonable prior:</p>
+<ol type="1">
+<li>a blurred phone photograph;</li>
+<li>a CT scan with few projection angles;</li>
+<li>an old photograph with scratches and missing regions.</li>
+</ol>
+</div>
+</section>
+<section id="suggested-answers" class="slide level2">
+<h2>Suggested Answers</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th><span class="math inline">A</span></th>
+<th>Possible prior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>blurred photo</td>
+<td>convolution</td>
+<td>sharp edges, natural-image smoothness</td>
+</tr>
+<tr class="even">
+<td>few-angle CT</td>
+<td>projection operator</td>
+<td>piecewise smooth anatomy</td>
+</tr>
+<tr class="odd">
+<td>missing regions</td>
+<td>masking operator</td>
+<td>texture or geometric continuation</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="what-students-should-remember" class="slide level2">
 <h2>What Students Should Remember</h2>
