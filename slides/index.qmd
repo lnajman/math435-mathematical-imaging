@@ -8,3 +8,4 @@ The slide deck is being developed week by week. Each deck is a Quarto Reveal.js 
 |---:|---|---|
 | - | Reusable slide patterns | [Template deck](template.html) |
 | 1 | Introduction to imaging as a mathematical problem | [HTML deck](week-01-image-formation.html) |
+| 2 | Convolution and blur | [HTML deck](week-02-convolution-blur.html) |

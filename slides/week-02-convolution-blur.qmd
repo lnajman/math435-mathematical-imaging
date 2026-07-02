@@ -1,0 +1,521 @@
+---
+title: "Convolution and Blur"
+subtitle: "MATH 435: Mathematical Imaging - Week 2"
+author: "Laurent Najman"
+date: "Week 2"
+format:
+  revealjs:
+    incremental: false
+execute:
+  enabled: false
+---
+
+## Opening Question {.inverse-slide}
+
+::: {.section-kicker}
+From pixels to operators
+:::
+
+What does it mean, mathematically, for an image to be blurred?
+
+## Today
+
+::: {.checklist}
+- Build convolution from a local weighted average.
+- Interpret the point spread function (PSF).
+- Apply 2D convolution to real images.
+- Understand boundary conditions.
+- See why deblurring is already a hard inverse problem.
+:::
+
+## 75-Minute Plan
+
+| Time | Work |
+|---:|---|
+| 0-10 min | review fixed forward models |
+| 10-25 min | 1D convolution by hand |
+| 25-40 min | 2D convolution and PSF |
+| 40-55 min | real image blur demo |
+| 55-65 min | boundary conditions |
+| 65-72 min | why deblurring is hard |
+| 72-75 min | exit checkpoint |
+
+## Reminder from Week 1
+
+::: {.model-box}
+For a fixed measurement rule, we often write
+
+$$
+y = Ax + \eta.
+$$
+
+Today, $A$ will be a blur operator.
+:::
+
+::: {.caption}
+The blur kernel is assumed fixed. That is different from unknown scene occlusion or nonlinear visibility.
+:::
+
+## Part 1: 1D Convolution {.section-slide}
+
+::: {.section-kicker}
+First in one dimension
+:::
+
+Convolution as a weighted neighborhood average
+
+## Local Weighted Average
+
+Suppose a signal is noisy or sharp at one point. A simple smoothing rule is:
+
+$$
+y_i = \frac{1}{4}x_{i-1} + \frac{1}{2}x_i + \frac{1}{4}x_{i+1}.
+$$
+
+::: {.definition-box}
+The output at index $i$ is built from a small neighborhood of the input.
+:::
+
+## The Kernel
+
+The weights
+
+$$
+h =
+\begin{bmatrix}
+\frac{1}{4} & \frac{1}{2} & \frac{1}{4}
+\end{bmatrix}
+$$
+
+are called a convolution kernel.
+
+::: {.question-box}
+What should happen if the weights sum to 1?
+:::
+
+## Activity 1: Compute by Hand
+
+::: {.time-tag}
+8 minutes
+:::
+
+Let
+
+$$
+x =
+\begin{bmatrix}
+0 & 0 & 1 & 3 & 2 & 0 & 0
+\end{bmatrix}
+$$
+
+and $h = [1/4, 1/2, 1/4]$.
+
+Compute the output at the central indices using zero values outside the signal.
+
+## Activity 1 Debrief
+
+For the peak location,
+
+$$
+y_4 = \frac{1}{4}x_3 + \frac{1}{2}x_4 + \frac{1}{4}x_5
+     = \frac{1}{4}(1) + \frac{1}{2}(3) + \frac{1}{4}(2)
+     = 2.25.
+$$
+
+::: {.takeaway-box}
+The peak is reduced, and its mass is spread to neighboring locations.
+:::
+
+## 1D Convolution Picture
+
+::: {.figure-frame}
+![](../assets/figures/week02-1d-convolution.png){fig-alt="One dimensional signal, convolution kernel, and blurred output"}
+:::
+
+## Convolution Formula
+
+One common discrete convention is
+
+$$
+(h * x)_i = \sum_{k} h_k x_{i-k}.
+$$
+
+::: {.caption}
+For symmetric kernels, convolution and correlation give the same result. For nonsymmetric kernels, the sign convention matters.
+:::
+
+## Three Useful Properties
+
+For a fixed kernel $h$, convolution is:
+
+::: {.three-col}
+::: {.model-box}
+::: {.tag}
+Linear
+:::
+
+$h*(a x + b z) = a(h*x) + b(h*z)$
+:::
+
+::: {.definition-box}
+::: {.tag}
+Local
+:::
+
+Each output uses nearby values.
+:::
+
+::: {.question-box}
+::: {.tag}
+Shift-invariant
+:::
+
+The same rule is applied everywhere.
+:::
+:::
+
+## Part 2: 2D Convolution {.section-slide}
+
+::: {.section-kicker}
+From signals to images
+:::
+
+A kernel becomes a small image
+
+## 2D Formula
+
+For an image $x[i,j]$ and a kernel $h[a,b]$:
+
+$$
+y[i,j] = (h*x)[i,j]
+      = \sum_{a,b} h[a,b] x[i-a,j-b].
+$$
+
+::: {.definition-box}
+The output pixel is a weighted combination of nearby input pixels.
+:::
+
+## Point Spread Function
+
+::: {.model-box}
+::: {.tag}
+PSF
+:::
+
+The point spread function describes how the imaging system records a single ideal bright point.
+:::
+
+If one point becomes a small blob, then every point in the image is spread in the same way.
+
+## Example Kernels
+
+::: {.figure-frame}
+![](../assets/figures/week02-kernels.png){fig-alt="Identity, box average, gaussian, and motion blur kernels"}
+:::
+
+## Kernel Interpretation
+
+| Kernel | Visual effect | Typical model |
+|---|---|---|
+| identity | no blur | perfect sampling |
+| box average | blocky smoothing | simple local average |
+| gaussian | smooth blur | defocus or optical smoothing |
+| motion | directional streak | camera or object motion |
+
+## Fixed Blur Is Linear
+
+If $h$ is fixed, then
+
+$$
+y = h * x
+$$
+
+is a linear operator on the image.
+
+::: {.caption}
+This is a controlled blur model. It does not say all visual image formation is linear.
+:::
+
+## Part 3: Blur on a Real Image {.section-slide}
+
+::: {.section-kicker}
+Now look at pixels
+:::
+
+Different kernels, different blur
+
+## Real Image Blur
+
+::: {.figure-frame}
+![](../assets/figures/week02-real-blur.png){fig-alt="Real grayscale image with box, gaussian, and motion blur"}
+:::
+
+## What Changed?
+
+::: {.two-col}
+::: {.definition-box}
+Blur removes local contrast:
+
+- edges become less sharp;
+- fine textures disappear;
+- neighboring pixels become more similar.
+:::
+
+::: {.question-box}
+::: {.tag}
+Discussion
+:::
+
+Which blur looks easiest to undo? Which looks hardest?
+:::
+:::
+
+## Python Demo: Blur a Real Image {.code-small}
+
+```{python}
+from skimage import data
+from scipy import signal
+import numpy as np
+
+image = data.camera().astype(float) / 255
+kernel = np.ones((13, 13)) / (13 * 13)
+
+blurred = signal.convolve2d(
+    image, kernel, mode="same", boundary="symm"
+)
+```
+
+## Run Today's Code {.code-small}
+
+From the repository root:
+
+```bash
+python3 examples/week02_convolution_blur.py
+python3 examples/make_week02_figures.py
+./scripts/quarto render
+```
+
+::: {.caption}
+The first command prints numerical outputs. The second regenerates the figures used in this deck.
+:::
+
+## Why Normalize the Kernel?
+
+For many blur kernels, we impose
+
+$$
+\sum_{a,b} h[a,b] = 1.
+$$
+
+::: {.takeaway-box}
+This preserves the average brightness of the image.
+:::
+
+## Mini-Check
+
+::: {.exercise-box}
+::: {.tag}
+2 minutes
+:::
+
+If a $3 \times 3$ box blur has equal weights, what is each weight?
+
+What happens if the weights sum to 2 instead of 1?
+:::
+
+## Part 4: Boundary Conditions {.section-slide}
+
+::: {.section-kicker}
+The edge of the image
+:::
+
+What does the kernel see outside the image?
+
+## Why Boundaries Matter
+
+Near the image boundary, a kernel asks for pixels that do not exist.
+
+For example, at the top-left pixel:
+
+$$
+y[1,1] = \sum_{a,b} h[a,b] x[1-a,1-b].
+$$
+
+Some indices fall outside the image.
+
+## Boundary Choices
+
+| Mode | Outside value | Possible artifact |
+|---|---|---|
+| zero padding | black outside | dark borders |
+| reflect | mirror image | smoother edges |
+| wrap | periodic image | artificial wraparound |
+| crop/valid | do not compute boundary | smaller output |
+
+## Boundary Effects
+
+::: {.figure-frame}
+![](../assets/figures/week02-boundary-effects.png){fig-alt="Boundary modes: original, zero padding, reflect, and wrap"}
+:::
+
+## Activity 2: Choose a Boundary Rule
+
+::: {.time-tag}
+6 minutes
+:::
+
+::: {.exercise-box}
+For each application, choose a boundary condition and justify it:
+
+1. a microscope image of cells;
+2. a panoramic texture;
+3. a medical slice with black background;
+4. a small cropped photograph.
+:::
+
+## Part 5: Matrix View {.section-slide}
+
+::: {.section-kicker}
+Back to Week 1
+:::
+
+Convolution is a linear operator when the kernel is fixed
+
+## Convolution as a Matrix
+
+For a four-pixel 1D signal, same-size output, zero boundary conditions, and
+$h = [h_{-1}, h_0, h_1]$:
+
+$$
+y =
+\begin{bmatrix}
+h_0    & h_1 & 0   & 0 \\
+h_{-1} & h_0 & h_1 & 0 \\
+0      & h_{-1} & h_0 & h_1 \\
+0      & 0   & h_{-1} & h_0
+\end{bmatrix}
+x.
+$$
+
+## What the Matrix Shows
+
+::: {.takeaway-box}
+The blur matrix has repeated diagonals because the same local rule is applied at each position.
+:::
+
+::: {.question-box}
+What changes in this matrix if we use periodic boundary conditions?
+:::
+
+## Part 6: Why Deblurring Is Hard {.section-slide}
+
+::: {.section-kicker}
+The inverse problem appears
+:::
+
+If blur is linear, why not just invert it?
+
+## The Naive Deblurring Idea
+
+If
+
+$$
+y = Ax + \eta,
+$$
+
+then the tempting answer is
+
+$$
+x = A^{-1}y.
+$$
+
+::: {.question-box}
+What could go wrong here?
+:::
+
+## First Look at Instability
+
+::: {.figure-frame}
+![](../assets/figures/week02-deblur-instability.png){fig-alt="Clean signal, blurred signal, noisy blurred signal, and unstable naive inverse"}
+:::
+
+## Why It Fails
+
+Deblurring can fail because:
+
+1. blur removes high-frequency detail;
+2. small singular values make inversion unstable;
+3. noise is amplified by inverse filtering;
+4. the blur kernel may be unknown or only approximately known.
+
+::: {.caption}
+Fourier analysis will make this precise in the next lectures.
+:::
+
+## Modeling Caveat
+
+::: {.definition-box}
+Some blur is well modeled as fixed convolution.
+:::
+
+::: {.question-box}
+Other image degradations are not simple convolution:
+
+- depth-dependent defocus;
+- nonlinear camera saturation;
+- occlusion;
+- spatially varying motion.
+:::
+
+## In-Class Modeling Question
+
+::: {.exercise-box}
+::: {.tag}
+Discuss
+:::
+
+You receive a blurry photo from a phone camera.
+
+What evidence would make you believe the blur is approximately convolutional?
+
+What evidence would make you reject the convolution model?
+:::
+
+## End-of-Class Checkpoint
+
+::: {.exercise-box}
+For each item, give one sentence:
+
+1. What is a PSF?
+2. Why should a blur kernel often sum to 1?
+3. Name two boundary conditions.
+4. Why is deblurring sensitive to noise?
+:::
+
+## Suggested Answers
+
+| Question | Short answer |
+|---|---|
+| PSF | image of one ideal point after the imaging system |
+| kernel sum | preserves average brightness |
+| boundary | zero, reflect, wrap, valid/crop |
+| noise | inverse filtering amplifies weak frequencies |
+
+## What Students Should Remember
+
+::: {.takeaway-box}
+- Convolution is a local weighted average.
+- The PSF is the blur kernel of an imaging system.
+- Boundary conditions are part of the model.
+- Fixed convolution is linear, but not all image formation is convolution.
+- Deblurring is an inverse problem and is usually unstable.
+:::
+
+## Next Time
+
+Fourier transform in imaging:
+
+- frequency interpretation of blur;
+- convolution theorem;
+- low-pass and high-pass behavior;
+- why inverse filtering amplifies noise.

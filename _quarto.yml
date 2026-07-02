@@ -9,6 +9,7 @@ project:
     - slides/index.qmd
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
+    - slides/week-02-convolution-blur.qmd
     - project/index.qmd
 
 website:
