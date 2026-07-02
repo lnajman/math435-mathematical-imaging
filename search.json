@@ -7,118 +7,6 @@
     "text": "The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.\nEach team will:\n\ndefine the forward model;\nimplement reconstruction methods in Python;\nanalyze parameter sensitivity;\ninterpret reconstruction quality;\nsubmit a written report and code;\ncomplete an individual oral defense."
   },
   {
-    "objectID": "slides/template.html#section-divider",
-    "href": "slides/template.html#section-divider",
-    "title": "MATH 435 Slide Template",
-    "section": "Section Divider",
-    "text": "Section Divider\n\nPart 1\n\nThe big conceptual turn"
-  },
-  {
-    "objectID": "slides/template.html#learning-goals",
-    "href": "slides/template.html#learning-goals",
-    "title": "MATH 435 Slide Template",
-    "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this lecture, students should be able to:\n\nstate the mathematical object being modeled;\nidentify the forward operator and observed data;\nexplain why the inverse problem is difficult;\nimplement the minimal computational representation."
-  },
-  {
-    "objectID": "slides/template.html#definition-slide",
-    "href": "slides/template.html#definition-slide",
-    "title": "MATH 435 Slide Template",
-    "section": "Definition Slide",
-    "text": "Definition Slide\n\n\nDefinition\n\nAn image is modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}\n\nor, after sampling, as an array U \\in \\mathbb{R}^{m \\times n}."
-  },
-  {
-    "objectID": "slides/template.html#model-slide",
-    "href": "slides/template.html#model-slide",
-    "title": "MATH 435 Slide Template",
-    "section": "Model Slide",
-    "text": "Model Slide\n\n\nForward model\n\n\ny = A x + \\eta\n\n\nx: unknown image\nA: forward imaging operator\ny: observed data\n\\eta: noise or model error"
-  },
-  {
-    "objectID": "slides/template.html#figure-slide",
-    "href": "slides/template.html#figure-slide",
-    "title": "MATH 435 Slide Template",
-    "section": "Figure Slide",
-    "text": "Figure Slide\n\n\n\n\nUse one strong visual per slide when possible.\n\n\n\nThe figure should carry the idea before the equations formalize it."
-  },
-  {
-    "objectID": "slides/template.html#code-slide",
-    "href": "slides/template.html#code-slide",
-    "title": "MATH 435 Slide Template",
-    "section": "Code Slide",
-    "text": "Code Slide\n\nimport numpy as np\n\nm, n = 4, 5\nU = np.arange(m * n).reshape(m, n)\nx = U.reshape(-1)\n\nprint(U)\nprint(x)"
-  },
-  {
-    "objectID": "slides/template.html#exercise-slide",
-    "href": "slides/template.html#exercise-slide",
-    "title": "MATH 435 Slide Template",
-    "section": "Exercise Slide",
-    "text": "Exercise Slide\n\n\nIn class\n\nSuppose an operator keeps only every other pixel. What information is lost, and what kind of prior knowledge could help recover a plausible image?"
-  },
-  {
-    "objectID": "slides/template.html#takeaway-slide",
-    "href": "slides/template.html#takeaway-slide",
-    "title": "MATH 435 Slide Template",
-    "section": "Takeaway Slide",
-    "text": "Takeaway Slide\n\n\nTakeaway\n\nThe course repeatedly moves through the same chain:\n\n\\text{physics} \\to \\text{operator} \\to \\text{inverse problem} \\to \\text{regularized computation}."
-  },
-  {
-    "objectID": "syllabus.html",
-    "href": "syllabus.html",
-    "title": "Syllabus Summary",
-    "section": "",
-    "text": "This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python."
-  },
-  {
-    "objectID": "syllabus.html#catalog-description",
-    "href": "syllabus.html#catalog-description",
-    "title": "Syllabus Summary",
-    "section": "",
-    "text": "This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python."
-  },
-  {
-    "objectID": "syllabus.html#main-text",
-    "href": "syllabus.html#main-text",
-    "title": "Syllabus Summary",
-    "section": "Main Text",
-    "text": "Main Text\nM. Bertero and P. Boccacci, Introduction to Inverse Problems in Imaging, 2nd edition, CRC Press, 2021."
-  },
-  {
-    "objectID": "syllabus.html#references",
-    "href": "syllabus.html#references",
-    "title": "Syllabus Summary",
-    "section": "References",
-    "text": "References\n\nA. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” Acta Numerica, 25, 161-319, 2016.\nS. Mallat, A Wavelet Tour of Signal Processing, 3rd edition, Academic Press, 2008."
-  },
-  {
-    "objectID": "syllabus.html#assessment-structure",
-    "href": "syllabus.html#assessment-structure",
-    "title": "Syllabus Summary",
-    "section": "Assessment Structure",
-    "text": "Assessment Structure\n\n\n\n\n\n\n\n\nAssessment\nWeight\nTiming\n\n\n\n\nQuizzes\n15%\nWeeks 4 and 12\n\n\nTwo-student modeling project\n30%\nAssigned Week 6, report Week 14, defense Week 15\n\n\nSemester examination\n25%\nWeek 8\n\n\nFinal examination\n30%\nExam week"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
-  },
-  {
-    "objectID": "index.html#current-focus",
-    "href": "index.html#current-focus",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Current Focus",
-    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
-  },
-  {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
-  },
-  {
     "objectID": "slides/week-01-image-formation.html#opening-question",
     "href": "slides/week-01-image-formation.html#opening-question",
     "title": "Images as Mathematical Objects",
@@ -411,5 +299,418 @@
     "title": "Images as Mathematical Objects",
     "section": "Next Time",
     "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "",
+    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
+  },
+  {
+    "objectID": "index.html#current-focus",
+    "href": "index.html#current-focus",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Current Focus",
+    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
+  },
+  {
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus Summary",
+    "section": "",
+    "text": "This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python."
+  },
+  {
+    "objectID": "syllabus.html#catalog-description",
+    "href": "syllabus.html#catalog-description",
+    "title": "Syllabus Summary",
+    "section": "",
+    "text": "This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python."
+  },
+  {
+    "objectID": "syllabus.html#main-text",
+    "href": "syllabus.html#main-text",
+    "title": "Syllabus Summary",
+    "section": "Main Text",
+    "text": "Main Text\nM. Bertero and P. Boccacci, Introduction to Inverse Problems in Imaging, 2nd edition, CRC Press, 2021."
+  },
+  {
+    "objectID": "syllabus.html#references",
+    "href": "syllabus.html#references",
+    "title": "Syllabus Summary",
+    "section": "References",
+    "text": "References\n\nA. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” Acta Numerica, 25, 161-319, 2016.\nS. Mallat, A Wavelet Tour of Signal Processing, 3rd edition, Academic Press, 2008."
+  },
+  {
+    "objectID": "syllabus.html#assessment-structure",
+    "href": "syllabus.html#assessment-structure",
+    "title": "Syllabus Summary",
+    "section": "Assessment Structure",
+    "text": "Assessment Structure\n\n\n\n\n\n\n\n\nAssessment\nWeight\nTiming\n\n\n\n\nQuizzes\n15%\nWeeks 4 and 12\n\n\nTwo-student modeling project\n30%\nAssigned Week 6, report Week 14, defense Week 15\n\n\nSemester examination\n25%\nWeek 8\n\n\nFinal examination\n30%\nExam week"
+  },
+  {
+    "objectID": "slides/template.html#section-divider",
+    "href": "slides/template.html#section-divider",
+    "title": "MATH 435 Slide Template",
+    "section": "Section Divider",
+    "text": "Section Divider\n\nPart 1\n\nThe big conceptual turn"
+  },
+  {
+    "objectID": "slides/template.html#learning-goals",
+    "href": "slides/template.html#learning-goals",
+    "title": "MATH 435 Slide Template",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this lecture, students should be able to:\n\nstate the mathematical object being modeled;\nidentify the forward operator and observed data;\nexplain why the inverse problem is difficult;\nimplement the minimal computational representation."
+  },
+  {
+    "objectID": "slides/template.html#definition-slide",
+    "href": "slides/template.html#definition-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Definition Slide",
+    "text": "Definition Slide\n\n\nDefinition\n\nAn image is modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}\n\nor, after sampling, as an array U \\in \\mathbb{R}^{m \\times n}."
+  },
+  {
+    "objectID": "slides/template.html#model-slide",
+    "href": "slides/template.html#model-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Model Slide",
+    "text": "Model Slide\n\n\nForward model\n\n\ny = A x + \\eta\n\n\nx: unknown image\nA: forward imaging operator\ny: observed data\n\\eta: noise or model error"
+  },
+  {
+    "objectID": "slides/template.html#figure-slide",
+    "href": "slides/template.html#figure-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Figure Slide",
+    "text": "Figure Slide\n\n\n\n\nUse one strong visual per slide when possible.\n\n\n\nThe figure should carry the idea before the equations formalize it."
+  },
+  {
+    "objectID": "slides/template.html#code-slide",
+    "href": "slides/template.html#code-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Code Slide",
+    "text": "Code Slide\n\nimport numpy as np\n\nm, n = 4, 5\nU = np.arange(m * n).reshape(m, n)\nx = U.reshape(-1)\n\nprint(U)\nprint(x)"
+  },
+  {
+    "objectID": "slides/template.html#exercise-slide",
+    "href": "slides/template.html#exercise-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Exercise Slide",
+    "text": "Exercise Slide\n\n\nIn class\n\nSuppose an operator keeps only every other pixel. What information is lost, and what kind of prior knowledge could help recover a plausible image?"
+  },
+  {
+    "objectID": "slides/template.html#takeaway-slide",
+    "href": "slides/template.html#takeaway-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Takeaway Slide",
+    "text": "Takeaway Slide\n\n\nTakeaway\n\nThe course repeatedly moves through the same chain:\n\n\\text{physics} \\to \\text{operator} \\to \\text{inverse problem} \\to \\text{regularized computation}."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#opening-question",
+    "href": "slides/week-02-convolution-blur.html#opening-question",
+    "title": "Convolution and Blur",
+    "section": "Opening Question",
+    "text": "Opening Question\n\nFrom pixels to operators\n\nWhat does it mean, mathematically, for an image to be blurred?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#today",
+    "href": "slides/week-02-convolution-blur.html#today",
+    "title": "Convolution and Blur",
+    "section": "Today",
+    "text": "Today\n\n\nBuild convolution from a local weighted average.\nInterpret the point spread function (PSF).\nApply 2D convolution to real images.\nUnderstand boundary conditions.\nSee why deblurring is already a hard inverse problem."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#minute-plan",
+    "href": "slides/week-02-convolution-blur.html#minute-plan",
+    "title": "Convolution and Blur",
+    "section": "75-Minute Plan",
+    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-10 min\nreview fixed forward models\n\n\n10-25 min\n1D convolution by hand\n\n\n25-40 min\n2D convolution and PSF\n\n\n40-55 min\nreal image blur demo\n\n\n55-65 min\nboundary conditions\n\n\n65-72 min\nwhy deblurring is hard\n\n\n72-75 min\nexit checkpoint"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#reminder-from-week-1",
+    "href": "slides/week-02-convolution-blur.html#reminder-from-week-1",
+    "title": "Convolution and Blur",
+    "section": "Reminder from Week 1",
+    "text": "Reminder from Week 1\n\nFor a fixed measurement rule, we often write\n\ny = Ax + \\eta.\n\nToday, A will be a blur operator.\n\n\nThe blur kernel is assumed fixed. That is different from unknown scene occlusion or nonlinear visibility."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#part-1-1d-convolution",
+    "href": "slides/week-02-convolution-blur.html#part-1-1d-convolution",
+    "title": "Convolution and Blur",
+    "section": "Part 1: 1D Convolution",
+    "text": "Part 1: 1D Convolution\n\nFirst in one dimension\n\nConvolution as a weighted neighborhood average"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#local-weighted-average",
+    "href": "slides/week-02-convolution-blur.html#local-weighted-average",
+    "title": "Convolution and Blur",
+    "section": "Local Weighted Average",
+    "text": "Local Weighted Average\nSuppose a signal is noisy or sharp at one point. A simple smoothing rule is:\n\ny_i = \\frac{1}{4}x_{i-1} + \\frac{1}{2}x_i + \\frac{1}{4}x_{i+1}.\n\n\nThe output at index i is built from a small neighborhood of the input."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#the-kernel",
+    "href": "slides/week-02-convolution-blur.html#the-kernel",
+    "title": "Convolution and Blur",
+    "section": "The Kernel",
+    "text": "The Kernel\nThe weights\n\nh =\n\\begin{bmatrix}\n\\frac{1}{4} & \\frac{1}{2} & \\frac{1}{4}\n\\end{bmatrix}\n\nare called a convolution kernel.\n\nWhat should happen if the weights sum to 1?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#activity-1-compute-by-hand",
+    "href": "slides/week-02-convolution-blur.html#activity-1-compute-by-hand",
+    "title": "Convolution and Blur",
+    "section": "Activity 1: Compute by Hand",
+    "text": "Activity 1: Compute by Hand\n\n8 minutes\n\nLet\n\nx =\n\\begin{bmatrix}\n0 & 0 & 1 & 3 & 2 & 0 & 0\n\\end{bmatrix}\n\nand h = [1/4, 1/2, 1/4].\nCompute the output at the central indices using zero values outside the signal."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#activity-1-debrief",
+    "href": "slides/week-02-convolution-blur.html#activity-1-debrief",
+    "title": "Convolution and Blur",
+    "section": "Activity 1 Debrief",
+    "text": "Activity 1 Debrief\nFor the peak location,\n\ny_4 = \\frac{1}{4}x_3 + \\frac{1}{2}x_4 + \\frac{1}{4}x_5\n     = \\frac{1}{4}(1) + \\frac{1}{2}(3) + \\frac{1}{4}(2)\n     = 2.25.\n\n\nThe peak is reduced, and its mass is spread to neighboring locations."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#d-convolution-picture",
+    "href": "slides/week-02-convolution-blur.html#d-convolution-picture",
+    "title": "Convolution and Blur",
+    "section": "1D Convolution Picture",
+    "text": "1D Convolution Picture"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#convolution-formula",
+    "href": "slides/week-02-convolution-blur.html#convolution-formula",
+    "title": "Convolution and Blur",
+    "section": "Convolution Formula",
+    "text": "Convolution Formula\nOne common discrete convention is\n\n(h * x)_i = \\sum_{k} h_k x_{i-k}.\n\n\nFor symmetric kernels, convolution and correlation give the same result. For nonsymmetric kernels, the sign convention matters."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#three-useful-properties",
+    "href": "slides/week-02-convolution-blur.html#three-useful-properties",
+    "title": "Convolution and Blur",
+    "section": "Three Useful Properties",
+    "text": "Three Useful Properties\nFor a fixed kernel h, convolution is:\n\n\n\nLinear\n\nh*(a x + b z) = a(h*x) + b(h*z)\n\n\n\nLocal\n\nEach output uses nearby values.\n\n\n\nShift-invariant\n\nThe same rule is applied everywhere."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#part-2-2d-convolution",
+    "href": "slides/week-02-convolution-blur.html#part-2-2d-convolution",
+    "title": "Convolution and Blur",
+    "section": "Part 2: 2D Convolution",
+    "text": "Part 2: 2D Convolution\n\nFrom signals to images\n\nA kernel becomes a small image"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#d-formula",
+    "href": "slides/week-02-convolution-blur.html#d-formula",
+    "title": "Convolution and Blur",
+    "section": "2D Formula",
+    "text": "2D Formula\nFor an image x[i,j] and a kernel h[a,b]:\n\ny[i,j] = (h*x)[i,j]\n      = \\sum_{a,b} h[a,b] x[i-a,j-b].\n\n\nThe output pixel is a weighted combination of nearby input pixels."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#point-spread-function",
+    "href": "slides/week-02-convolution-blur.html#point-spread-function",
+    "title": "Convolution and Blur",
+    "section": "Point Spread Function",
+    "text": "Point Spread Function\n\n\nPSF\n\nThe point spread function describes how the imaging system records a single ideal bright point.\n\nIf one point becomes a small blob, then every point in the image is spread in the same way."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#example-kernels",
+    "href": "slides/week-02-convolution-blur.html#example-kernels",
+    "title": "Convolution and Blur",
+    "section": "Example Kernels",
+    "text": "Example Kernels"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#kernel-interpretation",
+    "href": "slides/week-02-convolution-blur.html#kernel-interpretation",
+    "title": "Convolution and Blur",
+    "section": "Kernel Interpretation",
+    "text": "Kernel Interpretation\n\n\n\nKernel\nVisual effect\nTypical model\n\n\n\n\nidentity\nno blur\nperfect sampling\n\n\nbox average\nblocky smoothing\nsimple local average\n\n\ngaussian\nsmooth blur\ndefocus or optical smoothing\n\n\nmotion\ndirectional streak\ncamera or object motion"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#fixed-blur-is-linear",
+    "href": "slides/week-02-convolution-blur.html#fixed-blur-is-linear",
+    "title": "Convolution and Blur",
+    "section": "Fixed Blur Is Linear",
+    "text": "Fixed Blur Is Linear\nIf h is fixed, then\n\ny = h * x\n\nis a linear operator on the image.\n\nThis is a controlled blur model. It does not say all visual image formation is linear."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#part-3-blur-on-a-real-image",
+    "href": "slides/week-02-convolution-blur.html#part-3-blur-on-a-real-image",
+    "title": "Convolution and Blur",
+    "section": "Part 3: Blur on a Real Image",
+    "text": "Part 3: Blur on a Real Image\n\nNow look at pixels\n\nDifferent kernels, different blur"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#real-image-blur",
+    "href": "slides/week-02-convolution-blur.html#real-image-blur",
+    "title": "Convolution and Blur",
+    "section": "Real Image Blur",
+    "text": "Real Image Blur"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#what-changed",
+    "href": "slides/week-02-convolution-blur.html#what-changed",
+    "title": "Convolution and Blur",
+    "section": "What Changed?",
+    "text": "What Changed?\n\n\nBlur removes local contrast:\n\nedges become less sharp;\nfine textures disappear;\nneighboring pixels become more similar.\n\n\n\n\nDiscussion\n\nWhich blur looks easiest to undo? Which looks hardest?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#python-demo-blur-a-real-image",
+    "href": "slides/week-02-convolution-blur.html#python-demo-blur-a-real-image",
+    "title": "Convolution and Blur",
+    "section": "Python Demo: Blur a Real Image",
+    "text": "Python Demo: Blur a Real Image\n\nfrom skimage import data\nfrom scipy import signal\nimport numpy as np\n\nimage = data.camera().astype(float) / 255\nkernel = np.ones((13, 13)) / (13 * 13)\n\nblurred = signal.convolve2d(\n    image, kernel, mode=\"same\", boundary=\"symm\"\n)"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#run-todays-code",
+    "href": "slides/week-02-convolution-blur.html#run-todays-code",
+    "title": "Convolution and Blur",
+    "section": "Run Today’s Code",
+    "text": "Run Today’s Code\nFrom the repository root:\npython3 examples/week02_convolution_blur.py\npython3 examples/make_week02_figures.py\n./scripts/quarto render\n\nThe first command prints numerical outputs. The second regenerates the figures used in this deck."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#why-normalize-the-kernel",
+    "href": "slides/week-02-convolution-blur.html#why-normalize-the-kernel",
+    "title": "Convolution and Blur",
+    "section": "Why Normalize the Kernel?",
+    "text": "Why Normalize the Kernel?\nFor many blur kernels, we impose\n\n\\sum_{a,b} h[a,b] = 1.\n\n\nThis preserves the average brightness of the image."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#mini-check",
+    "href": "slides/week-02-convolution-blur.html#mini-check",
+    "title": "Convolution and Blur",
+    "section": "Mini-Check",
+    "text": "Mini-Check\n\n\n2 minutes\n\nIf a 3 \\times 3 box blur has equal weights, what is each weight?\nWhat happens if the weights sum to 2 instead of 1?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#part-4-boundary-conditions",
+    "href": "slides/week-02-convolution-blur.html#part-4-boundary-conditions",
+    "title": "Convolution and Blur",
+    "section": "Part 4: Boundary Conditions",
+    "text": "Part 4: Boundary Conditions\n\nThe edge of the image\n\nWhat does the kernel see outside the image?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#why-boundaries-matter",
+    "href": "slides/week-02-convolution-blur.html#why-boundaries-matter",
+    "title": "Convolution and Blur",
+    "section": "Why Boundaries Matter",
+    "text": "Why Boundaries Matter\nNear the image boundary, a kernel asks for pixels that do not exist.\nFor example, at the top-left pixel:\n\ny[1,1] = \\sum_{a,b} h[a,b] x[1-a,1-b].\n\nSome indices fall outside the image."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#boundary-choices",
+    "href": "slides/week-02-convolution-blur.html#boundary-choices",
+    "title": "Convolution and Blur",
+    "section": "Boundary Choices",
+    "text": "Boundary Choices\n\n\n\nMode\nOutside value\nPossible artifact\n\n\n\n\nzero padding\nblack outside\ndark borders\n\n\nreflect\nmirror image\nsmoother edges\n\n\nwrap\nperiodic image\nartificial wraparound\n\n\ncrop/valid\ndo not compute boundary\nsmaller output"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#boundary-effects",
+    "href": "slides/week-02-convolution-blur.html#boundary-effects",
+    "title": "Convolution and Blur",
+    "section": "Boundary Effects",
+    "text": "Boundary Effects"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#activity-2-choose-a-boundary-rule",
+    "href": "slides/week-02-convolution-blur.html#activity-2-choose-a-boundary-rule",
+    "title": "Convolution and Blur",
+    "section": "Activity 2: Choose a Boundary Rule",
+    "text": "Activity 2: Choose a Boundary Rule\n\n6 minutes\n\n\nFor each application, choose a boundary condition and justify it:\n\na microscope image of cells;\na panoramic texture;\na medical slice with black background;\na small cropped photograph."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#part-5-matrix-view",
+    "href": "slides/week-02-convolution-blur.html#part-5-matrix-view",
+    "title": "Convolution and Blur",
+    "section": "Part 5: Matrix View",
+    "text": "Part 5: Matrix View\n\nBack to Week 1\n\nConvolution is a linear operator when the kernel is fixed"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#convolution-as-a-matrix",
+    "href": "slides/week-02-convolution-blur.html#convolution-as-a-matrix",
+    "title": "Convolution and Blur",
+    "section": "Convolution as a Matrix",
+    "text": "Convolution as a Matrix\nFor a four-pixel 1D signal, same-size output, zero boundary conditions, and h = [h_{-1}, h_0, h_1]:\n\ny =\n\\begin{bmatrix}\nh_0    & h_1 & 0   & 0 \\\\\nh_{-1} & h_0 & h_1 & 0 \\\\\n0      & h_{-1} & h_0 & h_1 \\\\\n0      & 0   & h_{-1} & h_0\n\\end{bmatrix}\nx."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#what-the-matrix-shows",
+    "href": "slides/week-02-convolution-blur.html#what-the-matrix-shows",
+    "title": "Convolution and Blur",
+    "section": "What the Matrix Shows",
+    "text": "What the Matrix Shows\n\nThe blur matrix has repeated diagonals because the same local rule is applied at each position.\n\n\nWhat changes in this matrix if we use periodic boundary conditions?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#part-6-why-deblurring-is-hard",
+    "href": "slides/week-02-convolution-blur.html#part-6-why-deblurring-is-hard",
+    "title": "Convolution and Blur",
+    "section": "Part 6: Why Deblurring Is Hard",
+    "text": "Part 6: Why Deblurring Is Hard\n\nThe inverse problem appears\n\nIf blur is linear, why not just invert it?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#the-naive-deblurring-idea",
+    "href": "slides/week-02-convolution-blur.html#the-naive-deblurring-idea",
+    "title": "Convolution and Blur",
+    "section": "The Naive Deblurring Idea",
+    "text": "The Naive Deblurring Idea\nIf\n\ny = Ax + \\eta,\n\nthen the tempting answer is\n\nx = A^{-1}y.\n\n\nWhat could go wrong here?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#first-look-at-instability",
+    "href": "slides/week-02-convolution-blur.html#first-look-at-instability",
+    "title": "Convolution and Blur",
+    "section": "First Look at Instability",
+    "text": "First Look at Instability"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#why-it-fails",
+    "href": "slides/week-02-convolution-blur.html#why-it-fails",
+    "title": "Convolution and Blur",
+    "section": "Why It Fails",
+    "text": "Why It Fails\nDeblurring can fail because:\n\nblur removes high-frequency detail;\nsmall singular values make inversion unstable;\nnoise is amplified by inverse filtering;\nthe blur kernel may be unknown or only approximately known.\n\n\nFourier analysis will make this precise in the next lectures."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#modeling-caveat",
+    "href": "slides/week-02-convolution-blur.html#modeling-caveat",
+    "title": "Convolution and Blur",
+    "section": "Modeling Caveat",
+    "text": "Modeling Caveat\n\nSome blur is well modeled as fixed convolution.\n\n\nOther image degradations are not simple convolution:\n\ndepth-dependent defocus;\nnonlinear camera saturation;\nocclusion;\nspatially varying motion."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#in-class-modeling-question",
+    "href": "slides/week-02-convolution-blur.html#in-class-modeling-question",
+    "title": "Convolution and Blur",
+    "section": "In-Class Modeling Question",
+    "text": "In-Class Modeling Question\n\n\nDiscuss\n\nYou receive a blurry photo from a phone camera.\nWhat evidence would make you believe the blur is approximately convolutional?\nWhat evidence would make you reject the convolution model?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#end-of-class-checkpoint",
+    "href": "slides/week-02-convolution-blur.html#end-of-class-checkpoint",
+    "title": "Convolution and Blur",
+    "section": "End-of-Class Checkpoint",
+    "text": "End-of-Class Checkpoint\n\nFor each item, give one sentence:\n\nWhat is a PSF?\nWhy should a blur kernel often sum to 1?\nName two boundary conditions.\nWhy is deblurring sensitive to noise?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#suggested-answers",
+    "href": "slides/week-02-convolution-blur.html#suggested-answers",
+    "title": "Convolution and Blur",
+    "section": "Suggested Answers",
+    "text": "Suggested Answers\n\n\n\nQuestion\nShort answer\n\n\n\n\nPSF\nimage of one ideal point after the imaging system\n\n\nkernel sum\npreserves average brightness\n\n\nboundary\nzero, reflect, wrap, valid/crop\n\n\nnoise\ninverse filtering amplifies weak frequencies"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#what-students-should-remember",
+    "href": "slides/week-02-convolution-blur.html#what-students-should-remember",
+    "title": "Convolution and Blur",
+    "section": "What Students Should Remember",
+    "text": "What Students Should Remember\n\n\nConvolution is a local weighted average.\nThe PSF is the blur kernel of an imaging system.\nBoundary conditions are part of the model.\nFixed convolution is linear, but not all image formation is convolution.\nDeblurring is an inverse problem and is usually unstable."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#next-time",
+    "href": "slides/week-02-convolution-blur.html#next-time",
+    "title": "Convolution and Blur",
+    "section": "Next Time",
+    "text": "Next Time\nFourier transform in imaging:\n\nfrequency interpretation of blur;\nconvolution theorem;\nlow-pass and high-pass behavior;\nwhy inverse filtering amplifies noise."
   }
 ]
