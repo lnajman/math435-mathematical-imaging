@@ -28,6 +28,17 @@ If a scanner gives us imperfect data, what exactly are we trying to recover?
 - Write the first NumPy representations.
 :::
 
+## 75-Minute Plan
+
+| Time | Work |
+|---:|---|
+| 0-10 min | motivation and course pattern |
+| 10-30 min | image models, pixels, vectorization |
+| 30-45 min | hand activity and NumPy representation |
+| 45-60 min | forward model and inverse problem |
+| 60-72 min | masking example with a real image |
+| 72-75 min | exit checkpoint |
+
 ## The Course Pattern
 
 ```{mermaid}
@@ -99,6 +110,42 @@ u_{2,1} & u_{2,2} & \cdots & u_{2,n} \\
 u_{m,1} & u_{m,2} & \cdots & u_{m,n}
 \end{bmatrix}.
 $$
+
+## Activity 1: Vectorize by Hand
+
+::: {.time-tag}
+8 minutes
+:::
+
+::: {.exercise-box}
+Given
+
+$$
+U =
+\begin{bmatrix}
+10 & 20 & 30 & 40 \\
+50 & 60 & 70 & 80 \\
+90 & 100 & 110 & 120
+\end{bmatrix},
+$$
+
+write $\operatorname{vec}(U)$ using row-major order.
+:::
+
+## Activity 1 Debrief
+
+Row-major order reads rows from left to right:
+
+$$
+\operatorname{vec}(U) =
+\begin{bmatrix}
+10 & 20 & 30 & 40 & 50 & 60 & 70 & 80 & 90 & 100 & 110 & 120
+\end{bmatrix}^{T}.
+$$
+
+::: {.question-box}
+How would the vector change under column-major order?
+:::
 
 ## A Real Image as Data
 
@@ -187,6 +234,42 @@ print(U.reshape(-1))
 
 ::: {.exercise-box}
 When translating formulas into code, always state your vectorization convention.
+:::
+
+## Indexing Matters
+
+::: {.two-col}
+::: {.model-box}
+For an image $U \in \mathbb{R}^{m \times n}$, a pixel has two indices:
+
+$$
+U_{i,j}.
+$$
+:::
+
+::: {.definition-box}
+After vectorization, the same pixel has one index:
+
+$$
+x_k.
+$$
+
+For row-major order, $k = (i-1)n + j$.
+:::
+:::
+
+## Micro-Check
+
+::: {.exercise-box}
+::: {.tag}
+2 minutes
+:::
+
+For a $4 \times 5$ image, where does pixel $(i,j) = (3,2)$ appear in row-major vectorization?
+
+$$
+k = (i-1)n + j
+$$
 :::
 
 ## The Forward Model {.section-slide}
@@ -301,7 +384,76 @@ Here $M$ selects rows from the identity matrix.
 If $M$ has fewer rows than columns, can there be a unique inverse?
 :::
 
-## In-Class Exercise
+## Worked Masking Matrix
+
+Let
+
+$$
+x =
+\begin{bmatrix}
+x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
+\end{bmatrix}
+$$
+
+and suppose we observe only entries 1, 3, and 5:
+
+$$
+y =
+\begin{bmatrix}
+x_1 \\ x_3 \\ x_5
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1
+\end{bmatrix}
+x.
+$$
+
+## What Is Lost?
+
+::: {.two-col}
+::: {.definition-box}
+The matrix $M$ has shape $3 \times 5$.
+
+It cannot have an inverse that recovers all five unknowns from three measurements.
+:::
+
+::: {.question-box}
+::: {.tag}
+Class question
+:::
+
+Can you describe two different vectors $x$ that produce the same $y$?
+:::
+:::
+
+## A Real Masking Operator
+
+::: {.figure-frame}
+![](../assets/figures/week01-real-image-masking.png){fig-alt="Real image, sampling mask, observed pixels, and zero-filled view"}
+:::
+
+## Python Demo: Masking a Real Image {.code-small}
+
+```{python}
+from skimage import data
+import numpy as np
+
+image = data.camera().astype(float) / 255
+
+mask = np.zeros_like(image, dtype=bool)
+mask[::2, ::2] = True
+
+y = image[mask]
+zero_filled = np.where(mask, image, 0)
+
+print(image.shape)
+print(y.shape)
+```
+
+## In-Class Exercise 2
 
 ::: {.exercise-box}
 ::: {.tag}
@@ -313,6 +465,18 @@ Suppose an operator keeps only every other pixel.
 1. What information has been lost?
 2. Can interpolation recover the original image exactly?
 3. What assumptions could make recovery plausible?
+:::
+
+## Why Assumptions Enter
+
+::: {.takeaway-box}
+The missing pixels are not hidden somewhere in $y$.
+
+To choose one reconstruction among many possible images, we need a principle:
+
+$$
+\text{data fit} + \text{prior knowledge}.
+$$
 :::
 
 ## Prior Knowledge
@@ -366,6 +530,28 @@ Preview
 Next week, we will make this precise and compute it.
 :::
 :::
+
+## End-of-Class Checkpoint
+
+::: {.exercise-box}
+::: {.tag}
+Exit ticket
+:::
+
+For each situation, identify $x$, $y$, $A$, and one reasonable prior:
+
+1. a blurred phone photograph;
+2. a CT scan with few projection angles;
+3. an old photograph with scratches and missing regions.
+:::
+
+## Suggested Answers
+
+| Situation | $A$ | Possible prior |
+|---|---|---|
+| blurred photo | convolution | sharp edges, natural-image smoothness |
+| few-angle CT | projection operator | piecewise smooth anatomy |
+| missing regions | masking operator | texture or geometric continuation |
 
 ## What Students Should Remember
 

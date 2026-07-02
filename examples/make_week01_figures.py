@@ -110,6 +110,47 @@ def make_real_image_vectorization(path: Path) -> None:
     plt.close(fig)
 
 
+def make_real_image_masking(path: Path) -> None:
+    image = data.camera().astype(float) / 255.0
+    image = image[145:273, 150:278]
+    mask = np.zeros_like(image, dtype=bool)
+    mask[::2, ::2] = True
+    observed = np.where(mask, image, 1.0)
+    zero_filled = np.where(mask, image, 0.0)
+
+    fig = plt.figure(figsize=(12.8, 4.6), dpi=150)
+    gs = fig.add_gridspec(1, 4, width_ratios=[1, 1, 1, 1], wspace=0.18)
+
+    panels = [
+        ("unknown x", image, "gray"),
+        ("sampling mask", mask.astype(float), "gray"),
+        ("observed y", observed, "gray"),
+        ("zero-filled view", zero_filled, "gray"),
+    ]
+
+    for idx, (title, values, cmap) in enumerate(panels):
+        ax = fig.add_subplot(gs[0, idx])
+        ax.imshow(values, cmap=cmap, vmin=0, vmax=1)
+        ax.set_title(title, fontsize=14, color="#1f4f63", pad=9)
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    fig.text(
+        0.5,
+        0.035,
+        "masking model:  y = Mx  keeps only selected pixels",
+        ha="center",
+        va="center",
+        fontsize=14,
+        color="#202428",
+    )
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     make_sampling_vectorization(Path("assets/figures/week01-sampling-vectorization.png"))
     make_real_image_vectorization(Path("assets/figures/week01-real-image-vectorization.png"))
+    make_real_image_masking(Path("assets/figures/week01-real-image-masking.png"))
