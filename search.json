@@ -7,25 +7,60 @@
     "text": "The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.\nEach team will:\n\ndefine the forward model;\nimplement reconstruction methods in Python;\nanalyze parameter sensitivity;\ninterpret reconstruction quality;\nsubmit a written report and code;\ncomplete an individual oral defense."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
+    "objectID": "slides/template.html#section-divider",
+    "href": "slides/template.html#section-divider",
+    "title": "MATH 435 Slide Template",
+    "section": "Section Divider",
+    "text": "Section Divider\n\nPart 1\n\nThe big conceptual turn"
   },
   {
-    "objectID": "index.html#current-focus",
-    "href": "index.html#current-focus",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Current Focus",
-    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
+    "objectID": "slides/template.html#learning-goals",
+    "href": "slides/template.html#learning-goals",
+    "title": "MATH 435 Slide Template",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this lecture, students should be able to:\n\nstate the mathematical object being modeled;\nidentify the forward operator and observed data;\nexplain why the inverse problem is difficult;\nimplement the minimal computational representation."
   },
   {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
+    "objectID": "slides/template.html#definition-slide",
+    "href": "slides/template.html#definition-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Definition Slide",
+    "text": "Definition Slide\n\n\nDefinition\n\nAn image is modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}\n\nor, after sampling, as an array U \\in \\mathbb{R}^{m \\times n}."
+  },
+  {
+    "objectID": "slides/template.html#model-slide",
+    "href": "slides/template.html#model-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Model Slide",
+    "text": "Model Slide\n\n\nForward model\n\n\ny = A x + \\eta\n\n\nx: unknown image\nA: forward imaging operator\ny: observed data\n\\eta: noise or model error"
+  },
+  {
+    "objectID": "slides/template.html#figure-slide",
+    "href": "slides/template.html#figure-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Figure Slide",
+    "text": "Figure Slide\n\n\n\n\nUse one strong visual per slide when possible.\n\n\n\nThe figure should carry the idea before the equations formalize it."
+  },
+  {
+    "objectID": "slides/template.html#code-slide",
+    "href": "slides/template.html#code-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Code Slide",
+    "text": "Code Slide\n\nimport numpy as np\n\nm, n = 4, 5\nU = np.arange(m * n).reshape(m, n)\nx = U.reshape(-1)\n\nprint(U)\nprint(x)"
+  },
+  {
+    "objectID": "slides/template.html#exercise-slide",
+    "href": "slides/template.html#exercise-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Exercise Slide",
+    "text": "Exercise Slide\n\n\nIn class\n\nSuppose an operator keeps only every other pixel. What information is lost, and what kind of prior knowledge could help recover a plausible image?"
+  },
+  {
+    "objectID": "slides/template.html#takeaway-slide",
+    "href": "slides/template.html#takeaway-slide",
+    "title": "MATH 435 Slide Template",
+    "section": "Takeaway Slide",
+    "text": "Takeaway Slide\n\n\nTakeaway\n\nThe course repeatedly moves through the same chain:\n\n\\text{physics} \\to \\text{operator} \\to \\text{inverse problem} \\to \\text{regularized computation}."
   },
   {
     "objectID": "syllabus.html",
@@ -63,115 +98,199 @@
     "text": "Assessment Structure\n\n\n\n\n\n\n\n\nAssessment\nWeight\nTiming\n\n\n\n\nQuizzes\n15%\nWeeks 4 and 12\n\n\nTwo-student modeling project\n30%\nAssigned Week 6, report Week 14, defense Week 15\n\n\nSemester examination\n25%\nWeek 8\n\n\nFinal examination\n30%\nExam week"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "",
+    "text": "This repository contains the working course materials for MATH 435: Mathematical Imaging.\nThe course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods."
+  },
+  {
+    "objectID": "index.html#current-focus",
+    "href": "index.html#current-focus",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Current Focus",
+    "text": "Current Focus\n\nBuild lecture slides first.\nKeep Python examples close to the lectures.\nGrow the online book from the stabilized slide material.\nPublish everything from GitHub using Quarto and GitHub Pages."
+  },
+  {
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\nImages as mathematical objects and linear systems.\nBlur, convolution, Fourier analysis, and noise.\nIll-posed inverse problems and regularization.\nVariational imaging and optimization.\nSparse and multiscale representations.\nModel-based, data-driven, and plug-and-play reconstruction.\nStability, robustness, ethics, and project defenses."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#opening-question",
+    "href": "slides/week-01-image-formation.html#opening-question",
+    "title": "Images as Mathematical Objects",
+    "section": "Opening Question",
+    "text": "Opening Question\n\nMathematical imaging begins here\n\nIf a scanner gives us imperfect data, what exactly are we trying to recover?"
+  },
+  {
     "objectID": "slides/week-01-image-formation.html#today",
     "href": "slides/week-01-image-formation.html#today",
     "title": "Images as Mathematical Objects",
     "section": "Today",
-    "text": "Today\n\nWhat is an image mathematically?\nContinuous images, discrete images, and pixels\nImages as vectors\nImaging as a forward model\nFirst computational representation in Python"
+    "text": "Today\n\n\nModel an image as a function, an array, and a vector.\nConnect pixel grids to linear algebra.\nIntroduce the forward model y = Ax + \\eta.\nSeparate image formation from image reconstruction.\nWrite the first NumPy representations."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#the-course-pattern",
+    "href": "slides/week-01-image-formation.html#the-course-pattern",
+    "title": "Images as Mathematical Objects",
+    "section": "The Course Pattern",
+    "text": "The Course Pattern\n\nflowchart LR\n  P[\"physics or sensing\"] --&gt; A[\"forward operator A\"]\n  A --&gt; Y[\"data y\"]\n  Y --&gt; R[\"reconstruction method\"]\n  R --&gt; X[\"image estimate x-hat\"]\n\n\n\n\n\n\n\n\n\n\n\nMost of the course studies the middle two arrows: how data are produced, and how reconstruction stabilizes the inverse problem."
   },
   {
     "objectID": "slides/week-01-image-formation.html#what-is-an-image",
     "href": "slides/week-01-image-formation.html#what-is-an-image",
     "title": "Images as Mathematical Objects",
     "section": "What Is an Image?",
-    "text": "What Is an Image?\nAt the mathematical level, an image is often modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}\n\nwhere:\n\n\\Omega is the spatial domain\nu(x,y) is the intensity at location (x,y)\ncolor images use several channels, for example u : \\Omega \\to \\mathbb{R}^3"
+    "text": "What Is an Image?\n\n\nContinuous model\n\nAt the mathematical level, a grayscale image is often modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}.\n\nThe value u(x,y) is the intensity at location (x,y)."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#color-and-multichannel-images",
+    "href": "slides/week-01-image-formation.html#color-and-multichannel-images",
+    "title": "Images as Mathematical Objects",
+    "section": "Color and Multichannel Images",
+    "text": "Color and Multichannel Images\n\n\nFor color images, the value at each point has several components:\n\nu : \\Omega \\to \\mathbb{R}^3.\n\nEach location stores red, green, and blue intensities.\n\n\n\nQuestion\n\nWhat changes mathematically when a medical image has many channels, time frames, or slices?"
   },
   {
     "objectID": "slides/week-01-image-formation.html#from-continuous-to-discrete",
     "href": "slides/week-01-image-formation.html#from-continuous-to-discrete",
     "title": "Images as Mathematical Objects",
     "section": "From Continuous to Discrete",
-    "text": "From Continuous to Discrete\nDigital images are sampled on a grid:\n\nu_{i,j} \\approx u(x_i, y_j)\n\nFor an image with m rows and n columns:\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n} \\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n} \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}"
+    "text": "From Continuous to Discrete\nDigital images are sampled on a grid:\n\nu_{i,j} \\approx u(x_i, y_j).\n\nFor an image with m rows and n columns:\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n} \\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n} \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#pixel-grid",
-    "href": "slides/week-01-image-formation.html#pixel-grid",
+    "objectID": "slides/week-01-image-formation.html#sampling-and-vectorization",
+    "href": "slides/week-01-image-formation.html#sampling-and-vectorization",
     "title": "Images as Mathematical Objects",
-    "section": "Pixel Grid",
-    "text": "Pixel Grid\n\nflowchart LR\n  A[\"Continuous scene&lt;br/&gt;u(x,y)\"] --&gt; B[\"Sensor sampling\"]\n  B --&gt; C[\"Pixel grid&lt;br/&gt;m x n array\"]\n  C --&gt; D[\"Computation&lt;br/&gt;matrix/vector model\"]"
+    "section": "Sampling and Vectorization",
+    "text": "Sampling and Vectorization"
   },
   {
     "objectID": "slides/week-01-image-formation.html#matrix-or-vector",
     "href": "slides/week-01-image-formation.html#matrix-or-vector",
     "title": "Images as Mathematical Objects",
     "section": "Matrix or Vector?",
-    "text": "Matrix or Vector?\nFor visualization, a grayscale image is naturally a matrix:\n\nU \\in \\mathbb{R}^{m \\times n}\n\nFor linear algebra, we often reshape it as a vector:\n\nx = \\operatorname{vec}(U) \\in \\mathbb{R}^{mn}\n\nThis lets imaging problems use the tools of linear systems."
+    "text": "Matrix or Vector?\n\n\n\nVisualization\n\nFor display, a grayscale image is naturally a matrix:\n\nU \\in \\mathbb{R}^{m \\times n}.\n\n\n\n\nComputation\n\nFor linear algebra, reshape the image as\n\nx = \\operatorname{vec}(U) \\in \\mathbb{R}^{mn}."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#a-first-forward-model",
-    "href": "slides/week-01-image-formation.html#a-first-forward-model",
+    "objectID": "slides/week-01-image-formation.html#why-vectorize",
+    "href": "slides/week-01-image-formation.html#why-vectorize",
     "title": "Images as Mathematical Objects",
-    "section": "A First Forward Model",
-    "text": "A First Forward Model\nThe central model of the course is:\n\ny = A x + \\eta\n\nwhere:\n\nx is the unknown clean image\nA is the forward imaging operator\ny is the observed data\n\\eta is noise or modeling error"
+    "section": "Why Vectorize?",
+    "text": "Why Vectorize?\nOnce U is written as a vector x, we can use matrices to represent imaging operations:\n\nx \\mapsto Ax.\n\nExamples:\n\nmasking pixels;\nblurring;\nsampling Fourier coefficients;\nprojecting along lines;\ncombining channels or frames."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#examples-of-forward-operators",
-    "href": "slides/week-01-image-formation.html#examples-of-forward-operators",
+    "objectID": "slides/week-01-image-formation.html#first-numpy-representation",
+    "href": "slides/week-01-image-formation.html#first-numpy-representation",
     "title": "Images as Mathematical Objects",
-    "section": "Examples of Forward Operators",
-    "text": "Examples of Forward Operators\n\n\n\nOperator\nMeaning\n\n\n\n\nA = I\ndirect observation\n\n\nconvolution matrix\nblur\n\n\nsubsampling matrix\nmissing pixels or lower resolution\n\n\nFourier sampling\nMRI-style acquisition\n\n\nprojection operator\ntomography"
+    "section": "First NumPy Representation",
+    "text": "First NumPy Representation\n\nimport numpy as np\n\nm, n = 4, 5\nU = np.arange(m * n).reshape(m, n)\n\nx = U.reshape(-1)\nU_back = x.reshape(m, n)\n\nprint(U)\nprint(x)\n\n\nThe same image can be an array for display and a vector for linear algebra."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#why-this-view-matters",
-    "href": "slides/week-01-image-formation.html#why-this-view-matters",
+    "objectID": "slides/week-01-image-formation.html#vectorization-convention",
+    "href": "slides/week-01-image-formation.html#vectorization-convention",
     "title": "Images as Mathematical Objects",
-    "section": "Why This View Matters",
-    "text": "Why This View Matters\nMost imaging problems are inverse problems:\n\n\\text{given } y,\\quad \\text{recover } x\n\nThe naive answer would be:\n\nx = A^{-1}y\n\nBut in real imaging, this often fails."
+    "section": "Vectorization Convention",
+    "text": "Vectorization Convention\nNumPy uses row-major order by default:\n\nU = np.array([[1, 2, 3],\n              [4, 5, 6]])\n\nprint(U.reshape(-1))\n# [1 2 3 4 5 6]\n\n\nWhen translating formulas into code, always state your vectorization convention."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#why-inversion-fails",
-    "href": "slides/week-01-image-formation.html#why-inversion-fails",
+    "objectID": "slides/week-01-image-formation.html#the-forward-model",
+    "href": "slides/week-01-image-formation.html#the-forward-model",
     "title": "Images as Mathematical Objects",
-    "section": "Why Inversion Fails",
-    "text": "Why Inversion Fails\nThree recurring difficulties:\n\nA may not be invertible.\nA may be badly conditioned.\nNoise \\eta may be amplified by inversion.\n\nThis is the reason regularization is not a technical detail. It is the heart of reconstruction."
+    "section": "The Forward Model",
+    "text": "The Forward Model\n\nThe central equation\n\nFrom image formation to inverse problems"
   },
   {
-    "objectID": "slides/week-01-image-formation.html#python-representation",
-    "href": "slides/week-01-image-formation.html#python-representation",
+    "objectID": "slides/week-01-image-formation.html#the-central-model",
+    "href": "slides/week-01-image-formation.html#the-central-model",
     "title": "Images as Mathematical Objects",
-    "section": "Python Representation",
-    "text": "Python Representation\n\nimport numpy as np\n\nm, n = 4, 5\nU = np.arange(m * n).reshape(m, n)\n\nx = U.reshape(-1)\nU_back = x.reshape(m, n)\n\nprint(U)\nprint(x)"
+    "section": "The Central Model",
+    "text": "The Central Model\n\n\nForward model\n\n\ny = A x + \\eta.\n\n\nx: unknown clean image;\nA: forward imaging operator;\ny: observed data;\n\\eta: noise or modeling error."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#row-major-detail",
-    "href": "slides/week-01-image-formation.html#row-major-detail",
+    "objectID": "slides/week-01-image-formation.html#what-does-a-mean",
+    "href": "slides/week-01-image-formation.html#what-does-a-mean",
     "title": "Images as Mathematical Objects",
-    "section": "Row-Major Detail",
-    "text": "Row-Major Detail\nNumPy stores arrays in row-major order by default:\n\nU = np.array([[1, 2, 3],\n              [4, 5, 6]])\n\nprint(U.reshape(-1))\n# [1 2 3 4 5 6]\n\nWhen implementing formulas, always state your vectorization convention."
+    "section": "What Does A Mean?",
+    "text": "What Does A Mean?\n\n\n\nOperator\nImaging meaning\nTypical difficulty\n\n\n\n\nI\ndirect observation\nnoise\n\n\nmasking\nmissing pixels\nincomplete data\n\n\nconvolution\nblur\nlost high frequencies\n\n\nFourier sampling\nMRI-style acquisition\nindirect measurements\n\n\nprojection\ntomography\nincomplete angles"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#image-formation-vs-reconstruction",
+    "href": "slides/week-01-image-formation.html#image-formation-vs-reconstruction",
+    "title": "Images as Mathematical Objects",
+    "section": "Image Formation vs Reconstruction",
+    "text": "Image Formation vs Reconstruction\n\n\n\nForward problem\n\nGiven x, predict the measured data:\n\ny = Ax + \\eta.\n\nUsually stable.\n\n\n\nInverse problem\n\nGiven y, estimate the unknown image:\n\n\\hat{x} \\approx x.\n\nOften unstable."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#why-the-inverse-problem-is-hard",
+    "href": "slides/week-01-image-formation.html#why-the-inverse-problem-is-hard",
+    "title": "Images as Mathematical Objects",
+    "section": "Why the Inverse Problem Is Hard",
+    "text": "Why the Inverse Problem Is Hard\nThe naive answer would be:\n\nx = A^{-1}y.\n\nBut this can fail because:\n\nA may not be invertible.\nA may be badly conditioned.\nNoise can be amplified by inversion.\nMany plausible images may explain the same data."
   },
   {
     "objectID": "slides/week-01-image-formation.html#a-toy-masking-operator",
     "href": "slides/week-01-image-formation.html#a-toy-masking-operator",
     "title": "Images as Mathematical Objects",
     "section": "A Toy Masking Operator",
-    "text": "A Toy Masking Operator\n\nimport numpy as np\n\nx = np.linspace(0, 1, 12)\nmask = np.array([1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1], dtype=bool)\n\ny = x[mask]\n\nprint(\"unknown image vector:\", x)\nprint(\"observed entries:\", y)\n\nThis is a very simple forward model: only some pixels are observed."
+    "text": "A Toy Masking Operator\nSuppose only some pixels are measured.\n\nimport numpy as np\n\nx = np.linspace(0, 1, 12)\nmask = np.array([1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1], dtype=bool)\n\ny = x[mask]\n\nprint(\"unknown image vector:\", x)\nprint(\"observed entries:\", y)"
   },
   {
-    "objectID": "slides/week-01-image-formation.html#in-class-question",
-    "href": "slides/week-01-image-formation.html#in-class-question",
+    "objectID": "slides/week-01-image-formation.html#matrix-view-of-masking",
+    "href": "slides/week-01-image-formation.html#matrix-view-of-masking",
     "title": "Images as Mathematical Objects",
-    "section": "In-Class Question",
-    "text": "In-Class Question\nSuppose A keeps only every other pixel.\nWhat information has been lost?\nWhat kinds of assumptions might help recover a plausible image?"
+    "section": "Matrix View of Masking",
+    "text": "Matrix View of Masking\n\n\ny = Mx\n\n\nHere M selects rows from the identity matrix.\n\nIf M has fewer rows than columns, can there be a unique inverse?"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#in-class-exercise",
+    "href": "slides/week-01-image-formation.html#in-class-exercise",
+    "title": "Images as Mathematical Objects",
+    "section": "In-Class Exercise",
+    "text": "In-Class Exercise\n\n\nThink, then discuss\n\nSuppose an operator keeps only every other pixel.\n\nWhat information has been lost?\nCan interpolation recover the original image exactly?\nWhat assumptions could make recovery plausible?"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#prior-knowledge",
+    "href": "slides/week-01-image-formation.html#prior-knowledge",
+    "title": "Images as Mathematical Objects",
+    "section": "Prior Knowledge",
+    "text": "Prior Knowledge\nReconstruction needs information not present in the data alone.\nCommon priors in this course:\n\nsmall energy or smoothness;\nsparse representation;\npiecewise smoothness with edges;\nphysical constraints;\nlearned or data-driven regularity."
   },
   {
     "objectID": "slides/week-01-image-formation.html#modeling-habit",
     "href": "slides/week-01-image-formation.html#modeling-habit",
     "title": "Images as Mathematical Objects",
     "section": "Modeling Habit",
-    "text": "Modeling Habit\nFor every imaging problem, ask:\n\nWhat is the unknown?\nWhat is measured?\nWhat is the forward operator?\nWhat noise model is reasonable?\nWhat prior knowledge should guide reconstruction?"
+    "text": "Modeling Habit\n\nA practical checklist\n\nAsk these questions for every problem."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#takeaways",
-    "href": "slides/week-01-image-formation.html#takeaways",
+    "objectID": "slides/week-01-image-formation.html#the-five-questions",
+    "href": "slides/week-01-image-formation.html#the-five-questions",
     "title": "Images as Mathematical Objects",
-    "section": "Takeaways",
-    "text": "Takeaways\n\nA digital image can be treated as both an array and a vector.\nImage formation can often be written as y = Ax + \\eta.\nReconstruction asks for x from incomplete, blurred, noisy, or indirect data.\nThe inverse problem viewpoint will organize the whole course."
+    "section": "The Five Questions",
+    "text": "The Five Questions\n\n\nWhat is the unknown x?\nWhat is measured as data y?\nWhat is the forward operator A?\nWhat noise model is reasonable for \\eta?\nWhat prior knowledge should guide reconstruction?"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#mini-case-blurred-photograph",
+    "href": "slides/week-01-image-formation.html#mini-case-blurred-photograph",
+    "title": "Images as Mathematical Objects",
+    "section": "Mini-Case: Blurred Photograph",
+    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext week, we will make this precise and compute it."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#what-students-should-remember",
+    "href": "slides/week-01-image-formation.html#what-students-should-remember",
+    "title": "Images as Mathematical Objects",
+    "section": "What Students Should Remember",
+    "text": "What Students Should Remember\n\n\nA digital image can be treated as a function, matrix, or vector.\nLinear operators let us write imaging systems as y = Ax + \\eta.\nReconstruction is difficult because the inverse map may be unstable or nonunique.\nRegularization adds mathematical prior knowledge to stabilize recovery."
   },
   {
     "objectID": "slides/week-01-image-formation.html#next-time",
     "href": "slides/week-01-image-formation.html#next-time",
     "title": "Images as Mathematical Objects",
     "section": "Next Time",
-    "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution\npoint spread functions\nboundary conditions\nblur as a linear operator"
+    "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
   }
 ]
