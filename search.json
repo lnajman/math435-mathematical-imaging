@@ -2163,6 +2163,217 @@
     "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
   },
   {
+    "objectID": "book/week-02-convolution-blur.html",
+    "href": "book/week-02-convolution-blur.html",
+    "title": "Convolution and Blur",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#learning-goals",
+    "href": "book/week-02-convolution-blur.html#learning-goals",
+    "title": "Convolution and Blur",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ncompute a simple 1D convolution;\ninterpret a blur kernel as a point spread function;\nexplain why fixed blur is a linear operator;\ndescribe the role of boundary conditions;\nexplain why deblurring is unstable.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#local-weighted-averages",
+    "href": "book/week-02-convolution-blur.html#local-weighted-averages",
+    "title": "Convolution and Blur",
+    "section": "Local Weighted Averages",
+    "text": "Local Weighted Averages\nConvolution begins with a local rule. For a one-dimensional signal x, define\n\ny_i = \\frac{1}{4}x_{i-1}+\\frac{1}{2}x_i+\\frac{1}{4}x_{i+1}.\n\nThe output at index i is a weighted average of nearby input values. The weights\n\nh =\n\\begin{bmatrix}\n\\frac{1}{4} & \\frac{1}{2} & \\frac{1}{4}\n\\end{bmatrix}\n\nform a convolution kernel.\nIf the weights are nonnegative and sum to 1, the operation preserves average brightness for constant signals.\n\n\nConvolution spreads a local peak into neighboring positions.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#the-convolution-formula",
+    "href": "book/week-02-convolution-blur.html#the-convolution-formula",
+    "title": "Convolution and Blur",
+    "section": "The Convolution Formula",
+    "text": "The Convolution Formula\nOne common discrete convention is\n\n(h*x)_i = \\sum_k h_k x_{i-k}.\n\nFor symmetric kernels, convolution and correlation produce the same result. For nonsymmetric kernels, the reversal in the index convention matters.\nFor a fixed kernel h, convolution is linear:\n\nh*(a x + b z) = a(h*x)+b(h*z).\n\nIt is also shift-invariant: the same local rule is applied at every position.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#two-dimensional-convolution",
+    "href": "book/week-02-convolution-blur.html#two-dimensional-convolution",
+    "title": "Convolution and Blur",
+    "section": "Two-Dimensional Convolution",
+    "text": "Two-Dimensional Convolution\nFor an image x[i,j] and a 2D kernel h[a,b],\n\ny[i,j]\n=\n(h*x)[i,j]\n=\n\\sum_{a,b} h[a,b]\\,x[i-a,j-b].\n\nThe output pixel is a weighted combination of nearby input pixels.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#point-spread-function",
+    "href": "book/week-02-convolution-blur.html#point-spread-function",
+    "title": "Convolution and Blur",
+    "section": "Point Spread Function",
+    "text": "Point Spread Function\nThe point spread function (PSF) describes how an imaging system records a single ideal bright point.\nIf a point is recorded as a small Gaussian blob, then the image is blurred by approximately the same Gaussian pattern at every location. Under that assumption, the imaging model is convolution.\n\n\nCommon kernels model different kinds of blur.\n\n\n\n\nKernel\nEffect\nPossible interpretation\n\n\n\n\nidentity\nno blur\nideal sampling\n\n\nbox average\nlocal averaging\nsimple smoothing\n\n\nGaussian\nsmooth blur\ndefocus or optics\n\n\nmotion\ndirectional streak\ncamera or object motion",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#blur-as-a-forward-operator",
+    "href": "book/week-02-convolution-blur.html#blur-as-a-forward-operator",
+    "title": "Convolution and Blur",
+    "section": "Blur As A Forward Operator",
+    "text": "Blur As A Forward Operator\nIf h is fixed, then blur can be written as\n\ny = h*x.\n\nAfter vectorization, this becomes\n\ny = Ax,\n\nwhere A is the matrix that represents convolution by h under the chosen boundary convention.\n\n\n\n\n\n\nNote\n\n\n\nA fixed blur is linear. This does not mean every image formation process is linear. It means this particular controlled model is linear.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#real-image-blur",
+    "href": "book/week-02-convolution-blur.html#real-image-blur",
+    "title": "Convolution and Blur",
+    "section": "Real Image Blur",
+    "text": "Real Image Blur\n\n\nDifferent kernels remove different details from the same image.\n\nBlur reduces local contrast. Edges become less sharp, fine textures disappear, and point-like structures spread into neighborhoods.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#boundary-conditions",
+    "href": "book/week-02-convolution-blur.html#boundary-conditions",
+    "title": "Convolution and Blur",
+    "section": "Boundary Conditions",
+    "text": "Boundary Conditions\nNear the edge of an image, a convolution kernel asks for values outside the recorded grid. Boundary conditions decide what those values mean.\nCommon choices include:\n\n\n\nBoundary condition\nMeaning\n\n\n\n\nzero padding\noutside pixels are zero\n\n\nreflection\nimage reflects at the boundary\n\n\nperiodic\nimage wraps around\n\n\nnearest\noutside pixels copy the nearest boundary value\n\n\n\n\n\nThe same kernel can produce different edge behavior depending on the boundary rule.\n\nBoundary choices are part of the mathematical model. They should not be treated as harmless implementation details.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#why-deblurring-is-hard",
+    "href": "book/week-02-convolution-blur.html#why-deblurring-is-hard",
+    "title": "Convolution and Blur",
+    "section": "Why Deblurring Is Hard",
+    "text": "Why Deblurring Is Hard\nDeblurring asks for an image x from a blurred observation y:\n\ny = Ax + \\eta.\n\nIf blur attenuates fine details, then trying to invert the blur must amplify the components that were weakened. Unfortunately, noise is also amplified in those same directions.\n\n\nNaive inversion can turn small noise into large oscillations.\n\nThis is the first appearance of a central course theme: reconstruction is not only inversion. It is stabilized inversion.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#computation",
+    "href": "book/week-02-convolution-blur.html#computation",
+    "title": "Convolution and Blur",
+    "section": "Computation",
+    "text": "Computation\nThe Week 2 notebook lets you change kernels, boundary modes, and deblurring stabilizers.\nRun:\npython3 examples/week02_convolution_blur.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#exercises",
+    "href": "book/week-02-convolution-blur.html#exercises",
+    "title": "Convolution and Blur",
+    "section": "Exercises",
+    "text": "Exercises\n\nCompute one output value for the kernel [1/4,1/2,1/4] and the signal [0,0,1,3,2,0,0].\nExplain why a normalized blur kernel preserves constant images.\nCompare zero-padding and reflection near an image boundary.\nExplain in your own words why deblurring amplifies noise.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/week-02-convolution-blur.html#takeaways",
+    "href": "book/week-02-convolution-blur.html#takeaways",
+    "title": "Convolution and Blur",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nConvolution is a local weighted averaging rule.\nA point spread function models how one ideal point is spread by the imaging system.\nFixed blur is linear and can be written as y=Ax.\nBoundary conditions are modeling choices.\nDeblurring is unstable because blur weakens information that inversion tries to recover.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "2. Convolution and blur"
+    ]
+  },
+  {
+    "objectID": "book/index.html",
+    "href": "book/index.html",
+    "title": "Mathematical Imaging",
+    "section": "",
+    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for 75-minute class meetings; the book is designed for slower reading, review, and project preparation.\nThe book grows from the stabilized course materials. Each chapter connects:",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
+    "objectID": "book/index.html#how-to-use-this-book",
+    "href": "book/index.html#how-to-use-this-book",
+    "title": "Mathematical Imaging",
+    "section": "How To Use This Book",
+    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure and the notebook for experiments.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat can go wrong?",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
+    "objectID": "book/index.html#current-chapters",
+    "href": "book/index.html#current-chapters",
+    "title": "Mathematical Imaging",
+    "section": "Current Chapters",
+    "text": "Current Chapters\n\n\n\nChapter\nTopic\nSlides\nNotebook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
+    "objectID": "book/index.html#roadmap",
+    "href": "book/index.html#roadmap",
+    "title": "Mathematical Imaging",
+    "section": "Roadmap",
+    "text": "Roadmap\nThe complete book will follow the course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14-15\nRobustness, ethics, project reporting, oral defense\n\n\n\nThe first writing pass contains Chapters 1-3. Later passes will convert the remaining weekly materials into full chapters.",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
+    "objectID": "book/index.html#notation",
+    "href": "book/index.html#notation",
+    "title": "Mathematical Imaging",
+    "section": "Notation",
+    "text": "Notation\nWe will use:\n\nu for a continuous image function;\nU for a discrete image array;\nx=\\operatorname{vec}(U) for a vectorized image;\nA for a forward operator;\ny for measured data;\n\\eta for noise;\n\\hat{x} for a reconstruction.\n\nThe meaning of A changes from chapter to chapter: it may be a mask, a blur, a Fourier sampling operator, or a more general measurement model.",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -2441,6 +2652,318 @@
     "title": "Notebooks",
     "section": "Working Locally",
     "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
+  },
+  {
+    "objectID": "book/week-01-image-formation.html",
+    "href": "book/week-01-image-formation.html",
+    "title": "Images as Mathematical Objects",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#learning-goals",
+    "href": "book/week-01-image-formation.html#learning-goals",
+    "title": "Images as Mathematical Objects",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndescribe an image as a function, an array, and a vector;\nexplain why vectorization is useful for linear algebra;\nwrite a first forward model y=Ax+\\eta;\ndistinguish recorded missing pixels from hidden scene content;\nrun a small NumPy experiment with image arrays and masks.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#images-as-functions",
+    "href": "book/week-01-image-formation.html#images-as-functions",
+    "title": "Images as Mathematical Objects",
+    "section": "Images As Functions",
+    "text": "Images As Functions\nAt the mathematical level, a grayscale image is often modeled as a function\n\nu : \\Omega \\subset \\mathbb{R}^2 \\to \\mathbb{R}.\n\nThe domain \\Omega is the region being imaged. The value u(s,t) is the intensity at location (s,t). This continuous model is useful because many imaging systems are described physically before they are discretized.\nFor a color image, the value has several components:\n\nu : \\Omega \\to \\mathbb{R}^3.\n\nFor a video, a 3D volume, or a multispectral image, the range and the domain can have even more dimensions. The same principle remains: an image is data organized over space, and sometimes over time, wavelength, or slice index.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#images-as-arrays",
+    "href": "book/week-01-image-formation.html#images-as-arrays",
+    "title": "Images as Mathematical Objects",
+    "section": "Images As Arrays",
+    "text": "Images As Arrays\nA digital image is sampled on a grid. If the image has m rows and n columns, we write\n\nU =\n\\begin{bmatrix}\nu_{1,1} & u_{1,2} & \\cdots & u_{1,n}\\\\\nu_{2,1} & u_{2,2} & \\cdots & u_{2,n}\\\\\n\\vdots & \\vdots & \\ddots & \\vdots\\\\\nu_{m,1} & u_{m,2} & \\cdots & u_{m,n}\n\\end{bmatrix}.\n\nThe array is the natural form for display and local operations. Neighboring entries in the array correspond to neighboring pixels.\n\n\n\n\n\n\nNote\n\n\n\nThe displayed photograph is not the mathematical object by itself. The mathematical object is the numerical array that the display visualizes.\n\n\n\n\nReal image data can be inspected as an array, a pixel crop, or a vector.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#images-as-vectors",
+    "href": "book/week-01-image-formation.html#images-as-vectors",
+    "title": "Images as Mathematical Objects",
+    "section": "Images As Vectors",
+    "text": "Images As Vectors\nFor linear algebra, we often reshape the image matrix U into a vector\n\nx = \\operatorname{vec}(U) \\in \\mathbb{R}^{mn}.\n\nIf row-major order is used, the rows of U are read from left to right:\n\nU =\n\\begin{bmatrix}\n10 & 20 & 30\\\\\n40 & 50 & 60\n\\end{bmatrix}\n\\quad\\Longrightarrow\\quad\n\\operatorname{vec}(U)=\n\\begin{bmatrix}\n10 & 20 & 30 & 40 & 50 & 60\n\\end{bmatrix}^{T}.\n\nVectorization does not change the information. It changes the shape so that matrix-vector notation can be used.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#forward-models",
+    "href": "book/week-01-image-formation.html#forward-models",
+    "title": "Images as Mathematical Objects",
+    "section": "Forward Models",
+    "text": "Forward Models\nOnce the unknown image is written as a vector x, a controlled measurement process can often be written as\n\ny = Ax + \\eta.\n\nHere:\n\nx is the unknown image;\nA is the forward operator;\ny is the recorded data;\n\\eta is noise or measurement error.\n\nThis formula is a modeling template, not a claim that every visual process is linear. It is useful when the imaging system is controlled and the measurement rule is known well enough to write down.\nExamples of forward operators include:\n\n\n\nOperator\nWhat it does\n\n\n\n\nidentity\nrecords every pixel directly\n\n\nmask\nrecords only selected pixels\n\n\nblur\nspreads each pixel to its neighbors\n\n\nFourier sampling\nrecords frequency coefficients\n\n\nprojection\nrecords line integrals or summaries",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#masking-recorded-pixels",
+    "href": "book/week-01-image-formation.html#masking-recorded-pixels",
+    "title": "Images as Mathematical Objects",
+    "section": "Masking Recorded Pixels",
+    "text": "Masking Recorded Pixels\nA binary mask models which recorded pixels are available. If M selects a subset of entries of x, then\n\ny = Mx\n\nrecords only those entries.\n\n\nMasking recorded pixels creates missing entries in the digital observation.\n\nThe inverse problem is then to infer something about the missing values from the observed ones and from assumptions about images.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#missing-pixels-versus-occlusion",
+    "href": "book/week-01-image-formation.html#missing-pixels-versus-occlusion",
+    "title": "Images as Mathematical Objects",
+    "section": "Missing Pixels Versus Occlusion",
+    "text": "Missing Pixels Versus Occlusion\nIt is important to distinguish two situations:\n\nA pixel was recorded but then removed or masked.\nA part of the physical scene was hidden from the sensor.\n\nThe first case is a missing-data problem in the recorded image. The second is a visibility problem in the physical scene.\nIf a person is behind a tree, the camera did not record the hidden part of the person. No mathematical method can recover information that was never measured without adding assumptions from outside the measurement. This is one reason image inverse problems are different from many idealized signal separation problems.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#computation",
+    "href": "book/week-01-image-formation.html#computation",
+    "title": "Images as Mathematical Objects",
+    "section": "Computation",
+    "text": "Computation\nThe Week 1 notebook asks you to inspect image arrays, reshape them, and apply simple masks.\nRun:\npython3 examples/week01_image_arrays.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#exercises",
+    "href": "book/week-01-image-formation.html#exercises",
+    "title": "Images as Mathematical Objects",
+    "section": "Exercises",
+    "text": "Exercises\n\nWrite the row-major vectorization of a 3 \\times 4 image array with entries 1,\\ldots,12.\nGive an example of a forward operator A that is linear.\nGive an example from real imaging where the physical process is not well described by a linear operator.\nExplain why a mask can model missing recorded pixels but not seeing behind an occluder.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-01-image-formation.html#takeaways",
+    "href": "book/week-01-image-formation.html#takeaways",
+    "title": "Images as Mathematical Objects",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nAn image can be viewed as a function, an array, or a vector.\nVectorization lets us write imaging models using linear algebra.\nThe forward model y=Ax+\\eta separates the unknown image, the measurement rule, and noise.\nMissing data in an array is not the same as hidden information in the physical scene.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "1. Images as mathematical objects"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html",
+    "href": "book/week-03-fourier-imaging.html",
+    "title": "Fourier Transform in Imaging",
+    "section": "",
+    "text": "Slides | Notebook | Open in Colab",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#learning-goals",
+    "href": "book/week-03-fourier-imaging.html#learning-goals",
+    "title": "Fourier Transform in Imaging",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret a signal as a sum of oscillations;\nread a 2D Fourier magnitude spectrum;\ndistinguish Fourier magnitude and phase;\nstate the convolution theorem;\nexplain blur and inverse filtering in the frequency domain.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#the-big-idea",
+    "href": "book/week-03-fourier-imaging.html#the-big-idea",
+    "title": "Fourier Transform in Imaging",
+    "section": "The Big Idea",
+    "text": "The Big Idea\nFourier analysis rewrites a signal or image as a combination of oscillations.\nLow frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.\nFor imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#one-dimensional-frequencies",
+    "href": "book/week-03-fourier-imaging.html#one-dimensional-frequencies",
+    "title": "Fourier Transform in Imaging",
+    "section": "One-Dimensional Frequencies",
+    "text": "One-Dimensional Frequencies\nA basic length-N oscillation is\n\ns_k[n] = \\sin(2\\pi k n/N).\n\nThe integer k is the frequency index. A larger k means more oscillations over the same interval.\n\n\nThe Fourier magnitude reveals which oscillations are present.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#the-discrete-fourier-transform",
+    "href": "book/week-03-fourier-imaging.html#the-discrete-fourier-transform",
+    "title": "Fourier Transform in Imaging",
+    "section": "The Discrete Fourier Transform",
+    "text": "The Discrete Fourier Transform\nFor a length-N signal x, the discrete Fourier transform is\n\n\\widehat{x}[k]\n=\n\\sum_{n=0}^{N-1}\nx[n]e^{-2\\pi i kn/N}.\n\nEach coefficient \\widehat{x}[k] measures how much frequency k is present.\nFourier coefficients are complex:\n\n\\widehat{x}[k] = a_k + i b_k.\n\nTheir magnitude and phase are\n\n|\\widehat{x}[k]|\n\\qquad\\text{and}\\qquad\n\\arg(\\widehat{x}[k]).\n\nMagnitude measures strength. Phase measures alignment.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#two-dimensional-fourier-transform",
+    "href": "book/week-03-fourier-imaging.html#two-dimensional-fourier-transform",
+    "title": "Fourier Transform in Imaging",
+    "section": "Two-Dimensional Fourier Transform",
+    "text": "Two-Dimensional Fourier Transform\nFor an image x[m,n], the 2D Fourier transform uses horizontal and vertical frequency indices:\n\n\\widehat{x}[u,v]\n=\n\\sum_{m,n}\nx[m,n]e^{-2\\pi i(um/M+vn/N)}.\n\nThe coefficient \\widehat{x}[u,v] measures an oscillation with horizontal frequency u and vertical frequency v.\n\n\nThe centered log magnitude is a common way to display an image spectrum.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#reading-a-spectrum",
+    "href": "book/week-03-fourier-imaging.html#reading-a-spectrum",
+    "title": "Fourier Transform in Imaging",
+    "section": "Reading A Spectrum",
+    "text": "Reading A Spectrum\nIn a centered spectrum:\n\nthe center corresponds to zero frequency and slow variation;\npoints far from the center correspond to fine oscillations;\ndirection in the spectrum corresponds to orientation in the image.\n\nStrong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#magnitude-and-phase",
+    "href": "book/week-03-fourier-imaging.html#magnitude-and-phase",
+    "title": "Fourier Transform in Imaging",
+    "section": "Magnitude And Phase",
+    "text": "Magnitude And Phase\nEvery Fourier coefficient can be written as\n\n\\widehat{x}[u,v]\n=\n|\\widehat{x}[u,v]|e^{i\\phi[u,v]}.\n\nMagnitude says how much of a frequency is present. Phase says where that frequency is aligned.\n\n\nPhase carries much of the recognizable geometry of an image.\n\nMagnitude is visually important, but phase is often crucial for the location of edges and structures.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#the-convolution-theorem",
+    "href": "book/week-03-fourier-imaging.html#the-convolution-theorem",
+    "title": "Fourier Transform in Imaging",
+    "section": "The Convolution Theorem",
+    "text": "The Convolution Theorem\nThe reason Fourier analysis is central to imaging is the convolution theorem:\n\n\\widehat{h*x}[u,v]\n=\n\\widehat{h}[u,v]\\widehat{x}[u,v].\n\nConvolution in the image domain becomes multiplication in the Fourier domain.\nIf\n\ny = h*x,\n\nthen\n\n\\widehat{y} = \\widehat{h}\\,\\widehat{x}.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#blur-in-frequency-space",
+    "href": "book/week-03-fourier-imaging.html#blur-in-frequency-space",
+    "title": "Fourier Transform in Imaging",
+    "section": "Blur In Frequency Space",
+    "text": "Blur In Frequency Space\nA blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means\n\n|\\widehat{y}[u,v]|\n=\n|\\widehat{h}[u,v]|\\ |\\widehat{x}[u,v]|\n\nis much smaller where |\\widehat{h}[u,v]| is small.\n\n\nBlur is easier to analyze after the Fourier transform because frequencies are multiplied independently.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#low-pass-and-high-pass-filtering",
+    "href": "book/week-03-fourier-imaging.html#low-pass-and-high-pass-filtering",
+    "title": "Fourier Transform in Imaging",
+    "section": "Low-Pass And High-Pass Filtering",
+    "text": "Low-Pass And High-Pass Filtering\nA low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.\n\n\nFrequency filtering gives direct control over coarse and fine image components.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#why-inverse-filtering-is-dangerous",
+    "href": "book/week-03-fourier-imaging.html#why-inverse-filtering-is-dangerous",
+    "title": "Fourier Transform in Imaging",
+    "section": "Why Inverse Filtering Is Dangerous",
+    "text": "Why Inverse Filtering Is Dangerous\nIf \\widehat{h}[u,v] is nonzero, a formal inverse filter would use\n\n\\widehat{x}[u,v]\n=\n\\frac{\\widehat{y}[u,v]}{\\widehat{h}[u,v]}.\n\nBut when |\\widehat{h}[u,v]| is small, division by \\widehat{h} amplifies noise.\n\n\nInverse filtering recovers some detail but can amplify noise dramatically.\n\nThis frequency-domain view explains why regularization will be necessary in later chapters.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#computation",
+    "href": "book/week-03-fourier-imaging.html#computation",
+    "title": "Fourier Transform in Imaging",
+    "section": "Computation",
+    "text": "Computation\nThe Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.\nRun:\npython3 examples/week03_fourier_imaging.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#exercises",
+    "href": "book/week-03-fourier-imaging.html#exercises",
+    "title": "Fourier Transform in Imaging",
+    "section": "Exercises",
+    "text": "Exercises\n\nFor x[n]=\\sin(2\\pi 5n/N)+0.5\\sin(2\\pi 20n/N), where should the Fourier magnitude be large?\nIn a centered 2D spectrum, what does the center represent?\nWhich carries more geometric information in a natural image: magnitude or phase?\nUse the convolution theorem to explain why blur attenuates high frequencies.\nExplain why inverse filtering amplifies noise.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-03-fourier-imaging.html#takeaways",
+    "href": "book/week-03-fourier-imaging.html#takeaways",
+    "title": "Fourier Transform in Imaging",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nFourier analysis represents images using oscillations.\nLow frequencies describe coarse structure; high frequencies describe fine detail.\nFourier coefficients have magnitude and phase.\nConvolution becomes multiplication in the Fourier domain.\nBlur suppresses frequencies, and inverse filtering can amplify noise.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
   },
   {
     "objectID": "slides/template.html#section-divider",

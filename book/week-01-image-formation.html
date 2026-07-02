@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modeling Project – MATH 435: Mathematical Imaging</title>
+<title>Images as Mathematical Objects – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -71,10 +106,53 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -104,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Notebooks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../book/index.html"> 
+    <a class="nav-link active" href="../book/index.html" aria-current="page"> 
 <span class="menu-text">Book</span></a>
   </li>  
   <li class="nav-item">
@@ -112,7 +190,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../project/index.html" aria-current="page"> 
+    <a class="nav-link" href="../project/index.html"> 
 <span class="menu-text">Project</span></a>
   </li>  
 </ul>
@@ -121,20 +199,96 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">1. Images as mathematical objects</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Book home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I: Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/week-01-image-formation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1. Images as mathematical objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/week-02-convolution-blur.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Convolution and blur</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/week-03-fourier-imaging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Fourier transform in imaging</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#images-as-functions" id="toc-images-as-functions" class="nav-link" data-scroll-target="#images-as-functions">Images As Functions</a></li>
+  <li><a href="#images-as-arrays" id="toc-images-as-arrays" class="nav-link" data-scroll-target="#images-as-arrays">Images As Arrays</a></li>
+  <li><a href="#images-as-vectors" id="toc-images-as-vectors" class="nav-link" data-scroll-target="#images-as-vectors">Images As Vectors</a></li>
+  <li><a href="#forward-models" id="toc-forward-models" class="nav-link" data-scroll-target="#forward-models">Forward Models</a></li>
+  <li><a href="#masking-recorded-pixels" id="toc-masking-recorded-pixels" class="nav-link" data-scroll-target="#masking-recorded-pixels">Masking Recorded Pixels</a></li>
+  <li><a href="#missing-pixels-versus-occlusion" id="toc-missing-pixels-versus-occlusion" class="nav-link" data-scroll-target="#missing-pixels-versus-occlusion">Missing Pixels Versus Occlusion</a></li>
+  <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-01-image-formation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="../book/week-01-image-formation.html">1. Images as mathematical objects</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Modeling Project</h1>
+<h1 class="title">Images as Mathematical Objects</h1>
+<p class="subtitle lead">Chapter 1</p>
 </div>
 
 
@@ -151,18 +305,179 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.</p>
-<p>Each team will:</p>
+<p><a href="../slides/week-01-image-formation.html">Slides</a> | <a href="../notebooks/week01_image_formation.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb">Open in Colab</a></p>
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
+<p>By the end of this chapter, you should be able to:</p>
 <ul>
-<li>define the forward model;</li>
-<li>implement reconstruction methods in Python;</li>
-<li>analyze parameter sensitivity;</li>
-<li>interpret reconstruction quality;</li>
-<li>submit a written report and code;</li>
-<li>complete an individual oral defense.</li>
+<li>describe an image as a function, an array, and a vector;</li>
+<li>explain why vectorization is useful for linear algebra;</li>
+<li>write a first forward model <span class="math inline">y=Ax+\eta</span>;</li>
+<li>distinguish recorded missing pixels from hidden scene content;</li>
+<li>run a small NumPy experiment with image arrays and masks.</li>
+</ul>
+</section>
+<section id="images-as-functions" class="level2">
+<h2 class="anchored" data-anchor-id="images-as-functions">Images As Functions</h2>
+<p>At the mathematical level, a grayscale image is often modeled as a function</p>
+<p><span class="math display">
+u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}.
+</span></p>
+<p>The domain <span class="math inline">\Omega</span> is the region being imaged. The value <span class="math inline">u(s,t)</span> is the intensity at location <span class="math inline">(s,t)</span>. This continuous model is useful because many imaging systems are described physically before they are discretized.</p>
+<p>For a color image, the value has several components:</p>
+<p><span class="math display">
+u : \Omega \to \mathbb{R}^3.
+</span></p>
+<p>For a video, a 3D volume, or a multispectral image, the range and the domain can have even more dimensions. The same principle remains: an image is data organized over space, and sometimes over time, wavelength, or slice index.</p>
+</section>
+<section id="images-as-arrays" class="level2">
+<h2 class="anchored" data-anchor-id="images-as-arrays">Images As Arrays</h2>
+<p>A digital image is sampled on a grid. If the image has <span class="math inline">m</span> rows and <span class="math inline">n</span> columns, we write</p>
+<p><span class="math display">
+U =
+\begin{bmatrix}
+u_{1,1} &amp; u_{1,2} &amp; \cdots &amp; u_{1,n}\\
+u_{2,1} &amp; u_{2,2} &amp; \cdots &amp; u_{2,n}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+u_{m,1} &amp; u_{m,2} &amp; \cdots &amp; u_{m,n}
+\end{bmatrix}.
+</span></p>
+<p>The array is the natural form for display and local operations. Neighboring entries in the array correspond to neighboring pixels.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The displayed photograph is not the mathematical object by itself. The mathematical object is the numerical array that the display visualizes.</p>
+</div>
+</div>
+<div class="figure">
+<p><img src="../assets/figures/week01-real-image-vectorization.png" class="img-fluid" alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"></p>
+<p>Real image data can be inspected as an array, a pixel crop, or a vector.</p>
+</div>
+</section>
+<section id="images-as-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="images-as-vectors">Images As Vectors</h2>
+<p>For linear algebra, we often reshape the image matrix <span class="math inline">U</span> into a vector</p>
+<p><span class="math display">
+x = \operatorname{vec}(U) \in \mathbb{R}^{mn}.
+</span></p>
+<p>If row-major order is used, the rows of <span class="math inline">U</span> are read from left to right:</p>
+<p><span class="math display">
+U =
+\begin{bmatrix}
+10 &amp; 20 &amp; 30\\
+40 &amp; 50 &amp; 60
+\end{bmatrix}
+\quad\Longrightarrow\quad
+\operatorname{vec}(U)=
+\begin{bmatrix}
+10 &amp; 20 &amp; 30 &amp; 40 &amp; 50 &amp; 60
+\end{bmatrix}^{T}.
+</span></p>
+<p>Vectorization does not change the information. It changes the shape so that matrix-vector notation can be used.</p>
+</section>
+<section id="forward-models" class="level2">
+<h2 class="anchored" data-anchor-id="forward-models">Forward Models</h2>
+<p>Once the unknown image is written as a vector <span class="math inline">x</span>, a controlled measurement process can often be written as</p>
+<p><span class="math display">
+y = Ax + \eta.
+</span></p>
+<p>Here:</p>
+<ul>
+<li><span class="math inline">x</span> is the unknown image;</li>
+<li><span class="math inline">A</span> is the forward operator;</li>
+<li><span class="math inline">y</span> is the recorded data;</li>
+<li><span class="math inline">\eta</span> is noise or measurement error.</li>
+</ul>
+<p>This formula is a modeling template, not a claim that every visual process is linear. It is useful when the imaging system is controlled and the measurement rule is known well enough to write down.</p>
+<p>Examples of forward operators include:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>identity</td>
+<td>records every pixel directly</td>
+</tr>
+<tr class="even">
+<td>mask</td>
+<td>records only selected pixels</td>
+</tr>
+<tr class="odd">
+<td>blur</td>
+<td>spreads each pixel to its neighbors</td>
+</tr>
+<tr class="even">
+<td>Fourier sampling</td>
+<td>records frequency coefficients</td>
+</tr>
+<tr class="odd">
+<td>projection</td>
+<td>records line integrals or summaries</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="masking-recorded-pixels" class="level2">
+<h2 class="anchored" data-anchor-id="masking-recorded-pixels">Masking Recorded Pixels</h2>
+<p>A binary mask models which recorded pixels are available. If <span class="math inline">M</span> selects a subset of entries of <span class="math inline">x</span>, then</p>
+<p><span class="math display">
+y = Mx
+</span></p>
+<p>records only those entries.</p>
+<div class="figure">
+<p><img src="../assets/figures/week01-real-image-masking.png" class="img-fluid" alt="Original image, recorded pixel mask, masked observation, and observed vector"></p>
+<p>Masking recorded pixels creates missing entries in the digital observation.</p>
+</div>
+<p>The inverse problem is then to infer something about the missing values from the observed ones and from assumptions about images.</p>
+</section>
+<section id="missing-pixels-versus-occlusion" class="level2">
+<h2 class="anchored" data-anchor-id="missing-pixels-versus-occlusion">Missing Pixels Versus Occlusion</h2>
+<p>It is important to distinguish two situations:</p>
+<ol type="1">
+<li>A pixel was recorded but then removed or masked.</li>
+<li>A part of the physical scene was hidden from the sensor.</li>
+</ol>
+<p>The first case is a missing-data problem in the recorded image. The second is a visibility problem in the physical scene.</p>
+<p>If a person is behind a tree, the camera did not record the hidden part of the person. No mathematical method can recover information that was never measured without adding assumptions from outside the measurement. This is one reason image inverse problems are different from many idealized signal separation problems.</p>
+</section>
+<section id="computation" class="level2">
+<h2 class="anchored" data-anchor-id="computation">Computation</h2>
+<p>The Week 1 notebook asks you to inspect image arrays, reshape them, and apply simple masks.</p>
+<p>Run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week01_image_arrays.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>or open the notebook in Colab from the link at the top of this chapter.</p>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<ol type="1">
+<li>Write the row-major vectorization of a <span class="math inline">3 \times 4</span> image array with entries <span class="math inline">1,\ldots,12</span>.</li>
+<li>Give an example of a forward operator <span class="math inline">A</span> that is linear.</li>
+<li>Give an example from real imaging where the physical process is not well described by a linear operator.</li>
+<li>Explain why a mask can model missing recorded pixels but not seeing behind an occluder.</li>
+</ol>
+</section>
+<section id="takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<ul>
+<li>An image can be viewed as a function, an array, or a vector.</li>
+<li>Vectorization lets us write imaging models using linear algebra.</li>
+<li>The forward model <span class="math inline">y=Ax+\eta</span> separates the unknown image, the measurement rule, and noise.</li>
+<li>Missing data in an array is not the same as hidden information in the physical scene.</li>
 </ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -573,7 +888,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/project/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-01-image-formation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
