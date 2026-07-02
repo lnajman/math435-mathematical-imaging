@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-02-01">
-  <title>MATH 435: Mathematical Imaging – Convolution and Blur</title>
+  <meta name="dcterms.date" content="2001-05-01">
+  <title>MATH 435: Mathematical Imaging – Ill-Posed Inverse Problems</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -214,8 +214,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Convolution and Blur</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 2</p>
+  <h1 class="title">Ill-Posed Inverse Problems</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 5</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -225,24 +225,24 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-02-01</p>
+  <p class="date">2001-05-01</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
 <div class="section-kicker">
-<p>From pixels to operators</p>
+<p>When inversion goes wrong</p>
 </div>
-<p>What does it mean, mathematically, for an image to be blurred?</p>
+<p>Can a problem have a solution, a unique solution, and still be impossible to solve reliably?</p>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <div class="checklist">
 <ul>
-<li>Build convolution from a local weighted average.</li>
-<li>Interpret the point spread function (PSF).</li>
-<li>Apply 2D convolution to real images.</li>
-<li>Understand boundary conditions.</li>
-<li>See why deblurring is already a hard inverse problem.</li>
+<li>State Hadamard’s three conditions for well-posedness.</li>
+<li>Identify non-uniqueness in missing-data imaging.</li>
+<li>Explain stability and instability.</li>
+<li>Interpret small singular values.</li>
+<li>Connect inverse filtering to SVD noise amplification.</li>
 </ul>
 </div>
 </section>
@@ -257,479 +257,483 @@ Laurent Najman
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>review fixed forward models</td>
+<td style="text-align: right;">0-8 min</td>
+<td>recap likelihood and data fidelity</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-25 min</td>
-<td>1D convolution by hand</td>
+<td style="text-align: right;">8-20 min</td>
+<td>Hadamard well-posedness</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">25-40 min</td>
-<td>2D convolution and PSF</td>
+<td style="text-align: right;">20-32 min</td>
+<td>non-uniqueness and missing information</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">40-55 min</td>
-<td>real image blur demo</td>
+<td style="text-align: right;">32-48 min</td>
+<td>stability and inverse sensitivity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">55-65 min</td>
-<td>boundary conditions</td>
+<td style="text-align: right;">48-62 min</td>
+<td>singular values and conceptual SVD</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">65-72 min</td>
-<td>why deblurring is hard</td>
+<td style="text-align: right;">62-70 min</td>
+<td>notebook activity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">72-75 min</td>
-<td>exit checkpoint</td>
+<td style="text-align: right;">70-75 min</td>
+<td>synthesis and exit checkpoint</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="reminder-from-week-1" class="slide level2">
-<h2>Reminder from Week 1</h2>
-<div class="model-box">
-<p>For a fixed measurement rule, we often write</p>
+<section id="bridge-from-week-4" class="slide level2">
+<h2>Bridge from Week 4</h2>
+<p>Week 4 gave us a data term:</p>
 <p><span class="math display">
-y = Ax + \eta.
+D(y, f(x)).
 </span></p>
-<p>Today, <span class="math inline">A</span> will be a blur operator.</p>
-</div>
-<div class="caption">
-<p>The blur kernel is assumed fixed. That is different from unknown scene occlusion or nonlinear visibility.</p>
+<div class="question-box">
+<p>If a candidate image fits the data well, does that mean it is the correct image?</p>
 </div>
 </section>
-<section id="part-1-1d-convolution" class="slide level2 section-slide">
-<h2>Part 1: 1D Convolution</h2>
-<div class="section-kicker">
-<p>First in one dimension</p>
-</div>
-<p>Convolution as a weighted neighborhood average</p>
-</section>
-<section id="local-weighted-average" class="slide level2">
-<h2>Local Weighted Average</h2>
-<p>Suppose a signal is noisy or sharp at one point. A simple smoothing rule is:</p>
+<section id="the-inverse-problem" class="slide level2">
+<h2>The Inverse Problem</h2>
+<p>Forward problem:</p>
 <p><span class="math display">
-y_i = \frac{1}{4}x_{i-1} + \frac{1}{2}x_i + \frac{1}{4}x_{i+1}.
+x \longmapsto y = f(x).
+</span></p>
+<p>Inverse problem:</p>
+<p><span class="math display">
+y \longmapsto x.
 </span></p>
 <div class="definition-box">
-<p>The output at index <span class="math inline">i</span> is built from a small neighborhood of the input.</p>
+<p>The inverse problem asks us to recover a cause from an observed effect.</p>
 </div>
 </section>
-<section id="the-kernel" class="slide level2">
-<h2>The Kernel</h2>
-<p>The weights</p>
+<section id="linear-models-are-a-special-case" class="slide level2">
+<h2>Linear Models Are a Special Case</h2>
+<p>When the imaging model is linear:</p>
 <p><span class="math display">
-h =
-\begin{bmatrix}
-\frac{1}{4} &amp; \frac{1}{2} &amp; \frac{1}{4}
-\end{bmatrix}
+y = A x.
 </span></p>
-<p>are called a convolution kernel.</p>
+<p>Examples include idealized blur, Fourier sampling, and recorded-pixel selection after image formation.</p>
+<div class="caption">
+<p>Physical scene occlusion is different: hidden content may never reach the sensor.</p>
+</div>
+</section>
+<section id="part-1-well-posedness" class="slide level2 section-slide">
+<h2>Part 1: Well-Posedness</h2>
+<div class="section-kicker">
+<p>Hadamard’s checklist</p>
+</div>
+<p>Three ways to fail</p>
+</section>
+<section id="hadamard-well-posedness" class="slide level2">
+<h2>Hadamard Well-Posedness</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week05-hadamard-checks.png" alt="Existence, uniqueness, and stability as the three Hadamard conditions"></p>
+</div>
+</section>
+<section id="the-three-questions" class="slide level2">
+<h2>The Three Questions</h2>
+<div class="three-col">
+<div class="definition-box">
+<div class="tag">
+<p>Existence</p>
+</div>
+<p>Does at least one solution fit the data?</p>
+</div>
+<div class="model-box">
+<div class="tag">
+<p>Uniqueness</p>
+</div>
+<p>Is there only one such solution?</p>
+</div>
 <div class="question-box">
-<p>What should happen if the weights sum to 1?</p>
+<div class="tag">
+<p>Stability</p>
+</div>
+<p>Do small data errors cause small solution errors?</p>
+</div>
 </div>
 </section>
-<section id="activity-1-compute-by-hand" class="slide level2">
-<h2>Activity 1: Compute by Hand</h2>
+<section id="activity-1-classify-the-failure" class="slide level2">
+<h2>Activity 1: Classify the Failure</h2>
 <div class="time-tag">
-<p>8 minutes</p>
+<p>5 minutes</p>
 </div>
-<p>Let</p>
-<p><span class="math display">
-x =
-\begin{bmatrix}
-0 &amp; 0 &amp; 1 &amp; 3 &amp; 2 &amp; 0 &amp; 0
-\end{bmatrix}
-</span></p>
-<p>and <span class="math inline">h = [1/4, 1/2, 1/4]</span>.</p>
-<p>Compute the output at the central indices using zero values outside the signal.</p>
+<div class="exercise-box">
+<p>For each case, which Hadamard condition may fail?</p>
+<ol type="1">
+<li>The data are inconsistent with the model.</li>
+<li>A missing square can contain many different textures.</li>
+<li>A tiny amount of noise creates a wildly different reconstruction.</li>
+</ol>
+</div>
 </section>
-<section id="activity-1-debrief" class="slide level2">
-<h2>Activity 1 Debrief</h2>
-<p>For the peak location,</p>
+<section id="well-posed-does-not-mean-easy" class="slide level2">
+<h2>Well-Posed Does Not Mean Easy</h2>
+<p>A well-posed problem may still be computationally expensive.</p>
+<p>An ill-posed problem may be small and fast but mathematically unreliable.</p>
+<div class="takeaway-box">
+<p>Well-posedness is about the behavior of the map from data to solution.</p>
+</div>
+</section>
+<section id="part-2-non-uniqueness" class="slide level2 section-slide">
+<h2>Part 2: Non-Uniqueness</h2>
+<div class="section-kicker">
+<p>Data do not always determine the image</p>
+</div>
+<p>Many causes, same observation</p>
+</section>
+<section id="missing-data-example" class="slide level2">
+<h2>Missing Data Example</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week05-nonuniqueness.png" alt="Two candidate images, the same observed pixels, and a sampling mask"></p>
+</div>
+</section>
+<section id="same-observation-different-images" class="slide level2">
+<h2>Same Observation, Different Images</h2>
+<p>Let <span class="math inline">M</span> be a recorded-pixel selection mask.</p>
 <p><span class="math display">
-y_4 = \frac{1}{4}x_3 + \frac{1}{2}x_4 + \frac{1}{4}x_5
-     = \frac{1}{4}(1) + \frac{1}{2}(3) + \frac{1}{4}(2)
-     = 2.25.
+y = Mx.
+</span></p>
+<p>If two images differ only where <span class="math inline">M</span> does not observe, then</p>
+<p><span class="math display">
+Mx_1 = Mx_2.
 </span></p>
 <div class="takeaway-box">
-<p>The peak is reduced, and its mass is spread to neighboring locations.</p>
+<p>The recorded data alone cannot choose between <span class="math inline">x_1</span> and <span class="math inline">x_2</span>.</p>
 </div>
 </section>
-<section id="d-convolution-picture" class="slide level2">
-<h2>1D Convolution Picture</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week02-1d-convolution.png" alt="One dimensional signal, convolution kernel, and blurred output"></p>
-</div>
-</section>
-<section id="convolution-formula" class="slide level2">
-<h2>Convolution Formula</h2>
-<p>One common discrete convention is</p>
-<p><span class="math display">
-(h * x)_i = \sum_{k} h_k x_{i-k}.
-</span></p>
-<div class="caption">
-<p>For symmetric kernels, convolution and correlation give the same result. For nonsymmetric kernels, the sign convention matters.</p>
-</div>
-</section>
-<section id="three-useful-properties" class="slide level2">
-<h2>Three Useful Properties</h2>
-<p>For a fixed kernel <span class="math inline">h</span>, convolution is:</p>
-<div class="three-col">
-<div class="model-box">
-<div class="tag">
-<p>Linear</p>
-</div>
-<p><span class="math inline">h*(a x + b z) = a(h*x) + b(h*z)</span></p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Local</p>
-</div>
-<p>Each output uses nearby values.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Shift-invariant</p>
-</div>
-<p>The same rule is applied everywhere.</p>
-</div>
-</div>
-</section>
-<section id="part-2-2d-convolution" class="slide level2 section-slide">
-<h2>Part 2: 2D Convolution</h2>
-<div class="section-kicker">
-<p>From signals to images</p>
-</div>
-<p>A kernel becomes a small image</p>
-</section>
-<section id="d-formula" class="slide level2">
-<h2>2D Formula</h2>
-<p>For an image <span class="math inline">x[i,j]</span> and a kernel <span class="math inline">h[a,b]</span>:</p>
-<p><span class="math display">
-y[i,j] = (h*x)[i,j]
-      = \sum_{a,b} h[a,b] x[i-a,j-b].
-</span></p>
-<div class="definition-box">
-<p>The output pixel is a weighted combination of nearby input pixels.</p>
-</div>
-</section>
-<section id="point-spread-function" class="slide level2">
-<h2>Point Spread Function</h2>
-<div class="model-box">
-<div class="tag">
-<p>PSF</p>
-</div>
-<p>The point spread function describes how the imaging system records a single ideal bright point.</p>
-</div>
-<p>If one point becomes a small blob, then every point in the image is spread in the same way.</p>
-</section>
-<section id="example-kernels" class="slide level2">
-<h2>Example Kernels</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week02-kernels.png" alt="Identity, box average, gaussian, and motion blur kernels"></p>
-</div>
-</section>
-<section id="kernel-interpretation" class="slide level2">
-<h2>Kernel Interpretation</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Kernel</th>
-<th>Visual effect</th>
-<th>Typical model</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>identity</td>
-<td>no blur</td>
-<td>perfect sampling</td>
-</tr>
-<tr class="even">
-<td>box average</td>
-<td>blocky smoothing</td>
-<td>simple local average</td>
-</tr>
-<tr class="odd">
-<td>gaussian</td>
-<td>smooth blur</td>
-<td>defocus or optical smoothing</td>
-</tr>
-<tr class="even">
-<td>motion</td>
-<td>directional streak</td>
-<td>camera or object motion</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="fixed-blur-is-linear" class="slide level2">
-<h2>Fixed Blur Is Linear</h2>
-<p>If <span class="math inline">h</span> is fixed, then</p>
-<p><span class="math display">
-y = h * x
-</span></p>
-<p>is a linear operator on the image.</p>
-<div class="caption">
-<p>This is a controlled blur model. It does not say all visual image formation is linear.</p>
-</div>
-</section>
-<section id="part-3-blur-on-a-real-image" class="slide level2 section-slide">
-<h2>Part 3: Blur on a Real Image</h2>
-<div class="section-kicker">
-<p>Now look at pixels</p>
-</div>
-<p>Different kernels, different blur</p>
-</section>
-<section id="real-image-blur" class="slide level2">
-<h2>Real Image Blur</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week02-real-blur.png" alt="Real grayscale image with box, gaussian, and motion blur"></p>
-</div>
-</section>
-<section id="what-changed" class="slide level2">
-<h2>What Changed?</h2>
+<section id="important-distinction" class="slide level2">
+<h2>Important Distinction</h2>
 <div class="two-col">
 <div class="definition-box">
-<p>Blur removes local contrast:</p>
+<p>Recorded-pixel masking:</p>
+<p>a linear projection of an already formed image.</p>
+</div>
+<div class="model-box">
+<p>Physical occlusion:</p>
+<p>hidden scene content may not be measured at all.</p>
+</div>
+</div>
+<div class="caption">
+<p>Both can create missing information, but they are not the same physical model.</p>
+</div>
+</section>
+<section id="nullspace-language" class="slide level2">
+<h2>Nullspace Language</h2>
+<p>For a linear operator <span class="math inline">A</span>,</p>
+<p><span class="math display">
+\mathcal{N}(A)=\{z:Az=0\}.
+</span></p>
+<p>If <span class="math inline">z\in \mathcal{N}(A)</span>, then</p>
+<p><span class="math display">
+A(x+z)=Ax.
+</span></p>
+<div class="definition-box">
+<p>The nullspace contains invisible changes.</p>
+</div>
+</section>
+<section id="activity-2-invisible-changes" class="slide level2">
+<h2>Activity 2: Invisible Changes</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Suppose an operator observes only every second pixel.</p>
+<p>Describe one nonzero image vector <span class="math inline">z</span> such that <span class="math inline">Az=0</span>.</p>
+</div>
+</section>
+<section id="consequence-for-reconstruction" class="slide level2">
+<h2>Consequence for Reconstruction</h2>
+<p>If <span class="math inline">A</span> has a nontrivial nullspace, data fidelity cannot identify a unique image:</p>
+<p><span class="math display">
+D(y, Ax)
+=
+D(y, A(x+z)).
+</span></p>
+<div class="question-box">
+<p>What extra information could help choose one completion?</p>
+</div>
+</section>
+<section id="part-3-stability" class="slide level2 section-slide">
+<h2>Part 3: Stability</h2>
+<div class="section-kicker">
+<p>Small errors, large consequences</p>
+</div>
+<p>The central inverse problem issue</p>
+</section>
+<section id="stability" class="slide level2">
+<h2>Stability</h2>
+<p>An inverse map is stable if nearby data give nearby solutions.</p>
+<p>Informally:</p>
+<p><span class="math display">
+\|y_1-y_2\| \text{ small}
+\quad\Rightarrow\quad
+\|x_1-x_2\| \text{ small}.
+</span></p>
+<div class="caption">
+<p>Stability is the reason noise matters mathematically.</p>
+</div>
+</section>
+<section id="one-dimensional-warning" class="slide level2">
+<h2>One-Dimensional Warning</h2>
+<p>Consider</p>
+<p><span class="math display">
+y = \varepsilon x.
+</span></p>
+<p>The inverse is</p>
+<p><span class="math display">
+x = y/\varepsilon.
+</span></p>
+<p>If <span class="math inline">\varepsilon</span> is small, tiny errors in <span class="math inline">y</span> become large errors in <span class="math inline">x</span>.</p>
+</section>
+<section id="activity-3-sensitivity" class="slide level2">
+<h2>Activity 3: Sensitivity</h2>
+<div class="time-tag">
+<p>4 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Let <span class="math inline">\varepsilon=0.001</span> and suppose the data error is <span class="math inline">10^{-4}</span>.</p>
+<p>What is the error after inversion?</p>
+</div>
+</section>
+<section id="imaging-version" class="slide level2">
+<h2>Imaging Version</h2>
+<p>Blur suppresses some directions in image space.</p>
+<p>Deblurring tries to divide by those suppressions.</p>
+<div class="takeaway-box">
+<p>The unstable directions are the directions that the forward model almost erases.</p>
+</div>
+</section>
+<section id="instability-picture" class="slide level2">
+<h2>Instability Picture</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week05-noise-amplification.png" alt="True signal, blurred noisy signal, unstable inverse, and truncated SVD reconstruction"></p>
+</div>
+</section>
+<section id="what-failed" class="slide level2">
+<h2>What Failed?</h2>
+<p>In the instability picture:</p>
+<div class="checklist">
 <ul>
-<li>edges become less sharp;</li>
-<li>fine textures disappear;</li>
-<li>neighboring pixels become more similar.</li>
+<li>a solution exists;</li>
+<li>the model is known;</li>
+<li>the data error is tiny;</li>
+<li>the direct inverse is still useless.</li>
 </ul>
 </div>
-<div class="question-box">
-<div class="tag">
-<p>Discussion</p>
-</div>
-<p>Which blur looks easiest to undo? Which looks hardest?</p>
-</div>
+<div class="takeaway-box">
+<p>This is a stability failure.</p>
 </div>
 </section>
-<section id="python-demo-blur-a-real-image" class="slide level2 code-small">
-<h2>Python Demo: Blur a Real Image</h2>
-<div id="27e581f2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
-<span id="cb1-2"><a></a><span class="im">from</span> scipy <span class="im">import</span> signal</span>
-<span id="cb1-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
-<span id="cb1-6"><a></a>kernel <span class="op">=</span> np.ones((<span class="dv">13</span>, <span class="dv">13</span>)) <span class="op">/</span> (<span class="dv">13</span> <span class="op">*</span> <span class="dv">13</span>)</span>
-<span id="cb1-7"><a></a></span>
-<span id="cb1-8"><a></a>blurred <span class="op">=</span> signal.convolve2d(</span>
-<span id="cb1-9"><a></a>    image, kernel, mode<span class="op">=</span><span class="st">"same"</span>, boundary<span class="op">=</span><span class="st">"symm"</span></span>
-<span id="cb1-10"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="part-4-singular-values" class="slide level2 section-slide">
+<h2>Part 4: Singular Values</h2>
+<div class="section-kicker">
+<p>A coordinate system for sensitivity</p>
 </div>
+<p>Conceptual SVD</p>
 </section>
-<section id="run-todays-code" class="slide level2 code-small">
-<h2>Run Today’s Code</h2>
-<p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week02_convolution_blur.py</span>
-<span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week02_figures.py</span>
-<span id="cb2-3"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="caption">
-<p>The first command prints numerical outputs. The second regenerates the figures used in this deck.</p>
-</div>
-</section>
-<section id="why-normalize-the-kernel" class="slide level2">
-<h2>Why Normalize the Kernel?</h2>
-<p>For many blur kernels, we impose</p>
+<section id="svd-idea" class="slide level2">
+<h2>SVD Idea</h2>
+<p>For a linear operator <span class="math inline">A</span>,</p>
 <p><span class="math display">
-\sum_{a,b} h[a,b] = 1.
+A v_i = \sigma_i u_i.
+</span></p>
+<div class="definition-box">
+<p>The singular value <span class="math inline">\sigma_i</span> tells how strongly <span class="math inline">A</span> transmits the input direction <span class="math inline">v_i</span>.</p>
+</div>
+</section>
+<section id="large-and-small-singular-values" class="slide level2">
+<h2>Large and Small Singular Values</h2>
+<div class="two-col">
+<div class="model-box">
+<p>Large <span class="math inline">\sigma_i</span>:</p>
+<p>the direction is visible in the data.</p>
+</div>
+<div class="question-box">
+<p>Small <span class="math inline">\sigma_i</span>:</p>
+<p>the direction is weakly visible or nearly invisible.</p>
+</div>
+</div>
+</section>
+<section id="inverting-in-svd-coordinates" class="slide level2">
+<h2>Inverting in SVD Coordinates</h2>
+<p>If</p>
+<p><span class="math display">
+y = A x
+</span></p>
+<p>and</p>
+<p><span class="math display">
+y = \sum_i \alpha_i u_i,
+</span></p>
+<p>then the formal inverse is</p>
+<p><span class="math display">
+x = \sum_i \frac{\alpha_i}{\sigma_i} v_i.
+</span></p>
+</section>
+<section id="where-noise-enters" class="slide level2">
+<h2>Where Noise Enters</h2>
+<p>With noisy data:</p>
+<p><span class="math display">
+y^\delta = Ax + \eta.
+</span></p>
+<p>The inverse includes</p>
+<p><span class="math display">
+\frac{\langle \eta,u_i\rangle}{\sigma_i}.
 </span></p>
 <div class="takeaway-box">
-<p>This preserves the average brightness of the image.</p>
+<p>Small singular values divide noise by a small number.</p>
 </div>
 </section>
-<section id="mini-check" class="slide level2">
-<h2>Mini-Check</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>2 minutes</p>
-</div>
-<p>If a <span class="math inline">3 \times 3</span> box blur has equal weights, what is each weight?</p>
-<p>What happens if the weights sum to 2 instead of 1?</p>
-</div>
-</section>
-<section id="part-4-boundary-conditions" class="slide level2 section-slide">
-<h2>Part 4: Boundary Conditions</h2>
-<div class="section-kicker">
-<p>The edge of the image</p>
-</div>
-<p>What does the kernel see outside the image?</p>
-</section>
-<section id="why-boundaries-matter" class="slide level2">
-<h2>Why Boundaries Matter</h2>
-<p>Near the image boundary, a kernel asks for pixels that do not exist.</p>
-<p>For example, at the top-left pixel:</p>
-<p><span class="math display">
-y[1,1] = \sum_{a,b} h[a,b] x[1-a,1-b].
-</span></p>
-<p>Some indices fall outside the image.</p>
-</section>
-<section id="boundary-choices" class="slide level2">
-<h2>Boundary Choices</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Mode</th>
-<th>Outside value</th>
-<th>Possible artifact</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>zero padding</td>
-<td>black outside</td>
-<td>dark borders</td>
-</tr>
-<tr class="even">
-<td>reflect</td>
-<td>mirror image</td>
-<td>smoother edges</td>
-</tr>
-<tr class="odd">
-<td>wrap</td>
-<td>periodic image</td>
-<td>artificial wraparound</td>
-</tr>
-<tr class="even">
-<td>crop/valid</td>
-<td>do not compute boundary</td>
-<td>smaller output</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="boundary-effects" class="slide level2">
-<h2>Boundary Effects</h2>
+<section id="singular-values-of-blur" class="slide level2">
+<h2>Singular Values of Blur</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week02-boundary-effects.png" alt="Boundary modes: original, zero padding, reflect, and wrap"></p>
+<p><img data-src="../assets/figures/week05-singular-values.png" alt="Decaying singular values of blur operators with several blur strengths"></p>
 </div>
 </section>
-<section id="activity-2-choose-a-boundary-rule" class="slide level2">
-<h2>Activity 2: Choose a Boundary Rule</h2>
+<section id="reading-the-plot" class="slide level2">
+<h2>Reading the Plot</h2>
+<div class="checklist">
+<ul>
+<li>Stronger blur gives faster singular-value decay.</li>
+<li>Later singular vectors often represent oscillatory detail.</li>
+<li>Small singular values mean details are weakly observed.</li>
+<li>Inversion becomes sensitive where singular values are small.</li>
+</ul>
+</div>
+</section>
+<section id="coefficient-view" class="slide level2">
+<h2>Coefficient View</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week05-svd-coefficients.png" alt="Singular values and SVD coefficients showing noise divided by small singular values"></p>
+</div>
+</section>
+<section id="activity-4-svd-diagnosis" class="slide level2">
+<h2>Activity 4: SVD Diagnosis</h2>
 <div class="time-tag">
 <p>6 minutes</p>
 </div>
 <div class="exercise-box">
-<p>For each application, choose a boundary condition and justify it:</p>
-<ol type="1">
-<li>a microscope image of cells;</li>
-<li>a panoramic texture;</li>
-<li>a medical slice with black background;</li>
-<li>a small cropped photograph.</li>
-</ol>
-</div>
-</section>
-<section id="part-5-matrix-view" class="slide level2 section-slide">
-<h2>Part 5: Matrix View</h2>
-<div class="section-kicker">
-<p>Back to Week 1</p>
-</div>
-<p>Convolution is a linear operator when the kernel is fixed</p>
-</section>
-<section id="convolution-as-a-matrix" class="slide level2">
-<h2>Convolution as a Matrix</h2>
-<p>For a four-pixel 1D signal, same-size output, zero boundary conditions, and <span class="math inline">h = [h_{-1}, h_0, h_1]</span>:</p>
+<p>You see singular values:</p>
 <p><span class="math display">
-y =
-\begin{bmatrix}
-h_0    &amp; h_1 &amp; 0   &amp; 0 \\
-h_{-1} &amp; h_0 &amp; h_1 &amp; 0 \\
-0      &amp; h_{-1} &amp; h_0 &amp; h_1 \\
-0      &amp; 0   &amp; h_{-1} &amp; h_0
-\end{bmatrix}
-x.
+1,\; 0.7,\; 0.3,\; 0.02,\; 0.0001.
 </span></p>
-</section>
-<section id="what-the-matrix-shows" class="slide level2">
-<h2>What the Matrix Shows</h2>
-<div class="takeaway-box">
-<p>The blur matrix has repeated diagonals because the same local rule is applied at each position.</p>
-</div>
-<div class="question-box">
-<p>What changes in this matrix if we use periodic boundary conditions?</p>
+<p>Which directions are dangerous to invert? Why?</p>
 </div>
 </section>
-<section id="part-6-why-deblurring-is-hard" class="slide level2 section-slide">
-<h2>Part 6: Why Deblurring Is Hard</h2>
-<div class="section-kicker">
-<p>The inverse problem appears</p>
-</div>
-<p>If blur is linear, why not just invert it?</p>
-</section>
-<section id="the-naive-deblurring-idea" class="slide level2">
-<h2>The Naive Deblurring Idea</h2>
-<p>If</p>
+<section id="condition-number" class="slide level2">
+<h2>Condition Number</h2>
+<p>For an invertible matrix,</p>
 <p><span class="math display">
-y = Ax + \eta,
+\kappa(A)=\frac{\sigma_{\max}}{\sigma_{\min}}.
 </span></p>
-<p>then the tempting answer is</p>
-<p><span class="math display">
-x = A^{-1}y.
-</span></p>
-<div class="question-box">
-<p>What could go wrong here?</p>
-</div>
-</section>
-<section id="first-look-at-instability" class="slide level2">
-<h2>First Look at Instability</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week02-deblur-instability.png" alt="Clean signal, blurred signal, noisy blurred signal, and unstable naive inverse"></p>
-</div>
-</section>
-<section id="why-it-fails" class="slide level2">
-<h2>Why It Fails</h2>
-<p>Deblurring can fail because:</p>
-<ol type="1">
-<li>blur removes high-frequency detail;</li>
-<li>small singular values make inversion unstable;</li>
-<li>noise is amplified by inverse filtering;</li>
-<li>the blur kernel may be unknown or only approximately known.</li>
-</ol>
-<div class="caption">
-<p>Fourier analysis will make this precise in the next lectures.</p>
-</div>
-</section>
-<section id="modeling-caveat" class="slide level2">
-<h2>Modeling Caveat</h2>
 <div class="definition-box">
-<p>Some blur is well modeled as fixed convolution.</p>
+<p>A large condition number means there is a direction that is transmitted much more weakly than another.</p>
 </div>
-<div class="question-box">
-<p>Other image degradations are not simple convolution:</p>
+</section>
+<section id="condition-number-is-not-the-whole-story" class="slide level2">
+<h2>Condition Number Is Not the Whole Story</h2>
+<p>A large condition number warns us about worst-case sensitivity.</p>
+<p>But in imaging we also care about:</p>
+<div class="checklist">
 <ul>
-<li>depth-dependent defocus;</li>
-<li>nonlinear camera saturation;</li>
-<li>occlusion;</li>
-<li>spatially varying motion.</li>
+<li>where the noise lives;</li>
+<li>whether small singular directions contain important image details;</li>
+<li>how the reconstruction will be used.</li>
 </ul>
 </div>
 </section>
-<section id="in-class-modeling-question" class="slide level2">
-<h2>In-Class Modeling Question</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>Discuss</p>
+<section id="part-5-stabilization-idea" class="slide level2 section-slide">
+<h2>Part 5: Stabilization Idea</h2>
+<div class="section-kicker">
+<p>Not solving yet</p>
 </div>
-<p>You receive a blurry photo from a phone camera.</p>
-<p>What evidence would make you believe the blur is approximately convolutional?</p>
-<p>What evidence would make you reject the convolution model?</p>
+<p>Just seeing the need</p>
+</section>
+<section id="a-first-stabilization-idea" class="slide level2">
+<h2>A First Stabilization Idea</h2>
+<p>If small <span class="math inline">\sigma_i</span> amplify noise, one crude idea is:</p>
+<p><span class="math display">
+\frac{\alpha_i}{\sigma_i}
+\quad\text{only for sufficiently large } \sigma_i.
+</span></p>
+<div class="definition-box">
+<p>This is the idea behind truncated SVD.</p>
+</div>
+</section>
+<section id="what-truncated-svd-does" class="slide level2">
+<h2>What Truncated SVD Does</h2>
+<div class="two-col">
+<div class="model-box">
+<p>Keeps stable directions that are well observed.</p>
+</div>
+<div class="question-box">
+<p>Discards unstable directions that may contain detail.</p>
+</div>
+</div>
+<div class="caption">
+<p>This is already a bias-stability tradeoff.</p>
+</div>
+</section>
+<section id="preview-of-regularization" class="slide level2">
+<h2>Preview of Regularization</h2>
+<p>Next week, instead of a hard cutoff, we will solve problems like</p>
+<p><span class="math display">
+\min_x
+\|Ax-y\|_2^2 + \lambda \|x\|_2^2.
+</span></p>
+<div class="takeaway-box">
+<p>Regularization is a controlled way to trade exact data fit for stability.</p>
+</div>
+</section>
+<section id="code-demo-run-week-5-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 5 Examples</h2>
+<p>From the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> examples/week05_ill_posed.py</span>
+<span id="cb1-2"><a></a><span class="ex">python3</span> examples/make_week05_figures.py</span>
+<span id="cb1-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="in-class-notebook-activity" class="slide level2">
+<h2>In-Class Notebook Activity</h2>
+<div class="time-tag">
+<p>8 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Open the Week 5 notebook.</p>
+<ol type="1">
+<li>Change the blur strength.</li>
+<li>Change the noise level.</li>
+<li>Change the number of singular values kept.</li>
+<li>Record when reconstruction improves and when it fails.</li>
+</ol>
+</div>
+</section>
+<section id="quiz-style-check" class="slide level2">
+<h2>Quiz-Style Check</h2>
+<div class="exercise-box">
+<p>For each statement, identify the issue:</p>
+<ol type="1">
+<li>No image matches the measured data exactly.</li>
+<li>Many images match the same data.</li>
+<li>A tiny measurement error creates a huge reconstruction error.</li>
+<li>A singular value is nearly zero.</li>
+</ol>
 </div>
 </section>
 <section id="end-of-class-checkpoint" class="slide level2">
 <h2>End-of-Class Checkpoint</h2>
 <div class="exercise-box">
-<p>For each item, give one sentence:</p>
+<p>Answer in one sentence each:</p>
 <ol type="1">
-<li>What is a PSF?</li>
-<li>Why should a blur kernel often sum to 1?</li>
-<li>Name two boundary conditions.</li>
-<li>Why is deblurring sensitive to noise?</li>
+<li>What are Hadamard’s three conditions?</li>
+<li>What is a nullspace?</li>
+<li>Why do small singular values cause instability?</li>
+<li>What does truncated SVD trade away?</li>
 </ol>
 </div>
 </section>
@@ -744,20 +748,20 @@ x = A^{-1}y.
 </thead>
 <tbody>
 <tr class="odd">
-<td>PSF</td>
-<td>image of one ideal point after the imaging system</td>
+<td>Hadamard conditions</td>
+<td>existence, uniqueness, stability</td>
 </tr>
 <tr class="even">
-<td>kernel sum</td>
-<td>preserves average brightness</td>
+<td>nullspace</td>
+<td>changes that the operator maps to zero</td>
 </tr>
 <tr class="odd">
-<td>boundary</td>
-<td>zero, reflect, wrap, valid/crop</td>
+<td>small singular values</td>
+<td>inverse divides by them and amplifies noise</td>
 </tr>
 <tr class="even">
-<td>noise</td>
-<td>inverse filtering amplifies weak frequencies</td>
+<td>truncated SVD</td>
+<td>trades fine detail or bias for stability</td>
 </tr>
 </tbody>
 </table>
@@ -766,22 +770,22 @@ x = A^{-1}y.
 <h2>What Students Should Remember</h2>
 <div class="takeaway-box">
 <ul>
-<li>Convolution is a local weighted average.</li>
-<li>The PSF is the blur kernel of an imaging system.</li>
-<li>Boundary conditions are part of the model.</li>
-<li>Fixed convolution is linear, but not all image formation is convolution.</li>
-<li>Deblurring is an inverse problem and is usually unstable.</li>
+<li>Ill-posedness is not just “hard”; it is a structural failure.</li>
+<li>Missing information causes non-uniqueness.</li>
+<li>Small singular values cause instability.</li>
+<li>A direct inverse may fit the model and still be useless.</li>
+<li>Regularization is motivated by the need for stable reconstruction.</li>
 </ul>
 </div>
 </section>
 <section id="next-time" class="slide level2">
 <h2>Next Time</h2>
-<p>Fourier transform in imaging:</p>
+<p>Tikhonov regularization:</p>
 <ul>
-<li>frequency interpretation of blur;</li>
-<li>convolution theorem;</li>
-<li>low-pass and high-pass behavior;</li>
-<li>why inverse filtering amplifies noise.</li>
+<li><span class="math inline">\ell_2</span> regularization;</li>
+<li>filter factors;</li>
+<li>parameter effects;</li>
+<li>bias-stability tradeoff.</li>
 </ul>
 
 

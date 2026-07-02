@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lnajman.github.io/math435-mathematical-imaging/project/index.html</loc>
-    <lastmod>2026-07-02T09:56:15.568Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-03-fourier-imaging.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-01-image-formation.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/index.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/syllabus.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/index.html</loc>
-    <lastmod>2026-07-02T09:56:15.568Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/notebooks/index.html</loc>
-    <lastmod>2026-07-02T09:56:15.568Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/template.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-02-convolution-blur.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
+    <lastmod>2026-07-02T10:09:47.490Z</lastmod>
   </url>
   <url>
     <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-04-noise-likelihood.html</loc>
-    <lastmod>2026-07-02T09:56:15.569Z</lastmod>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-02-convolution-blur.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/template.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/notebooks/index.html</loc>
+    <lastmod>2026-07-02T10:09:47.490Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/index.html</loc>
+    <lastmod>2026-07-02T10:09:47.490Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/syllabus.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/index.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-01-image-formation.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-03-fourier-imaging.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lnajman.github.io/math435-mathematical-imaging/slides/week-05-ill-posed-inverse-problems.html</loc>
+    <lastmod>2026-07-02T10:09:47.492Z</lastmod>
   </url>
 </urlset>
