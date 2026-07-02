@@ -378,7 +378,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 <section id="what-fft-returns" class="slide level2">
 <h2>What FFT Returns</h2>
 <div class="code-small">
-<div id="6f284da7" class="cell">
+<div id="d482cbbf" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>spectrum <span class="op">=</span> np.fft.fft(signal)</span>
@@ -417,7 +417,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 <p>Most software places the zero frequency at the corner.</p>
 <p>For visualization, we often use:</p>
 <div class="code-small">
-<div id="ff86b63a" class="cell">
+<div id="54fd896f" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>F <span class="op">=</span> np.fft.fft2(image)</span>
 <span id="cb2-2"><a></a>F_centered <span class="op">=</span> np.fft.fftshift(F)</span>
 <span id="cb2-3"><a></a>log_magnitude <span class="op">=</span> np.log1p(np.<span class="bu">abs</span>(F_centered))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -487,7 +487,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 </section>
 <section id="python-demo-spectrum-of-an-image" class="slide level2 code-small">
 <h2>Python Demo: Spectrum of an Image</h2>
-<div id="d75e5bce" class="cell">
+<div id="f1e12574" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb3-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-3"><a></a></span>
