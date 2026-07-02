@@ -19,6 +19,7 @@ project:
     - slides/week-07-variational-formulation.qmd
     - slides/week-08-total-variation.qmd
     - slides/week-09-optimization-methods.qmd
+    - slides/week-10-sparse-reconstruction.qmd
     - project/index.qmd
 
 website:

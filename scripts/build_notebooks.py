@@ -3748,6 +3748,503 @@ def week09_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week10_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 10 - Sparse Reconstruction
+
+            This notebook accompanies the tenth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - explain sparsity in a chosen representation;
+            - compare l1 and l2 regularization on an underdetermined problem;
+            - run an l1 reconstruction with ISTA;
+            - test how the number of measurements affects sparse recovery;
+            - reconstruct an image from random pixels using a sparse DCT prior.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from scipy.fft import dctn, idctn
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def soft_threshold(values, threshold):
+                return np.sign(values) * np.maximum(np.abs(values) - threshold, 0.0)
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def make_sparse_problem(measurements=32, unknowns=96, sparsity=6, seed=43510):
+                rng_matrix = np.random.default_rng(seed)
+                rng_signal = np.random.default_rng(seed + 1)
+                full_rows = max(64, measurements)
+                full_matrix = rng_matrix.standard_normal((full_rows, unknowns))
+                matrix = full_matrix[:measurements] / np.sqrt(measurements)
+                matrix = matrix / np.linalg.norm(matrix, axis=0, keepdims=True)
+
+                support = np.sort(rng_signal.choice(unknowns, size=sparsity, replace=False))
+                amplitudes = rng_signal.choice([-1.0, 1.0], size=sparsity) * rng_signal.uniform(0.65, 1.25, size=sparsity)
+                true_signal = np.zeros(unknowns)
+                true_signal[support] = amplitudes
+                measurements_vector = matrix @ true_signal
+                return matrix, true_signal, measurements_vector, support
+
+
+            def minimum_l2_solution(matrix, measurements_vector):
+                gram = matrix @ matrix.T
+                return matrix.T @ np.linalg.solve(gram + 1e-10 * np.eye(gram.shape[0]), measurements_vector)
+
+
+            def ista_l1(matrix, measurements_vector, lam, iterations=1200):
+                lipschitz = float(np.linalg.norm(matrix, 2) ** 2)
+                step_size = 0.95 / lipschitz
+                estimate = np.zeros(matrix.shape[1])
+                energies = []
+                for _ in range(iterations):
+                    residual = matrix @ estimate - measurements_vector
+                    gradient = matrix.T @ residual
+                    estimate = soft_threshold(estimate - step_size * gradient, step_size * lam)
+                    energy = 0.5 * float(np.sum((matrix @ estimate - measurements_vector) ** 2)) + lam * float(np.sum(np.abs(estimate)))
+                    energies.append(energy)
+                return estimate, np.array(energies)
+
+
+            def relative_error(estimate, reference):
+                return float(np.linalg.norm(estimate - reference) / np.linalg.norm(reference))
+
+
+            def active_count(values, tolerance=1e-2):
+                return int(np.count_nonzero(np.abs(values) > tolerance))
+
+
+            def show_signal_comparison(signals, titles, height=650):
+                fig = make_subplots(rows=len(signals), cols=1, subplot_titles=titles, shared_xaxes=True)
+                for row, (values, title) in enumerate(zip(signals, titles), start=1):
+                    index = np.arange(len(values))
+                    fig.add_trace(go.Scatter(x=index, y=values, mode="markers", name=title), row=row, col=1)
+                    fig.add_trace(go.Scatter(x=index, y=np.zeros_like(values), mode="lines", line=dict(color="lightgray"), showlegend=False), row=row, col=1)
+                    fig.update_yaxes(title_text="value", row=row, col=1)
+                fig.update_xaxes(title_text="coefficient index", row=len(signals), col=1)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=70, b=45), showlegend=False)
+                fig.show()
+
+
+            def show_image_grid(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin if colorscale == "Gray" else None,
+                            zmax=zmax if colorscale == "Gray" else None,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Sparse and Dense Coefficients
+
+            Sparsity means that most coefficients are zero or negligible in a chosen representation.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43510)
+            n = 72
+            sparse = np.zeros(n)
+            sparse[[6, 18, 31, 44, 57, 66]] = [1.0, -0.8, 0.7, 1.15, -0.65, 0.9]
+            dense = 0.18 * rng.standard_normal(n) + 0.25 * np.sin(np.linspace(0, 5 * np.pi, n))
+
+            show_signal_comparison(
+                [sparse, dense],
+                [f"sparse vector: {active_count(sparse)} active entries", f"dense vector: {active_count(dense)} active entries"],
+                height=500,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change `tolerance`. When should a coefficient count as negligible rather than nonzero?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            tolerance = 0.05
+
+            print("sparse active count:", active_count(sparse, tolerance))
+            print("dense active count:", active_count(dense, tolerance))
+            """
+        ),
+        md(
+            """
+            ### 2. l1 Versus l2 Geometry
+
+            l2 balls are round. l1 balls have corners on coordinate axes.
+            Those corners are one reason l1 can produce exact zeros.
+            """
+        ),
+        code(
+            """
+            x = np.linspace(-1.0, 1.35, 400)
+            y = (1.0 - x) / 2.0
+            l2_solution = np.array([0.2, 0.4])
+            l1_solution = np.array([0.0, 0.5])
+
+            theta = np.linspace(0, 2 * np.pi, 500)
+            radius = np.linalg.norm(l2_solution)
+            diamond_radius = np.sum(np.abs(l1_solution))
+            diamond_x = [diamond_radius, 0, -diamond_radius, 0, diamond_radius]
+            diamond_y = [0, diamond_radius, 0, -diamond_radius, 0]
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=y, mode="lines", name="data constraint"))
+            fig.add_trace(go.Scatter(x=radius * np.cos(theta), y=radius * np.sin(theta), mode="lines", name="l2 ball"))
+            fig.add_trace(go.Scatter(x=diamond_x, y=diamond_y, mode="lines", name="l1 ball"))
+            fig.add_trace(go.Scatter(x=[l2_solution[0]], y=[l2_solution[1]], mode="markers", name="l2 solution", marker=dict(size=11)))
+            fig.add_trace(go.Scatter(x=[l1_solution[0]], y=[l1_solution[1]], mode="markers", name="l1 solution", marker=dict(size=11)))
+            fig.update_yaxes(scaleanchor="x", scaleratio=1)
+            fig.update_layout(
+                title="First contact with a data constraint",
+                xaxis_title="x1",
+                yaxis_title="x2",
+                height=520,
+                margin=dict(l=20, r=20, t=60, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### 3. Underdetermined Sparse Recovery
+
+            We now create a problem with fewer measurements than unknowns.
+
+            The true signal is sparse, but the reconstruction algorithm does not get told the support.
+            """
+        ),
+        code(
+            """
+            matrix, true_signal, measurements_vector, support = make_sparse_problem(
+                measurements=32,
+                unknowns=96,
+                sparsity=6,
+            )
+
+            l2_solution = minimum_l2_solution(matrix, measurements_vector)
+            l1_solution, l1_energies = ista_l1(matrix, measurements_vector, lam=0.015, iterations=1200)
+
+            show_signal_comparison(
+                [true_signal, l2_solution, l1_solution],
+                [
+                    f"true sparse signal: support={support.tolist()}",
+                    f"minimum l2-norm solution: active={active_count(l2_solution)}",
+                    f"l1-regularized solution: active={active_count(l1_solution)}",
+                ],
+                height=720,
+            )
+
+            for name, estimate in [("l2", l2_solution), ("l1", l1_solution)]:
+                print(
+                    f"{name:3s}",
+                    "relative error=", round(relative_error(estimate, true_signal), 4),
+                    "residual=", round(float(np.linalg.norm(matrix @ estimate - measurements_vector)), 6),
+                    "active=", active_count(estimate),
+                )
+            """
+        ),
+        md(
+            """
+            ### Reading the Result
+
+            The l2 solution fits the measurements almost exactly, but it spreads coefficients across many entries.
+
+            The l1 solution allows a small residual but is much closer to the sparse signal.
+            """
+        ),
+        code(
+            """
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(y=l1_energies, mode="lines", name="l1 objective"))
+            fig.update_layout(
+                title="l1 objective through ISTA iterations",
+                xaxis_title="iteration",
+                yaxis_title="objective value",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change the number of measurements and the l1 regularization weight.
+
+            What changes first: residual, sparsity, or reconstruction error?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            measurements = 24
+            lam = 0.015
+
+            matrix_exp, true_exp, y_exp, support_exp = make_sparse_problem(measurements=measurements, unknowns=96, sparsity=6)
+            l2_exp = minimum_l2_solution(matrix_exp, y_exp)
+            l1_exp, _ = ista_l1(matrix_exp, y_exp, lam=lam, iterations=1200)
+
+            print("support:", support_exp.tolist())
+            for name, estimate in [("l2", l2_exp), ("l1", l1_exp)]:
+                print(
+                    f"{name:3s}",
+                    "relative error=", round(relative_error(estimate, true_exp), 4),
+                    "residual=", round(float(np.linalg.norm(matrix_exp @ estimate - y_exp)), 6),
+                    "active=", active_count(estimate),
+                )
+            """
+        ),
+        md(
+            """
+            ### 4. Measurement Sweep
+
+            Compressed sensing intuition: if the signal is sparse and the measurements mix information well, recovery can work with far fewer measurements than unknowns.
+            """
+        ),
+        code(
+            """
+            counts = [12, 16, 20, 24, 28, 32, 40, 56, 64]
+            l2_errors = []
+            l1_errors = []
+            l1_active = []
+
+            for count in counts:
+                matrix_sweep, true_sweep, y_sweep, _ = make_sparse_problem(measurements=count, unknowns=96, sparsity=6)
+                l2_sweep = minimum_l2_solution(matrix_sweep, y_sweep)
+                l1_sweep, _ = ista_l1(matrix_sweep, y_sweep, lam=0.015, iterations=1500)
+                l2_errors.append(relative_error(l2_sweep, true_sweep))
+                l1_errors.append(relative_error(l1_sweep, true_sweep))
+                l1_active.append(active_count(l1_sweep))
+
+            fig = make_subplots(specs=[[{"secondary_y": True}]])
+            fig.add_trace(go.Scatter(x=counts, y=l2_errors, mode="lines+markers", name="minimum l2-norm"), secondary_y=False)
+            fig.add_trace(go.Scatter(x=counts, y=l1_errors, mode="lines+markers", name="l1 regularized"), secondary_y=False)
+            fig.add_trace(go.Scatter(x=counts, y=l1_active, mode="lines+markers", name="active l1 entries"), secondary_y=True)
+            fig.update_xaxes(title_text="number of measurements")
+            fig.update_yaxes(title_text="relative error", secondary_y=False)
+            fig.update_yaxes(title_text="active l1 entries", secondary_y=True)
+            fig.update_layout(title="Sparse recovery improves when there are enough measurements", height=430, margin=dict(l=20, r=20, t=55, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Change `sparsity` below. How many measurements are needed before l1 recovery becomes reliable?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            sparsity = 10
+
+            for count in [24, 32, 40, 56, 64]:
+                matrix_test, true_test, y_test, _ = make_sparse_problem(measurements=count, unknowns=96, sparsity=sparsity)
+                l1_test, _ = ista_l1(matrix_test, y_test, lam=0.015, iterations=1500)
+                print(
+                    f"measurements={count:2d}",
+                    "relative error=", round(relative_error(l1_test, true_test), 4),
+                    "active=", active_count(l1_test),
+                )
+            """
+        ),
+        md(
+            """
+            ### 5. Image Sparsity in the DCT
+
+            A natural-image patch is usually not sparse in pixels, but it may be approximately sparse in a transform domain.
+            """
+        ),
+        code(
+            """
+            image = data.camera().astype(float)[80:208, 128:256] / 255.0
+            coefficients = dctn(image, norm="ortho")
+            sorted_magnitudes = np.sort(np.abs(coefficients).ravel())[::-1]
+
+            reconstructions = []
+            titles = []
+            for fraction in [0.10, 0.03, 0.01]:
+                keep = max(1, int(fraction * coefficients.size))
+                threshold = sorted_magnitudes[keep - 1]
+                sparse_coefficients = np.where(np.abs(coefficients) >= threshold, coefficients, 0.0)
+                reconstruction = np.clip(idctn(sparse_coefficients, norm="ortho"), 0.0, 1.0)
+                reconstructions.append(reconstruction)
+                titles.append(f"{100*fraction:.0f}% kept, RMSE={rmse(reconstruction, image):.3f}")
+
+            show_image_grid(
+                [image, np.log1p(np.abs(np.fft.fftshift(coefficients)))] + reconstructions,
+                ["original", "log DCT magnitude"] + titles,
+                colorscales=["Gray", "Magma", "Gray", "Gray", "Gray"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### 6. Sparse DCT Reconstruction from Random Pixels
+
+            Now we observe only a random subset of pixels and reconstruct DCT coefficients with an l1 penalty.
+            """
+        ),
+        code(
+            """
+            def dct_sparse_inpaint(observed, mask, lam, iterations=180):
+                coefficients = np.zeros_like(observed)
+                energies = []
+                for _ in range(iterations):
+                    image_estimate = idctn(coefficients, norm="ortho")
+                    residual = (image_estimate - observed) * mask
+                    gradient = dctn(residual, norm="ortho")
+                    coefficients = soft_threshold(coefficients - 0.95 * gradient, 0.95 * lam)
+                    image_estimate = idctn(coefficients, norm="ortho")
+                    energy = 0.5 * float(np.sum(((image_estimate - observed) * mask) ** 2)) + lam * float(np.sum(np.abs(coefficients)))
+                    energies.append(energy)
+                return np.clip(idctn(coefficients, norm="ortho"), 0.0, 1.0), coefficients, np.array(energies)
+
+
+            rng = np.random.default_rng(43510)
+            image_small = data.camera().astype(float)[96:160, 128:192] / 255.0
+            mask = rng.random(image_small.shape) < 0.40
+            observed = image_small * mask
+
+            reconstruction, sparse_coefficients, inpaint_energies = dct_sparse_inpaint(
+                observed,
+                mask,
+                lam=0.008,
+                iterations=180,
+            )
+
+            show_image_grid(
+                [
+                    image_small,
+                    observed,
+                    reconstruction,
+                    mask.astype(float),
+                    np.log1p(np.abs(np.fft.fftshift(sparse_coefficients))),
+                ],
+                [
+                    "original",
+                    f"observed ({mask.mean():.0%} pixels)",
+                    f"sparse DCT, RMSE={rmse(reconstruction, image_small):.3f}",
+                    "mask",
+                    "log DCT coefficients",
+                ],
+                colorscales=["Gray", "Gray", "Gray", "Gray", "Magma"],
+                height=430,
+            )
+
+            print("zero-filled RMSE:", round(rmse(observed, image_small), 4))
+            print("sparse DCT RMSE:", round(rmse(reconstruction, image_small), 4))
+            print("active DCT coefficients:", active_count(sparse_coefficients, tolerance=1e-3))
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Change the observed-pixel fraction and l1 weight.
+
+            What happens when the image is sampled less densely?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            observed_fraction = 0.25
+            image_lam = 0.008
+
+            rng = np.random.default_rng(43511)
+            test_mask = rng.random(image_small.shape) < observed_fraction
+            test_observed = image_small * test_mask
+            test_reconstruction, test_coefficients, _ = dct_sparse_inpaint(
+                test_observed,
+                test_mask,
+                lam=image_lam,
+                iterations=180,
+            )
+
+            show_image_grid(
+                [image_small, test_observed, test_reconstruction],
+                ["original", f"observed ({test_mask.mean():.0%} pixels)", f"reconstruction, lam={image_lam:g}"],
+                height=400,
+            )
+            print("zero-filled RMSE:", round(rmse(test_observed, image_small), 4))
+            print("sparse DCT RMSE:", round(rmse(test_reconstruction, image_small), 4))
+            print("active DCT coefficients:", active_count(test_coefficients, tolerance=1e-3))
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. Why is sparsity representation-dependent?
+            2. Why does l1 promote exact zeros more than l2?
+            3. Why can an l2 solution fit the data but fail to recover the sparse signal?
+            4. What assumptions are needed for compressed sensing-style reconstruction?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 11 studies wavelets and multiscale representations, which are a natural sparse representation for many images.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -3758,6 +4255,7 @@ def main() -> None:
     write_notebook("week07_variational_formulation.ipynb", week07_cells())
     write_notebook("week08_total_variation.ipynb", week08_cells())
     write_notebook("week09_optimization_methods.ipynb", week09_cells())
+    write_notebook("week10_sparse_reconstruction.ipynb", week10_cells())
 
 
 if __name__ == "__main__":
