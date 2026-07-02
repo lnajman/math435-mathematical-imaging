@@ -1,0 +1,560 @@
+---
+title: "Tikhonov Regularization"
+subtitle: "MATH 435: Mathematical Imaging - Week 6"
+author: "Laurent Najman"
+date: "Week 6"
+format:
+  revealjs:
+    incremental: false
+execute:
+  enabled: false
+---
+
+## Opening Question {.inverse-slide}
+
+::: {.section-kicker}
+Stabilizing an inverse
+:::
+
+If exact inversion is unstable, what should we give up: exact data fit, sharpness, or both?
+
+## Today
+
+::: {.checklist}
+- Formulate Tikhonov regularization.
+- Derive the normal equations.
+- Interpret the regularization parameter.
+- Read Tikhonov filter factors.
+- Explain the bias-stability tradeoff.
+:::
+
+## 75-Minute Plan
+
+| Time | Work |
+|---:|---|
+| 0-8 min | recap ill-posedness and small singular values |
+| 8-20 min | penalized least squares |
+| 20-34 min | normal equations and closed form |
+| 34-48 min | SVD and filter factors |
+| 48-60 min | parameter effects |
+| 60-68 min | bias-variance tradeoff |
+| 68-72 min | project assignment note |
+| 72-75 min | exit checkpoint |
+
+## Bridge from Week 5
+
+Week 5 showed that direct inversion may amplify noise:
+
+$$
+\frac{\langle \eta,u_i\rangle}{\sigma_i}.
+$$
+
+::: {.question-box}
+How can we keep useful directions without exploding in unstable directions?
+:::
+
+## The Basic Model
+
+For a linear imaging model:
+
+$$
+y = Ax + \eta.
+$$
+
+The least-squares data fit is
+
+$$
+\|Ax-y\|_2^2.
+$$
+
+::: {.caption}
+For Gaussian noise, this comes from the likelihood.
+:::
+
+## The Problem with Least Squares
+
+If $A$ is ill-conditioned, the least-squares solution can fit noise.
+
+::: {.takeaway-box}
+Data fit alone does not know which data components are reliable.
+:::
+
+## Part 1: Tikhonov Model {.section-slide}
+
+::: {.section-kicker}
+Add a stabilizing penalty
+:::
+
+Least squares plus size control
+
+## Tikhonov Regularization
+
+The simplest Tikhonov model is
+
+$$
+x_\lambda
+=
+\operatorname*{argmin}_x
+\|Ax-y\|_2^2 + \lambda\|x\|_2^2.
+$$
+
+::: {.definition-box}
+The parameter $\lambda>0$ controls the strength of regularization.
+:::
+
+## What the Terms Mean
+
+::: {.two-col}
+::: {.definition-box}
+Data term:
+
+$$
+\|Ax-y\|_2^2
+$$
+
+prefer reconstructions that explain the measurements.
+:::
+
+::: {.model-box}
+Penalty term:
+
+$$
+\lambda\|x\|_2^2
+$$
+
+prefer smaller-energy solutions.
+:::
+:::
+
+## Why Penalize the Solution?
+
+::: {.question-box}
+If two images explain the data similarly, which one should we prefer?
+:::
+
+Tikhonov's answer:
+
+::: {.takeaway-box}
+Prefer the one with smaller norm.
+:::
+
+## Activity 1: Extreme Parameters
+
+::: {.time-tag}
+5 minutes
+:::
+
+::: {.exercise-box}
+Predict what happens to
+
+$$
+\|Ax-y\|_2^2+\lambda\|x\|_2^2
+$$
+
+when:
+
+1. $\lambda \to 0$;
+2. $\lambda \to \infty$.
+:::
+
+## Parameter Path
+
+::: {.figure-frame}
+![](../assets/figures/week06-tikhonov-path.png){fig-alt="True signal, blurred noisy data, and Tikhonov reconstructions for three lambda values"}
+:::
+
+## Reading the Path
+
+::: {.checklist}
+- Very small $\lambda$: unstable directions are barely damped.
+- Moderate $\lambda$: noise is controlled while structure remains.
+- Large $\lambda$: the solution is overly damped.
+:::
+
+## Part 2: Deriving the Normal Equations {.section-slide}
+
+::: {.section-kicker}
+Closed form
+:::
+
+Differentiate the objective
+
+## Objective Function
+
+Let
+
+$$
+J(x)=\|Ax-y\|_2^2+\lambda\|x\|_2^2.
+$$
+
+Expanding:
+
+$$
+J(x)=(Ax-y)^T(Ax-y)+\lambda x^T x.
+$$
+
+## Gradient
+
+The gradient is
+
+$$
+\nabla J(x)
+=
+2A^T(Ax-y)+2\lambda x.
+$$
+
+At a minimizer:
+
+$$
+\nabla J(x_\lambda)=0.
+$$
+
+## Normal Equations
+
+Setting the gradient to zero gives:
+
+$$
+A^T(Ax_\lambda-y)+\lambda x_\lambda=0.
+$$
+
+Therefore:
+
+$$
+(A^TA+\lambda I)x_\lambda=A^T y.
+$$
+
+## Closed-Form Solution
+
+If $\lambda>0$,
+
+$$
+x_\lambda
+=
+(A^TA+\lambda I)^{-1}A^T y.
+$$
+
+::: {.takeaway-box}
+Tikhonov replaces an unstable inverse by a stabilized linear solve.
+:::
+
+## Why This Is Better Conditioned
+
+If $A$ has singular values $\sigma_i$, then $A^TA$ has eigenvalues $\sigma_i^2$.
+
+Tikhonov shifts them:
+
+$$
+\sigma_i^2
+\quad\longmapsto\quad
+\sigma_i^2+\lambda.
+$$
+
+::: {.caption}
+Small eigenvalues are lifted away from zero.
+:::
+
+## Activity 2: Condition Number
+
+::: {.time-tag}
+5 minutes
+:::
+
+::: {.exercise-box}
+Suppose singular values are
+
+$$
+1,\;0.1,\;0.001.
+$$
+
+Compare the smallest eigenvalue of $A^TA$ with that of $A^TA+\lambda I$ for $\lambda=0.01$.
+:::
+
+## Python Demo: Normal Equations {.code-small}
+
+```{python}
+lhs = A.T @ A + lam * np.eye(n)
+rhs = A.T @ y
+x_lam = np.linalg.solve(lhs, rhs)
+```
+
+::: {.caption}
+This is the direct matrix form for small educational examples.
+:::
+
+## Part 3: SVD Interpretation {.section-slide}
+
+::: {.section-kicker}
+What lambda does to each direction
+:::
+
+Filter factors
+
+## Tikhonov in SVD Coordinates
+
+Let
+
+$$
+A v_i = \sigma_i u_i.
+$$
+
+Then
+
+$$
+x_\lambda
+=
+\sum_i
+\frac{\sigma_i}{\sigma_i^2+\lambda}
+\langle y,u_i\rangle v_i.
+$$
+
+## Compare with Direct Inversion
+
+Direct inverse factor:
+
+$$
+\frac{1}{\sigma_i}.
+$$
+
+Tikhonov factor:
+
+$$
+\frac{\sigma_i}{\sigma_i^2+\lambda}.
+$$
+
+::: {.takeaway-box}
+When $\sigma_i$ is small, Tikhonov avoids division by a tiny number.
+:::
+
+## Filter Factors
+
+::: {.figure-frame}
+![](../assets/figures/week06-filter-factors.png){fig-alt="Singular values and Tikhonov inverse filter factors for several lambda values"}
+:::
+
+## Reading the Filter Factors
+
+::: {.checklist}
+- Small $\lambda$ behaves more like the inverse.
+- Larger $\lambda$ damps weak singular directions.
+- Strong damping reduces noise but also removes detail.
+:::
+
+## Activity 3: Direction-by-Direction
+
+::: {.time-tag}
+6 minutes
+:::
+
+::: {.exercise-box}
+For $\sigma=0.001$, compare:
+
+$$
+\frac{1}{\sigma}
+\quad\text{and}\quad
+\frac{\sigma}{\sigma^2+\lambda}
+$$
+
+for $\lambda=0.01$.
+
+What changed?
+:::
+
+## Part 4: Choosing Lambda {.section-slide}
+
+::: {.section-kicker}
+No free lunch
+:::
+
+The parameter is the lesson
+
+## Parameter Effects
+
+::: {.two-col}
+::: {.question-box}
+Small $\lambda$:
+
+better data fit, more noise amplification.
+:::
+
+::: {.model-box}
+Large $\lambda$:
+
+more stability, more bias and blur.
+:::
+:::
+
+## Error and L-Curve Views
+
+::: {.figure-frame}
+![](../assets/figures/week06-parameter-tradeoff.png){fig-alt="RMSE versus lambda and L-curve for Tikhonov regularization"}
+:::
+
+## Important Reality
+
+The true image is usually unknown.
+
+So the RMSE curve is a teaching diagnostic, not a practical parameter-choice method.
+
+::: {.caption}
+In practice, parameter choice may use validation data, discrepancy principles, cross-validation, or L-curve heuristics.
+:::
+
+## Real Image Example
+
+::: {.figure-frame}
+![](../assets/figures/week06-image-tikhonov.png){fig-alt="Original image, blurred noisy image, and Tikhonov deblurring with several lambda values"}
+:::
+
+## Discussion
+
+::: {.time-tag}
+4 minutes
+:::
+
+::: {.exercise-box}
+Which reconstruction would you choose visually?
+
+Would your answer change if the image were for medical diagnosis?
+:::
+
+## Part 5: Bias-Variance Tradeoff {.section-slide}
+
+::: {.section-kicker}
+What regularization buys and costs
+:::
+
+Stability has a price
+
+## Bias and Variance
+
+Imagine repeating the noisy measurement many times.
+
+::: {.two-col}
+::: {.definition-box}
+Bias:
+
+systematic error from the average reconstruction.
+:::
+
+::: {.model-box}
+Variance:
+
+random variation across noise realizations.
+:::
+:::
+
+## Bias-Variance Picture
+
+::: {.figure-frame}
+![](../assets/figures/week06-bias-variance.png){fig-alt="Bias squared, variance, and total mean squared error versus lambda"}
+:::
+
+## Reading the Tradeoff
+
+::: {.checklist}
+- Increasing $\lambda$ usually reduces variance.
+- Increasing $\lambda$ usually increases bias.
+- The best mean squared error is often between the extremes.
+:::
+
+## Activity 4: Explain the U-Shape
+
+::: {.time-tag}
+5 minutes
+:::
+
+::: {.exercise-box}
+Why can the error be large for both very small and very large $\lambda$?
+
+Use the words "noise", "bias", and "stability".
+:::
+
+## Project Assigned
+
+This week the modeling project is assigned.
+
+::: {.checklist}
+- Teams choose or receive an imaging reconstruction problem.
+- The report and code are due later in the semester.
+- Each student should understand the entire model and implementation.
+:::
+
+::: {.caption}
+See the project page for the current project structure and expectations.
+:::
+
+## Code Demo: Run Week 6 Examples {.code-small}
+
+From the repository root:
+
+```bash
+python3 examples/week06_tikhonov.py
+python3 examples/make_week06_figures.py
+python3 scripts/build_notebooks.py
+./scripts/quarto render
+```
+
+## In-Class Notebook Activity
+
+::: {.time-tag}
+8 minutes
+:::
+
+::: {.exercise-box}
+Open the Week 6 notebook.
+
+1. Change blur strength.
+2. Change noise level.
+3. Sweep $\lambda$.
+4. Record which value balances noise and blur best.
+:::
+
+## Quiz-Style Check
+
+::: {.exercise-box}
+For each expression, identify its role:
+
+1. $\|Ax-y\|_2^2$;
+2. $\lambda\|x\|_2^2$;
+3. $(A^TA+\lambda I)x=A^Ty$;
+4. $\sigma_i/(\sigma_i^2+\lambda)$.
+:::
+
+## End-of-Class Checkpoint
+
+::: {.exercise-box}
+Answer in one sentence each:
+
+1. What does Tikhonov regularization minimize?
+2. Why does $\lambda I$ improve stability?
+3. What happens when $\lambda$ is too small?
+4. What happens when $\lambda$ is too large?
+:::
+
+## Suggested Answers
+
+| Question | Short answer |
+|---|---|
+| Tikhonov objective | data fit plus $\ell_2$ penalty |
+| stability | small eigenvalues are shifted away from zero |
+| too small | noise amplification remains |
+| too large | solution is biased and over-smoothed |
+
+## What Students Should Remember
+
+::: {.takeaway-box}
+- Tikhonov solves $\min_x \|Ax-y\|_2^2+\lambda\|x\|_2^2$.
+- The normal equations are $(A^TA+\lambda I)x=A^Ty$.
+- In SVD coordinates, Tikhonov damps weak singular directions.
+- $\lambda$ controls a bias-stability tradeoff.
+- Regularization is not magic; it encodes a modeling choice.
+:::
+
+## Next Time
+
+Variational formulation:
+
+- energy minimization;
+- convexity as a geometric idea;
+- guided Euler-Lagrange derivation;
+- gradient descent intuition.

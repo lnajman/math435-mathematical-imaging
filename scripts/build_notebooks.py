@@ -2102,12 +2102,464 @@ def week05_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week06_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 6 - Tikhonov Regularization
+
+            This notebook accompanies the sixth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - solve a Tikhonov-regularized least-squares problem;
+            - derive and use the normal equations;
+            - interpret Tikhonov filter factors;
+            - sweep the regularization parameter `lambda`;
+            - explain the bias-stability tradeoff.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from scipy import ndimage
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def gaussian_kernel1d(radius, sigma):
+                axis = np.arange(-radius, radius + 1)
+                kernel = np.exp(-(axis**2) / (2 * sigma**2))
+                return kernel / kernel.sum()
+
+
+            def gaussian_kernel2d(size, sigma):
+                axis = np.arange(-(size // 2), size // 2 + 1)
+                xx, yy = np.meshgrid(axis, axis)
+                kernel = np.exp(-(xx**2 + yy**2) / (2 * sigma**2))
+                return kernel / kernel.sum()
+
+
+            def convolution_matrix(n, sigma):
+                radius = max(3, int(np.ceil(4 * sigma)))
+                kernel = gaussian_kernel1d(radius, sigma)
+                matrix = np.zeros((n, n))
+                for col in range(n):
+                    impulse = np.zeros(n)
+                    impulse[col] = 1.0
+                    matrix[:, col] = np.convolve(impulse, kernel, mode="same")
+                return matrix
+
+
+            def test_signal(n):
+                t = np.linspace(0, 1, n, endpoint=False)
+                signal = (
+                    0.58 * np.sin(2 * np.pi * 3 * t)
+                    + 0.24 * np.sin(2 * np.pi * 14 * t)
+                    + 0.20 * (t > 0.43)
+                    - 0.18 * (t > 0.72)
+                )
+                return signal / np.max(np.abs(signal))
+
+
+            def tikhonov_solution(matrix, y, lam):
+                n = matrix.shape[1]
+                lhs = matrix.T @ matrix + lam * np.eye(n)
+                rhs = matrix.T @ y
+                return np.linalg.solve(lhs, rhs)
+
+
+            def centered_kernel_fft(kernel, shape):
+                padded = np.zeros(shape)
+                kh, kw = kernel.shape
+                padded[:kh, :kw] = kernel
+                padded = np.roll(padded, -(kh // 2), axis=0)
+                padded = np.roll(padded, -(kw // 2), axis=1)
+                return np.fft.fft2(padded)
+
+
+            def frequency_tikhonov(noisy, kernel, lam):
+                h_fft = centered_kernel_fft(kernel, noisy.shape)
+                y_fft = np.fft.fft2(noisy)
+                estimate = np.real(np.fft.ifft2(np.conj(h_fft) * y_fft / (np.abs(h_fft) ** 2 + lam)))
+                return np.clip(estimate, 0.0, 1.0)
+
+
+            def show_heatmaps(images, titles, zmin=0, zmax=1, height=430):
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, image in enumerate(images, start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale="Gray",
+                            zmin=zmin,
+                            zmax=zmax,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Build a Small Ill-Conditioned Deblurring Problem
+
+            We begin with a 1D signal and a blur matrix. The matrix is deliberately ill-conditioned.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43506)
+
+            n = 128
+            blur_sigma = 2.8
+            noise_level = 0.018
+
+            matrix = convolution_matrix(n, blur_sigma)
+            clean = test_signal(n)
+            blurred = matrix @ clean
+            noisy = blurred + noise_level * rng.standard_normal(n)
+
+            singular_values = np.linalg.svd(matrix, compute_uv=False)
+
+            print("condition number of A:", f"{singular_values[0] / singular_values[-1]:.3e}")
+            print("condition number of A.T @ A:", f"{(singular_values[0] ** 2) / (singular_values[-1] ** 2):.3e}")
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["true signal", "blurred + noise"])
+            fig.add_trace(go.Scatter(y=clean, mode="lines"), row=1, col=1)
+            fig.add_trace(go.Scatter(y=noisy, mode="lines"), row=1, col=2)
+            fig.update_layout(height=360, showlegend=False, margin=dict(l=20, r=20, t=60, b=35))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### 2. Solve the Tikhonov Normal Equations
+
+            Tikhonov regularization solves
+
+            ```text
+            minimize ||Ax - y||_2^2 + lambda ||x||_2^2
+            ```
+
+            The normal equations are
+
+            ```text
+            (A.T @ A + lambda * I) x = A.T @ y
+            ```
+            """
+        ),
+        code(
+            """
+            lambdas = [1e-6, 1e-3, 1e-1]
+            estimates = [tikhonov_solution(matrix, noisy, lam) for lam in lambdas]
+
+            fig = make_subplots(
+                rows=1,
+                cols=5,
+                subplot_titles=["true", "data"] + [f"lambda={lam:g}" for lam in lambdas],
+            )
+            for index, values in enumerate([clean, noisy] + estimates, start=1):
+                fig.add_trace(go.Scatter(y=values, mode="lines"), row=1, col=index)
+                fig.update_yaxes(range=[-1.35, 1.35], row=1, col=index)
+                fig.update_xaxes(showticklabels=False, row=1, col=index)
+            fig.update_layout(height=380, showlegend=False, margin=dict(l=20, r=20, t=60, b=35))
+            fig.show()
+
+            for lam, estimate in zip(lambdas, estimates):
+                print(f"lambda={lam:g}, RMSE={rmse(estimate, clean):.4f}")
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change the three `lambda` values above. Which one gives the best visual reconstruction?
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            student_lambdas = [1e-5, 3e-3, 3e-1]
+
+            for lam in student_lambdas:
+                estimate = tikhonov_solution(matrix, noisy, lam)
+                residual = np.linalg.norm(matrix @ estimate - noisy)
+                norm = np.linalg.norm(estimate)
+                error = rmse(estimate, clean)
+                print(f"lambda={lam:g}, residual={residual:.4f}, norm={norm:.4f}, RMSE={error:.4f}")
+            """
+        ),
+        md(
+            """
+            ### 3. Sweep Lambda
+
+            In teaching examples we can measure error because we know the true signal. In real inverse problems, the true image is unknown.
+            """
+        ),
+        code(
+            """
+            lambda_grid = np.logspace(-8, 0, 70)
+            errors = []
+            residuals = []
+            solution_norms = []
+            system_conditions = []
+
+            for lam in lambda_grid:
+                estimate = tikhonov_solution(matrix, noisy, lam)
+                errors.append(rmse(estimate, clean))
+                residuals.append(np.linalg.norm(matrix @ estimate - noisy))
+                solution_norms.append(np.linalg.norm(estimate))
+                system_conditions.append((singular_values[0] ** 2 + lam) / (singular_values[-1] ** 2 + lam))
+
+            best_index = int(np.argmin(errors))
+            best_lambda = lambda_grid[best_index]
+
+            fig = make_subplots(
+                rows=1,
+                cols=3,
+                subplot_titles=["RMSE", "L-curve", "condition number"],
+            )
+            fig.add_trace(go.Scatter(x=lambda_grid, y=errors, mode="lines"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=[best_lambda], y=[errors[best_index]], mode="markers"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=residuals, y=solution_norms, mode="lines"), row=1, col=2)
+            fig.add_trace(go.Scatter(x=[residuals[best_index]], y=[solution_norms[best_index]], mode="markers"), row=1, col=2)
+            fig.add_trace(go.Scatter(x=lambda_grid, y=system_conditions, mode="lines"), row=1, col=3)
+            fig.update_xaxes(type="log", title_text="lambda", row=1, col=1)
+            fig.update_yaxes(type="log", title_text="RMSE", row=1, col=1)
+            fig.update_xaxes(type="log", title_text="residual norm", row=1, col=2)
+            fig.update_yaxes(type="log", title_text="solution norm", row=1, col=2)
+            fig.update_xaxes(type="log", title_text="lambda", row=1, col=3)
+            fig.update_yaxes(type="log", title_text="condition", row=1, col=3)
+            fig.update_layout(height=410, showlegend=False, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+
+            print("best lambda in this teaching example:", f"{best_lambda:.3e}")
+            print("best RMSE:", round(errors[best_index], 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Increase `noise_level` in Step 1 and rerun the notebook from there.
+
+            Does the best `lambda` move larger or smaller?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your observation here after rerunning with a different noise level."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ### 4. Tikhonov Filter Factors
+
+            Direct inversion multiplies by `1 / sigma_i`.
+
+            Tikhonov multiplies by:
+
+            ```text
+            sigma_i / (sigma_i^2 + lambda)
+            ```
+            """
+        ),
+        code(
+            """
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["singular values", "Tikhonov inverse factors"])
+            fig.add_trace(go.Scatter(y=singular_values, mode="lines", name="singular values"), row=1, col=1)
+
+            for lam in [1e-6, 1e-4, 1e-2, 1e-1]:
+                factors = singular_values / (singular_values**2 + lam)
+                fig.add_trace(go.Scatter(y=factors, mode="lines", name=f"lambda={lam:g}"), row=1, col=2)
+
+            fig.update_yaxes(type="log", row=1, col=1)
+            fig.update_yaxes(type="log", row=1, col=2)
+            fig.update_xaxes(title_text="index", row=1, col=1)
+            fig.update_xaxes(title_text="index", row=1, col=2)
+            fig.update_layout(height=410, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            For `sigma = 0.001`, compare direct inversion with Tikhonov for `lambda = 0.01`.
+            """
+        ),
+        code(
+            """
+            sigma = 0.001
+            lam = 0.01
+
+            direct_factor = 1 / sigma
+            tikhonov_factor = sigma / (sigma**2 + lam)
+
+            print("direct inverse factor:", direct_factor)
+            print("Tikhonov factor:", tikhonov_factor)
+            """
+        ),
+        md(
+            """
+            ### 5. Bias-Variance Tradeoff by Simulation
+
+            We repeat the noisy measurement many times and look at how the average reconstruction and the reconstruction variability depend on `lambda`.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43506)
+            small_n = 90
+            small_matrix = convolution_matrix(small_n, sigma=2.6)
+            small_clean = test_signal(small_n)
+            small_blurred = small_matrix @ small_clean
+
+            lambda_grid_small = np.logspace(-7, -0.2, 35)
+            trials = 80
+            simulation_noise = 0.02
+            bias_squared = []
+            variance = []
+
+            for lam in lambda_grid_small:
+                trial_estimates = []
+                for _ in range(trials):
+                    trial_noisy = small_blurred + simulation_noise * rng.standard_normal(small_n)
+                    trial_estimates.append(tikhonov_solution(small_matrix, trial_noisy, lam))
+                stack = np.asarray(trial_estimates)
+                mean_estimate = stack.mean(axis=0)
+                bias_squared.append(np.mean((mean_estimate - small_clean) ** 2))
+                variance.append(np.mean(np.var(stack, axis=0)))
+
+            total = np.asarray(bias_squared) + np.asarray(variance)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=lambda_grid_small, y=bias_squared, mode="lines", name="bias^2"))
+            fig.add_trace(go.Scatter(x=lambda_grid_small, y=variance, mode="lines", name="variance"))
+            fig.add_trace(go.Scatter(x=lambda_grid_small, y=total, mode="lines", name="bias^2 + variance"))
+            fig.update_layout(
+                title="Bias-variance tradeoff",
+                xaxis_title="lambda",
+                yaxis_title="mean squared contribution",
+                xaxis_type="log",
+                yaxis_type="log",
+                height=410,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            In your own words, why does variance decrease as `lambda` grows? Why does bias increase?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your bias-variance explanation here."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ### 6. Real Image Deblurring with Frequency-Domain Tikhonov
+
+            For convolution with periodic boundary assumptions, Tikhonov deblurring can be written in the Fourier domain:
+
+            ```text
+            X_lambda = conj(H) * Y / (|H|^2 + lambda)
+            ```
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43506)
+            image = data.camera().astype(float) / 255.0
+            image = image[120:376, 120:376]
+
+            kernel = gaussian_kernel2d(25, 3.5)
+            blurred_image = ndimage.convolve(image, kernel, mode="reflect")
+            noisy_image = np.clip(blurred_image + 0.018 * rng.standard_normal(image.shape), 0, 1)
+
+            image_lambdas = [1e-5, 5e-2, 1.0]
+            image_estimates = [frequency_tikhonov(noisy_image, kernel, lam) for lam in image_lambdas]
+
+            show_heatmaps(
+                [image, noisy_image] + image_estimates,
+                ["original", "blurred + noise"] + [f"lambda={lam:g}" for lam in image_lambdas],
+                height=430,
+            )
+
+            for lam, estimate in zip(image_lambdas, image_estimates):
+                print(f"lambda={lam:g}, RMSE={rmse(estimate, image):.4f}")
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. What objective does Tikhonov regularization minimize?
+            2. What are the normal equations?
+            3. How does `lambda` affect small singular-value directions?
+            4. What is the bias-stability tradeoff?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 7 moves from this closed-form quadratic model to a broader variational view:
+
+            ```text
+            minimize energy(image)
+            ```
+
+            The same idea remains: choose an objective that balances data agreement and image structure.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
     write_notebook("week03_fourier_imaging.ipynb", week03_cells())
     write_notebook("week04_noise_likelihood.ipynb", week04_cells())
     write_notebook("week05_ill_posed_inverse_problems.ipynb", week05_cells())
+    write_notebook("week06_tikhonov_regularization.ipynb", week06_cells())
 
 
 if __name__ == "__main__":

@@ -15,6 +15,7 @@ project:
     - slides/week-03-fourier-imaging.qmd
     - slides/week-04-noise-likelihood.qmd
     - slides/week-05-ill-posed-inverse-problems.qmd
+    - slides/week-06-tikhonov-regularization.qmd
     - project/index.qmd
 
 website:

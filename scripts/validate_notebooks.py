@@ -14,6 +14,7 @@ NOTEBOOKS = [
     ROOT / "notebooks" / "week03_fourier_imaging.ipynb",
     ROOT / "notebooks" / "week04_noise_likelihood.ipynb",
     ROOT / "notebooks" / "week05_ill_posed_inverse_problems.ipynb",
+    ROOT / "notebooks" / "week06_tikhonov_regularization.ipynb",
 ]
 OUTPUT_DIR = Path("/private/tmp/math435-notebook-validation")
 
