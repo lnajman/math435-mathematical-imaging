@@ -13,3 +13,4 @@ The slide deck is being developed week by week. Each deck is a Quarto Reveal.js 
 | 4 | Noise models and likelihoods | [HTML deck](week-04-noise-likelihood.html) |
 | 5 | Ill-posed inverse problems | [HTML deck](week-05-ill-posed-inverse-problems.html) |
 | 6 | Tikhonov regularization | [HTML deck](week-06-tikhonov-regularization.html) |
+| 7 | Variational formulation | [HTML deck](week-07-variational-formulation.html) |

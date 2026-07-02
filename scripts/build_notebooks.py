@@ -2553,6 +2553,382 @@ def week06_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week07_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 7 - Variational Formulation
+
+            This notebook accompanies the seventh MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - write a reconstruction problem as energy minimization;
+            - identify data fidelity and regularization terms;
+            - interpret convex and nonconvex energies visually;
+            - verify the Euler-Lagrange optimality condition for an `l2` smoothing model;
+            - run gradient descent and compare it with the closed-form solution.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def periodic_laplacian_matrix_eigenvalues(shape):
+                rows, cols = shape
+                row_freq = 2 * np.pi * np.fft.fftfreq(rows)
+                col_freq = 2 * np.pi * np.fft.fftfreq(cols)
+                rr, cc = np.meshgrid(row_freq, col_freq, indexing="ij")
+                return 4 - 2 * np.cos(rr) - 2 * np.cos(cc)
+
+
+            def quadratic_denoise(noisy, lam):
+                eig = periodic_laplacian_matrix_eigenvalues(noisy.shape)
+                estimate = np.real(np.fft.ifft2(np.fft.fft2(noisy) / (1 + lam * eig)))
+                return np.clip(estimate, 0, 1)
+
+
+            def smoothness_energy(image):
+                vertical = np.roll(image, -1, axis=0) - image
+                horizontal = np.roll(image, -1, axis=1) - image
+                return float(np.sum(vertical**2 + horizontal**2))
+
+
+            def quadratic_energy(u, y, lam):
+                return 0.5 * float(np.sum((u - y) ** 2)) + 0.5 * lam * smoothness_energy(u)
+
+
+            def gradient(u, y, lam):
+                laplacian_operator = (
+                    4 * u
+                    - np.roll(u, 1, axis=0)
+                    - np.roll(u, -1, axis=0)
+                    - np.roll(u, 1, axis=1)
+                    - np.roll(u, -1, axis=1)
+                )
+                return (u - y) + lam * laplacian_operator
+
+
+            def show_heatmaps(images, titles, zmin=0, zmax=1, height=430):
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, image in enumerate(images, start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale="Gray",
+                            zmin=zmin,
+                            zmax=zmax,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Energy = Data Fit + Regularization
+
+            A variational model chooses a reconstruction by minimizing an energy.
+
+            For a scalar teaching example:
+
+            ```text
+            E(x) = 0.5 * (x - y)^2 + 0.5 * lambda * x^2
+            ```
+            """
+        ),
+        code(
+            """
+            x = np.linspace(-2.5, 2.5, 500)
+            observed_y = 0.8
+            lam = 0.55
+
+            data_term = 0.5 * (x - observed_y) ** 2
+            regularizer = 0.5 * lam * x**2
+            energy = data_term + regularizer
+            minimizer = observed_y / (1 + lam)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=data_term, mode="lines", name="data fit"))
+            fig.add_trace(go.Scatter(x=x, y=regularizer, mode="lines", name="regularizer"))
+            fig.add_trace(go.Scatter(x=x, y=energy, mode="lines", name="energy"))
+            fig.add_trace(
+                go.Scatter(
+                    x=[minimizer],
+                    y=[0.5 * (minimizer - observed_y) ** 2 + 0.5 * lam * minimizer**2],
+                    mode="markers",
+                    name="minimizer",
+                    marker=dict(size=10),
+                )
+            )
+            fig.update_layout(
+                title="Energy terms",
+                xaxis_title="candidate x",
+                yaxis_title="cost",
+                height=390,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            print("observed value:", observed_y)
+            print("minimizer:", round(float(minimizer), 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change `lam`.
+
+            What happens to the minimizer when regularization becomes stronger?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            lam = 2.0
+
+            minimizer = observed_y / (1 + lam)
+            print("lambda:", lam)
+            print("minimizer:", round(float(minimizer), 4))
+            """
+        ),
+        md(
+            """
+            ### 2. Convexity as Geometry
+
+            Convex energies have no deceptive local minima. Nonconvex energies can have several valleys.
+            """
+        ),
+        code(
+            """
+            grid = np.linspace(-2.5, 2.5, 120)
+            xx, yy = np.meshgrid(grid, grid)
+            convex = 0.65 * (xx - 0.3) ** 2 + 1.2 * (yy + 0.2) ** 2 + 0.35 * xx * yy
+            nonconvex = 0.15 * (xx**2 + yy**2) + 0.8 * np.sin(2.4 * xx) * np.cos(2.0 * yy)
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["convex energy", "nonconvex energy"])
+            fig.add_trace(go.Contour(z=convex, x=grid, y=grid, colorscale="Viridis", showscale=False), row=1, col=1)
+            fig.add_trace(go.Contour(z=nonconvex, x=grid, y=grid, colorscale="Viridis", showscale=False), row=1, col=2)
+            fig.update_layout(height=430, margin=dict(l=20, r=20, t=60, b=35))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            In the nonconvex plot, choose two different valleys. Why might gradient descent end in different places depending on the initialization?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your explanation here."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ### 3. Quadratic Image Denoising
+
+            We now use the variational model
+
+            ```text
+            E(u) = 0.5 ||u - y||_2^2 + 0.5 lambda ||grad u||_2^2
+            ```
+
+            The first term keeps the result close to the noisy image. The second term penalizes roughness.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43507)
+
+            image = data.camera().astype(float) / 255.0
+            image = image[80:336, 90:346]
+            noisy = np.clip(image + 0.10 * rng.standard_normal(image.shape), 0, 1)
+
+            lambdas = [0.15, 1.2, 8.0]
+            estimates = [quadratic_denoise(noisy, lam) for lam in lambdas]
+
+            show_heatmaps(
+                [image, noisy] + estimates,
+                ["original", "noisy"] + [f"lambda={lam:g}" for lam in lambdas],
+                height=430,
+            )
+
+            print("noisy RMSE:", round(rmse(noisy, image), 4))
+            for lam, estimate in zip(lambdas, estimates):
+                print(f"lambda={lam:g}, RMSE={rmse(estimate, image):.4f}, smoothness={smoothness_energy(estimate):.1f}")
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Try a larger lambda. What improves? What gets worse?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            lam = 3.0
+
+            estimate = quadratic_denoise(noisy, lam)
+            show_heatmaps([noisy, estimate], ["noisy", f"lambda={lam:g}"], height=420)
+            print("RMSE:", round(rmse(estimate, image), 4))
+            print("smoothness energy:", round(smoothness_energy(estimate), 1))
+            """
+        ),
+        md(
+            """
+            ### 4. Euler-Lagrange Residual
+
+            The Euler-Lagrange equation for the quadratic denoising model is
+
+            ```text
+            (u - y) + lambda * L u = 0
+            ```
+
+            where `L` is a discrete negative Laplacian.
+            """
+        ),
+        code(
+            """
+            lam = 1.2
+            closed_form = quadratic_denoise(noisy, lam)
+            residual = gradient(closed_form, noisy, lam)
+
+            print("Euler-Lagrange residual norm:", f"{np.linalg.norm(residual):.3e}")
+            print("maximum absolute residual:", f"{np.max(np.abs(residual)):.3e}")
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Compute the gradient norm at the noisy image itself. Is the noisy image already a minimizer of the variational energy?
+            """
+        ),
+        code(
+            """
+            lam = 1.2
+            residual_at_noisy = gradient(noisy, noisy, lam)
+
+            print("gradient norm at noisy image:", f"{np.linalg.norm(residual_at_noisy):.3e}")
+            print("gradient norm at minimizer:", f"{np.linalg.norm(gradient(closed_form, noisy, lam)):.3e}")
+            """
+        ),
+        md(
+            """
+            ### 5. Gradient Descent
+
+            Instead of solving the Euler-Lagrange equation directly, we can iterate:
+
+            ```text
+            u_{k+1} = u_k - step * grad E(u_k)
+            ```
+            """
+        ),
+        code(
+            """
+            lam = 1.5
+            step = 0.08
+            current = noisy.copy()
+            energies = [quadratic_energy(current, noisy, lam)]
+            errors = [rmse(current, image)]
+            snapshots = [current.copy()]
+
+            for iteration in range(80):
+                current = current - step * gradient(current, noisy, lam)
+                energies.append(quadratic_energy(current, noisy, lam))
+                errors.append(rmse(current, image))
+                if iteration in [2, 9, 39, 79]:
+                    snapshots.append(current.copy())
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["energy", "RMSE"])
+            fig.add_trace(go.Scatter(y=energies, mode="lines", name="energy"), row=1, col=1)
+            fig.add_trace(go.Scatter(y=errors, mode="lines", name="RMSE"), row=1, col=2)
+            fig.update_yaxes(type="log", row=1, col=1)
+            fig.update_layout(height=380, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+
+            show_heatmaps(snapshots, ["iter 0", "iter 3", "iter 10", "iter 40", "iter 80"], height=430)
+            print("initial energy:", round(energies[0], 3))
+            print("final energy:", round(energies[-1], 3))
+            """
+        ),
+        md(
+            """
+            ### Exercise 5
+
+            Change `step`.
+
+            What happens if the step is too large? Try `step = 0.20` and rerun only the gradient-descent cell.
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write what you observe when changing the step size."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. What is a variational model?
+            2. Why is convexity useful?
+            3. What does an Euler-Lagrange equation express?
+            4. Why does quadratic smoothness blur edges?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 8 studies Total Variation regularization. It modifies the smoothness term so that edges are penalized differently:
+
+            ```text
+            integral |grad u|
+            ```
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -2560,6 +2936,7 @@ def main() -> None:
     write_notebook("week04_noise_likelihood.ipynb", week04_cells())
     write_notebook("week05_ill_posed_inverse_problems.ipynb", week05_cells())
     write_notebook("week06_tikhonov_regularization.ipynb", week06_cells())
+    write_notebook("week07_variational_formulation.ipynb", week07_cells())
 
 
 if __name__ == "__main__":
