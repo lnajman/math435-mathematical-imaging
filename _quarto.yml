@@ -18,6 +18,7 @@ project:
     - slides/week-06-tikhonov-regularization.qmd
     - slides/week-07-variational-formulation.qmd
     - slides/week-08-total-variation.qmd
+    - slides/week-09-optimization-methods.qmd
     - project/index.qmd
 
 website:

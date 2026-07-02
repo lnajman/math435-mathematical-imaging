@@ -15,3 +15,4 @@ The slide deck is being developed week by week. Each deck is a Quarto Reveal.js 
 | 6 | Tikhonov regularization | [HTML deck](week-06-tikhonov-regularization.html) |
 | 7 | Variational formulation | [HTML deck](week-07-variational-formulation.html) |
 | 8 | Total Variation regularization | [HTML deck](week-08-total-variation.html) |
+| 9 | Optimization methods | [HTML deck](week-09-optimization-methods.html) |

@@ -17,6 +17,7 @@ NOTEBOOKS = [
     ROOT / "notebooks" / "week06_tikhonov_regularization.ipynb",
     ROOT / "notebooks" / "week07_variational_formulation.ipynb",
     ROOT / "notebooks" / "week08_total_variation.ipynb",
+    ROOT / "notebooks" / "week09_optimization_methods.ipynb",
 ]
 OUTPUT_DIR = Path("/private/tmp/math435-notebook-validation")
 

@@ -3302,6 +3302,452 @@ def week08_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week09_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 9 - Optimization Methods
+
+            This notebook accompanies the ninth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - run gradient descent on a smooth convex energy;
+            - explain how the step size changes convergence;
+            - apply soft thresholding as a proximal operator;
+            - run ISTA on a sparse inverse problem;
+            - connect proximal steps to sparse imaging.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from scipy.fft import dctn, idctn
+            from scipy.ndimage import gaussian_filter
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def soft_threshold(values, threshold):
+                return np.sign(values) * np.maximum(np.abs(values) - threshold, 0.0)
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def quadratic_energy(point, matrix, center):
+                diff = point - center
+                return float(0.5 * diff @ matrix @ diff)
+
+
+            def gradient_descent_path(start, matrix, center, step_size, iterations):
+                point = start.astype(float).copy()
+                points = [point.copy()]
+                energies = [quadratic_energy(point, matrix, center)]
+                for _ in range(iterations):
+                    gradient = matrix @ (point - center)
+                    point = point - step_size * gradient
+                    points.append(point.copy())
+                    energies.append(quadratic_energy(point, matrix, center))
+                return np.array(points), np.array(energies)
+
+
+            def show_image_grid(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin if colorscale == "Gray" else None,
+                            zmax=zmax if colorscale == "Gray" else None,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Gradient Descent on a Convex Quadratic
+
+            We minimize a simple two-variable energy:
+
+            $$
+            E(x)=\\frac12(x-x_*)^TQ(x-x_*).
+            $$
+
+            The minimizer is `center`.
+            """
+        ),
+        code(
+            """
+            matrix = np.array([[1.0, 0.0], [0.0, 10.0]])
+            center = np.array([0.9, -0.45])
+            start = np.array([-1.7, 1.15])
+            lipschitz = float(np.linalg.eigvalsh(matrix).max())
+
+            x_values = np.linspace(-2.2, 1.5, 160)
+            y_values = np.linspace(-1.2, 1.35, 160)
+            xx, yy = np.meshgrid(x_values, y_values)
+            energy = 0.5 * ((xx - center[0]) ** 2 + 10.0 * (yy - center[1]) ** 2)
+
+            path_small, energies_small = gradient_descent_path(start, matrix, center, 0.055, 28)
+            path_large, energies_large = gradient_descent_path(start, matrix, center, 0.175, 28)
+
+            fig = go.Figure()
+            fig.add_trace(go.Contour(x=x_values, y=y_values, z=energy, colorscale="Greys", showscale=False, contours=dict(showlabels=False)))
+            fig.add_trace(go.Scatter(x=path_small[:, 0], y=path_small[:, 1], mode="lines+markers", name="small steps"))
+            fig.add_trace(go.Scatter(x=path_large[:, 0], y=path_large[:, 1], mode="lines+markers", name="large steps"))
+            fig.add_trace(go.Scatter(x=[center[0]], y=[center[1]], mode="markers", name="minimizer", marker=dict(size=13, symbol="star")))
+            fig.update_layout(
+                title="Gradient descent paths on a convex quadratic",
+                xaxis_title="coordinate 1",
+                yaxis_title="coordinate 2",
+                height=520,
+                margin=dict(l=20, r=20, t=60, b=45),
+            )
+            fig.show()
+
+            print("Lipschitz constant L:", lipschitz)
+            print("A common safe step size is at most 1/L =", round(1 / lipschitz, 3))
+            """
+        ),
+        md(
+            """
+            ### 2. Step Size Experiment
+
+            The step size controls stability. For this quadratic, the critical value is near `2 / L`.
+            """
+        ),
+        code(
+            """
+            settings = [
+                ("small", 0.4 / lipschitz),
+                ("near 1/L", 1.0 / lipschitz),
+                ("aggressive", 1.8 / lipschitz),
+                ("too large", 2.1 / lipschitz),
+            ]
+
+            fig = go.Figure()
+            for label, step_size in settings:
+                _, energies = gradient_descent_path(start, matrix, center, step_size, 35)
+                fig.add_trace(go.Scatter(y=energies, mode="lines+markers", name=f"{label}: tau={step_size:.3f}"))
+                print(f"{label:10s} tau={step_size:.3f}: E0={energies[0]:.4f}, E35={energies[-1]:.4f}")
+
+            fig.update_layout(
+                title="Energy through gradient descent iterations",
+                xaxis_title="iteration",
+                yaxis_title="energy",
+                yaxis_type="log",
+                height=420,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change `manual_step_size` below. Try values below and above `2 / L`.
+
+            What do you observe?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            manual_step_size = 0.12
+
+            path_manual, energies_manual = gradient_descent_path(start, matrix, center, manual_step_size, 35)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(y=energies_manual, mode="lines+markers", name=f"tau={manual_step_size}"))
+            fig.update_layout(
+                title="Manual step-size experiment",
+                xaxis_title="iteration",
+                yaxis_title="energy",
+                yaxis_type="log",
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            print("first energy:", round(energies_manual[0], 4))
+            print("last energy:", round(energies_manual[-1], 4))
+            """
+        ),
+        md(
+            """
+            ### 3. Soft Thresholding
+
+            Soft thresholding is the proximal operator for the l1 norm.
+
+            $$
+            S_\\alpha(v)=\\operatorname{sign}(v)\\max(|v|-\\alpha,0).
+            $$
+            """
+        ),
+        code(
+            """
+            values = np.linspace(-3, 3, 700)
+            threshold = 0.8
+            shrinked = soft_threshold(values, threshold)
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["absolute value", "soft threshold"])
+            fig.add_trace(go.Scatter(x=values, y=np.abs(values), mode="lines", name="|x|"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=values, y=values, mode="lines", name="identity", line=dict(dash="dash")), row=1, col=2)
+            fig.add_trace(go.Scatter(x=values, y=shrinked, mode="lines", name="soft threshold"), row=1, col=2)
+            fig.update_xaxes(title_text="x", row=1, col=1)
+            fig.update_xaxes(title_text="input", row=1, col=2)
+            fig.update_yaxes(title_text="|x|", row=1, col=1)
+            fig.update_yaxes(title_text="output", row=1, col=2)
+            fig.update_layout(height=390, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change the threshold. Which inputs become exactly zero?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            threshold = 0.6
+            test_values = np.array([-2.0, -0.7, -0.2, 0.0, 0.3, 0.9, 2.3])
+
+            print("input: ", test_values)
+            print("output:", soft_threshold(test_values, threshold))
+            """
+        ),
+        md(
+            """
+            ### 4. ISTA for a Sparse Signal
+
+            ISTA alternates:
+
+            1. a gradient step for the data term;
+            2. a soft-thresholding step for the l1 regularizer.
+            """
+        ),
+        code(
+            """
+            def blur1d(values, sigma):
+                return gaussian_filter(values, sigma=sigma, mode="wrap")
+
+
+            def ista_sparse_signal(observed, lam, step_size, iterations, sigma):
+                estimate = np.zeros_like(observed)
+                energies = []
+                active_counts = []
+                for _ in range(iterations):
+                    residual = blur1d(estimate, sigma) - observed
+                    gradient = blur1d(residual, sigma)
+                    estimate = soft_threshold(estimate - step_size * gradient, step_size * lam)
+                    energy = 0.5 * float(np.sum((blur1d(estimate, sigma) - observed) ** 2)) + lam * float(np.sum(np.abs(estimate)))
+                    energies.append(energy)
+                    active_counts.append(int(np.count_nonzero(np.abs(estimate) > 1e-3)))
+                return estimate, np.array(energies), np.array(active_counts)
+
+
+            rng = np.random.default_rng(43509)
+            n = 180
+            positions = np.linspace(0, 1, n)
+            sparse_signal = np.zeros(n)
+            locations = np.array([18, 42, 75, 109, 143, 162])
+            amplitudes = np.array([1.0, -0.75, 0.55, 0.9, -0.65, 0.5])
+            sparse_signal[locations] = amplitudes
+            observed_signal = blur1d(sparse_signal, sigma=3.0) + 0.035 * rng.standard_normal(n)
+
+            ista_signal, ista_energies, active_counts = ista_sparse_signal(
+                observed_signal,
+                lam=0.035,
+                step_size=0.95,
+                iterations=80,
+                sigma=3.0,
+            )
+
+            fig = make_subplots(
+                rows=1,
+                cols=2,
+                subplot_titles=["signal", "ISTA diagnostics"],
+                specs=[[{}, {"secondary_y": True}]],
+            )
+            fig.add_trace(go.Scatter(x=positions, y=observed_signal, mode="lines", name="blurred noisy observation"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=positions, y=sparse_signal, mode="markers", name="true sparse signal"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=positions, y=ista_signal, mode="markers", name="ISTA estimate"), row=1, col=1)
+            fig.add_trace(go.Scatter(y=ista_energies, mode="lines", name="energy"), row=1, col=2, secondary_y=False)
+            fig.add_trace(go.Scatter(y=active_counts, mode="lines", name="active coefficients"), row=1, col=2, secondary_y=True)
+            fig.update_yaxes(title_text="energy", row=1, col=2, secondary_y=False)
+            fig.update_yaxes(title_text="active coefficients", row=1, col=2, secondary_y=True)
+            fig.update_layout(height=430, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+
+            print("initial energy:", round(ista_energies[0], 4))
+            print("final energy:", round(ista_energies[-1], 4))
+            print("active coefficients:", active_counts[0], "->", active_counts[-1])
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Change `lam` below. How does it affect sparsity and data fit?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            lam = 0.06
+
+            estimate, energies, active = ista_sparse_signal(
+                observed_signal,
+                lam=lam,
+                step_size=0.95,
+                iterations=80,
+                sigma=3.0,
+            )
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=positions, y=observed_signal, mode="lines", name="observation"))
+            fig.add_trace(go.Scatter(x=positions, y=sparse_signal, mode="markers", name="true"))
+            fig.add_trace(go.Scatter(x=positions, y=estimate, mode="markers", name=f"ISTA lam={lam}"))
+            fig.update_layout(height=380, margin=dict(l=20, r=20, t=55, b=45))
+            fig.show()
+
+            print("final energy:", round(energies[-1], 4))
+            print("active coefficients:", active[-1])
+            """
+        ),
+        md(
+            """
+            ### 5. ISTA for Sparse Image Deblurring
+
+            We now regularize DCT coefficients of an image. The unknown image is represented by transform coefficients, and the l1 penalty encourages many of them to become zero.
+            """
+        ),
+        code(
+            """
+            def ista_dct_deblur(observed, lam, step_size, iterations, blur_sigma):
+                coefficients = dctn(observed, norm="ortho")
+                energies = []
+                active_counts = []
+                for _ in range(iterations):
+                    image = idctn(coefficients, norm="ortho")
+                    residual = gaussian_filter(image, sigma=blur_sigma, mode="reflect") - observed
+                    gradient_image = gaussian_filter(residual, sigma=blur_sigma, mode="reflect")
+                    gradient_coefficients = dctn(gradient_image, norm="ortho")
+                    coefficients = soft_threshold(coefficients - step_size * gradient_coefficients, step_size * lam)
+                    image = idctn(coefficients, norm="ortho")
+                    energy = 0.5 * float(np.sum((gaussian_filter(image, sigma=blur_sigma, mode="reflect") - observed) ** 2)) + lam * float(np.sum(np.abs(coefficients)))
+                    energies.append(energy)
+                    active_counts.append(int(np.count_nonzero(np.abs(coefficients) > 1e-3)))
+                return np.clip(idctn(coefficients, norm="ortho"), 0.0, 1.0), coefficients, np.array(energies), np.array(active_counts)
+
+
+            rng = np.random.default_rng(43509)
+            image = data.camera().astype(float)[96:224, 128:256] / 255.0
+            observed = np.clip(gaussian_filter(image, sigma=1.1, mode="reflect") + 0.035 * rng.standard_normal(image.shape), 0, 1)
+            ista_image, dct_coefficients, image_energies, image_active = ista_dct_deblur(
+                observed,
+                lam=0.0045,
+                step_size=0.95,
+                iterations=65,
+                blur_sigma=1.1,
+            )
+
+            coefficient_view = np.log1p(np.abs(np.fft.fftshift(dct_coefficients)))
+            show_image_grid(
+                [image, observed, ista_image, coefficient_view],
+                ["original", "blurred + noisy", "ISTA estimate", "log DCT coefficients"],
+                colorscales=["Gray", "Gray", "Gray", "Magma"],
+                height=430,
+            )
+
+            print("observed RMSE:", round(rmse(observed, image), 4))
+            print("ISTA RMSE:", round(rmse(ista_image, image), 4))
+            print("energy:", round(image_energies[0], 2), "->", round(image_energies[-1], 2))
+            print("active DCT coefficients:", image_active[0], "->", image_active[-1])
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Change the regularization weight for the image. What improves and what gets worse?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            image_lam = 0.009
+
+            experiment, coefficients, energies, active = ista_dct_deblur(
+                observed,
+                lam=image_lam,
+                step_size=0.95,
+                iterations=65,
+                blur_sigma=1.1,
+            )
+
+            show_image_grid([observed, experiment], ["observation", f"ISTA lam={image_lam:g}"], height=400)
+            print("RMSE:", round(rmse(experiment, image), 4))
+            print("final energy:", round(energies[-1], 2))
+            print("active DCT coefficients:", active[-1])
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. Why does step size matter in gradient descent?
+            2. What does soft thresholding do to small coefficients?
+            3. Why is a proximal step useful for l1 or TV-like penalties?
+            4. In ISTA, which part handles the data term and which part handles the prior?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 10 studies sparse reconstruction in more depth: why sparsity can make an inverse problem easier and how l1 differs from l2.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -3311,6 +3757,7 @@ def main() -> None:
     write_notebook("week06_tikhonov_regularization.ipynb", week06_cells())
     write_notebook("week07_variational_formulation.ipynb", week07_cells())
     write_notebook("week08_total_variation.ipynb", week08_cells())
+    write_notebook("week09_optimization_methods.ipynb", week09_cells())
 
 
 if __name__ == "__main__":
