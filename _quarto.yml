@@ -12,6 +12,7 @@ project:
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
     - slides/week-02-convolution-blur.qmd
+    - slides/week-03-fourier-imaging.qmd
     - project/index.qmd
 
 website:

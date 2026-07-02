@@ -10,6 +10,7 @@ Use the Google Colab links if you want to work in a browser without installing P
 |---:|---|---|---|
 | 1 | Image formation as arrays | [Download](week01_image_formation.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |
 | 2 | Convolution and blur | [Download](week02_convolution_blur.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
+| 3 | Fourier transform in imaging | [Download](week03_fourier_imaging.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) |
 
 ## Working Locally
 

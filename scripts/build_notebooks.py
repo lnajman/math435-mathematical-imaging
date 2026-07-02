@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build student notebooks for MATH 435."""
 
+import hashlib
 from pathlib import Path
 from textwrap import dedent
 
@@ -35,9 +36,38 @@ def make_notebook(cells: list[nbf.NotebookNode]) -> nbf.NotebookNode:
     return notebook
 
 
+def cell_key(cell: nbf.NotebookNode) -> tuple[str, str]:
+    return (cell.cell_type, cell.source)
+
+
+def stable_cell_id(name: str, index: int, cell: nbf.NotebookNode) -> str:
+    text = f"{name}:{index}:{cell.cell_type}:{cell.source}"
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:8]
+
+
+def preserve_cell_ids(path: Path, cells: list[nbf.NotebookNode]) -> None:
+    old_ids: dict[tuple[str, str], list[str]] = {}
+    if path.exists():
+        old_notebook = nbf.read(path, as_version=4)
+        for old_cell in old_notebook.cells:
+            old_ids.setdefault(cell_key(old_cell), []).append(old_cell.get("id", ""))
+
+    used_ids: set[str] = set()
+    for index, cell in enumerate(cells):
+        previous_ids = old_ids.get(cell_key(cell), [])
+        candidate = previous_ids.pop(0) if previous_ids else stable_cell_id(path.name, index, cell)
+        if not candidate:
+            candidate = stable_cell_id(path.name, index, cell)
+        while candidate in used_ids:
+            candidate = hashlib.sha1(f"{candidate}:{index}".encode("utf-8")).hexdigest()[:8]
+        cell["id"] = candidate
+        used_ids.add(candidate)
+
+
 def write_notebook(name: str, cells: list[nbf.NotebookNode]) -> None:
     NOTEBOOK_DIR.mkdir(parents=True, exist_ok=True)
     path = NOTEBOOK_DIR / name
+    preserve_cell_ids(path, cells)
     nbf.write(make_notebook(cells), path)
     print(f"Wrote {path.relative_to(ROOT)}")
 
@@ -684,9 +714,426 @@ def week02_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week03_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 3 - Fourier Transform in Imaging
+
+            This notebook accompanies the third MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - identify simple 1D frequency components;
+            - display a 2D Fourier magnitude spectrum;
+            - compare magnitude and phase information;
+            - use the convolution theorem to explain blur;
+            - experiment with low-pass, high-pass, and deblurring filters.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, SciPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from scipy import ndimage
+            from skimage import data
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def normalize01(values):
+                values = np.asarray(values, dtype=float)
+                vmin = values.min()
+                vmax = values.max()
+                if vmax == vmin:
+                    return np.zeros_like(values)
+                return (values - vmin) / (vmax - vmin)
+
+
+            def gaussian_kernel(size, sigma):
+                axis = np.arange(-(size // 2), size // 2 + 1)
+                xx, yy = np.meshgrid(axis, axis)
+                kernel = np.exp(-(xx**2 + yy**2) / (2 * sigma**2))
+                return kernel / kernel.sum()
+
+
+            def fft_log_magnitude(image):
+                spectrum = np.fft.fftshift(np.fft.fft2(image))
+                return np.log1p(np.abs(spectrum))
+
+
+            def centered_kernel_fft(kernel, shape):
+                padded = np.zeros(shape)
+                kh, kw = kernel.shape
+                padded[:kh, :kw] = kernel
+                padded = np.roll(padded, -(kh // 2), axis=0)
+                padded = np.roll(padded, -(kw // 2), axis=1)
+                return np.fft.fft2(padded)
+
+
+            def show_heatmaps(images, titles, colorscales=None, zmin=None, zmax=None, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin,
+                            zmax=zmax,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+
+
+            def show_lines(series, titles, x_values=None, height=360):
+                fig = make_subplots(rows=1, cols=len(series), subplot_titles=titles)
+                for index, values in enumerate(series, start=1):
+                    x_axis = np.arange(len(values)) if x_values is None else x_values
+                    fig.add_trace(go.Scatter(x=x_axis, y=values, mode="lines"), row=1, col=index)
+                    fig.update_xaxes(title_text="index", row=1, col=index)
+                fig.update_layout(height=height, showlegend=False, margin=dict(l=20, r=20, t=60, b=45))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Step 1 - 1D Frequencies
+
+            A Fourier transform measures which oscillations are present in a signal.
+            """
+        ),
+        code(
+            """
+            n = 256
+            t = np.arange(n) / n
+
+            low = np.sin(2 * np.pi * 5 * t)
+            high = 0.45 * np.sin(2 * np.pi * 23 * t)
+            signal = low + high
+
+            frequencies = np.fft.rfftfreq(n, d=1 / n)
+            magnitude = np.abs(np.fft.rfft(signal))
+
+            show_lines([low, high, signal], ["low frequency", "high frequency", "sum"], x_values=t)
+
+            fig = go.Figure(go.Bar(x=frequencies, y=magnitude))
+            fig.update_layout(
+                title="Fourier magnitude",
+                xaxis_title="frequency",
+                yaxis_title="magnitude",
+                xaxis_range=[0, 32],
+                height=360,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Change the two frequencies below. Before looking at the spectrum, predict where the largest peaks should be.
+            """
+        ),
+        code(
+            """
+            # TODO: change these values.
+            frequency_1 = 8
+            frequency_2 = 31
+            amplitude_2 = 0.35
+
+            experiment = (
+                np.sin(2 * np.pi * frequency_1 * t)
+                + amplitude_2 * np.sin(2 * np.pi * frequency_2 * t)
+            )
+            experiment_magnitude = np.abs(np.fft.rfft(experiment))
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["signal", "Fourier magnitude"])
+            fig.add_trace(go.Scatter(x=t, y=experiment, mode="lines"), row=1, col=1)
+            fig.add_trace(go.Bar(x=frequencies, y=experiment_magnitude), row=1, col=2)
+            fig.update_xaxes(range=[0, 40], row=1, col=2)
+            fig.update_layout(height=360, showlegend=False, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ## Step 2 - 2D Fourier Transform of an Image
+
+            Images have horizontal and vertical frequencies. We usually display the centered log magnitude.
+            """
+        ),
+        code(
+            """
+            image = data.camera().astype(float) / 255.0
+            image = image[80:336, 90:346]
+            spectrum = fft_log_magnitude(image)
+
+            print("image shape:", image.shape)
+            print("spectrum shape:", spectrum.shape)
+
+            show_heatmaps(
+                [image, spectrum],
+                ["image", "centered log Fourier magnitude"],
+                colorscales=["Gray", "Magma"],
+                height=460,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Inspect another crop. Do smooth regions and textured regions produce different spectra?
+            """
+        ),
+        code(
+            """
+            # TODO: change the crop coordinates.
+            row_start = 0
+            col_start = 0
+            crop_size = 192
+
+            full_image = data.camera().astype(float) / 255.0
+            crop = full_image[row_start : row_start + crop_size, col_start : col_start + crop_size]
+            crop_spectrum = fft_log_magnitude(crop)
+
+            show_heatmaps(
+                [crop, crop_spectrum],
+                ["selected crop", "crop spectrum"],
+                colorscales=["Gray", "Magma"],
+                height=460,
+            )
+            """
+        ),
+        md(
+            """
+            ## Step 3 - Magnitude and Phase
+
+            A Fourier coefficient has magnitude and phase. Magnitude measures strength; phase measures alignment.
+            """
+        ),
+        code(
+            """
+            F = np.fft.fft2(image)
+            magnitude_image = np.abs(F)
+            phase_image = np.angle(F)
+
+            magnitude_only = normalize01(np.real(np.fft.ifft2(magnitude_image)))
+            phase_only = normalize01(np.real(np.fft.ifft2(np.exp(1j * phase_image))))
+
+            show_heatmaps(
+                [image, np.log1p(np.fft.fftshift(magnitude_image)), magnitude_only, phase_only],
+                ["original", "log magnitude", "magnitude only", "phase only"],
+                colorscales=["Gray", "Magma", "Gray", "Gray"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            In one sentence: which reconstruction is more recognizable, magnitude-only or phase-only?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your answer here."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ## Step 4 - Convolution Theorem
+
+            The convolution theorem says that convolution in image space becomes multiplication in Fourier space.
+            """
+        ),
+        code(
+            """
+            blur_kernel = gaussian_kernel(25, 4.0)
+            blurred = ndimage.convolve(image, blur_kernel, mode="reflect")
+            kernel_response = np.fft.fftshift(np.abs(centered_kernel_fft(blur_kernel, image.shape)))
+
+            show_heatmaps(
+                [image, blur_kernel, blurred, kernel_response],
+                ["image", "blur kernel", "blurred image", "|FFT(kernel)|"],
+                colorscales=["Gray", "Viridis", "Gray", "Magma"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Increase `sigma`. What happens to the blurred image and to the kernel frequency response?
+            """
+        ),
+        code(
+            """
+            # TODO: change sigma.
+            sigma = 6.0
+            kernel_size = 31
+
+            experiment_kernel = gaussian_kernel(kernel_size, sigma)
+            experiment_blur = ndimage.convolve(image, experiment_kernel, mode="reflect")
+            experiment_response = np.fft.fftshift(np.abs(centered_kernel_fft(experiment_kernel, image.shape)))
+
+            show_heatmaps(
+                [experiment_blur, experiment_response],
+                [f"blurred: sigma={sigma}", "|FFT(kernel)|"],
+                colorscales=["Gray", "Magma"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ## Step 5 - Low-Pass and High-Pass Filtering
+
+            A frequency mask can keep low frequencies or high frequencies.
+            """
+        ),
+        code(
+            """
+            rows, cols = image.shape
+            rr, cc = np.ogrid[:rows, :cols]
+            center_r, center_c = rows // 2, cols // 2
+            cutoff_radius = 28
+
+            low_mask = (rr - center_r) ** 2 + (cc - center_c) ** 2 <= cutoff_radius**2
+            high_mask = ~low_mask
+
+            shifted = np.fft.fftshift(np.fft.fft2(image))
+            low_pass = normalize01(np.real(np.fft.ifft2(np.fft.ifftshift(shifted * low_mask))))
+            high_pass = normalize01(np.real(np.fft.ifft2(np.fft.ifftshift(shifted * high_mask))))
+
+            show_heatmaps(
+                [image, low_mask.astype(float), low_pass, high_pass],
+                ["original", "low-pass mask", "low-pass image", "high-pass image"],
+                colorscales=["Gray", "Magma", "Gray", "Gray"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 5
+
+            Change the cutoff radius. How does it affect smooth structures and edges?
+            """
+        ),
+        code(
+            """
+            # TODO: change cutoff_radius.
+            cutoff_radius = 12
+
+            low_mask = (rr - center_r) ** 2 + (cc - center_c) ** 2 <= cutoff_radius**2
+            low_pass = normalize01(np.real(np.fft.ifft2(np.fft.ifftshift(shifted * low_mask))))
+
+            show_heatmaps(
+                [low_mask.astype(float), low_pass],
+                [f"low-pass mask: radius={cutoff_radius}", "filtered image"],
+                colorscales=["Magma", "Gray"],
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ## Step 6 - Deblurring and Noise Amplification
+
+            In frequency space, naive deblurring divides by the blur response. If the response is small, noise can explode.
+            """
+        ),
+        code(
+            """
+            deblur_image = data.camera().astype(float)[120:376, 120:376] / 255.0
+            deblur_kernel = gaussian_kernel(21, 3.0)
+            deblur_blurred = ndimage.convolve(deblur_image, deblur_kernel, mode="reflect")
+
+            rng = np.random.default_rng(12)
+            deblur_noisy = np.clip(deblur_blurred + 0.015 * rng.standard_normal(deblur_image.shape), 0, 1)
+
+            H = centered_kernel_fft(deblur_kernel, deblur_image.shape)
+            Y = np.fft.fft2(deblur_noisy)
+
+            naive = normalize01(np.real(np.fft.ifft2(Y / (H + 1e-4))))
+            regularization = 5e-3
+            regularized = normalize01(np.real(np.fft.ifft2(Y * np.conj(H) / (np.abs(H) ** 2 + regularization))))
+
+            show_heatmaps(
+                [deblur_image, deblur_noisy, naive, regularized],
+                ["original", "blurred + noise", "naive inverse", "regularized inverse"],
+                colorscales=["Gray", "Gray", "Gray", "Gray"],
+                height=430,
+            )
+
+            print("naive RMS error:", np.sqrt(np.mean((naive - deblur_image) ** 2)))
+            print("regularized RMS error:", np.sqrt(np.mean((regularized - deblur_image) ** 2)))
+            """
+        ),
+        md(
+            """
+            ### Exercise 6
+
+            Change the regularization parameter. What is the tradeoff between sharpness and noise?
+            """
+        ),
+        code(
+            """
+            # TODO: add or remove values.
+            regularization_values = [1e-2, 5e-3, 1e-3]
+
+            for value in regularization_values:
+                estimate = normalize01(np.real(np.fft.ifft2(Y * np.conj(H) / (np.abs(H) ** 2 + value))))
+                rms_error = np.sqrt(np.mean((estimate - deblur_image) ** 2))
+                print(f"regularization={value:g}, RMS error={rms_error:.3f}")
+            """
+        ),
+        md(
+            """
+            ## Checkpoint
+
+            Answer in your own words:
+
+            1. What does the Fourier magnitude measure?
+            2. Where are low frequencies after `fftshift`?
+            3. What does the convolution theorem say?
+            4. Why is deblurring unstable when the blur response is small?
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
+    write_notebook("week03_fourier_imaging.ipynb", week03_cells())
 
 
 if __name__ == "__main__":

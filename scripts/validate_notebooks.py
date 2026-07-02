@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOKS = [
     ROOT / "notebooks" / "week01_image_formation.ipynb",
     ROOT / "notebooks" / "week02_convolution_blur.ipynb",
+    ROOT / "notebooks" / "week03_fourier_imaging.ipynb",
 ]
 OUTPUT_DIR = Path("/private/tmp/math435-notebook-validation")
 
