@@ -10,8 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-01-01">
-  <title>MATH 435: Mathematical Imaging – Images as Mathematical Objects</title>
+  <title>MATH 435: Mathematical Imaging – Stability, Robustness, and Ethics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -208,17 +207,14 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Images as Mathematical Objects</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 1</p>
+  <h1 class="title">Stability, Robustness, and Ethics</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 14</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -228,24 +224,24 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-01-01</p>
+  <p class="date">Invalid Date</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
 <div class="section-kicker">
-<p>Mathematical imaging begins here</p>
+<p>When is a beautiful reconstruction unsafe?</p>
 </div>
-<p>If a scanner gives us imperfect data, what exactly are we trying to recover?</p>
+<p>An image can look plausible and still be wrong in a way that matters.</p>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <div class="checklist">
 <ul>
-<li>Model an image as a function, an array, and a vector.</li>
-<li>Connect pixel grids to linear algebra.</li>
-<li>Introduce the forward model <span class="math inline">y = Ax + \eta</span>.</li>
-<li>Separate image formation from image reconstruction.</li>
-<li>Write the first NumPy representations.</li>
+<li>Define stability and parameter sensitivity.</li>
+<li>See how small perturbations can become large reconstruction changes.</li>
+<li>Explain robustness across noise levels, models, and image families.</li>
+<li>Discuss hallucination and small-feature suppression.</li>
+<li>Connect mathematical validation to ethical responsibility.</li>
 </ul>
 </div>
 </section>
@@ -260,645 +256,469 @@ Laurent Najman
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>motivation and course pattern</td>
+<td style="text-align: right;">0-8 min</td>
+<td>recap: plug-and-play and learned priors</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-30 min</td>
-<td>image models, pixels, vectorization</td>
+<td style="text-align: right;">8-23 min</td>
+<td>stability and parameter sensitivity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">30-45 min</td>
-<td>hand activity and NumPy representation</td>
+<td style="text-align: right;">23-36 min</td>
+<td>perturbation amplification</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">45-60 min</td>
-<td>forward model and inverse problem</td>
+<td style="text-align: right;">36-50 min</td>
+<td>robustness and distribution shift</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">60-72 min</td>
-<td>masking example with a real image</td>
+<td style="text-align: right;">50-62 min</td>
+<td>hallucination, small features, reliability</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">62-72 min</td>
+<td>notebook activity and project report check</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">72-75 min</td>
-<td>exit checkpoint</td>
+<td>synthesis and exit check</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="the-course-pattern" class="slide level2">
-<h2>The Course Pattern</h2>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a></a>flowchart LR</span>
-<span id="cb1-2"><a></a>  P["physics or sensing"] --&gt; A["forward operator A"]</span>
-<span id="cb1-3"><a></a>  A --&gt; Y["data y"]</span>
-<span id="cb1-4"><a></a>  Y --&gt; R["reconstruction method"]</span>
-<span id="cb1-5"><a></a>  R --&gt; X["image estimate x-hat"]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<div class="caption">
-<p>Most of the course studies the middle two arrows: how data are produced, and how reconstruction stabilizes the inverse problem.</p>
-</div>
-</section>
-<section id="what-is-an-image" class="slide level2">
-<h2>What Is an Image?</h2>
-<div class="definition-box">
-<div class="tag">
-<p>Continuous model</p>
-</div>
-<p>At the mathematical level, a grayscale image is often modeled as a function</p>
-<p><span class="math display">
-u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}.
-</span></p>
-<p>The value <span class="math inline">u(x,y)</span> is the intensity at location <span class="math inline">(x,y)</span>.</p>
-</div>
-</section>
-<section id="color-and-multichannel-images" class="slide level2">
-<h2>Color and Multichannel Images</h2>
-<div class="two-col">
-<div class="model-box">
-<p>For color images, the value at each point has several components:</p>
-<p><span class="math display">
-u : \Omega \to \mathbb{R}^3.
-</span></p>
-<p>Each location stores red, green, and blue intensities.</p>
+<section id="bridge-from-week-13" class="slide level2">
+<h2>Bridge from Week 13</h2>
+<p>Plug-and-play gave us a hybrid loop:</p>
+<div class="checklist">
+<ul>
+<li>use the forward model for data consistency;</li>
+<li>use a denoiser as an implicit prior;</li>
+<li>monitor fixed-point behavior.</li>
+</ul>
 </div>
 <div class="question-box">
-<div class="tag">
-<p>Question</p>
-</div>
-<p>What changes mathematically when a medical image has many channels, time frames, or slices?</p>
-</div>
+<p>How do we know whether the result should be trusted?</p>
 </div>
 </section>
-<section id="from-continuous-to-discrete" class="slide level2">
-<h2>From Continuous to Discrete</h2>
-<p>Digital images are sampled on a grid:</p>
-<p><span class="math display">
-u_{i,j} \approx u(x_i, y_j).
-</span></p>
-<p>For an image with <span class="math inline">m</span> rows and <span class="math inline">n</span> columns:</p>
-<p><span class="math display">
-U =
-\begin{bmatrix}
-u_{1,1} &amp; u_{1,2} &amp; \cdots &amp; u_{1,n} \\
-u_{2,1} &amp; u_{2,2} &amp; \cdots &amp; u_{2,n} \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-u_{m,1} &amp; u_{m,2} &amp; \cdots &amp; u_{m,n}
-\end{bmatrix}.
-</span></p>
-</section>
-<section id="activity-1-vectorize-by-hand" class="slide level2">
-<h2>Activity 1: Vectorize by Hand</h2>
-<div class="time-tag">
-<p>8 minutes</p>
-</div>
-<div class="exercise-box">
-<p>Given</p>
-<p><span class="math display">
-U =
-\begin{bmatrix}
-10 &amp; 20 &amp; 30 &amp; 40 \\
-50 &amp; 60 &amp; 70 &amp; 80 \\
-90 &amp; 100 &amp; 110 &amp; 120
-\end{bmatrix},
-</span></p>
-<p>write <span class="math inline">\operatorname{vec}(U)</span> using row-major order.</p>
-</div>
-</section>
-<section id="activity-1-debrief" class="slide level2">
-<h2>Activity 1 Debrief</h2>
-<p>Row-major order reads rows from left to right:</p>
-<p><span class="math display">
-\operatorname{vec}(U) =
-\begin{bmatrix}
-10 &amp; 20 &amp; 30 &amp; 40 &amp; 50 &amp; 60 &amp; 70 &amp; 80 &amp; 90 &amp; 100 &amp; 110 &amp; 120
-\end{bmatrix}^{T}.
-</span></p>
-<div class="question-box">
-<p>How would the vector change under column-major order?</p>
-</div>
-</section>
-<section id="a-real-image-as-data" class="slide level2">
-<h2>A Real Image as Data</h2>
+<section id="reliability-is-tested" class="slide level2">
+<h2>Reliability Is Tested</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week01-real-image-vectorization.png" alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"></p>
-<div class="caption">
-<p>Real sample image from <code>skimage.data.camera()</code>. The mathematical object is not the displayed photograph alone; it is the numerical array behind it.</p>
-</div>
+<p><img data-src="../assets/figures/week14-reliability-loop.png" alt="Reliability loop showing reconstruction method, perturbation tests, domain-shift tests, robustness checks, and decision"></p>
 </div>
 </section>
-<section id="matrix-or-vector" class="slide level2">
-<h2>Matrix or Vector?</h2>
-<div class="two-col">
-<div class="definition-box">
-<div class="tag">
-<p>Visualization</p>
-</div>
-<p>For display, a grayscale image is naturally a matrix:</p>
-<p><span class="math display">
-U \in \mathbb{R}^{m \times n}.
-</span></p>
-</div>
-<div class="model-box">
-<div class="tag">
-<p>Computation</p>
-</div>
-<p>For linear algebra, reshape the image as</p>
-<p><span class="math display">
-x = \operatorname{vec}(U) \in \mathbb{R}^{mn}.
-</span></p>
-</div>
-</div>
-</section>
-<section id="why-vectorize" class="slide level2">
-<h2>Why Vectorize?</h2>
-<p>Once <span class="math inline">U</span> is written as a vector <span class="math inline">x</span>, we can use matrices to represent many controlled imaging operations:</p>
-<p><span class="math display">
-x \mapsto Ax.
-</span></p>
-<p>Examples:</p>
-<ul>
-<li>masking pixels;</li>
-<li>blurring;</li>
-<li>sampling Fourier coefficients;</li>
-<li>projecting along lines;</li>
-<li>combining channels or frames.</li>
-</ul>
-<div class="caption">
-<p>This is a modeling choice, not a claim that all image formation is linear.</p>
-</div>
-</section>
-<section id="first-numpy-representation" class="slide level2 code-small">
-<h2>First NumPy Representation</h2>
-<div id="363ca2d2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
-<span id="cb2-4"><a></a>U <span class="op">=</span> np.arange(m <span class="op">*</span> n).reshape(m, n)</span>
-<span id="cb2-5"><a></a></span>
-<span id="cb2-6"><a></a>x <span class="op">=</span> U.reshape(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb2-7"><a></a>U_back <span class="op">=</span> x.reshape(m, n)</span>
-<span id="cb2-8"><a></a></span>
-<span id="cb2-9"><a></a><span class="bu">print</span>(U)</span>
-<span id="cb2-10"><a></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="caption">
-<p>The same image can be an array for display and a vector for linear algebra.</p>
-</div>
-</section>
-<section id="vectorization-convention" class="slide level2">
-<h2>Vectorization Convention</h2>
-<p>NumPy uses row-major order by default:</p>
-<div id="484e6103" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="bu">print</span>(U.reshape(<span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb3-5"><a></a><span class="co"># [1 2 3 4 5 6]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="exercise-box">
-<p>When translating formulas into code, always state your vectorization convention.</p>
-</div>
-</section>
-<section id="indexing-matters" class="slide level2">
-<h2>Indexing Matters</h2>
-<div class="two-col">
-<div class="model-box">
-<p>For an image <span class="math inline">U \in \mathbb{R}^{m \times n}</span>, a pixel has two indices:</p>
-<p><span class="math display">
-U_{i,j}.
-</span></p>
-</div>
-<div class="definition-box">
-<p>After vectorization, the same pixel has one index:</p>
-<p><span class="math display">
-x_k.
-</span></p>
-<p>For row-major order, <span class="math inline">k = (i-1)n + j</span>.</p>
-</div>
-</div>
-</section>
-<section id="micro-check" class="slide level2">
-<h2>Micro-Check</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>2 minutes</p>
-</div>
-<p>For a <span class="math inline">4 \times 5</span> image, where does pixel <span class="math inline">(i,j) = (3,2)</span> appear in row-major vectorization?</p>
-<p><span class="math display">
-k = (i-1)n + j
-</span></p>
-</div>
-</section>
-<section id="the-forward-model" class="slide level2 section-slide">
-<h2>The Forward Model</h2>
+<section id="part-1-stability" class="slide level2 section-slide">
+<h2>Part 1: Stability</h2>
 <div class="section-kicker">
-<p>The central equation</p>
+<p>Small input, small output?</p>
 </div>
-<p>From image formation to inverse problems</p>
+<p>The first trust question</p>
 </section>
-<section id="the-central-model" class="slide level2">
-<h2>The Central Model</h2>
-<div class="model-box">
-<div class="tag">
-<p>First forward model</p>
+<section id="stability" class="slide level2">
+<h2>Stability</h2>
+<p>An imaging method is stable if small changes in the data tend to produce small changes in the reconstruction.</p>
+<div class="definition-box">
+<p>Stability is about sensitivity to perturbations: noise, calibration error, numerical error, or small modeling changes.</p>
 </div>
-<p><span class="math display">
-y = A x + \eta.
-</span></p>
+</section>
+<section id="why-inverse-problems-are-sensitive" class="slide level2">
+<h2>Why Inverse Problems Are Sensitive</h2>
+<p>Forward imaging often loses information.</p>
+<p>Examples:</p>
+<div class="checklist">
 <ul>
-<li><span class="math inline">x</span>: unknown clean image;</li>
-<li><span class="math inline">A</span>: forward imaging operator;</li>
-<li><span class="math inline">y</span>: observed data;</li>
-<li><span class="math inline">\eta</span>: noise or modeling error.</li>
+<li>blur attenuates high frequencies;</li>
+<li>subsampling removes pixels or coefficients;</li>
+<li>masking discards observations;</li>
+<li>noise corrupts weak signal components.</li>
 </ul>
 </div>
-<div class="caption">
-<p>This linear model is the first mathematical language of the course. We will also need nonlinear and information-losing models.</p>
+<p>Trying to invert lost or weakened information can amplify errors.</p>
+</section>
+<section id="parameter-sensitivity" class="slide level2">
+<h2>Parameter Sensitivity</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week14-lambda-sensitivity.png" alt="Tikhonov parameter sensitivity curve and reconstructions for weak, near-best, and strong regularization"></p>
 </div>
 </section>
-<section id="what-does-a-mean" class="slide level2">
-<h2>What Does <span class="math inline">A</span> Mean?</h2>
+<section id="reading-the-sensitivity-curve" class="slide level2">
+<h2>Reading the Sensitivity Curve</h2>
+<p>Weak regularization:</p>
+<div class="checklist">
+<ul>
+<li>fits unstable directions;</li>
+<li>amplifies noise;</li>
+<li>may have low data residual but poor image quality.</li>
+</ul>
+</div>
+<p>Strong regularization:</p>
+<div class="checklist">
+<ul>
+<li>suppresses artifacts;</li>
+<li>also suppresses details;</li>
+<li>may fit the data poorly.</li>
+</ul>
+</div>
+</section>
+<section id="activity-1-parameter-choice" class="slide level2">
+<h2>Activity 1: Parameter Choice</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Suppose two reconstructions have similar visual quality.</p>
+<p>One has lower data residual. The other is smoother and more stable under noise.</p>
+<p>Which would you choose, and what extra test would you ask for?</p>
+</div>
+</section>
+<section id="part-2-perturbation-amplification" class="slide level2 section-slide">
+<h2>Part 2: Perturbation Amplification</h2>
+<div class="section-kicker">
+<p>Invisible changes can matter</p>
+</div>
+<p>Worst-case directions</p>
+</section>
+<section id="a-small-perturbation-test" class="slide level2">
+<h2>A Small Perturbation Test</h2>
+<p>Take an observation <span class="math inline">y</span> and add a tiny perturbation <span class="math inline">\delta y</span>.</p>
+<p>Compare:</p>
+<p><span class="math display">
+\frac{\|\delta y\|}{\|y\|}
+\qquad\text{and}\qquad
+\frac{\|\hat{x}(y+\delta y)-\hat{x}(y)\|}{\|\hat{x}(y)\|}.
+</span></p>
+<div class="takeaway-box">
+<p>The output-change/input-change ratio is a practical sensitivity diagnostic.</p>
+</div>
+</section>
+<section id="amplification-example" class="slide level2">
+<h2>Amplification Example</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week14-perturbation-amplification.png" alt="Output-change over input-change versus Tikhonov lambda, showing large amplification for weak regularization"></p>
+</div>
+</section>
+<section id="why-this-happens" class="slide level2">
+<h2>Why This Happens</h2>
+<p>In singular-value language, unstable directions have small singular values.</p>
+<p>Direct inversion multiplies by:</p>
+<p><span class="math display">
+\frac{1}{\sigma_i}.
+</span></p>
+<p>Regularization limits that multiplication.</p>
+</section>
+<section id="stability-is-not-only-about-noise" class="slide level2">
+<h2>Stability Is Not Only About Noise</h2>
+<p>Perturbations can come from:</p>
+<div class="checklist">
+<ul>
+<li>sensor noise;</li>
+<li>wrong blur kernel;</li>
+<li>calibration drift;</li>
+<li>discretization choices;</li>
+<li>preprocessing;</li>
+<li>changes in acquisition protocol.</li>
+</ul>
+</div>
+</section>
+<section id="part-3-robustness" class="slide level2 section-slide">
+<h2>Part 3: Robustness</h2>
+<div class="section-kicker">
+<p>Does it still work off the happy path?</p>
+</div>
+<p>Beyond one clean experiment</p>
+</section>
+<section id="robustness" class="slide level2">
+<h2>Robustness</h2>
+<p>A method is robust if it works acceptably across a meaningful range of conditions.</p>
+<div class="definition-box">
+<p>Robustness is not a single number. It is a testing plan over expected and stressful cases.</p>
+</div>
+</section>
+<section id="robustness-axes" class="slide level2">
+<h2>Robustness Axes</h2>
+<p>Test across:</p>
+<div class="checklist">
+<ul>
+<li>noise levels;</li>
+<li>blur or sampling model mismatch;</li>
+<li>parameter settings;</li>
+<li>image classes;</li>
+<li>acquisition devices;</li>
+<li>rare but important structures.</li>
+</ul>
+</div>
+</section>
+<section id="a-minimal-robustness-table" class="slide level2">
+<h2>A Minimal Robustness Table</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>Operator</th>
-<th>Imaging meaning</th>
-<th>Typical difficulty</th>
+<th>Test</th>
+<th>Question</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">I</span></td>
-<td>direct observation</td>
-<td>noise</td>
+<td>noise sweep</td>
+<td>Does performance degrade smoothly?</td>
 </tr>
 <tr class="even">
-<td>fixed masking</td>
-<td>selected pixels are recorded</td>
-<td>incomplete data</td>
+<td>parameter sweep</td>
+<td>Is there a wide safe range?</td>
 </tr>
 <tr class="odd">
-<td>convolution</td>
-<td>blur</td>
-<td>lost high frequencies</td>
+<td>model mismatch</td>
+<td>What if <span class="math inline">A</span> is wrong?</td>
 </tr>
 <tr class="even">
-<td>Fourier sampling</td>
-<td>MRI-style acquisition</td>
-<td>indirect measurements</td>
+<td>image family shift</td>
+<td>Does the prior overfit one domain?</td>
 </tr>
 <tr class="odd">
-<td>projection</td>
-<td>tomography</td>
-<td>incomplete angles</td>
+<td>small feature test</td>
+<td>Are weak structures preserved?</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="important-caveat" class="slide level2">
-<h2>Important Caveat</h2>
-<div class="definition-box">
-<div class="tag">
-<p>Linear model</p>
-</div>
-<p>If the measurement rule is fixed in advance, then many operators are linear:</p>
-<p><span class="math display">
-x \mapsto Ax.
-</span></p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>But real scenes</p>
-</div>
-<p>Visibility, occlusion, saturation, shadows, reflection, and segmentation can make the image formation process nonlinear or irreversible.</p>
-</div>
-</section>
-<section id="image-formation-vs-reconstruction" class="slide level2">
-<h2>Image Formation vs Reconstruction</h2>
-<div class="two-col">
-<div class="model-box">
-<div class="tag">
-<p>Forward problem</p>
-</div>
-<p>Given <span class="math inline">x</span>, predict the measured data:</p>
-<p><span class="math display">
-y = Ax + \eta.
-</span></p>
-<p>Usually stable.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Inverse problem</p>
-</div>
-<p>Given <span class="math inline">y</span>, estimate the unknown image:</p>
-<p><span class="math display">
-\hat{x} \approx x.
-</span></p>
-<p>Often unstable.</p>
-</div>
-</div>
-</section>
-<section id="fixed-mask-vs-occlusion" class="slide level2">
-<h2>Fixed Mask vs Occlusion</h2>
-<div class="two-col">
-<div class="model-box">
-<div class="tag">
-<p>Fixed mask</p>
-</div>
-<p>If we decide in advance which pixels to keep, then</p>
-<p><span class="math display">
-y = Mx
-</span></p>
-<p>is linear.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Occlusion</p>
-</div>
-<p>If a tree hides a person, the visible image depends on scene geometry, depth, and visibility.</p>
-<p>The hidden person is not encoded in the pixels.</p>
-</div>
-</div>
-</section>
-<section id="information-that-is-not-measured" class="slide level2">
-<h2>Information That Is Not Measured</h2>
-<div class="takeaway-box">
-<p>Some inverse problems are unstable but still contain indirect information.</p>
-<p>Other situations are simply not observed. If an object is completely occluded, no algorithm can recover its true appearance from that image alone without outside information.</p>
-</div>
-</section>
-<section id="audio-mixing-vs-image-visibility" class="slide level2">
-<h2>Audio Mixing vs Image Visibility</h2>
-<div class="two-col">
-<div class="model-box">
-<div class="tag">
-<p>Audio</p>
-</div>
-<p>Sound waves approximately superpose:</p>
-<p><span class="math display">
-y(t) \approx s_1(t) + s_2(t) + \cdots.
-</span></p>
-<p>Separation is still hard, but the mixture can contain all sources.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Images</p>
-</div>
-<p>Visibility is different: the camera records the visible surface.</p>
-<p>If a surface is hidden, its appearance is absent from that image.</p>
-</div>
-</div>
-</section>
-<section id="why-the-inverse-problem-is-hard" class="slide level2">
-<h2>Why the Inverse Problem Is Hard</h2>
-<p>The naive answer would be:</p>
-<p><span class="math display">
-x = A^{-1}y.
-</span></p>
-<div class="question-box">
-<p>What could go wrong with this answer?</p>
-</div>
-</section>
-<section id="why-the-naive-inverse-fails" class="slide level2">
-<h2>Why the Naive Inverse Fails</h2>
-<p>The naive answer would be:</p>
-<p><span class="math display">
-x = A^{-1}y.
-</span></p>
-<p>But this can fail because:</p>
-<ol type="1">
-<li><span class="math inline">A</span> may not be invertible.</li>
-<li><span class="math inline">A</span> may be badly conditioned.</li>
-<li>Noise can be amplified by inversion.</li>
-<li>Many plausible images may explain the same data.</li>
-</ol>
-</section>
-<section id="a-toy-masking-operator" class="slide level2">
-<h2>A Toy Masking Operator</h2>
-<p>Suppose a fixed set of pixels is measured.</p>
-<div id="79cb344c" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
-<span id="cb4-4"><a></a>mask <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>], dtype<span class="op">=</span><span class="bu">bool</span>)</span>
-<span id="cb4-5"><a></a></span>
-<span id="cb4-6"><a></a>y <span class="op">=</span> x[mask]</span>
-<span id="cb4-7"><a></a></span>
-<span id="cb4-8"><a></a><span class="bu">print</span>(<span class="st">"unknown image vector:"</span>, x)</span>
-<span id="cb4-9"><a></a><span class="bu">print</span>(<span class="st">"observed entries:"</span>, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The mask is fixed independently of the unknown image.</p>
-</section>
-<section id="matrix-view-of-masking" class="slide level2">
-<h2>Matrix View of Masking</h2>
-<div class="large-math">
-<p><span class="math display">
-y = Mx
-</span></p>
-</div>
-<p>Here <span class="math inline">M</span> selects rows from the identity matrix.</p>
-<div class="question-box">
-<p>If <span class="math inline">M</span> has fewer rows than columns, can there be a unique inverse?</p>
-</div>
-</section>
-<section id="worked-masking-matrix" class="slide level2">
-<h2>Worked Masking Matrix</h2>
-<p>Let</p>
-<p><span class="math display">
-x =
-\begin{bmatrix}
-x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
-\end{bmatrix}
-</span></p>
-<p>and suppose we observe only entries 1, 3, and 5:</p>
-<p><span class="math display">
-y =
-\begin{bmatrix}
-x_1 \\ x_3 \\ x_5
-\end{bmatrix}
-=
-\begin{bmatrix}
-1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-x.
-</span></p>
-</section>
-<section id="what-is-lost" class="slide level2">
-<h2>What Is Lost?</h2>
-<div class="two-col">
-<div class="definition-box">
-<p>The matrix <span class="math inline">M</span> has shape <span class="math inline">3 \times 5</span>.</p>
-<p>It cannot have an inverse that recovers all five unknowns from three measurements.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Class question</p>
-</div>
-<p>Can you describe two different vectors <span class="math inline">x</span> that produce the same <span class="math inline">y</span>?</p>
-</div>
-</div>
-</section>
-<section id="a-real-masking-operator" class="slide level2">
-<h2>A Real Masking Operator</h2>
+<section id="domain-robustness" class="slide level2">
+<h2>Domain Robustness</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week01-real-image-masking.png" alt="Real image, sampling mask, observed pixels, and zero-filled view"></p>
-</div>
-<div class="caption">
-<p>This is a fixed sampling mask. It is not the same as physical occlusion by an object in the scene.</p>
+<p><img data-src="../assets/figures/week14-domain-robustness.png" alt="RMSE of noisy, Gaussian, and camera-trained PCA denoising across camera, moon, and coins image families"></p>
 </div>
 </section>
-<section id="python-demo-masking-a-real-image" class="slide level2 code-small">
-<h2>Python Demo: Masking a Real Image</h2>
-<div id="1465b183" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
-<span id="cb5-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
-<span id="cb5-5"><a></a></span>
-<span id="cb5-6"><a></a>mask <span class="op">=</span> np.zeros_like(image, dtype<span class="op">=</span><span class="bu">bool</span>)</span>
-<span id="cb5-7"><a></a>mask[::<span class="dv">2</span>, ::<span class="dv">2</span>] <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb5-8"><a></a></span>
-<span id="cb5-9"><a></a>y <span class="op">=</span> image[mask]</span>
-<span id="cb5-10"><a></a>zero_filled <span class="op">=</span> np.where(mask, image, <span class="dv">0</span>)</span>
-<span id="cb5-11"><a></a></span>
-<span id="cb5-12"><a></a><span class="bu">print</span>(image.shape)</span>
-<span id="cb5-13"><a></a><span class="bu">print</span>(y.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="in-class-exercise-2" class="slide level2">
-<h2>In-Class Exercise 2</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>Think, then discuss</p>
-</div>
-<p>Suppose an operator keeps only every other pixel.</p>
-<ol type="1">
-<li>What information has been lost?</li>
-<li>Can interpolation recover the original image exactly?</li>
-<li>What assumptions could make recovery plausible?</li>
-</ol>
-</div>
-</section>
-<section id="why-assumptions-enter" class="slide level2">
-<h2>Why Assumptions Enter</h2>
+<section id="reading-the-domain-test" class="slide level2">
+<h2>Reading the Domain Test</h2>
+<p>The learned patch prior was trained on camera-like patches.</p>
+<p>It helps on a camera crop.</p>
+<p>It is less competitive on a different image family.</p>
 <div class="takeaway-box">
-<p>The missing pixels are not hidden somewhere in <span class="math inline">y</span>.</p>
-<p>To choose one reconstruction among many possible images, we need a principle:</p>
-<p><span class="math display">
-\text{data fit} + \text{prior knowledge}.
-</span></p>
+<p>Learning from data does not remove assumptions. It moves assumptions into the training set.</p>
 </div>
 </section>
-<section id="prior-knowledge" class="slide level2">
-<h2>Prior Knowledge</h2>
-<p>Reconstruction needs information not present in the data alone.</p>
-<p>Common priors in this course:</p>
+<section id="overfitting-in-inverse-problems" class="slide level2">
+<h2>Overfitting in Inverse Problems</h2>
+<p>Overfitting can mean:</p>
+<div class="checklist">
 <ul>
-<li>small energy or smoothness;</li>
-<li>sparse representation;</li>
-<li>piecewise smoothness with edges;</li>
-<li>physical constraints;</li>
-<li>learned or data-driven regularity.</li>
+<li>excellent results on benchmark images;</li>
+<li>poor robustness on new acquisition conditions;</li>
+<li>learned texture that does not correspond to measured evidence;</li>
+<li>hidden failure on minority or rare cases.</li>
 </ul>
-</section>
-<section id="modeling-habit" class="slide level2 section-slide">
-<h2>Modeling Habit</h2>
-<div class="section-kicker">
-<p>A practical checklist</p>
 </div>
-<p>Ask these questions for every problem.</p>
 </section>
-<section id="the-five-questions" class="slide level2">
-<h2>The Five Questions</h2>
-<div class="takeaway-box">
+<section id="activity-2-robustness-plan" class="slide level2">
+<h2>Activity 2: Robustness Plan</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>For your project, name:</p>
 <ol type="1">
-<li>What is the unknown <span class="math inline">x</span>?</li>
-<li>What is measured as data <span class="math inline">y</span>?</li>
-<li>What is the forward operator <span class="math inline">A</span>?</li>
-<li>What noise model is reasonable for <span class="math inline">\eta</span>?</li>
-<li>What prior knowledge should guide reconstruction?</li>
+<li>one parameter you will sweep;</li>
+<li>one model mismatch you will test;</li>
+<li>one failure case you will show honestly.</li>
 </ol>
 </div>
 </section>
-<section id="mini-case-blurred-photograph" class="slide level2">
-<h2>Mini-Case: Blurred Photograph</h2>
-<div class="two-col">
-<div class="model-box">
-<p>The data are a blurred and noisy image:</p>
-<p><span class="math display">
-y = h * x + \eta.
-</span></p>
-<p>The operator <span class="math inline">A</span> is convolution by the point spread function <span class="math inline">h</span>.</p>
+<section id="part-4-hallucination-and-small-features" class="slide level2 section-slide">
+<h2>Part 4: Hallucination and Small Features</h2>
+<div class="section-kicker">
+<p>Plausible is not the same as true</p>
 </div>
+<p>Image quality can deceive</p>
+</section>
+<section id="hallucination" class="slide level2">
+<h2>Hallucination</h2>
+<p>In reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.</p>
 <div class="question-box">
-<div class="tag">
-<p>Preview</p>
-</div>
-<p>Next week, we will make this precise and compute it.</p>
-</div>
+<p>What is worse: inventing a false feature, or removing a real weak feature?</p>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
-<div class="exercise-box">
-<div class="tag">
-<p>Exit ticket</p>
+<section id="small-feature-risk" class="slide level2">
+<h2>Small Feature Risk</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week14-small-feature-risk.png" alt="Small bright feature weakened by regularization and smoothing"></p>
 </div>
-<p>For each situation, identify <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and one reasonable prior:</p>
+</section>
+<section id="reading-the-small-feature-example" class="slide level2">
+<h2>Reading the Small Feature Example</h2>
+<p>The feature is visible in the clean image.</p>
+<p>With blur and noise, it is hard to recover.</p>
+<p>Strong regularization and smoothing make the image look calmer, but reduce feature contrast.</p>
+<div class="takeaway-box">
+<p>The right reconstruction depends on the task, not only on visual smoothness.</p>
+</div>
+</section>
+<section id="data-consistency-is-necessary" class="slide level2">
+<h2>Data Consistency Is Necessary</h2>
+<p>An output should be compatible with the measurement model:</p>
+<p><span class="math display">
+Ax \approx y.
+</span></p>
+<p>But data consistency alone is not enough when the inverse problem is ill-posed.</p>
+<div class="model-box">
+<p>Many images may explain the same measurement within noise tolerance.</p>
+</div>
+</section>
+<section id="image-quality-is-not-enough" class="slide level2">
+<h2>Image Quality Is Not Enough</h2>
+<p>Common visual scores can miss:</p>
+<div class="checklist">
+<ul>
+<li>rare features;</li>
+<li>small structures;</li>
+<li>localized artifacts;</li>
+<li>downstream decision errors;</li>
+<li>confidence calibration.</li>
+</ul>
+</div>
+</section>
+<section id="better-evaluation" class="slide level2">
+<h2>Better Evaluation</h2>
+<p>Use several checks:</p>
+<div class="checklist">
+<ul>
+<li>data residual;</li>
+<li>RMSE or PSNR when ground truth exists;</li>
+<li>feature contrast or task-specific measurements;</li>
+<li>robustness sweeps;</li>
+<li>expert or domain review;</li>
+<li>uncertainty or confidence reporting.</li>
+</ul>
+</div>
+</section>
+<section id="part-5-ethics-and-responsibility" class="slide level2 section-slide">
+<h2>Part 5: Ethics and Responsibility</h2>
+<div class="section-kicker">
+<p>Mathematics has consequences</p>
+</div>
+<p>Especially in scientific and medical imaging</p>
+</section>
+<section id="reliability-in-medical-imaging" class="slide level2">
+<h2>Reliability in Medical Imaging</h2>
+<p>For medical or high-stakes scientific use, a reconstruction can influence decisions.</p>
+<p>That means we should ask:</p>
+<div class="checklist">
+<ul>
+<li>What evidence supports the output?</li>
+<li>What could be hidden by the algorithm?</li>
+<li>Who is affected by a false positive or false negative?</li>
+<li>Can a user see uncertainty and limitations?</li>
+</ul>
+</div>
+</section>
+<section id="questions-before-deployment" class="slide level2">
+<h2>Questions Before Deployment</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week14-ethics-questions.png" alt="Ethics questions before deployment: training data, tested failures, harm, uncertainty, auditability"></p>
+</div>
+</section>
+<section id="ethical-failure-modes" class="slide level2">
+<h2>Ethical Failure Modes</h2>
+<div class="checklist">
+<ul>
+<li>A model works worse for some populations or acquisition sites.</li>
+<li>A reconstruction removes rare but important signs.</li>
+<li>A plausible output is treated as direct measurement.</li>
+<li>Users are not told when the method is outside its tested domain.</li>
+<li>Code and parameters are not reproducible.</li>
+</ul>
+</div>
+</section>
+<section id="what-to-document" class="slide level2">
+<h2>What To Document</h2>
+<p>For a reconstruction method, document:</p>
+<div class="checklist">
+<ul>
+<li>forward model and assumptions;</li>
+<li>training data or priors;</li>
+<li>parameter choices;</li>
+<li>validation cases;</li>
+<li>known failures;</li>
+<li>uncertainty and limitations;</li>
+<li>intended use and non-use.</li>
+</ul>
+</div>
+</section>
+<section id="project-reports-due" class="slide level2">
+<h2>Project Reports Due</h2>
+<div class="time-tag">
+<p>Week 14 checkpoint</p>
+</div>
+<p>Your project report should include:</p>
+<div class="checklist">
+<ul>
+<li>mathematical model;</li>
+<li>reconstruction algorithm;</li>
+<li>parameter study;</li>
+<li>results on multiple cases;</li>
+<li>failure or limitation analysis;</li>
+<li>code and reproducibility notes.</li>
+</ul>
+</div>
+</section>
+<section id="code-demo-run-week-14-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 14 Examples</h2>
+<p>From the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> examples/week14_stability_robustness.py</span>
+<span id="cb1-2"><a></a><span class="ex">python3</span> examples/make_week14_figures.py</span>
+<span id="cb1-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="in-class-notebook-activity" class="slide level2">
+<h2>In-Class Notebook Activity</h2>
+<div class="time-tag">
+<p>10 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Open the Week 14 notebook.</p>
 <ol type="1">
-<li>a blurred phone photograph;</li>
-<li>a CT scan with few projection angles;</li>
-<li>an old photograph with scratches and missing regions.</li>
+<li>Sweep Tikhonov lambda.</li>
+<li>Measure perturbation amplification.</li>
+<li>Track small-feature contrast.</li>
+<li>Compare learned denoising across image families.</li>
+<li>Write a reliability checklist for your project.</li>
+</ol>
+</div>
+</section>
+<section id="quiz-style-check" class="slide level2">
+<h2>Quiz-Style Check</h2>
+<div class="exercise-box">
+<p>Answer quickly:</p>
+<ol type="1">
+<li>What does stability mean?</li>
+<li>What is parameter sensitivity?</li>
+<li>What is hallucination in reconstruction?</li>
+<li>Why is robustness testing an ethical issue?</li>
 </ol>
 </div>
 </section>
 <section id="suggested-answers" class="slide level2">
 <h2>Suggested Answers</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Situation</th>
-<th><span class="math inline">A</span></th>
-<th>Possible prior</th>
+<th>Question</th>
+<th>Short answer</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>blurred photo</td>
-<td>convolution</td>
-<td>sharp edges, natural-image smoothness</td>
+<td>stability</td>
+<td>small data changes give small reconstruction changes</td>
 </tr>
 <tr class="even">
-<td>few-angle CT</td>
-<td>projection operator</td>
-<td>piecewise smooth anatomy</td>
+<td>sensitivity</td>
+<td>output changes strongly when a parameter changes</td>
 </tr>
 <tr class="odd">
-<td>missing regions</td>
-<td>fixed masking, if mask is known</td>
-<td>texture or geometric continuation</td>
+<td>hallucination</td>
+<td>plausible structure not supported by data</td>
 </tr>
 <tr class="even">
-<td>object hidden by a tree</td>
-<td>nonlinear visibility/occlusion</td>
-<td>cannot recover true appearance from one image alone</td>
+<td>ethics</td>
+<td>failures affect real decisions and people</td>
 </tr>
 </tbody>
 </table>
@@ -907,23 +727,22 @@ y = h * x + \eta.
 <h2>What Students Should Remember</h2>
 <div class="takeaway-box">
 <ul>
-<li>A digital image can be treated as a function, matrix, or vector.</li>
-<li>Linear operators are a powerful first model for many controlled imaging systems.</li>
-<li>Real image formation can also be nonlinear and information-losing.</li>
-<li>Reconstruction is difficult because the inverse map may be unstable, nonunique, or physically impossible.</li>
-<li>Regularization adds mathematical prior knowledge to stabilize recovery.</li>
+<li>Ill-posed inverse problems require stability checks.</li>
+<li>A good-looking image can still be unreliable.</li>
+<li>Learned priors inherit assumptions from training data.</li>
+<li>Robustness must be tested across realistic and stressful cases.</li>
+<li>Ethical reconstruction means documenting assumptions, failures, and limits.</li>
 </ul>
 </div>
 </section>
 <section id="next-time" class="slide level2">
 <h2>Next Time</h2>
-<p>Convolution and blur:</p>
+<p>Oral defenses:</p>
 <ul>
-<li>1D and 2D convolution;</li>
-<li>point spread functions;</li>
-<li>boundary conditions;</li>
-<li>blur as a linear operator;</li>
-<li>first deblurring experiment.</li>
+<li>explain your model clearly;</li>
+<li>justify algorithm and parameters;</li>
+<li>interpret results and failures;</li>
+<li>show that both teammates understand the whole project.</li>
 </ul>
 
 
