@@ -441,6 +441,18 @@ $$
 x = A^{-1}y.
 $$
 
+::: {.question-box}
+What could go wrong with this answer?
+:::
+
+## Why the Naive Inverse Fails
+
+The naive answer would be:
+
+$$
+x = A^{-1}y.
+$$
+
 But this can fail because:
 
 1. $A$ may not be invertible.
