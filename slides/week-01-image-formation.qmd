@@ -187,7 +187,7 @@ $$
 
 ## Why Vectorize?
 
-Once $U$ is written as a vector $x$, we can use matrices to represent imaging operations:
+Once $U$ is written as a vector $x$, we can use matrices to represent many controlled imaging operations:
 
 $$
 x \mapsto Ax.
@@ -200,6 +200,10 @@ Examples:
 - sampling Fourier coefficients;
 - projecting along lines;
 - combining channels or frames.
+
+::: {.caption}
+This is a modeling choice, not a claim that all image formation is linear.
+:::
 
 ## First NumPy Representation {.code-small}
 
@@ -284,7 +288,7 @@ From image formation to inverse problems
 
 ::: {.model-box}
 ::: {.tag}
-Forward model
+First forward model
 :::
 
 $$
@@ -297,15 +301,41 @@ $$
 - $\eta$: noise or modeling error.
 :::
 
+::: {.caption}
+This linear model is the first mathematical language of the course. We will also need nonlinear and information-losing models.
+:::
+
 ## What Does $A$ Mean?
 
 | Operator | Imaging meaning | Typical difficulty |
 |---|---|---|
 | $I$ | direct observation | noise |
-| masking | missing pixels | incomplete data |
+| fixed masking | selected pixels are recorded | incomplete data |
 | convolution | blur | lost high frequencies |
 | Fourier sampling | MRI-style acquisition | indirect measurements |
 | projection | tomography | incomplete angles |
+
+## Important Caveat
+
+::: {.definition-box}
+::: {.tag}
+Linear model
+:::
+
+If the measurement rule is fixed in advance, then many operators are linear:
+
+$$
+x \mapsto Ax.
+$$
+:::
+
+::: {.question-box}
+::: {.tag}
+But real scenes
+:::
+
+Visibility, occlusion, saturation, shadows, reflection, and segmentation can make the image formation process nonlinear or irreversible.
+:::
 
 ## Image Formation vs Reconstruction
 
@@ -339,6 +369,70 @@ Often unstable.
 :::
 :::
 
+## Fixed Mask vs Occlusion
+
+::: {.two-col}
+::: {.model-box}
+::: {.tag}
+Fixed mask
+:::
+
+If we decide in advance which pixels to keep, then
+
+$$
+y = Mx
+$$
+
+is linear.
+:::
+
+::: {.definition-box}
+::: {.tag}
+Occlusion
+:::
+
+If a tree hides a person, the visible image depends on scene geometry, depth, and visibility.
+
+The hidden person is not encoded in the pixels.
+:::
+:::
+
+## Information That Is Not Measured
+
+::: {.takeaway-box}
+Some inverse problems are unstable but still contain indirect information.
+
+Other situations are simply not observed. If an object is completely occluded, no algorithm can recover its true appearance from that image alone without outside information.
+:::
+
+## Audio Mixing vs Image Visibility
+
+::: {.two-col}
+::: {.model-box}
+::: {.tag}
+Audio
+:::
+
+Sound waves approximately superpose:
+
+$$
+y(t) \approx s_1(t) + s_2(t) + \cdots.
+$$
+
+Separation is still hard, but the mixture can contain all sources.
+:::
+
+::: {.definition-box}
+::: {.tag}
+Images
+:::
+
+Visibility is different: the camera records the visible surface.
+
+If a surface is hidden, its appearance is absent from that image.
+:::
+:::
+
 ## Why the Inverse Problem Is Hard
 
 The naive answer would be:
@@ -356,7 +450,7 @@ But this can fail because:
 
 ## A Toy Masking Operator
 
-Suppose only some pixels are measured.
+Suppose a fixed set of pixels is measured.
 
 ```{python}
 import numpy as np
@@ -369,6 +463,8 @@ y = x[mask]
 print("unknown image vector:", x)
 print("observed entries:", y)
 ```
+
+The mask is fixed independently of the unknown image.
 
 ## Matrix View of Masking
 
@@ -433,6 +529,10 @@ Can you describe two different vectors $x$ that produce the same $y$?
 
 ::: {.figure-frame}
 ![](../assets/figures/week01-real-image-masking.png){fig-alt="Real image, sampling mask, observed pixels, and zero-filled view"}
+:::
+
+::: {.caption}
+This is a fixed sampling mask. It is not the same as physical occlusion by an object in the scene.
 :::
 
 ## Python Demo: Masking a Real Image {.code-small}
@@ -551,14 +651,16 @@ For each situation, identify $x$, $y$, $A$, and one reasonable prior:
 |---|---|---|
 | blurred photo | convolution | sharp edges, natural-image smoothness |
 | few-angle CT | projection operator | piecewise smooth anatomy |
-| missing regions | masking operator | texture or geometric continuation |
+| missing regions | fixed masking, if mask is known | texture or geometric continuation |
+| object hidden by a tree | nonlinear visibility/occlusion | cannot recover true appearance from one image alone |
 
 ## What Students Should Remember
 
 ::: {.takeaway-box}
 - A digital image can be treated as a function, matrix, or vector.
-- Linear operators let us write imaging systems as $y = Ax + \eta$.
-- Reconstruction is difficult because the inverse map may be unstable or nonunique.
+- Linear operators are a powerful first model for many controlled imaging systems.
+- Real image formation can also be nonlinear and information-losing.
+- Reconstruction is difficult because the inverse map may be unstable, nonunique, or physically impossible.
 - Regularization adds mathematical prior knowledge to stabilize recovery.
 :::
 

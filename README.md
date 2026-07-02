@@ -17,6 +17,19 @@ Use the helper script for local rendering:
 ./scripts/quarto preview
 ```
 
+To preview the Week 1 slides specifically:
+
+```bash
+./scripts/quarto preview slides/week-01-image-formation.qmd
+```
+
+The slide code blocks are currently displayed rather than executed during render, so lecture demos should be run from the terminal or a notebook:
+
+```bash
+python3 examples/week01_image_arrays.py
+python3 examples/make_week01_figures.py
+```
+
 ## Repository Layout
 
 - `slides/`: lecture slides, one Quarto Reveal.js deck per lecture or week.
@@ -28,4 +41,3 @@ Use the helper script for local rendering:
 ## Publishing
 
 The repository is prepared for GitHub Pages with Quarto. The GitHub Action in `.github/workflows/publish.yml` installs Quarto in CI, renders the site, and publishes it to the `gh-pages` branch.
-
