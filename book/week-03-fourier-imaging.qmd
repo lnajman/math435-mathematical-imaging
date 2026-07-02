@@ -1,0 +1,219 @@
+---
+title: "Fourier Transform in Imaging"
+subtitle: "Chapter 3"
+---
+
+[Slides](../slides/week-03-fourier-imaging.html) | [Notebook](../notebooks/week03_fourier_imaging.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- interpret a signal as a sum of oscillations;
+- read a 2D Fourier magnitude spectrum;
+- distinguish Fourier magnitude and phase;
+- state the convolution theorem;
+- explain blur and inverse filtering in the frequency domain.
+
+## The Big Idea
+
+Fourier analysis rewrites a signal or image as a combination of oscillations.
+
+Low frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.
+
+For imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.
+
+## One-Dimensional Frequencies
+
+A basic length-$N$ oscillation is
+
+$$
+s_k[n] = \sin(2\pi k n/N).
+$$
+
+The integer $k$ is the frequency index. A larger $k$ means more oscillations over the same interval.
+
+::: {.figure}
+![](../assets/figures/week03-1d-frequencies.png){fig-alt="Low frequency sine, high frequency sine, their sum, and Fourier magnitude"}
+
+The Fourier magnitude reveals which oscillations are present.
+:::
+
+## The Discrete Fourier Transform
+
+For a length-$N$ signal $x$, the discrete Fourier transform is
+
+$$
+\widehat{x}[k]
+=
+\sum_{n=0}^{N-1}
+x[n]e^{-2\pi i kn/N}.
+$$
+
+Each coefficient $\widehat{x}[k]$ measures how much frequency $k$ is present.
+
+Fourier coefficients are complex:
+
+$$
+\widehat{x}[k] = a_k + i b_k.
+$$
+
+Their magnitude and phase are
+
+$$
+|\widehat{x}[k]|
+\qquad\text{and}\qquad
+\arg(\widehat{x}[k]).
+$$
+
+Magnitude measures strength. Phase measures alignment.
+
+## Two-Dimensional Fourier Transform
+
+For an image $x[m,n]$, the 2D Fourier transform uses horizontal and vertical frequency indices:
+
+$$
+\widehat{x}[u,v]
+=
+\sum_{m,n}
+x[m,n]e^{-2\pi i(um/M+vn/N)}.
+$$
+
+The coefficient $\widehat{x}[u,v]$ measures an oscillation with horizontal frequency $u$ and vertical frequency $v$.
+
+::: {.figure}
+![](../assets/figures/week03-image-spectrum.png){fig-alt="Real image and centered log Fourier magnitude"}
+
+The centered log magnitude is a common way to display an image spectrum.
+:::
+
+## Reading A Spectrum
+
+In a centered spectrum:
+
+- the center corresponds to zero frequency and slow variation;
+- points far from the center correspond to fine oscillations;
+- direction in the spectrum corresponds to orientation in the image.
+
+Strong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.
+
+## Magnitude And Phase
+
+Every Fourier coefficient can be written as
+
+$$
+\widehat{x}[u,v]
+=
+|\widehat{x}[u,v]|e^{i\phi[u,v]}.
+$$
+
+Magnitude says how much of a frequency is present. Phase says where that frequency is aligned.
+
+::: {.figure}
+![](../assets/figures/week03-magnitude-phase.png){fig-alt="Original image, Fourier magnitude, magnitude-only reconstruction, and phase-only reconstruction"}
+
+Phase carries much of the recognizable geometry of an image.
+:::
+
+Magnitude is visually important, but phase is often crucial for the location of edges and structures.
+
+## The Convolution Theorem
+
+The reason Fourier analysis is central to imaging is the convolution theorem:
+
+$$
+\widehat{h*x}[u,v]
+=
+\widehat{h}[u,v]\widehat{x}[u,v].
+$$
+
+Convolution in the image domain becomes multiplication in the Fourier domain.
+
+If
+
+$$
+y = h*x,
+$$
+
+then
+
+$$
+\widehat{y} = \widehat{h}\,\widehat{x}.
+$$
+
+## Blur In Frequency Space
+
+A blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means
+
+$$
+|\widehat{y}[u,v]|
+=
+|\widehat{h}[u,v]|\ |\widehat{x}[u,v]|
+$$
+
+is much smaller where $|\widehat{h}[u,v]|$ is small.
+
+::: {.figure}
+![](../assets/figures/week03-convolution-theorem.png){fig-alt="Convolution theorem for a blurred signal or image"}
+
+Blur is easier to analyze after the Fourier transform because frequencies are multiplied independently.
+:::
+
+## Low-Pass And High-Pass Filtering
+
+A low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.
+
+::: {.figure}
+![](../assets/figures/week03-low-high-pass.png){fig-alt="Low-pass and high-pass Fourier filtering on an image"}
+
+Frequency filtering gives direct control over coarse and fine image components.
+:::
+
+## Why Inverse Filtering Is Dangerous
+
+If $\widehat{h}[u,v]$ is nonzero, a formal inverse filter would use
+
+$$
+\widehat{x}[u,v]
+=
+\frac{\widehat{y}[u,v]}{\widehat{h}[u,v]}.
+$$
+
+But when $|\widehat{h}[u,v]|$ is small, division by $\widehat{h}$ amplifies noise.
+
+::: {.figure}
+![](../assets/figures/week03-inverse-filtering.png){fig-alt="Inverse filtering with noise amplification"}
+
+Inverse filtering recovers some detail but can amplify noise dramatically.
+:::
+
+This frequency-domain view explains why regularization will be necessary in later chapters.
+
+## Computation
+
+The Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.
+
+Run:
+
+```bash
+python3 examples/week03_fourier_imaging.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. For $x[n]=\sin(2\pi 5n/N)+0.5\sin(2\pi 20n/N)$, where should the Fourier magnitude be large?
+2. In a centered 2D spectrum, what does the center represent?
+3. Which carries more geometric information in a natural image: magnitude or phase?
+4. Use the convolution theorem to explain why blur attenuates high frequencies.
+5. Explain why inverse filtering amplifies noise.
+
+## Takeaways
+
+- Fourier analysis represents images using oscillations.
+- Low frequencies describe coarse structure; high frequencies describe fine detail.
+- Fourier coefficients have magnitude and phase.
+- Convolution becomes multiplication in the Fourier domain.
+- Blur suppresses frequencies, and inverse filtering can amplify noise.
+

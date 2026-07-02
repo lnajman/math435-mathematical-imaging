@@ -11,7 +11,7 @@ The course develops the mathematical foundations of imaging science from an inve
 
 - Build lecture slides first.
 - Keep Python examples close to the lectures.
-- Grow the online book from the stabilized slide material.
+- Grow the [online book](book/index.qmd) from the stabilized slide material.
 - Publish everything from GitHub using Quarto and GitHub Pages.
 
 ## Course Arc
@@ -23,4 +23,3 @@ The course develops the mathematical foundations of imaging science from an inve
 5. Sparse and multiscale representations.
 6. Model-based, data-driven, and plug-and-play reconstruction.
 7. Stability, robustness, ethics, and project defenses.
-

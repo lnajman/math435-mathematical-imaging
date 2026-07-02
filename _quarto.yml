@@ -8,6 +8,10 @@ project:
     - index.qmd
     - syllabus.qmd
     - notebooks/index.qmd
+    - book/index.qmd
+    - book/week-01-image-formation.qmd
+    - book/week-02-convolution-blur.qmd
+    - book/week-03-fourier-imaging.qmd
     - slides/index.qmd
     - slides/template.qmd
     - slides/week-01-image-formation.qmd
@@ -38,10 +42,27 @@ website:
         text: Slides
       - href: notebooks/index.qmd
         text: Notebooks
+      - href: book/index.qmd
+        text: Book
       - href: syllabus.qmd
         text: Syllabus
       - href: project/index.qmd
         text: Project
+  sidebar:
+    - title: "Online Book"
+      style: "docked"
+      search: true
+      contents:
+        - href: book/index.qmd
+          text: Book home
+        - section: "Part I: Foundations"
+          contents:
+            - href: book/week-01-image-formation.qmd
+              text: "1. Images as mathematical objects"
+            - href: book/week-02-convolution-blur.qmd
+              text: "2. Convolution and blur"
+            - href: book/week-03-fourier-imaging.qmd
+              text: "3. Fourier transform in imaging"
   page-footer:
     left: "MATH 435: Mathematical Imaging"
     right: "Built with Quarto"

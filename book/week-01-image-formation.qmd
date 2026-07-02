@@ -1,0 +1,169 @@
+---
+title: "Images as Mathematical Objects"
+subtitle: "Chapter 1"
+---
+
+[Slides](../slides/week-01-image-formation.html) | [Notebook](../notebooks/week01_image_formation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb)
+
+## Learning Goals
+
+By the end of this chapter, you should be able to:
+
+- describe an image as a function, an array, and a vector;
+- explain why vectorization is useful for linear algebra;
+- write a first forward model $y=Ax+\eta$;
+- distinguish recorded missing pixels from hidden scene content;
+- run a small NumPy experiment with image arrays and masks.
+
+## Images As Functions
+
+At the mathematical level, a grayscale image is often modeled as a function
+
+$$
+u : \Omega \subset \mathbb{R}^2 \to \mathbb{R}.
+$$
+
+The domain $\Omega$ is the region being imaged. The value $u(s,t)$ is the intensity at location $(s,t)$.
+This continuous model is useful because many imaging systems are described physically before they are discretized.
+
+For a color image, the value has several components:
+
+$$
+u : \Omega \to \mathbb{R}^3.
+$$
+
+For a video, a 3D volume, or a multispectral image, the range and the domain can have even more dimensions. The same principle remains: an image is data organized over space, and sometimes over time, wavelength, or slice index.
+
+## Images As Arrays
+
+A digital image is sampled on a grid. If the image has $m$ rows and $n$ columns, we write
+
+$$
+U =
+\begin{bmatrix}
+u_{1,1} & u_{1,2} & \cdots & u_{1,n}\\
+u_{2,1} & u_{2,2} & \cdots & u_{2,n}\\
+\vdots & \vdots & \ddots & \vdots\\
+u_{m,1} & u_{m,2} & \cdots & u_{m,n}
+\end{bmatrix}.
+$$
+
+The array is the natural form for display and local operations. Neighboring entries in the array correspond to neighboring pixels.
+
+::: {.callout-note}
+The displayed photograph is not the mathematical object by itself. The mathematical object is the numerical array that the display visualizes.
+:::
+
+::: {.figure}
+![](../assets/figures/week01-real-image-vectorization.png){fig-alt="Real grayscale photograph, zoomed pixel patch, and vectorized patch"}
+
+Real image data can be inspected as an array, a pixel crop, or a vector.
+:::
+
+## Images As Vectors
+
+For linear algebra, we often reshape the image matrix $U$ into a vector
+
+$$
+x = \operatorname{vec}(U) \in \mathbb{R}^{mn}.
+$$
+
+If row-major order is used, the rows of $U$ are read from left to right:
+
+$$
+U =
+\begin{bmatrix}
+10 & 20 & 30\\
+40 & 50 & 60
+\end{bmatrix}
+\quad\Longrightarrow\quad
+\operatorname{vec}(U)=
+\begin{bmatrix}
+10 & 20 & 30 & 40 & 50 & 60
+\end{bmatrix}^{T}.
+$$
+
+Vectorization does not change the information. It changes the shape so that matrix-vector notation can be used.
+
+## Forward Models
+
+Once the unknown image is written as a vector $x$, a controlled measurement process can often be written as
+
+$$
+y = Ax + \eta.
+$$
+
+Here:
+
+- $x$ is the unknown image;
+- $A$ is the forward operator;
+- $y$ is the recorded data;
+- $\eta$ is noise or measurement error.
+
+This formula is a modeling template, not a claim that every visual process is linear. It is useful when the imaging system is controlled and the measurement rule is known well enough to write down.
+
+Examples of forward operators include:
+
+| Operator | What it does |
+|---|---|
+| identity | records every pixel directly |
+| mask | records only selected pixels |
+| blur | spreads each pixel to its neighbors |
+| Fourier sampling | records frequency coefficients |
+| projection | records line integrals or summaries |
+
+## Masking Recorded Pixels
+
+A binary mask models which recorded pixels are available. If $M$ selects a subset of entries of $x$, then
+
+$$
+y = Mx
+$$
+
+records only those entries.
+
+::: {.figure}
+![](../assets/figures/week01-real-image-masking.png){fig-alt="Original image, recorded pixel mask, masked observation, and observed vector"}
+
+Masking recorded pixels creates missing entries in the digital observation.
+:::
+
+The inverse problem is then to infer something about the missing values from the observed ones and from assumptions about images.
+
+## Missing Pixels Versus Occlusion
+
+It is important to distinguish two situations:
+
+1. A pixel was recorded but then removed or masked.
+2. A part of the physical scene was hidden from the sensor.
+
+The first case is a missing-data problem in the recorded image. The second is a visibility problem in the physical scene.
+
+If a person is behind a tree, the camera did not record the hidden part of the person. No mathematical method can recover information that was never measured without adding assumptions from outside the measurement. This is one reason image inverse problems are different from many idealized signal separation problems.
+
+## Computation
+
+The Week 1 notebook asks you to inspect image arrays, reshape them, and apply simple masks.
+
+Run:
+
+```bash
+python3 examples/week01_image_arrays.py
+```
+
+or open the notebook in Colab from the link at the top of this chapter.
+
+## Exercises
+
+1. Write the row-major vectorization of a $3 \times 4$ image array with entries $1,\ldots,12$.
+2. Give an example of a forward operator $A$ that is linear.
+3. Give an example from real imaging where the physical process is not well described by a linear operator.
+4. Explain why a mask can model missing recorded pixels but not seeing behind an occluder.
+
+## Takeaways
+
+- An image can be viewed as a function, an array, or a vector.
+- Vectorization lets us write imaging models using linear algebra.
+- The forward model $y=Ax+\eta$ separates the unknown image, the measurement rule, and noise.
+- Missing data in an array is not the same as hidden information in the physical scene.
+
