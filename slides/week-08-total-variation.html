@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-03-01">
-  <title>MATH 435: Mathematical Imaging – Fourier Transform in Imaging</title>
+  <meta name="dcterms.date" content="2001-08-01">
+  <title>MATH 435: Mathematical Imaging – Total Variation Regularization</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -214,8 +214,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Fourier Transform in Imaging</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 3</p>
+  <h1 class="title">Total Variation Regularization</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 8</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -225,24 +225,24 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-03-01</p>
+  <p class="date">2001-08-01</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
 <div class="section-kicker">
-<p>From blur to frequency</p>
+<p>Edges are not noise</p>
 </div>
-<p>What does it mean for an image to contain high frequencies?</p>
+<p>How can a regularizer remove noise without treating every edge as a mistake?</p>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <div class="checklist">
 <ul>
-<li>Interpret 1D and 2D frequencies.</li>
-<li>Compute and read Fourier magnitudes.</li>
-<li>Separate magnitude and phase.</li>
-<li>Use the convolution theorem.</li>
-<li>Explain blur and deblurring in frequency space.</li>
+<li>Define Total Variation (TV).</li>
+<li>Compare TV with quadratic smoothness.</li>
+<li>Explain why TV preserves edges better.</li>
+<li>Observe the staircasing effect.</li>
+<li>Use TV denoising on signals and images.</li>
 </ul>
 </div>
 </section>
@@ -257,386 +257,368 @@ Laurent Najman
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>recap convolution and blur</td>
+<td style="text-align: right;">0-8 min</td>
+<td>recap variational energy models</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-25 min</td>
-<td>1D frequencies and the DFT</td>
+<td style="text-align: right;">8-22 min</td>
+<td>TV definition and gradient penalties</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">25-40 min</td>
-<td>2D Fourier transform of images</td>
+<td style="text-align: right;">22-38 min</td>
+<td>edge preservation in 1D</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">40-52 min</td>
-<td>magnitude, phase, and geometry</td>
+<td style="text-align: right;">38-52 min</td>
+<td>image denoising: l2 versus TV</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">52-63 min</td>
-<td>convolution theorem</td>
+<td style="text-align: right;">52-62 min</td>
+<td>staircasing and limitations</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">63-72 min</td>
-<td>filtering and deblurring</td>
+<td style="text-align: right;">62-69 min</td>
+<td>notebook activity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">72-75 min</td>
-<td>exit checkpoint</td>
+<td style="text-align: right;">69-75 min</td>
+<td>midterm/course checkpoint</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="reminder-from-week-2" class="slide level2">
-<h2>Reminder from Week 2</h2>
-<div class="model-box">
-<p>For a fixed blur kernel <span class="math inline">h</span>,</p>
+<section id="bridge-from-week-7" class="slide level2">
+<h2>Bridge from Week 7</h2>
+<p>Week 7 used the quadratic smoothing energy:</p>
 <p><span class="math display">
-y = h * x.
+E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2.
 </span></p>
-</div>
 <div class="question-box">
-<p>Why does blur remove fine details?</p>
+<p>What happens to true edges when we penalize large gradients quadratically?</p>
 </div>
 </section>
-<section id="the-big-idea" class="slide level2">
-<h2>The Big Idea</h2>
+<section id="the-problem-with-quadratic-smoothing" class="slide level2">
+<h2>The Problem with Quadratic Smoothing</h2>
+<p>Edges are large gradients.</p>
+<p>Noise also creates large local changes.</p>
 <div class="takeaway-box">
-<p>Fourier analysis rewrites an image as a sum of oscillations.</p>
+<p>Quadratic smoothness reduces both noise and edges.</p>
 </div>
-<p>Low frequencies describe slow variation.</p>
-<p>High frequencies describe rapid variation, edges, and texture.</p>
 </section>
-<section id="part-1-1d-frequencies" class="slide level2 section-slide">
-<h2>Part 1: 1D Frequencies</h2>
+<section id="part-1-total-variation" class="slide level2 section-slide">
+<h2>Part 1: Total Variation</h2>
 <div class="section-kicker">
-<p>Start with signals</p>
+<p>A different smoothness prior</p>
 </div>
-<p>Frequency counts oscillations</p>
+<p>Penalize gradient magnitude</p>
 </section>
-<section id="a-sine-wave" class="slide level2">
-<h2>A Sine Wave</h2>
-<p>A simple oscillation can be written as</p>
+<section id="continuous-tv" class="slide level2">
+<h2>Continuous TV</h2>
+<p>For a grayscale image <span class="math inline">u:\Omega\to\mathbb{R}</span>:</p>
 <p><span class="math display">
-s_k[n] = \sin\left(2\pi k n / N\right).
+\operatorname{TV}(u)
+=
+\int_\Omega |\nabla u(x)|\,dx.
 </span></p>
 <div class="definition-box">
-<p>The integer <span class="math inline">k</span> is the frequency index. Larger <span class="math inline">k</span> means more oscillations over the same interval.</p>
+<p>TV measures the total amount of change in the image.</p>
 </div>
 </section>
-<section id="activity-1-predict-the-spectrum" class="slide level2">
-<h2>Activity 1: Predict the Spectrum</h2>
+<section id="discrete-isotropic-tv" class="slide level2">
+<h2>Discrete Isotropic TV</h2>
+<p>For a pixel grid:</p>
+<p><span class="math display">
+\operatorname{TV}(u)
+=
+\sum_i
+\sqrt{(D_xu_i)^2+(D_yu_i)^2}.
+</span></p>
+<div class="caption">
+<p><span class="math inline">D_x</span> and <span class="math inline">D_y</span> are finite differences in horizontal and vertical directions.</p>
+</div>
+</section>
+<section id="tv-denoising-model" class="slide level2">
+<h2>TV Denoising Model</h2>
+<p>The classical Rudin-Osher-Fatemi model is:</p>
+<p><span class="math display">
+u_\lambda
+=
+\operatorname*{argmin}_u
+\frac12\|u-y\|_2^2
++
+\lambda\,\operatorname{TV}(u).
+</span></p>
+<div class="takeaway-box">
+<p>Data fidelity keeps the image close to data; TV regularization controls total edge strength.</p>
+</div>
+</section>
+<section id="l2-versus-tv-penalties" class="slide level2">
+<h2>l2 Versus TV Penalties</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week08-penalties.png" alt="Quadratic and TV penalties for a gradient value and their derivative behavior"></p>
+</div>
+</section>
+<section id="why-tv-preserves-edges" class="slide level2">
+<h2>Why TV Preserves Edges</h2>
+<p>Quadratic penalty:</p>
+<p><span class="math display">
+\frac12 g^2
+</span></p>
+<p>TV penalty:</p>
+<p><span class="math display">
+|g|.
+</span></p>
+<div class="takeaway-box">
+<p>Large gradients are much more expensive under <span class="math inline">\ell_2</span> than under TV.</p>
+</div>
+</section>
+<section id="activity-1-penalty-comparison" class="slide level2">
+<h2>Activity 1: Penalty Comparison</h2>
 <div class="time-tag">
 <p>5 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Suppose</p>
-<p><span class="math display">
-x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
-</span></p>
-<p>Where should the Fourier magnitude be large?</p>
-</div>
-</section>
-<section id="frequency-components" class="slide level2">
-<h2>Frequency Components</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-1d-frequencies.png" alt="Low frequency sine, high frequency sine, their sum, and Fourier magnitude"></p>
-</div>
-</section>
-<section id="the-discrete-fourier-transform" class="slide level2">
-<h2>The Discrete Fourier Transform</h2>
-<p>For a length-<span class="math inline">N</span> signal:</p>
-<p><span class="math display">
-\widehat{x}[k] =
-\sum_{n=0}^{N-1} x[n] e^{-2\pi i kn/N}.
-</span></p>
-<div class="caption">
-<p>Each coefficient measures how much frequency <span class="math inline">k</span> is present.</p>
-</div>
-</section>
-<section id="complex-coefficients" class="slide level2">
-<h2>Complex Coefficients</h2>
-<p>Fourier coefficients are usually complex:</p>
-<p><span class="math display">
-\widehat{x}[k] = a_k + i b_k.
-</span></p>
-<div class="two-col">
-<div class="definition-box">
-<p>Magnitude:</p>
-<p><span class="math display">
-|\widehat{x}[k]|
-</span> strength of frequency <span class="math inline">k</span></p>
-</div>
-<div class="model-box">
-<p>Phase:</p>
-<p><span class="math display">
-\arg(\widehat{x}[k])
-</span> alignment of the oscillation</p>
-</div>
-</div>
-</section>
-<section id="what-fft-returns" class="slide level2">
-<h2>What FFT Returns</h2>
-<div class="code-small">
-<div id="8e623617" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a>spectrum <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb1-4"><a></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(spectrum)</span>
-<span id="cb1-5"><a></a>phase <span class="op">=</span> np.angle(spectrum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="caption">
-<p><code>fft</code> computes the DFT quickly. The mathematics is the same transform.</p>
-</div>
-</section>
-<section id="part-2-2d-fourier-transform" class="slide level2 section-slide">
-<h2>Part 2: 2D Fourier Transform</h2>
-<div class="section-kicker">
-<p>Images are 2D signals</p>
-</div>
-<p>Frequencies have direction</p>
-</section>
-<section id="images-as-2d-signals" class="slide level2">
-<h2>Images as 2D Signals</h2>
-<p>A grayscale image is an array <span class="math inline">x[m,n]</span>.</p>
-<p>The 2D Fourier transform uses horizontal and vertical frequency indices:</p>
-<p><span class="math display">
-\widehat{x}[u,v] =
-\sum_{m,n} x[m,n] e^{-2\pi i(um/M + vn/N)}.
-</span></p>
-</section>
-<section id="image-spectrum" class="slide level2">
-<h2>Image Spectrum</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-image-spectrum.png" alt="Real image and centered log Fourier magnitude"></p>
-</div>
-</section>
-<section id="centered-spectrum" class="slide level2">
-<h2>Centered Spectrum</h2>
-<p>Most software places the zero frequency at the corner.</p>
-<p>For visualization, we often use:</p>
-<div class="code-small">
-<div id="0fceea62" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>F <span class="op">=</span> np.fft.fft2(image)</span>
-<span id="cb2-2"><a></a>F_centered <span class="op">=</span> np.fft.fftshift(F)</span>
-<span id="cb2-3"><a></a>log_magnitude <span class="op">=</span> np.log1p(np.<span class="bu">abs</span>(F_centered))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="reading-the-spectrum" class="slide level2">
-<h2>Reading the Spectrum</h2>
-<div class="three-col">
-<div class="model-box">
-<div class="tag">
-<p>Center</p>
-</div>
-<p>Average and slow variation.</p>
-</div>
-<div class="definition-box">
-<div class="tag">
-<p>Far from center</p>
-</div>
-<p>Fine oscillations and texture.</p>
-</div>
-<div class="question-box">
-<div class="tag">
-<p>Direction</p>
-</div>
-<p>Frequency orientation.</p>
-</div>
-</div>
-</section>
-<section id="mini-check" class="slide level2">
-<h2>Mini-Check</h2>
-<div class="exercise-box">
-<p>An image has strong vertical stripes.</p>
-<p>Which direction of frequency should be strong: horizontal, vertical, or both?</p>
-</div>
-</section>
-<section id="part-3-magnitude-and-phase" class="slide level2 section-slide">
-<h2>Part 3: Magnitude and Phase</h2>
-<div class="section-kicker">
-<p>What is stored in a coefficient?</p>
-</div>
-<p>Strength and alignment</p>
-</section>
-<section id="magnitude-and-phase" class="slide level2">
-<h2>Magnitude and Phase</h2>
-<p>For each Fourier coefficient:</p>
-<p><span class="math display">
-\widehat{x}[u,v] =
-|\widehat{x}[u,v]| e^{i\phi[u,v]}.
-</span></p>
-<div class="caption">
-<p>Magnitude says how much. Phase says where the oscillation lines up.</p>
-</div>
-</section>
-<section id="magnitude-versus-phase" class="slide level2">
-<h2>Magnitude Versus Phase</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-magnitude-phase.png" alt="Original image, Fourier magnitude, magnitude-only reconstruction, and phase-only reconstruction"></p>
-</div>
-</section>
-<section id="discussion" class="slide level2">
-<h2>Discussion</h2>
-<div class="question-box">
-<p>Which reconstruction preserves more recognizable geometry?</p>
-<p>What does that suggest about the importance of phase?</p>
-</div>
-</section>
-<section id="python-demo-spectrum-of-an-image" class="slide level2 code-small">
-<h2>Python Demo: Spectrum of an Image</h2>
-<div id="7008ab8e" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
-<span id="cb3-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
-<span id="cb3-5"><a></a>F <span class="op">=</span> np.fft.fft2(image)</span>
-<span id="cb3-6"><a></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(F)</span>
-<span id="cb3-7"><a></a>phase <span class="op">=</span> np.angle(F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="run-todays-code" class="slide level2 code-small">
-<h2>Run Today’s Code</h2>
-<p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">python3</span> examples/week03_fourier_imaging.py</span>
-<span id="cb4-2"><a></a><span class="ex">python3</span> examples/make_week03_figures.py</span>
-<span id="cb4-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
-<span id="cb4-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="part-4-convolution-theorem" class="slide level2 section-slide">
-<h2>Part 4: Convolution Theorem</h2>
-<div class="section-kicker">
-<p>The Week 2 bridge</p>
-</div>
-<p>Convolution becomes multiplication</p>
-</section>
-<section id="the-convolution-theorem" class="slide level2">
-<h2>The Convolution Theorem</h2>
-<p>If</p>
-<p><span class="math display">
-y = h * x,
-</span></p>
-<p>then</p>
-<p><span class="math display">
-\widehat{y} = \widehat{h}\,\widehat{x}.
-</span></p>
-<div class="takeaway-box">
-<p>Blur is easier to understand in frequency space.</p>
-</div>
-</section>
-<section id="why-this-matters" class="slide level2">
-<h2>Why This Matters</h2>
-<p>If <span class="math inline">\widehat{h}</span> is small at high frequencies, then</p>
-<p><span class="math display">
-\widehat{y}[u,v] = \widehat{h}[u,v]\widehat{x}[u,v]
-</span></p>
-<p>has weak high-frequency content.</p>
-<div class="caption">
-<p>This is the frequency-space explanation for smoothing.</p>
-</div>
-</section>
-<section id="convolution-theorem-picture" class="slide level2">
-<h2>Convolution Theorem Picture</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-convolution-theorem.png" alt="Image, blur kernel, blurred image, and Fourier magnitude of the kernel"></p>
-</div>
-</section>
-<section id="activity-2-translate-the-model" class="slide level2">
-<h2>Activity 2: Translate the Model</h2>
-<div class="time-tag">
-<p>6 minutes</p>
-</div>
-<div class="exercise-box">
-<p>Translate each statement between image space and frequency space:</p>
+<p>Compare the cost of a gradient <span class="math inline">g=4</span>:</p>
 <ol type="1">
-<li>blur averages nearby pixels;</li>
-<li>blur suppresses fine detail;</li>
-<li>deblurring divides by the blur response.</li>
+<li>quadratic cost <span class="math inline">\frac12 g^2</span>;</li>
+<li>TV cost <span class="math inline">|g|</span>.</li>
+</ol>
+<p>Which penalty discourages a sharp edge more strongly?</p>
+</div>
+</section>
+<section id="nonsmoothness" class="slide level2">
+<h2>Nonsmoothness</h2>
+<p>The function <span class="math inline">|g|</span> is not differentiable at <span class="math inline">g=0</span>.</p>
+<div class="question-box">
+<p>Why might this make optimization more delicate than quadratic smoothing?</p>
+</div>
+<div class="caption">
+<p>Week 9 will discuss subgradients and proximal ideas.</p>
+</div>
+</section>
+<section id="part-2-1d-edge-preservation" class="slide level2 section-slide">
+<h2>Part 2: 1D Edge Preservation</h2>
+<div class="section-kicker">
+<p>Start with a signal</p>
+</div>
+<p>Jumps are allowed</p>
+</section>
+<section id="step-signal-comparison" class="slide level2">
+<h2>Step Signal Comparison</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week08-step-l2-tv.png" alt="Noisy step signal denoised by quadratic smoothing and TV"></p>
+</div>
+</section>
+<section id="reading-the-step-example" class="slide level2">
+<h2>Reading the Step Example</h2>
+<div class="checklist">
+<ul>
+<li>The noisy signal has many small oscillations.</li>
+<li>l2 smoothing rounds the jumps.</li>
+<li>TV denoising keeps flatter regions and sharper jumps.</li>
+<li>TV is well matched to piecewise-constant structure.</li>
+</ul>
+</div>
+</section>
+<section id="why-piecewise-constant" class="slide level2">
+<h2>Why Piecewise Constant?</h2>
+<p>TV counts the amount of change, not how spread out it is.</p>
+<div class="model-box">
+<p>A sharp jump can be cheaper than a long gradual transition with many small changes.</p>
+</div>
+</section>
+<section id="activity-2-predict-the-prior" class="slide level2">
+<h2>Activity 2: Predict the Prior</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>Which image class does TV prefer?</p>
+<ol type="1">
+<li>smooth ramps everywhere;</li>
+<li>piecewise flat regions separated by edges;</li>
+<li>high-frequency texture everywhere.</li>
+</ol>
+<p>Give a one-sentence reason.</p>
+</div>
+</section>
+<section id="part-3-image-denoising" class="slide level2 section-slide">
+<h2>Part 3: Image Denoising</h2>
+<div class="section-kicker">
+<p>Real image comparison</p>
+</div>
+<p>Noise versus edge preservation</p>
+</section>
+<section id="l2-smoothing-versus-tv" class="slide level2">
+<h2>l2 Smoothing Versus TV</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week08-image-l2-tv.png" alt="Original image, noisy image, l2 smoothed image, and TV denoised image"></p>
+</div>
+</section>
+<section id="gradient-maps" class="slide level2">
+<h2>Gradient Maps</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week08-gradient-maps.png" alt="Gradient magnitude maps of original, noisy, l2 smoothed, and TV denoised images"></p>
+</div>
+</section>
+<section id="reading-gradient-maps" class="slide level2">
+<h2>Reading Gradient Maps</h2>
+<div class="checklist">
+<ul>
+<li>Noise creates many small gradients.</li>
+<li>l2 smoothing reduces gradients broadly.</li>
+<li>TV suppresses weak fluctuations while retaining stronger edge sets.</li>
+</ul>
+</div>
+</section>
+<section id="parameter-effects" class="slide level2">
+<h2>Parameter Effects</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week08-parameter-effects.png" alt="TV denoising with several regularization weights"></p>
+</div>
+</section>
+<section id="regularization-weight" class="slide level2">
+<h2>Regularization Weight</h2>
+<p>In</p>
+<p><span class="math display">
+\frac12\|u-y\|_2^2+\lambda\operatorname{TV}(u),
+</span></p>
+<p>larger <span class="math inline">\lambda</span> means:</p>
+<div class="checklist">
+<ul>
+<li>stronger denoising;</li>
+<li>fewer small variations;</li>
+<li>greater risk of losing detail.</li>
+</ul>
+</div>
+</section>
+<section id="activity-3-choose-lambda" class="slide level2">
+<h2>Activity 3: Choose Lambda</h2>
+<div class="time-tag">
+<p>5 minutes</p>
+</div>
+<div class="exercise-box">
+<p>For the parameter-effect figure, choose a TV weight.</p>
+<p>Would you choose the same value for:</p>
+<ol type="1">
+<li>a diagnostic medical image;</li>
+<li>a photograph for visual display?</li>
 </ol>
 </div>
 </section>
-<section id="part-5-filtering" class="slide level2 section-slide">
-<h2>Part 5: Filtering</h2>
+<section id="part-4-staircasing" class="slide level2 section-slide">
+<h2>Part 4: Staircasing</h2>
 <div class="section-kicker">
-<p>Manipulating frequencies</p>
+<p>TV has a signature artifact</p>
 </div>
-<p>Masks in the Fourier domain</p>
+<p>Piecewise-flat plateaus</p>
 </section>
-<section id="low-pass-and-high-pass" class="slide level2">
-<h2>Low-Pass and High-Pass</h2>
-<div class="two-col">
-<div class="definition-box">
-<p>Low-pass filter:</p>
-<p>keeps slow variation and removes rapid variation.</p>
-</div>
-<div class="model-box">
-<p>High-pass filter:</p>
-<p>keeps rapid variation and removes smooth background.</p>
-</div>
-</div>
-</section>
-<section id="low-pass-and-high-pass-image" class="slide level2">
-<h2>Low-Pass and High-Pass Image</h2>
+<section id="staircasing-effect" class="slide level2">
+<h2>Staircasing Effect</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week03-low-high-pass.png" alt="Original image, low-pass Fourier mask, low-pass reconstruction, and high-pass reconstruction"></p>
+<p><img data-src="../assets/figures/week08-staircasing.png" alt="Smooth noisy signal denoised by l2 smoothing and TV, showing TV staircasing"></p>
 </div>
 </section>
-<section id="frequency-masks-are-models" class="slide level2">
-<h2>Frequency Masks Are Models</h2>
-<div class="question-box">
-<p>A sharp circular cutoff is mathematically simple.</p>
-<p>Is it always a good physical model of an imaging system?</p>
-</div>
-<div class="caption">
-<p>We use it to learn the idea. Real systems often have smoother frequency responses.</p>
-</div>
-</section>
-<section id="part-6-deblurring-revisited" class="slide level2 section-slide">
-<h2>Part 6: Deblurring Revisited</h2>
-<div class="section-kicker">
-<p>The inverse problem, now visible</p>
-</div>
-<p>Division is dangerous</p>
-</section>
-<section id="inverse-filtering" class="slide level2">
-<h2>Inverse Filtering</h2>
-<p>If</p>
-<p><span class="math display">
-\widehat{y} = \widehat{h}\widehat{x} + \widehat{\eta},
-</span></p>
-<p>the naive inverse is</p>
-<p><span class="math display">
-\widehat{x} = \frac{\widehat{y}}{\widehat{h}}.
-</span></p>
-<div class="question-box">
-<p>What happens where <span class="math inline">|\widehat{h}|</span> is close to zero?</p>
-</div>
-</section>
-<section id="inverse-filtering-picture" class="slide level2">
-<h2>Inverse Filtering Picture</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week03-inverse-filtering.png" alt="Original image, blurred noisy image, naive inverse, and regularized inverse"></p>
-</div>
-</section>
-<section id="why-the-naive-inverse-fails" class="slide level2">
-<h2>Why the Naive Inverse Fails</h2>
+<section id="why-staircasing-happens" class="slide level2">
+<h2>Why Staircasing Happens</h2>
+<p>TV favors sparse gradients.</p>
+<p>That means many locations with zero gradient and a smaller number of jumps.</p>
 <div class="takeaway-box">
-<p>Deblurring amplifies frequencies that blur suppressed.</p>
+<p>TV preserves edges, but it can turn smooth variation into plateaus.</p>
 </div>
-<p>If the measurement contains noise, those frequencies may be mostly noise.</p>
 </section>
-<section id="a-stabilized-alternative" class="slide level2">
-<h2>A Stabilized Alternative</h2>
-<p>One common frequency-domain stabilizer is</p>
-<p><span class="math display">
-\widehat{x}_\lambda =
-\frac{\overline{\widehat{h}}}{|\widehat{h}|^2 + \lambda}\widehat{y}.
-</span></p>
-<div class="caption">
-<p>The parameter <span class="math inline">\lambda</span> controls how much we trust weak frequencies.</p>
+<section id="strengths-and-weaknesses" class="slide level2">
+<h2>Strengths and Weaknesses</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>l2 smoothing</th>
+<th>TV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Noise removal</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>Edge preservation</td>
+<td>weak</td>
+<td>strong</td>
+</tr>
+<tr class="odd">
+<td>Optimization</td>
+<td>smooth linear problem</td>
+<td>nonsmooth convex problem</td>
+</tr>
+<tr class="even">
+<td>Typical artifact</td>
+<td>blur</td>
+<td>staircasing</td>
+</tr>
+<tr class="odd">
+<td>Best for</td>
+<td>smooth images</td>
+<td>piecewise-smooth or piecewise-constant images</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="part-5-modeling-view" class="slide level2 section-slide">
+<h2>Part 5: Modeling View</h2>
+<div class="section-kicker">
+<p>What prior did we choose?</p>
 </div>
+<p>Regularization is a modeling statement</p>
+</section>
+<section id="tv-as-a-prior" class="slide level2">
+<h2>TV as a Prior</h2>
+<p>TV regularization says:</p>
+<div class="takeaway-box">
+<p>Among images that fit the data, prefer images with small total variation.</p>
+</div>
+<p>This is a good prior when meaningful structures are separated by edges.</p>
+</section>
+<section id="when-tv-is-not-enough" class="slide level2">
+<h2>When TV Is Not Enough</h2>
+<p>TV may struggle with:</p>
+<div class="checklist">
+<ul>
+<li>texture;</li>
+<li>fine repeated patterns;</li>
+<li>gradual shading;</li>
+<li>curved smooth surfaces;</li>
+<li>strongly nonlocal structure.</li>
+</ul>
+</div>
+</section>
+<section id="midterm-course-checkpoint" class="slide level2">
+<h2>Midterm / Course Checkpoint</h2>
+<p>Week 8 is also the midterm week in the syllabus.</p>
+<div class="checklist">
+<ul>
+<li>Forward models and image arrays.</li>
+<li>Convolution, blur, Fourier interpretation.</li>
+<li>Noise models and likelihoods.</li>
+<li>Ill-posedness and singular values.</li>
+<li>Tikhonov, variational energies, and TV.</li>
+</ul>
+</div>
+</section>
+<section id="code-demo-run-week-8-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 8 Examples</h2>
+<p>From the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> examples/week08_total_variation.py</span>
+<span id="cb1-2"><a></a><span class="ex">python3</span> examples/make_week08_figures.py</span>
+<span id="cb1-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="in-class-notebook-activity" class="slide level2">
 <h2>In-Class Notebook Activity</h2>
@@ -644,20 +626,36 @@ y = h * x,
 <p>8 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Open the Week 3 notebook.</p>
-<p>Change the low-pass radius and the deblurring stabilizer.</p>
-<p>Record one visual effect and one numerical effect.</p>
+<p>Open the Week 8 notebook.</p>
+<ol type="1">
+<li>Change the TV weight.</li>
+<li>Compare TV and l2 smoothing on an image.</li>
+<li>Inspect gradient maps.</li>
+<li>Find an example of staircasing.</li>
+</ol>
+</div>
+</section>
+<section id="quiz-style-check" class="slide level2">
+<h2>Quiz-Style Check</h2>
+<div class="exercise-box">
+<p>For each phrase, choose l2 smoothing or TV:</p>
+<ol type="1">
+<li>penalizes squared gradients;</li>
+<li>penalizes gradient magnitude;</li>
+<li>tends to blur edges;</li>
+<li>can create staircasing.</li>
+</ol>
 </div>
 </section>
 <section id="end-of-class-checkpoint" class="slide level2">
 <h2>End-of-Class Checkpoint</h2>
 <div class="exercise-box">
-<p>For each item, give one sentence:</p>
+<p>Answer in one sentence each:</p>
 <ol type="1">
-<li>What does a Fourier magnitude show?</li>
-<li>Where are low frequencies in a centered spectrum?</li>
-<li>What does the convolution theorem say?</li>
-<li>Why does inverse filtering amplify noise?</li>
+<li>What is Total Variation?</li>
+<li>Why does TV preserve edges better than l2 smoothing?</li>
+<li>What is staircasing?</li>
+<li>Why is TV optimization more delicate than quadratic smoothing?</li>
 </ol>
 </div>
 </section>
@@ -676,20 +674,20 @@ y = h * x,
 </thead>
 <tbody>
 <tr class="odd">
-<td>Fourier magnitude</td>
-<td>strength of each frequency</td>
+<td>TV</td>
+<td>sum or integral of gradient magnitude</td>
 </tr>
 <tr class="even">
-<td>centered low frequencies</td>
-<td>near the center</td>
+<td>edge preservation</td>
+<td>linear gradient penalty is less harsh on large jumps</td>
 </tr>
 <tr class="odd">
-<td>convolution theorem</td>
-<td>convolution in space is multiplication in frequency</td>
+<td>staircasing</td>
+<td>smooth variation becomes piecewise flat</td>
 </tr>
 <tr class="even">
-<td>noise amplification</td>
-<td>division by small blur response magnifies noise</td>
+<td>optimization</td>
+<td>TV is convex but nonsmooth</td>
 </tr>
 </tbody>
 </table>
@@ -698,22 +696,22 @@ y = h * x,
 <h2>What Students Should Remember</h2>
 <div class="takeaway-box">
 <ul>
-<li>Fourier coefficients describe oscillations.</li>
-<li>Images have horizontal and vertical frequencies.</li>
-<li>Magnitude and phase carry different information.</li>
-<li>Blur is low-pass behavior in frequency space.</li>
-<li>Deblurring needs regularization because inverse filtering is unstable.</li>
+<li>TV regularization uses <span class="math inline">\operatorname{TV}(u)=\int |\nabla u|</span>.</li>
+<li>TV is a variational prior favoring small total change.</li>
+<li>Compared with l2 smoothing, TV preserves stronger edges.</li>
+<li>TV can create staircasing artifacts.</li>
+<li>The choice of regularizer is a modeling decision.</li>
 </ul>
 </div>
 </section>
 <section id="next-time" class="slide level2">
 <h2>Next Time</h2>
-<p>Noise and statistical image models:</p>
+<p>Optimization methods:</p>
 <ul>
-<li>additive noise;</li>
-<li>Gaussian and Poisson models;</li>
-<li>signal-to-noise ratio;</li>
-<li>likelihoods for reconstruction.</li>
+<li>convex sets and convex functions;</li>
+<li>subgradient intuition;</li>
+<li>proximal operator idea;</li>
+<li>iterative shrinkage / ISTA intuition.</li>
 </ul>
 
 
