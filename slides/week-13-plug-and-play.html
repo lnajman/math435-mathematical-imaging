@@ -10,8 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-06-01">
-  <title>MATH 435: Mathematical Imaging – Tikhonov Regularization</title>
+  <title>MATH 435: Mathematical Imaging – Plug-and-Play and Learned Regularization</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -214,8 +213,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Tikhonov Regularization</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 6</p>
+  <h1 class="title">Plug-and-Play and Learned Regularization</h1>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 13</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -225,24 +224,25 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-06-01</p>
+  <p class="date">Invalid Date</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
 <div class="section-kicker">
-<p>Stabilizing an inverse</p>
+<p>Can a denoiser be a prior?</p>
 </div>
-<p>If exact inversion is unstable, what should we give up: exact data fit, sharpness, or both?</p>
+<p>Suppose you already have a good denoising algorithm.</p>
+<p>Can you insert it inside an inverse-problem solver?</p>
 </section>
 <section id="today" class="slide level2">
 <h2>Today</h2>
 <div class="checklist">
 <ul>
-<li>Formulate Tikhonov regularization.</li>
-<li>Derive the normal equations.</li>
-<li>Interpret the regularization parameter.</li>
-<li>Read Tikhonov filter factors.</li>
-<li>Explain the bias-stability tradeoff.</li>
+<li>Recall proximal algorithms for regularized inverse problems.</li>
+<li>Define plug-and-play reconstruction.</li>
+<li>Compare explicit and implicit regularization.</li>
+<li>Run a deblurring example with handcrafted and learned denoisers.</li>
+<li>Discuss fixed points, convergence, and trust.</li>
 </ul>
 </div>
 </section>
@@ -258,466 +258,480 @@ Laurent Najman
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0-8 min</td>
-<td>recap ill-posedness and small singular values</td>
+<td>recap: model-based vs data-driven</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-20 min</td>
-<td>penalized least squares</td>
+<td style="text-align: right;">8-22 min</td>
+<td>proximal steps as denoising-like operations</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">20-34 min</td>
-<td>normal equations and closed form</td>
+<td style="text-align: right;">22-38 min</td>
+<td>plug-and-play idea and update equations</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">34-48 min</td>
-<td>SVD and filter factors</td>
+<td style="text-align: right;">38-52 min</td>
+<td>learned regularization and examples</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">48-60 min</td>
-<td>parameter effects</td>
+<td style="text-align: right;">52-62 min</td>
+<td>convergence, fixed points, and failure modes</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">60-68 min</td>
-<td>bias-variance tradeoff</td>
+<td style="text-align: right;">62-72 min</td>
+<td>notebook activity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">68-72 min</td>
-<td>project assignment note</td>
-</tr>
-<tr class="even">
 <td style="text-align: right;">72-75 min</td>
-<td>exit checkpoint</td>
+<td>synthesis and exit check</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-week-5" class="slide level2">
-<h2>Bridge from Week 5</h2>
-<p>Week 5 showed that direct inversion may amplify noise:</p>
-<p><span class="math display">
-\frac{\langle \eta,u_i\rangle}{\sigma_i}.
-</span></p>
-<div class="question-box">
-<p>How can we keep useful directions without exploding in unstable directions?</p>
+<section id="bridge-from-week-12" class="slide level2">
+<h2>Bridge from Week 12</h2>
+<p>Week 12 compared:</p>
+<div class="checklist">
+<ul>
+<li>model-based methods: write the prior;</li>
+<li>data-driven methods: learn the prior;</li>
+<li>hybrid methods: use both physics and learned image structure.</li>
+</ul>
 </div>
-</section>
-<section id="the-basic-model" class="slide level2">
-<h2>The Basic Model</h2>
-<p>For a linear imaging model:</p>
-<p><span class="math display">
-y = Ax + \eta.
-</span></p>
-<p>The least-squares data fit is</p>
-<p><span class="math display">
-\|Ax-y\|_2^2.
-</span></p>
-<div class="caption">
-<p>For Gaussian noise, this comes from the likelihood.</p>
-</div>
-</section>
-<section id="the-problem-with-least-squares" class="slide level2">
-<h2>The Problem with Least Squares</h2>
-<p>If <span class="math inline">A</span> is ill-conditioned, the least-squares solution can fit noise.</p>
 <div class="takeaway-box">
-<p>Data fit alone does not know which data components are reliable.</p>
+<p>Plug-and-play is one of the cleanest hybrid ideas.</p>
 </div>
 </section>
-<section id="part-1-tikhonov-model" class="slide level2 section-slide">
-<h2>Part 1: Tikhonov Model</h2>
-<div class="section-kicker">
-<p>Add a stabilizing penalty</p>
-</div>
-<p>Least squares plus size control</p>
-</section>
-<section id="tikhonov-regularization" class="slide level2">
-<h2>Tikhonov Regularization</h2>
-<p>The simplest Tikhonov model is</p>
+<section id="the-hybrid-goal" class="slide level2">
+<h2>The Hybrid Goal</h2>
+<p>Use the measurement model:</p>
 <p><span class="math display">
-x_\lambda
+y \approx Ax
+</span></p>
+<p>and also use an image-restoration tool that knows what plausible images look like.</p>
+<div class="question-box">
+<p>Where should that image-restoration tool enter the algorithm?</p>
+</div>
+</section>
+<section id="part-1-proximal-algorithms" class="slide level2 section-slide">
+<h2>Part 1: Proximal Algorithms</h2>
+<div class="section-kicker">
+<p>An old algorithmic doorway</p>
+</div>
+<p>Data step plus prior step</p>
+</section>
+<section id="regularized-reconstruction" class="slide level2">
+<h2>Regularized Reconstruction</h2>
+<p>A standard variational model is</p>
+<p><span class="math display">
+\hat{x}
 =
 \operatorname*{argmin}_x
-\|Ax-y\|_2^2 + \lambda\|x\|_2^2.
+\frac{1}{2}\|Ax-y\|_2^2+\lambda R(x).
 </span></p>
 <div class="definition-box">
-<p>The parameter <span class="math inline">\lambda&gt;0</span> controls the strength of regularization.</p>
+<p>The data term uses the forward model. The regularizer encodes image structure.</p>
 </div>
 </section>
-<section id="what-the-terms-mean" class="slide level2">
-<h2>What the Terms Mean</h2>
-<div class="two-col">
-<div class="definition-box">
-<p>Data term:</p>
+<section id="gradient-step-for-the-data-term" class="slide level2">
+<h2>Gradient Step for the Data Term</h2>
+<p>For</p>
 <p><span class="math display">
-\|Ax-y\|_2^2
+D(x)=\frac{1}{2}\|Ax-y\|_2^2,
 </span></p>
-<p>prefer reconstructions that explain the measurements.</p>
-</div>
-<div class="model-box">
-<p>Penalty term:</p>
+<p>the gradient is</p>
 <p><span class="math display">
-\lambda\|x\|_2^2
+\nabla D(x)=A^\top(Ax-y).
 </span></p>
-<p>prefer smaller-energy solutions.</p>
-</div>
-</div>
+<p>A data-consistency step is:</p>
+<p><span class="math display">
+z^k=x^k-\tau A^\top(Ax^k-y).
+</span></p>
 </section>
-<section id="why-penalize-the-solution" class="slide level2">
-<h2>Why Penalize the Solution?</h2>
-<div class="question-box">
-<p>If two images explain the data similarly, which one should we prefer?</p>
-</div>
-<p>Tikhonov’s answer:</p>
+<section id="proximal-step" class="slide level2">
+<h2>Proximal Step</h2>
+<p>The proximal operator of <span class="math inline">R</span> is</p>
+<p><span class="math display">
+\operatorname{prox}_{\lambda R}(z)
+=
+\operatorname*{argmin}_x
+\frac{1}{2}\|x-z\|_2^2+\lambda R(x).
+</span></p>
 <div class="takeaway-box">
-<p>Prefer the one with smaller norm.</p>
+<p>It asks for an image close to <span class="math inline">z</span>, but preferred by the prior <span class="math inline">R</span>.</p>
 </div>
 </section>
-<section id="activity-1-extreme-parameters" class="slide level2">
-<h2>Activity 1: Extreme Parameters</h2>
+<section id="proximal-gradient" class="slide level2">
+<h2>Proximal Gradient</h2>
+<p>Put the two steps together:</p>
+<p><span class="math display">
+z^k=x^k-\tau A^\top(Ax^k-y),
+</span></p>
+<p><span class="math display">
+x^{k+1}
+=
+\operatorname{prox}_{\tau\lambda R}(z^k).
+</span></p>
+<div class="caption">
+<p>This is the algorithmic pattern plug-and-play modifies.</p>
+</div>
+</section>
+<section id="a-denoising-interpretation" class="slide level2">
+<h2>A Denoising Interpretation</h2>
+<p>The proximal step receives a corrupted intermediate image <span class="math inline">z^k</span> and returns a more regular image.</p>
+<p>That sounds like denoising.</p>
+<div class="question-box">
+<p>If a proximal step already behaves like a denoiser, why not use a strong denoiser directly?</p>
+</div>
+</section>
+<section id="proximal-step-versus-denoiser" class="slide level2">
+<h2>Proximal Step Versus Denoiser</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week13-prox-vs-denoiser.png" alt="Comparison of a classical proximal step and a plug-and-play denoising step"></p>
+</div>
+</section>
+<section id="part-2-plug-and-play" class="slide level2 section-slide">
+<h2>Part 2: Plug-and-Play</h2>
+<div class="section-kicker">
+<p>Replace the proximal map</p>
+</div>
+<p>Keep the algorithm; swap the prior step</p>
+</section>
+<section id="plug-and-play-update" class="slide level2">
+<h2>Plug-and-Play Update</h2>
+<p>Plug-and-play reconstruction uses:</p>
+<p><span class="math display">
+z^k=x^k-\tau A^\top(Ax^k-y),
+</span></p>
+<p><span class="math display">
+x^{k+1}=D_\sigma(z^k),
+</span></p>
+<p>where <span class="math inline">D_\sigma</span> is a denoising operator.</p>
+</section>
+<section id="reconstruction-loop" class="slide level2">
+<h2>Reconstruction Loop</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week13-pnp-loop.png" alt="Plug-and-play loop with data consistency step and denoiser step"></p>
+</div>
+</section>
+<section id="what-is-plugged-in" class="slide level2">
+<h2>What Is Plugged In?</h2>
+<p>The denoiser can be:</p>
+<div class="checklist">
+<ul>
+<li>Gaussian smoothing;</li>
+<li>median filtering;</li>
+<li>wavelet thresholding;</li>
+<li>non-local means;</li>
+<li>a learned neural-network denoiser;</li>
+<li>a learned patch prior.</li>
+</ul>
+</div>
+</section>
+<section id="what-is-still-model-based" class="slide level2">
+<h2>What Is Still Model-Based?</h2>
+<p>The data-consistency step still uses:</p>
+<div class="checklist">
+<ul>
+<li>the forward model <span class="math inline">A</span>;</li>
+<li>the adjoint <span class="math inline">A^\top</span>;</li>
+<li>the measured data <span class="math inline">y</span>;</li>
+<li>the noise model through the data term.</li>
+</ul>
+</div>
+<div class="takeaway-box">
+<p>PnP does not throw away physics. It uses physics between denoising steps.</p>
+</div>
+</section>
+<section id="what-is-no-longer-classical" class="slide level2">
+<h2>What Is No Longer Classical?</h2>
+<p>If <span class="math inline">D_\sigma</span> is not exactly a proximal operator, then the iteration may not minimize a known objective.</p>
+<div class="model-box">
+<p>The prior can be implicit: it is represented by the behavior of the denoiser.</p>
+</div>
+</section>
+<section id="activity-1-what-changed" class="slide level2">
+<h2>Activity 1: What Changed?</h2>
 <div class="time-tag">
 <p>5 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Predict what happens to</p>
-<p><span class="math display">
-\|Ax-y\|_2^2+\lambda\|x\|_2^2
-</span></p>
-<p>when:</p>
+<p>Compare these two updates:</p>
 <ol type="1">
-<li><span class="math inline">\lambda \to 0</span>;</li>
-<li><span class="math inline">\lambda \to \infty</span>.</li>
+<li><span class="math inline">x^{k+1}=\operatorname{prox}_{\tau\lambda R}(z^k)</span>;</li>
+<li><span class="math inline">x^{k+1}=D_\sigma(z^k)</span>.</li>
 </ol>
+<p>What mathematical object is explicit in the first update but implicit in the second?</p>
 </div>
 </section>
-<section id="parameter-path" class="slide level2">
-<h2>Parameter Path</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week06-tikhonov-path.png" alt="True signal, blurred noisy data, and Tikhonov reconstructions for three lambda values"></p>
+<section id="part-3-learned-regularization" class="slide level2 section-slide">
+<h2>Part 3: Learned Regularization</h2>
+<div class="section-kicker">
+<p>Learning inside inverse problems</p>
 </div>
+<p>Not just post-processing</p>
 </section>
-<section id="reading-the-path" class="slide level2">
-<h2>Reading the Path</h2>
+<section id="three-learned-regularization-views" class="slide level2">
+<h2>Three Learned-Regularization Views</h2>
 <div class="checklist">
 <ul>
-<li>Very small <span class="math inline">\lambda</span>: unstable directions are barely damped.</li>
-<li>Moderate <span class="math inline">\lambda</span>: noise is controlled while structure remains.</li>
-<li>Large <span class="math inline">\lambda</span>: the solution is overly damped.</li>
+<li>Learn a denoiser and use it inside an iterative method.</li>
+<li>Learn a regularizer <span class="math inline">R_\theta(x)</span> and optimize with it.</li>
+<li>Learn an unrolled reconstruction algorithm with data-consistency layers.</li>
 </ul>
 </div>
 </section>
-<section id="part-2-deriving-the-normal-equations" class="slide level2 section-slide">
-<h2>Part 2: Deriving the Normal Equations</h2>
-<div class="section-kicker">
-<p>Closed form</p>
-</div>
-<p>Differentiate the objective</p>
-</section>
-<section id="objective-function" class="slide level2">
-<h2>Objective Function</h2>
-<p>Let</p>
+<section id="learned-regularizer-form" class="slide level2">
+<h2>Learned Regularizer Form</h2>
+<p>One possible model is</p>
 <p><span class="math display">
-J(x)=\|Ax-y\|_2^2+\lambda\|x\|_2^2.
-</span></p>
-<p>Expanding:</p>
-<p><span class="math display">
-J(x)=(Ax-y)^T(Ax-y)+\lambda x^T x.
-</span></p>
-</section>
-<section id="gradient" class="slide level2">
-<h2>Gradient</h2>
-<p>The gradient is</p>
-<p><span class="math display">
-\nabla J(x)
+\hat{x}
 =
-2A^T(Ax-y)+2\lambda x.
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R_\theta(x),
 </span></p>
-<p>At a minimizer:</p>
-<p><span class="math display">
-\nabla J(x_\lambda)=0.
-</span></p>
-</section>
-<section id="normal-equations" class="slide level2">
-<h2>Normal Equations</h2>
-<p>Setting the gradient to zero gives:</p>
-<p><span class="math display">
-A^T(Ax_\lambda-y)+\lambda x_\lambda=0.
-</span></p>
-<p>Therefore:</p>
-<p><span class="math display">
-(A^TA+\lambda I)x_\lambda=A^T y.
-</span></p>
-</section>
-<section id="closed-form-solution" class="slide level2">
-<h2>Closed-Form Solution</h2>
-<p>If <span class="math inline">\lambda&gt;0</span>,</p>
-<p><span class="math display">
-x_\lambda
-=
-(A^TA+\lambda I)^{-1}A^T y.
-</span></p>
-<div class="takeaway-box">
-<p>Tikhonov replaces an unstable inverse by a stabilized linear solve.</p>
-</div>
-</section>
-<section id="why-this-is-better-conditioned" class="slide level2">
-<h2>Why This Is Better Conditioned</h2>
-<p>If <span class="math inline">A</span> has singular values <span class="math inline">\sigma_i</span>, then <span class="math inline">A^TA</span> has eigenvalues <span class="math inline">\sigma_i^2</span>.</p>
-<p>Tikhonov shifts them:</p>
-<p><span class="math display">
-\sigma_i^2
-\quad\longmapsto\quad
-\sigma_i^2+\lambda.
-</span></p>
+<p>where <span class="math inline">R_\theta</span> is learned from examples.</p>
 <div class="caption">
-<p>Small eigenvalues are lifted away from zero.</p>
+<p>This restores an explicit objective, but the regularizer may be harder to interpret.</p>
 </div>
 </section>
-<section id="activity-2-condition-number" class="slide level2">
-<h2>Activity 2: Condition Number</h2>
-<div class="time-tag">
-<p>5 minutes</p>
-</div>
-<div class="exercise-box">
-<p>Suppose singular values are</p>
+<section id="learned-denoiser-form" class="slide level2">
+<h2>Learned Denoiser Form</h2>
+<p>Plug-and-play often uses a learned denoiser:</p>
 <p><span class="math display">
-1,\;0.1,\;0.001.
+x^{k+1}=D_\theta(z^k).
 </span></p>
-<p>Compare the smallest eigenvalue of <span class="math inline">A^TA</span> with that of <span class="math inline">A^TA+\lambda I</span> for <span class="math inline">\lambda=0.01</span>.</p>
-</div>
-</section>
-<section id="python-demo-normal-equations" class="slide level2 code-small">
-<h2>Python Demo: Normal Equations</h2>
-<div id="2c6cc920" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
-<span id="cb1-2"><a></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
-<span id="cb1-3"><a></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="caption">
-<p>This is the direct matrix form for small educational examples.</p>
-</div>
-</section>
-<section id="part-3-svd-interpretation" class="slide level2 section-slide">
-<h2>Part 3: SVD Interpretation</h2>
-<div class="section-kicker">
-<p>What lambda does to each direction</p>
-</div>
-<p>Filter factors</p>
-</section>
-<section id="tikhonov-in-svd-coordinates" class="slide level2">
-<h2>Tikhonov in SVD Coordinates</h2>
-<p>Let</p>
-<p><span class="math display">
-A v_i = \sigma_i u_i.
-</span></p>
-<p>Then</p>
-<p><span class="math display">
-x_\lambda
-=
-\sum_i
-\frac{\sigma_i}{\sigma_i^2+\lambda}
-\langle y,u_i\rangle v_i.
-</span></p>
-</section>
-<section id="compare-with-direct-inversion" class="slide level2">
-<h2>Compare with Direct Inversion</h2>
-<p>Direct inverse factor:</p>
-<p><span class="math display">
-\frac{1}{\sigma_i}.
-</span></p>
-<p>Tikhonov factor:</p>
-<p><span class="math display">
-\frac{\sigma_i}{\sigma_i^2+\lambda}.
-</span></p>
-<div class="takeaway-box">
-<p>When <span class="math inline">\sigma_i</span> is small, Tikhonov avoids division by a tiny number.</p>
-</div>
-</section>
-<section id="filter-factors" class="slide level2">
-<h2>Filter Factors</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week06-filter-factors.png" alt="Singular values and Tikhonov inverse filter factors for several lambda values"></p>
-</div>
-</section>
-<section id="reading-the-filter-factors" class="slide level2">
-<h2>Reading the Filter Factors</h2>
-<div class="checklist">
-<ul>
-<li>Small <span class="math inline">\lambda</span> behaves more like the inverse.</li>
-<li>Larger <span class="math inline">\lambda</span> damps weak singular directions.</li>
-<li>Strong damping reduces noise but also removes detail.</li>
-</ul>
-</div>
-</section>
-<section id="activity-3-direction-by-direction" class="slide level2">
-<h2>Activity 3: Direction-by-Direction</h2>
-<div class="time-tag">
-<p>6 minutes</p>
-</div>
-<div class="exercise-box">
-<p>For <span class="math inline">\sigma=0.001</span>, compare:</p>
-<p><span class="math display">
-\frac{1}{\sigma}
-\quad\text{and}\quad
-\frac{\sigma}{\sigma^2+\lambda}
-</span></p>
-<p>for <span class="math inline">\lambda=0.01</span>.</p>
-<p>What changed?</p>
-</div>
-</section>
-<section id="part-4-choosing-lambda" class="slide level2 section-slide">
-<h2>Part 4: Choosing Lambda</h2>
-<div class="section-kicker">
-<p>No free lunch</p>
-</div>
-<p>The parameter is the lesson</p>
-</section>
-<section id="parameter-effects" class="slide level2">
-<h2>Parameter Effects</h2>
-<div class="two-col">
+<p>The denoiser has learned image statistics from training data.</p>
 <div class="question-box">
-<p>Small <span class="math inline">\lambda</span>:</p>
-<p>better data fit, more noise amplification.</p>
-</div>
-<div class="model-box">
-<p>Large <span class="math inline">\lambda</span>:</p>
-<p>more stability, more bias and blur.</p>
-</div>
+<p>What should the training data resemble if this is used for medical imaging, microscopy, or astronomy?</p>
 </div>
 </section>
-<section id="error-and-l-curve-views" class="slide level2">
-<h2>Error and L-Curve Views</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week06-parameter-tradeoff.png" alt="RMSE versus lambda and L-curve for Tikhonov regularization"></p>
+<section id="unrolled-algorithm-form" class="slide level2">
+<h2>Unrolled Algorithm Form</h2>
+<p>Instead of running an algorithm until convergence, fix a number of iterations:</p>
+<p><span class="math display">
+x^0 \rightarrow x^1 \rightarrow \cdots \rightarrow x^K.
+</span></p>
+<p>Then learn parameters inside the <span class="math inline">K</span> stages.</p>
+<div class="checklist">
+<ul>
+<li>data-consistency blocks;</li>
+<li>denoising or regularization blocks;</li>
+<li>learned step sizes or filters.</li>
+</ul>
 </div>
 </section>
-<section id="important-reality" class="slide level2">
-<h2>Important Reality</h2>
-<p>The true image is usually unknown.</p>
-<p>So the RMSE curve is a teaching diagnostic, not a practical parameter-choice method.</p>
-<div class="caption">
-<p>In practice, parameter choice may use validation data, discrepancy principles, cross-validation, or L-curve heuristics.</p>
+<section id="why-this-is-attractive" class="slide level2">
+<h2>Why This Is Attractive</h2>
+<p>Hybrid learned methods can:</p>
+<div class="checklist">
+<ul>
+<li>respect measured data;</li>
+<li>exploit rich image statistics;</li>
+<li>use fewer training examples than a black-box map;</li>
+<li>give fast inference after training;</li>
+<li>connect to optimization intuition.</li>
+</ul>
 </div>
 </section>
-<section id="real-image-example" class="slide level2">
-<h2>Real Image Example</h2>
-<div class="figure-frame">
-<p><img data-src="../assets/figures/week06-image-tikhonov.png" alt="Original image, blurred noisy image, and Tikhonov deblurring with several lambda values"></p>
+<section id="why-this-is-dangerous" class="slide level2">
+<h2>Why This Is Dangerous</h2>
+<p>Hybrid learned methods can still fail when:</p>
+<div class="checklist">
+<ul>
+<li>the denoiser invents plausible structure;</li>
+<li>the forward model is wrong;</li>
+<li>the training distribution is too narrow;</li>
+<li>the iteration converges to a biased fixed point;</li>
+<li>the evaluation metric misses the scientific task.</li>
+</ul>
 </div>
 </section>
-<section id="discussion" class="slide level2">
-<h2>Discussion</h2>
-<div class="time-tag">
-<p>4 minutes</p>
-</div>
-<div class="exercise-box">
-<p>Which reconstruction would you choose visually?</p>
-<p>Would your answer change if the image were for medical diagnosis?</p>
-</div>
-</section>
-<section id="part-5-bias-variance-tradeoff" class="slide level2 section-slide">
-<h2>Part 5: Bias-Variance Tradeoff</h2>
+<section id="part-4-deblurring-example" class="slide level2 section-slide">
+<h2>Part 4: Deblurring Example</h2>
 <div class="section-kicker">
-<p>What regularization buys and costs</p>
+<p>Physics plus denoising</p>
 </div>
-<p>Stability has a price</p>
+<p>A small plug-and-play experiment</p>
 </section>
-<section id="bias-and-variance" class="slide level2">
-<h2>Bias and Variance</h2>
-<p>Imagine repeating the noisy measurement many times.</p>
-<div class="two-col">
-<div class="definition-box">
-<p>Bias:</p>
-<p>systematic error from the average reconstruction.</p>
-</div>
-<div class="model-box">
-<p>Variance:</p>
-<p>random variation across noise realizations.</p>
-</div>
+<section id="example-setup" class="slide level2">
+<h2>Example Setup</h2>
+<p>We use a blurred and noisy image crop:</p>
+<p><span class="math display">
+y=Ax+\eta.
+</span></p>
+<p>We compare:</p>
+<div class="checklist">
+<ul>
+<li>Tikhonov deblurring;</li>
+<li>plug-and-play with Gaussian denoising;</li>
+<li>plug-and-play with a learned PCA patch denoiser.</li>
+</ul>
 </div>
 </section>
-<section id="bias-variance-picture" class="slide level2">
-<h2>Bias-Variance Picture</h2>
+<section id="plug-and-play-deblurring" class="slide level2">
+<h2>Plug-and-Play Deblurring</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week06-bias-variance.png" alt="Bias squared, variance, and total mean squared error versus lambda"></p>
+<p><img data-src="../assets/figures/week13-pnp-deblurring.png" alt="Deblurring comparison with clean, observation, Tikhonov, Gaussian PnP, and learned PnP reconstructions"></p>
 </div>
 </section>
-<section id="reading-the-tradeoff" class="slide level2">
-<h2>Reading the Tradeoff</h2>
+<section id="reading-the-example" class="slide level2">
+<h2>Reading the Example</h2>
 <div class="checklist">
 <ul>
-<li>Increasing <span class="math inline">\lambda</span> usually reduces variance.</li>
-<li>Increasing <span class="math inline">\lambda</span> usually increases bias.</li>
-<li>The best mean squared error is often between the extremes.</li>
+<li>Tikhonov restores detail but can amplify texture-like noise.</li>
+<li>Gaussian PnP is stable but can oversmooth.</li>
+<li>Learned PnP can preserve plausible structure when training and test images match.</li>
+</ul>
+</div>
+<div class="question-box">
+<p>Which result would you trust most without access to the clean image?</p>
+</div>
+</section>
+<section id="iteration-history" class="slide level2">
+<h2>Iteration History</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week13-iteration-curve.png" alt="RMSE and fixed-point change versus plug-and-play iteration"></p>
+</div>
+</section>
+<section id="fixed-point-thinking" class="slide level2">
+<h2>Fixed-Point Thinking</h2>
+<p>PnP is often analyzed as a fixed-point iteration:</p>
+<p><span class="math display">
+x^\star
+=
+D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
+</span></p>
+<div class="takeaway-box">
+<p>The fixed point balances data consistency with denoiser preference.</p>
+</div>
+</section>
+<section id="denoising-strength-tradeoff" class="slide level2">
+<h2>Denoising Strength Tradeoff</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week13-strength-tradeoff.png" alt="RMSE and data residual as Gaussian denoiser strength changes"></p>
+</div>
+</section>
+<section id="interpreting-the-tradeoff" class="slide level2">
+<h2>Interpreting the Tradeoff</h2>
+<p>Too weak:</p>
+<div class="checklist">
+<ul>
+<li>little regularization;</li>
+<li>noise and inversion artifacts remain.</li>
+</ul>
+</div>
+<p>Too strong:</p>
+<div class="checklist">
+<ul>
+<li>details are removed;</li>
+<li>the result may move away from measured data.</li>
 </ul>
 </div>
 </section>
-<section id="activity-4-explain-the-u-shape" class="slide level2">
-<h2>Activity 4: Explain the U-Shape</h2>
-<div class="time-tag">
-<p>5 minutes</p>
+<section id="part-5-convergence-and-trust" class="slide level2 section-slide">
+<h2>Part 5: Convergence and Trust</h2>
+<div class="section-kicker">
+<p>What can we guarantee?</p>
 </div>
-<div class="exercise-box">
-<p>Why can the error be large for both very small and very large <span class="math inline">\lambda</span>?</p>
-<p>Use the words “noise”, “bias”, and “stability”.</p>
-</div>
+<p>The theory changes</p>
 </section>
-<section id="project-assigned" class="slide level2">
-<h2>Project Assigned</h2>
-<p>This week the modeling project is assigned.</p>
+<section id="classical-comfort" class="slide level2">
+<h2>Classical Comfort</h2>
+<p>For convex <span class="math inline">R</span> and suitable step size, proximal gradient has a clear story:</p>
 <div class="checklist">
 <ul>
-<li>Teams choose or receive an imaging reconstruction problem.</li>
-<li>The report and code are due later in the semester.</li>
-<li>Each student should understand the entire model and implementation.</li>
+<li>it minimizes a known objective;</li>
+<li>objective values can be monitored;</li>
+<li>convergence can be proved under standard assumptions.</li>
 </ul>
 </div>
-<div class="caption">
-<p>See the project page for the current project structure and expectations.</p>
+</section>
+<section id="plug-and-play-complication" class="slide level2">
+<h2>Plug-and-Play Complication</h2>
+<p>For a general denoiser:</p>
+<div class="checklist">
+<ul>
+<li>there may be no explicit <span class="math inline">R</span>;</li>
+<li>there may be no decreasing objective;</li>
+<li>convergence depends on properties of <span class="math inline">D_\sigma</span>;</li>
+<li>a fixed point may not be a minimizer.</li>
+</ul>
 </div>
 </section>
-<section id="code-demo-run-week-6-examples" class="slide level2 code-small">
-<h2>Code Demo: Run Week 6 Examples</h2>
+<section id="useful-questions" class="slide level2">
+<h2>Useful Questions</h2>
+<p>When using PnP, ask:</p>
+<div class="checklist">
+<ul>
+<li>Is the denoiser stable to small perturbations?</li>
+<li>Does the data residual remain reasonable?</li>
+<li>Does the result change much between iterations?</li>
+<li>Does the method pass tests on out-of-distribution images?</li>
+<li>Does it preserve task-critical structures?</li>
+</ul>
+</div>
+</section>
+<section id="distribution-shift-example" class="slide level2">
+<h2>Distribution Shift Example</h2>
+<div class="figure-frame">
+<p><img data-src="../assets/figures/week13-failure-mode.png" alt="Camera-trained learned denoiser applied to a moon image crop, showing distribution shift"></p>
+</div>
+</section>
+<section id="what-went-wrong" class="slide level2">
+<h2>What Went Wrong?</h2>
+<p>The learned denoiser was trained on camera-like patches.</p>
+<p>The moon crop has different texture statistics.</p>
+<div class="takeaway-box">
+<p>A learned prior is not universal just because it is learned.</p>
+</div>
+</section>
+<section id="safeguards" class="slide level2">
+<h2>Safeguards</h2>
+<p>Practical learned imaging should report:</p>
+<div class="checklist">
+<ul>
+<li>baseline comparisons;</li>
+<li>data-consistency errors;</li>
+<li>sensitivity to denoising strength;</li>
+<li>robustness to distribution shift;</li>
+<li>uncertainty or confidence when possible;</li>
+<li>task-based evaluation.</li>
+</ul>
+</div>
+</section>
+<section id="code-demo-run-week-13-examples" class="slide level2 code-small">
+<h2>Code Demo: Run Week 13 Examples</h2>
 <p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week06_tikhonov.py</span>
-<span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week06_figures.py</span>
-<span id="cb2-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
-<span id="cb2-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">python3</span> examples/week13_plug_and_play.py</span>
+<span id="cb1-2"><a></a><span class="ex">python3</span> examples/make_week13_figures.py</span>
+<span id="cb1-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="in-class-notebook-activity" class="slide level2">
 <h2>In-Class Notebook Activity</h2>
 <div class="time-tag">
-<p>8 minutes</p>
+<p>10 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Open the Week 6 notebook.</p>
+<p>Open the Week 13 notebook.</p>
 <ol type="1">
-<li>Change blur strength.</li>
-<li>Change noise level.</li>
-<li>Sweep <span class="math inline">\lambda</span>.</li>
-<li>Record which value balances noise and blur best.</li>
+<li>Change the denoiser strength.</li>
+<li>Change the number of PnP iterations.</li>
+<li>Compare Tikhonov and PnP residuals.</li>
+<li>Replace the Gaussian denoiser by the learned patch denoiser.</li>
+<li>Test the learned denoiser on a different image family.</li>
 </ol>
 </div>
 </section>
 <section id="quiz-style-check" class="slide level2">
 <h2>Quiz-Style Check</h2>
 <div class="exercise-box">
-<p>For each expression, identify its role:</p>
+<p>Answer quickly:</p>
 <ol type="1">
-<li><span class="math inline">\|Ax-y\|_2^2</span>;</li>
-<li><span class="math inline">\lambda\|x\|_2^2</span>;</li>
-<li><span class="math inline">(A^TA+\lambda I)x=A^Ty</span>;</li>
-<li><span class="math inline">\sigma_i/(\sigma_i^2+\lambda)</span>.</li>
-</ol>
-</div>
-</section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
-<div class="exercise-box">
-<p>Answer in one sentence each:</p>
-<ol type="1">
-<li>What does Tikhonov regularization minimize?</li>
-<li>Why does <span class="math inline">\lambda I</span> improve stability?</li>
-<li>What happens when <span class="math inline">\lambda</span> is too small?</li>
-<li>What happens when <span class="math inline">\lambda</span> is too large?</li>
+<li>What does a proximal operator do?</li>
+<li>What does plug-and-play replace?</li>
+<li>Why might PnP not minimize a known objective?</li>
+<li>What is a fixed point?</li>
 </ol>
 </div>
 </section>
@@ -732,20 +746,20 @@ x_\lambda
 </thead>
 <tbody>
 <tr class="odd">
-<td>Tikhonov objective</td>
-<td>data fit plus <span class="math inline">\ell_2</span> penalty</td>
+<td>proximal operator</td>
+<td>balances closeness to input and regularization</td>
 </tr>
 <tr class="even">
-<td>stability</td>
-<td>small eigenvalues are shifted away from zero</td>
+<td>PnP replacement</td>
+<td>replaces prox with a denoiser</td>
 </tr>
 <tr class="odd">
-<td>too small</td>
-<td>noise amplification remains</td>
+<td>no known objective</td>
+<td>denoiser may not equal any prox</td>
 </tr>
 <tr class="even">
-<td>too large</td>
-<td>solution is biased and over-smoothed</td>
+<td>fixed point</td>
+<td>an iterate unchanged by the update rule</td>
 </tr>
 </tbody>
 </table>
@@ -754,22 +768,22 @@ x_\lambda
 <h2>What Students Should Remember</h2>
 <div class="takeaway-box">
 <ul>
-<li>Tikhonov solves <span class="math inline">\min_x \|Ax-y\|_2^2+\lambda\|x\|_2^2</span>.</li>
-<li>The normal equations are <span class="math inline">(A^TA+\lambda I)x=A^Ty</span>.</li>
-<li>In SVD coordinates, Tikhonov damps weak singular directions.</li>
-<li><span class="math inline">\lambda</span> controls a bias-stability tradeoff.</li>
-<li>Regularization is not magic; it encodes a modeling choice.</li>
+<li>Plug-and-play keeps the forward model and inserts a denoiser.</li>
+<li>The denoiser acts as an implicit prior.</li>
+<li>Learned denoisers can improve reconstructions when data match training.</li>
+<li>PnP needs careful validation because objective and convergence guarantees change.</li>
+<li>Always check both image quality and consistency with measurements.</li>
 </ul>
 </div>
 </section>
 <section id="next-time" class="slide level2">
 <h2>Next Time</h2>
-<p>Variational formulation:</p>
+<p>Course project workshop and imaging case studies:</p>
 <ul>
-<li>energy minimization;</li>
-<li>convexity as a geometric idea;</li>
-<li>guided Euler-Lagrange derivation;</li>
-<li>gradient descent intuition.</li>
+<li>choosing a forward model;</li>
+<li>choosing a regularizer or learned prior;</li>
+<li>planning experiments;</li>
+<li>reporting limitations.</li>
 </ul>
 
 
