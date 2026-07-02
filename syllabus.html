@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Syllabus Summary – MATH 435: Mathematical Imaging</title>
+<title>Syllabus – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-176648c1164fd02229ab52b0d5e7a185.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6a9c299b4b7cfe220888da23614071da.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,6 +71,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -127,10 +170,50 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#catalog-description" id="toc-catalog-description" class="nav-link active" data-scroll-target="#catalog-description">Catalog Description</a></li>
-  <li><a href="#main-text" id="toc-main-text" class="nav-link" data-scroll-target="#main-text">Main Text</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  <li><a href="#assessment-structure" id="toc-assessment-structure" class="nav-link" data-scroll-target="#assessment-structure">Assessment Structure</a></li>
+  <li><a href="#course-information" id="toc-course-information" class="nav-link active" data-scroll-target="#course-information">Course Information</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#corequisites" id="toc-corequisites" class="nav-link" data-scroll-target="#corequisites">Corequisites</a></li>
+  <li><a href="#course-catalog-description" id="toc-course-catalog-description" class="nav-link" data-scroll-target="#course-catalog-description">Course Catalog Description</a></li>
+  <li><a href="#textbook" id="toc-textbook" class="nav-link" data-scroll-target="#textbook">Textbook</a></li>
+  <li><a href="#reference-materials" id="toc-reference-materials" class="nav-link" data-scroll-target="#reference-materials">Reference Materials</a></li>
+  <li><a href="#course-structure-learning-methodology" id="toc-course-structure-learning-methodology" class="nav-link" data-scroll-target="#course-structure-learning-methodology">Course Structure &amp; Learning Methodology</a></li>
+  <li><a href="#course-topics" id="toc-course-topics" class="nav-link" data-scroll-target="#course-topics">Course Topics</a></li>
+  <li><a href="#laboratory-andor-computingdigital-resources" id="toc-laboratory-andor-computingdigital-resources" class="nav-link" data-scroll-target="#laboratory-andor-computingdigital-resources">Laboratory and/or Computing/Digital Resources</a></li>
+  <li><a href="#course-learning-outcomes-clo-and-program-learning-outcomes-plo" id="toc-course-learning-outcomes-clo-and-program-learning-outcomes-plo" class="nav-link" data-scroll-target="#course-learning-outcomes-clo-and-program-learning-outcomes-plo">Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)</a></li>
+  <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
+  <li><a href="#grading-scheme" id="toc-grading-scheme" class="nav-link" data-scroll-target="#grading-scheme">Grading Scheme</a></li>
+  <li><a href="#academic-integrity-statement" id="toc-academic-integrity-statement" class="nav-link" data-scroll-target="#academic-integrity-statement">Academic Integrity Statement</a></li>
+  <li><a href="#copyright-and-plagiarism" id="toc-copyright-and-plagiarism" class="nav-link" data-scroll-target="#copyright-and-plagiarism">Copyright and Plagiarism</a></li>
+  <li><a href="#syllabus-supplement" id="toc-syllabus-supplement" class="nav-link" data-scroll-target="#syllabus-supplement">Syllabus Supplement</a></li>
+  <li><a href="#instructor-policy-on-late-submission-of-assignments" id="toc-instructor-policy-on-late-submission-of-assignments" class="nav-link" data-scroll-target="#instructor-policy-on-late-submission-of-assignments">Instructor Policy on Late Submission of Assignments</a>
+  <ul class="collapse">
+  <li><a href="#quizzes" id="toc-quizzes" class="nav-link" data-scroll-target="#quizzes">Quizzes</a></li>
+  <li><a href="#semester-examination" id="toc-semester-examination" class="nav-link" data-scroll-target="#semester-examination">Semester Examination</a></li>
+  </ul></li>
+  <li><a href="#additional-information" id="toc-additional-information" class="nav-link" data-scroll-target="#additional-information">Additional Information</a>
+  <ul class="collapse">
+  <li><a href="#assessment-1" id="toc-assessment-1" class="nav-link" data-scroll-target="#assessment-1">Assessment</a></li>
+  <li><a href="#project" id="toc-project" class="nav-link" data-scroll-target="#project">Project</a></li>
+  <li><a href="#calculator-policy" id="toc-calculator-policy" class="nav-link" data-scroll-target="#calculator-policy">Calculator Policy</a></li>
+  <li><a href="#classroom-policies" id="toc-classroom-policies" class="nav-link" data-scroll-target="#classroom-policies">Classroom Policies</a></li>
+  </ul></li>
+  <li><a href="#weekly-plan-tentative" id="toc-weekly-plan-tentative" class="nav-link" data-scroll-target="#weekly-plan-tentative">Weekly Plan (Tentative)</a></li>
+  <li><a href="#detailed-weekly-plan-15-weeks-tentative" id="toc-detailed-weekly-plan-15-weeks-tentative" class="nav-link" data-scroll-target="#detailed-weekly-plan-15-weeks-tentative">Detailed Weekly Plan (15 Weeks, Tentative)</a></li>
+  <li><a href="#week-1-introduction-to-imaging-as-a-mathematical-problem" id="toc-week-1-introduction-to-imaging-as-a-mathematical-problem" class="nav-link" data-scroll-target="#week-1-introduction-to-imaging-as-a-mathematical-problem">Week 1 – Introduction to Imaging as a Mathematical Problem</a></li>
+  <li><a href="#week-2-convolution-and-blur" id="toc-week-2-convolution-and-blur" class="nav-link" data-scroll-target="#week-2-convolution-and-blur">Week 2 – Convolution and Blur</a></li>
+  <li><a href="#week-3-fourier-transform-in-imaging" id="toc-week-3-fourier-transform-in-imaging" class="nav-link" data-scroll-target="#week-3-fourier-transform-in-imaging">Week 3 – Fourier Transform in Imaging</a></li>
+  <li><a href="#week-4-discrete-fourier-transform-noise-models" id="toc-week-4-discrete-fourier-transform-noise-models" class="nav-link" data-scroll-target="#week-4-discrete-fourier-transform-noise-models">Week 4 – Discrete Fourier Transform &amp; Noise Models</a></li>
+  <li><a href="#week-5-ill-posed-inverse-problems" id="toc-week-5-ill-posed-inverse-problems" class="nav-link" data-scroll-target="#week-5-ill-posed-inverse-problems">Week 5 – Ill-Posed Inverse Problems</a></li>
+  <li><a href="#week-6-tikhonov-regularization" id="toc-week-6-tikhonov-regularization" class="nav-link" data-scroll-target="#week-6-tikhonov-regularization">Week 6 – Tikhonov Regularization</a></li>
+  <li><a href="#week-7-variational-formulation" id="toc-week-7-variational-formulation" class="nav-link" data-scroll-target="#week-7-variational-formulation">Week 7 – Variational Formulation</a></li>
+  <li><a href="#week-8-total-variation-tv-regularization" id="toc-week-8-total-variation-tv-regularization" class="nav-link" data-scroll-target="#week-8-total-variation-tv-regularization">Week 8 – Total Variation (TV) Regularization</a></li>
+  <li><a href="#week-9-optimization-methods" id="toc-week-9-optimization-methods" class="nav-link" data-scroll-target="#week-9-optimization-methods">Week 9 – Optimization Methods</a></li>
+  <li><a href="#week-10-sparse-reconstruction" id="toc-week-10-sparse-reconstruction" class="nav-link" data-scroll-target="#week-10-sparse-reconstruction">Week 10 – Sparse Reconstruction</a></li>
+  <li><a href="#week-11-wavelets-and-multiscale-representation" id="toc-week-11-wavelets-and-multiscale-representation" class="nav-link" data-scroll-target="#week-11-wavelets-and-multiscale-representation">Week 11 – Wavelets and Multiscale Representation</a></li>
+  <li><a href="#week-12-model-based-vs-data-driven-imaging" id="toc-week-12-model-based-vs-data-driven-imaging" class="nav-link" data-scroll-target="#week-12-model-based-vs-data-driven-imaging">Week 12 – Model-Based vs Data-Driven Imaging</a></li>
+  <li><a href="#week-13-plug-and-play-and-learned-regularization" id="toc-week-13-plug-and-play-and-learned-regularization" class="nav-link" data-scroll-target="#week-13-plug-and-play-and-learned-regularization">Week 13 – Plug-and-Play and Learned Regularization</a></li>
+  <li><a href="#week-14-stability-robustness-and-ethics" id="toc-week-14-stability-robustness-and-ethics" class="nav-link" data-scroll-target="#week-14-stability-robustness-and-ethics">Week 14 – Stability, Robustness, and Ethics</a></li>
+  <li><a href="#week-15-oral-defenses" id="toc-week-15-oral-defenses" class="nav-link" data-scroll-target="#week-15-oral-defenses">Week 15 – Oral Defenses</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/syllabus.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -139,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Syllabus Summary</h1>
+<h1 class="title">Syllabus</h1>
 </div>
 
 
@@ -156,60 +239,1087 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="catalog-description" class="level2">
-<h2 class="anchored" data-anchor-id="catalog-description">Catalog Description</h2>
-<p>This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.</p>
-<p>The course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python.</p>
+<!-- This page is generated from the official Word syllabus by scripts/convert_syllabus_docx.py. -->
+<section id="course-information" class="level2">
+<h2 class="anchored" data-anchor-id="course-information">Course Information</h2>
+<p><strong>MATH 435: Mathematical Imaging</strong></p>
+<p>(3 Lecture hours, 0 Laboratory, 3 Credits)</p>
 </section>
-<section id="main-text" class="level2">
-<h2 class="anchored" data-anchor-id="main-text">Main Text</h2>
-<p>M. Bertero and P. Boccacci, <em>Introduction to Inverse Problems in Imaging</em>, 2nd edition, CRC Press, 2021.</p>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
 <ul>
-<li>A. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” <em>Acta Numerica</em>, 25, 161-319, 2016.</li>
-<li>S. Mallat, <em>A Wavelet Tour of Signal Processing</em>, 3rd edition, Academic Press, 2008.</li>
+<li><p>MATH 317 – Advanced Calculus</p></li>
+<li><p>MATH 318 – Linear Algebra II</p></li>
+<li><p>MATH 412 – Probability and Statistics</p></li>
 </ul>
 </section>
-<section id="assessment-structure" class="level2">
-<h2 class="anchored" data-anchor-id="assessment-structure">Assessment Structure</h2>
+<section id="corequisites" class="level2">
+<h2 class="anchored" data-anchor-id="corequisites">Corequisites</h2>
+<ul>
+<li>None</li>
+</ul>
+</section>
+<section id="course-catalog-description" class="level2">
+<h2 class="anchored" data-anchor-id="course-catalog-description">Course Catalog Description</h2>
+<p>This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.</p>
+<p>The course emphasizes mathematical modeling, stability analysis, regularization techniques (Tikhonov, Total Variation, sparse methods), and computational implementation. Classical model-based approaches are connected to modern computational imaging techniques, including data-driven and learning-based reconstruction methods.</p>
+<p>Applications focus on medical and scientific imaging.</p>
+</section>
+<section id="textbook" class="level2">
+<h2 class="anchored" data-anchor-id="textbook">Textbook</h2>
+<ul>
+<li>M Bertero. and P. Boccacci, <em>Introduction to Inverse Problems in Imaging</em>, 2nd ed., CRC Press, 2021.</li>
+</ul>
+</section>
+<section id="reference-materials" class="level2">
+<h2 class="anchored" data-anchor-id="reference-materials">Reference Materials</h2>
+<ul>
+<li><p>A. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” <em>Acta Numerica</em>, vol.&nbsp;25, pp.&nbsp;161–319, 2016.</p></li>
+<li><p>S. Mallat, <em>A Wavelet Tour of Signal Processing</em>, 3rd ed., Academic Press, 2008.</p></li>
+<li><p>Selected recent research articles on modern computational imaging and learning-based reconstruction (provided during the course).</p></li>
+</ul>
+</section>
+<section id="course-structure-learning-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="course-structure-learning-methodology">Course Structure &amp; Learning Methodology</h2>
+<p>Lectures will be 3x50 minutes or 2 × 75-minutes per week. The course is delivered through lectures, guided mathematical derivations, conceptual discussions, and computational demonstrations using MATLAB or Python. Homework assignments and an individual modeling project are conducted throughout the semester to reinforce understanding.</p>
+<p>The course emphasizes reasoning and modeling rather than formal proof-writing.</p>
+</section>
+<section id="course-topics" class="level2">
+<h2 class="anchored" data-anchor-id="course-topics">Course Topics</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Assessment</th>
-<th style="text-align: right;">Weight</th>
-<th>Timing</th>
+<th style="text-align: center;"><strong>Week #</strong></th>
+<th><strong>Topics</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Quizzes</td>
-<td style="text-align: right;">15%</td>
-<td>Weeks 4 and 12</td>
+<td style="text-align: center;">01</td>
+<td>Image formation models; convolution; linear systems</td>
 </tr>
 <tr class="even">
-<td>Two-student modeling project</td>
-<td style="text-align: right;">30%</td>
-<td>Assigned Week 6, report Week 14, defense Week 15</td>
+<td style="text-align: center;">02</td>
+<td>Fourier transform; convolution theorem; frequency interpretation of blur</td>
 </tr>
 <tr class="odd">
-<td>Semester examination</td>
-<td style="text-align: right;">25%</td>
-<td>Week 8</td>
+<td style="text-align: center;">03</td>
+<td>Discrete Fourier transform (DFT); spectral analysis; filtering</td>
 </tr>
 <tr class="even">
-<td>Final examination</td>
-<td style="text-align: right;">30%</td>
-<td>Exam week</td>
+<td style="text-align: center;">04</td>
+<td>Noise models: Gaussian and Poisson; likelihood formulation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">05</td>
+<td>Ill-posed inverse problems; instability; SVD (conceptual)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">06</td>
+<td>Tikhonov regularization; parameter effects; bias–variance tradeoff</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">07</td>
+<td>Variational models; convexity (geometric view); Euler–Lagrange derivation</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">08</td>
+<td>Total Variation regularization; edge preservation; comparison with ℓ2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">09</td>
+<td>Convex optimization basics; gradient descent; proximal ideas</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td>Sparse reconstruction; ℓ1 regularization; compressed sensing intuition</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td>Wavelets and multiscale representations; thresholding</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td>Modern computational imaging: model-based vs data-driven reconstruction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13</td>
+<td>Plug-and-play priors; learned regularization; CNNs as iterative operators</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14</td>
+<td>Stability, robustness, and limitations of AI-based reconstruction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td>Project presentations and oral defenses</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="laboratory-andor-computingdigital-resources" class="level2">
+<h2 class="anchored" data-anchor-id="laboratory-andor-computingdigital-resources">Laboratory and/or Computing/Digital Resources</h2>
+<p>Python (NumPy, SciPy, Matplotlib).</p>
+</section>
+<section id="course-learning-outcomes-clo-and-program-learning-outcomes-plo" class="level2">
+<h2 class="anchored" data-anchor-id="course-learning-outcomes-clo-and-program-learning-outcomes-plo">Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 59%">
+<col style="width: 18%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">
+<strong>No.</strong>
+</th>
+<th>
+<strong>CLOs</strong>
+</th>
+<th>
+<strong>PLOs</strong>
+</th>
+<th>
+<strong>Emphasis Level<sup>#</sup></strong>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">
+1
+</td>
+<td>
+Formulate mathematical models for image formation, degradation, and reconstruction problem
+</td>
+<td>
+1,2
+</td>
+<td>
+H,H
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+2
+</td>
+<td>
+<p>
+Analyze ill-posed imaging problems and evaluate the role of
+</p>
+<p>
+regularization techniques in ensuring stability and meaningful
+</p>
+<p>
+reconstruction.
+</p>
+</td>
+<td>
+1,3
+</td>
+<td>
+H,H
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+3
+</td>
+<td>
+<p>
+Design and implement computational reconstruction methods and
+</p>
+<p>
+interpret experimental results using scientific judgment.
+</p>
+</td>
+<td>
+2,3
+</td>
+<td>
+H,H
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+4
+</td>
+<td>
+<p>
+Communicate mathematical reasoning, modeling decisions, and
+</p>
+<p>
+reconstruction results effectively in written and oral formats.
+</p>
+</td>
+<td>
+4
+</td>
+<td>
+H
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+5
+</td>
+<td>
+<p>
+Work effectively in two-student teams to plan, execute, and deliver a
+</p>
+<p>
+modeling project while recognizing ethical considerations and the
+</p>
+<p>
+societal impact of computational imaging solutions.
+</p>
+</td>
+<td>
+5,6
+</td>
+<td>
+M,H
+</td>
+</tr>
+</tbody>
+</table>
+<p><sup>*</sup>PLOs can be found in the academic catalog</p>
+<p><sup>#</sup>Emphasis level: H: High; M: Medium; L: Low; N: Nothing specific</p>
+</section>
+<section id="assessment" class="level2">
+<h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
+<p>All course learning outcomes are assessed using the following assessment tools.</p>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 31%">
+<col style="width: 20%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">
+<strong>Assessment Instruments</strong>
+</th>
+<th style="text-align: center;">
+<strong>Contribution to Course Grade (%)</strong>
+</th>
+<th style="text-align: center;">
+<strong>Week #</strong>
+</th>
+<th style="text-align: center;">
+<strong>CLO(s)</strong>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<p>
+Quizzes
+</p>
+</td>
+<td>
+15%
+</td>
+<td>
+4,12
+</td>
+<td>
+1,2
+</td>
+</tr>
+<tr>
+<td>
+<p>
+Two-Student Team Modeling
+</p>
+<p>
+Project (Joint Report
+</p>
+<p>
+and Individual Oral Defense)
+</p>
+</td>
+<td>
+30%
+</td>
+<td>
+<p>
+Proposal: Week 6
+</p>
+<p>
+Report: Week 14
+</p>
+<p>
+Oral Defense: Week 15
+</p>
+</td>
+<td>
+1,2,3,4,5
+</td>
+</tr>
+<tr>
+<td>
+<p>
+Semester Examination
+</p>
+</td>
+<td>
+25%
+</td>
+<td>
+Week 8
+</td>
+<td>
+1,2
+</td>
+</tr>
+<tr>
+<td>
+<p>
+Final Examination
+</p>
+</td>
+<td>
+30%
+</td>
+<td>
+Exam Week
+</td>
+<td>
+1,2,3
+</td>
+</tr>
+</tbody>
+</table>
+<p>Students may use computational tools and AI assistance for the project, but must be able to justify and defend all modeling decisions during the oral defense.</p>
+</section>
+<section id="grading-scheme" class="level2">
+<h2 class="anchored" data-anchor-id="grading-scheme">Grading Scheme</h2>
+<p>The official Khalifa University grading system uses letter grades with pluses and minuses. Passing grades range from A to D; F is failing. Each letter grade is assigned a grade point on a four-point scale as per the guidelines below:</p>
+<p><em>For undergraduate programs:</em></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 16%">
+<col style="width: 44%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">
+<strong>Letter Grade</strong>
+</th>
+<th style="text-align: center;">
+<strong>Grade Point</strong>
+</th>
+<th style="text-align: center;">
+<strong>Grade Range</strong>
+</th>
+<th style="text-align: center;">
+<strong>Description</strong>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+A
+</td>
+<td>
+4.00
+</td>
+<td>
+From 92.5% to 100%
+</td>
+<td>
+Excellent
+</td>
+</tr>
+<tr>
+<td>
+A-
+</td>
+<td>
+3.70
+</td>
+<td>
+From 89.5% to less than 92.5%
+</td>
+<td rowspan="2">
+Very Good
+</td>
+</tr>
+<tr>
+<td>
+B+
+</td>
+<td>
+3.30
+</td>
+<td>
+From 86.5% to less than 89.5%
+</td>
+</tr>
+<tr>
+<td>
+B
+</td>
+<td>
+3.00
+</td>
+<td>
+From 82.5% to less than 86.5%
+</td>
+<td rowspan="2">
+Good
+</td>
+</tr>
+<tr>
+<td>
+B-
+</td>
+<td>
+2.70
+</td>
+<td>
+From 79.5% to less than 82.5%
+</td>
+</tr>
+<tr>
+<td>
+C+
+</td>
+<td>
+2.30
+</td>
+<td>
+From 76.5% to less than 79.5%
+</td>
+<td rowspan="2">
+Satisfactory
+</td>
+</tr>
+<tr>
+<td>
+C
+</td>
+<td>
+2.00
+</td>
+<td>
+From 72.5% to less than 76.5%
+</td>
+</tr>
+<tr>
+<td>
+C-
+</td>
+<td>
+1.70
+</td>
+<td>
+From 69.5% to less than 72.5%
+</td>
+<td>
+Less than Satisfactory
+</td>
+</tr>
+<tr>
+<td>
+D
+</td>
+<td>
+1.00
+</td>
+<td>
+From 59.5% to less than 69.5%
+</td>
+<td>
+Poor
+</td>
+</tr>
+<tr>
+<td>
+F
+</td>
+<td>
+0.00
+</td>
+<td>
+Less than 59.5%
+</td>
+<td>
+Fail
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="academic-integrity-statement" class="level2">
+<h2 class="anchored" data-anchor-id="academic-integrity-statement">Academic Integrity Statement</h2>
+<p>“As a Khalifa University student, I will not lie, cheat, steal, or use any unfair means in academic work and will behave according to university rules and UAE societal norms and expectations.” Refer to ACA 3500 Academic Integrity Policy for more details.</p>
+</section>
+<section id="copyright-and-plagiarism" class="level2">
+<h2 class="anchored" data-anchor-id="copyright-and-plagiarism">Copyright and Plagiarism</h2>
+<p>All students must adhere to the university’s policies on copyright and plagiarism, including the ethical use of generative AI tools. Any use of AI-generated content must be properly attributed and must not violate academic integrity standards.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This syllabus must be augmented by a syllabus supplement for students.</p>
+</div>
+</div>
+</section>
+<section id="syllabus-supplement" class="level2">
+<h2 class="anchored" data-anchor-id="syllabus-supplement">Syllabus Supplement</h2>
+<table>
+<colgroup>
+<col style="width: 27%">
+<col style="width: 2%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 10%">
+</colgroup>
+<tbody>
+<tr>
+<td colspan="5">
+<strong>Organizational Details</strong>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Course Code and Title:</strong>
+</td>
+<td colspan="3" style="text-align: left;">
+MATH 435 – Mathematical Imaging
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Semester:</strong>
+</td>
+<td colspan="3">
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Schedule:</strong>
+</td>
+<td colspan="3">
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Instructor:</strong>
+</td>
+<td colspan="3">
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Contact Email:</strong>
+</td>
+<td colspan="3">
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Office Room Number:</strong>
+</td>
+<td colspan="3">
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<strong>Office Hours:</strong>
+</td>
+<td colspan="3">
+</td>
+</tr>
+<tr>
+<td colspan="5">
+<strong>Assessment Methodology</strong>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center;">
+</td>
+<td>
+<strong>Tentative Dates</strong>
+</td>
+<td>
+<strong>Weight</strong>
+</td>
+</tr>
+<tr>
+<td rowspan="3">
+<strong>Coursework</strong>.
+</td>
+<td colspan="2">
+Quiz 1
+</td>
+<td>
+Week 4 (7.5%)
+</td>
+<td rowspan="3">
+45%
+</td>
+</tr>
+<tr>
+<td colspan="2">
+Quiz 2
+</td>
+<td>
+Week 12 (7.5%)
+</td>
+</tr>
+<tr>
+<td colspan="2">
+Project and Presentation
+</td>
+<td>
+Week 14/15 (30%)
+</td>
+</tr>
+<tr>
+<td>
+<strong>Midterm Examination</strong>.
+</td>
+<td colspan="3">
+Week 8
+</td>
+<td>
+25%
+</td>
+</tr>
+<tr>
+<td>
+<strong>Final Examination</strong>.
+</td>
+<td colspan="3">
+TBD by the Registrar’s Office
+</td>
+<td>
+35%
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instructor-policy-on-late-submission-of-assignments" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-policy-on-late-submission-of-assignments">Instructor Policy on Late Submission of Assignments</h2>
+<section id="quizzes" class="level3">
+<h3 class="anchored" data-anchor-id="quizzes">Quizzes</h3>
+<p>There will be no make-up quizzes. If the student fails to attend a scheduled quiz <strong>without</strong> an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.</p>
+<p>If the student fails to attend a quiz and the <strong>Student Success Department confirms</strong> that the student’s absence from that quiz is approved, then the grade that will be assigned to that quiz is:</p>
+<ul>
+<li>the grade of the Semester examination if that quiz took place before the Semester examination;</li>
+<li>the grade of the Final Examination if that quiz took place after the Semester examination.</li>
+</ul>
+</section>
+<section id="semester-examination" class="level3">
+<h3 class="anchored" data-anchor-id="semester-examination">Semester Examination</h3>
+<p>There will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination <strong>without</strong> an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.</p>
+<p>If the student fails to attend the Semester examination and the <strong>Student Success Department confirms</strong> that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.</p>
+<p><strong>A maximum of 40% of the course grade can be compensated through the above policy.</strong></p>
+</section>
+</section>
+<section id="additional-information" class="level2">
+<h2 class="anchored" data-anchor-id="additional-information">Additional Information</h2>
+<section id="assessment-1" class="level3">
+<h3 class="anchored" data-anchor-id="assessment-1">Assessment</h3>
+<p>Late submission of the group project will not be accepted.</p>
+</section>
+<section id="project" class="level3">
+<h3 class="anchored" data-anchor-id="project">Project</h3>
+<p>The project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.</p>
+<p>Students are required to use Python for all computational implementations and analyses.</p>
+<p>A written report and the corresponding code must be submitted in Week 13.</p>
+<p>In Week 14, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project.</p>
+<p>Failure to participate in the oral defense will result in a maximum of 50% of the project grade.</p>
+</section>
+<section id="calculator-policy" class="level3">
+<h3 class="anchored" data-anchor-id="calculator-policy">Calculator Policy</h3>
+<p>You will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.</p>
+</section>
+<section id="classroom-policies" class="level3">
+<h3 class="anchored" data-anchor-id="classroom-policies">Classroom Policies</h3>
+<p>Discipline is one of the main components of your academic and professional success.</p>
+<p>Please arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.</p>
+<p>Please ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.</p>
+<p><strong>If you are absent for any lecture, it is your responsibility to cover the missed material.</strong></p>
+</section>
+</section>
+<section id="weekly-plan-tentative" class="level2">
+<h2 class="anchored" data-anchor-id="weekly-plan-tentative">Weekly Plan (Tentative)</h2>
+<table>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 90%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">
+<strong>Week #</strong>
+</th>
+<th style="text-align: center;">
+<strong>Topics</strong>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">
+01
+</td>
+<td>
+Image formation models; convolution; linear systems
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+02
+</td>
+<td>
+Fourier transform; convolution theorem; frequency interpretation of blur
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+03
+</td>
+<td>
+Discrete Fourier transform (DFT); spectral analysis; filtering
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+04
+</td>
+<td>
+Noise models: Gaussian and Poisson; likelihood formulation<br> Quiz 1
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+05
+</td>
+<td>
+Ill-posed inverse problems; instability; SVD (conceptual)
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+06
+</td>
+<td>
+Tikhonov regularization; parameter effects; bias–variance tradeoff<br> Project assigned
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+07
+</td>
+<td>
+Variational models; convexity (geometric view); Euler–Lagrange derivation
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+08
+</td>
+<td>
+Total Variation regularization; edge preservation; comparison with ℓ2<br> Midterm
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+09
+</td>
+<td>
+Convex optimization basics; gradient descent; proximal ideas
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+10
+</td>
+<td>
+Sparse reconstruction; ℓ1 regularization; compressed sensing intuition
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+11
+</td>
+<td>
+Wavelets and multiscale representations; thresholding
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+12
+</td>
+<td>
+Modern computational imaging: model-based vs data-driven reconstruction<br> Quiz 2
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+13
+</td>
+<td>
+Plug-and-play priors; learned regularization; CNNs as iterative operators
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+14
+</td>
+<td>
+Stability, robustness, and limitations of AI-based reconstruction<br> Project report
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+15
+</td>
+<td>
+Project presentations and oral defenses
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="detailed-weekly-plan-15-weeks-tentative" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-weekly-plan-15-weeks-tentative">Detailed Weekly Plan (15 Weeks, Tentative)</h2>
+</section>
+<section id="week-1-introduction-to-imaging-as-a-mathematical-problem" class="level2">
+<h2 class="anchored" data-anchor-id="week-1-introduction-to-imaging-as-a-mathematical-problem">Week 1 – Introduction to Imaging as a Mathematical Problem</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>What is an image mathematically?</p></li>
+<li><p>Continuous vs discrete images</p></li>
+<li><p>Pixels, grids, vector representation</p></li>
+<li><p>Linear systems viewpoint of imaging</p></li>
+<li><p>Forward operator concept</p></li>
+</ul>
+<p><strong>Focus</strong><br>
+Students understand that imaging is a mathematical mapping:</p>
+<p><span class="math display">
+Ax = b
+</span></p>
+<p><strong>Learning Goal</strong><br>
+Students can describe image formation as a mathematical model.</p>
+</section>
+<section id="week-2-convolution-and-blur" class="level2">
+<h2 class="anchored" data-anchor-id="week-2-convolution-and-blur">Week 2 – Convolution and Blur</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Convolution in 1D and 2D</p></li>
+<li><p>Point spread function (PSF)</p></li>
+<li><p>Physical meaning of blur</p></li>
+<li><p>Boundary conditions</p></li>
+</ul>
+<p><strong>In class</strong></p>
+<ul>
+<li><p>Compute simple convolution examples</p></li>
+<li><p>Visual interpretation of blur</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students can formulate blur as convolution.</p>
+</section>
+<section id="week-3-fourier-transform-in-imaging" class="level2">
+<h2 class="anchored" data-anchor-id="week-3-fourier-transform-in-imaging">Week 3 – Fourier Transform in Imaging</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>2D Fourier transform</p></li>
+<li><p>Convolution theorem</p></li>
+<li><p>Frequency interpretation of blur</p></li>
+<li><p>Low-pass vs high-pass filtering</p></li>
+</ul>
+<p><strong>Focus</strong><br>
+Why inversion in frequency domain amplifies noise.</p>
+<p><strong>Learning Goal</strong><br>
+Students understand why deblurring is unstable.</p>
+</section>
+<section id="week-4-discrete-fourier-transform-noise-models" class="level2">
+<h2 class="anchored" data-anchor-id="week-4-discrete-fourier-transform-noise-models">Week 4 – Discrete Fourier Transform &amp; Noise Models</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>DFT and FFT</p></li>
+<li><p>Spectral representation of images</p></li>
+<li><p>Gaussian noise model</p></li>
+<li><p>Poisson noise (medical relevance)</p></li>
+<li><p>Likelihood formulation</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students can distinguish noise models and write likelihood expressions.</p>
+</section>
+<section id="week-5-ill-posed-inverse-problems" class="level2">
+<h2 class="anchored" data-anchor-id="week-5-ill-posed-inverse-problems">Week 5 – Ill-Posed Inverse Problems</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Hadamard definition of well-posedness</p></li>
+<li><p>Instability of inverse filtering</p></li>
+<li><p>Singular values (conceptual SVD)</p></li>
+<li><p>Condition number</p></li>
+</ul>
+<p><strong>Demonstration</strong><br>
+Noise amplification in inverse filtering.</p>
+<p><strong>Learning Goal</strong><br>
+Students understand why reconstruction requires regularization.</p>
+</section>
+<section id="week-6-tikhonov-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="week-6-tikhonov-regularization">Week 6 – Tikhonov Regularization</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>ℓ2 regularization</p></li>
+<li><p>Closed-form solution</p></li>
+</ul>
+<p><span class="math display">
+(A^{T}A + \lambda I)x = A^{T}b
+</span></p>
+<ul>
+<li><p>Bias–variance tradeoff</p></li>
+<li><p>Parameter influence</p></li>
+</ul>
+<p><strong>Project Assigned</strong></p>
+<p>Teams receive dataset + problem description.</p>
+<p><strong>Learning Goal</strong><br>
+Students understand stabilization through regularization.</p>
+</section>
+<section id="week-7-variational-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="week-7-variational-formulation">Week 7 – Variational Formulation</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Energy minimization framework</p></li>
+<li><p>Convexity (geometric interpretation)</p></li>
+<li><p>Euler–Lagrange derivation (guided)</p></li>
+<li><p>Gradient descent intuition</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students can derive optimality condition for ℓ2 model.</p>
+</section>
+<section id="week-8-total-variation-tv-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="week-8-total-variation-tv-regularization">Week 8 – Total Variation (TV) Regularization</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Definition of TV norm</p></li>
+<li><p>Edge preservation mechanism</p></li>
+<li><p>Comparison with ℓ2 smoothing</p></li>
+<li><p>Staircasing effect</p></li>
+</ul>
+<p><strong>Midterm Exam</strong></p>
+<p><strong>Learning Goal</strong><br>
+Students can explain why TV preserves edges better than ℓ2.</p>
+</section>
+<section id="week-9-optimization-methods" class="level2">
+<h2 class="anchored" data-anchor-id="week-9-optimization-methods">Week 9 – Optimization Methods</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Convex sets and convex functions</p></li>
+<li><p>Subgradient concept (intuitive)</p></li>
+<li><p>Proximal operator idea</p></li>
+<li><p>Iterative shrinkage algorithm (ISTA intuition)</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students understand algorithmic structure behind regularization.</p>
+</section>
+<section id="week-10-sparse-reconstruction" class="level2">
+<h2 class="anchored" data-anchor-id="week-10-sparse-reconstruction">Week 10 – Sparse Reconstruction</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>ℓ1 regularization</p></li>
+<li><p>Sparsity concept</p></li>
+<li><p>Compressed sensing intuition</p></li>
+<li><p>Comparison ℓ1 vs ℓ2</p></li>
+</ul>
+<p><strong>Focus</strong><br>
+Why sparsity improves reconstruction in certain bases.</p>
+<p><strong>Learning Goal</strong><br>
+Students can justify when ℓ1 is preferable.</p>
+</section>
+<section id="week-11-wavelets-and-multiscale-representation" class="level2">
+<h2 class="anchored" data-anchor-id="week-11-wavelets-and-multiscale-representation">Week 11 – Wavelets and Multiscale Representation</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Wavelet transform concept</p></li>
+<li><p>Sparsity in wavelet domain</p></li>
+<li><p>Thresholding methods</p></li>
+<li><p>Denoising comparison experiments</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students can connect representation choice to reconstruction quality.</p>
+</section>
+<section id="week-12-model-based-vs-data-driven-imaging" class="level2">
+<h2 class="anchored" data-anchor-id="week-12-model-based-vs-data-driven-imaging">Week 12 – Model-Based vs Data-Driven Imaging</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Classical variational reconstruction</p></li>
+<li><p>Learned priors concept</p></li>
+<li><p>Neural networks as parameterized operators</p></li>
+<li><p>Comparison of philosophies</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students understand the difference between handcrafted and learned regularizers.</p>
+</section>
+<section id="week-13-plug-and-play-and-learned-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="week-13-plug-and-play-and-learned-regularization">Week 13 – Plug-and-Play and Learned Regularization</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Iterative algorithms structure</p></li>
+<li><p>Replacing proximal operator with denoiser</p></li>
+<li><p>Plug-and-play priors</p></li>
+<li><p>CNN as denoiser in optimization loop</p></li>
+<li><p>Convergence questions (conceptual)</p></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students understand how AI integrates into mathematical frameworks.</p>
+</section>
+<section id="week-14-stability-robustness-and-ethics" class="level2">
+<h2 class="anchored" data-anchor-id="week-14-stability-robustness-and-ethics">Week 14 – Stability, Robustness, and Ethics</h2>
+<p><strong>Topics</strong></p>
+<ul>
+<li><p>Parameter sensitivity analysis</p></li>
+<li><p>Hallucination artifacts in AI reconstruction</p></li>
+<li><p>Overfitting in inverse problems</p></li>
+<li><p>Reliability in medical imaging</p></li>
+<li><p>Societal and ethical implications</p></li>
+</ul>
+<p><strong>Project Reports Due</strong></p>
+<p><strong>Learning Goal</strong><br>
+Students recognize limitations and ethical considerations.</p>
+</section>
+<section id="week-15-oral-defenses" class="level2">
+<h2 class="anchored" data-anchor-id="week-15-oral-defenses">Week 15 – Oral Defenses</h2>
+<p><strong>Activities</strong></p>
+<ul>
+<li><p>Individual oral defense per student</p></li>
+<li><p>Evaluation of:</p>
+<ul>
+<li><p>Modeling understanding</p></li>
+<li><p>Parameter reasoning</p></li>
+<li><p>Interpretation of results</p></li>
+<li><p>Team collaboration</p></li>
+</ul></li>
+</ul>
+<p><strong>Learning Goal</strong><br>
+Students demonstrate independent mastery of project content.</p>
 
 
 </section>

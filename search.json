@@ -401,37 +401,247 @@
   {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
-    "title": "Syllabus Summary",
+    "title": "Syllabus",
     "section": "",
-    "text": "This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python."
+    "text": "MATH 435: Mathematical Imaging\n(3 Lecture hours, 0 Laboratory, 3 Credits)"
   },
   {
-    "objectID": "syllabus.html#catalog-description",
-    "href": "syllabus.html#catalog-description",
-    "title": "Syllabus Summary",
+    "objectID": "syllabus.html#course-information",
+    "href": "syllabus.html#course-information",
+    "title": "Syllabus",
     "section": "",
-    "text": "This course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques such as Tikhonov, Total Variation, and sparse methods, and computational implementation in Python."
+    "text": "MATH 435: Mathematical Imaging\n(3 Lecture hours, 0 Laboratory, 3 Credits)"
   },
   {
-    "objectID": "syllabus.html#main-text",
-    "href": "syllabus.html#main-text",
-    "title": "Syllabus Summary",
-    "section": "Main Text",
-    "text": "Main Text\nM. Bertero and P. Boccacci, Introduction to Inverse Problems in Imaging, 2nd edition, CRC Press, 2021."
+    "objectID": "syllabus.html#prerequisites",
+    "href": "syllabus.html#prerequisites",
+    "title": "Syllabus",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nMATH 317 – Advanced Calculus\nMATH 318 – Linear Algebra II\nMATH 412 – Probability and Statistics"
   },
   {
-    "objectID": "syllabus.html#references",
-    "href": "syllabus.html#references",
-    "title": "Syllabus Summary",
-    "section": "References",
-    "text": "References\n\nA. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” Acta Numerica, 25, 161-319, 2016.\nS. Mallat, A Wavelet Tour of Signal Processing, 3rd edition, Academic Press, 2008."
+    "objectID": "syllabus.html#corequisites",
+    "href": "syllabus.html#corequisites",
+    "title": "Syllabus",
+    "section": "Corequisites",
+    "text": "Corequisites\n\nNone"
   },
   {
-    "objectID": "syllabus.html#assessment-structure",
-    "href": "syllabus.html#assessment-structure",
-    "title": "Syllabus Summary",
-    "section": "Assessment Structure",
-    "text": "Assessment Structure\n\n\n\n\n\n\n\n\nAssessment\nWeight\nTiming\n\n\n\n\nQuizzes\n15%\nWeeks 4 and 12\n\n\nTwo-student modeling project\n30%\nAssigned Week 6, report Week 14, defense Week 15\n\n\nSemester examination\n25%\nWeek 8\n\n\nFinal examination\n30%\nExam week"
+    "objectID": "syllabus.html#course-catalog-description",
+    "href": "syllabus.html#course-catalog-description",
+    "title": "Syllabus",
+    "section": "Course Catalog Description",
+    "text": "Course Catalog Description\nThis course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques (Tikhonov, Total Variation, sparse methods), and computational implementation. Classical model-based approaches are connected to modern computational imaging techniques, including data-driven and learning-based reconstruction methods.\nApplications focus on medical and scientific imaging."
+  },
+  {
+    "objectID": "syllabus.html#textbook",
+    "href": "syllabus.html#textbook",
+    "title": "Syllabus",
+    "section": "Textbook",
+    "text": "Textbook\n\nM Bertero. and P. Boccacci, Introduction to Inverse Problems in Imaging, 2nd ed., CRC Press, 2021."
+  },
+  {
+    "objectID": "syllabus.html#reference-materials",
+    "href": "syllabus.html#reference-materials",
+    "title": "Syllabus",
+    "section": "Reference Materials",
+    "text": "Reference Materials\n\nA. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” Acta Numerica, vol. 25, pp. 161–319, 2016.\nS. Mallat, A Wavelet Tour of Signal Processing, 3rd ed., Academic Press, 2008.\nSelected recent research articles on modern computational imaging and learning-based reconstruction (provided during the course)."
+  },
+  {
+    "objectID": "syllabus.html#course-structure-learning-methodology",
+    "href": "syllabus.html#course-structure-learning-methodology",
+    "title": "Syllabus",
+    "section": "Course Structure & Learning Methodology",
+    "text": "Course Structure & Learning Methodology\nLectures will be 3x50 minutes or 2 × 75-minutes per week. The course is delivered through lectures, guided mathematical derivations, conceptual discussions, and computational demonstrations using MATLAB or Python. Homework assignments and an individual modeling project are conducted throughout the semester to reinforce understanding.\nThe course emphasizes reasoning and modeling rather than formal proof-writing."
+  },
+  {
+    "objectID": "syllabus.html#course-topics",
+    "href": "syllabus.html#course-topics",
+    "title": "Syllabus",
+    "section": "Course Topics",
+    "text": "Course Topics\n\n\n\n\n\n\n\nWeek #\nTopics\n\n\n\n\n01\nImage formation models; convolution; linear systems\n\n\n02\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n03\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n04\nNoise models: Gaussian and Poisson; likelihood formulation\n\n\n05\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n06\nTikhonov regularization; parameter effects; bias–variance tradeoff\n\n\n07\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n08\nTotal Variation regularization; edge preservation; comparison with ℓ2\n\n\n09\nConvex optimization basics; gradient descent; proximal ideas\n\n\n10\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n11\nWavelets and multiscale representations; thresholding\n\n\n12\nModern computational imaging: model-based vs data-driven reconstruction\n\n\n13\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n14\nStability, robustness, and limitations of AI-based reconstruction\n\n\n15\nProject presentations and oral defenses"
+  },
+  {
+    "objectID": "syllabus.html#laboratory-andor-computingdigital-resources",
+    "href": "syllabus.html#laboratory-andor-computingdigital-resources",
+    "title": "Syllabus",
+    "section": "Laboratory and/or Computing/Digital Resources",
+    "text": "Laboratory and/or Computing/Digital Resources\nPython (NumPy, SciPy, Matplotlib)."
+  },
+  {
+    "objectID": "syllabus.html#course-learning-outcomes-clo-and-program-learning-outcomes-plo",
+    "href": "syllabus.html#course-learning-outcomes-clo-and-program-learning-outcomes-plo",
+    "title": "Syllabus",
+    "section": "Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)",
+    "text": "Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)\n\n\n\n\n\n\n\n\n\n\nNo.\n\n\nCLOs\n\n\nPLOs\n\n\nEmphasis Level#\n\n\n\n\n\n\n1\n\n\nFormulate mathematical models for image formation, degradation, and reconstruction problem\n\n\n1,2\n\n\nH,H\n\n\n\n\n2\n\n\n\nAnalyze ill-posed imaging problems and evaluate the role of\n\n\nregularization techniques in ensuring stability and meaningful\n\n\nreconstruction.\n\n\n\n1,3\n\n\nH,H\n\n\n\n\n3\n\n\n\nDesign and implement computational reconstruction methods and\n\n\ninterpret experimental results using scientific judgment.\n\n\n\n2,3\n\n\nH,H\n\n\n\n\n4\n\n\n\nCommunicate mathematical reasoning, modeling decisions, and\n\n\nreconstruction results effectively in written and oral formats.\n\n\n\n4\n\n\nH\n\n\n\n\n5\n\n\n\nWork effectively in two-student teams to plan, execute, and deliver a\n\n\nmodeling project while recognizing ethical considerations and the\n\n\nsocietal impact of computational imaging solutions.\n\n\n\n5,6\n\n\nM,H\n\n\n\n\n*PLOs can be found in the academic catalog\n#Emphasis level: H: High; M: Medium; L: Low; N: Nothing specific"
+  },
+  {
+    "objectID": "syllabus.html#assessment",
+    "href": "syllabus.html#assessment",
+    "title": "Syllabus",
+    "section": "Assessment",
+    "text": "Assessment\nAll course learning outcomes are assessed using the following assessment tools.\n\n\n\n\n\n\n\n\n\n\nAssessment Instruments\n\n\nContribution to Course Grade (%)\n\n\nWeek #\n\n\nCLO(s)\n\n\n\n\n\n\n\nQuizzes\n\n\n\n15%\n\n\n4,12\n\n\n1,2\n\n\n\n\n\nTwo-Student Team Modeling\n\n\nProject (Joint Report\n\n\nand Individual Oral Defense)\n\n\n\n30%\n\n\n\nProposal: Week 6\n\n\nReport: Week 14\n\n\nOral Defense: Week 15\n\n\n\n1,2,3,4,5\n\n\n\n\n\nSemester Examination\n\n\n\n25%\n\n\nWeek 8\n\n\n1,2\n\n\n\n\n\nFinal Examination\n\n\n\n30%\n\n\nExam Week\n\n\n1,2,3\n\n\n\n\nStudents may use computational tools and AI assistance for the project, but must be able to justify and defend all modeling decisions during the oral defense."
+  },
+  {
+    "objectID": "syllabus.html#grading-scheme",
+    "href": "syllabus.html#grading-scheme",
+    "title": "Syllabus",
+    "section": "Grading Scheme",
+    "text": "Grading Scheme\nThe official Khalifa University grading system uses letter grades with pluses and minuses. Passing grades range from A to D; F is failing. Each letter grade is assigned a grade point on a four-point scale as per the guidelines below:\nFor undergraduate programs:\n\n\n\n\n\n\n\n\n\n\nLetter Grade\n\n\nGrade Point\n\n\nGrade Range\n\n\nDescription\n\n\n\n\n\n\nA\n\n\n4.00\n\n\nFrom 92.5% to 100%\n\n\nExcellent\n\n\n\n\nA-\n\n\n3.70\n\n\nFrom 89.5% to less than 92.5%\n\n\nVery Good\n\n\n\n\nB+\n\n\n3.30\n\n\nFrom 86.5% to less than 89.5%\n\n\n\n\nB\n\n\n3.00\n\n\nFrom 82.5% to less than 86.5%\n\n\nGood\n\n\n\n\nB-\n\n\n2.70\n\n\nFrom 79.5% to less than 82.5%\n\n\n\n\nC+\n\n\n2.30\n\n\nFrom 76.5% to less than 79.5%\n\n\nSatisfactory\n\n\n\n\nC\n\n\n2.00\n\n\nFrom 72.5% to less than 76.5%\n\n\n\n\nC-\n\n\n1.70\n\n\nFrom 69.5% to less than 72.5%\n\n\nLess than Satisfactory\n\n\n\n\nD\n\n\n1.00\n\n\nFrom 59.5% to less than 69.5%\n\n\nPoor\n\n\n\n\nF\n\n\n0.00\n\n\nLess than 59.5%\n\n\nFail"
+  },
+  {
+    "objectID": "syllabus.html#academic-integrity-statement",
+    "href": "syllabus.html#academic-integrity-statement",
+    "title": "Syllabus",
+    "section": "Academic Integrity Statement",
+    "text": "Academic Integrity Statement\n“As a Khalifa University student, I will not lie, cheat, steal, or use any unfair means in academic work and will behave according to university rules and UAE societal norms and expectations.” Refer to ACA 3500 Academic Integrity Policy for more details."
+  },
+  {
+    "objectID": "syllabus.html#copyright-and-plagiarism",
+    "href": "syllabus.html#copyright-and-plagiarism",
+    "title": "Syllabus",
+    "section": "Copyright and Plagiarism",
+    "text": "Copyright and Plagiarism\nAll students must adhere to the university’s policies on copyright and plagiarism, including the ethical use of generative AI tools. Any use of AI-generated content must be properly attributed and must not violate academic integrity standards.\n\n\n\n\n\n\nNote\n\n\n\nThis syllabus must be augmented by a syllabus supplement for students."
+  },
+  {
+    "objectID": "syllabus.html#syllabus-supplement",
+    "href": "syllabus.html#syllabus-supplement",
+    "title": "Syllabus",
+    "section": "Syllabus Supplement",
+    "text": "Syllabus Supplement\n\n\n\n\n\n\n\n\n\n\n\nOrganizational Details\n\n\n\n\nCourse Code and Title:\n\n\nMATH 435 – Mathematical Imaging\n\n\n\n\nSemester:\n\n\n\n\n\n\nSchedule:\n\n\n\n\n\n\nInstructor:\n\n\n\n\n\n\nContact Email:\n\n\n\n\n\n\nOffice Room Number:\n\n\n\n\n\n\nOffice Hours:\n\n\n\n\n\n\nAssessment Methodology\n\n\n\n\n\n\nTentative Dates\n\n\nWeight\n\n\n\n\nCoursework.\n\n\nQuiz 1\n\n\nWeek 4 (7.5%)\n\n\n45%\n\n\n\n\nQuiz 2\n\n\nWeek 12 (7.5%)\n\n\n\n\nProject and Presentation\n\n\nWeek 14/15 (30%)\n\n\n\n\nMidterm Examination.\n\n\nWeek 8\n\n\n25%\n\n\n\n\nFinal Examination.\n\n\nTBD by the Registrar’s Office\n\n\n35%"
+  },
+  {
+    "objectID": "syllabus.html#instructor-policy-on-late-submission-of-assignments",
+    "href": "syllabus.html#instructor-policy-on-late-submission-of-assignments",
+    "title": "Syllabus",
+    "section": "Instructor Policy on Late Submission of Assignments",
+    "text": "Instructor Policy on Late Submission of Assignments\n\nQuizzes\nThere will be no make-up quizzes. If the student fails to attend a scheduled quiz without an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.\nIf the student fails to attend a quiz and the Student Success Department confirms that the student’s absence from that quiz is approved, then the grade that will be assigned to that quiz is:\n\nthe grade of the Semester examination if that quiz took place before the Semester examination;\nthe grade of the Final Examination if that quiz took place after the Semester examination.\n\n\n\nSemester Examination\nThere will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination without an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.\nIf the student fails to attend the Semester examination and the Student Success Department confirms that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.\nA maximum of 40% of the course grade can be compensated through the above policy."
+  },
+  {
+    "objectID": "syllabus.html#additional-information",
+    "href": "syllabus.html#additional-information",
+    "title": "Syllabus",
+    "section": "Additional Information",
+    "text": "Additional Information\n\nAssessment\nLate submission of the group project will not be accepted.\n\n\nProject\nThe project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.\nStudents are required to use Python for all computational implementations and analyses.\nA written report and the corresponding code must be submitted in Week 13.\nIn Week 14, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project.\nFailure to participate in the oral defense will result in a maximum of 50% of the project grade.\n\n\nCalculator Policy\nYou will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.\n\n\nClassroom Policies\nDiscipline is one of the main components of your academic and professional success.\nPlease arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.\nPlease ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.\nIf you are absent for any lecture, it is your responsibility to cover the missed material."
+  },
+  {
+    "objectID": "syllabus.html#weekly-plan-tentative",
+    "href": "syllabus.html#weekly-plan-tentative",
+    "title": "Syllabus",
+    "section": "Weekly Plan (Tentative)",
+    "text": "Weekly Plan (Tentative)\n\n\n\n\n\n\n\n\nWeek #\n\n\nTopics\n\n\n\n\n\n\n01\n\n\nImage formation models; convolution; linear systems\n\n\n\n\n02\n\n\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n\n\n03\n\n\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n\n\n04\n\n\nNoise models: Gaussian and Poisson; likelihood formulation Quiz 1\n\n\n\n\n05\n\n\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n\n\n06\n\n\nTikhonov regularization; parameter effects; bias–variance tradeoff Project assigned\n\n\n\n\n07\n\n\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n\n\n08\n\n\nTotal Variation regularization; edge preservation; comparison with ℓ2 Midterm\n\n\n\n\n09\n\n\nConvex optimization basics; gradient descent; proximal ideas\n\n\n\n\n10\n\n\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n\n\n11\n\n\nWavelets and multiscale representations; thresholding\n\n\n\n\n12\n\n\nModern computational imaging: model-based vs data-driven reconstruction Quiz 2\n\n\n\n\n13\n\n\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n\n\n14\n\n\nStability, robustness, and limitations of AI-based reconstruction Project report\n\n\n\n\n15\n\n\nProject presentations and oral defenses"
+  },
+  {
+    "objectID": "syllabus.html#detailed-weekly-plan-15-weeks-tentative",
+    "href": "syllabus.html#detailed-weekly-plan-15-weeks-tentative",
+    "title": "Syllabus",
+    "section": "Detailed Weekly Plan (15 Weeks, Tentative)",
+    "text": "Detailed Weekly Plan (15 Weeks, Tentative)"
+  },
+  {
+    "objectID": "syllabus.html#week-1-introduction-to-imaging-as-a-mathematical-problem",
+    "href": "syllabus.html#week-1-introduction-to-imaging-as-a-mathematical-problem",
+    "title": "Syllabus",
+    "section": "Week 1 – Introduction to Imaging as a Mathematical Problem",
+    "text": "Week 1 – Introduction to Imaging as a Mathematical Problem\nTopics\n\nWhat is an image mathematically?\nContinuous vs discrete images\nPixels, grids, vector representation\nLinear systems viewpoint of imaging\nForward operator concept\n\nFocus\nStudents understand that imaging is a mathematical mapping:\n\nAx = b\n\nLearning Goal\nStudents can describe image formation as a mathematical model."
+  },
+  {
+    "objectID": "syllabus.html#week-2-convolution-and-blur",
+    "href": "syllabus.html#week-2-convolution-and-blur",
+    "title": "Syllabus",
+    "section": "Week 2 – Convolution and Blur",
+    "text": "Week 2 – Convolution and Blur\nTopics\n\nConvolution in 1D and 2D\nPoint spread function (PSF)\nPhysical meaning of blur\nBoundary conditions\n\nIn class\n\nCompute simple convolution examples\nVisual interpretation of blur\n\nLearning Goal\nStudents can formulate blur as convolution."
+  },
+  {
+    "objectID": "syllabus.html#week-3-fourier-transform-in-imaging",
+    "href": "syllabus.html#week-3-fourier-transform-in-imaging",
+    "title": "Syllabus",
+    "section": "Week 3 – Fourier Transform in Imaging",
+    "text": "Week 3 – Fourier Transform in Imaging\nTopics\n\n2D Fourier transform\nConvolution theorem\nFrequency interpretation of blur\nLow-pass vs high-pass filtering\n\nFocus\nWhy inversion in frequency domain amplifies noise.\nLearning Goal\nStudents understand why deblurring is unstable."
+  },
+  {
+    "objectID": "syllabus.html#week-4-discrete-fourier-transform-noise-models",
+    "href": "syllabus.html#week-4-discrete-fourier-transform-noise-models",
+    "title": "Syllabus",
+    "section": "Week 4 – Discrete Fourier Transform & Noise Models",
+    "text": "Week 4 – Discrete Fourier Transform & Noise Models\nTopics\n\nDFT and FFT\nSpectral representation of images\nGaussian noise model\nPoisson noise (medical relevance)\nLikelihood formulation\n\nLearning Goal\nStudents can distinguish noise models and write likelihood expressions."
+  },
+  {
+    "objectID": "syllabus.html#week-5-ill-posed-inverse-problems",
+    "href": "syllabus.html#week-5-ill-posed-inverse-problems",
+    "title": "Syllabus",
+    "section": "Week 5 – Ill-Posed Inverse Problems",
+    "text": "Week 5 – Ill-Posed Inverse Problems\nTopics\n\nHadamard definition of well-posedness\nInstability of inverse filtering\nSingular values (conceptual SVD)\nCondition number\n\nDemonstration\nNoise amplification in inverse filtering.\nLearning Goal\nStudents understand why reconstruction requires regularization."
+  },
+  {
+    "objectID": "syllabus.html#week-6-tikhonov-regularization",
+    "href": "syllabus.html#week-6-tikhonov-regularization",
+    "title": "Syllabus",
+    "section": "Week 6 – Tikhonov Regularization",
+    "text": "Week 6 – Tikhonov Regularization\nTopics\n\nℓ2 regularization\nClosed-form solution\n\n\n(A^{T}A + \\lambda I)x = A^{T}b\n\n\nBias–variance tradeoff\nParameter influence\n\nProject Assigned\nTeams receive dataset + problem description.\nLearning Goal\nStudents understand stabilization through regularization."
+  },
+  {
+    "objectID": "syllabus.html#week-7-variational-formulation",
+    "href": "syllabus.html#week-7-variational-formulation",
+    "title": "Syllabus",
+    "section": "Week 7 – Variational Formulation",
+    "text": "Week 7 – Variational Formulation\nTopics\n\nEnergy minimization framework\nConvexity (geometric interpretation)\nEuler–Lagrange derivation (guided)\nGradient descent intuition\n\nLearning Goal\nStudents can derive optimality condition for ℓ2 model."
+  },
+  {
+    "objectID": "syllabus.html#week-8-total-variation-tv-regularization",
+    "href": "syllabus.html#week-8-total-variation-tv-regularization",
+    "title": "Syllabus",
+    "section": "Week 8 – Total Variation (TV) Regularization",
+    "text": "Week 8 – Total Variation (TV) Regularization\nTopics\n\nDefinition of TV norm\nEdge preservation mechanism\nComparison with ℓ2 smoothing\nStaircasing effect\n\nMidterm Exam\nLearning Goal\nStudents can explain why TV preserves edges better than ℓ2."
+  },
+  {
+    "objectID": "syllabus.html#week-9-optimization-methods",
+    "href": "syllabus.html#week-9-optimization-methods",
+    "title": "Syllabus",
+    "section": "Week 9 – Optimization Methods",
+    "text": "Week 9 – Optimization Methods\nTopics\n\nConvex sets and convex functions\nSubgradient concept (intuitive)\nProximal operator idea\nIterative shrinkage algorithm (ISTA intuition)\n\nLearning Goal\nStudents understand algorithmic structure behind regularization."
+  },
+  {
+    "objectID": "syllabus.html#week-10-sparse-reconstruction",
+    "href": "syllabus.html#week-10-sparse-reconstruction",
+    "title": "Syllabus",
+    "section": "Week 10 – Sparse Reconstruction",
+    "text": "Week 10 – Sparse Reconstruction\nTopics\n\nℓ1 regularization\nSparsity concept\nCompressed sensing intuition\nComparison ℓ1 vs ℓ2\n\nFocus\nWhy sparsity improves reconstruction in certain bases.\nLearning Goal\nStudents can justify when ℓ1 is preferable."
+  },
+  {
+    "objectID": "syllabus.html#week-11-wavelets-and-multiscale-representation",
+    "href": "syllabus.html#week-11-wavelets-and-multiscale-representation",
+    "title": "Syllabus",
+    "section": "Week 11 – Wavelets and Multiscale Representation",
+    "text": "Week 11 – Wavelets and Multiscale Representation\nTopics\n\nWavelet transform concept\nSparsity in wavelet domain\nThresholding methods\nDenoising comparison experiments\n\nLearning Goal\nStudents can connect representation choice to reconstruction quality."
+  },
+  {
+    "objectID": "syllabus.html#week-12-model-based-vs-data-driven-imaging",
+    "href": "syllabus.html#week-12-model-based-vs-data-driven-imaging",
+    "title": "Syllabus",
+    "section": "Week 12 – Model-Based vs Data-Driven Imaging",
+    "text": "Week 12 – Model-Based vs Data-Driven Imaging\nTopics\n\nClassical variational reconstruction\nLearned priors concept\nNeural networks as parameterized operators\nComparison of philosophies\n\nLearning Goal\nStudents understand the difference between handcrafted and learned regularizers."
+  },
+  {
+    "objectID": "syllabus.html#week-13-plug-and-play-and-learned-regularization",
+    "href": "syllabus.html#week-13-plug-and-play-and-learned-regularization",
+    "title": "Syllabus",
+    "section": "Week 13 – Plug-and-Play and Learned Regularization",
+    "text": "Week 13 – Plug-and-Play and Learned Regularization\nTopics\n\nIterative algorithms structure\nReplacing proximal operator with denoiser\nPlug-and-play priors\nCNN as denoiser in optimization loop\nConvergence questions (conceptual)\n\nLearning Goal\nStudents understand how AI integrates into mathematical frameworks."
+  },
+  {
+    "objectID": "syllabus.html#week-14-stability-robustness-and-ethics",
+    "href": "syllabus.html#week-14-stability-robustness-and-ethics",
+    "title": "Syllabus",
+    "section": "Week 14 – Stability, Robustness, and Ethics",
+    "text": "Week 14 – Stability, Robustness, and Ethics\nTopics\n\nParameter sensitivity analysis\nHallucination artifacts in AI reconstruction\nOverfitting in inverse problems\nReliability in medical imaging\nSocietal and ethical implications\n\nProject Reports Due\nLearning Goal\nStudents recognize limitations and ethical considerations."
+  },
+  {
+    "objectID": "syllabus.html#week-15-oral-defenses",
+    "href": "syllabus.html#week-15-oral-defenses",
+    "title": "Syllabus",
+    "section": "Week 15 – Oral Defenses",
+    "text": "Week 15 – Oral Defenses\nActivities\n\nIndividual oral defense per student\nEvaluation of:\n\nModeling understanding\nParameter reasoning\nInterpretation of results\nTeam collaboration\n\n\nLearning Goal\nStudents demonstrate independent mastery of project content."
   },
   {
     "objectID": "slides/week-01-image-formation.html#opening-question",
