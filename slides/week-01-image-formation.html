@@ -421,7 +421,7 @@ x = \operatorname{vec}(U) \in \mathbb{R}^{mn}.
 </section>
 <section id="why-vectorize" class="slide level2">
 <h2>Why Vectorize?</h2>
-<p>Once <span class="math inline">U</span> is written as a vector <span class="math inline">x</span>, we can use matrices to represent imaging operations:</p>
+<p>Once <span class="math inline">U</span> is written as a vector <span class="math inline">x</span>, we can use matrices to represent many controlled imaging operations:</p>
 <p><span class="math display">
 x \mapsto Ax.
 </span></p>
@@ -433,10 +433,13 @@ x \mapsto Ax.
 <li>projecting along lines;</li>
 <li>combining channels or frames.</li>
 </ul>
+<div class="caption">
+<p>This is a modeling choice, not a claim that all image formation is linear.</p>
+</div>
 </section>
 <section id="first-numpy-representation" class="slide level2 code-small">
 <h2>First NumPy Representation</h2>
-<div id="28e72618" class="cell">
+<div id="d24c30e0" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
@@ -455,7 +458,7 @@ x \mapsto Ax.
 <section id="vectorization-convention" class="slide level2">
 <h2>Vectorization Convention</h2>
 <p>NumPy uses row-major order by default:</p>
-<div id="7a442d35" class="cell">
+<div id="300d232e" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
 <span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
 <span id="cb3-3"><a></a></span>
@@ -507,7 +510,7 @@ k = (i-1)n + j
 <h2>The Central Model</h2>
 <div class="model-box">
 <div class="tag">
-<p>Forward model</p>
+<p>First forward model</p>
 </div>
 <p><span class="math display">
 y = A x + \eta.
@@ -518,6 +521,9 @@ y = A x + \eta.
 <li><span class="math inline">y</span>: observed data;</li>
 <li><span class="math inline">\eta</span>: noise or modeling error.</li>
 </ul>
+</div>
+<div class="caption">
+<p>This linear model is the first mathematical language of the course. We will also need nonlinear and information-losing models.</p>
 </div>
 </section>
 <section id="what-does-a-mean" class="slide level2">
@@ -537,8 +543,8 @@ y = A x + \eta.
 <td>noise</td>
 </tr>
 <tr class="even">
-<td>masking</td>
-<td>missing pixels</td>
+<td>fixed masking</td>
+<td>selected pixels are recorded</td>
 <td>incomplete data</td>
 </tr>
 <tr class="odd">
@@ -558,6 +564,24 @@ y = A x + \eta.
 </tr>
 </tbody>
 </table>
+</section>
+<section id="important-caveat" class="slide level2">
+<h2>Important Caveat</h2>
+<div class="definition-box">
+<div class="tag">
+<p>Linear model</p>
+</div>
+<p>If the measurement rule is fixed in advance, then many operators are linear:</p>
+<p><span class="math display">
+x \mapsto Ax.
+</span></p>
+</div>
+<div class="question-box">
+<div class="tag">
+<p>But real scenes</p>
+</div>
+<p>Visibility, occlusion, saturation, shadows, reflection, and segmentation can make the image formation process nonlinear or irreversible.</p>
+</div>
 </section>
 <section id="image-formation-vs-reconstruction" class="slide level2">
 <h2>Image Formation vs Reconstruction</h2>
@@ -584,6 +608,57 @@ y = Ax + \eta.
 </div>
 </div>
 </section>
+<section id="fixed-mask-vs-occlusion" class="slide level2">
+<h2>Fixed Mask vs Occlusion</h2>
+<div class="two-col">
+<div class="model-box">
+<div class="tag">
+<p>Fixed mask</p>
+</div>
+<p>If we decide in advance which pixels to keep, then</p>
+<p><span class="math display">
+y = Mx
+</span></p>
+<p>is linear.</p>
+</div>
+<div class="definition-box">
+<div class="tag">
+<p>Occlusion</p>
+</div>
+<p>If a tree hides a person, the visible image depends on scene geometry, depth, and visibility.</p>
+<p>The hidden person is not encoded in the pixels.</p>
+</div>
+</div>
+</section>
+<section id="information-that-is-not-measured" class="slide level2">
+<h2>Information That Is Not Measured</h2>
+<div class="takeaway-box">
+<p>Some inverse problems are unstable but still contain indirect information.</p>
+<p>Other situations are simply not observed. If an object is completely occluded, no algorithm can recover its true appearance from that image alone without outside information.</p>
+</div>
+</section>
+<section id="audio-mixing-vs-image-visibility" class="slide level2">
+<h2>Audio Mixing vs Image Visibility</h2>
+<div class="two-col">
+<div class="model-box">
+<div class="tag">
+<p>Audio</p>
+</div>
+<p>Sound waves approximately superpose:</p>
+<p><span class="math display">
+y(t) \approx s_1(t) + s_2(t) + \cdots.
+</span></p>
+<p>Separation is still hard, but the mixture can contain all sources.</p>
+</div>
+<div class="definition-box">
+<div class="tag">
+<p>Images</p>
+</div>
+<p>Visibility is different: the camera records the visible surface.</p>
+<p>If a surface is hidden, its appearance is absent from that image.</p>
+</div>
+</div>
+</section>
 <section id="why-the-inverse-problem-is-hard" class="slide level2">
 <h2>Why the Inverse Problem Is Hard</h2>
 <p>The naive answer would be:</p>
@@ -600,8 +675,8 @@ x = A^{-1}y.
 </section>
 <section id="a-toy-masking-operator" class="slide level2">
 <h2>A Toy Masking Operator</h2>
-<p>Suppose only some pixels are measured.</p>
-<div id="7bb4419a" class="cell">
+<p>Suppose a fixed set of pixels is measured.</p>
+<div id="6851131d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
@@ -612,6 +687,7 @@ x = A^{-1}y.
 <span id="cb4-8"><a></a><span class="bu">print</span>(<span class="st">"unknown image vector:"</span>, x)</span>
 <span id="cb4-9"><a></a><span class="bu">print</span>(<span class="st">"observed entries:"</span>, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>The mask is fixed independently of the unknown image.</p>
 </section>
 <section id="matrix-view-of-masking" class="slide level2">
 <h2>Matrix View of Masking</h2>
@@ -669,10 +745,13 @@ x.
 <div class="figure-frame">
 <p><img data-src="../assets/figures/week01-real-image-masking.png" alt="Real image, sampling mask, observed pixels, and zero-filled view"></p>
 </div>
+<div class="caption">
+<p>This is a fixed sampling mask. It is not the same as physical occlusion by an object in the scene.</p>
+</div>
 </section>
 <section id="python-demo-masking-a-real-image" class="slide level2 code-small">
 <h2>Python Demo: Masking a Real Image</h2>
-<div id="2e573861" class="cell">
+<div id="718b21b8" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb5-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-3"><a></a></span>
@@ -803,8 +882,13 @@ y = h * x + \eta.
 </tr>
 <tr class="odd">
 <td>missing regions</td>
-<td>masking operator</td>
+<td>fixed masking, if mask is known</td>
 <td>texture or geometric continuation</td>
+</tr>
+<tr class="even">
+<td>object hidden by a tree</td>
+<td>nonlinear visibility/occlusion</td>
+<td>cannot recover true appearance from one image alone</td>
 </tr>
 </tbody>
 </table>
@@ -814,8 +898,9 @@ y = h * x + \eta.
 <div class="takeaway-box">
 <ul>
 <li>A digital image can be treated as a function, matrix, or vector.</li>
-<li>Linear operators let us write imaging systems as <span class="math inline">y = Ax + \eta</span>.</li>
-<li>Reconstruction is difficult because the inverse map may be unstable or nonunique.</li>
+<li>Linear operators are a powerful first model for many controlled imaging systems.</li>
+<li>Real image formation can also be nonlinear and information-losing.</li>
+<li>Reconstruction is difficult because the inverse map may be unstable, nonunique, or physically impossible.</li>
 <li>Regularization adds mathematical prior knowledge to stabilize recovery.</li>
 </ul>
 </div>

@@ -200,7 +200,7 @@
     "href": "slides/week-01-image-formation.html#why-vectorize",
     "title": "Images as Mathematical Objects",
     "section": "Why Vectorize?",
-    "text": "Why Vectorize?\nOnce U is written as a vector x, we can use matrices to represent imaging operations:\n\nx \\mapsto Ax.\n\nExamples:\n\nmasking pixels;\nblurring;\nsampling Fourier coefficients;\nprojecting along lines;\ncombining channels or frames."
+    "text": "Why Vectorize?\nOnce U is written as a vector x, we can use matrices to represent many controlled imaging operations:\n\nx \\mapsto Ax.\n\nExamples:\n\nmasking pixels;\nblurring;\nsampling Fourier coefficients;\nprojecting along lines;\ncombining channels or frames.\n\n\nThis is a modeling choice, not a claim that all image formation is linear."
   },
   {
     "objectID": "slides/week-01-image-formation.html#first-numpy-representation",
@@ -242,14 +242,21 @@
     "href": "slides/week-01-image-formation.html#the-central-model",
     "title": "Images as Mathematical Objects",
     "section": "The Central Model",
-    "text": "The Central Model\n\n\nForward model\n\n\ny = A x + \\eta.\n\n\nx: unknown clean image;\nA: forward imaging operator;\ny: observed data;\n\\eta: noise or modeling error."
+    "text": "The Central Model\n\n\nFirst forward model\n\n\ny = A x + \\eta.\n\n\nx: unknown clean image;\nA: forward imaging operator;\ny: observed data;\n\\eta: noise or modeling error.\n\n\n\nThis linear model is the first mathematical language of the course. We will also need nonlinear and information-losing models."
   },
   {
     "objectID": "slides/week-01-image-formation.html#what-does-a-mean",
     "href": "slides/week-01-image-formation.html#what-does-a-mean",
     "title": "Images as Mathematical Objects",
     "section": "What Does A Mean?",
-    "text": "What Does A Mean?\n\n\n\nOperator\nImaging meaning\nTypical difficulty\n\n\n\n\nI\ndirect observation\nnoise\n\n\nmasking\nmissing pixels\nincomplete data\n\n\nconvolution\nblur\nlost high frequencies\n\n\nFourier sampling\nMRI-style acquisition\nindirect measurements\n\n\nprojection\ntomography\nincomplete angles"
+    "text": "What Does A Mean?\n\n\n\nOperator\nImaging meaning\nTypical difficulty\n\n\n\n\nI\ndirect observation\nnoise\n\n\nfixed masking\nselected pixels are recorded\nincomplete data\n\n\nconvolution\nblur\nlost high frequencies\n\n\nFourier sampling\nMRI-style acquisition\nindirect measurements\n\n\nprojection\ntomography\nincomplete angles"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#important-caveat",
+    "href": "slides/week-01-image-formation.html#important-caveat",
+    "title": "Images as Mathematical Objects",
+    "section": "Important Caveat",
+    "text": "Important Caveat\n\n\nLinear model\n\nIf the measurement rule is fixed in advance, then many operators are linear:\n\nx \\mapsto Ax.\n\n\n\n\nBut real scenes\n\nVisibility, occlusion, saturation, shadows, reflection, and segmentation can make the image formation process nonlinear or irreversible."
   },
   {
     "objectID": "slides/week-01-image-formation.html#image-formation-vs-reconstruction",
@@ -257,6 +264,27 @@
     "title": "Images as Mathematical Objects",
     "section": "Image Formation vs Reconstruction",
     "text": "Image Formation vs Reconstruction\n\n\n\nForward problem\n\nGiven x, predict the measured data:\n\ny = Ax + \\eta.\n\nUsually stable.\n\n\n\nInverse problem\n\nGiven y, estimate the unknown image:\n\n\\hat{x} \\approx x.\n\nOften unstable."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#fixed-mask-vs-occlusion",
+    "href": "slides/week-01-image-formation.html#fixed-mask-vs-occlusion",
+    "title": "Images as Mathematical Objects",
+    "section": "Fixed Mask vs Occlusion",
+    "text": "Fixed Mask vs Occlusion\n\n\n\nFixed mask\n\nIf we decide in advance which pixels to keep, then\n\ny = Mx\n\nis linear.\n\n\n\nOcclusion\n\nIf a tree hides a person, the visible image depends on scene geometry, depth, and visibility.\nThe hidden person is not encoded in the pixels."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#information-that-is-not-measured",
+    "href": "slides/week-01-image-formation.html#information-that-is-not-measured",
+    "title": "Images as Mathematical Objects",
+    "section": "Information That Is Not Measured",
+    "text": "Information That Is Not Measured\n\nSome inverse problems are unstable but still contain indirect information.\nOther situations are simply not observed. If an object is completely occluded, no algorithm can recover its true appearance from that image alone without outside information."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#audio-mixing-vs-image-visibility",
+    "href": "slides/week-01-image-formation.html#audio-mixing-vs-image-visibility",
+    "title": "Images as Mathematical Objects",
+    "section": "Audio Mixing vs Image Visibility",
+    "text": "Audio Mixing vs Image Visibility\n\n\n\nAudio\n\nSound waves approximately superpose:\n\ny(t) \\approx s_1(t) + s_2(t) + \\cdots.\n\nSeparation is still hard, but the mixture can contain all sources.\n\n\n\nImages\n\nVisibility is different: the camera records the visible surface.\nIf a surface is hidden, its appearance is absent from that image."
   },
   {
     "objectID": "slides/week-01-image-formation.html#why-the-inverse-problem-is-hard",
@@ -270,7 +298,7 @@
     "href": "slides/week-01-image-formation.html#a-toy-masking-operator",
     "title": "Images as Mathematical Objects",
     "section": "A Toy Masking Operator",
-    "text": "A Toy Masking Operator\nSuppose only some pixels are measured.\n\nimport numpy as np\n\nx = np.linspace(0, 1, 12)\nmask = np.array([1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1], dtype=bool)\n\ny = x[mask]\n\nprint(\"unknown image vector:\", x)\nprint(\"observed entries:\", y)"
+    "text": "A Toy Masking Operator\nSuppose a fixed set of pixels is measured.\n\nimport numpy as np\n\nx = np.linspace(0, 1, 12)\nmask = np.array([1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1], dtype=bool)\n\ny = x[mask]\n\nprint(\"unknown image vector:\", x)\nprint(\"observed entries:\", y)\n\nThe mask is fixed independently of the unknown image."
   },
   {
     "objectID": "slides/week-01-image-formation.html#matrix-view-of-masking",
@@ -298,7 +326,7 @@
     "href": "slides/week-01-image-formation.html#a-real-masking-operator",
     "title": "Images as Mathematical Objects",
     "section": "A Real Masking Operator",
-    "text": "A Real Masking Operator"
+    "text": "A Real Masking Operator\n\n\n\n\nThis is a fixed sampling mask. It is not the same as physical occlusion by an object in the scene."
   },
   {
     "objectID": "slides/week-01-image-formation.html#python-demo-masking-a-real-image",
@@ -361,14 +389,14 @@
     "href": "slides/week-01-image-formation.html#suggested-answers",
     "title": "Images as Mathematical Objects",
     "section": "Suggested Answers",
-    "text": "Suggested Answers\n\n\n\n\n\n\n\n\nSituation\nA\nPossible prior\n\n\n\n\nblurred photo\nconvolution\nsharp edges, natural-image smoothness\n\n\nfew-angle CT\nprojection operator\npiecewise smooth anatomy\n\n\nmissing regions\nmasking operator\ntexture or geometric continuation"
+    "text": "Suggested Answers\n\n\n\n\n\n\n\n\nSituation\nA\nPossible prior\n\n\n\n\nblurred photo\nconvolution\nsharp edges, natural-image smoothness\n\n\nfew-angle CT\nprojection operator\npiecewise smooth anatomy\n\n\nmissing regions\nfixed masking, if mask is known\ntexture or geometric continuation\n\n\nobject hidden by a tree\nnonlinear visibility/occlusion\ncannot recover true appearance from one image alone"
   },
   {
     "objectID": "slides/week-01-image-formation.html#what-students-should-remember",
     "href": "slides/week-01-image-formation.html#what-students-should-remember",
     "title": "Images as Mathematical Objects",
     "section": "What Students Should Remember",
-    "text": "What Students Should Remember\n\n\nA digital image can be treated as a function, matrix, or vector.\nLinear operators let us write imaging systems as y = Ax + \\eta.\nReconstruction is difficult because the inverse map may be unstable or nonunique.\nRegularization adds mathematical prior knowledge to stabilize recovery."
+    "text": "What Students Should Remember\n\n\nA digital image can be treated as a function, matrix, or vector.\nLinear operators are a powerful first model for many controlled imaging systems.\nReal image formation can also be nonlinear and information-losing.\nReconstruction is difficult because the inverse map may be unstable, nonunique, or physically impossible.\nRegularization adds mathematical prior knowledge to stabilize recovery."
   },
   {
     "objectID": "slides/week-01-image-formation.html#next-time",
