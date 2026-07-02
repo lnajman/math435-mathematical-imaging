@@ -17,6 +17,7 @@ project:
     - slides/week-05-ill-posed-inverse-problems.qmd
     - slides/week-06-tikhonov-regularization.qmd
     - slides/week-07-variational-formulation.qmd
+    - slides/week-08-total-variation.qmd
     - project/index.qmd
 
 website:

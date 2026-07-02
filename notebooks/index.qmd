@@ -15,6 +15,7 @@ Use the Google Colab links if you want to work in a browser without installing P
 | 5 | Ill-posed inverse problems | [Download](week05_ill_posed_inverse_problems.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) |
 | 6 | Tikhonov regularization | [Download](week06_tikhonov_regularization.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb) |
 | 7 | Variational formulation | [Download](week07_variational_formulation.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) |
+| 8 | Total Variation regularization | [Download](week08_total_variation.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) |
 
 ## Working Locally
 

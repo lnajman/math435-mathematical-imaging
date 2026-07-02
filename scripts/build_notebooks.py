@@ -2929,6 +2929,379 @@ def week07_cells() -> list[nbf.NotebookNode]:
     ]
 
 
+def week08_cells() -> list[nbf.NotebookNode]:
+    return [
+        md(
+            """
+            # Week 8 - Total Variation Regularization
+
+            This notebook accompanies the eighth MATH 435 slide deck.
+
+            ## Goal
+
+            By the end, you should be able to:
+
+            - compute a discrete Total Variation (TV) quantity;
+            - compare l2 smoothing and TV denoising;
+            - explain why TV preserves strong edges;
+            - inspect gradient magnitude maps;
+            - identify the staircasing effect.
+            """
+        ),
+        md(
+            """
+            ## Setup
+
+            The notebook uses NumPy, scikit-image, and Plotly.
+
+            If you run this outside Google Colab and a package is missing, install the course requirements from the repository root:
+
+            ```bash
+            python3 -m pip install -r requirements.txt
+            ```
+            """
+        ),
+        code(
+            """
+            import numpy as np
+            from skimage import data
+            from skimage.restoration import denoise_tv_chambolle
+            import plotly.graph_objects as go
+            from plotly.subplots import make_subplots
+
+
+            def rmse(estimate, reference):
+                return float(np.sqrt(np.mean((estimate - reference) ** 2)))
+
+
+            def periodic_laplacian_eigenvalues(shape):
+                grids = np.meshgrid(
+                    *[2 * np.pi * np.fft.fftfreq(size) for size in shape],
+                    indexing="ij",
+                )
+                values = np.zeros(shape)
+                for grid in grids:
+                    values += 2 - 2 * np.cos(grid)
+                return values
+
+
+            def quadratic_smooth(noisy, lam):
+                eig = periodic_laplacian_eigenvalues(noisy.shape)
+                estimate = np.real(np.fft.ifftn(np.fft.fftn(noisy) / (1 + lam * eig)))
+                return np.clip(estimate, 0.0, 1.0)
+
+
+            def gradient_magnitude(image):
+                if image.ndim == 1:
+                    return np.abs(np.diff(image, append=image[-1]))
+                vertical = np.diff(image, axis=0, append=image[-1:, :])
+                horizontal = np.diff(image, axis=1, append=image[:, -1:])
+                return np.sqrt(vertical**2 + horizontal**2)
+
+
+            def total_variation(image):
+                return float(np.sum(gradient_magnitude(image)))
+
+
+            def smoothness_energy(image):
+                gradient = gradient_magnitude(image)
+                return float(np.sum(gradient**2))
+
+
+            def show_heatmaps(images, titles, colorscales=None, zmin=0, zmax=1, height=430):
+                if colorscales is None:
+                    colorscales = ["Gray"] * len(images)
+                fig = make_subplots(rows=1, cols=len(images), subplot_titles=titles)
+                for index, (image, colorscale) in enumerate(zip(images, colorscales), start=1):
+                    fig.add_trace(
+                        go.Heatmap(
+                            z=image,
+                            colorscale=colorscale,
+                            zmin=zmin,
+                            zmax=zmax,
+                            showscale=index == len(images),
+                        ),
+                        row=1,
+                        col=index,
+                    )
+                    fig.update_xaxes(showticklabels=False, row=1, col=index)
+                    fig.update_yaxes(autorange="reversed", showticklabels=False, row=1, col=index)
+                fig.update_layout(height=height, margin=dict(l=20, r=20, t=60, b=20))
+                fig.show()
+            """
+        ),
+        md(
+            """
+            ## Steps
+
+            ### 1. Gradient Penalties
+
+            Quadratic smoothing penalizes `0.5 * g^2`.
+
+            Total Variation penalizes `abs(g)`.
+            """
+        ),
+        code(
+            """
+            g = np.linspace(-3, 3, 600)
+            l2_penalty = 0.5 * g**2
+            tv_penalty = np.abs(g)
+
+            fig = make_subplots(rows=1, cols=2, subplot_titles=["penalty", "derivative"])
+            fig.add_trace(go.Scatter(x=g, y=l2_penalty, mode="lines", name="0.5 g^2"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=g, y=tv_penalty, mode="lines", name="|g|"), row=1, col=1)
+            fig.add_trace(go.Scatter(x=g, y=g, mode="lines", name="l2 derivative"), row=1, col=2)
+            fig.add_trace(go.Scatter(x=g, y=np.sign(g), mode="lines", name="TV subgradient"), row=1, col=2)
+            fig.update_xaxes(title_text="gradient g", row=1, col=1)
+            fig.update_xaxes(title_text="gradient g", row=1, col=2)
+            fig.update_yaxes(title_text="cost", row=1, col=1)
+            fig.update_yaxes(title_text="derivative", row=1, col=2)
+            fig.update_layout(height=390, margin=dict(l=20, r=20, t=60, b=45))
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ### Exercise 1
+
+            Compute the two penalties for a gradient of size 4. Which model penalizes this sharp jump more?
+            """
+        ),
+        code(
+            """
+            gradient_value = 4.0
+
+            print("l2 penalty:", 0.5 * gradient_value**2)
+            print("TV penalty:", abs(gradient_value))
+            """
+        ),
+        md(
+            """
+            ### 2. Step Signal
+
+            TV is well suited to piecewise-constant signals because it allows sharp jumps.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43508)
+            n = 220
+            x = np.linspace(0, 1, n)
+            clean = np.zeros(n)
+            clean[x > 0.18] = 0.35
+            clean[x > 0.45] = 0.9
+            clean[x > 0.72] = 0.2
+            noisy_signal = np.clip(clean + 0.13 * rng.standard_normal(n), 0, 1)
+
+            l2_signal = quadratic_smooth(noisy_signal, lam=18.0)
+            tv_signal = denoise_tv_chambolle(noisy_signal, weight=0.18)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=clean, mode="lines", name="clean"))
+            fig.add_trace(go.Scatter(x=x, y=noisy_signal, mode="lines", name="noisy"))
+            fig.add_trace(go.Scatter(x=x, y=l2_signal, mode="lines", name="l2 smoothing"))
+            fig.add_trace(go.Scatter(x=x, y=tv_signal, mode="lines", name="TV"))
+            fig.update_layout(
+                title="Step signal denoising",
+                xaxis_title="position",
+                yaxis_title="intensity",
+                height=410,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+
+            print("noisy RMSE:", round(rmse(noisy_signal, clean), 4))
+            print("l2 RMSE:", round(rmse(l2_signal, clean), 4))
+            print("TV RMSE:", round(rmse(tv_signal, clean), 4))
+            """
+        ),
+        md(
+            """
+            ### Exercise 2
+
+            Change `weight` in the TV denoising line.
+
+            What happens to noise, flat regions, and jump sharpness?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            tv_weight = 0.35
+
+            tv_experiment = denoise_tv_chambolle(noisy_signal, weight=tv_weight)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=clean, mode="lines", name="clean"))
+            fig.add_trace(go.Scatter(x=x, y=tv_experiment, mode="lines", name=f"TV weight={tv_weight}"))
+            fig.update_layout(height=360, margin=dict(l=20, r=20, t=55, b=45))
+            fig.show()
+
+            print("TV RMSE:", round(rmse(tv_experiment, clean), 4))
+            print("TV norm:", round(total_variation(tv_experiment), 3))
+            """
+        ),
+        md(
+            """
+            ### 3. Image Denoising: l2 Versus TV
+
+            We now compare quadratic smoothing and TV denoising on a real image.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43508)
+            image = data.camera().astype(float) / 255.0
+            image = image[80:336, 90:346]
+            noisy = np.clip(image + 0.10 * rng.standard_normal(image.shape), 0, 1)
+
+            l2_image = quadratic_smooth(noisy, lam=1.2)
+            tv_image = denoise_tv_chambolle(noisy, weight=0.11)
+
+            show_heatmaps(
+                [image, noisy, l2_image, tv_image],
+                ["original", "noisy", "l2 smoothing", "TV"],
+                height=430,
+            )
+
+            for name, estimate in [("noisy", noisy), ("l2", l2_image), ("TV", tv_image)]:
+                print(
+                    f"{name:5s}",
+                    "RMSE=", round(rmse(estimate, image), 4),
+                    "TV=", round(total_variation(estimate), 1),
+                    "l2-grad-energy=", round(smoothness_energy(estimate), 1),
+                )
+            """
+        ),
+        md(
+            """
+            ### 4. Gradient Magnitude Maps
+
+            Gradient maps help us inspect edge preservation.
+            """
+        ),
+        code(
+            """
+            maps = [gradient_magnitude(values) for values in [image, noisy, l2_image, tv_image]]
+            vmax = np.percentile(maps[1], 99)
+
+            show_heatmaps(
+                maps,
+                ["original gradients", "noisy gradients", "l2 gradients", "TV gradients"],
+                colorscales=["Magma"] * 4,
+                zmin=0,
+                zmax=vmax,
+                height=430,
+            )
+            """
+        ),
+        md(
+            """
+            ### Exercise 3
+
+            Look at the gradient maps. Which method keeps the main contours more clearly?
+            """
+        ),
+        code(
+            """
+            answer = "TODO: write your observation here."
+            print(answer)
+            """
+        ),
+        md(
+            """
+            ### 5. TV Parameter Sweep
+
+            The TV weight controls the noise-edge tradeoff.
+            """
+        ),
+        code(
+            """
+            weights = [0.03, 0.10, 0.28]
+            estimates = [denoise_tv_chambolle(noisy, weight=weight) for weight in weights]
+
+            show_heatmaps(
+                [image, noisy] + estimates,
+                ["original", "noisy"] + [f"weight={weight:g}" for weight in weights],
+                height=430,
+            )
+
+            for weight, estimate in zip(weights, estimates):
+                print(f"weight={weight:g}, RMSE={rmse(estimate, image):.4f}, TV={total_variation(estimate):.1f}")
+            """
+        ),
+        md(
+            """
+            ### Exercise 4
+
+            Add another TV weight to the list. Which value would you choose visually?
+            """
+        ),
+        code(
+            """
+            # TODO: change this value.
+            weight = 0.18
+
+            estimate = denoise_tv_chambolle(noisy, weight=weight)
+            show_heatmaps([noisy, estimate], ["noisy", f"TV weight={weight:g}"], height=420)
+            print("RMSE:", round(rmse(estimate, image), 4))
+            print("TV:", round(total_variation(estimate), 1))
+            """
+        ),
+        md(
+            """
+            ### 6. Staircasing
+
+            TV can turn smooth ramps into piecewise-flat plateaus. This is called staircasing.
+            """
+        ),
+        code(
+            """
+            rng = np.random.default_rng(43508)
+            n = 260
+            x = np.linspace(0, 1, n)
+            clean_ramp = 0.15 + 0.65 * x + 0.08 * np.sin(2 * np.pi * 3 * x)
+            noisy_ramp = np.clip(clean_ramp + 0.045 * rng.standard_normal(n), 0, 1)
+            l2_ramp = quadratic_smooth(noisy_ramp, lam=22.0)
+            tv_ramp = denoise_tv_chambolle(noisy_ramp, weight=0.12)
+
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=clean_ramp, mode="lines", name="clean smooth signal"))
+            fig.add_trace(go.Scatter(x=x, y=noisy_ramp, mode="lines", name="noisy"))
+            fig.add_trace(go.Scatter(x=x, y=l2_ramp, mode="lines", name="l2 smoothing"))
+            fig.add_trace(go.Scatter(x=x, y=tv_ramp, mode="lines", name="TV"))
+            fig.update_layout(
+                title="Staircasing on a smooth signal",
+                xaxis_title="position",
+                yaxis_title="intensity",
+                height=410,
+                margin=dict(l=20, r=20, t=55, b=45),
+            )
+            fig.show()
+            """
+        ),
+        md(
+            """
+            ## Checks
+
+            Answer in your own words:
+
+            1. What does Total Variation measure?
+            2. Why does TV preserve edges better than l2 smoothing?
+            3. What is staircasing?
+            4. Why is TV optimization more delicate than quadratic smoothing?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 9 studies optimization methods. TV is convex but nonsmooth, so it motivates subgradient and proximal ideas.
+            """
+        ),
+    ]
+
+
 def main() -> None:
     write_notebook("week01_image_formation.ipynb", week01_cells())
     write_notebook("week02_convolution_blur.ipynb", week02_cells())
@@ -2937,6 +3310,7 @@ def main() -> None:
     write_notebook("week05_ill_posed_inverse_problems.ipynb", week05_cells())
     write_notebook("week06_tikhonov_regularization.ipynb", week06_cells())
     write_notebook("week07_variational_formulation.ipynb", week07_cells())
+    write_notebook("week08_total_variation.ipynb", week08_cells())
 
 
 if __name__ == "__main__":
