@@ -397,6 +397,7 @@ window.Quarto = {
   <li><a href="#hybrid-methods" id="toc-hybrid-methods" class="nav-link" data-scroll-target="#hybrid-methods">Hybrid Methods</a></li>
   <li><a href="#a-small-learned-patch-prior" id="toc-a-small-learned-patch-prior" class="nav-link" data-scroll-target="#a-small-learned-patch-prior">A Small Learned Patch Prior</a></li>
   <li><a href="#capacity-and-generalization" id="toc-capacity-and-generalization" class="nav-link" data-scroll-target="#capacity-and-generalization">Capacity And Generalization</a></li>
+  <li><a href="#training-data-as-a-prior" id="toc-training-data-as-a-prior" class="nav-link" data-scroll-target="#training-data-as-a-prior">Training Data As A Prior</a></li>
   <li><a href="#comparing-the-philosophies" id="toc-comparing-the-philosophies" class="nav-link" data-scroll-target="#comparing-the-philosophies">Comparing The Philosophies</a></li>
   <li><a href="#data-consistency" id="toc-data-consistency" class="nav-link" data-scroll-target="#data-consistency">Data Consistency</a></li>
   <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
@@ -655,6 +656,43 @@ x^{k+1}
 <p>Distribution shift can be subtle. A denoiser trained on natural photographs may fail on microscopy. A network trained on one scanner may fail on another scanner. A super-resolution method trained on one degradation model may fail when the real blur or noise is different.</p>
 <p>This is why training data are part of the method. In a paper or project, one should describe not only the network but also what it was trained on and how the test data differ from the training data.</p>
 </section>
+<section id="training-data-as-a-prior" class="level2">
+<h2 class="anchored" data-anchor-id="training-data-as-a-prior">Training Data As A Prior</h2>
+<p>Training data act like a prior, even when no regularization term is written down.</p>
+<p>A learned model is shaped by:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Training choice</th>
+<th>Prior effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>image family</td>
+<td>which structures are expected</td>
+</tr>
+<tr class="even">
+<td>degradation model</td>
+<td>which inverse problem is learned</td>
+</tr>
+<tr class="odd">
+<td>loss function</td>
+<td>which errors are penalized</td>
+</tr>
+<tr class="even">
+<td>augmentation</td>
+<td>which variations are treated as normal</td>
+</tr>
+<tr class="odd">
+<td>architecture</td>
+<td>which computations are easy for the model</td>
+</tr>
+</tbody>
+</table>
+<p>This does not make learned methods bad. It makes them honest mathematical objects: they encode assumptions, only in a different form from TV, wavelets, or Tikhonov.</p>
+<p>When evaluating a learned reconstruction, ask what the training process made likely. Then ask whether the test case belongs to that world.</p>
+</section>
 <section id="comparing-the-philosophies" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-the-philosophies">Comparing The Philosophies</h2>
 <table class="caption-top table">
@@ -734,6 +772,7 @@ A\hat{x}\approx y.
 <p>A first mistake is to think that data-driven methods do not use assumptions. They do. The assumptions are encoded in the data, architecture, loss, optimizer, and training procedure.</p>
 <p>A second mistake is to think that a visually impressive reconstruction is automatically correct. Visual plausibility and measurement consistency are different.</p>
 <p>A third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.</p>
+<p>A fourth mistake is to describe the network but not the training distribution. For learned imaging, the training set is part of the method.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -752,6 +791,7 @@ A\hat{x}\approx y.
 <li>What is distribution shift?</li>
 <li>Give one reason hallucinated structure is dangerous in scientific imaging.</li>
 <li>Explain why data consistency is still important for a supervised neural reconstruction method.</li>
+<li>In what sense can training data be viewed as a prior?</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -761,6 +801,7 @@ A\hat{x}\approx y.
 <li>Data-driven methods learn assumptions from examples.</li>
 <li>Neural networks are parameterized nonlinear operators.</li>
 <li>Learned methods can be powerful but depend on training data.</li>
+<li>Training data, loss, architecture, and augmentation encode assumptions.</li>
 <li>Modern imaging often combines physics, optimization, and learning.</li>
 <li>A learned reconstruction should be judged by both plausibility and consistency with measured data.</li>
 </ul>

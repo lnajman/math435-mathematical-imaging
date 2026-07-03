@@ -406,6 +406,7 @@ window.Quarto = {
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#what-to-document" id="toc-what-to-document" class="nav-link" data-scroll-target="#what-to-document">What To Document</a></li>
   <li><a href="#final-course-synthesis" id="toc-final-course-synthesis" class="nav-link" data-scroll-target="#final-course-synthesis">Final Course Synthesis</a></li>
+  <li><a href="#claim-versus-evidence" id="toc-claim-versus-evidence" class="nav-link" data-scroll-target="#claim-versus-evidence">Claim Versus Evidence</a></li>
   <li><a href="#project-checkpoint" id="toc-project-checkpoint" class="nav-link" data-scroll-target="#project-checkpoint">Project Checkpoint</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -831,6 +832,49 @@ A\hat{x}\approx y.
 </ul>
 <p>That is the path from mathematical imaging to neural imaging without losing scientific discipline.</p>
 </section>
+<section id="claim-versus-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="claim-versus-evidence">Claim Versus Evidence</h2>
+<p>The final habit is to match every claim to evidence.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Claim</th>
+<th>Evidence to provide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>the model fits the data</td>
+<td>residuals consistent with the noise model</td>
+</tr>
+<tr class="even">
+<td>the method is stable</td>
+<td>perturbation tests and parameter sweeps</td>
+</tr>
+<tr class="odd">
+<td>the prior is appropriate</td>
+<td>comparison across image families or known structures</td>
+</tr>
+<tr class="even">
+<td>the method improves reconstruction</td>
+<td>meaningful baselines and task-relevant metrics</td>
+</tr>
+<tr class="odd">
+<td>failures are understood</td>
+<td>documented failure cases and limitations</td>
+</tr>
+<tr class="even">
+<td>learned components generalize</td>
+<td>tests outside the training distribution</td>
+</tr>
+</tbody>
+</table>
+<p>This table is useful for the final project. It also protects against overclaiming. A reconstruction can be visually impressive while only supporting a modest claim. Conversely, a simple method with clear evidence may be more trustworthy than a complex method with only a polished example.</p>
+</section>
 <section id="project-checkpoint" class="level2">
 <h2 class="anchored" data-anchor-id="project-checkpoint">Project Checkpoint</h2>
 <p>By the end of the course project, your report should include:</p>
@@ -879,6 +923,7 @@ A\hat{x}\approx y.
 <li><p><strong>Small-feature test.</strong> Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.</p></li>
 <li><p><strong>Ethics paragraph.</strong> Write five sentences explaining when your method should not be used.</p></li>
 <li><p><strong>Uncertainty statement.</strong> Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.</p></li>
+<li><p><strong>Claim-evidence table.</strong> Write three claims about your project results and list the evidence that supports each one.</p></li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -888,6 +933,7 @@ A\hat{x}\approx y.
 <li>A good-looking image can still be unreliable.</li>
 <li>Learned priors inherit assumptions from training data.</li>
 <li>Robustness must be tested across realistic and stressful cases.</li>
+<li>Every reconstruction claim should be matched with evidence.</li>
 <li>Ethical reconstruction means documenting assumptions, failures, and limits.</li>
 <li>The final goal is not only reconstruction, but trustworthy reconstruction.</li>
 </ul>

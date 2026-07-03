@@ -392,6 +392,7 @@ window.Quarto = {
   <li><a href="#non-uniqueness" id="toc-non-uniqueness" class="nav-link" data-scroll-target="#non-uniqueness">Non-Uniqueness</a></li>
   <li><a href="#masking-versus-occlusion" id="toc-masking-versus-occlusion" class="nav-link" data-scroll-target="#masking-versus-occlusion">Masking Versus Occlusion</a></li>
   <li><a href="#nullspace-language" id="toc-nullspace-language" class="nav-link" data-scroll-target="#nullspace-language">Nullspace Language</a></li>
+  <li><a href="#what-the-data-determine" id="toc-what-the-data-determine" class="nav-link" data-scroll-target="#what-the-data-determine">What The Data Determine</a></li>
   <li><a href="#stability" id="toc-stability" class="nav-link" data-scroll-target="#stability">Stability</a></li>
   <li><a href="#imaging-instability" id="toc-imaging-instability" class="nav-link" data-scroll-target="#imaging-instability">Imaging Instability</a></li>
   <li><a href="#singular-values" id="toc-singular-values" class="nav-link" data-scroll-target="#singular-values">Singular Values</a></li>
@@ -439,6 +440,7 @@ window.Quarto = {
 <li>identify non-uniqueness in missing-data imaging;</li>
 <li>distinguish missing recorded pixels from physical occlusion;</li>
 <li>explain stability and instability;</li>
+<li>separate data-supported information from prior-selected information;</li>
 <li>interpret small singular values as noise-amplifying directions.</li>
 </ul>
 </section>
@@ -580,6 +582,43 @@ D(y,Ax)=D(y,A(x+z)).
 <p>To choose between possible reconstructions, we need extra information: smoothness, sparsity, edge preservation, training data, physical constraints, or some other modeling assumption.</p>
 <p>This is the role of a prior. A prior does not create measured information. It ranks possible explanations. A smoothness prior prefers smooth completions. A sparsity prior prefers images with a concise representation. A learned prior prefers images that resemble the training distribution.</p>
 <p>The strength and danger of priors are the same: they make choices. A good prior can stabilize an impossible problem. A bad or mismatched prior can hallucinate structure, erase unusual details, or make a reconstruction look more certain than the data justify.</p>
+</section>
+<section id="what-the-data-determine" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-data-determine">What The Data Determine</h2>
+<p>Ill-posedness forces a useful question:</p>
+<blockquote class="blockquote">
+<p>Which parts of the reconstruction are determined by the data, and which parts are selected by the prior?</p>
+</blockquote>
+<p>For a well-observed direction, the data strongly constrain the answer. For a nullspace direction, the data do not constrain the answer at all. For a weak singular direction, the data contain some information, but it is fragile because noise and model error are amplified.</p>
+<p>This gives three regimes:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Direction type</th>
+<th>Data support</th>
+<th>Reconstruction risk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>strongly observed</td>
+<td>high</td>
+<td>usually reliable if the model is correct</td>
+</tr>
+<tr class="even">
+<td>weakly observed</td>
+<td>partial</td>
+<td>sensitive to noise and regularization</td>
+</tr>
+<tr class="odd">
+<td>invisible/nullspace</td>
+<td>none</td>
+<td>chosen entirely by assumptions</td>
+</tr>
+</tbody>
+</table>
+<p>This table is a better mental model than asking whether a method “recovers” the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.</p>
+<p>For learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.</p>
 </section>
 <section id="stability" class="level2">
 <h2 class="anchored" data-anchor-id="stability">Stability</h2>
@@ -747,6 +786,7 @@ y^\delta=Ax+\eta,
 <p>A first mistake is to say that an inverse problem is hard only because the matrix is large. Size can make computation difficult, but ill-posedness is different. A tiny matrix with a very small singular value can be unstable.</p>
 <p>A second mistake is to believe that if an image looks plausible, it must have been recovered from the data. Plausibility may come from a prior or training set. This can be useful, but it should not be confused with measured evidence.</p>
 <p>A third mistake is to collapse all missing information into the word “masking.” Recorded-pixel masking and physical occlusion can both create missing information, but they describe different imaging processes.</p>
+<p>A fourth mistake is to treat every pixel in a reconstruction as equally supported by the data. Ill-posedness is directional: some structures are well observed, some are weakly observed, and some are not observed at all.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -765,6 +805,7 @@ y^\delta=Ax+\eta,
 <li>For singular values <span class="math inline">1,0.7,0.3,0.02,0.0001</span>, identify the dangerous directions to invert.</li>
 <li>Explain in your own words why direct deblurring can fail even when the blur model is known.</li>
 <li>Explain how a learned prior can help an ill-posed inverse problem, and give one risk of using such a prior.</li>
+<li>Give an example of a reconstruction feature that might be data-supported and one that might be prior-selected.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -773,6 +814,7 @@ y^\delta=Ax+\eta,
 <li>Ill-posedness is a structural issue, not merely a computational inconvenience.</li>
 <li>Hadamard’s conditions are existence, uniqueness, and stability.</li>
 <li>Missing information causes non-uniqueness.</li>
+<li>A reconstruction can contain both data-supported and prior-selected structures.</li>
 <li>Small singular values cause instability because inverse formulas divide by them.</li>
 <li>Regularization is motivated by the need for stable reconstruction.</li>
 <li>Neural reconstruction methods can be understood as learned ways to choose or stabilize solutions.</li>

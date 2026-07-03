@@ -390,6 +390,7 @@ window.Quarto = {
   <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#energy-as-a-model" id="toc-energy-as-a-model" class="nav-link" data-scroll-target="#energy-as-a-model">Energy As A Model</a></li>
   <li><a href="#the-three-modeling-choices" id="toc-the-three-modeling-choices" class="nav-link" data-scroll-target="#the-three-modeling-choices">The Three Modeling Choices</a></li>
+  <li><a href="#reading-an-energy-as-an-audit-trail" id="toc-reading-an-energy-as-an-audit-trail" class="nav-link" data-scroll-target="#reading-an-energy-as-an-audit-trail">Reading An Energy As An Audit Trail</a></li>
   <li><a href="#a-first-variational-denoising-model" id="toc-a-first-variational-denoising-model" class="nav-link" data-scroll-target="#a-first-variational-denoising-model">A First Variational Denoising Model</a></li>
   <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
   <li><a href="#euler-lagrange-equation" id="toc-euler-lagrange-equation" class="nav-link" data-scroll-target="#euler-lagrange-equation">Euler-Lagrange Equation</a></li>
@@ -438,6 +439,7 @@ window.Quarto = {
 <li>interpret reconstruction as energy minimization;</li>
 <li>separate data fidelity and regularization;</li>
 <li>explain why convexity matters;</li>
+<li>read an energy functional as a record of modeling choices;</li>
 <li>derive the Euler-Lagrange equation for a quadratic smoothing model;</li>
 <li>connect optimality equations to gradient descent.</li>
 </ul>
@@ -559,6 +561,43 @@ D(y,f(x))+\lambda R(x),
 </tbody>
 </table>
 <p>The optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.</p>
+</section>
+<section id="reading-an-energy-as-an-audit-trail" class="level2">
+<h2 class="anchored" data-anchor-id="reading-an-energy-as-an-audit-trail">Reading An Energy As An Audit Trail</h2>
+<p>An energy functional is an audit trail for the reconstruction.</p>
+<p>For example,</p>
+<p><span class="math display">
+E(x)=D(Ax,y)+\lambda R(x)
+</span></p>
+<p>records at least four choices:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>What it records</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">A</span></td>
+<td>what measurement process is assumed</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">D</span></td>
+<td>what noise or discrepancy model is assumed</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">R</span></td>
+<td>what image structures are preferred</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\lambda</span></td>
+<td>how data fit and prior are balanced</td>
+</tr>
+</tbody>
+</table>
+<p>This is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.</p>
+<p>Learned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.</p>
 </section>
 <section id="a-first-variational-denoising-model" class="level2">
 <h2 class="anchored" data-anchor-id="a-first-variational-denoising-model">A First Variational Denoising Model</h2>
@@ -792,6 +831,7 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 <p>A first mistake is to think that an energy is objective truth. An energy is a model. It encodes choices, approximations, and priorities.</p>
 <p>A second mistake is to confuse the minimizer of an energy with the true image. If the energy is poorly matched to the data or the task, the minimizer can be clean and wrong.</p>
 <p>A third mistake is to ignore boundary conditions. Many artifacts near image borders come from assumptions made silently by convolution, finite differences, or Fourier transforms.</p>
+<p>A fourth mistake is to discuss a reconstruction without naming the energy or loss that produced it. Without that, the assumptions are difficult to inspect.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -810,6 +850,7 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 <li>Explain why the Euler-Lagrange equation for quadratic denoising is <span class="math inline">u-\lambda\Delta u=y</span>.</li>
 <li>In gradient descent, what can go wrong if the step size is too large?</li>
 <li>Explain how a neural reconstruction method can be described using the same roles as a variational model, even when the regularizer is learned.</li>
+<li>For an energy of the form <span class="math inline">D(Ax,y)+\lambda R(x)</span>, list the modeling assumptions associated with <span class="math inline">A</span>, <span class="math inline">D</span>, <span class="math inline">R</span>, and <span class="math inline">\lambda</span>.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -819,6 +860,7 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 <li>Energies combine data fidelity and regularization.</li>
 <li>Convexity gives a safer optimization landscape.</li>
 <li>Euler-Lagrange equations express first-order optimality.</li>
+<li>An energy functional is also a record of assumptions.</li>
 <li>Quadratic smoothness is clear and useful, but it blurs edges.</li>
 <li>Variational thinking provides a vocabulary for learned priors and unrolled neural reconstruction.</li>
 </ul>

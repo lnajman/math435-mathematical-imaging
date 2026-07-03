@@ -397,6 +397,7 @@ window.Quarto = {
   <li><a href="#choosing-the-tv-weight" id="toc-choosing-the-tv-weight" class="nav-link" data-scroll-target="#choosing-the-tv-weight">Choosing The TV Weight</a></li>
   <li><a href="#staircasing" id="toc-staircasing" class="nav-link" data-scroll-target="#staircasing">Staircasing</a></li>
   <li><a href="#strengths-and-weaknesses" id="toc-strengths-and-weaknesses" class="nav-link" data-scroll-target="#strengths-and-weaknesses">Strengths And Weaknesses</a></li>
+  <li><a href="#edge-preservation-is-not-truth" id="toc-edge-preservation-is-not-truth" class="nav-link" data-scroll-target="#edge-preservation-is-not-truth">Edge Preservation Is Not Truth</a></li>
   <li><a href="#tv-and-learned-priors" id="toc-tv-and-learned-priors" class="nav-link" data-scroll-target="#tv-and-learned-priors">TV And Learned Priors</a></li>
   <li><a href="#course-checkpoint" id="toc-course-checkpoint" class="nav-link" data-scroll-target="#course-checkpoint">Course Checkpoint</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
@@ -438,6 +439,7 @@ window.Quarto = {
 <li>compare TV with quadratic smoothness;</li>
 <li>explain why TV preserves edges better;</li>
 <li>identify staircasing artifacts;</li>
+<li>distinguish edge preservation from semantic correctness;</li>
 <li>use TV as a modeling prior for image denoising.</li>
 </ul>
 </section>
@@ -644,6 +646,39 @@ D_{\text{Poisson}}(y,u)
 <p>TV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.</p>
 <p>This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.</p>
 </section>
+<section id="edge-preservation-is-not-truth" class="level2">
+<h2 class="anchored" data-anchor-id="edge-preservation-is-not-truth">Edge Preservation Is Not Truth</h2>
+<p>TV is attractive because it can preserve sharp transitions. But an edge-preserving reconstruction is not automatically a true reconstruction.</p>
+<p>There are three different claims:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Claim</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>the method preserves edges</td>
+<td>large gradients are not penalized as aggressively as in quadratic smoothing</td>
+</tr>
+<tr class="even">
+<td>the edge is data-supported</td>
+<td>the measured data contain evidence for that transition</td>
+</tr>
+<tr class="odd">
+<td>the edge is meaningful</td>
+<td>the transition corresponds to a real structure for the task</td>
+</tr>
+</tbody>
+</table>
+<p>TV mostly addresses the first claim. The second claim requires checking the forward model and residual. The third claim may require domain knowledge.</p>
+<p>This distinction matters in scientific and medical imaging. A sharp boundary can improve interpretation when it is real. It can also mislead when it is an artifact of the prior, parameter choice, or preprocessing.</p>
+</section>
 <section id="tv-and-learned-priors" class="level2">
 <h2 class="anchored" data-anchor-id="tv-and-learned-priors">TV And Learned Priors</h2>
 <p>TV is a hand-designed prior. It expresses a clear belief: good images often have sparse gradients. Neural priors are usually less explicit. They may learn from many examples that natural images contain edges, textures, repeated patterns, object shapes, and correlations across distant regions.</p>
@@ -699,6 +734,7 @@ D_{\text{Poisson}}(y,u)
 <p>A first mistake is to say that TV preserves all edges. TV preserves some strong transitions better than quadratic smoothing, but weak edges can still disappear and noise edges can remain.</p>
 <p>A second mistake is to think that TV is always more accurate because it looks sharper. Sharpness is not the same as truth.</p>
 <p>A third mistake is to ignore staircasing. If the true image contains smooth shading, TV may replace it with artificial plateaus.</p>
+<p>A fourth mistake is to equate sharpness with evidence. A sharp edge still needs support from the measured data.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -717,6 +753,7 @@ D_{\text{Poisson}}(y,u)
 <li>Explain why TV preserves edges better than quadratic smoothing.</li>
 <li>Describe staircasing and give one situation where it would be undesirable.</li>
 <li>Compare TV as a hand-designed prior with a learned prior. Give one advantage and one risk of each.</li>
+<li>Give an example where an edge-preserving method could create a misleading result.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -725,6 +762,7 @@ D_{\text{Poisson}}(y,u)
 <li>Total Variation uses <span class="math inline">\operatorname{TV}(u)=\int_\Omega |\nabla u|\,dx</span>.</li>
 <li>TV favors images with small total change.</li>
 <li>Compared with l2 smoothing, TV preserves stronger edges.</li>
+<li>Edge preservation is not the same as proof that an edge is real.</li>
 <li>TV is convex but nonsmooth.</li>
 <li>TV can create staircasing artifacts, so it is not always the right prior.</li>
 <li>TV is an interpretable prior, useful both practically and as a reference point for learned priors.</li>

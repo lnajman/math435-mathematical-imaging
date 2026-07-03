@@ -397,6 +397,7 @@ window.Quarto = {
   <li><a href="#deblurring-example" id="toc-deblurring-example" class="nav-link" data-scroll-target="#deblurring-example">Deblurring Example</a></li>
   <li><a href="#fixed-points" id="toc-fixed-points" class="nav-link" data-scroll-target="#fixed-points">Fixed Points</a></li>
   <li><a href="#convergence-and-trust" id="toc-convergence-and-trust" class="nav-link" data-scroll-target="#convergence-and-trust">Convergence And Trust</a></li>
+  <li><a href="#denoiser-strength-as-regularization" id="toc-denoiser-strength-as-regularization" class="nav-link" data-scroll-target="#denoiser-strength-as-regularization">Denoiser Strength As Regularization</a></li>
   <li><a href="#failure-modes" id="toc-failure-modes" class="nav-link" data-scroll-target="#failure-modes">Failure Modes</a></li>
   <li><a href="#what-students-should-trust" id="toc-what-students-should-trust" class="nav-link" data-scroll-target="#what-students-should-trust">What Students Should Trust</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
@@ -673,6 +674,20 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 </ul>
 <p>The goal is to understand not only whether the output looks good, but whether the algorithm is behaving consistently.</p>
 </section>
+<section id="denoiser-strength-as-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="denoiser-strength-as-regularization">Denoiser Strength As Regularization</h2>
+<p>The denoiser strength plays a role similar to a regularization parameter.</p>
+<p>Weak denoising trusts the data-consistency step more and leaves more artifacts. Strong denoising trusts the image prior more and may remove structures that the measurements support.</p>
+<p>In plug-and-play, this balance is especially delicate because the denoiser may not correspond to an explicit penalty <span class="math inline">R(x)</span>. The parameter still changes the implicit prior. Therefore it should be swept and reported, just like <span class="math inline">\lambda</span> in Tikhonov or TV.</p>
+<p>When reading PnP results, compare:</p>
+<ul>
+<li>the image quality;</li>
+<li>the data residual;</li>
+<li>the fixed-point change;</li>
+<li>sensitivity to denoiser strength;</li>
+<li>behavior on images outside the denoiser’s training distribution.</li>
+</ul>
+</section>
 <section id="failure-modes" class="level2">
 <h2 class="anchored" data-anchor-id="failure-modes">Failure Modes</h2>
 <div class="figure">
@@ -734,6 +749,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <p>A first mistake is to think PnP is just denoising after reconstruction. It is not. The denoiser is inserted inside the reconstruction loop, alternating with data consistency.</p>
 <p>A second mistake is to think a stronger denoiser is always better. Strong denoising can erase true structures or pull the image away from the data.</p>
 <p>A third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.</p>
+<p>A fourth mistake is to report one denoiser strength without showing how sensitive the conclusion is to that choice.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -752,6 +768,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>What is a fixed point of the PnP iteration?</li>
 <li>Give two safeguards for using learned denoisers in high-stakes imaging.</li>
 <li>Explain the difference between convergence of a PnP iteration and correctness of the reconstruction.</li>
+<li>Explain why denoiser strength should be swept like a regularization parameter.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -761,6 +778,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>The denoiser acts as an implicit prior.</li>
 <li>Learned denoisers can improve reconstructions when data match training.</li>
 <li>PnP needs careful validation because objective and convergence guarantees change.</li>
+<li>Denoiser strength controls an implicit regularization tradeoff.</li>
 <li>Always check both image quality and consistency with measurements.</li>
 <li>Hybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.</li>
 </ul>

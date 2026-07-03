@@ -2525,6 +2525,18 @@
     ]
   },
   {
+    "objectID": "book/week-14-stability-robustness-ethics.html#claim-versus-evidence",
+    "href": "book/week-14-stability-robustness-ethics.html#claim-versus-evidence",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Claim Versus Evidence",
+    "text": "Claim Versus Evidence\nThe final habit is to match every claim to evidence.\n\n\n\n\n\n\n\nClaim\nEvidence to provide\n\n\n\n\nthe model fits the data\nresiduals consistent with the noise model\n\n\nthe method is stable\nperturbation tests and parameter sweeps\n\n\nthe prior is appropriate\ncomparison across image families or known structures\n\n\nthe method improves reconstruction\nmeaningful baselines and task-relevant metrics\n\n\nfailures are understood\ndocumented failure cases and limitations\n\n\nlearned components generalize\ntests outside the training distribution\n\n\n\nThis table is useful for the final project. It also protects against overclaiming. A reconstruction can be visually impressive while only supporting a modest claim. Conversely, a simple method with clear evidence may be more trustworthy than a complex method with only a polished example.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
     "objectID": "book/week-14-stability-robustness-ethics.html#project-checkpoint",
     "href": "book/week-14-stability-robustness-ethics.html#project-checkpoint",
     "title": "Stability, Robustness, and Ethics",
@@ -2553,7 +2565,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#exercises",
     "title": "Stability, Robustness, and Ethics",
     "section": "Exercises",
-    "text": "Exercises\n\nParameter sensitivity. Choose two nearby values of \\lambda in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.\nPerturbation test. Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.\nRobustness table. For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.\nSmall-feature test. Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.\nEthics paragraph. Write five sentences explaining when your method should not be used.\nUncertainty statement. Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.",
+    "text": "Exercises\n\nParameter sensitivity. Choose two nearby values of \\lambda in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.\nPerturbation test. Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.\nRobustness table. For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.\nSmall-feature test. Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.\nEthics paragraph. Write five sentences explaining when your method should not be used.\nUncertainty statement. Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.\nClaim-evidence table. Write three claims about your project results and list the evidence that supports each one.",
     "crumbs": [
       "Book",
       "Part V: Reliability",
@@ -2565,7 +2577,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#takeaways",
     "title": "Stability, Robustness, and Ethics",
     "section": "Takeaways",
-    "text": "Takeaways\n\nIll-posed inverse problems require stability checks.\nA good-looking image can still be unreliable.\nLearned priors inherit assumptions from training data.\nRobustness must be tested across realistic and stressful cases.\nEthical reconstruction means documenting assumptions, failures, and limits.\nThe final goal is not only reconstruction, but trustworthy reconstruction.",
+    "text": "Takeaways\n\nIll-posed inverse problems require stability checks.\nA good-looking image can still be unreliable.\nLearned priors inherit assumptions from training data.\nRobustness must be tested across realistic and stressful cases.\nEvery reconstruction claim should be matched with evidence.\nEthical reconstruction means documenting assumptions, failures, and limits.\nThe final goal is not only reconstruction, but trustworthy reconstruction.",
     "crumbs": [
       "Book",
       "Part V: Reliability",
@@ -2729,6 +2741,18 @@
     ]
   },
   {
+    "objectID": "book/week-12-model-data.html#training-data-as-a-prior",
+    "href": "book/week-12-model-data.html#training-data-as-a-prior",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Training Data As A Prior",
+    "text": "Training Data As A Prior\nTraining data act like a prior, even when no regularization term is written down.\nA learned model is shaped by:\n\n\n\nTraining choice\nPrior effect\n\n\n\n\nimage family\nwhich structures are expected\n\n\ndegradation model\nwhich inverse problem is learned\n\n\nloss function\nwhich errors are penalized\n\n\naugmentation\nwhich variations are treated as normal\n\n\narchitecture\nwhich computations are easy for the model\n\n\n\nThis does not make learned methods bad. It makes them honest mathematical objects: they encode assumptions, only in a different form from TV, wavelets, or Tikhonov.\nWhen evaluating a learned reconstruction, ask what the training process made likely. Then ask whether the test case belongs to that world.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
     "objectID": "book/week-12-model-data.html#comparing-the-philosophies",
     "href": "book/week-12-model-data.html#comparing-the-philosophies",
     "title": "Model-Based vs Data-Driven Imaging",
@@ -2769,7 +2793,7 @@
     "href": "book/week-12-model-data.html#common-mistakes",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to think that data-driven methods do not use assumptions. They do. The assumptions are encoded in the data, architecture, loss, optimizer, and training procedure.\nA second mistake is to think that a visually impressive reconstruction is automatically correct. Visual plausibility and measurement consistency are different.\nA third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.",
+    "text": "Common Mistakes\nA first mistake is to think that data-driven methods do not use assumptions. They do. The assumptions are encoded in the data, architecture, loss, optimizer, and training procedure.\nA second mistake is to think that a visually impressive reconstruction is automatically correct. Visual plausibility and measurement consistency are different.\nA third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.\nA fourth mistake is to describe the network but not the training distribution. For learned imaging, the training set is part of the method.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2793,7 +2817,7 @@
     "href": "book/week-12-model-data.html#exercises",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat does a model-based method specify explicitly?\nWhat does a data-driven method learn from examples?\nWhy is a neural network a nonlinear operator?\nWhat is distribution shift?\nGive one reason hallucinated structure is dangerous in scientific imaging.\nExplain why data consistency is still important for a supervised neural reconstruction method.",
+    "text": "Exercises\n\nWhat does a model-based method specify explicitly?\nWhat does a data-driven method learn from examples?\nWhy is a neural network a nonlinear operator?\nWhat is distribution shift?\nGive one reason hallucinated structure is dangerous in scientific imaging.\nExplain why data consistency is still important for a supervised neural reconstruction method.\nIn what sense can training data be viewed as a prior?",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2805,7 +2829,7 @@
     "href": "book/week-12-model-data.html#takeaways",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Takeaways",
-    "text": "Takeaways\n\nModel-based methods write assumptions explicitly.\nData-driven methods learn assumptions from examples.\nNeural networks are parameterized nonlinear operators.\nLearned methods can be powerful but depend on training data.\nModern imaging often combines physics, optimization, and learning.\nA learned reconstruction should be judged by both plausibility and consistency with measured data.",
+    "text": "Takeaways\n\nModel-based methods write assumptions explicitly.\nData-driven methods learn assumptions from examples.\nNeural networks are parameterized nonlinear operators.\nLearned methods can be powerful but depend on training data.\nTraining data, loss, architecture, and augmentation encode assumptions.\nModern imaging often combines physics, optimization, and learning.\nA learned reconstruction should be judged by both plausibility and consistency with measured data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2957,6 +2981,18 @@
     ]
   },
   {
+    "objectID": "book/week-10-sparse-reconstruction.html#sparsity-is-evidence-only-with-a-model",
+    "href": "book/week-10-sparse-reconstruction.html#sparsity-is-evidence-only-with-a-model",
+    "title": "Sparse Reconstruction",
+    "section": "Sparsity Is Evidence Only With A Model",
+    "text": "Sparsity Is Evidence Only With A Model\nA sparse reconstruction is persuasive only when the sparse model is appropriate.\nThe statement “this image has a sparse representation” is incomplete. We must ask:\n\nsparse in which representation?\nunder which measurement operator?\nat what noise level?\nwith what regularization weight?\nfor which image class?\n\nIf the representation matches the image and the measurements are informative enough, sparsity can strongly stabilize reconstruction. If the representation is mismatched, sparsity can select the wrong explanation with great confidence.\nThis is the same lesson as before, now in coefficient language. The data term checks the measurement. The sparse prior chooses among images that fit the measurement. The reconstruction should not be trusted unless both parts are reasonable.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "10. Sparse reconstruction"
+    ]
+  },
+  {
     "objectID": "book/week-10-sparse-reconstruction.html#l1-versus-l2",
     "href": "book/week-10-sparse-reconstruction.html#l1-versus-l2",
     "title": "Sparse Reconstruction",
@@ -2985,7 +3021,7 @@
     "href": "book/week-10-sparse-reconstruction.html#common-mistakes",
     "title": "Sparse Reconstruction",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to say that sparsity is an intrinsic property of an image. Sparsity depends on the representation.\nA second mistake is to believe that l1 always recovers the true sparse signal. Recovery depends on the measurement operator, noise level, sparsity level, and parameter choice.\nA third mistake is to equate compression quality with reconstruction reliability. A representation that compresses natural images well may still fail for a particular inverse problem if the measurements do not contain the right information.",
+    "text": "Common Mistakes\nA first mistake is to say that sparsity is an intrinsic property of an image. Sparsity depends on the representation.\nA second mistake is to believe that l1 always recovers the true sparse signal. Recovery depends on the measurement operator, noise level, sparsity level, and parameter choice.\nA third mistake is to equate compression quality with reconstruction reliability. A representation that compresses natural images well may still fail for a particular inverse problem if the measurements do not contain the right information.\nA fourth mistake is to forget that sparsity is a claim about coefficients, not automatically a claim about truth in the scene.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -3009,7 +3045,7 @@
     "href": "book/week-10-sparse-reconstruction.html#exercises",
     "title": "Sparse Reconstruction",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat does it mean for a vector to be k-sparse?\nWhy is sparsity representation-dependent for images?\nExplain why l1 regularization promotes exact zeros.\nGive one reason l1 recovery can fail even when the true signal is sparse.\nIn the sparse DCT image model, what are the roles of M, D^{-1}, and c?\nExplain how sparse reconstruction anticipates learned representations in neural imaging.",
+    "text": "Exercises\n\nWhat does it mean for a vector to be k-sparse?\nWhy is sparsity representation-dependent for images?\nExplain why l1 regularization promotes exact zeros.\nGive one reason l1 recovery can fail even when the true signal is sparse.\nIn the sparse DCT image model, what are the roles of M, D^{-1}, and c?\nExplain how sparse reconstruction anticipates learned representations in neural imaging.\nExplain why sparse coefficients are useful evidence only after a representation and measurement model have been chosen.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -3021,7 +3057,7 @@
     "href": "book/week-10-sparse-reconstruction.html#takeaways",
     "title": "Sparse Reconstruction",
     "section": "Takeaways",
-    "text": "Takeaways\n\nSparsity means few nonzero or significant coefficients.\nImages are sparse only after choosing a representation.\nl1 is a convex surrogate for sparse selection.\nl1 and l2 encode different priors.\nSparse reconstruction works when the measurement model and sparse representation are compatible.\nLearned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.",
+    "text": "Takeaways\n\nSparsity means few nonzero or significant coefficients.\nImages are sparse only after choosing a representation.\nl1 is a convex surrogate for sparse selection.\nl1 and l2 encode different priors.\nSparse reconstruction works when the measurement model and sparse representation are compatible.\nSparsity can stabilize reconstruction, but a mismatched representation can select the wrong explanation.\nLearned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -3045,7 +3081,7 @@
     "href": "book/week-08-total-variation.html#learning-goals",
     "title": "Total Variation Regularization",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndefine Total Variation;\ncompare TV with quadratic smoothness;\nexplain why TV preserves edges better;\nidentify staircasing artifacts;\nuse TV as a modeling prior for image denoising.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndefine Total Variation;\ncompare TV with quadratic smoothness;\nexplain why TV preserves edges better;\nidentify staircasing artifacts;\ndistinguish edge preservation from semantic correctness;\nuse TV as a modeling prior for image denoising.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -3185,6 +3221,18 @@
     ]
   },
   {
+    "objectID": "book/week-08-total-variation.html#edge-preservation-is-not-truth",
+    "href": "book/week-08-total-variation.html#edge-preservation-is-not-truth",
+    "title": "Total Variation Regularization",
+    "section": "Edge Preservation Is Not Truth",
+    "text": "Edge Preservation Is Not Truth\nTV is attractive because it can preserve sharp transitions. But an edge-preserving reconstruction is not automatically a true reconstruction.\nThere are three different claims:\n\n\n\n\n\n\n\nClaim\nMeaning\n\n\n\n\nthe method preserves edges\nlarge gradients are not penalized as aggressively as in quadratic smoothing\n\n\nthe edge is data-supported\nthe measured data contain evidence for that transition\n\n\nthe edge is meaningful\nthe transition corresponds to a real structure for the task\n\n\n\nTV mostly addresses the first claim. The second claim requires checking the forward model and residual. The third claim may require domain knowledge.\nThis distinction matters in scientific and medical imaging. A sharp boundary can improve interpretation when it is real. It can also mislead when it is an artifact of the prior, parameter choice, or preprocessing.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
     "objectID": "book/week-08-total-variation.html#tv-and-learned-priors",
     "href": "book/week-08-total-variation.html#tv-and-learned-priors",
     "title": "Total Variation Regularization",
@@ -3213,7 +3261,7 @@
     "href": "book/week-08-total-variation.html#common-mistakes",
     "title": "Total Variation Regularization",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to say that TV preserves all edges. TV preserves some strong transitions better than quadratic smoothing, but weak edges can still disappear and noise edges can remain.\nA second mistake is to think that TV is always more accurate because it looks sharper. Sharpness is not the same as truth.\nA third mistake is to ignore staircasing. If the true image contains smooth shading, TV may replace it with artificial plateaus.",
+    "text": "Common Mistakes\nA first mistake is to say that TV preserves all edges. TV preserves some strong transitions better than quadratic smoothing, but weak edges can still disappear and noise edges can remain.\nA second mistake is to think that TV is always more accurate because it looks sharper. Sharpness is not the same as truth.\nA third mistake is to ignore staircasing. If the true image contains smooth shading, TV may replace it with artificial plateaus.\nA fourth mistake is to equate sharpness with evidence. A sharp edge still needs support from the measured data.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -3237,7 +3285,7 @@
     "href": "book/week-08-total-variation.html#exercises",
     "title": "Total Variation Regularization",
     "section": "Exercises",
-    "text": "Exercises\n\nWrite the continuous definition of \\operatorname{TV}(u).\nWrite the discrete isotropic TV formula using D_xu_i and D_yu_i.\nCompare the quadratic and TV costs for gradient values g=1 and g=4.\nExplain why TV preserves edges better than quadratic smoothing.\nDescribe staircasing and give one situation where it would be undesirable.\nCompare TV as a hand-designed prior with a learned prior. Give one advantage and one risk of each.",
+    "text": "Exercises\n\nWrite the continuous definition of \\operatorname{TV}(u).\nWrite the discrete isotropic TV formula using D_xu_i and D_yu_i.\nCompare the quadratic and TV costs for gradient values g=1 and g=4.\nExplain why TV preserves edges better than quadratic smoothing.\nDescribe staircasing and give one situation where it would be undesirable.\nCompare TV as a hand-designed prior with a learned prior. Give one advantage and one risk of each.\nGive an example where an edge-preserving method could create a misleading result.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -3249,7 +3297,7 @@
     "href": "book/week-08-total-variation.html#takeaways",
     "title": "Total Variation Regularization",
     "section": "Takeaways",
-    "text": "Takeaways\n\nTotal Variation uses \\operatorname{TV}(u)=\\int_\\Omega |\\nabla u|\\,dx.\nTV favors images with small total change.\nCompared with l2 smoothing, TV preserves stronger edges.\nTV is convex but nonsmooth.\nTV can create staircasing artifacts, so it is not always the right prior.\nTV is an interpretable prior, useful both practically and as a reference point for learned priors.",
+    "text": "Takeaways\n\nTotal Variation uses \\operatorname{TV}(u)=\\int_\\Omega |\\nabla u|\\,dx.\nTV favors images with small total change.\nCompared with l2 smoothing, TV preserves stronger edges.\nEdge preservation is not the same as proof that an edge is real.\nTV is convex but nonsmooth.\nTV can create staircasing artifacts, so it is not always the right prior.\nTV is an interpretable prior, useful both practically and as a reference point for learned priors.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -3273,7 +3321,7 @@
     "href": "book/week-06-tikhonov-regularization.html#learning-goals",
     "title": "Tikhonov Regularization",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nformulate Tikhonov regularization;\nderive the normal equations;\ninterpret the regularization parameter \\lambda;\nread Tikhonov filter factors;\nexplain the bias-stability tradeoff.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nformulate Tikhonov regularization;\nderive the normal equations;\ninterpret the regularization parameter \\lambda;\nread Tikhonov filter factors;\naudit whether \\lambda is under- or over-regularizing;\nexplain the bias-stability tradeoff.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3389,11 +3437,35 @@
     ]
   },
   {
+    "objectID": "book/week-06-tikhonov-regularization.html#lambda-as-a-trust-parameter",
+    "href": "book/week-06-tikhonov-regularization.html#lambda-as-a-trust-parameter",
+    "title": "Tikhonov Regularization",
+    "section": "Lambda As A Trust Parameter",
+    "text": "Lambda As A Trust Parameter\nThe regularization parameter can be read as a trust parameter.\nSmall \\lambda trusts the data fit strongly, including components that may be mostly noise. Large \\lambda trusts the prior strongly, including the possibility that the prior suppresses true structure.\nThis is not a moral choice between data and prior. Both are needed. The question is how much confidence the data deserve in each situation.\n\n\n\n\n\n\n\n\n\nRegime\nData residual\nImage appearance\nRisk\n\n\n\n\ntoo small \\lambda\nvery small\nnoisy or oscillatory\nfits noise and unstable directions\n\n\nmoderate \\lambda\ncompatible with noise level\nstructure preserved, artifacts controlled\ntask-dependent compromise\n\n\ntoo large \\lambda\nunnecessarily large\nover-smoothed or low contrast\nignores measured detail\n\n\n\nThe middle row does not mean perfect truth. It means the reconstruction is using the data and prior in a defensible balance.\nIn projects and notebooks, this is why a parameter sweep is more informative than a single chosen image. A sweep shows whether the conclusion is stable across a reasonable range or whether it depends on one fragile value.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "6. Tikhonov regularization"
+    ]
+  },
+  {
     "objectID": "book/week-06-tikhonov-regularization.html#bias-and-variance",
     "href": "book/week-06-tikhonov-regularization.html#bias-and-variance",
     "title": "Tikhonov Regularization",
     "section": "Bias And Variance",
     "text": "Bias And Variance\nImagine repeating the noisy measurement many times.\nBias is systematic error from the average reconstruction. Variance is random variation across noise realizations.\n\n\nRegularization trades variance for bias.\n\nIncreasing \\lambda usually reduces variance and increases bias. The best mean squared error often lies between the extremes.\nThe error can be large for two opposite reasons:\n\nif \\lambda is too small, noise amplification remains;\nif \\lambda is too large, the reconstruction is over-smoothed and biased.\n\nThis language will reappear when we discuss learned methods. A neural network can also reduce variance by restricting reconstructions to images that look familiar from training data. But that restriction can introduce bias: unusual structures may be suppressed because they are not well represented in the training set.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "6. Tikhonov regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-06-tikhonov-regularization.html#residual-checks",
+    "href": "book/week-06-tikhonov-regularization.html#residual-checks",
+    "title": "Tikhonov Regularization",
+    "section": "Residual Checks",
+    "text": "Residual Checks\nA regularized reconstruction should not be judged only by the image. The residual\n\nr_\\lambda = Ax_\\lambda-y\n\nalso contains information.\nIf the residual is much smaller than the expected noise level, the method may be fitting noise. If the residual is much larger than expected, the method may be over-regularized, using a wrong forward model, or using a prior that is too restrictive.\nThe residual is not a proof of correctness. In an ill-posed problem, many images can have similar residuals. But residual checks help separate three different situations:\n\nthe reconstruction does not explain the data;\nthe reconstruction explains the data but looks implausible;\nthe reconstruction looks plausible but is not data-consistent.\n\nThis diagnostic remains useful for neural reconstruction. A learned output should still be passed through the forward model and compared with the measurement whenever A is known.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3429,7 +3501,7 @@
     "href": "book/week-06-tikhonov-regularization.html#common-mistakes",
     "title": "Tikhonov Regularization",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to think that increasing \\lambda always improves the reconstruction. It improves stability, but it can also erase true structure.\nA second mistake is to judge \\lambda only by visual smoothness. Smooth images can be wrong. A reconstruction should be judged against the task, the data, and the measurement model.\nA third mistake is to form large dense matrices because the formula contains A^TA. The formula is useful for analysis, but practical imaging code often works with operators.",
+    "text": "Common Mistakes\nA first mistake is to think that increasing \\lambda always improves the reconstruction. It improves stability, but it can also erase true structure.\nA second mistake is to judge \\lambda only by visual smoothness. Smooth images can be wrong. A reconstruction should be judged against the task, the data, and the measurement model.\nA third mistake is to form large dense matrices because the formula contains A^TA. The formula is useful for analysis, but practical imaging code often works with operators.\nA fourth mistake is to choose \\lambda from one image only and then treat it as universal. The best value can change with noise level, blur strength, image content, and the task.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3453,7 +3525,7 @@
     "href": "book/week-06-tikhonov-regularization.html#exercises",
     "title": "Tikhonov Regularization",
     "section": "Exercises",
-    "text": "Exercises\n\nPredict what happens to the Tikhonov objective when \\lambda\\to 0 and when \\lambda\\to\\infty.\nDerive the normal equations for \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nIf singular values are 1,0.1,0.001, compare the smallest eigenvalue of A^TA with that of A^TA+\\lambda I for \\lambda=0.01.\nFor \\sigma=0.001 and \\lambda=0.01, compare 1/\\sigma with \\sigma/(\\sigma^2+\\lambda).\nExplain why increasing \\lambda can both improve and damage a reconstruction.\nExplain how Tikhonov regularization anticipates the role of learned priors in neural imaging.",
+    "text": "Exercises\n\nPredict what happens to the Tikhonov objective when \\lambda\\to 0 and when \\lambda\\to\\infty.\nDerive the normal equations for \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nIf singular values are 1,0.1,0.001, compare the smallest eigenvalue of A^TA with that of A^TA+\\lambda I for \\lambda=0.01.\nFor \\sigma=0.001 and \\lambda=0.01, compare 1/\\sigma with \\sigma/(\\sigma^2+\\lambda).\nExplain why increasing \\lambda can both improve and damage a reconstruction.\nExplain how Tikhonov regularization anticipates the role of learned priors in neural imaging.\nDescribe what you would expect to see in the residual if \\lambda is much too small or much too large.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3465,7 +3537,7 @@
     "href": "book/week-06-tikhonov-regularization.html#takeaways",
     "title": "Tikhonov Regularization",
     "section": "Takeaways",
-    "text": "Takeaways\n\nTikhonov solves \\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nThe normal equations are (A^TA+\\lambda I)x=A^Ty.\nIn SVD coordinates, Tikhonov damps weak singular directions.\n\\lambda controls a bias-stability tradeoff.\nRegularization is a modeling choice, not magic.\nNeural reconstruction methods can be viewed as replacing or enriching simple regularizers with learned image models.",
+    "text": "Takeaways\n\nTikhonov solves \\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nThe normal equations are (A^TA+\\lambda I)x=A^Ty.\nIn SVD coordinates, Tikhonov damps weak singular directions.\n\\lambda controls a bias-stability tradeoff.\nResidual checks help judge whether regularization is consistent with the data and noise model.\nRegularization is a modeling choice, not magic.\nNeural reconstruction methods can be viewed as replacing or enriching simple regularizers with learned image models.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -4783,7 +4855,7 @@
     "href": "book/week-05-ill-posed-inverse-problems.html#learning-goals",
     "title": "Ill-Posed Inverse Problems",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nstate Hadamard’s three conditions for well-posedness;\nidentify non-uniqueness in missing-data imaging;\ndistinguish missing recorded pixels from physical occlusion;\nexplain stability and instability;\ninterpret small singular values as noise-amplifying directions.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nstate Hadamard’s three conditions for well-posedness;\nidentify non-uniqueness in missing-data imaging;\ndistinguish missing recorded pixels from physical occlusion;\nexplain stability and instability;\nseparate data-supported information from prior-selected information;\ninterpret small singular values as noise-amplifying directions.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -4856,6 +4928,18 @@
     "title": "Ill-Posed Inverse Problems",
     "section": "Nullspace Language",
     "text": "Nullspace Language\nFor a linear operator A, the nullspace is\n\n\\mathcal{N}(A)=\\{z:Az=0\\}.\n\nIf z\\in \\mathcal{N}(A), then\n\nA(x+z)=Ax.\n\nThe nullspace contains invisible changes. If A has a nontrivial nullspace, data fidelity cannot identify a unique image:\n\nD(y,Ax)=D(y,A(x+z)).\n\nTo choose between possible reconstructions, we need extra information: smoothness, sparsity, edge preservation, training data, physical constraints, or some other modeling assumption.\nThis is the role of a prior. A prior does not create measured information. It ranks possible explanations. A smoothness prior prefers smooth completions. A sparsity prior prefers images with a concise representation. A learned prior prefers images that resemble the training distribution.\nThe strength and danger of priors are the same: they make choices. A good prior can stabilize an impossible problem. A bad or mismatched prior can hallucinate structure, erase unusual details, or make a reconstruction look more certain than the data justify.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "5. Ill-posed inverse problems"
+    ]
+  },
+  {
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#what-the-data-determine",
+    "href": "book/week-05-ill-posed-inverse-problems.html#what-the-data-determine",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "What The Data Determine",
+    "text": "What The Data Determine\nIll-posedness forces a useful question:\n\nWhich parts of the reconstruction are determined by the data, and which parts are selected by the prior?\n\nFor a well-observed direction, the data strongly constrain the answer. For a nullspace direction, the data do not constrain the answer at all. For a weak singular direction, the data contain some information, but it is fragile because noise and model error are amplified.\nThis gives three regimes:\n\n\n\nDirection type\nData support\nReconstruction risk\n\n\n\n\nstrongly observed\nhigh\nusually reliable if the model is correct\n\n\nweakly observed\npartial\nsensitive to noise and regularization\n\n\ninvisible/nullspace\nnone\nchosen entirely by assumptions\n\n\n\nThis table is a better mental model than asking whether a method “recovers” the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.\nFor learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -4963,7 +5047,7 @@
     "href": "book/week-05-ill-posed-inverse-problems.html#common-mistakes",
     "title": "Ill-Posed Inverse Problems",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to say that an inverse problem is hard only because the matrix is large. Size can make computation difficult, but ill-posedness is different. A tiny matrix with a very small singular value can be unstable.\nA second mistake is to believe that if an image looks plausible, it must have been recovered from the data. Plausibility may come from a prior or training set. This can be useful, but it should not be confused with measured evidence.\nA third mistake is to collapse all missing information into the word “masking.” Recorded-pixel masking and physical occlusion can both create missing information, but they describe different imaging processes.",
+    "text": "Common Mistakes\nA first mistake is to say that an inverse problem is hard only because the matrix is large. Size can make computation difficult, but ill-posedness is different. A tiny matrix with a very small singular value can be unstable.\nA second mistake is to believe that if an image looks plausible, it must have been recovered from the data. Plausibility may come from a prior or training set. This can be useful, but it should not be confused with measured evidence.\nA third mistake is to collapse all missing information into the word “masking.” Recorded-pixel masking and physical occlusion can both create missing information, but they describe different imaging processes.\nA fourth mistake is to treat every pixel in a reconstruction as equally supported by the data. Ill-posedness is directional: some structures are well observed, some are weakly observed, and some are not observed at all.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -4987,7 +5071,7 @@
     "href": "book/week-05-ill-posed-inverse-problems.html#exercises",
     "title": "Ill-Posed Inverse Problems",
     "section": "Exercises",
-    "text": "Exercises\n\nGive an example of an inverse problem where existence fails.\nGive an example of an inverse problem where uniqueness fails.\nExplain why a missing square in an image creates many possible completions.\nFor singular values 1,0.7,0.3,0.02,0.0001, identify the dangerous directions to invert.\nExplain in your own words why direct deblurring can fail even when the blur model is known.\nExplain how a learned prior can help an ill-posed inverse problem, and give one risk of using such a prior.",
+    "text": "Exercises\n\nGive an example of an inverse problem where existence fails.\nGive an example of an inverse problem where uniqueness fails.\nExplain why a missing square in an image creates many possible completions.\nFor singular values 1,0.7,0.3,0.02,0.0001, identify the dangerous directions to invert.\nExplain in your own words why direct deblurring can fail even when the blur model is known.\nExplain how a learned prior can help an ill-posed inverse problem, and give one risk of using such a prior.\nGive an example of a reconstruction feature that might be data-supported and one that might be prior-selected.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -4999,7 +5083,7 @@
     "href": "book/week-05-ill-posed-inverse-problems.html#takeaways",
     "title": "Ill-Posed Inverse Problems",
     "section": "Takeaways",
-    "text": "Takeaways\n\nIll-posedness is a structural issue, not merely a computational inconvenience.\nHadamard’s conditions are existence, uniqueness, and stability.\nMissing information causes non-uniqueness.\nSmall singular values cause instability because inverse formulas divide by them.\nRegularization is motivated by the need for stable reconstruction.\nNeural reconstruction methods can be understood as learned ways to choose or stabilize solutions.",
+    "text": "Takeaways\n\nIll-posedness is a structural issue, not merely a computational inconvenience.\nHadamard’s conditions are existence, uniqueness, and stability.\nMissing information causes non-uniqueness.\nA reconstruction can contain both data-supported and prior-selected structures.\nSmall singular values cause instability because inverse formulas divide by them.\nRegularization is motivated by the need for stable reconstruction.\nNeural reconstruction methods can be understood as learned ways to choose or stabilize solutions.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -5023,7 +5107,7 @@
     "href": "book/week-07-variational-formulation.html#learning-goals",
     "title": "Variational Formulation",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret reconstruction as energy minimization;\nseparate data fidelity and regularization;\nexplain why convexity matters;\nderive the Euler-Lagrange equation for a quadratic smoothing model;\nconnect optimality equations to gradient descent.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret reconstruction as energy minimization;\nseparate data fidelity and regularization;\nexplain why convexity matters;\nread an energy functional as a record of modeling choices;\nderive the Euler-Lagrange equation for a quadratic smoothing model;\nconnect optimality equations to gradient descent.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5072,6 +5156,18 @@
     "title": "Variational Formulation",
     "section": "The Three Modeling Choices",
     "text": "The Three Modeling Choices\nVariational reconstruction separates modeling from computation. This is one of its strengths.\n\n\n\n\n\n\n\n\nChoice\nTypical question\nExample\n\n\n\n\nForward model\nhow does x produce data?\nblur, masking, Fourier sampling\n\n\nData fidelity\nhow should mismatch be measured?\nGaussian least squares, Poisson likelihood\n\n\nRegularizer\nwhat images are plausible?\nsmall norm, smoothness, TV, sparsity\n\n\n\nThe optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
+    "objectID": "book/week-07-variational-formulation.html#reading-an-energy-as-an-audit-trail",
+    "href": "book/week-07-variational-formulation.html#reading-an-energy-as-an-audit-trail",
+    "title": "Variational Formulation",
+    "section": "Reading An Energy As An Audit Trail",
+    "text": "Reading An Energy As An Audit Trail\nAn energy functional is an audit trail for the reconstruction.\nFor example,\n\nE(x)=D(Ax,y)+\\lambda R(x)\n\nrecords at least four choices:\n\n\n\nPart\nWhat it records\n\n\n\n\nA\nwhat measurement process is assumed\n\n\nD\nwhat noise or discrepancy model is assumed\n\n\nR\nwhat image structures are preferred\n\n\n\\lambda\nhow data fit and prior are balanced\n\n\n\nThis is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.\nLearned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5203,7 +5299,7 @@
     "href": "book/week-07-variational-formulation.html#common-mistakes",
     "title": "Variational Formulation",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to think that an energy is objective truth. An energy is a model. It encodes choices, approximations, and priorities.\nA second mistake is to confuse the minimizer of an energy with the true image. If the energy is poorly matched to the data or the task, the minimizer can be clean and wrong.\nA third mistake is to ignore boundary conditions. Many artifacts near image borders come from assumptions made silently by convolution, finite differences, or Fourier transforms.",
+    "text": "Common Mistakes\nA first mistake is to think that an energy is objective truth. An energy is a model. It encodes choices, approximations, and priorities.\nA second mistake is to confuse the minimizer of an energy with the true image. If the energy is poorly matched to the data or the task, the minimizer can be clean and wrong.\nA third mistake is to ignore boundary conditions. Many artifacts near image borders come from assumptions made silently by convolution, finite differences, or Fourier transforms.\nA fourth mistake is to discuss a reconstruction without naming the energy or loss that produced it. Without that, the assumptions are difficult to inspect.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5227,7 +5323,7 @@
     "href": "book/week-07-variational-formulation.html#exercises",
     "title": "Variational Formulation",
     "section": "Exercises",
-    "text": "Exercises\n\nIn E(u)=\\frac12\\|u-y\\|_2^2+\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2, identify the data term, regularizer, and parameter.\nExplain why convexity is useful for minimization.\nDerive the variation of the data term \\frac12\\int_\\Omega (u-y)^2\\,dx.\nExplain why the Euler-Lagrange equation for quadratic denoising is u-\\lambda\\Delta u=y.\nIn gradient descent, what can go wrong if the step size is too large?\nExplain how a neural reconstruction method can be described using the same roles as a variational model, even when the regularizer is learned.",
+    "text": "Exercises\n\nIn E(u)=\\frac12\\|u-y\\|_2^2+\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2, identify the data term, regularizer, and parameter.\nExplain why convexity is useful for minimization.\nDerive the variation of the data term \\frac12\\int_\\Omega (u-y)^2\\,dx.\nExplain why the Euler-Lagrange equation for quadratic denoising is u-\\lambda\\Delta u=y.\nIn gradient descent, what can go wrong if the step size is too large?\nExplain how a neural reconstruction method can be described using the same roles as a variational model, even when the regularizer is learned.\nFor an energy of the form D(Ax,y)+\\lambda R(x), list the modeling assumptions associated with A, D, R, and \\lambda.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5239,7 +5335,7 @@
     "href": "book/week-07-variational-formulation.html#takeaways",
     "title": "Variational Formulation",
     "section": "Takeaways",
-    "text": "Takeaways\n\nVariational imaging models define reconstruction by energy minimization.\nEnergies combine data fidelity and regularization.\nConvexity gives a safer optimization landscape.\nEuler-Lagrange equations express first-order optimality.\nQuadratic smoothness is clear and useful, but it blurs edges.\nVariational thinking provides a vocabulary for learned priors and unrolled neural reconstruction.",
+    "text": "Takeaways\n\nVariational imaging models define reconstruction by energy minimization.\nEnergies combine data fidelity and regularization.\nConvexity gives a safer optimization landscape.\nEuler-Lagrange equations express first-order optimality.\nAn energy functional is also a record of assumptions.\nQuadratic smoothness is clear and useful, but it blurs edges.\nVariational thinking provides a vocabulary for learned priors and unrolled neural reconstruction.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5263,7 +5359,7 @@
     "href": "book/week-09-optimization-methods.html#learning-goals",
     "title": "Optimization Methods",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nrecognize convex optimization problems in imaging;\nuse gradient descent for smooth energies;\nexplain why step size matters;\nunderstand subgradient intuition for nonsmooth terms;\ndescribe proximal operators and ISTA.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nrecognize convex optimization problems in imaging;\nuse gradient descent for smooth energies;\nexplain why step size matters;\nunderstand subgradient intuition for nonsmooth terms;\ndescribe proximal operators and ISTA;\nuse optimization diagnostics to separate solver failure from model failure.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5439,6 +5535,18 @@
     ]
   },
   {
+    "objectID": "book/week-09-optimization-methods.html#optimization-diagnostics",
+    "href": "book/week-09-optimization-methods.html#optimization-diagnostics",
+    "title": "Optimization Methods",
+    "section": "Optimization Diagnostics",
+    "text": "Optimization Diagnostics\nA final reconstruction image is not enough evidence that an optimization method behaved well.\nUseful diagnostics include:\n\n\n\n\n\n\n\nDiagnostic\nWhat it can reveal\n\n\n\n\nobjective value versus iteration\nwhether the algorithm is actually decreasing the chosen energy\n\n\nresidual norm \\|Ax^k-y\\|\nwhether data consistency is improving or being sacrificed\n\n\nregularizer value R(x^k)\nwhether the prior term is dominating\n\n\nstep norm \\|x^{k+1}-x^k\\|\nwhether the algorithm is stabilizing\n\n\nvisual snapshots\nwhether numerical progress matches meaningful image improvement\n\n\n\nThese diagnostics do not prove the model is correct. They tell us whether the solver is doing what the model asks it to do.\nThis distinction is especially important for unrolled neural networks. An unrolled network may look like an iterative algorithm, but some steps are learned and may no longer minimize a known objective. In that case, diagnostics such as data residuals, parameter sensitivity, and failure cases become even more important.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
     "objectID": "book/week-09-optimization-methods.html#computation",
     "href": "book/week-09-optimization-methods.html#computation",
     "title": "Optimization Methods",
@@ -5455,7 +5563,7 @@
     "href": "book/week-09-optimization-methods.html#exercises",
     "title": "Optimization Methods",
     "section": "Exercises",
-    "text": "Exercises\n\nExplain the difference between a variational model and an optimization method.\nFor gradient descent, describe what happens when the step size is too small and when it is too large.\nWhy does the absolute value penalty encourage exact zero values?\nWrite the proximal operator definition for a regularizer R.\nExplain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.\nExplain how an unrolled neural network can be viewed as a learned version of an iterative reconstruction algorithm.",
+    "text": "Exercises\n\nExplain the difference between a variational model and an optimization method.\nFor gradient descent, describe what happens when the step size is too small and when it is too large.\nWhy does the absolute value penalty encourage exact zero values?\nWrite the proximal operator definition for a regularizer R.\nExplain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.\nExplain how an unrolled neural network can be viewed as a learned version of an iterative reconstruction algorithm.\nName two diagnostics you would plot to check whether an iterative reconstruction method is behaving sensibly.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5467,7 +5575,7 @@
     "href": "book/week-09-optimization-methods.html#takeaways",
     "title": "Optimization Methods",
     "section": "Takeaways",
-    "text": "Takeaways\n\nConvexity makes minimization conceptually safer.\nGradient descent solves smooth problems by local descent.\nStep size controls stability and speed.\nl1 and TV are convex but nonsmooth.\nProximal operators are central for sparse and edge-preserving imaging.\nUnrolled neural networks reuse the structure of iterative inverse-problem algorithms while learning some of their components.",
+    "text": "Takeaways\n\nConvexity makes minimization conceptually safer.\nGradient descent solves smooth problems by local descent.\nStep size controls stability and speed.\nl1 and TV are convex but nonsmooth.\nProximal operators are central for sparse and edge-preserving imaging.\nOptimization diagnostics help distinguish solver behavior from modeling quality.\nUnrolled neural networks reuse the structure of iterative inverse-problem algorithms while learning some of their components.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5607,6 +5715,18 @@
     ]
   },
   {
+    "objectID": "book/week-11-wavelets.html#scale-and-boundary-choices",
+    "href": "book/week-11-wavelets.html#scale-and-boundary-choices",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Scale And Boundary Choices",
+    "text": "Scale And Boundary Choices\nWavelet methods contain practical modeling choices.\nThe number of decomposition levels decides which scales are represented explicitly. Too few levels may miss broad structure. Too many levels can make coarse coefficients dominate or create artifacts near boundaries.\nBoundary handling also matters. A wavelet filter near the edge of an image needs values beyond the recorded grid, just like convolution. Reflection, periodization, zero padding, and other conventions can produce different coefficients near the boundary.\nThese details are not secondary. A thresholding rule acts on the coefficients it is given. If the transform creates boundary artifacts or represents texture poorly, the sparse prior may remove or preserve the wrong structures.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "11. Wavelets and multiscale representation"
+    ]
+  },
+  {
     "objectID": "book/week-11-wavelets.html#wavelets-in-inverse-problems",
     "href": "book/week-11-wavelets.html#wavelets-in-inverse-problems",
     "title": "Wavelets and Multiscale Representation",
@@ -5635,7 +5755,7 @@
     "href": "book/week-11-wavelets.html#common-mistakes",
     "title": "Wavelets and Multiscale Representation",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to say that wavelets are simply another name for Fourier analysis. Both are transforms, but Fourier modes are global while wavelets are localized.\nA second mistake is to think thresholding is harmless because small coefficients look unimportant. Many small coefficients can collectively encode texture or subtle detail.\nA third mistake is to ignore the wavelet family and boundary handling. Different choices can produce different artifacts, especially near image borders.",
+    "text": "Common Mistakes\nA first mistake is to say that wavelets are simply another name for Fourier analysis. Both are transforms, but Fourier modes are global while wavelets are localized.\nA second mistake is to think thresholding is harmless because small coefficients look unimportant. Many small coefficients can collectively encode texture or subtle detail.\nA third mistake is to ignore the wavelet family and boundary handling. Different choices can produce different artifacts, especially near image borders.\nA fourth mistake is to treat the threshold as a purely visual parameter. It controls the balance between detail preservation and noise removal.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5659,7 +5779,7 @@
     "href": "book/week-11-wavelets.html#exercises",
     "title": "Wavelets and Multiscale Representation",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat makes wavelets different from Fourier modes?\nCompute the Haar average and detail for the pair (8,6).\nWhat information does a detail coefficient store?\nWhy can wavelet coefficients be sparse for piecewise-smooth images?\nCompare hard thresholding and soft thresholding.\nExplain one similarity and one difference between wavelet features and learned convolutional features.\nExplain the support difference between Fourier atoms and compactly supported wavelets.\nHow does the Pythagorean theorem appear in both Fourier and orthogonal wavelet decompositions?",
+    "text": "Exercises\n\nWhat makes wavelets different from Fourier modes?\nCompute the Haar average and detail for the pair (8,6).\nWhat information does a detail coefficient store?\nWhy can wavelet coefficients be sparse for piecewise-smooth images?\nCompare hard thresholding and soft thresholding.\nExplain one similarity and one difference between wavelet features and learned convolutional features.\nExplain the support difference between Fourier atoms and compactly supported wavelets.\nHow does the Pythagorean theorem appear in both Fourier and orthogonal wavelet decompositions?\nWhy can boundary handling affect wavelet denoising near image borders?",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5671,7 +5791,7 @@
     "href": "book/week-11-wavelets.html#takeaways",
     "title": "Wavelets and Multiscale Representation",
     "section": "Takeaways",
-    "text": "Takeaways\n\nWavelets represent images across position, scale, and direction.\nFourier atoms are global; many wavelets are compactly supported and localized.\nOrthogonal wavelet decompositions preserve energy through the same Pythagorean principle as Fourier decompositions.\nA wavelet transform splits images into coarse approximation and detail subbands.\nMany images are approximately sparse in wavelet coefficients.\nThresholding gives compression and denoising algorithms.\nRepresentation choice controls the success of sparse reconstruction.\nWavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.",
+    "text": "Takeaways\n\nWavelets represent images across position, scale, and direction.\nFourier atoms are global; many wavelets are compactly supported and localized.\nOrthogonal wavelet decompositions preserve energy through the same Pythagorean principle as Fourier decompositions.\nA wavelet transform splits images into coarse approximation and detail subbands.\nMany images are approximately sparse in wavelet coefficients.\nThresholding gives compression and denoising algorithms.\nWavelet family, scale depth, threshold, and boundary handling are modeling choices.\nRepresentation choice controls the success of sparse reconstruction.\nWavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5835,6 +5955,18 @@
     ]
   },
   {
+    "objectID": "book/week-13-plug-and-play.html#denoiser-strength-as-regularization",
+    "href": "book/week-13-plug-and-play.html#denoiser-strength-as-regularization",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Denoiser Strength As Regularization",
+    "text": "Denoiser Strength As Regularization\nThe denoiser strength plays a role similar to a regularization parameter.\nWeak denoising trusts the data-consistency step more and leaves more artifacts. Strong denoising trusts the image prior more and may remove structures that the measurements support.\nIn plug-and-play, this balance is especially delicate because the denoiser may not correspond to an explicit penalty R(x). The parameter still changes the implicit prior. Therefore it should be swept and reported, just like \\lambda in Tikhonov or TV.\nWhen reading PnP results, compare:\n\nthe image quality;\nthe data residual;\nthe fixed-point change;\nsensitivity to denoiser strength;\nbehavior on images outside the denoiser’s training distribution.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "13. Plug-and-play and learned regularization"
+    ]
+  },
+  {
     "objectID": "book/week-13-plug-and-play.html#failure-modes",
     "href": "book/week-13-plug-and-play.html#failure-modes",
     "title": "Plug-and-Play and Learned Regularization",
@@ -5863,7 +5995,7 @@
     "href": "book/week-13-plug-and-play.html#common-mistakes",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to think PnP is just denoising after reconstruction. It is not. The denoiser is inserted inside the reconstruction loop, alternating with data consistency.\nA second mistake is to think a stronger denoiser is always better. Strong denoising can erase true structures or pull the image away from the data.\nA third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.",
+    "text": "Common Mistakes\nA first mistake is to think PnP is just denoising after reconstruction. It is not. The denoiser is inserted inside the reconstruction loop, alternating with data consistency.\nA second mistake is to think a stronger denoiser is always better. Strong denoising can erase true structures or pull the image away from the data.\nA third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.\nA fourth mistake is to report one denoiser strength without showing how sensitive the conclusion is to that choice.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5887,7 +6019,7 @@
     "href": "book/week-13-plug-and-play.html#exercises",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat does a proximal operator do?\nWhat does plug-and-play replace in proximal gradient?\nWhy might PnP not minimize a known objective?\nWhat is a fixed point of the PnP iteration?\nGive two safeguards for using learned denoisers in high-stakes imaging.\nExplain the difference between convergence of a PnP iteration and correctness of the reconstruction.",
+    "text": "Exercises\n\nWhat does a proximal operator do?\nWhat does plug-and-play replace in proximal gradient?\nWhy might PnP not minimize a known objective?\nWhat is a fixed point of the PnP iteration?\nGive two safeguards for using learned denoisers in high-stakes imaging.\nExplain the difference between convergence of a PnP iteration and correctness of the reconstruction.\nExplain why denoiser strength should be swept like a regularization parameter.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5899,7 +6031,7 @@
     "href": "book/week-13-plug-and-play.html#takeaways",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Takeaways",
-    "text": "Takeaways\n\nPlug-and-play keeps the forward model and inserts a denoiser.\nThe denoiser acts as an implicit prior.\nLearned denoisers can improve reconstructions when data match training.\nPnP needs careful validation because objective and convergence guarantees change.\nAlways check both image quality and consistency with measurements.\nHybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.",
+    "text": "Takeaways\n\nPlug-and-play keeps the forward model and inserts a denoiser.\nThe denoiser acts as an implicit prior.\nLearned denoisers can improve reconstructions when data match training.\nPnP needs careful validation because objective and convergence guarantees change.\nDenoiser strength controls an implicit regularization tradeoff.\nAlways check both image quality and consistency with measurements.\nHybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",

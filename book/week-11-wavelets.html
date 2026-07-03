@@ -395,6 +395,7 @@ window.Quarto = {
   <li><a href="#compression" id="toc-compression" class="nav-link" data-scroll-target="#compression">Compression</a></li>
   <li><a href="#wavelet-denoising" id="toc-wavelet-denoising" class="nav-link" data-scroll-target="#wavelet-denoising">Wavelet Denoising</a></li>
   <li><a href="#wavelets-versus-tv" id="toc-wavelets-versus-tv" class="nav-link" data-scroll-target="#wavelets-versus-tv">Wavelets Versus TV</a></li>
+  <li><a href="#scale-and-boundary-choices" id="toc-scale-and-boundary-choices" class="nav-link" data-scroll-target="#scale-and-boundary-choices">Scale And Boundary Choices</a></li>
   <li><a href="#wavelets-in-inverse-problems" id="toc-wavelets-in-inverse-problems" class="nav-link" data-scroll-target="#wavelets-in-inverse-problems">Wavelets In Inverse Problems</a></li>
   <li><a href="#wavelets-and-neural-networks" id="toc-wavelets-and-neural-networks" class="nav-link" data-scroll-target="#wavelets-and-neural-networks">Wavelets And Neural Networks</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
@@ -636,6 +637,13 @@ S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
 <p>Both are sparse priors, but they encode different structure.</p>
 <p>Wavelets are not automatic truth machines. The wavelet family, boundary handling, threshold value, texture structure, and forward model all matter.</p>
 </section>
+<section id="scale-and-boundary-choices" class="level2">
+<h2 class="anchored" data-anchor-id="scale-and-boundary-choices">Scale And Boundary Choices</h2>
+<p>Wavelet methods contain practical modeling choices.</p>
+<p>The number of decomposition levels decides which scales are represented explicitly. Too few levels may miss broad structure. Too many levels can make coarse coefficients dominate or create artifacts near boundaries.</p>
+<p>Boundary handling also matters. A wavelet filter near the edge of an image needs values beyond the recorded grid, just like convolution. Reflection, periodization, zero padding, and other conventions can produce different coefficients near the boundary.</p>
+<p>These details are not secondary. A thresholding rule acts on the coefficients it is given. If the transform creates boundary artifacts or represents texture poorly, the sparse prior may remove or preserve the wrong structures.</p>
+</section>
 <section id="wavelets-in-inverse-problems" class="level2">
 <h2 class="anchored" data-anchor-id="wavelets-in-inverse-problems">Wavelets In Inverse Problems</h2>
 <p>Wavelets are not only for denoising and compression. They can also be used inside inverse problems:</p>
@@ -700,6 +708,7 @@ D(y,AW^{-1}c)+\lambda\|c\|_1.
 <p>A first mistake is to say that wavelets are simply another name for Fourier analysis. Both are transforms, but Fourier modes are global while wavelets are localized.</p>
 <p>A second mistake is to think thresholding is harmless because small coefficients look unimportant. Many small coefficients can collectively encode texture or subtle detail.</p>
 <p>A third mistake is to ignore the wavelet family and boundary handling. Different choices can produce different artifacts, especially near image borders.</p>
+<p>A fourth mistake is to treat the threshold as a purely visual parameter. It controls the balance between detail preservation and noise removal.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -720,6 +729,7 @@ D(y,AW^{-1}c)+\lambda\|c\|_1.
 <li>Explain one similarity and one difference between wavelet features and learned convolutional features.</li>
 <li>Explain the support difference between Fourier atoms and compactly supported wavelets.</li>
 <li>How does the Pythagorean theorem appear in both Fourier and orthogonal wavelet decompositions?</li>
+<li>Why can boundary handling affect wavelet denoising near image borders?</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -731,6 +741,7 @@ D(y,AW^{-1}c)+\lambda\|c\|_1.
 <li>A wavelet transform splits images into coarse approximation and detail subbands.</li>
 <li>Many images are approximately sparse in wavelet coefficients.</li>
 <li>Thresholding gives compression and denoising algorithms.</li>
+<li>Wavelet family, scale depth, threshold, and boundary handling are modeling choices.</li>
 <li>Representation choice controls the success of sparse reconstruction.</li>
 <li>Wavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.</li>
 </ul>

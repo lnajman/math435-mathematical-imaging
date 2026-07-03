@@ -396,6 +396,7 @@ window.Quarto = {
   <li><a href="#underdetermined-recovery" id="toc-underdetermined-recovery" class="nav-link" data-scroll-target="#underdetermined-recovery">Underdetermined Recovery</a></li>
   <li><a href="#compressed-sensing-intuition" id="toc-compressed-sensing-intuition" class="nav-link" data-scroll-target="#compressed-sensing-intuition">Compressed Sensing Intuition</a></li>
   <li><a href="#sparse-images" id="toc-sparse-images" class="nav-link" data-scroll-target="#sparse-images">Sparse Images</a></li>
+  <li><a href="#sparsity-is-evidence-only-with-a-model" id="toc-sparsity-is-evidence-only-with-a-model" class="nav-link" data-scroll-target="#sparsity-is-evidence-only-with-a-model">Sparsity Is Evidence Only With A Model</a></li>
   <li><a href="#l1-versus-l2" id="toc-l1-versus-l2" class="nav-link" data-scroll-target="#l1-versus-l2">l1 Versus l2</a></li>
   <li><a href="#from-sparse-priors-to-learned-representations" id="toc-from-sparse-priors-to-learned-representations" class="nav-link" data-scroll-target="#from-sparse-priors-to-learned-representations">From Sparse Priors To Learned Representations</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
@@ -621,6 +622,20 @@ Ax=y.
 <p>This is not a universal promise. The representation, measurements, noise level, calibration, model mismatch, and regularization weight all matter.</p>
 <p>When reading the reconstruction figure, compare three things: observed pixels, filled-in smooth regions, and fine details. Sparse DCT priors often reconstruct broad structure well, but they can struggle with localized sharp details or texture. This is not surprising: DCT atoms are global cosine patterns, not localized edge atoms.</p>
 </section>
+<section id="sparsity-is-evidence-only-with-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="sparsity-is-evidence-only-with-a-model">Sparsity Is Evidence Only With A Model</h2>
+<p>A sparse reconstruction is persuasive only when the sparse model is appropriate.</p>
+<p>The statement “this image has a sparse representation” is incomplete. We must ask:</p>
+<ul>
+<li>sparse in which representation?</li>
+<li>under which measurement operator?</li>
+<li>at what noise level?</li>
+<li>with what regularization weight?</li>
+<li>for which image class?</li>
+</ul>
+<p>If the representation matches the image and the measurements are informative enough, sparsity can strongly stabilize reconstruction. If the representation is mismatched, sparsity can select the wrong explanation with great confidence.</p>
+<p>This is the same lesson as before, now in coefficient language. The data term checks the measurement. The sparse prior chooses among images that fit the measurement. The reconstruction should not be trusted unless both parts are reasonable.</p>
+</section>
 <section id="l1-versus-l2" class="level2">
 <h2 class="anchored" data-anchor-id="l1-versus-l2">l1 Versus l2</h2>
 <table class="caption-top table">
@@ -681,6 +696,7 @@ Ax=y.
 <p>A first mistake is to say that sparsity is an intrinsic property of an image. Sparsity depends on the representation.</p>
 <p>A second mistake is to believe that l1 always recovers the true sparse signal. Recovery depends on the measurement operator, noise level, sparsity level, and parameter choice.</p>
 <p>A third mistake is to equate compression quality with reconstruction reliability. A representation that compresses natural images well may still fail for a particular inverse problem if the measurements do not contain the right information.</p>
+<p>A fourth mistake is to forget that sparsity is a claim about coefficients, not automatically a claim about truth in the scene.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -699,6 +715,7 @@ Ax=y.
 <li>Give one reason l1 recovery can fail even when the true signal is sparse.</li>
 <li>In the sparse DCT image model, what are the roles of <span class="math inline">M</span>, <span class="math inline">D^{-1}</span>, and <span class="math inline">c</span>?</li>
 <li>Explain how sparse reconstruction anticipates learned representations in neural imaging.</li>
+<li>Explain why sparse coefficients are useful evidence only after a representation and measurement model have been chosen.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -709,6 +726,7 @@ Ax=y.
 <li>l1 is a convex surrogate for sparse selection.</li>
 <li>l1 and l2 encode different priors.</li>
 <li>Sparse reconstruction works when the measurement model and sparse representation are compatible.</li>
+<li>Sparsity can stabilize reconstruction, but a mismatched representation can select the wrong explanation.</li>
 <li>Learned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.</li>
 </ul>
 

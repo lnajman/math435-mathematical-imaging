@@ -395,7 +395,9 @@ window.Quarto = {
   <li><a href="#reading-filter-factors" id="toc-reading-filter-factors" class="nav-link" data-scroll-target="#reading-filter-factors">Reading Filter Factors</a></li>
   <li><a href="#generalized-tikhonov" id="toc-generalized-tikhonov" class="nav-link" data-scroll-target="#generalized-tikhonov">Generalized Tikhonov</a></li>
   <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda">Choosing Lambda</a></li>
+  <li><a href="#lambda-as-a-trust-parameter" id="toc-lambda-as-a-trust-parameter" class="nav-link" data-scroll-target="#lambda-as-a-trust-parameter">Lambda As A Trust Parameter</a></li>
   <li><a href="#bias-and-variance" id="toc-bias-and-variance" class="nav-link" data-scroll-target="#bias-and-variance">Bias And Variance</a></li>
+  <li><a href="#residual-checks" id="toc-residual-checks" class="nav-link" data-scroll-target="#residual-checks">Residual Checks</a></li>
   <li><a href="#what-tikhonov-does-not-solve" id="toc-what-tikhonov-does-not-solve" class="nav-link" data-scroll-target="#what-tikhonov-does-not-solve">What Tikhonov Does Not Solve</a></li>
   <li><a href="#from-tikhonov-to-learned-reconstruction" id="toc-from-tikhonov-to-learned-reconstruction" class="nav-link" data-scroll-target="#from-tikhonov-to-learned-reconstruction">From Tikhonov To Learned Reconstruction</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
@@ -437,6 +439,7 @@ window.Quarto = {
 <li>derive the normal equations;</li>
 <li>interpret the regularization parameter <span class="math inline">\lambda</span>;</li>
 <li>read Tikhonov filter factors;</li>
+<li>audit whether <span class="math inline">\lambda</span> is under- or over-regularizing;</li>
 <li>explain the bias-stability tradeoff.</li>
 </ul>
 </section>
@@ -646,6 +649,50 @@ x_\lambda
 <p>In a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.</p>
 <p>When reading the image panel, do not search only for the prettiest image. Ask what changed as <span class="math inline">\lambda</span> increased. Are noise oscillations reduced? Are edges softened? Are small features removed? The correct parameter depends on which errors matter for the application.</p>
 </section>
+<section id="lambda-as-a-trust-parameter" class="level2">
+<h2 class="anchored" data-anchor-id="lambda-as-a-trust-parameter">Lambda As A Trust Parameter</h2>
+<p>The regularization parameter can be read as a trust parameter.</p>
+<p>Small <span class="math inline">\lambda</span> trusts the data fit strongly, including components that may be mostly noise. Large <span class="math inline">\lambda</span> trusts the prior strongly, including the possibility that the prior suppresses true structure.</p>
+<p>This is not a moral choice between data and prior. Both are needed. The question is how much confidence the data deserve in each situation.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Regime</th>
+<th>Data residual</th>
+<th>Image appearance</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>too small <span class="math inline">\lambda</span></td>
+<td>very small</td>
+<td>noisy or oscillatory</td>
+<td>fits noise and unstable directions</td>
+</tr>
+<tr class="even">
+<td>moderate <span class="math inline">\lambda</span></td>
+<td>compatible with noise level</td>
+<td>structure preserved, artifacts controlled</td>
+<td>task-dependent compromise</td>
+</tr>
+<tr class="odd">
+<td>too large <span class="math inline">\lambda</span></td>
+<td>unnecessarily large</td>
+<td>over-smoothed or low contrast</td>
+<td>ignores measured detail</td>
+</tr>
+</tbody>
+</table>
+<p>The middle row does not mean perfect truth. It means the reconstruction is using the data and prior in a defensible balance.</p>
+<p>In projects and notebooks, this is why a parameter sweep is more informative than a single chosen image. A sweep shows whether the conclusion is stable across a reasonable range or whether it depends on one fragile value.</p>
+</section>
 <section id="bias-and-variance" class="level2">
 <h2 class="anchored" data-anchor-id="bias-and-variance">Bias And Variance</h2>
 <p>Imagine repeating the noisy measurement many times.</p>
@@ -661,6 +708,22 @@ x_\lambda
 <li>if <span class="math inline">\lambda</span> is too large, the reconstruction is over-smoothed and biased.</li>
 </ul>
 <p>This language will reappear when we discuss learned methods. A neural network can also reduce variance by restricting reconstructions to images that look familiar from training data. But that restriction can introduce bias: unusual structures may be suppressed because they are not well represented in the training set.</p>
+</section>
+<section id="residual-checks" class="level2">
+<h2 class="anchored" data-anchor-id="residual-checks">Residual Checks</h2>
+<p>A regularized reconstruction should not be judged only by the image. The residual</p>
+<p><span class="math display">
+r_\lambda = Ax_\lambda-y
+</span></p>
+<p>also contains information.</p>
+<p>If the residual is much smaller than the expected noise level, the method may be fitting noise. If the residual is much larger than expected, the method may be over-regularized, using a wrong forward model, or using a prior that is too restrictive.</p>
+<p>The residual is not a proof of correctness. In an ill-posed problem, many images can have similar residuals. But residual checks help separate three different situations:</p>
+<ul>
+<li>the reconstruction does not explain the data;</li>
+<li>the reconstruction explains the data but looks implausible;</li>
+<li>the reconstruction looks plausible but is not data-consistent.</li>
+</ul>
+<p>This diagnostic remains useful for neural reconstruction. A learned output should still be passed through the forward model and compared with the measurement whenever <span class="math inline">A</span> is known.</p>
 </section>
 <section id="what-tikhonov-does-not-solve" class="level2">
 <h2 class="anchored" data-anchor-id="what-tikhonov-does-not-solve">What Tikhonov Does Not Solve</h2>
@@ -687,6 +750,7 @@ x_\lambda
 <p>A first mistake is to think that increasing <span class="math inline">\lambda</span> always improves the reconstruction. It improves stability, but it can also erase true structure.</p>
 <p>A second mistake is to judge <span class="math inline">\lambda</span> only by visual smoothness. Smooth images can be wrong. A reconstruction should be judged against the task, the data, and the measurement model.</p>
 <p>A third mistake is to form large dense matrices because the formula contains <span class="math inline">A^TA</span>. The formula is useful for analysis, but practical imaging code often works with operators.</p>
+<p>A fourth mistake is to choose <span class="math inline">\lambda</span> from one image only and then treat it as universal. The best value can change with noise level, blur strength, image content, and the task.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -705,6 +769,7 @@ x_\lambda
 <li>For <span class="math inline">\sigma=0.001</span> and <span class="math inline">\lambda=0.01</span>, compare <span class="math inline">1/\sigma</span> with <span class="math inline">\sigma/(\sigma^2+\lambda)</span>.</li>
 <li>Explain why increasing <span class="math inline">\lambda</span> can both improve and damage a reconstruction.</li>
 <li>Explain how Tikhonov regularization anticipates the role of learned priors in neural imaging.</li>
+<li>Describe what you would expect to see in the residual if <span class="math inline">\lambda</span> is much too small or much too large.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -714,6 +779,7 @@ x_\lambda
 <li>The normal equations are <span class="math inline">(A^TA+\lambda I)x=A^Ty</span>.</li>
 <li>In SVD coordinates, Tikhonov damps weak singular directions.</li>
 <li><span class="math inline">\lambda</span> controls a bias-stability tradeoff.</li>
+<li>Residual checks help judge whether regularization is consistent with the data and noise model.</li>
 <li>Regularization is a modeling choice, not magic.</li>
 <li>Neural reconstruction methods can be viewed as replacing or enriching simple regularizers with learned image models.</li>
 </ul>
