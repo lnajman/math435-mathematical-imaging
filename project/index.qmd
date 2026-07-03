@@ -1,15 +1,150 @@
 ---
-title: "Modeling Project"
+title: "Final Modeling Project"
 ---
 
-The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.
+The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.
 
-Each team will:
+Students will work in teams of two. Each team will choose one imaging inverse problem, implement at least two reconstruction approaches, compare them experimentally, and explain when each approach should and should not be trusted.
+
+The goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation.
+
+## Project Question
+
+Each project should answer the following question:
+
+> Given degraded image data $y$, a forward model $A$, and noise or uncertainty, how can we reconstruct an image $x$, and how do we know when the reconstruction is reliable?
+
+A typical project has the form:
+
+$$
+y = A x + \eta,
+$$
+
+or a related model adapted to the chosen degradation.
+
+The team must define what $x$, $y$, $A$, and $\eta$ mean in their project.
+
+## Required LLM Use
+
+Use of an LLM is required for this project.
+
+Students may use an LLM for:
+
+- brainstorming project ideas;
+- understanding mathematical definitions;
+- generating or debugging code;
+- improving plots;
+- organizing the report;
+- checking explanations;
+- preparing for the oral defense.
+
+However, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.
+
+Each submission must include an **LLM-use statement** describing:
+
+1. which LLM tools were used;
+2. what they were used for;
+3. which generated code or text was accepted, modified, or rejected;
+4. what the team verified independently;
+5. at least one mistake, limitation, or misleading suggestion produced by the LLM.
+
+The LLM-use statement is **required but not graded separately**. A missing or dishonest LLM-use statement makes the project incomplete.
+
+## Core Requirements
+
+Each team must include:
+
+| Requirement | Description |
+|---|---|
+| Forward model | Define the image, degradation, measurements, and noise model. |
+| Two reconstruction approaches | Compare at least two methods; at least one must come from the course. |
+| Parameter study | Sweep at least one important parameter and explain the tradeoff. |
+| Quantitative comparison | Use RMSE, PSNR, residual norm, feature contrast, or another justified metric. |
+| Visual comparison | Show reconstructed images and interpret visible artifacts or improvements. |
+| Robustness test | Test noise level, model mismatch, domain shift, missing data, or another stress case. |
+| Failure case | Show one case where a method fails, and explain why. |
+| Reproducible notebook | Submit a runnable Python notebook with clear inputs, outputs, and plots. |
+| Written report | Explain the model, methods, experiments, results, and limitations. |
+| Oral defense | Each student must individually defend the whole project. |
+
+## Possible Project Topics
+
+Teams may choose one of the following topics or propose a related topic.
+
+| Topic | Possible Methods | Reliability Question |
+|---|---|---|
+| Image deblurring | Tikhonov vs TV | What happens when the blur kernel is wrong? |
+| Image inpainting | interpolation vs sparse DCT or TV | How many missing pixels can be tolerated? |
+| Image denoising | Gaussian smoothing vs wavelets vs TV | Which details are removed with the noise? |
+| Poisson image denoising | Gaussian model vs Poisson likelihood | When does the Gaussian approximation fail? |
+| Sparse reconstruction | minimum norm vs l1 regularization | How many measurements are needed? |
+| Wavelet denoising | hard vs soft thresholding | How should the threshold be chosen? |
+| Plug-and-play reconstruction | classical regularization vs denoiser prior | Is the output supported by the data? |
+| Small-feature preservation | smoothing vs TV vs wavelets | Does the method erase weak structures? |
+| Domain shift in denoising | train/test on different image families | Does a learned prior generalize? |
+| Robustness audit | compare several methods under perturbations | Which method fails most gracefully? |
+
+The instructor may provide additional test images or degraded observations. These may be used to test whether the submitted notebook generalizes beyond the examples used during development.
+
+## Recommended Project Structure
+
+The report should be concise and structured.
+
+1. **Problem statement.** What imaging problem is being solved?
+2. **Forward model.** Define $x$, $y$, $A$, and the noise or degradation.
+3. **Methods.** Describe the reconstruction algorithms.
+4. **Implementation.** Explain the main computational choices.
+5. **Parameter study.** Show how reconstruction changes as a parameter changes.
+6. **Results.** Present quantitative and visual comparisons.
+7. **Robustness and failure.** Show stress tests and at least one failure case.
+8. **Limitations.** Explain when the method should not be trusted.
+9. **LLM-use statement.** Disclose how the required LLM support was used.
+
+## Grading Rubric
+
+The project is graded on demonstrated understanding, reproducibility, experimental care, and defense of the work.
+
+| Component | Weight |
+|---|---:|
+| Mathematical model and assumptions | 15% |
+| Reproducible notebook and implementation | 15% |
+| Experiments and parameter study | 15% |
+| Robustness and failure analysis | 20% |
+| Written report clarity | 10% |
+| Oral defense and code walkthrough | 25% |
+| LLM-use statement | Required, ungraded |
+
+## Oral Defense
+
+The oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.
+
+During the defense, students may be asked to:
 
 - define the forward model;
-- implement reconstruction methods in Python;
-- analyze parameter sensitivity;
-- interpret reconstruction quality;
-- submit a written report and code;
-- complete an individual oral defense.
+- explain why the inverse problem is difficult;
+- derive or interpret the reconstruction objective;
+- explain how a parameter affects the result;
+- interpret a quantitative metric;
+- explain a figure from the report;
+- identify one failure case;
+- walk through selected lines of code;
+- run the notebook on a new test image or modified degradation;
+- explain how LLM assistance was checked.
 
+The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact.
+
+## What A Strong Project Shows
+
+A strong project does not simply show that one method looks good on one image.
+
+It shows:
+
+- a clear mathematical model;
+- correct and reproducible computation;
+- thoughtful parameter choices;
+- comparison against a meaningful baseline;
+- evidence from more than one test condition;
+- an honest failure case;
+- clear explanation of what the method can and cannot claim.
+
+In mathematical imaging, a reconstruction is not only an image. It is an argument supported by a model, an algorithm, experiments, and interpretation.
