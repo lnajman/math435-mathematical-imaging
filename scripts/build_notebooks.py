@@ -20,6 +20,17 @@ def code(source: str) -> nbf.NotebookNode:
     return nbf.v4.new_code_cell(dedent(source).strip())
 
 
+def coherence_checkpoint(title: str, prompts: list[tuple[str, str]]) -> nbf.NotebookNode:
+    rows = "\n".join(f"- **{label}.** {prompt}" for label, prompt in prompts)
+    return md(
+        f"""
+        ### Coherence Check - {title}
+
+        {rows}
+        """
+    )
+
+
 def make_notebook(cells: list[nbf.NotebookNode]) -> nbf.NotebookNode:
     notebook = nbf.v4.new_notebook(cells=cells)
     notebook.metadata = {
@@ -348,6 +359,15 @@ def week01_cells() -> list[nbf.NotebookNode]:
             print("observations:", toy_observations)
             print("observed fraction:", round(float(toy_mask.mean()), 3))
             """
+        ),
+        coherence_checkpoint(
+            "From Scene to Data",
+            [
+                ("Unknown", "What is the mathematical unknown: the scene, the recorded image, or the image vector?"),
+                ("Forward map", "What does the mask record, and what does it discard?"),
+                ("Nonlinearity", "Why is seeing behind an occluder different from filling in missing recorded pixels?"),
+                ("Claim", "Write one statement that the observation supports and one it cannot support."),
+            ],
         ),
         md(
             """
@@ -698,6 +718,15 @@ def week02_cells() -> list[nbf.NotebookNode]:
                 rms_error = np.sqrt(np.mean((estimate - clean) ** 2))
                 print(f"stabilizer={value:g}, RMS error={rms_error:.3f}")
             """
+        ),
+        coherence_checkpoint(
+            "Blur as a Forward Model",
+            [
+                ("Operator", "Which blur kernel and boundary condition define the forward operator?"),
+                ("Assumption", "When is a spatially invariant point spread function a reasonable imaging model?"),
+                ("Lost detail", "Which details become weakly measured after blur?"),
+                ("Stabilization", "What does the stabilizer trade away when it suppresses noise amplification?"),
+            ],
         ),
         md(
             """
@@ -1114,6 +1143,15 @@ def week03_cells() -> list[nbf.NotebookNode]:
                 rms_error = np.sqrt(np.mean((estimate - deblur_image) ** 2))
                 print(f"regularization={value:g}, RMS error={rms_error:.3f}")
             """
+        ),
+        coherence_checkpoint(
+            "Fourier Projection and Stability",
+            [
+                ("Projection", "Which oscillatory basis vectors carry most of the image energy?"),
+                ("Pythagorean link", "For an orthonormal Fourier transform, how is squared energy redistributed across coefficients?"),
+                ("Infinite support", "Why does changing one Fourier coefficient affect the whole image?"),
+                ("Inverse problem", "Which frequencies are weakly transmitted by blur and therefore dangerous to invert?"),
+            ],
         ),
         md(
             """
@@ -1621,6 +1659,15 @@ def week04_cells() -> list[nbf.NotebookNode]:
             print(answer)
             """
         ),
+        coherence_checkpoint(
+            "Likelihood as Data Evidence",
+            [
+                ("Noise model", "Which random mechanism makes the observed image plausible?"),
+                ("Data term", "What residual or count mismatch does the likelihood penalize?"),
+                ("Limits", "What kind of imaging failure cannot be fixed by averaging more noisy measurements?"),
+                ("Bridge", "Explain how likelihood plus prior becomes the reconstruction objective used later in the course."),
+            ],
+        ),
         md(
             """
             ## Checks
@@ -2074,6 +2121,15 @@ def week05_cells() -> list[nbf.NotebookNode]:
             fig.show()
             """
         ),
+        coherence_checkpoint(
+            "Directions and Evidence",
+            [
+                ("Strong singular directions", "Which features are well transmitted by the blur operator? Use the singular-value plot as evidence."),
+                ("Weak singular directions", "Where does inversion mostly amplify noise rather than recover information?"),
+                ("Missing information", "Which changes to the unknown would not change the observations in the masking example?"),
+                ("Trust statement", "Name one reconstruction claim you would trust and one you would not trust."),
+            ],
+        ),
         md(
             """
             ## Checks
@@ -2525,6 +2581,15 @@ def week06_cells() -> list[nbf.NotebookNode]:
                 print(f"lambda={lam:g}, RMSE={rmse(estimate, image):.4f}")
             """
         ),
+        coherence_checkpoint(
+            "Choosing Lambda Without the Truth",
+            [
+                ("Data residual", "For each lambda, does the reconstruction still explain the measured image?"),
+                ("Prior strength", "How does the solution norm or visual smoothness change as lambda grows?"),
+                ("Hidden ground truth", "In a real problem RMSE is unavailable; which observable diagnostics would you report instead?"),
+                ("Decision", "Choose one lambda and justify it with residuals, artifacts, and assumptions."),
+            ],
+        ),
         md(
             """
             ## Checks
@@ -2903,6 +2968,15 @@ def week07_cells() -> list[nbf.NotebookNode]:
             print(answer)
             """
         ),
+        coherence_checkpoint(
+            "Energy as an Audit Trail",
+            [
+                ("Data term", "What observation is the minimizer allowed to disagree with, and by how much?"),
+                ("Regularizer", "Which image structures are rewarded or penalized by the chosen energy?"),
+                ("Optimality", "What does a small Euler-Lagrange residual prove, and what does it not prove?"),
+                ("Failure mode", "Describe a case where energy decreases while the reconstruction becomes less scientifically useful."),
+            ],
+        ),
         md(
             """
             ## Checks
@@ -3279,6 +3353,15 @@ def week08_cells() -> list[nbf.NotebookNode]:
             )
             fig.show()
             """
+        ),
+        coherence_checkpoint(
+            "Edge Preservation Is Not Proof",
+            [
+                ("Supported edges", "Which edges are visible in the observation and remain stable across TV weights?"),
+                ("Possible artifacts", "Which sharp transitions might be staircasing or parameter-induced artifacts?"),
+                ("Evidence", "Use at least two diagnostics: image view, gradient map, RMSE when available, TV value, or parameter sweep."),
+                ("Limitation", "Write one sentence explaining why a clean-looking TV result can still be wrong."),
+            ],
         ),
         md(
             """
@@ -3725,6 +3808,15 @@ def week09_cells() -> list[nbf.NotebookNode]:
             print("final energy:", round(energies[-1], 2))
             print("active DCT coefficients:", active[-1])
             """
+        ),
+        coherence_checkpoint(
+            "Optimization Diagnostics",
+            [
+                ("Step size", "What evidence shows that the iteration is stable rather than diverging or oscillating?"),
+                ("Energy", "Does the objective decrease, and where does it flatten?"),
+                ("Sparsity", "How do active coefficients change when lambda changes?"),
+                ("Reconstruction claim", "State whether the algorithm solved the intended inverse problem or only minimized the chosen objective."),
+            ],
         ),
         md(
             """
@@ -4223,6 +4315,15 @@ def week10_cells() -> list[nbf.NotebookNode]:
             print("active DCT coefficients:", active_count(test_coefficients, tolerance=1e-3))
             """
         ),
+        coherence_checkpoint(
+            "Representation Mismatch",
+            [
+                ("Sparse where?", "Is the unknown sparse in pixels, DCT coefficients, wavelets, or another representation?"),
+                ("Measurements", "Do the measurements contain enough mixed information to identify the sparse coefficients?"),
+                ("Mismatch", "What image features are poorly represented by the chosen sparse basis?"),
+                ("Failure case", "Design one test image where the sparse DCT prior should fail or create artifacts."),
+            ],
+        ),
         md(
             """
             ## Checks
@@ -4628,6 +4729,15 @@ def week11_cells() -> list[nbf.NotebookNode]:
 
             show_image_grid(sweep_images, sweep_titles, height=430)
             """
+        ),
+        coherence_checkpoint(
+            "Fourier, Wavelets, and Energy",
+            [
+                ("Support", "Fourier modes spread over the whole domain; wavelets are localized. Where do you see that in the coefficient plots?"),
+                ("Pythagorean view", "For an orthonormal transform, total squared energy is preserved. Which coefficients carry most of that energy?"),
+                ("Local evidence", "Which image features are better described by compactly supported wavelet details than by global Fourier modes?"),
+                ("Boundary and scale", "Name one artifact or limitation introduced by the chosen wavelet, level, or boundary convention."),
+            ],
         ),
         md(
             """
@@ -5052,6 +5162,15 @@ def week12_cells() -> list[nbf.NotebookNode]:
                 height=430,
             )
             """
+        ),
+        coherence_checkpoint(
+            "Training Data as a Prior",
+            [
+                ("Examples", "Which structures did the training crop teach the patch model to expect?"),
+                ("Capacity", "How does changing the number of PCA components change the strength of the learned prior?"),
+                ("Shift", "Which results show that the learned method depends on the test image family?"),
+                ("Inverse-problem view", "Write the neural-network version of the course identity: forward model plus learned prior plus optimization or training."),
+            ],
         ),
         md(
             """
@@ -5569,6 +5688,15 @@ def week13_cells() -> list[nbf.NotebookNode]:
             )
             """
         ),
+        coherence_checkpoint(
+            "Implicit Prior Strength",
+            [
+                ("Forward model", "Which line of the PnP update enforces agreement with `y = A x + noise`?"),
+                ("Denoiser", "How does Gaussian sigma or PCA component count change the implicit prior?"),
+                ("Diagnostics", "Compare RMSE, data residual, and fixed-point change. Do they always agree?"),
+                ("Claim", "What can you honestly claim if the iteration stabilizes but the residual remains large?"),
+            ],
+        ),
         md(
             """
             ## Checks
@@ -6046,6 +6174,48 @@ def week14_cells() -> list[nbf.NotebookNode]:
             for item, answer in project_checklist.items():
                 print(f"{item}: {answer}")
             """
+        ),
+        md(
+            """
+            ### 7. Claim-Evidence Table
+
+            Before a project result is credible, each claim should be paired with evidence and a known limitation.
+            """
+        ),
+        code(
+            """
+            claim_evidence_table = [
+                {
+                    "claim": "The reconstruction explains the measured data.",
+                    "evidence": "Report a data residual or likelihood score.",
+                    "failure_or_limit": "A small residual can still hide non-unique solutions.",
+                },
+                {
+                    "claim": "The chosen regularization is not overly strong.",
+                    "evidence": "Show a parameter sweep and at least one preserved feature metric.",
+                    "failure_or_limit": "A visually smooth image can erase small structures.",
+                },
+                {
+                    "claim": "The method is robust enough for the stated use.",
+                    "evidence": "Test perturbations, noise changes, and distribution shifts.",
+                    "failure_or_limit": "Robust on examples does not prove robust in all deployments.",
+                },
+            ]
+
+            for row in claim_evidence_table:
+                print("CLAIM:", row["claim"])
+                print("  evidence:", row["evidence"])
+                print("  limit:", row["failure_or_limit"])
+            """
+        ),
+        coherence_checkpoint(
+            "From Notebook to Project Defense",
+            [
+                ("Model", "What is the forward model, and which parts of reality does it ignore?"),
+                ("Prior", "What prior, regularizer, denoiser, or learned training distribution shapes the answer?"),
+                ("Evidence", "Which figures or metrics support the central claim?"),
+                ("Oral defense", "What question would reveal whether you understand the result beyond what an LLM could write?"),
+            ],
         ),
         md(
             """
