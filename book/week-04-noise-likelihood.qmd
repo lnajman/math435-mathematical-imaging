@@ -13,6 +13,7 @@ By the end of this chapter, you should be able to:
 - model additive Gaussian noise;
 - model photon-counting Poisson noise;
 - compare absolute and relative noise behavior;
+- distinguish random noise from model error;
 - derive likelihood-based data terms for reconstruction.
 
 ## Why Noise Models Matter
@@ -169,6 +170,30 @@ Gaussian models are still common for good reasons. They are often reasonable app
 
 The caution is that "least squares" should not become automatic. Before using it, ask what kind of measurement error is being assumed.
 
+## Weighted Least Squares
+
+The ordinary squared error assumes that each residual has the same variance. If different measurements have different variances, the likelihood leads to a weighted squared error instead.
+
+Suppose
+
+$$
+y_i = f_i(x)+\eta_i,
+\qquad
+\eta_i\sim\mathcal{N}(0,\sigma_i^2),
+$$
+
+with independent errors. Then the negative log-likelihood contains
+
+$$
+\frac12
+\sum_i
+\frac{(f_i(x)-y_i)^2}{\sigma_i^2}.
+$$
+
+Measurements with smaller variance receive larger weight because they are more reliable under the model. Measurements with larger variance receive smaller weight because larger deviations are less surprising.
+
+This is the main idea behind many data terms: the residual is not judged only by its numerical size. It is judged relative to the uncertainty of the measurement.
+
 ## Poisson Noise
 
 Light arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.
@@ -286,6 +311,23 @@ Real cameras may contain several noise sources at once. A simplified pipeline mi
 
 This is one reason image restoration papers often specify both the degradation model and the noise model. "Denoising" by itself is not one problem. Denoising Gaussian noise, photon noise, JPEG artifacts, and sensor artifacts are related but not identical tasks.
 
+## Noise Versus Model Error
+
+Noise is random variation around a model. Model error means the model itself is wrong or incomplete.
+
+These two failures can look similar in an image, but they have different meanings:
+
+| Issue | Example | Why it matters |
+|---|---|---|
+| random noise | photon counts fluctuate around the correct mean | repeated measurements may help |
+| model error | the assumed blur kernel is wrong | repeated measurements repeat the wrong model |
+| missing information | a region was never observed | a prior is needed to choose a completion |
+| nonlinear sensor effect | clipping saturates bright pixels | Gaussian residuals may be misleading |
+
+Likelihoods describe random data variation conditional on a model. They do not automatically protect us from a wrong forward model, a wrong noise law, or a missing physical effect.
+
+This distinction becomes important for learned reconstruction. A network may be trained on one degradation model and tested on another. If it performs poorly, the failure may not be "noise" in the usual sense. It may be model mismatch or distribution shift.
+
 ## Repeated Measurements
 
 If
@@ -346,6 +388,23 @@ Classical inverse problems usually choose $R$ explicitly: smoothness, small ener
 
 The likelihood still matters in learned methods. A neural reconstruction that ignores the measurement model may produce visually convincing images that are not faithful to the data. In imaging, visual plausibility and measurement consistency are not the same thing.
 
+## Data Fidelity As A Contract
+
+A data term is a contract between the reconstruction and the measurement process.
+
+For Gaussian noise, the contract says: large squared residuals are unlikely. For Poisson counts, it says: predicted photon counts should explain the observed counts with the correct signal-dependent uncertainty. For weighted least squares, it says: residuals in reliable measurements matter more than residuals in uncertain measurements.
+
+This contract is only as good as the assumptions behind it. If the noise model is wrong, the data term may over-penalize harmless deviations or under-penalize serious ones. If the forward model is wrong, the reconstruction may fit the mathematical data term while failing the physical problem.
+
+The practical habit is simple:
+
+1. state the forward model;
+2. state the noise model;
+3. derive or choose the data term;
+4. test whether the residuals behave like the model predicts.
+
+The fourth step is often where modeling becomes scientific rather than decorative.
+
 ## Common Mistakes
 
 A first mistake is to treat all noise as Gaussian because squared error is familiar. Squared error is a model choice. Sometimes it is a good one, sometimes it is only a convenient approximation, and sometimes it is misleading.
@@ -353,6 +412,8 @@ A first mistake is to treat all noise as Gaussian because squared error is famil
 A second mistake is to confuse random noise with missing information. Random noise can sometimes be reduced by repeated measurements or averaging. Missing scene content, physical occlusion, or unobserved frequencies require additional assumptions; averaging does not create information that was never measured.
 
 A third mistake is to think that a lower data term always means a better image. With noisy data, fitting the measurements perfectly can mean fitting noise. This is why likelihood must later be balanced with regularization.
+
+A fourth mistake is to call every discrepancy "noise." Some discrepancies are model errors, calibration errors, clipping artifacts, or distribution shifts. A likelihood can only describe the uncertainty it was designed to model.
 
 ## Computation
 
@@ -376,12 +437,16 @@ When using the notebook, do not only look at the final images. Change the noise 
 4. Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.
 5. Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.
 6. In your own words, explain why a neural reconstruction method should still care about the measurement noise model.
+7. Derive the weighted least-squares data term for independent Gaussian measurements with variances $\sigma_i^2$.
+8. Give one example of random noise and one example of model error in an imaging experiment.
 
 ## Takeaways
 
 - Noise models connect physical measurement assumptions to mathematical data terms.
 - Gaussian additive noise leads to squared-error fidelity.
+- Unequal measurement variances lead naturally to weighted least squares.
 - Poisson photon-counting noise has variance equal to its mean.
 - Low-light images are difficult because relative photon noise is high.
+- Noise and model error are different; likelihoods only describe uncertainty under a chosen model.
 - Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.
 - Learned imaging methods still need data consistency; plausibility alone is not enough.

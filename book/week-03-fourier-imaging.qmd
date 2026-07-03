@@ -11,6 +11,7 @@ By the end of this chapter, you should be able to:
 
 - interpret a signal as a sum of oscillations;
 - read a 2D Fourier magnitude spectrum;
+- explain the tradeoff between frequency localization and spatial localization;
 - distinguish Fourier magnitude and phase;
 - state the convolution theorem;
 - explain blur and inverse filtering in the frequency domain.
@@ -156,6 +157,25 @@ The spectrum is especially useful for recognizing anisotropy. Motion blur in one
 A Fourier spectrum is not a neural feature map, but both are representations. The spectrum is hand-designed and interpretable; learned representations are data-adapted and often harder to interpret.
 :::
 
+## What The Spectrum Can And Cannot Say
+
+A Fourier spectrum is evidence about frequencies, directions, and scales. It can tell us that an image contains strong oscillations at a certain orientation, or that a blur has suppressed high frequencies. It can reveal periodic artifacts, motion direction, grid effects, and the difference between smooth and textured regions.
+
+But the spectrum is not a complete explanation of image content. Because Fourier atoms are global, the magnitude spectrum does not directly tell us where a local event occurs. Two images can have the same Fourier magnitude and different spatial organization. Phase helps recover geometry, but the frequency view still organizes information globally.
+
+This distinction matters for inverse problems. A reconstruction may have the "right amount" of high-frequency energy and still put structures in the wrong place. Conversely, a reconstruction may look smoother than the original but preserve the structures that matter for a specific decision.
+
+For students, a useful habit is to ask:
+
+| Question | Fourier helps? | Why |
+|---|---|---|
+| Which scales are present? | yes | frequency magnitude measures oscillatory strength |
+| Is there directional texture or motion blur? | yes | orientation leaves spectral signatures |
+| Where exactly is one edge? | only indirectly | global atoms do not localize events |
+| Is a restored detail true? | not by itself | frequency evidence must be tied to the forward model |
+
+This is the bridge to later representations. Wavelets, sparse models, and neural feature maps all try, in different ways, to represent image structure with more spatial awareness.
+
 ## Magnitude And Phase
 
 Every Fourier coefficient can be written as
@@ -207,6 +227,8 @@ $$
 This theorem is the reason blur is often analyzed in frequency space. A large convolution matrix in the pixel domain becomes pointwise multiplication after the Fourier transform, at least under compatible boundary assumptions. Instead of one large coupled operation, each frequency can be studied separately.
 
 This does not make the inverse problem disappear. It makes the difficulty visible.
+
+There is also a modeling warning. The simplest Fourier-domain formula assumes boundary conventions that are compatible with circular convolution. Real images do not usually wrap around at the boundary. In practice, software choices such as padding, reflection, cropping, and windowing affect the spectrum and the deblurring result. These choices are part of the forward model, not cosmetic implementation details.
 
 ## Blur In Frequency Space
 
@@ -274,6 +296,7 @@ The reliability question is the same in both cases. When a method restores high 
 2. **Thinking low frequency means unimportant.** Illumination, smooth shading, and large shapes are low-frequency content.
 3. **Ignoring phase.** Phase is essential for the placement of structures.
 4. **Treating inverse filtering as a safe inverse.** Division by small Fourier values is a mechanism for noise amplification.
+5. **Forgetting boundary assumptions.** Fourier deblurring formulas depend on how the image is extended beyond the recorded grid.
 
 ## Computation
 
@@ -303,12 +326,14 @@ or open the notebook in Colab from the link at the top of this chapter.
 5. Explain why inverse filtering amplifies noise.
 6. Explain how Parseval's identity is a version of the Pythagorean theorem.
 7. Why does a local edge usually require many Fourier coefficients?
+8. Give one example of a feature that is easy to detect in the Fourier spectrum and one feature that is hard to localize from magnitude alone.
 
 ## Takeaways
 
 - Fourier analysis represents images using oscillations.
 - Fourier coefficients are projections onto orthogonal global directions.
 - Parseval's identity generalizes the Pythagorean theorem.
+- Fourier gives strong frequency localization but weak spatial localization.
 - Low frequencies describe coarse structure; high frequencies describe fine detail.
 - Fourier coefficients have magnitude and phase.
 - Convolution becomes multiplication in the Fourier domain.
