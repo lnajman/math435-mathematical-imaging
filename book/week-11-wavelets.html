@@ -387,6 +387,7 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#why-wavelets" id="toc-why-wavelets" class="nav-link" data-scroll-target="#why-wavelets">Why Wavelets?</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#haar-intuition" id="toc-haar-intuition" class="nav-link" data-scroll-target="#haar-intuition">Haar Intuition</a></li>
   <li><a href="#multiscale-decomposition" id="toc-multiscale-decomposition" class="nav-link" data-scroll-target="#multiscale-decomposition">Multiscale Decomposition</a></li>
   <li><a href="#two-dimensional-wavelets" id="toc-two-dimensional-wavelets" class="nav-link" data-scroll-target="#two-dimensional-wavelets">Two-Dimensional Wavelets</a></li>
@@ -394,6 +395,9 @@ window.Quarto = {
   <li><a href="#compression" id="toc-compression" class="nav-link" data-scroll-target="#compression">Compression</a></li>
   <li><a href="#wavelet-denoising" id="toc-wavelet-denoising" class="nav-link" data-scroll-target="#wavelet-denoising">Wavelet Denoising</a></li>
   <li><a href="#wavelets-versus-tv" id="toc-wavelets-versus-tv" class="nav-link" data-scroll-target="#wavelets-versus-tv">Wavelets Versus TV</a></li>
+  <li><a href="#wavelets-in-inverse-problems" id="toc-wavelets-in-inverse-problems" class="nav-link" data-scroll-target="#wavelets-in-inverse-problems">Wavelets In Inverse Problems</a></li>
+  <li><a href="#wavelets-and-neural-networks" id="toc-wavelets-and-neural-networks" class="nav-link" data-scroll-target="#wavelets-and-neural-networks">Wavelets And Neural Networks</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -441,6 +445,17 @@ window.Quarto = {
 <p>Wavelets are local and multiscale. They can be shifted in position, scaled in size, and used to describe coarse and fine image structures.</p>
 <p>This makes wavelets a natural representation for localized edges and details.</p>
 </section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>Chapter 10 explained that sparse reconstruction depends on representation. Wavelets are one of the most important fixed representations for images because they combine three ideas:</p>
+<ul>
+<li>location: where something happens;</li>
+<li>scale: how large the structure is;</li>
+<li>direction: whether the structure is horizontal, vertical, or diagonal.</li>
+</ul>
+<p>Fourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.</p>
+<p>Wavelets also give a concrete example of a representation that is not learned but already feels “feature-like.” This makes them a useful stepping stone toward convolutional neural networks.</p>
+</section>
 <section id="haar-intuition" class="level2">
 <h2 class="anchored" data-anchor-id="haar-intuition">Haar Intuition</h2>
 <p>The Haar wavelet is the simplest wavelet example.</p>
@@ -456,6 +471,8 @@ window.Quarto = {
 </span></p>
 <p>The average stores coarse information. The detail stores local change.</p>
 <p>Repeating this idea on averages gives a multiscale decomposition: fine details first, then coarser details at larger scales.</p>
+<p>The Haar example is simple enough to compute by hand, but it contains the whole idea. If two neighboring values are almost equal, the detail coefficient is small. If they differ strongly, the detail coefficient is large. Thus, detail coefficients detect local changes.</p>
+<p>For images, local changes often correspond to edges, texture, or noise. Wavelet methods work because these different phenomena leave different patterns across scales and locations.</p>
 </section>
 <section id="multiscale-decomposition" class="level2">
 <h2 class="anchored" data-anchor-id="multiscale-decomposition">Multiscale Decomposition</h2>
@@ -466,6 +483,8 @@ window.Quarto = {
 <p>The approximation contains the broad trend. Coarse details capture large jumps. Fine details capture narrow changes and oscillations.</p>
 <p>The transform does not create new information. It reorganizes information into coarse approximation plus details.</p>
 <p>For orthogonal wavelets, energy is preserved up to normalization.</p>
+<p>This reorganization is useful because many tasks become easier in wavelet coordinates. Compression keeps large coefficients. Denoising removes small detail coefficients. Sparse reconstruction asks for an image whose wavelet coefficients are mostly small or zero.</p>
+<p>The original signal and its wavelet coefficients contain the same information when the transform is invertible. The advantage is not extra information; it is a better coordinate system.</p>
 </section>
 <section id="two-dimensional-wavelets" class="level2">
 <h2 class="anchored" data-anchor-id="two-dimensional-wavelets">Two-Dimensional Wavelets</h2>
@@ -507,6 +526,8 @@ window.Quarto = {
 </tbody>
 </table>
 <p>Naming conventions vary by library, but the main idea is directional detail at multiple scales.</p>
+<p>When reading a 2D wavelet coefficient image, do not interpret it like an ordinary photograph. Large bright coefficients mark locations and scales where the image changes. The LL block shows a coarse version of the image. The detail blocks show where horizontal, vertical, and diagonal changes occur.</p>
+<p>At deeper levels, the approximation is decomposed again. This creates a hierarchy: coarse structure near the top of the decomposition, and finer details in smaller-scale subbands.</p>
 </section>
 <section id="wavelet-sparsity" class="level2">
 <h2 class="anchored" data-anchor-id="wavelet-sparsity">Wavelet Sparsity</h2>
@@ -516,6 +537,8 @@ window.Quarto = {
 <p>Wavelet coefficients often decay quickly for piecewise-smooth images.</p>
 </div>
 <p>This is why wavelets are useful for sparse imaging: they represent many natural images with many small coefficients and a few large ones.</p>
+<p>Wavelet sparsity is especially effective for piecewise-smooth images. Smooth regions produce small detail coefficients. Edges produce significant coefficients, but only near the edge and at relevant scales. This is much more economical than a global Fourier representation, where a local edge can influence many coefficients across the whole domain.</p>
+<p>Textures are more complicated. Repeated fine patterns can produce many significant coefficients. This is why wavelet denoising may remove texture along with noise when the threshold is too aggressive.</p>
 </section>
 <section id="compression" class="level2">
 <h2 class="anchored" data-anchor-id="compression">Compression</h2>
@@ -538,6 +561,8 @@ c, &amp; |c|\geq T,\\
 S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
 </span></p>
 <p>Soft thresholding is the proximal operator behind l1 regularization.</p>
+<p>The difference between hard and soft thresholding is important. Hard thresholding keeps large coefficients unchanged and removes small ones. Soft thresholding removes small coefficients and shrinks the remaining ones. Hard thresholding is closer to pure coefficient selection; soft thresholding is more connected to convex l1 optimization.</p>
+<p>Both methods express the same modeling idea: small coefficients are more likely to be noise or insignificant detail than essential structure.</p>
 </section>
 <section id="wavelet-denoising" class="level2">
 <h2 class="anchored" data-anchor-id="wavelet-denoising">Wavelet Denoising</h2>
@@ -556,6 +581,9 @@ S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
 <p><img src="../assets/figures/week11-threshold-sweep.png" class="img-fluid" alt="Wavelet denoising with several threshold strengths"></p>
 <p>Small thresholds leave noise; large thresholds remove real detail.</p>
 </div>
+<p>Wavelet denoising works best when noise is spread across many small coefficients and the true image is concentrated in fewer larger coefficients. This is often a reasonable approximation for Gaussian noise and piecewise-smooth images.</p>
+<p>The threshold can be chosen by theory, heuristic rules, visual inspection, validation data, or task-specific criteria. The wrong threshold can either leave noise or erase meaningful details.</p>
+<p>When reading the threshold sweep, look for the moment where the image stops merely becoming cleaner and starts losing structure. That point is the same kind of bias-stability tradeoff seen in Tikhonov, TV, and sparse reconstruction.</p>
 </section>
 <section id="wavelets-versus-tv" class="level2">
 <h2 class="anchored" data-anchor-id="wavelets-versus-tv">Wavelets Versus TV</h2>
@@ -592,12 +620,50 @@ S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
 <p>Both are sparse priors, but they encode different structure.</p>
 <p>Wavelets are not automatic truth machines. The wavelet family, boundary handling, threshold value, texture structure, and forward model all matter.</p>
 </section>
+<section id="wavelets-in-inverse-problems" class="level2">
+<h2 class="anchored" data-anchor-id="wavelets-in-inverse-problems">Wavelets In Inverse Problems</h2>
+<p>Wavelets are not only for denoising and compression. They can also be used inside inverse problems:</p>
+<p><span class="math display">
+\min_x
+D(y,Ax)+\lambda\|Wx\|_1,
+</span></p>
+<p>where <span class="math inline">W</span> is a wavelet transform. This says: fit the measurements, but prefer images with sparse wavelet coefficients.</p>
+<p>Equivalently, in a synthesis view,</p>
+<p><span class="math display">
+x=W^{-1}c,
+</span></p>
+<p>and one solves for sparse coefficients <span class="math inline">c</span>:</p>
+<p><span class="math display">
+\min_c
+D(y,AW^{-1}c)+\lambda\|c\|_1.
+</span></p>
+<p>This is the wavelet version of the sparse DCT model from Chapter 10. The difference is that wavelets are localized and multiscale, which often matches images better than global cosine atoms.</p>
+</section>
+<section id="wavelets-and-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="wavelets-and-neural-networks">Wavelets And Neural Networks</h2>
+<p>Wavelets and convolutional neural networks share some intuitions:</p>
+<ul>
+<li>both use localized filters;</li>
+<li>both respond to structures at different positions;</li>
+<li>both can represent features at multiple scales;</li>
+<li>both transform an image into coefficient or feature maps.</li>
+</ul>
+<p>The difference is that wavelet filters are designed mathematically, while neural filters are learned from data. This gives neural networks more flexibility, but less immediate interpretability.</p>
+<p>Wavelets therefore give students a useful reference point. Before saying that a neural network has learned features, we can understand a fixed feature transform where every coefficient has a clear meaning: scale, location, and orientation.</p>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<p>A first mistake is to say that wavelets are simply another name for Fourier analysis. Both are transforms, but Fourier modes are global while wavelets are localized.</p>
+<p>A second mistake is to think thresholding is harmless because small coefficients look unimportant. Many small coefficients can collectively encode texture or subtle detail.</p>
+<p>A third mistake is to ignore the wavelet family and boundary handling. Different choices can produce different artifacts, especially near image borders.</p>
+</section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
 <p>The Week 11 notebook lets you change the wavelet family, number of decomposition levels, retained coefficient fraction, and denoising threshold.</p>
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week11_wavelets.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>In the notebook, compare compression and denoising. Compression asks how many coefficients are needed to preserve structure. Denoising asks which coefficients are likely to be noise. These are related questions, but they are not identical.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
@@ -607,6 +673,7 @@ S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
 <li>What information does a detail coefficient store?</li>
 <li>Why can wavelet coefficients be sparse for piecewise-smooth images?</li>
 <li>Compare hard thresholding and soft thresholding.</li>
+<li>Explain one similarity and one difference between wavelet features and learned convolutional features.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -617,6 +684,7 @@ S_T(c)=\operatorname{sign}(c)\max(|c|-T,0).
 <li>Many images are approximately sparse in wavelet coefficients.</li>
 <li>Thresholding gives compression and denoising algorithms.</li>
 <li>Representation choice controls the success of sparse reconstruction.</li>
+<li>Wavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.</li>
 </ul>
 
 

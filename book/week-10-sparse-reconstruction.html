@@ -387,7 +387,9 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#sparsity-as-a-prior" id="toc-sparsity-as-a-prior" class="nav-link" data-scroll-target="#sparsity-as-a-prior">Sparsity As A Prior</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#representation-matters" id="toc-representation-matters" class="nav-link" data-scroll-target="#representation-matters">Representation Matters</a></li>
+  <li><a href="#analysis-and-synthesis-views" id="toc-analysis-and-synthesis-views" class="nav-link" data-scroll-target="#analysis-and-synthesis-views">Analysis And Synthesis Views</a></li>
   <li><a href="#l2-regularization" id="toc-l2-regularization" class="nav-link" data-scroll-target="#l2-regularization">l2 Regularization</a></li>
   <li><a href="#l1-regularization" id="toc-l1-regularization" class="nav-link" data-scroll-target="#l1-regularization">l1 Regularization</a></li>
   <li><a href="#geometry-of-l1-and-l2" id="toc-geometry-of-l1-and-l2" class="nav-link" data-scroll-target="#geometry-of-l1-and-l2">Geometry Of l1 And l2</a></li>
@@ -395,6 +397,8 @@ window.Quarto = {
   <li><a href="#compressed-sensing-intuition" id="toc-compressed-sensing-intuition" class="nav-link" data-scroll-target="#compressed-sensing-intuition">Compressed Sensing Intuition</a></li>
   <li><a href="#sparse-images" id="toc-sparse-images" class="nav-link" data-scroll-target="#sparse-images">Sparse Images</a></li>
   <li><a href="#l1-versus-l2" id="toc-l1-versus-l2" class="nav-link" data-scroll-target="#l1-versus-l2">l1 Versus l2</a></li>
+  <li><a href="#from-sparse-priors-to-learned-representations" id="toc-from-sparse-priors-to-learned-representations" class="nav-link" data-scroll-target="#from-sparse-priors-to-learned-representations">From Sparse Priors To Learned Representations</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -446,6 +450,12 @@ S_{\tau\lambda}
 \left(x^k-\tau A^\top(Ax^k-y)\right).
 </span></p>
 <p>The soft-thresholding step imposes a modeling assumption: many coefficients should be zero or nearly zero.</p>
+</section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>The previous chapters introduced regularization as a way to stabilize inverse problems. Tikhonov prefers small energy. Total Variation prefers sparse gradients. Sparse reconstruction generalizes this idea: a signal or image may be simple after the right representation is chosen.</p>
+<p>This is an important turn in the course. We stop asking only whether an image is smooth and begin asking where its information is concentrated. If most of the meaningful structure can be described by a small number of coefficients, then incomplete measurements may be enough to reconstruct it.</p>
+<p>This also prepares the path to neural networks. A neural network can be understood, partly, as learning a representation in which relevant image structure becomes easier to describe, separate, or reconstruct. Sparse reconstruction is a hand-designed predecessor of that idea.</p>
 <p>A vector <span class="math inline">x\in\mathbb{R}^n</span> is <span class="math inline">k</span>-sparse if it has at most <span class="math inline">k</span> nonzero entries:</p>
 <p><span class="math display">
 \|x\|_0
@@ -457,6 +467,8 @@ S_{\tau\lambda}
 <p><img src="../assets/figures/week10-sparse-vs-dense.png" class="img-fluid" alt="Sparse signal and dense signal coefficient plots"></p>
 <p>Sparse vectors have only a few active coefficients; dense vectors spread information across many entries.</p>
 </div>
+<p>Sparsity is stronger than smallness. A vector can have small entries everywhere and still be dense. Sparse modeling says that most entries are exactly zero or negligible, and a relatively small set carries the important information.</p>
+<p>In practice, exact sparsity is rare. Approximate sparsity is enough for many imaging methods: sorted coefficient magnitudes decay rapidly, so keeping the largest coefficients captures most visible structure.</p>
 </section>
 <section id="representation-matters" class="level2">
 <h2 class="anchored" data-anchor-id="representation-matters">Representation Matters</h2>
@@ -470,6 +482,31 @@ S_{\tau\lambda}
 <li>gradient domain.</li>
 </ul>
 <p>Natural images often have many small transform coefficients and a few large ones. Sparse reconstruction does not require exact zeros everywhere; fast coefficient decay can be enough for useful approximation.</p>
+<p>The phrase “the image is sparse” is incomplete unless we say in what representation. A photograph of a face is not sparse in pixels, because most pixels are nonzero. The same image may be compressible in DCT or wavelet coefficients because large smooth regions and edges can be represented with fewer important coefficients.</p>
+<p>This distinction is central. The unknown may be an image <span class="math inline">x</span>, but the sparse variable may be a coefficient vector <span class="math inline">c</span>:</p>
+<p><span class="math display">
+x = \Psi c,
+</span></p>
+<p>where <span class="math inline">\Psi</span> is a synthesis transform or basis. Sparse reconstruction then asks for a coefficient vector <span class="math inline">c</span> with few significant entries.</p>
+</section>
+<section id="analysis-and-synthesis-views" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-and-synthesis-views">Analysis And Synthesis Views</h2>
+<p>There are two common ways to use a transform.</p>
+<p>In the synthesis view, the image is built from coefficients:</p>
+<p><span class="math display">
+x=\Psi c.
+</span></p>
+<p>The reconstruction problem may become</p>
+<p><span class="math display">
+\min_c
+D(y,A\Psi c)+\lambda\|c\|_1.
+</span></p>
+<p>In the analysis view, we penalize transformed coefficients of the image:</p>
+<p><span class="math display">
+\min_x
+D(y,Ax)+\lambda\|\Psi x\|_1.
+</span></p>
+<p>For orthogonal transforms these views can be closely related. For redundant transforms, learned dictionaries, or gradient penalties, they can behave differently. The important point is that sparsity is not a property of pixels alone; it is a property of pixels plus a representation.</p>
 </section>
 <section id="l2-regularization" class="level2">
 <h2 class="anchored" data-anchor-id="l2-regularization">l2 Regularization</h2>
@@ -500,6 +537,8 @@ S_{\tau\lambda}
 Ax=y.
 </span></p>
 <p>This problem is combinatorial. The l1 norm is a convex relaxation that preserves much of the sparse behavior.</p>
+<p>The word “relaxation” means that we replace a hard, discrete problem by a continuous one that is easier to optimize. The l0 problem asks which subset of coefficients should be active. The l1 problem avoids explicit subset search, while still encouraging many coefficients to become zero.</p>
+<p>This is a remarkable compromise: l1 is convex, so it can be optimized reliably in many settings, but it still behaves like a sparsity prior.</p>
 </section>
 <section id="geometry-of-l1-and-l2" class="level2">
 <h2 class="anchored" data-anchor-id="geometry-of-l1-and-l2">Geometry Of l1 And l2</h2>
@@ -509,6 +548,8 @@ Ax=y.
 </div>
 <p>The l2 ball is round. The l1 ball has corners on coordinate axes. When a data constraint first touches an l1 ball, it often touches a corner, which means some coordinates are exactly zero.</p>
 <p>This geometric picture matches the algorithmic picture from soft thresholding.</p>
+<p>When students first see this figure, the key is to focus on the contact point. The data constraint represents all coefficient vectors that fit the measurement equally well. The regularizer chooses the smallest ball that touches that constraint. A round l2 ball has no preference for axes. The l1 diamond has corners on axes, so its contact points often remove coefficients.</p>
+<p>The geometry is a picture of the prior.</p>
 </section>
 <section id="underdetermined-recovery" class="level2">
 <h2 class="anchored" data-anchor-id="underdetermined-recovery">Underdetermined Recovery</h2>
@@ -535,6 +576,8 @@ Ax=y.
 <p>The same measurements can lead to very different reconstructions under different priors.</p>
 </div>
 <p>Both methods see the same <span class="math inline">A</span> and <span class="math inline">y</span>. The difference is the prior: l2 asks for a small vector, while l1 asks for a sparse explanation.</p>
+<p>This is the recurring inverse-problem lesson. Data alone may be compatible with many answers. The regularizer chooses among them. Sparse reconstruction chooses the answer that can be explained using few active components.</p>
+<p>This can be extremely powerful, but it can also be wrong. If the true image is not sparse in the chosen representation, the sparse answer may look artificial or may erase structure that matters.</p>
 </section>
 <section id="compressed-sensing-intuition" class="level2">
 <h2 class="anchored" data-anchor-id="compressed-sensing-intuition">Compressed Sensing Intuition</h2>
@@ -545,6 +588,9 @@ Ax=y.
 <p>l1 recovery can improve sharply once enough measurements are available.</p>
 </div>
 <p>Sparse recovery can fail even when the true signal is sparse. The representation must be appropriate, the measurement operator must mix information well, and the regularization weight must be chosen carefully.</p>
+<p>The measurement operator matters because some measurements are more informative about sparse coefficients than others. Random measurements often behave well in theory because they mix information broadly. Structured measurements can be excellent or terrible depending on how they interact with the sparse basis.</p>
+<p>For example, if the measurements miss exactly the locations where the sparse signal is active, recovery is impossible. If the measurement system confuses two sparse patterns, no regularizer can reliably distinguish them without additional information.</p>
+<p>Compressed sensing is therefore not “recover anything from almost nothing.” It is a set of conditions under which sparse objects can be recovered from fewer measurements than classical intuition would suggest.</p>
 </section>
 <section id="sparse-images" class="level2">
 <h2 class="anchored" data-anchor-id="sparse-images">Sparse Images</h2>
@@ -560,11 +606,20 @@ Ax=y.
 \frac12\|M D^{-1}c-y\|_2^2+\lambda\|c\|_1.
 </span></p>
 <p>Here <span class="math inline">D^{-1}c</span> maps DCT coefficients back to an image, and <span class="math inline">M</span> keeps the observed pixels.</p>
+<p>This formula is worth reading slowly:</p>
+<ul>
+<li><span class="math inline">c</span> is the unknown sparse coefficient vector;</li>
+<li><span class="math inline">D^{-1}c</span> turns coefficients into an image;</li>
+<li><span class="math inline">M</span> simulates the pixels that were actually observed;</li>
+<li><span class="math inline">M D^{-1}c-y</span> is the data mismatch;</li>
+<li><span class="math inline">\|c\|_1</span> asks for a sparse transform-domain explanation.</li>
+</ul>
 <div class="figure">
 <p><img src="../assets/figures/week10-sparse-image-reconstruction.png" class="img-fluid" alt="Sparse DCT reconstruction from random observed pixels"></p>
 <p>Sparse priors can fill in missing data when the transform model is appropriate.</p>
 </div>
 <p>This is not a universal promise. The representation, measurements, noise level, calibration, model mismatch, and regularization weight all matter.</p>
+<p>When reading the reconstruction figure, compare three things: observed pixels, filled-in smooth regions, and fine details. Sparse DCT priors often reconstruct broad structure well, but they can struggle with localized sharp details or texture. This is not surprising: DCT atoms are global cosine patterns, not localized edge atoms.</p>
 </section>
 <section id="l1-versus-l2" class="level2">
 <h2 class="anchored" data-anchor-id="l1-versus-l2">l1 Versus l2</h2>
@@ -605,12 +660,35 @@ Ax=y.
 </tbody>
 </table>
 </section>
+<section id="from-sparse-priors-to-learned-representations" class="level2">
+<h2 class="anchored" data-anchor-id="from-sparse-priors-to-learned-representations">From Sparse Priors To Learned Representations</h2>
+<p>Sparse reconstruction asks us to choose a representation before reconstruction. DCT and wavelets are fixed mathematical transforms. Dictionaries can be learned from data. Neural networks go further: they can learn multiple layers of features adapted to a reconstruction task.</p>
+<p>The conceptual line is:</p>
+<p><span class="math display">
+\text{pixels}
+\longrightarrow
+\text{fixed transform coefficients}
+\longrightarrow
+\text{learned dictionary}
+\longrightarrow
+\text{deep learned representation}.
+</span></p>
+<p>In each case, we hope that the representation separates meaningful structure from noise, ambiguity, or missing data. What changes is how flexible the representation is and how easy it is to interpret.</p>
+<p>Fixed sparse priors are transparent but limited. Learned representations are expressive but can be harder to analyze. This tradeoff will become central in the later chapters.</p>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<p>A first mistake is to say that sparsity is an intrinsic property of an image. Sparsity depends on the representation.</p>
+<p>A second mistake is to believe that l1 always recovers the true sparse signal. Recovery depends on the measurement operator, noise level, sparsity level, and parameter choice.</p>
+<p>A third mistake is to equate compression quality with reconstruction reliability. A representation that compresses natural images well may still fail for a particular inverse problem if the measurements do not contain the right information.</p>
+</section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
 <p>The Week 10 notebook lets you change the number of measurements, the sparsity level, the l1 regularization weight, and the observed-pixel fraction in the image example.</p>
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week10_sparse_reconstruction.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>In the notebook, vary the number of measurements and the sparsity level separately. Look for the transition where l1 begins to recover the correct support. In the image example, compare the visual result with the coefficient pattern: the reconstruction quality is tied to whether the image is actually compressible in the chosen transform.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
@@ -620,6 +698,7 @@ Ax=y.
 <li>Explain why l1 regularization promotes exact zeros.</li>
 <li>Give one reason l1 recovery can fail even when the true signal is sparse.</li>
 <li>In the sparse DCT image model, what are the roles of <span class="math inline">M</span>, <span class="math inline">D^{-1}</span>, and <span class="math inline">c</span>?</li>
+<li>Explain how sparse reconstruction anticipates learned representations in neural imaging.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -630,6 +709,7 @@ Ax=y.
 <li>l1 is a convex surrogate for sparse selection.</li>
 <li>l1 and l2 encode different priors.</li>
 <li>Sparse reconstruction works when the measurement model and sparse representation are compatible.</li>
+<li>Learned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.</li>
 </ul>
 
 

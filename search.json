@@ -2643,7 +2643,19 @@
     "href": "book/week-10-sparse-reconstruction.html#sparsity-as-a-prior",
     "title": "Sparse Reconstruction",
     "section": "Sparsity As A Prior",
-    "text": "Sparsity As A Prior\nWeek 9 introduced ISTA:\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right).\n\nThe soft-thresholding step imposes a modeling assumption: many coefficients should be zero or nearly zero.\nA vector x\\in\\mathbb{R}^n is k-sparse if it has at most k nonzero entries:\n\n\\|x\\|_0\n=\n\\#\\{i:x_i\\neq 0\\}.\n\nThe notation \\|\\cdot\\|_0 counts nonzeros; it is not a true norm.\n\n\nSparse vectors have only a few active coefficients; dense vectors spread information across many entries.",
+    "text": "Sparsity As A Prior\nWeek 9 introduced ISTA:\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right).\n\nThe soft-thresholding step imposes a modeling assumption: many coefficients should be zero or nearly zero.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "10. Sparse reconstruction"
+    ]
+  },
+  {
+    "objectID": "book/week-10-sparse-reconstruction.html#why-this-chapter-matters",
+    "href": "book/week-10-sparse-reconstruction.html#why-this-chapter-matters",
+    "title": "Sparse Reconstruction",
+    "section": "Why This Chapter Matters",
+    "text": "Why This Chapter Matters\nThe previous chapters introduced regularization as a way to stabilize inverse problems. Tikhonov prefers small energy. Total Variation prefers sparse gradients. Sparse reconstruction generalizes this idea: a signal or image may be simple after the right representation is chosen.\nThis is an important turn in the course. We stop asking only whether an image is smooth and begin asking where its information is concentrated. If most of the meaningful structure can be described by a small number of coefficients, then incomplete measurements may be enough to reconstruct it.\nThis also prepares the path to neural networks. A neural network can be understood, partly, as learning a representation in which relevant image structure becomes easier to describe, separate, or reconstruct. Sparse reconstruction is a hand-designed predecessor of that idea.\nA vector x\\in\\mathbb{R}^n is k-sparse if it has at most k nonzero entries:\n\n\\|x\\|_0\n=\n\\#\\{i:x_i\\neq 0\\}.\n\nThe notation \\|\\cdot\\|_0 counts nonzeros; it is not a true norm.\n\n\nSparse vectors have only a few active coefficients; dense vectors spread information across many entries.\n\nSparsity is stronger than smallness. A vector can have small entries everywhere and still be dense. Sparse modeling says that most entries are exactly zero or negligible, and a relatively small set carries the important information.\nIn practice, exact sparsity is rare. Approximate sparsity is enough for many imaging methods: sorted coefficient magnitudes decay rapidly, so keeping the largest coefficients captures most visible structure.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2655,7 +2667,19 @@
     "href": "book/week-10-sparse-reconstruction.html#representation-matters",
     "title": "Sparse Reconstruction",
     "section": "Representation Matters",
-    "text": "Representation Matters\nAn image may not be sparse as pixels. It may be sparse, or approximately sparse, after a transform.\nCommon representations include:\n\nFourier coefficients;\nDCT coefficients;\nwavelet coefficients;\nlearned dictionaries;\ngradient domain.\n\nNatural images often have many small transform coefficients and a few large ones. Sparse reconstruction does not require exact zeros everywhere; fast coefficient decay can be enough for useful approximation.",
+    "text": "Representation Matters\nAn image may not be sparse as pixels. It may be sparse, or approximately sparse, after a transform.\nCommon representations include:\n\nFourier coefficients;\nDCT coefficients;\nwavelet coefficients;\nlearned dictionaries;\ngradient domain.\n\nNatural images often have many small transform coefficients and a few large ones. Sparse reconstruction does not require exact zeros everywhere; fast coefficient decay can be enough for useful approximation.\nThe phrase “the image is sparse” is incomplete unless we say in what representation. A photograph of a face is not sparse in pixels, because most pixels are nonzero. The same image may be compressible in DCT or wavelet coefficients because large smooth regions and edges can be represented with fewer important coefficients.\nThis distinction is central. The unknown may be an image x, but the sparse variable may be a coefficient vector c:\n\nx = \\Psi c,\n\nwhere \\Psi is a synthesis transform or basis. Sparse reconstruction then asks for a coefficient vector c with few significant entries.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "10. Sparse reconstruction"
+    ]
+  },
+  {
+    "objectID": "book/week-10-sparse-reconstruction.html#analysis-and-synthesis-views",
+    "href": "book/week-10-sparse-reconstruction.html#analysis-and-synthesis-views",
+    "title": "Sparse Reconstruction",
+    "section": "Analysis And Synthesis Views",
+    "text": "Analysis And Synthesis Views\nThere are two common ways to use a transform.\nIn the synthesis view, the image is built from coefficients:\n\nx=\\Psi c.\n\nThe reconstruction problem may become\n\n\\min_c\nD(y,A\\Psi c)+\\lambda\\|c\\|_1.\n\nIn the analysis view, we penalize transformed coefficients of the image:\n\n\\min_x\nD(y,Ax)+\\lambda\\|\\Psi x\\|_1.\n\nFor orthogonal transforms these views can be closely related. For redundant transforms, learned dictionaries, or gradient penalties, they can behave differently. The important point is that sparsity is not a property of pixels alone; it is a property of pixels plus a representation.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2679,7 +2703,7 @@
     "href": "book/week-10-sparse-reconstruction.html#l1-regularization",
     "title": "Sparse Reconstruction",
     "section": "l1 Regularization",
-    "text": "l1 Regularization\nSparse reconstruction often uses\n\n\\frac12\\|Ax-y\\|_2^2+\\lambda\\|x\\|_1,\n\nwhere\n\n\\|x\\|_1=\\sum_i |x_i|.\n\nThe l1 penalty encourages exact zeros. It is convex but nonsmooth.\nThe ideal sparse model might be\n\n\\min_x \\|x\\|_0\n\\quad\\text{subject to}\\quad\nAx=y.\n\nThis problem is combinatorial. The l1 norm is a convex relaxation that preserves much of the sparse behavior.",
+    "text": "l1 Regularization\nSparse reconstruction often uses\n\n\\frac12\\|Ax-y\\|_2^2+\\lambda\\|x\\|_1,\n\nwhere\n\n\\|x\\|_1=\\sum_i |x_i|.\n\nThe l1 penalty encourages exact zeros. It is convex but nonsmooth.\nThe ideal sparse model might be\n\n\\min_x \\|x\\|_0\n\\quad\\text{subject to}\\quad\nAx=y.\n\nThis problem is combinatorial. The l1 norm is a convex relaxation that preserves much of the sparse behavior.\nThe word “relaxation” means that we replace a hard, discrete problem by a continuous one that is easier to optimize. The l0 problem asks which subset of coefficients should be active. The l1 problem avoids explicit subset search, while still encouraging many coefficients to become zero.\nThis is a remarkable compromise: l1 is convex, so it can be optimized reliably in many settings, but it still behaves like a sparsity prior.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2691,7 +2715,7 @@
     "href": "book/week-10-sparse-reconstruction.html#geometry-of-l1-and-l2",
     "title": "Sparse Reconstruction",
     "section": "Geometry Of l1 And l2",
-    "text": "Geometry Of l1 And l2\n\n\nThe corners of the l1 ball make sparse solutions more likely.\n\nThe l2 ball is round. The l1 ball has corners on coordinate axes. When a data constraint first touches an l1 ball, it often touches a corner, which means some coordinates are exactly zero.\nThis geometric picture matches the algorithmic picture from soft thresholding.",
+    "text": "Geometry Of l1 And l2\n\n\nThe corners of the l1 ball make sparse solutions more likely.\n\nThe l2 ball is round. The l1 ball has corners on coordinate axes. When a data constraint first touches an l1 ball, it often touches a corner, which means some coordinates are exactly zero.\nThis geometric picture matches the algorithmic picture from soft thresholding.\nWhen students first see this figure, the key is to focus on the contact point. The data constraint represents all coefficient vectors that fit the measurement equally well. The regularizer chooses the smallest ball that touches that constraint. A round l2 ball has no preference for axes. The l1 diamond has corners on axes, so its contact points often remove coefficients.\nThe geometry is a picture of the prior.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2703,7 +2727,7 @@
     "href": "book/week-10-sparse-reconstruction.html#underdetermined-recovery",
     "title": "Sparse Reconstruction",
     "section": "Underdetermined Recovery",
-    "text": "Underdetermined Recovery\nSuppose we observe\n\ny=Ax,\n\nwhere A has fewer rows than columns. If m&lt;n, there are usually many possible solutions.\nOne classical choice is the minimum l2-norm solution:\n\n\\min_x \\|x\\|_2\n\\quad\\text{subject to}\\quad\nAx=y.\n\nThis fits the data, but it may be dense.\nThe l1-regularized solution\n\n\\min_x\n\\frac12\\|Ax-y\\|_2^2+\\lambda\\|x\\|_1\n\nbalances data fit with sparse coefficients.\n\n\nThe same measurements can lead to very different reconstructions under different priors.\n\nBoth methods see the same A and y. The difference is the prior: l2 asks for a small vector, while l1 asks for a sparse explanation.",
+    "text": "Underdetermined Recovery\nSuppose we observe\n\ny=Ax,\n\nwhere A has fewer rows than columns. If m&lt;n, there are usually many possible solutions.\nOne classical choice is the minimum l2-norm solution:\n\n\\min_x \\|x\\|_2\n\\quad\\text{subject to}\\quad\nAx=y.\n\nThis fits the data, but it may be dense.\nThe l1-regularized solution\n\n\\min_x\n\\frac12\\|Ax-y\\|_2^2+\\lambda\\|x\\|_1\n\nbalances data fit with sparse coefficients.\n\n\nThe same measurements can lead to very different reconstructions under different priors.\n\nBoth methods see the same A and y. The difference is the prior: l2 asks for a small vector, while l1 asks for a sparse explanation.\nThis is the recurring inverse-problem lesson. Data alone may be compatible with many answers. The regularizer chooses among them. Sparse reconstruction chooses the answer that can be explained using few active components.\nThis can be extremely powerful, but it can also be wrong. If the true image is not sparse in the chosen representation, the sparse answer may look artificial or may erase structure that matters.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2715,7 +2739,7 @@
     "href": "book/week-10-sparse-reconstruction.html#compressed-sensing-intuition",
     "title": "Sparse Reconstruction",
     "section": "Compressed Sensing Intuition",
-    "text": "Compressed Sensing Intuition\nIf x\\in\\mathbb{R}^{1000} is exactly 5-sparse, it is not truly a 1000-degree-of-freedom object. We need to learn which 5 locations are active and the 5 active values.\nSparse recovery can work with far fewer than n measurements, but not usually as few as k. We need enough measurements to identify support and amplitudes robustly.\n\n\nl1 recovery can improve sharply once enough measurements are available.\n\nSparse recovery can fail even when the true signal is sparse. The representation must be appropriate, the measurement operator must mix information well, and the regularization weight must be chosen carefully.",
+    "text": "Compressed Sensing Intuition\nIf x\\in\\mathbb{R}^{1000} is exactly 5-sparse, it is not truly a 1000-degree-of-freedom object. We need to learn which 5 locations are active and the 5 active values.\nSparse recovery can work with far fewer than n measurements, but not usually as few as k. We need enough measurements to identify support and amplitudes robustly.\n\n\nl1 recovery can improve sharply once enough measurements are available.\n\nSparse recovery can fail even when the true signal is sparse. The representation must be appropriate, the measurement operator must mix information well, and the regularization weight must be chosen carefully.\nThe measurement operator matters because some measurements are more informative about sparse coefficients than others. Random measurements often behave well in theory because they mix information broadly. Structured measurements can be excellent or terrible depending on how they interact with the sparse basis.\nFor example, if the measurements miss exactly the locations where the sparse signal is active, recovery is impossible. If the measurement system confuses two sparse patterns, no regularizer can reliably distinguish them without additional information.\nCompressed sensing is therefore not “recover anything from almost nothing.” It is a set of conditions under which sparse objects can be recovered from fewer measurements than classical intuition would suggest.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2727,7 +2751,7 @@
     "href": "book/week-10-sparse-reconstruction.html#sparse-images",
     "title": "Sparse Reconstruction",
     "section": "Sparse Images",
-    "text": "Sparse Images\nFor images, sparsity is usually transform-domain sparsity.\nThe Discrete Cosine Transform represents an image patch using cosine patterns. Many patches can be approximated using only a small fraction of DCT coefficients.\n\n\nFew large transform coefficients can preserve much of the visual structure.\n\nSuppose we observe only a random subset of pixels. We can reconstruct using sparse DCT coefficients by solving\n\n\\min_c\n\\frac12\\|M D^{-1}c-y\\|_2^2+\\lambda\\|c\\|_1.\n\nHere D^{-1}c maps DCT coefficients back to an image, and M keeps the observed pixels.\n\n\nSparse priors can fill in missing data when the transform model is appropriate.\n\nThis is not a universal promise. The representation, measurements, noise level, calibration, model mismatch, and regularization weight all matter.",
+    "text": "Sparse Images\nFor images, sparsity is usually transform-domain sparsity.\nThe Discrete Cosine Transform represents an image patch using cosine patterns. Many patches can be approximated using only a small fraction of DCT coefficients.\n\n\nFew large transform coefficients can preserve much of the visual structure.\n\nSuppose we observe only a random subset of pixels. We can reconstruct using sparse DCT coefficients by solving\n\n\\min_c\n\\frac12\\|M D^{-1}c-y\\|_2^2+\\lambda\\|c\\|_1.\n\nHere D^{-1}c maps DCT coefficients back to an image, and M keeps the observed pixels.\nThis formula is worth reading slowly:\n\nc is the unknown sparse coefficient vector;\nD^{-1}c turns coefficients into an image;\nM simulates the pixels that were actually observed;\nM D^{-1}c-y is the data mismatch;\n\\|c\\|_1 asks for a sparse transform-domain explanation.\n\n\n\nSparse priors can fill in missing data when the transform model is appropriate.\n\nThis is not a universal promise. The representation, measurements, noise level, calibration, model mismatch, and regularization weight all matter.\nWhen reading the reconstruction figure, compare three things: observed pixels, filled-in smooth regions, and fine details. Sparse DCT priors often reconstruct broad structure well, but they can struggle with localized sharp details or texture. This is not surprising: DCT atoms are global cosine patterns, not localized edge atoms.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2747,11 +2771,35 @@
     ]
   },
   {
+    "objectID": "book/week-10-sparse-reconstruction.html#from-sparse-priors-to-learned-representations",
+    "href": "book/week-10-sparse-reconstruction.html#from-sparse-priors-to-learned-representations",
+    "title": "Sparse Reconstruction",
+    "section": "From Sparse Priors To Learned Representations",
+    "text": "From Sparse Priors To Learned Representations\nSparse reconstruction asks us to choose a representation before reconstruction. DCT and wavelets are fixed mathematical transforms. Dictionaries can be learned from data. Neural networks go further: they can learn multiple layers of features adapted to a reconstruction task.\nThe conceptual line is:\n\n\\text{pixels}\n\\longrightarrow\n\\text{fixed transform coefficients}\n\\longrightarrow\n\\text{learned dictionary}\n\\longrightarrow\n\\text{deep learned representation}.\n\nIn each case, we hope that the representation separates meaningful structure from noise, ambiguity, or missing data. What changes is how flexible the representation is and how easy it is to interpret.\nFixed sparse priors are transparent but limited. Learned representations are expressive but can be harder to analyze. This tradeoff will become central in the later chapters.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "10. Sparse reconstruction"
+    ]
+  },
+  {
+    "objectID": "book/week-10-sparse-reconstruction.html#common-mistakes",
+    "href": "book/week-10-sparse-reconstruction.html#common-mistakes",
+    "title": "Sparse Reconstruction",
+    "section": "Common Mistakes",
+    "text": "Common Mistakes\nA first mistake is to say that sparsity is an intrinsic property of an image. Sparsity depends on the representation.\nA second mistake is to believe that l1 always recovers the true sparse signal. Recovery depends on the measurement operator, noise level, sparsity level, and parameter choice.\nA third mistake is to equate compression quality with reconstruction reliability. A representation that compresses natural images well may still fail for a particular inverse problem if the measurements do not contain the right information.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "10. Sparse reconstruction"
+    ]
+  },
+  {
     "objectID": "book/week-10-sparse-reconstruction.html#computation",
     "href": "book/week-10-sparse-reconstruction.html#computation",
     "title": "Sparse Reconstruction",
     "section": "Computation",
-    "text": "Computation\nThe Week 10 notebook lets you change the number of measurements, the sparsity level, the l1 regularization weight, and the observed-pixel fraction in the image example.\nRun:\npython3 examples/week10_sparse_reconstruction.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 10 notebook lets you change the number of measurements, the sparsity level, the l1 regularization weight, and the observed-pixel fraction in the image example.\nRun:\npython3 examples/week10_sparse_reconstruction.py\nor open the notebook in Colab from the link at the top of this chapter.\nIn the notebook, vary the number of measurements and the sparsity level separately. Look for the transition where l1 begins to recover the correct support. In the image example, compare the visual result with the coefficient pattern: the reconstruction quality is tied to whether the image is actually compressible in the chosen transform.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2763,7 +2811,7 @@
     "href": "book/week-10-sparse-reconstruction.html#exercises",
     "title": "Sparse Reconstruction",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat does it mean for a vector to be k-sparse?\nWhy is sparsity representation-dependent for images?\nExplain why l1 regularization promotes exact zeros.\nGive one reason l1 recovery can fail even when the true signal is sparse.\nIn the sparse DCT image model, what are the roles of M, D^{-1}, and c?",
+    "text": "Exercises\n\nWhat does it mean for a vector to be k-sparse?\nWhy is sparsity representation-dependent for images?\nExplain why l1 regularization promotes exact zeros.\nGive one reason l1 recovery can fail even when the true signal is sparse.\nIn the sparse DCT image model, what are the roles of M, D^{-1}, and c?\nExplain how sparse reconstruction anticipates learned representations in neural imaging.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2775,7 +2823,7 @@
     "href": "book/week-10-sparse-reconstruction.html#takeaways",
     "title": "Sparse Reconstruction",
     "section": "Takeaways",
-    "text": "Takeaways\n\nSparsity means few nonzero or significant coefficients.\nImages are sparse only after choosing a representation.\nl1 is a convex surrogate for sparse selection.\nl1 and l2 encode different priors.\nSparse reconstruction works when the measurement model and sparse representation are compatible.",
+    "text": "Takeaways\n\nSparsity means few nonzero or significant coefficients.\nImages are sparse only after choosing a representation.\nl1 is a convex surrogate for sparse selection.\nl1 and l2 encode different priors.\nSparse reconstruction works when the measurement model and sparse representation are compatible.\nLearned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5133,11 +5181,23 @@
     ]
   },
   {
+    "objectID": "book/week-11-wavelets.html#why-this-chapter-matters",
+    "href": "book/week-11-wavelets.html#why-this-chapter-matters",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Why This Chapter Matters",
+    "text": "Why This Chapter Matters\nChapter 10 explained that sparse reconstruction depends on representation. Wavelets are one of the most important fixed representations for images because they combine three ideas:\n\nlocation: where something happens;\nscale: how large the structure is;\ndirection: whether the structure is horizontal, vertical, or diagonal.\n\nFourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.\nWavelets also give a concrete example of a representation that is not learned but already feels “feature-like.” This makes them a useful stepping stone toward convolutional neural networks.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "11. Wavelets and multiscale representation"
+    ]
+  },
+  {
     "objectID": "book/week-11-wavelets.html#haar-intuition",
     "href": "book/week-11-wavelets.html#haar-intuition",
     "title": "Wavelets and Multiscale Representation",
     "section": "Haar Intuition",
-    "text": "Haar Intuition\nThe Haar wavelet is the simplest wavelet example.\n\n\nThe scaling function stores averages; the wavelet stores differences.\n\nFor two neighboring values a and b,\n\n\\text{average}=\\frac{a+b}{2},\n\\qquad\n\\text{detail}=\\frac{a-b}{2}.\n\nThe average stores coarse information. The detail stores local change.\nRepeating this idea on averages gives a multiscale decomposition: fine details first, then coarser details at larger scales.",
+    "text": "Haar Intuition\nThe Haar wavelet is the simplest wavelet example.\n\n\nThe scaling function stores averages; the wavelet stores differences.\n\nFor two neighboring values a and b,\n\n\\text{average}=\\frac{a+b}{2},\n\\qquad\n\\text{detail}=\\frac{a-b}{2}.\n\nThe average stores coarse information. The detail stores local change.\nRepeating this idea on averages gives a multiscale decomposition: fine details first, then coarser details at larger scales.\nThe Haar example is simple enough to compute by hand, but it contains the whole idea. If two neighboring values are almost equal, the detail coefficient is small. If they differ strongly, the detail coefficient is large. Thus, detail coefficients detect local changes.\nFor images, local changes often correspond to edges, texture, or noise. Wavelet methods work because these different phenomena leave different patterns across scales and locations.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5149,7 +5209,7 @@
     "href": "book/week-11-wavelets.html#multiscale-decomposition",
     "title": "Wavelets and Multiscale Representation",
     "section": "Multiscale Decomposition",
-    "text": "Multiscale Decomposition\n\n\nA signal can be decomposed into a coarse approximation plus details at several scales.\n\nThe approximation contains the broad trend. Coarse details capture large jumps. Fine details capture narrow changes and oscillations.\nThe transform does not create new information. It reorganizes information into coarse approximation plus details.\nFor orthogonal wavelets, energy is preserved up to normalization.",
+    "text": "Multiscale Decomposition\n\n\nA signal can be decomposed into a coarse approximation plus details at several scales.\n\nThe approximation contains the broad trend. Coarse details capture large jumps. Fine details capture narrow changes and oscillations.\nThe transform does not create new information. It reorganizes information into coarse approximation plus details.\nFor orthogonal wavelets, energy is preserved up to normalization.\nThis reorganization is useful because many tasks become easier in wavelet coordinates. Compression keeps large coefficients. Denoising removes small detail coefficients. Sparse reconstruction asks for an image whose wavelet coefficients are mostly small or zero.\nThe original signal and its wavelet coefficients contain the same information when the transform is invertible. The advantage is not extra information; it is a better coordinate system.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5161,7 +5221,7 @@
     "href": "book/week-11-wavelets.html#two-dimensional-wavelets",
     "title": "Wavelets and Multiscale Representation",
     "section": "Two-Dimensional Wavelets",
-    "text": "Two-Dimensional Wavelets\nFor images, the wavelet transform is applied along rows and columns. At each scale, we get:\n\napproximation coefficients;\nhorizontal detail coefficients;\nvertical detail coefficients;\ndiagonal detail coefficients.\n\n\n\nThe coefficient layout separates coarse image content from directional details.\n\n\n\n\nSubband\nRough meaning\n\n\n\n\nLL\ncoarse approximation\n\n\nLH\nhorizontal-type detail\n\n\nHL\nvertical-type detail\n\n\nHH\ndiagonal or corner-like detail\n\n\n\nNaming conventions vary by library, but the main idea is directional detail at multiple scales.",
+    "text": "Two-Dimensional Wavelets\nFor images, the wavelet transform is applied along rows and columns. At each scale, we get:\n\napproximation coefficients;\nhorizontal detail coefficients;\nvertical detail coefficients;\ndiagonal detail coefficients.\n\n\n\nThe coefficient layout separates coarse image content from directional details.\n\n\n\n\nSubband\nRough meaning\n\n\n\n\nLL\ncoarse approximation\n\n\nLH\nhorizontal-type detail\n\n\nHL\nvertical-type detail\n\n\nHH\ndiagonal or corner-like detail\n\n\n\nNaming conventions vary by library, but the main idea is directional detail at multiple scales.\nWhen reading a 2D wavelet coefficient image, do not interpret it like an ordinary photograph. Large bright coefficients mark locations and scales where the image changes. The LL block shows a coarse version of the image. The detail blocks show where horizontal, vertical, and diagonal changes occur.\nAt deeper levels, the approximation is decomposed again. This creates a hierarchy: coarse structure near the top of the decomposition, and finer details in smaller-scale subbands.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5173,7 +5233,7 @@
     "href": "book/week-11-wavelets.html#wavelet-sparsity",
     "title": "Wavelets and Multiscale Representation",
     "section": "Wavelet Sparsity",
-    "text": "Wavelet Sparsity\nMany image regions are locally smooth. Only edges and texture create large detail coefficients.\n\n\nWavelet coefficients often decay quickly for piecewise-smooth images.\n\nThis is why wavelets are useful for sparse imaging: they represent many natural images with many small coefficients and a few large ones.",
+    "text": "Wavelet Sparsity\nMany image regions are locally smooth. Only edges and texture create large detail coefficients.\n\n\nWavelet coefficients often decay quickly for piecewise-smooth images.\n\nThis is why wavelets are useful for sparse imaging: they represent many natural images with many small coefficients and a few large ones.\nWavelet sparsity is especially effective for piecewise-smooth images. Smooth regions produce small detail coefficients. Edges produce significant coefficients, but only near the edge and at relevant scales. This is much more economical than a global Fourier representation, where a local edge can influence many coefficients across the whole domain.\nTextures are more complicated. Repeated fine patterns can produce many significant coefficients. This is why wavelet denoising may remove texture along with noise when the threshold is too aggressive.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5185,7 +5245,7 @@
     "href": "book/week-11-wavelets.html#compression",
     "title": "Wavelets and Multiscale Representation",
     "section": "Compression",
-    "text": "Compression\nCompression keeps only the most important coefficients.\n\n\nKeeping a small fraction of large coefficients can preserve recognizable structure.\n\nHard thresholding keeps a coefficient only if it is large enough:\n\nH_T(c)=\n\\begin{cases}\nc, & |c|\\geq T,\\\\\n0, & |c|&lt;T.\n\\end{cases}\n\nHard thresholding is useful for compression, but it can create artifacts.\nSoft thresholding shrinks coefficients:\n\nS_T(c)=\\operatorname{sign}(c)\\max(|c|-T,0).\n\nSoft thresholding is the proximal operator behind l1 regularization.",
+    "text": "Compression\nCompression keeps only the most important coefficients.\n\n\nKeeping a small fraction of large coefficients can preserve recognizable structure.\n\nHard thresholding keeps a coefficient only if it is large enough:\n\nH_T(c)=\n\\begin{cases}\nc, & |c|\\geq T,\\\\\n0, & |c|&lt;T.\n\\end{cases}\n\nHard thresholding is useful for compression, but it can create artifacts.\nSoft thresholding shrinks coefficients:\n\nS_T(c)=\\operatorname{sign}(c)\\max(|c|-T,0).\n\nSoft thresholding is the proximal operator behind l1 regularization.\nThe difference between hard and soft thresholding is important. Hard thresholding keeps large coefficients unchanged and removes small ones. Soft thresholding removes small coefficients and shrinks the remaining ones. Hard thresholding is closer to pure coefficient selection; soft thresholding is more connected to convex l1 optimization.\nBoth methods express the same modeling idea: small coefficients are more likely to be noise or insignificant detail than essential structure.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5197,7 +5257,7 @@
     "href": "book/week-11-wavelets.html#wavelet-denoising",
     "title": "Wavelets and Multiscale Representation",
     "section": "Wavelet Denoising",
-    "text": "Wavelet Denoising\nNoise often creates many small detail coefficients. Wavelet denoising:\n\ntransforms the noisy image;\nthresholds detail coefficients;\nreconstructs the image.\n\n\n\nWavelet denoising can remove noise while preserving localized structure.\n\nThe threshold controls the tradeoff.\n\n\nSmall thresholds leave noise; large thresholds remove real detail.",
+    "text": "Wavelet Denoising\nNoise often creates many small detail coefficients. Wavelet denoising:\n\ntransforms the noisy image;\nthresholds detail coefficients;\nreconstructs the image.\n\n\n\nWavelet denoising can remove noise while preserving localized structure.\n\nThe threshold controls the tradeoff.\n\n\nSmall thresholds leave noise; large thresholds remove real detail.\n\nWavelet denoising works best when noise is spread across many small coefficients and the true image is concentrated in fewer larger coefficients. This is often a reasonable approximation for Gaussian noise and piecewise-smooth images.\nThe threshold can be chosen by theory, heuristic rules, visual inspection, validation data, or task-specific criteria. The wrong threshold can either leave noise or erase meaningful details.\nWhen reading the threshold sweep, look for the moment where the image stops merely becoming cleaner and starts losing structure. That point is the same kind of bias-stability tradeoff seen in Tikhonov, TV, and sparse reconstruction.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5217,11 +5277,47 @@
     ]
   },
   {
+    "objectID": "book/week-11-wavelets.html#wavelets-in-inverse-problems",
+    "href": "book/week-11-wavelets.html#wavelets-in-inverse-problems",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Wavelets In Inverse Problems",
+    "text": "Wavelets In Inverse Problems\nWavelets are not only for denoising and compression. They can also be used inside inverse problems:\n\n\\min_x\nD(y,Ax)+\\lambda\\|Wx\\|_1,\n\nwhere W is a wavelet transform. This says: fit the measurements, but prefer images with sparse wavelet coefficients.\nEquivalently, in a synthesis view,\n\nx=W^{-1}c,\n\nand one solves for sparse coefficients c:\n\n\\min_c\nD(y,AW^{-1}c)+\\lambda\\|c\\|_1.\n\nThis is the wavelet version of the sparse DCT model from Chapter 10. The difference is that wavelets are localized and multiscale, which often matches images better than global cosine atoms.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "11. Wavelets and multiscale representation"
+    ]
+  },
+  {
+    "objectID": "book/week-11-wavelets.html#wavelets-and-neural-networks",
+    "href": "book/week-11-wavelets.html#wavelets-and-neural-networks",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Wavelets And Neural Networks",
+    "text": "Wavelets And Neural Networks\nWavelets and convolutional neural networks share some intuitions:\n\nboth use localized filters;\nboth respond to structures at different positions;\nboth can represent features at multiple scales;\nboth transform an image into coefficient or feature maps.\n\nThe difference is that wavelet filters are designed mathematically, while neural filters are learned from data. This gives neural networks more flexibility, but less immediate interpretability.\nWavelets therefore give students a useful reference point. Before saying that a neural network has learned features, we can understand a fixed feature transform where every coefficient has a clear meaning: scale, location, and orientation.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "11. Wavelets and multiscale representation"
+    ]
+  },
+  {
+    "objectID": "book/week-11-wavelets.html#common-mistakes",
+    "href": "book/week-11-wavelets.html#common-mistakes",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Common Mistakes",
+    "text": "Common Mistakes\nA first mistake is to say that wavelets are simply another name for Fourier analysis. Both are transforms, but Fourier modes are global while wavelets are localized.\nA second mistake is to think thresholding is harmless because small coefficients look unimportant. Many small coefficients can collectively encode texture or subtle detail.\nA third mistake is to ignore the wavelet family and boundary handling. Different choices can produce different artifacts, especially near image borders.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "11. Wavelets and multiscale representation"
+    ]
+  },
+  {
     "objectID": "book/week-11-wavelets.html#computation",
     "href": "book/week-11-wavelets.html#computation",
     "title": "Wavelets and Multiscale Representation",
     "section": "Computation",
-    "text": "Computation\nThe Week 11 notebook lets you change the wavelet family, number of decomposition levels, retained coefficient fraction, and denoising threshold.\nRun:\npython3 examples/week11_wavelets.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 11 notebook lets you change the wavelet family, number of decomposition levels, retained coefficient fraction, and denoising threshold.\nRun:\npython3 examples/week11_wavelets.py\nor open the notebook in Colab from the link at the top of this chapter.\nIn the notebook, compare compression and denoising. Compression asks how many coefficients are needed to preserve structure. Denoising asks which coefficients are likely to be noise. These are related questions, but they are not identical.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5233,7 +5329,7 @@
     "href": "book/week-11-wavelets.html#exercises",
     "title": "Wavelets and Multiscale Representation",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat makes wavelets different from Fourier modes?\nCompute the Haar average and detail for the pair (8,6).\nWhat information does a detail coefficient store?\nWhy can wavelet coefficients be sparse for piecewise-smooth images?\nCompare hard thresholding and soft thresholding.",
+    "text": "Exercises\n\nWhat makes wavelets different from Fourier modes?\nCompute the Haar average and detail for the pair (8,6).\nWhat information does a detail coefficient store?\nWhy can wavelet coefficients be sparse for piecewise-smooth images?\nCompare hard thresholding and soft thresholding.\nExplain one similarity and one difference between wavelet features and learned convolutional features.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5245,7 +5341,7 @@
     "href": "book/week-11-wavelets.html#takeaways",
     "title": "Wavelets and Multiscale Representation",
     "section": "Takeaways",
-    "text": "Takeaways\n\nWavelets represent images across position, scale, and direction.\nA wavelet transform splits images into coarse approximation and detail subbands.\nMany images are approximately sparse in wavelet coefficients.\nThresholding gives compression and denoising algorithms.\nRepresentation choice controls the success of sparse reconstruction.",
+    "text": "Takeaways\n\nWavelets represent images across position, scale, and direction.\nA wavelet transform splits images into coarse approximation and detail subbands.\nMany images are approximately sparse in wavelet coefficients.\nThresholding gives compression and denoising algorithms.\nRepresentation choice controls the success of sparse reconstruction.\nWavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
