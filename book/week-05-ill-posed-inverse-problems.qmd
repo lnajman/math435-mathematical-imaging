@@ -39,6 +39,10 @@ $$
 
 Linear models include idealized blur, Fourier sampling, and recorded-pixel selection after image formation. But physical scene occlusion is different: hidden content may never reach the sensor, so the inverse problem is not simply "undoing a linear operator."
 
+This chapter is the conceptual center of the course. If inverse problems were always well posed, imaging would be mostly an exercise in applying the inverse of a known transformation. The interesting part begins when the inverse map is missing, ambiguous, or unstable.
+
+The same idea will later explain why neural networks enter the story. A neural network is not magic information recovery. It is a learned way of choosing among possible reconstructions, stabilizing an unstable inverse, or encoding what images tend to look like in a training set.
+
 ## Hadamard Well-Posedness
 
 Hadamard called a problem well posed if three conditions hold:
@@ -61,11 +65,31 @@ A well-posed problem may still be computationally expensive. An ill-posed proble
 
 Well-posedness is about the behavior of the map from data to solution.
 
+Each failure calls for a different response. If existence fails, we may need a softer data term because exact agreement with noisy data is unrealistic. If uniqueness fails, we need additional assumptions to choose among many possible images. If stability fails, we need to damp directions where the data are unreliable.
+
+Most real imaging problems contain more than one failure at once. A blurred noisy image may have a solution that fits the data, but many images fit almost equally well, and the formal inverse amplifies noise. Regularization is not an optional decoration; it is the mathematical response to these failures.
+
 ## Existence
 
 Existence can fail when the data are inconsistent with the model. For example, suppose a model claims that all measured intensities must be nonnegative and below one, but the data contain values outside that range. Or suppose we demand exact agreement with noisy measurements that no model image can produce.
 
 In practice, noise and model error often make exact existence too strict. This is one reason reconstruction methods use data fidelity terms rather than exact constraints.
+
+For example, instead of requiring
+
+$$
+Ax=y,
+$$
+
+we often minimize
+
+$$
+\|Ax-y\|^2.
+$$
+
+The first formula says the model must explain the data exactly. The second says that some disagreement is allowed and penalized. Chapter 4 explained how the shape of that penalty can come from a likelihood.
+
+This is also where modeling humility matters. If the forward model is incomplete, an exact solution to the wrong model is not necessarily a good reconstruction of the real scene.
 
 ## Non-Uniqueness
 
@@ -91,6 +115,10 @@ $$
 
 The recorded data alone cannot choose between $x_1$ and $x_2$.
 
+Non-uniqueness is not a rare corner case. It appears whenever the measurement discards information: missing pixels, limited-angle tomography, compressed sampling, severe blur, saturation, occlusion, or aggressive compression. The data may still be useful, but they do not determine one unique answer.
+
+This is why an image completion method always contains assumptions. If it fills a missing region with sky, texture, or a face, it is not reading that content directly from the recorded pixels. It is choosing a plausible completion under some model.
+
 ## Masking Versus Occlusion
 
 It is important to separate two ideas.
@@ -101,6 +129,10 @@ It is important to separate two ideas.
 | Physical occlusion | hidden scene content may not be measured at all | the sensor never received that information |
 
 Both create missing information, but they are not the same physical model. If a person is hidden behind a tree in a single image, the hidden content is not encoded in the pixels behind the tree. No inverse algorithm can recover exact information that was never measured.
+
+This distinction is important pedagogically because images are not one-dimensional audio mixtures. In audio, under favorable conditions, several sources can contribute additively to the same microphone signal. Separation can sometimes exploit that mixture structure. In a single photograph, an occluder may block light from the hidden object entirely. The hidden surface did not contribute additively to the measured pixel values.
+
+The mathematical question is therefore not only "can we invert $A$?" It is also "was the information present in the data at all?"
 
 ## Nullspace Language
 
@@ -123,6 +155,10 @@ D(y,Ax)=D(y,A(x+z)).
 $$
 
 To choose between possible reconstructions, we need extra information: smoothness, sparsity, edge preservation, training data, physical constraints, or some other modeling assumption.
+
+This is the role of a prior. A prior does not create measured information. It ranks possible explanations. A smoothness prior prefers smooth completions. A sparsity prior prefers images with a concise representation. A learned prior prefers images that resemble the training distribution.
+
+The strength and danger of priors are the same: they make choices. A good prior can stabilize an impossible problem. A bad or mismatched prior can hallucinate structure, erase unusual details, or make a reconstruction look more certain than the data justify.
 
 ## Stability
 
@@ -184,6 +220,10 @@ $$
 The singular value $\sigma_i$ tells how strongly $A$ transmits the input direction $v_i$.
 
 Large singular values correspond to directions that are visible in the data. Small singular values correspond to directions that are weakly visible or nearly invisible.
+
+In imaging, these directions are often not individual pixels. They may be patterns: smooth components, oscillatory components, edges in certain orientations, or combinations of many pixels. Thinking in directions is useful because an operator can preserve one kind of pattern while almost erasing another.
+
+Blur, for instance, tends to preserve low-frequency content and suppress fine detail. That does not mean all fine detail is gone equally, but it tells us why deblurring becomes sensitive to noise.
 
 ## Inverting In SVD Coordinates
 
@@ -256,6 +296,24 @@ The condition number warns us about worst-case sensitivity, but it is not the wh
 - whether small singular directions contain important image details;
 - how the reconstruction will be used.
 
+A single number cannot describe all perceptual or scientific risk. A small artifact in the background of a natural photograph may be acceptable. A small missed structure in a medical image or scientific measurement may be critical. Stability is mathematical, but the acceptable tradeoff is application dependent.
+
+## Ill-Posedness And Neural Networks
+
+The link to neural networks is now visible. When the inverse problem is non-unique or unstable, an algorithm must use information beyond the raw measurement. Classical methods encode this information explicitly through a penalty such as smoothness or sparsity. Neural methods learn some of this information from examples.
+
+There are several possible roles:
+
+| Neural role | Inverse-problem interpretation |
+|---|---|
+| Direct reconstruction network | learn an approximate inverse $y\mapsto x$ |
+| Learned denoiser | learn what clean images look like locally |
+| Learned regularizer | learn a penalty or score for plausible images |
+| Unrolled algorithm | learn parts of an iterative reconstruction method |
+| Data-consistent network | combine learned image structure with the known forward model |
+
+This course does not treat neural networks as a replacement for inverse-problem thinking. It treats them as one modern answer to the same old question: when the data do not determine a stable unique image, what additional information should guide reconstruction?
+
 ## Stabilization Idea
 
 If small $\sigma_i$ amplify noise, one crude stabilization idea is:
@@ -276,6 +334,16 @@ $$
 \|Ax-y\|_2^2 + \lambda\|x\|_2^2.
 $$
 
+This transition is important. Chapter 5 diagnoses the illness: missing uniqueness and missing stability. Chapter 6 introduces a first treatment: modify the problem so that unstable solutions are penalized.
+
+## Common Mistakes
+
+A first mistake is to say that an inverse problem is hard only because the matrix is large. Size can make computation difficult, but ill-posedness is different. A tiny matrix with a very small singular value can be unstable.
+
+A second mistake is to believe that if an image looks plausible, it must have been recovered from the data. Plausibility may come from a prior or training set. This can be useful, but it should not be confused with measured evidence.
+
+A third mistake is to collapse all missing information into the word "masking." Recorded-pixel masking and physical occlusion can both create missing information, but they describe different imaging processes.
+
 ## Computation
 
 The Week 5 notebook lets you vary blur strength, noise level, and the number of singular values kept.
@@ -288,6 +356,8 @@ python3 examples/week05_ill_posed.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+When using the notebook, watch for the point where the formal inverse begins to recover noise instead of detail. Then compare this with the truncated reconstruction. The interesting question is not only which image looks best, but which singular directions have become too unreliable to trust.
+
 ## Exercises
 
 1. Give an example of an inverse problem where existence fails.
@@ -295,6 +365,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Explain why a missing square in an image creates many possible completions.
 4. For singular values $1,0.7,0.3,0.02,0.0001$, identify the dangerous directions to invert.
 5. Explain in your own words why direct deblurring can fail even when the blur model is known.
+6. Explain how a learned prior can help an ill-posed inverse problem, and give one risk of using such a prior.
 
 ## Takeaways
 
@@ -303,3 +374,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Missing information causes non-uniqueness.
 - Small singular values cause instability because inverse formulas divide by them.
 - Regularization is motivated by the need for stable reconstruction.
+- Neural reconstruction methods can be understood as learned ways to choose or stabilize solutions.

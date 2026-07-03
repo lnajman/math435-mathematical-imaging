@@ -39,6 +39,14 @@ $$
 
 If $A$ is ill-conditioned, least squares can fit noise. Data fit alone does not know which data components are reliable.
 
+Tikhonov regularization is the first full example of the course template
+
+$$
+\operatorname*{argmin}_x D(Ax,y)+\lambda R(x).
+$$
+
+Here the data term comes from the Gaussian noise model of Chapter 4, and the regularization term is a simple prior on the image. This makes Tikhonov a useful bridge: it is elementary enough to derive completely, but it already contains the logic behind many modern reconstruction methods.
+
 ## Tikhonov Regularization
 
 The simplest Tikhonov model is
@@ -68,6 +76,32 @@ Changing $\lambda$ moves the reconstruction along a path from unstable to over-d
 :::
 
 Very small $\lambda$ leaves unstable directions barely damped. Moderate $\lambda$ can control noise while preserving structure. Large $\lambda$ over-damps the solution.
+
+The phrase "smaller-energy solution" should be interpreted carefully. For a signal represented as a vector, $\|x\|_2^2$ penalizes large coefficients. For images, this can shrink contrast and suppress detail. It does not directly say "prefer sharp edges" or "prefer natural texture." This is why basic Tikhonov is stable but often visually too smooth.
+
+## Probabilistic Interpretation
+
+Tikhonov can also be read as a maximum a posteriori estimate. Suppose
+
+$$
+y=Ax+\eta,
+\qquad
+\eta\sim\mathcal{N}(0,\sigma^2I),
+$$
+
+and suppose we place a Gaussian prior on $x$:
+
+$$
+p(x)\propto \exp\left(-\frac{\lambda}{2\sigma^2}\|x\|_2^2\right).
+$$
+
+Maximizing the posterior probability is equivalent to minimizing
+
+$$
+\|Ax-y\|_2^2+\lambda\|x\|_2^2.
+$$
+
+This interpretation is useful because it makes the modeling assumptions explicit. The data term says the measurement noise is Gaussian. The regularizer says smaller-energy images are more likely before seeing the data. Whether that prior is appropriate depends on the imaging task.
 
 ## Deriving The Normal Equations
 
@@ -109,6 +143,8 @@ $$
 
 These are the Tikhonov normal equations.
 
+The normal equations also show why $\lambda$ stabilizes the computation. Even when $A^TA$ has very small eigenvalues, the matrix $A^TA+\lambda I$ has eigenvalues shifted by $\lambda$. This does not make the original measurement more informative, but it prevents the reconstruction from chasing directions where the data are nearly silent.
+
 ## Closed-Form Solution
 
 If $\lambda>0$,
@@ -140,6 +176,8 @@ x_lam = np.linalg.solve(lhs, rhs)
 ```
 
 For large imaging problems, one usually avoids forming dense matrices explicitly and uses iterative methods or operator implementations.
+
+This point is practical. A $512\times512$ image has 262,144 pixels. The matrix for a general linear operator on that image would have more than 68 billion entries if stored densely. Imaging algorithms therefore usually apply $A$ and $A^T$ as functions: blur an image, subsample pixels, apply a Fourier transform, backproject, and so on.
 
 ## SVD Interpretation
 
@@ -179,6 +217,8 @@ When $\sigma_i$ is small, Tikhonov avoids division by a tiny number.
 Filter factors show how each singular direction is damped.
 :::
 
+This plot is the SVD version of the reconstruction story. Direct inversion uses very large factors when $\sigma_i$ is small. Tikhonov bends those factors down. The parameter $\lambda$ decides where that bending begins.
+
 ## Reading Filter Factors
 
 Filter factors reveal the effect of $\lambda$:
@@ -195,6 +235,23 @@ $$
 $$
 
 The unstable amplification is replaced by strong damping.
+
+The price is that the same damping also affects true signal components in weakly observed directions. If fine details live in directions with small $\sigma_i$, Tikhonov may remove them along with the noise. This is the central bias-stability tradeoff.
+
+## Generalized Tikhonov
+
+The basic penalty $\|x\|_2^2$ is not the only possibility. A common generalized form is
+
+$$
+x_\lambda
+=
+\operatorname*{argmin}_x
+\|Ax-y\|_2^2+\lambda\|Lx\|_2^2,
+$$
+
+where $L$ is another linear operator. If $L$ is a finite-difference gradient, then the penalty discourages large variations. If $L$ is a Laplacian, then the penalty discourages curvature.
+
+This is still a quadratic model, but it is already more image-aware than penalizing the image intensity itself. It also previews later chapters: once we begin choosing penalties that better match image structure, we are designing priors.
 
 ## Choosing Lambda
 
@@ -218,6 +275,8 @@ The visually best value of $\lambda$ depends on the task and risk.
 
 In a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.
 
+When reading the image panel, do not search only for the prettiest image. Ask what changed as $\lambda$ increased. Are noise oscillations reduced? Are edges softened? Are small features removed? The correct parameter depends on which errors matter for the application.
+
 ## Bias And Variance
 
 Imagine repeating the noisy measurement many times.
@@ -237,6 +296,8 @@ The error can be large for two opposite reasons:
 - if $\lambda$ is too small, noise amplification remains;
 - if $\lambda$ is too large, the reconstruction is over-smoothed and biased.
 
+This language will reappear when we discuss learned methods. A neural network can also reduce variance by restricting reconstructions to images that look familiar from training data. But that restriction can introduce bias: unusual structures may be suppressed because they are not well represented in the training set.
+
 ## What Tikhonov Does Not Solve
 
 Tikhonov is a first regularization method, not the final answer to imaging.
@@ -244,6 +305,32 @@ Tikhonov is a first regularization method, not the final answer to imaging.
 It tends to prefer small-energy solutions, which may over-smooth edges or texture. It also depends on a linear model and a quadratic penalty in its basic form.
 
 Later chapters introduce more expressive regularizers, including variational penalties, total variation, sparsity, wavelets, and learned priors.
+
+## From Tikhonov To Learned Reconstruction
+
+Tikhonov teaches a pattern that will survive even when the methods become more sophisticated:
+
+$$
+\text{reconstruction}
+=
+\text{data consistency}
++
+\text{image model}.
+$$
+
+In Tikhonov, the image model is the simple penalty $\|x\|_2^2$. In total variation, the image model prefers piecewise-smooth images with edges. In sparse reconstruction, it prefers concise representations. In neural imaging, the image model may be learned from data.
+
+The learned version is not conceptually unrelated to Tikhonov. It is a richer answer to the same question: how should the reconstruction behave in directions where the measurement is weak, ambiguous, or noisy?
+
+This is why the course builds toward neural networks through inverse problems. Neural networks become meaningful when we understand what they are being asked to replace or augment: the prior, the optimizer, the inverse map, or some combination of these.
+
+## Common Mistakes
+
+A first mistake is to think that increasing $\lambda$ always improves the reconstruction. It improves stability, but it can also erase true structure.
+
+A second mistake is to judge $\lambda$ only by visual smoothness. Smooth images can be wrong. A reconstruction should be judged against the task, the data, and the measurement model.
+
+A third mistake is to form large dense matrices because the formula contains $A^TA$. The formula is useful for analysis, but practical imaging code often works with operators.
 
 ## Computation
 
@@ -257,6 +344,8 @@ python3 examples/week06_tikhonov.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+In the notebook, try to find three regimes: under-regularized, reasonable, and over-regularized. Then look at the filter factors and identify which singular directions are being trusted or damped.
+
 ## Exercises
 
 1. Predict what happens to the Tikhonov objective when $\lambda\to 0$ and when $\lambda\to\infty$.
@@ -264,6 +353,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. If singular values are $1,0.1,0.001$, compare the smallest eigenvalue of $A^TA$ with that of $A^TA+\lambda I$ for $\lambda=0.01$.
 4. For $\sigma=0.001$ and $\lambda=0.01$, compare $1/\sigma$ with $\sigma/(\sigma^2+\lambda)$.
 5. Explain why increasing $\lambda$ can both improve and damage a reconstruction.
+6. Explain how Tikhonov regularization anticipates the role of learned priors in neural imaging.
 
 ## Takeaways
 
@@ -272,3 +362,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - In SVD coordinates, Tikhonov damps weak singular directions.
 - $\lambda$ controls a bias-stability tradeoff.
 - Regularization is a modeling choice, not magic.
+- Neural reconstruction methods can be viewed as replacing or enriching simple regularizers with learned image models.

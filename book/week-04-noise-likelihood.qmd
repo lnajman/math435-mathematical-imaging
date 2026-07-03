@@ -35,6 +35,15 @@ $$
 
 Linearity is a useful special case, not a universal law of imaging. Saturation, thresholding, occlusion, and many camera pipelines can be nonlinear or irreversible. The likelihood framework still applies if we replace $Ax$ by a general prediction $f(x)$.
 
+This chapter changes the question slightly. Instead of asking only "what image could have produced the data?", we ask "how probable are these data if the image were $x$?" That statistical question is the beginning of data fidelity.
+
+This matters because reconstruction methods are not built from regularization alone. They usually contain two ingredients:
+
+- a data term, which tells us how seriously to take disagreement with the measurements;
+- a prior or regularizer, which tells us what kinds of images are plausible when the data are incomplete or unstable.
+
+Noise models are how we derive the first ingredient. Without them, a cost function such as $\|Ax-y\|_2^2$ can look like a purely algebraic habit. With them, the same expression becomes a statement about the measurement process.
+
 ## Seeing Noise Before Modeling It
 
 The same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.
@@ -53,6 +62,10 @@ A useful noise model answers:
 - how large typical errors are;
 - whether the variance depends on intensity;
 - what cost should penalize disagreement with data.
+
+When you look at the figure, pay attention to two different effects. The Gaussian image has a similar grain in dark and bright regions. The Poisson image is more uneven in low-light regions because the number of photons there is small. The important point is not only that the images look different. The important point is that the same numerical error may have different statistical meanings in different parts of the image.
+
+For example, an error of five gray levels may be large in a dark region and ordinary in a bright region under a photon-counting model. A good data term should know this.
 
 ## Gaussian Noise
 
@@ -152,6 +165,10 @@ Gaussian noise is useful and mathematically friendly, but it is not always physi
 
 This is a general lesson: a simple model can be useful without being literally complete.
 
+Gaussian models are still common for good reasons. They are often reasonable approximations when many independent small error sources are added together, and they lead to convex quadratic objectives that are easy to analyze and optimize. In this course, Gaussian noise is also the cleanest way to understand the bridge from probability to least squares.
+
+The caution is that "least squares" should not become automatic. Before using it, ask what kind of measurement error is being assumed.
+
 ## Poisson Noise
 
 Light arrives as photons, and a sensor counts random arrivals during exposure. When photon counting is the dominant source of randomness, a Poisson model is natural.
@@ -243,11 +260,15 @@ $$
 
 This is not a least-squares data term.
 
+The positivity condition is not cosmetic. A Poisson mean must be nonnegative, and the logarithm requires a positive predicted count. In numerical code, this often forces us to constrain the reconstruction or to evaluate $\log(f_i(x)+\epsilon)$ with a very small $\epsilon$. Such details are not just programming details; they are part of making the mathematical model usable.
+
 ::: {.figure}
 ![](../assets/figures/week04-likelihood-curves.png){fig-alt="Gaussian and Poisson negative log-likelihood curves for one pixel"}
 
 Likelihood curves encode how each model penalizes disagreement with the data.
 :::
+
+Reading this plot is an important skill. A likelihood curve is steep where the model says a mismatch is unlikely, and flatter where the model is more tolerant. For Gaussian noise with fixed variance, the curve is a symmetric parabola. For Poisson data, the curve is asymmetric because counts cannot be negative and because the variance changes with the mean.
 
 ## Gaussian Versus Poisson
 
@@ -260,6 +281,10 @@ Likelihood curves encode how each model penalizes disagreement with the data.
 | Constraint | often unconstrained | positive mean |
 
 The choice of data term should come from the measurement process. A squared error term may be appropriate for Gaussian read noise, but a photon-limited acquisition suggests a Poisson likelihood.
+
+Real cameras may contain several noise sources at once. A simplified pipeline might include photon noise, electronic read noise, dark current, quantization, clipping, compression, and demosaicing. Modeling every part of that pipeline may be unnecessary for a first reconstruction method, but it is useful to know what has been simplified away.
+
+This is one reason image restoration papers often specify both the degradation model and the noise model. "Denoising" by itself is not one problem. Denoising Gaussian noise, photon noise, JPEG artifacts, and sensor artifacts are related but not identical tasks.
 
 ## Repeated Measurements
 
@@ -312,6 +337,23 @@ $$
 
 Here $D$ is the data fidelity term from the noise model, and $R$ is a regularizer encoding prior information or desired structure.
 
+This formula is one of the main templates of the course. The data term asks the reconstruction to be faithful to the measurement process. The regularizer asks it to be a plausible image. Different imaging methods can often be compared by asking two questions:
+
+- What is the data term?
+- What is the image model or prior?
+
+Classical inverse problems usually choose $R$ explicitly: smoothness, small energy, total variation, sparsity, or another mathematical prior. Neural methods often learn part of this structure from examples. They may learn a direct map from $y$ to $x$, learn a denoiser used inside an algorithm, or learn a regularizer implicitly through training.
+
+The likelihood still matters in learned methods. A neural reconstruction that ignores the measurement model may produce visually convincing images that are not faithful to the data. In imaging, visual plausibility and measurement consistency are not the same thing.
+
+## Common Mistakes
+
+A first mistake is to treat all noise as Gaussian because squared error is familiar. Squared error is a model choice. Sometimes it is a good one, sometimes it is only a convenient approximation, and sometimes it is misleading.
+
+A second mistake is to confuse random noise with missing information. Random noise can sometimes be reduced by repeated measurements or averaging. Missing scene content, physical occlusion, or unobserved frequencies require additional assumptions; averaging does not create information that was never measured.
+
+A third mistake is to think that a lower data term always means a better image. With noisy data, fitting the measurements perfectly can mean fitting noise. This is why likelihood must later be balanced with regularization.
+
 ## Computation
 
 The Week 4 notebook lets you compare Gaussian and Poisson noise, plot signal-to-noise behavior, and inspect likelihood curves.
@@ -324,6 +366,8 @@ python3 examples/week04_noise_likelihood.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+When using the notebook, do not only look at the final images. Change the noise parameters and ask whether the same visual artifact would be penalized the same way by each likelihood. Then inspect the likelihood curves and connect their shape to what you see in the image.
+
 ## Exercises
 
 1. For $y_i=x_i+\eta_i$ with $\eta_i\sim\mathcal{N}(0,\sigma^2)$, compute $\mathbb{E}[y_i\mid x_i]$ and $\mathrm{Var}(y_i\mid x_i)$.
@@ -331,6 +375,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Explain why Poisson relative noise improves as the photon count increases.
 4. Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.
 5. Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.
+6. In your own words, explain why a neural reconstruction method should still care about the measurement noise model.
 
 ## Takeaways
 
@@ -339,3 +384,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Poisson photon-counting noise has variance equal to its mean.
 - Low-light images are difficult because relative photon noise is high.
 - Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.
+- Learned imaging methods still need data consistency; plausibility alone is not enough.
