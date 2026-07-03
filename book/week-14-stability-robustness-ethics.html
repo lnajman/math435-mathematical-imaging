@@ -387,18 +387,25 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#reliability-is-tested" id="toc-reliability-is-tested" class="nav-link" data-scroll-target="#reliability-is-tested">Reliability Is Tested</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#stability" id="toc-stability" class="nav-link" data-scroll-target="#stability">Stability</a></li>
+  <li><a href="#stability-of-the-whole-pipeline" id="toc-stability-of-the-whole-pipeline" class="nav-link" data-scroll-target="#stability-of-the-whole-pipeline">Stability Of The Whole Pipeline</a></li>
   <li><a href="#parameter-sensitivity" id="toc-parameter-sensitivity" class="nav-link" data-scroll-target="#parameter-sensitivity">Parameter Sensitivity</a></li>
   <li><a href="#perturbation-amplification" id="toc-perturbation-amplification" class="nav-link" data-scroll-target="#perturbation-amplification">Perturbation Amplification</a></li>
   <li><a href="#singular-values-and-stability" id="toc-singular-values-and-stability" class="nav-link" data-scroll-target="#singular-values-and-stability">Singular Values And Stability</a></li>
   <li><a href="#robustness" id="toc-robustness" class="nav-link" data-scroll-target="#robustness">Robustness</a></li>
+  <li><a href="#robustness-for-learned-methods" id="toc-robustness-for-learned-methods" class="nav-link" data-scroll-target="#robustness-for-learned-methods">Robustness For Learned Methods</a></li>
   <li><a href="#domain-robustness" id="toc-domain-robustness" class="nav-link" data-scroll-target="#domain-robustness">Domain Robustness</a></li>
   <li><a href="#hallucination" id="toc-hallucination" class="nav-link" data-scroll-target="#hallucination">Hallucination</a></li>
   <li><a href="#small-feature-risk" id="toc-small-feature-risk" class="nav-link" data-scroll-target="#small-feature-risk">Small Feature Risk</a></li>
   <li><a href="#data-consistency-is-necessary" id="toc-data-consistency-is-necessary" class="nav-link" data-scroll-target="#data-consistency-is-necessary">Data Consistency Is Necessary</a></li>
+  <li><a href="#uncertainty" id="toc-uncertainty" class="nav-link" data-scroll-target="#uncertainty">Uncertainty</a></li>
   <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
   <li><a href="#ethics-and-responsibility" id="toc-ethics-and-responsibility" class="nav-link" data-scroll-target="#ethics-and-responsibility">Ethics And Responsibility</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#what-to-document" id="toc-what-to-document" class="nav-link" data-scroll-target="#what-to-document">What To Document</a></li>
+  <li><a href="#final-course-synthesis" id="toc-final-course-synthesis" class="nav-link" data-scroll-target="#final-course-synthesis">Final Course Synthesis</a></li>
   <li><a href="#project-checkpoint" id="toc-project-checkpoint" class="nav-link" data-scroll-target="#project-checkpoint">Project Checkpoint</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -459,6 +466,27 @@ window.Quarto = {
 </div>
 <p>In mathematical imaging, a beautiful output can still be unsafe if it is unstable, outside the tested domain, or visually plausible but unsupported by the measurements.</p>
 </section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>This final chapter returns to the beginning of the course. We started with the inverse-problem question:</p>
+<p><span class="math display">
+y = Ax+\eta,
+\qquad
+\text{recover } x \text{ from } y.
+</span></p>
+<p>We then saw why this is difficult: information can be lost, noise can be amplified, and many images can be compatible with the same data. Regularization, sparse priors, wavelets, learned priors, neural networks, and plug-and-play algorithms are all ways to make reconstruction possible.</p>
+<p>But the final question is not only whether reconstruction is possible. It is whether the result should be trusted for the intended use.</p>
+<p>This is where the course becomes a habit of mind. Every reconstruction should be read as a mixture of:</p>
+<ul>
+<li>measured evidence;</li>
+<li>forward-model assumptions;</li>
+<li>noise assumptions;</li>
+<li>prior information;</li>
+<li>algorithmic choices;</li>
+<li>training-data influence, if learning is used.</li>
+</ul>
+<p>Reliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.</p>
+</section>
 <section id="stability" class="level2">
 <h2 class="anchored" data-anchor-id="stability">Stability</h2>
 <p>An imaging method is stable if small changes in the data tend to produce small changes in the reconstruction.</p>
@@ -478,6 +506,23 @@ window.Quarto = {
 <li>a mismatch between training data and test data.</li>
 </ul>
 <p>The central danger is error amplification. Forward imaging often loses information: blur weakens high frequencies, masks discard observations, subsampling removes coefficients, and noise corrupts weak signal components. Trying to undo that loss can magnify small errors.</p>
+</section>
+<section id="stability-of-the-whole-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="stability-of-the-whole-pipeline">Stability Of The Whole Pipeline</h2>
+<p>Stability is not only a property of one formula. It is a property of the whole pipeline:</p>
+<p><span class="math display">
+\text{raw data}
+\rightarrow
+\text{preprocessing}
+\rightarrow
+\text{reconstruction}
+\rightarrow
+\text{postprocessing}
+\rightarrow
+\text{decision}.
+</span></p>
+<p>Small changes can enter at any stage. A different normalization, crop, interpolation rule, stopping criterion, or threshold can affect the final image. For learned methods, a small change in the input can interact with a nonlinear network in unexpected ways.</p>
+<p>For this reason, a responsible stability test should perturb more than one thing when possible. Perturb the measured data, the assumed model, the parameter values, and the preprocessing choices. Then ask whether the conclusion changes.</p>
 </section>
 <section id="parameter-sensitivity" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-sensitivity">Parameter Sensitivity</h2>
@@ -509,6 +554,7 @@ window.Quarto = {
 <li>may fit the data poorly.</li>
 </ul>
 <p>The goal is not to find a magic value of <span class="math inline">\lambda</span>. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.</p>
+<p>If a conclusion depends on one extremely precise parameter value, that conclusion is fragile. A robust conclusion should survive a reasonable neighborhood of choices. This is especially important in student projects: it is better to show a parameter range with clear tradeoffs than to present one polished image with no explanation of how it was obtained.</p>
 </section>
 <section id="perturbation-amplification" class="level2">
 <h2 class="anchored" data-anchor-id="perturbation-amplification">Perturbation Amplification</h2>
@@ -533,6 +579,8 @@ window.Quarto = {
 <p>Weak regularization can make the reconstruction much more sensitive to small perturbations in the data.</p>
 </div>
 <p>This diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.</p>
+<p>The amplification factor is not a universal score. It depends on the perturbation direction, the norm, and the reconstruction method. Still, it is useful because it turns the abstract idea of stability into an experiment students can run.</p>
+<p>When possible, repeat the test with several perturbations. If one small perturbation causes a large change in a task-critical region, that is evidence of fragility even if the average metric looks acceptable.</p>
 </section>
 <section id="singular-values-and-stability" class="level2">
 <h2 class="anchored" data-anchor-id="singular-values-and-stability">Singular Values And Stability</h2>
@@ -554,6 +602,7 @@ x
 \frac{\sigma_i}{\sigma_i^2+\lambda}.
 </span></p>
 <p>This factor does not explode when <span class="math inline">\sigma_i</span> is small. The price is bias: some true details are also reduced.</p>
+<p>This is the same tradeoff that appeared throughout the course. Stability is bought by refusing to trust weakly measured directions too much. The question is which details are sacrificed, and whether those details matter for the task.</p>
 </section>
 <section id="robustness" class="level2">
 <h2 class="anchored" data-anchor-id="robustness">Robustness</h2>
@@ -601,6 +650,20 @@ x
 </table>
 <p>Robustness is not proven by one successful example. It is supported by a pattern of successful and failed tests.</p>
 </section>
+<section id="robustness-for-learned-methods" class="level2">
+<h2 class="anchored" data-anchor-id="robustness-for-learned-methods">Robustness For Learned Methods</h2>
+<p>For learned imaging, robustness testing must include the training distribution. A method may be stable for images similar to the training set and unreliable outside it.</p>
+<p>Useful learned-method tests include:</p>
+<ul>
+<li>train/test domain comparison;</li>
+<li>noise levels not seen during training;</li>
+<li>forward models different from the simulated training model;</li>
+<li>rare structures or unusual cases;</li>
+<li>adversarial or worst-case perturbations when appropriate;</li>
+<li>comparison with simple model-based baselines.</li>
+</ul>
+<p>The goal is not to make learning look bad. The goal is to know where the learned prior is useful and where it becomes an unsupported assumption.</p>
+</section>
 <section id="domain-robustness" class="level2">
 <h2 class="anchored" data-anchor-id="domain-robustness">Domain Robustness</h2>
 <p>Learned priors are powerful, but they learn from the examples they see.</p>
@@ -617,6 +680,7 @@ x
 <li>hidden failure on rare cases;</li>
 <li>performance differences across populations, instruments, or sites.</li>
 </ul>
+<p>The ethical issue is not only average performance. A method that works well on average can still fail systematically for a subgroup, acquisition device, or rare structure. Robustness should therefore be reported across meaningful categories, not only as one global number.</p>
 </section>
 <section id="hallucination" class="level2">
 <h2 class="anchored" data-anchor-id="hallucination">Hallucination</h2>
@@ -628,6 +692,8 @@ x
 <li>a false negative: the method removes a real but weak structure.</li>
 </ul>
 <p>Both matter. Which one is worse depends on the task.</p>
+<p>In some applications, false positives are costly: a reconstruction may suggest a defect, lesion, object, or event that is not actually supported by the data. In other applications, false negatives are worse: a method may remove a weak but important signal. The evaluation should match the risk.</p>
+<p>This is why “looks good” is not a scientific criterion by itself. The reconstruction must be evaluated against the task and the possible harm of different errors.</p>
 </section>
 <section id="small-feature-risk" class="level2">
 <h2 class="anchored" data-anchor-id="small-feature-risk">Small Feature Risk</h2>
@@ -654,6 +720,21 @@ A\hat{x}\approx y.
 </span></p>
 <p>Data consistency is necessary, but it is not sufficient. In an ill-posed inverse problem, many images can explain the same measurement within noise tolerance.</p>
 <p>This is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.</p>
+<p>Data consistency should be interpreted with the noise model. Exact equality <span class="math inline">A\hat{x}=y</span> is not always desirable when <span class="math inline">y</span> is noisy. A good reconstruction should fit the data within the expected noise and model error, not necessarily fit every fluctuation.</p>
+<p>For learned reconstructions, data consistency is a guardrail. It does not prove truth, but it can reveal when a visually plausible output has drifted away from the measurement.</p>
+</section>
+<section id="uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="uncertainty">Uncertainty</h2>
+<p>A reconstruction is usually not complete without uncertainty. In an inverse problem, uncertainty can come from noise, missing data, model mismatch, parameter choice, and training distribution.</p>
+<p>Uncertainty can be communicated in several ways:</p>
+<ul>
+<li>show sensitivity to noise or perturbations;</li>
+<li>report confidence intervals for scalar measurements;</li>
+<li>display uncertainty maps when available;</li>
+<li>compare multiple plausible reconstructions;</li>
+<li>identify regions dominated by prior assumptions.</li>
+</ul>
+<p>The last point is essential. If a region is weakly measured and mostly determined by the prior, the user should know that.</p>
 </section>
 <section id="evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
@@ -670,6 +751,21 @@ A\hat{x}\approx y.
 <li>uncertainty or confidence reporting.</li>
 </ul>
 <p>For project reports, a failure case is not a weakness. It is evidence that the method has been tested honestly.</p>
+</section>
+<section id="reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<p>A reconstruction should be reproducible enough that another person can understand how it was produced. This requires more than code.</p>
+<p>Document:</p>
+<ul>
+<li>software versions and random seeds when relevant;</li>
+<li>preprocessing steps;</li>
+<li>parameter values;</li>
+<li>training data or simulated data generation;</li>
+<li>stopping criteria;</li>
+<li>evaluation scripts;</li>
+<li>known nondeterminism.</li>
+</ul>
+<p>Reproducibility is part of ethics because it allows others to inspect, challenge, and improve the result.</p>
 </section>
 <section id="ethics-and-responsibility" class="level2">
 <h2 class="anchored" data-anchor-id="ethics-and-responsibility">Ethics And Responsibility</h2>
@@ -688,6 +784,13 @@ A\hat{x}\approx y.
 </ul>
 <p>Ethics here is not separate from mathematics. Stability, robustness, reproducibility, and honest communication are part of responsible modeling.</p>
 </section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<p>A first mistake is to treat a high-quality visual result as proof. It is evidence of visual plausibility, not necessarily measurement support.</p>
+<p>A second mistake is to report only the best example. Reliability is learned from variation: easy cases, hard cases, parameter sweeps, and failure cases.</p>
+<p>A third mistake is to hide prior influence. Every method uses assumptions. The responsible move is to name them.</p>
+<p>A fourth mistake is to think ethics begins after the mathematics. In imaging, the mathematical choices determine what can be seen, hidden, amplified, or invented.</p>
+</section>
 <section id="what-to-document" class="level2">
 <h2 class="anchored" data-anchor-id="what-to-document">What To Document</h2>
 <p>For a reconstruction method, document:</p>
@@ -703,6 +806,30 @@ A\hat{x}\approx y.
 <li>intended use and non-use.</li>
 </ul>
 <p>This documentation makes the reconstruction inspectable. It also helps future users understand what the image is, and what it is not.</p>
+</section>
+<section id="final-course-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="final-course-synthesis">Final Course Synthesis</h2>
+<p>The course can be summarized in one line:</p>
+<p><span class="math display">
+\text{reconstruction}
+=
+\text{measurement consistency}
++
+\text{prior information}
++
+\text{optimization or learning}.
+</span></p>
+<p>Classical methods make the prior explicit. Learned methods often make the prior more powerful but less transparent. Hybrid methods try to keep the best of both: physics and measurement consistency from inverse problems, expressive image models from data.</p>
+<p>The goal is not to choose one camp forever. The goal is to ask the right questions:</p>
+<ul>
+<li>What information was measured?</li>
+<li>What information was assumed?</li>
+<li>What was learned from examples?</li>
+<li>What is stable under perturbation?</li>
+<li>What fails under domain shift?</li>
+<li>What should the user be told?</li>
+</ul>
+<p>That is the path from mathematical imaging to neural imaging without losing scientific discipline.</p>
 </section>
 <section id="project-checkpoint" class="level2">
 <h2 class="anchored" data-anchor-id="project-checkpoint">Project Checkpoint</h2>
@@ -751,6 +878,7 @@ A\hat{x}\approx y.
 <li><p><strong>Robustness table.</strong> For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.</p></li>
 <li><p><strong>Small-feature test.</strong> Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.</p></li>
 <li><p><strong>Ethics paragraph.</strong> Write five sentences explaining when your method should not be used.</p></li>
+<li><p><strong>Uncertainty statement.</strong> Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.</p></li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -761,6 +889,7 @@ A\hat{x}\approx y.
 <li>Learned priors inherit assumptions from training data.</li>
 <li>Robustness must be tested across realistic and stressful cases.</li>
 <li>Ethical reconstruction means documenting assumptions, failures, and limits.</li>
+<li>The final goal is not only reconstruction, but trustworthy reconstruction.</li>
 </ul>
 
 

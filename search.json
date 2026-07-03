@@ -2255,6 +2255,18 @@
     ]
   },
   {
+    "objectID": "book/week-14-stability-robustness-ethics.html#why-this-chapter-matters",
+    "href": "book/week-14-stability-robustness-ethics.html#why-this-chapter-matters",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Why This Chapter Matters",
+    "text": "Why This Chapter Matters\nThis final chapter returns to the beginning of the course. We started with the inverse-problem question:\n\ny = Ax+\\eta,\n\\qquad\n\\text{recover } x \\text{ from } y.\n\nWe then saw why this is difficult: information can be lost, noise can be amplified, and many images can be compatible with the same data. Regularization, sparse priors, wavelets, learned priors, neural networks, and plug-and-play algorithms are all ways to make reconstruction possible.\nBut the final question is not only whether reconstruction is possible. It is whether the result should be trusted for the intended use.\nThis is where the course becomes a habit of mind. Every reconstruction should be read as a mixture of:\n\nmeasured evidence;\nforward-model assumptions;\nnoise assumptions;\nprior information;\nalgorithmic choices;\ntraining-data influence, if learning is used.\n\nReliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
     "objectID": "book/week-14-stability-robustness-ethics.html#stability",
     "href": "book/week-14-stability-robustness-ethics.html#stability",
     "title": "Stability, Robustness, and Ethics",
@@ -2267,11 +2279,23 @@
     ]
   },
   {
+    "objectID": "book/week-14-stability-robustness-ethics.html#stability-of-the-whole-pipeline",
+    "href": "book/week-14-stability-robustness-ethics.html#stability-of-the-whole-pipeline",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Stability Of The Whole Pipeline",
+    "text": "Stability Of The Whole Pipeline\nStability is not only a property of one formula. It is a property of the whole pipeline:\n\n\\text{raw data}\n\\rightarrow\n\\text{preprocessing}\n\\rightarrow\n\\text{reconstruction}\n\\rightarrow\n\\text{postprocessing}\n\\rightarrow\n\\text{decision}.\n\nSmall changes can enter at any stage. A different normalization, crop, interpolation rule, stopping criterion, or threshold can affect the final image. For learned methods, a small change in the input can interact with a nonlinear network in unexpected ways.\nFor this reason, a responsible stability test should perturb more than one thing when possible. Perturb the measured data, the assumed model, the parameter values, and the preprocessing choices. Then ask whether the conclusion changes.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
     "objectID": "book/week-14-stability-robustness-ethics.html#parameter-sensitivity",
     "href": "book/week-14-stability-robustness-ethics.html#parameter-sensitivity",
     "title": "Stability, Robustness, and Ethics",
     "section": "Parameter Sensitivity",
-    "text": "Parameter Sensitivity\nRegularization makes inverse problems more stable, but the amount of regularization matters.\nFor Tikhonov regularization,\n\n\\hat{x}_\\lambda\n=\n\\arg\\min_x\n\\frac12\\|Ax-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|Lx\\|_2^2,\n\nthe parameter \\lambda controls the balance between data consistency and prior smoothness.\n\n\nThe reconstruction can change substantially as \\lambda moves from weak to strong regularization.\n\nWeak regularization often:\n\nfits unstable directions;\namplifies noise;\ngives a low data residual but poor image quality.\n\nStrong regularization often:\n\nsuppresses noise and artifacts;\nalso suppresses details;\nmay fit the data poorly.\n\nThe goal is not to find a magic value of \\lambda. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.",
+    "text": "Parameter Sensitivity\nRegularization makes inverse problems more stable, but the amount of regularization matters.\nFor Tikhonov regularization,\n\n\\hat{x}_\\lambda\n=\n\\arg\\min_x\n\\frac12\\|Ax-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|Lx\\|_2^2,\n\nthe parameter \\lambda controls the balance between data consistency and prior smoothness.\n\n\nThe reconstruction can change substantially as \\lambda moves from weak to strong regularization.\n\nWeak regularization often:\n\nfits unstable directions;\namplifies noise;\ngives a low data residual but poor image quality.\n\nStrong regularization often:\n\nsuppresses noise and artifacts;\nalso suppresses details;\nmay fit the data poorly.\n\nThe goal is not to find a magic value of \\lambda. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.\nIf a conclusion depends on one extremely precise parameter value, that conclusion is fragile. A robust conclusion should survive a reasonable neighborhood of choices. This is especially important in student projects: it is better to show a parameter range with clear tradeoffs than to present one polished image with no explanation of how it was obtained.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2283,7 +2307,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#perturbation-amplification",
     "title": "Stability, Robustness, and Ethics",
     "section": "Perturbation Amplification",
-    "text": "Perturbation Amplification\nA simple stability diagnostic is to perturb the data and compare relative input and output changes.\nTake an observation y and add a small perturbation \\delta y. Compute\n\n\\frac{\\|\\delta y\\|}{\\|y\\|}\n\\qquad\\text{and}\\qquad\n\\frac{\\|\\hat{x}(y+\\delta y)-\\hat{x}(y)\\|}{\\|\\hat{x}(y)\\|}.\n\nThe ratio\n\n\\frac{\n\\|\\hat{x}(y+\\delta y)-\\hat{x}(y)\\|/\\|\\hat{x}(y)\\|\n}{\n\\|\\delta y\\|/\\|y\\|\n}\n\nis an empirical amplification factor.\n\n\nWeak regularization can make the reconstruction much more sensitive to small perturbations in the data.\n\nThis diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.",
+    "text": "Perturbation Amplification\nA simple stability diagnostic is to perturb the data and compare relative input and output changes.\nTake an observation y and add a small perturbation \\delta y. Compute\n\n\\frac{\\|\\delta y\\|}{\\|y\\|}\n\\qquad\\text{and}\\qquad\n\\frac{\\|\\hat{x}(y+\\delta y)-\\hat{x}(y)\\|}{\\|\\hat{x}(y)\\|}.\n\nThe ratio\n\n\\frac{\n\\|\\hat{x}(y+\\delta y)-\\hat{x}(y)\\|/\\|\\hat{x}(y)\\|\n}{\n\\|\\delta y\\|/\\|y\\|\n}\n\nis an empirical amplification factor.\n\n\nWeak regularization can make the reconstruction much more sensitive to small perturbations in the data.\n\nThis diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.\nThe amplification factor is not a universal score. It depends on the perturbation direction, the norm, and the reconstruction method. Still, it is useful because it turns the abstract idea of stability into an experiment students can run.\nWhen possible, repeat the test with several perturbations. If one small perturbation causes a large change in a task-critical region, that is evidence of fragility even if the average metric looks acceptable.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2295,7 +2319,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#singular-values-and-stability",
     "title": "Stability, Robustness, and Ethics",
     "section": "Singular Values And Stability",
-    "text": "Singular Values And Stability\nFor a linear forward model y=Ax+\\eta, singular values explain why inversion can be unstable.\nIf\n\nA = U\\Sigma V^\\top,\n\nthen direct inversion divides by singular values:\n\nx\n=\n\\sum_i\n\\frac{u_i^\\top y}{\\sigma_i}v_i.\n\nWhen \\sigma_i is small, the factor 1/\\sigma_i is large. Noise or modeling error in the corresponding data direction is amplified.\nRegularization limits this amplification. For example, standard Tikhonov filtering replaces 1/\\sigma_i by\n\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}.\n\nThis factor does not explode when \\sigma_i is small. The price is bias: some true details are also reduced.",
+    "text": "Singular Values And Stability\nFor a linear forward model y=Ax+\\eta, singular values explain why inversion can be unstable.\nIf\n\nA = U\\Sigma V^\\top,\n\nthen direct inversion divides by singular values:\n\nx\n=\n\\sum_i\n\\frac{u_i^\\top y}{\\sigma_i}v_i.\n\nWhen \\sigma_i is small, the factor 1/\\sigma_i is large. Noise or modeling error in the corresponding data direction is amplified.\nRegularization limits this amplification. For example, standard Tikhonov filtering replaces 1/\\sigma_i by\n\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}.\n\nThis factor does not explode when \\sigma_i is small. The price is bias: some true details are also reduced.\nThis is the same tradeoff that appeared throughout the course. Stability is bought by refusing to trust weakly measured directions too much. The question is which details are sacrificed, and whether those details matter for the task.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2315,11 +2339,23 @@
     ]
   },
   {
+    "objectID": "book/week-14-stability-robustness-ethics.html#robustness-for-learned-methods",
+    "href": "book/week-14-stability-robustness-ethics.html#robustness-for-learned-methods",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Robustness For Learned Methods",
+    "text": "Robustness For Learned Methods\nFor learned imaging, robustness testing must include the training distribution. A method may be stable for images similar to the training set and unreliable outside it.\nUseful learned-method tests include:\n\ntrain/test domain comparison;\nnoise levels not seen during training;\nforward models different from the simulated training model;\nrare structures or unusual cases;\nadversarial or worst-case perturbations when appropriate;\ncomparison with simple model-based baselines.\n\nThe goal is not to make learning look bad. The goal is to know where the learned prior is useful and where it becomes an unsupported assumption.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
     "objectID": "book/week-14-stability-robustness-ethics.html#domain-robustness",
     "href": "book/week-14-stability-robustness-ethics.html#domain-robustness",
     "title": "Stability, Robustness, and Ethics",
     "section": "Domain Robustness",
-    "text": "Domain Robustness\nLearned priors are powerful, but they learn from the examples they see.\n\n\nA denoiser trained on one image family can be less reliable on another image family.\n\nThis is not a defect of learning itself. It is an assumption that must be named. The training set acts like a prior: it says which images and structures are expected.\nIn inverse problems, overfitting can mean:\n\nexcellent results on benchmark images;\npoor behavior on new acquisition conditions;\nlearned texture that is not supported by the data;\nhidden failure on rare cases;\nperformance differences across populations, instruments, or sites.",
+    "text": "Domain Robustness\nLearned priors are powerful, but they learn from the examples they see.\n\n\nA denoiser trained on one image family can be less reliable on another image family.\n\nThis is not a defect of learning itself. It is an assumption that must be named. The training set acts like a prior: it says which images and structures are expected.\nIn inverse problems, overfitting can mean:\n\nexcellent results on benchmark images;\npoor behavior on new acquisition conditions;\nlearned texture that is not supported by the data;\nhidden failure on rare cases;\nperformance differences across populations, instruments, or sites.\n\nThe ethical issue is not only average performance. A method that works well on average can still fail systematically for a subgroup, acquisition device, or rare structure. Robustness should therefore be reported across meaningful categories, not only as one global number.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2331,7 +2367,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#hallucination",
     "title": "Stability, Robustness, and Ethics",
     "section": "Hallucination",
-    "text": "Hallucination\nIn reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.\nThis can happen with learned methods, but the general risk is older than deep learning. Any strong prior can add, remove, or reshape information when the data are insufficient.\nThere are two symmetric dangers:\n\na false positive: the method invents a structure;\na false negative: the method removes a real but weak structure.\n\nBoth matter. Which one is worse depends on the task.",
+    "text": "Hallucination\nIn reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.\nThis can happen with learned methods, but the general risk is older than deep learning. Any strong prior can add, remove, or reshape information when the data are insufficient.\nThere are two symmetric dangers:\n\na false positive: the method invents a structure;\na false negative: the method removes a real but weak structure.\n\nBoth matter. Which one is worse depends on the task.\nIn some applications, false positives are costly: a reconstruction may suggest a defect, lesion, object, or event that is not actually supported by the data. In other applications, false negatives are worse: a method may remove a weak but important signal. The evaluation should match the risk.\nThis is why “looks good” is not a scientific criterion by itself. The reconstruction must be evaluated against the task and the possible harm of different errors.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2355,7 +2391,19 @@
     "href": "book/week-14-stability-robustness-ethics.html#data-consistency-is-necessary",
     "title": "Stability, Robustness, and Ethics",
     "section": "Data Consistency Is Necessary",
-    "text": "Data Consistency Is Necessary\nAn output should be compatible with the measurement model:\n\nA\\hat{x}\\approx y.\n\nData consistency is necessary, but it is not sufficient. In an ill-posed inverse problem, many images can explain the same measurement within noise tolerance.\nThis is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.",
+    "text": "Data Consistency Is Necessary\nAn output should be compatible with the measurement model:\n\nA\\hat{x}\\approx y.\n\nData consistency is necessary, but it is not sufficient. In an ill-posed inverse problem, many images can explain the same measurement within noise tolerance.\nThis is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.\nData consistency should be interpreted with the noise model. Exact equality A\\hat{x}=y is not always desirable when y is noisy. A good reconstruction should fit the data within the expected noise and model error, not necessarily fit every fluctuation.\nFor learned reconstructions, data consistency is a guardrail. It does not prove truth, but it can reveal when a visually plausible output has drifted away from the measurement.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
+    "objectID": "book/week-14-stability-robustness-ethics.html#uncertainty",
+    "href": "book/week-14-stability-robustness-ethics.html#uncertainty",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Uncertainty",
+    "text": "Uncertainty\nA reconstruction is usually not complete without uncertainty. In an inverse problem, uncertainty can come from noise, missing data, model mismatch, parameter choice, and training distribution.\nUncertainty can be communicated in several ways:\n\nshow sensitivity to noise or perturbations;\nreport confidence intervals for scalar measurements;\ndisplay uncertainty maps when available;\ncompare multiple plausible reconstructions;\nidentify regions dominated by prior assumptions.\n\nThe last point is essential. If a region is weakly measured and mostly determined by the prior, the user should know that.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2375,6 +2423,18 @@
     ]
   },
   {
+    "objectID": "book/week-14-stability-robustness-ethics.html#reproducibility",
+    "href": "book/week-14-stability-robustness-ethics.html#reproducibility",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Reproducibility",
+    "text": "Reproducibility\nA reconstruction should be reproducible enough that another person can understand how it was produced. This requires more than code.\nDocument:\n\nsoftware versions and random seeds when relevant;\npreprocessing steps;\nparameter values;\ntraining data or simulated data generation;\nstopping criteria;\nevaluation scripts;\nknown nondeterminism.\n\nReproducibility is part of ethics because it allows others to inspect, challenge, and improve the result.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
     "objectID": "book/week-14-stability-robustness-ethics.html#ethics-and-responsibility",
     "href": "book/week-14-stability-robustness-ethics.html#ethics-and-responsibility",
     "title": "Stability, Robustness, and Ethics",
@@ -2387,11 +2447,35 @@
     ]
   },
   {
+    "objectID": "book/week-14-stability-robustness-ethics.html#common-mistakes",
+    "href": "book/week-14-stability-robustness-ethics.html#common-mistakes",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Common Mistakes",
+    "text": "Common Mistakes\nA first mistake is to treat a high-quality visual result as proof. It is evidence of visual plausibility, not necessarily measurement support.\nA second mistake is to report only the best example. Reliability is learned from variation: easy cases, hard cases, parameter sweeps, and failure cases.\nA third mistake is to hide prior influence. Every method uses assumptions. The responsible move is to name them.\nA fourth mistake is to think ethics begins after the mathematics. In imaging, the mathematical choices determine what can be seen, hidden, amplified, or invented.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
     "objectID": "book/week-14-stability-robustness-ethics.html#what-to-document",
     "href": "book/week-14-stability-robustness-ethics.html#what-to-document",
     "title": "Stability, Robustness, and Ethics",
     "section": "What To Document",
     "text": "What To Document\nFor a reconstruction method, document:\n\nthe forward model and its assumptions;\nthe noise model;\nthe regularizer or learned prior;\ntraining data, if any;\nparameter choices;\nvalidation cases;\nknown failures;\nuncertainty and limitations;\nintended use and non-use.\n\nThis documentation makes the reconstruction inspectable. It also helps future users understand what the image is, and what it is not.",
+    "crumbs": [
+      "Book",
+      "Part V: Reliability and Projects",
+      "14. Stability, robustness, and ethics"
+    ]
+  },
+  {
+    "objectID": "book/week-14-stability-robustness-ethics.html#final-course-synthesis",
+    "href": "book/week-14-stability-robustness-ethics.html#final-course-synthesis",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Final Course Synthesis",
+    "text": "Final Course Synthesis\nThe course can be summarized in one line:\n\n\\text{reconstruction}\n=\n\\text{measurement consistency}\n+\n\\text{prior information}\n+\n\\text{optimization or learning}.\n\nClassical methods make the prior explicit. Learned methods often make the prior more powerful but less transparent. Hybrid methods try to keep the best of both: physics and measurement consistency from inverse problems, expressive image models from data.\nThe goal is not to choose one camp forever. The goal is to ask the right questions:\n\nWhat information was measured?\nWhat information was assumed?\nWhat was learned from examples?\nWhat is stable under perturbation?\nWhat fails under domain shift?\nWhat should the user be told?\n\nThat is the path from mathematical imaging to neural imaging without losing scientific discipline.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2427,7 +2511,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#exercises",
     "title": "Stability, Robustness, and Ethics",
     "section": "Exercises",
-    "text": "Exercises\n\nParameter sensitivity. Choose two nearby values of \\lambda in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.\nPerturbation test. Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.\nRobustness table. For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.\nSmall-feature test. Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.\nEthics paragraph. Write five sentences explaining when your method should not be used.",
+    "text": "Exercises\n\nParameter sensitivity. Choose two nearby values of \\lambda in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.\nPerturbation test. Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.\nRobustness table. For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.\nSmall-feature test. Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.\nEthics paragraph. Write five sentences explaining when your method should not be used.\nUncertainty statement. Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
@@ -2439,7 +2523,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#takeaways",
     "title": "Stability, Robustness, and Ethics",
     "section": "Takeaways",
-    "text": "Takeaways\n\nIll-posed inverse problems require stability checks.\nA good-looking image can still be unreliable.\nLearned priors inherit assumptions from training data.\nRobustness must be tested across realistic and stressful cases.\nEthical reconstruction means documenting assumptions, failures, and limits.",
+    "text": "Takeaways\n\nIll-posed inverse problems require stability checks.\nA good-looking image can still be unreliable.\nLearned priors inherit assumptions from training data.\nRobustness must be tested across realistic and stressful cases.\nEthical reconstruction means documenting assumptions, failures, and limits.\nThe final goal is not only reconstruction, but trustworthy reconstruction.",
     "crumbs": [
       "Book",
       "Part V: Reliability and Projects",
