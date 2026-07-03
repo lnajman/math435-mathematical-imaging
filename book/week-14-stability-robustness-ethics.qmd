@@ -36,6 +36,31 @@ Reliability is not a single final score. It is a loop of modeling, testing, stre
 
 In mathematical imaging, a beautiful output can still be unsafe if it is unstable, outside the tested domain, or visually plausible but unsupported by the measurements.
 
+## Why This Chapter Matters
+
+This final chapter returns to the beginning of the course. We started with the inverse-problem question:
+
+$$
+y = Ax+\eta,
+\qquad
+\text{recover } x \text{ from } y.
+$$
+
+We then saw why this is difficult: information can be lost, noise can be amplified, and many images can be compatible with the same data. Regularization, sparse priors, wavelets, learned priors, neural networks, and plug-and-play algorithms are all ways to make reconstruction possible.
+
+But the final question is not only whether reconstruction is possible. It is whether the result should be trusted for the intended use.
+
+This is where the course becomes a habit of mind. Every reconstruction should be read as a mixture of:
+
+- measured evidence;
+- forward-model assumptions;
+- noise assumptions;
+- prior information;
+- algorithmic choices;
+- training-data influence, if learning is used.
+
+Reliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.
+
 ## Stability
 
 An imaging method is stable if small changes in the data tend to produce small changes in the reconstruction.
@@ -59,6 +84,26 @@ Perturbations are not only random noise. They can come from:
 - a mismatch between training data and test data.
 
 The central danger is error amplification. Forward imaging often loses information: blur weakens high frequencies, masks discard observations, subsampling removes coefficients, and noise corrupts weak signal components. Trying to undo that loss can magnify small errors.
+
+## Stability Of The Whole Pipeline
+
+Stability is not only a property of one formula. It is a property of the whole pipeline:
+
+$$
+\text{raw data}
+\rightarrow
+\text{preprocessing}
+\rightarrow
+\text{reconstruction}
+\rightarrow
+\text{postprocessing}
+\rightarrow
+\text{decision}.
+$$
+
+Small changes can enter at any stage. A different normalization, crop, interpolation rule, stopping criterion, or threshold can affect the final image. For learned methods, a small change in the input can interact with a nonlinear network in unexpected ways.
+
+For this reason, a responsible stability test should perturb more than one thing when possible. Perturb the measured data, the assumed model, the parameter values, and the preprocessing choices. Then ask whether the conclusion changes.
 
 ## Parameter Sensitivity
 
@@ -97,6 +142,8 @@ Strong regularization often:
 
 The goal is not to find a magic value of $\lambda$. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.
 
+If a conclusion depends on one extremely precise parameter value, that conclusion is fragile. A robust conclusion should survive a reasonable neighborhood of choices. This is especially important in student projects: it is better to show a parameter range with clear tradeoffs than to present one polished image with no explanation of how it was obtained.
+
 ## Perturbation Amplification
 
 A simple stability diagnostic is to perturb the data and compare relative input and output changes.
@@ -129,6 +176,10 @@ Weak regularization can make the reconstruction much more sensitive to small per
 
 This diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.
 
+The amplification factor is not a universal score. It depends on the perturbation direction, the norm, and the reconstruction method. Still, it is useful because it turns the abstract idea of stability into an experiment students can run.
+
+When possible, repeat the test with several perturbations. If one small perturbation causes a large change in a task-critical region, that is evidence of fragility even if the average metric looks acceptable.
+
 ## Singular Values And Stability
 
 For a linear forward model $y=Ax+\eta$, singular values explain why inversion can be unstable.
@@ -158,6 +209,8 @@ $$
 
 This factor does not explode when $\sigma_i$ is small. The price is bias: some true details are also reduced.
 
+This is the same tradeoff that appeared throughout the course. Stability is bought by refusing to trust weakly measured directions too much. The question is which details are sacrificed, and whether those details matter for the task.
+
 ## Robustness
 
 Stability asks about sensitivity to small changes. Robustness asks whether a method continues to work acceptably across a meaningful range of conditions.
@@ -184,6 +237,21 @@ A minimal robustness table might look like this:
 
 Robustness is not proven by one successful example. It is supported by a pattern of successful and failed tests.
 
+## Robustness For Learned Methods
+
+For learned imaging, robustness testing must include the training distribution. A method may be stable for images similar to the training set and unreliable outside it.
+
+Useful learned-method tests include:
+
+- train/test domain comparison;
+- noise levels not seen during training;
+- forward models different from the simulated training model;
+- rare structures or unusual cases;
+- adversarial or worst-case perturbations when appropriate;
+- comparison with simple model-based baselines.
+
+The goal is not to make learning look bad. The goal is to know where the learned prior is useful and where it becomes an unsupported assumption.
+
 ## Domain Robustness
 
 Learned priors are powerful, but they learn from the examples they see.
@@ -204,6 +272,8 @@ In inverse problems, overfitting can mean:
 - hidden failure on rare cases;
 - performance differences across populations, instruments, or sites.
 
+The ethical issue is not only average performance. A method that works well on average can still fail systematically for a subgroup, acquisition device, or rare structure. Robustness should therefore be reported across meaningful categories, not only as one global number.
+
 ## Hallucination
 
 In reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.
@@ -216,6 +286,10 @@ There are two symmetric dangers:
 - a false negative: the method removes a real but weak structure.
 
 Both matter. Which one is worse depends on the task.
+
+In some applications, false positives are costly: a reconstruction may suggest a defect, lesion, object, or event that is not actually supported by the data. In other applications, false negatives are worse: a method may remove a weak but important signal. The evaluation should match the risk.
+
+This is why "looks good" is not a scientific criterion by itself. The reconstruction must be evaluated against the task and the possible harm of different errors.
 
 ## Small Feature Risk
 
@@ -249,6 +323,24 @@ Data consistency is necessary, but it is not sufficient. In an ill-posed inverse
 
 This is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.
 
+Data consistency should be interpreted with the noise model. Exact equality $A\hat{x}=y$ is not always desirable when $y$ is noisy. A good reconstruction should fit the data within the expected noise and model error, not necessarily fit every fluctuation.
+
+For learned reconstructions, data consistency is a guardrail. It does not prove truth, but it can reveal when a visually plausible output has drifted away from the measurement.
+
+## Uncertainty
+
+A reconstruction is usually not complete without uncertainty. In an inverse problem, uncertainty can come from noise, missing data, model mismatch, parameter choice, and training distribution.
+
+Uncertainty can be communicated in several ways:
+
+- show sensitivity to noise or perturbations;
+- report confidence intervals for scalar measurements;
+- display uncertainty maps when available;
+- compare multiple plausible reconstructions;
+- identify regions dominated by prior assumptions.
+
+The last point is essential. If a region is weakly measured and mostly determined by the prior, the user should know that.
+
 ## Evaluation
 
 No single evaluation number is enough.
@@ -266,6 +358,22 @@ When ground truth is not available, use indirect tests:
 - uncertainty or confidence reporting.
 
 For project reports, a failure case is not a weakness. It is evidence that the method has been tested honestly.
+
+## Reproducibility
+
+A reconstruction should be reproducible enough that another person can understand how it was produced. This requires more than code.
+
+Document:
+
+- software versions and random seeds when relevant;
+- preprocessing steps;
+- parameter values;
+- training data or simulated data generation;
+- stopping criteria;
+- evaluation scripts;
+- known nondeterminism.
+
+Reproducibility is part of ethics because it allows others to inspect, challenge, and improve the result.
 
 ## Ethics And Responsibility
 
@@ -287,6 +395,16 @@ Ethical failure modes include:
 
 Ethics here is not separate from mathematics. Stability, robustness, reproducibility, and honest communication are part of responsible modeling.
 
+## Common Mistakes
+
+A first mistake is to treat a high-quality visual result as proof. It is evidence of visual plausibility, not necessarily measurement support.
+
+A second mistake is to report only the best example. Reliability is learned from variation: easy cases, hard cases, parameter sweeps, and failure cases.
+
+A third mistake is to hide prior influence. Every method uses assumptions. The responsible move is to name them.
+
+A fourth mistake is to think ethics begins after the mathematics. In imaging, the mathematical choices determine what can be seen, hidden, amplified, or invented.
+
 ## What To Document
 
 For a reconstruction method, document:
@@ -302,6 +420,33 @@ For a reconstruction method, document:
 - intended use and non-use.
 
 This documentation makes the reconstruction inspectable. It also helps future users understand what the image is, and what it is not.
+
+## Final Course Synthesis
+
+The course can be summarized in one line:
+
+$$
+\text{reconstruction}
+=
+\text{measurement consistency}
++
+\text{prior information}
++
+\text{optimization or learning}.
+$$
+
+Classical methods make the prior explicit. Learned methods often make the prior more powerful but less transparent. Hybrid methods try to keep the best of both: physics and measurement consistency from inverse problems, expressive image models from data.
+
+The goal is not to choose one camp forever. The goal is to ask the right questions:
+
+- What information was measured?
+- What information was assumed?
+- What was learned from examples?
+- What is stable under perturbation?
+- What fails under domain shift?
+- What should the user be told?
+
+That is the path from mathematical imaging to neural imaging without losing scientific discipline.
 
 ## Project Checkpoint
 
@@ -357,6 +502,7 @@ The notebook is the best place to change parameters and see how sensitive the co
 4. **Small-feature test.** Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.
 
 5. **Ethics paragraph.** Write five sentences explaining when your method should not be used.
+6. **Uncertainty statement.** Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.
 
 ## Takeaways
 
@@ -365,3 +511,4 @@ The notebook is the best place to change parameters and see how sensitive the co
 - Learned priors inherit assumptions from training data.
 - Robustness must be tested across realistic and stressful cases.
 - Ethical reconstruction means documenting assumptions, failures, and limits.
+- The final goal is not only reconstruction, but trustworthy reconstruction.
