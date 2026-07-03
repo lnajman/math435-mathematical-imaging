@@ -393,6 +393,7 @@ window.Quarto = {
   <li><a href="#global-support" id="toc-global-support" class="nav-link" data-scroll-target="#global-support">Global Support</a></li>
   <li><a href="#two-dimensional-fourier-transform" id="toc-two-dimensional-fourier-transform" class="nav-link" data-scroll-target="#two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</a></li>
   <li><a href="#reading-a-spectrum" id="toc-reading-a-spectrum" class="nav-link" data-scroll-target="#reading-a-spectrum">Reading A Spectrum</a></li>
+  <li><a href="#what-the-spectrum-can-and-cannot-say" id="toc-what-the-spectrum-can-and-cannot-say" class="nav-link" data-scroll-target="#what-the-spectrum-can-and-cannot-say">What The Spectrum Can And Cannot Say</a></li>
   <li><a href="#magnitude-and-phase" id="toc-magnitude-and-phase" class="nav-link" data-scroll-target="#magnitude-and-phase">Magnitude And Phase</a></li>
   <li><a href="#the-convolution-theorem" id="toc-the-convolution-theorem" class="nav-link" data-scroll-target="#the-convolution-theorem">The Convolution Theorem</a></li>
   <li><a href="#blur-in-frequency-space" id="toc-blur-in-frequency-space" class="nav-link" data-scroll-target="#blur-in-frequency-space">Blur In Frequency Space</a></li>
@@ -435,6 +436,7 @@ window.Quarto = {
 <ul>
 <li>interpret a signal as a sum of oscillations;</li>
 <li>read a 2D Fourier magnitude spectrum;</li>
+<li>explain the tradeoff between frequency localization and spatial localization;</li>
 <li>distinguish Fourier magnitude and phase;</li>
 <li>state the convolution theorem;</li>
 <li>explain blur and inverse filtering in the frequency domain.</li>
@@ -553,6 +555,50 @@ Note
 </div>
 </div>
 </section>
+<section id="what-the-spectrum-can-and-cannot-say" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-spectrum-can-and-cannot-say">What The Spectrum Can And Cannot Say</h2>
+<p>A Fourier spectrum is evidence about frequencies, directions, and scales. It can tell us that an image contains strong oscillations at a certain orientation, or that a blur has suppressed high frequencies. It can reveal periodic artifacts, motion direction, grid effects, and the difference between smooth and textured regions.</p>
+<p>But the spectrum is not a complete explanation of image content. Because Fourier atoms are global, the magnitude spectrum does not directly tell us where a local event occurs. Two images can have the same Fourier magnitude and different spatial organization. Phase helps recover geometry, but the frequency view still organizes information globally.</p>
+<p>This distinction matters for inverse problems. A reconstruction may have the “right amount” of high-frequency energy and still put structures in the wrong place. Conversely, a reconstruction may look smoother than the original but preserve the structures that matter for a specific decision.</p>
+<p>For students, a useful habit is to ask:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Fourier helps?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Which scales are present?</td>
+<td>yes</td>
+<td>frequency magnitude measures oscillatory strength</td>
+</tr>
+<tr class="even">
+<td>Is there directional texture or motion blur?</td>
+<td>yes</td>
+<td>orientation leaves spectral signatures</td>
+</tr>
+<tr class="odd">
+<td>Where exactly is one edge?</td>
+<td>only indirectly</td>
+<td>global atoms do not localize events</td>
+</tr>
+<tr class="even">
+<td>Is a restored detail true?</td>
+<td>not by itself</td>
+<td>frequency evidence must be tied to the forward model</td>
+</tr>
+</tbody>
+</table>
+<p>This is the bridge to later representations. Wavelets, sparse models, and neural feature maps all try, in different ways, to represent image structure with more spatial awareness.</p>
+</section>
 <section id="magnitude-and-phase" class="level2">
 <h2 class="anchored" data-anchor-id="magnitude-and-phase">Magnitude And Phase</h2>
 <p>Every Fourier coefficient can be written as</p>
@@ -589,6 +635,7 @@ y = h*x,
 </span></p>
 <p>This theorem is the reason blur is often analyzed in frequency space. A large convolution matrix in the pixel domain becomes pointwise multiplication after the Fourier transform, at least under compatible boundary assumptions. Instead of one large coupled operation, each frequency can be studied separately.</p>
 <p>This does not make the inverse problem disappear. It makes the difficulty visible.</p>
+<p>There is also a modeling warning. The simplest Fourier-domain formula assumes boundary conventions that are compatible with circular convolution. Real images do not usually wrap around at the boundary. In practice, software choices such as padding, reflection, cropping, and windowing affect the spectrum and the deblurring result. These choices are part of the forward model, not cosmetic implementation details.</p>
 </section>
 <section id="blur-in-frequency-space" class="level2">
 <h2 class="anchored" data-anchor-id="blur-in-frequency-space">Blur In Frequency Space</h2>
@@ -640,6 +687,7 @@ y = h*x,
 <li><strong>Thinking low frequency means unimportant.</strong> Illumination, smooth shading, and large shapes are low-frequency content.</li>
 <li><strong>Ignoring phase.</strong> Phase is essential for the placement of structures.</li>
 <li><strong>Treating inverse filtering as a safe inverse.</strong> Division by small Fourier values is a mechanism for noise amplification.</li>
+<li><strong>Forgetting boundary assumptions.</strong> Fourier deblurring formulas depend on how the image is extended beyond the recorded grid.</li>
 </ol>
 </section>
 <section id="computation" class="level2">
@@ -666,6 +714,7 @@ y = h*x,
 <li>Explain why inverse filtering amplifies noise.</li>
 <li>Explain how Parseval’s identity is a version of the Pythagorean theorem.</li>
 <li>Why does a local edge usually require many Fourier coefficients?</li>
+<li>Give one example of a feature that is easy to detect in the Fourier spectrum and one feature that is hard to localize from magnitude alone.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -674,6 +723,7 @@ y = h*x,
 <li>Fourier analysis represents images using oscillations.</li>
 <li>Fourier coefficients are projections onto orthogonal global directions.</li>
 <li>Parseval’s identity generalizes the Pythagorean theorem.</li>
+<li>Fourier gives strong frequency localization but weak spatial localization.</li>
 <li>Low frequencies describe coarse structure; high frequencies describe fine detail.</li>
 <li>Fourier coefficients have magnitude and phase.</li>
 <li>Convolution becomes multiplication in the Fourier domain.</li>

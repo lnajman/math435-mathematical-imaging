@@ -3489,7 +3489,7 @@
     "href": "book/week-04-noise-likelihood.html#learning-goals",
     "title": "Noise Models and Likelihoods",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndistinguish deterministic degradation from random noise;\nmodel additive Gaussian noise;\nmodel photon-counting Poisson noise;\ncompare absolute and relative noise behavior;\nderive likelihood-based data terms for reconstruction.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ndistinguish deterministic degradation from random noise;\nmodel additive Gaussian noise;\nmodel photon-counting Poisson noise;\ncompare absolute and relative noise behavior;\ndistinguish random noise from model error;\nderive likelihood-based data terms for reconstruction.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3557,6 +3557,18 @@
     ]
   },
   {
+    "objectID": "book/week-04-noise-likelihood.html#weighted-least-squares",
+    "href": "book/week-04-noise-likelihood.html#weighted-least-squares",
+    "title": "Noise Models and Likelihoods",
+    "section": "Weighted Least Squares",
+    "text": "Weighted Least Squares\nThe ordinary squared error assumes that each residual has the same variance. If different measurements have different variances, the likelihood leads to a weighted squared error instead.\nSuppose\n\ny_i = f_i(x)+\\eta_i,\n\\qquad\n\\eta_i\\sim\\mathcal{N}(0,\\sigma_i^2),\n\nwith independent errors. Then the negative log-likelihood contains\n\n\\frac12\n\\sum_i\n\\frac{(f_i(x)-y_i)^2}{\\sigma_i^2}.\n\nMeasurements with smaller variance receive larger weight because they are more reliable under the model. Measurements with larger variance receive smaller weight because larger deviations are less surprising.\nThis is the main idea behind many data terms: the residual is not judged only by its numerical size. It is judged relative to the uncertainty of the measurement.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
     "objectID": "book/week-04-noise-likelihood.html#poisson-noise",
     "href": "book/week-04-noise-likelihood.html#poisson-noise",
     "title": "Noise Models and Likelihoods",
@@ -3605,6 +3617,18 @@
     ]
   },
   {
+    "objectID": "book/week-04-noise-likelihood.html#noise-versus-model-error",
+    "href": "book/week-04-noise-likelihood.html#noise-versus-model-error",
+    "title": "Noise Models and Likelihoods",
+    "section": "Noise Versus Model Error",
+    "text": "Noise Versus Model Error\nNoise is random variation around a model. Model error means the model itself is wrong or incomplete.\nThese two failures can look similar in an image, but they have different meanings:\n\n\n\n\n\n\n\n\nIssue\nExample\nWhy it matters\n\n\n\n\nrandom noise\nphoton counts fluctuate around the correct mean\nrepeated measurements may help\n\n\nmodel error\nthe assumed blur kernel is wrong\nrepeated measurements repeat the wrong model\n\n\nmissing information\na region was never observed\na prior is needed to choose a completion\n\n\nnonlinear sensor effect\nclipping saturates bright pixels\nGaussian residuals may be misleading\n\n\n\nLikelihoods describe random data variation conditional on a model. They do not automatically protect us from a wrong forward model, a wrong noise law, or a missing physical effect.\nThis distinction becomes important for learned reconstruction. A network may be trained on one degradation model and tested on another. If it performs poorly, the failure may not be “noise” in the usual sense. It may be model mismatch or distribution shift.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
     "objectID": "book/week-04-noise-likelihood.html#repeated-measurements",
     "href": "book/week-04-noise-likelihood.html#repeated-measurements",
     "title": "Noise Models and Likelihoods",
@@ -3629,11 +3653,23 @@
     ]
   },
   {
+    "objectID": "book/week-04-noise-likelihood.html#data-fidelity-as-a-contract",
+    "href": "book/week-04-noise-likelihood.html#data-fidelity-as-a-contract",
+    "title": "Noise Models and Likelihoods",
+    "section": "Data Fidelity As A Contract",
+    "text": "Data Fidelity As A Contract\nA data term is a contract between the reconstruction and the measurement process.\nFor Gaussian noise, the contract says: large squared residuals are unlikely. For Poisson counts, it says: predicted photon counts should explain the observed counts with the correct signal-dependent uncertainty. For weighted least squares, it says: residuals in reliable measurements matter more than residuals in uncertain measurements.\nThis contract is only as good as the assumptions behind it. If the noise model is wrong, the data term may over-penalize harmless deviations or under-penalize serious ones. If the forward model is wrong, the reconstruction may fit the mathematical data term while failing the physical problem.\nThe practical habit is simple:\n\nstate the forward model;\nstate the noise model;\nderive or choose the data term;\ntest whether the residuals behave like the model predicts.\n\nThe fourth step is often where modeling becomes scientific rather than decorative.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
     "objectID": "book/week-04-noise-likelihood.html#common-mistakes",
     "href": "book/week-04-noise-likelihood.html#common-mistakes",
     "title": "Noise Models and Likelihoods",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\nA first mistake is to treat all noise as Gaussian because squared error is familiar. Squared error is a model choice. Sometimes it is a good one, sometimes it is only a convenient approximation, and sometimes it is misleading.\nA second mistake is to confuse random noise with missing information. Random noise can sometimes be reduced by repeated measurements or averaging. Missing scene content, physical occlusion, or unobserved frequencies require additional assumptions; averaging does not create information that was never measured.\nA third mistake is to think that a lower data term always means a better image. With noisy data, fitting the measurements perfectly can mean fitting noise. This is why likelihood must later be balanced with regularization.",
+    "text": "Common Mistakes\nA first mistake is to treat all noise as Gaussian because squared error is familiar. Squared error is a model choice. Sometimes it is a good one, sometimes it is only a convenient approximation, and sometimes it is misleading.\nA second mistake is to confuse random noise with missing information. Random noise can sometimes be reduced by repeated measurements or averaging. Missing scene content, physical occlusion, or unobserved frequencies require additional assumptions; averaging does not create information that was never measured.\nA third mistake is to think that a lower data term always means a better image. With noisy data, fitting the measurements perfectly can mean fitting noise. This is why likelihood must later be balanced with regularization.\nA fourth mistake is to call every discrepancy “noise.” Some discrepancies are model errors, calibration errors, clipping artifacts, or distribution shifts. A likelihood can only describe the uncertainty it was designed to model.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3657,7 +3693,7 @@
     "href": "book/week-04-noise-likelihood.html#exercises",
     "title": "Noise Models and Likelihoods",
     "section": "Exercises",
-    "text": "Exercises\n\nFor y_i=x_i+\\eta_i with \\eta_i\\sim\\mathcal{N}(0,\\sigma^2), compute \\mathbb{E}[y_i\\mid x_i] and \\mathrm{Var}(y_i\\mid x_i).\nFor a Poisson pixel with expected count \\lambda=25, compute the standard deviation and approximate SNR.\nExplain why Poisson relative noise improves as the photon count increases.\nCompare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.\nGive one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.\nIn your own words, explain why a neural reconstruction method should still care about the measurement noise model.",
+    "text": "Exercises\n\nFor y_i=x_i+\\eta_i with \\eta_i\\sim\\mathcal{N}(0,\\sigma^2), compute \\mathbb{E}[y_i\\mid x_i] and \\mathrm{Var}(y_i\\mid x_i).\nFor a Poisson pixel with expected count \\lambda=25, compute the standard deviation and approximate SNR.\nExplain why Poisson relative noise improves as the photon count increases.\nCompare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.\nGive one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.\nIn your own words, explain why a neural reconstruction method should still care about the measurement noise model.\nDerive the weighted least-squares data term for independent Gaussian measurements with variances \\sigma_i^2.\nGive one example of random noise and one example of model error in an imaging experiment.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3669,7 +3705,7 @@
     "href": "book/week-04-noise-likelihood.html#takeaways",
     "title": "Noise Models and Likelihoods",
     "section": "Takeaways",
-    "text": "Takeaways\n\nNoise models connect physical measurement assumptions to mathematical data terms.\nGaussian additive noise leads to squared-error fidelity.\nPoisson photon-counting noise has variance equal to its mean.\nLow-light images are difficult because relative photon noise is high.\nLikelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.\nLearned imaging methods still need data consistency; plausibility alone is not enough.",
+    "text": "Takeaways\n\nNoise models connect physical measurement assumptions to mathematical data terms.\nGaussian additive noise leads to squared-error fidelity.\nUnequal measurement variances lead naturally to weighted least squares.\nPoisson photon-counting noise has variance equal to its mean.\nLow-light images are difficult because relative photon noise is high.\nNoise and model error are different; likelihoods only describe uncertainty under a chosen model.\nLikelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.\nLearned imaging methods still need data consistency; plausibility alone is not enough.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -4519,7 +4555,7 @@
     "href": "book/week-03-fourier-imaging.html#learning-goals",
     "title": "Fourier Transform in Imaging",
     "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret a signal as a sum of oscillations;\nread a 2D Fourier magnitude spectrum;\ndistinguish Fourier magnitude and phase;\nstate the convolution theorem;\nexplain blur and inverse filtering in the frequency domain.",
+    "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\ninterpret a signal as a sum of oscillations;\nread a 2D Fourier magnitude spectrum;\nexplain the tradeoff between frequency localization and spatial localization;\ndistinguish Fourier magnitude and phase;\nstate the convolution theorem;\nexplain blur and inverse filtering in the frequency domain.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
@@ -4611,6 +4647,18 @@
     ]
   },
   {
+    "objectID": "book/week-03-fourier-imaging.html#what-the-spectrum-can-and-cannot-say",
+    "href": "book/week-03-fourier-imaging.html#what-the-spectrum-can-and-cannot-say",
+    "title": "Fourier Transform in Imaging",
+    "section": "What The Spectrum Can And Cannot Say",
+    "text": "What The Spectrum Can And Cannot Say\nA Fourier spectrum is evidence about frequencies, directions, and scales. It can tell us that an image contains strong oscillations at a certain orientation, or that a blur has suppressed high frequencies. It can reveal periodic artifacts, motion direction, grid effects, and the difference between smooth and textured regions.\nBut the spectrum is not a complete explanation of image content. Because Fourier atoms are global, the magnitude spectrum does not directly tell us where a local event occurs. Two images can have the same Fourier magnitude and different spatial organization. Phase helps recover geometry, but the frequency view still organizes information globally.\nThis distinction matters for inverse problems. A reconstruction may have the “right amount” of high-frequency energy and still put structures in the wrong place. Conversely, a reconstruction may look smoother than the original but preserve the structures that matter for a specific decision.\nFor students, a useful habit is to ask:\n\n\n\n\n\n\n\n\nQuestion\nFourier helps?\nWhy\n\n\n\n\nWhich scales are present?\nyes\nfrequency magnitude measures oscillatory strength\n\n\nIs there directional texture or motion blur?\nyes\norientation leaves spectral signatures\n\n\nWhere exactly is one edge?\nonly indirectly\nglobal atoms do not localize events\n\n\nIs a restored detail true?\nnot by itself\nfrequency evidence must be tied to the forward model\n\n\n\nThis is the bridge to later representations. Wavelets, sparse models, and neural feature maps all try, in different ways, to represent image structure with more spatial awareness.",
+    "crumbs": [
+      "Book",
+      "Part I: Foundations",
+      "3. Fourier transform in imaging"
+    ]
+  },
+  {
     "objectID": "book/week-03-fourier-imaging.html#magnitude-and-phase",
     "href": "book/week-03-fourier-imaging.html#magnitude-and-phase",
     "title": "Fourier Transform in Imaging",
@@ -4627,7 +4675,7 @@
     "href": "book/week-03-fourier-imaging.html#the-convolution-theorem",
     "title": "Fourier Transform in Imaging",
     "section": "The Convolution Theorem",
-    "text": "The Convolution Theorem\nThe reason Fourier analysis is central to imaging is the convolution theorem:\n\n\\widehat{h*x}[u,v]\n=\n\\widehat{h}[u,v]\\widehat{x}[u,v].\n\nConvolution in the image domain becomes multiplication in the Fourier domain.\nIf\n\ny = h*x,\n\nthen\n\n\\widehat{y} = \\widehat{h}\\,\\widehat{x}.\n\nThis theorem is the reason blur is often analyzed in frequency space. A large convolution matrix in the pixel domain becomes pointwise multiplication after the Fourier transform, at least under compatible boundary assumptions. Instead of one large coupled operation, each frequency can be studied separately.\nThis does not make the inverse problem disappear. It makes the difficulty visible.",
+    "text": "The Convolution Theorem\nThe reason Fourier analysis is central to imaging is the convolution theorem:\n\n\\widehat{h*x}[u,v]\n=\n\\widehat{h}[u,v]\\widehat{x}[u,v].\n\nConvolution in the image domain becomes multiplication in the Fourier domain.\nIf\n\ny = h*x,\n\nthen\n\n\\widehat{y} = \\widehat{h}\\,\\widehat{x}.\n\nThis theorem is the reason blur is often analyzed in frequency space. A large convolution matrix in the pixel domain becomes pointwise multiplication after the Fourier transform, at least under compatible boundary assumptions. Instead of one large coupled operation, each frequency can be studied separately.\nThis does not make the inverse problem disappear. It makes the difficulty visible.\nThere is also a modeling warning. The simplest Fourier-domain formula assumes boundary conventions that are compatible with circular convolution. Real images do not usually wrap around at the boundary. In practice, software choices such as padding, reflection, cropping, and windowing affect the spectrum and the deblurring result. These choices are part of the forward model, not cosmetic implementation details.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
@@ -4675,7 +4723,7 @@
     "href": "book/week-03-fourier-imaging.html#common-mistakes",
     "title": "Fourier Transform in Imaging",
     "section": "Common Mistakes",
-    "text": "Common Mistakes\n\nThinking high frequency means noise only. Edges and fine structures are also high-frequency content.\nThinking low frequency means unimportant. Illumination, smooth shading, and large shapes are low-frequency content.\nIgnoring phase. Phase is essential for the placement of structures.\nTreating inverse filtering as a safe inverse. Division by small Fourier values is a mechanism for noise amplification.",
+    "text": "Common Mistakes\n\nThinking high frequency means noise only. Edges and fine structures are also high-frequency content.\nThinking low frequency means unimportant. Illumination, smooth shading, and large shapes are low-frequency content.\nIgnoring phase. Phase is essential for the placement of structures.\nTreating inverse filtering as a safe inverse. Division by small Fourier values is a mechanism for noise amplification.\nForgetting boundary assumptions. Fourier deblurring formulas depend on how the image is extended beyond the recorded grid.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
@@ -4699,7 +4747,7 @@
     "href": "book/week-03-fourier-imaging.html#exercises",
     "title": "Fourier Transform in Imaging",
     "section": "Exercises",
-    "text": "Exercises\n\nFor x[n]=\\sin(2\\pi 5n/N)+0.5\\sin(2\\pi 20n/N), where should the Fourier magnitude be large?\nIn a centered 2D spectrum, what does the center represent?\nWhich carries more geometric information in a natural image: magnitude or phase?\nUse the convolution theorem to explain why blur attenuates high frequencies.\nExplain why inverse filtering amplifies noise.\nExplain how Parseval’s identity is a version of the Pythagorean theorem.\nWhy does a local edge usually require many Fourier coefficients?",
+    "text": "Exercises\n\nFor x[n]=\\sin(2\\pi 5n/N)+0.5\\sin(2\\pi 20n/N), where should the Fourier magnitude be large?\nIn a centered 2D spectrum, what does the center represent?\nWhich carries more geometric information in a natural image: magnitude or phase?\nUse the convolution theorem to explain why blur attenuates high frequencies.\nExplain why inverse filtering amplifies noise.\nExplain how Parseval’s identity is a version of the Pythagorean theorem.\nWhy does a local edge usually require many Fourier coefficients?\nGive one example of a feature that is easy to detect in the Fourier spectrum and one feature that is hard to localize from magnitude alone.",
     "crumbs": [
       "Book",
       "Part I: Foundations",
@@ -4711,7 +4759,7 @@
     "href": "book/week-03-fourier-imaging.html#takeaways",
     "title": "Fourier Transform in Imaging",
     "section": "Takeaways",
-    "text": "Takeaways\n\nFourier analysis represents images using oscillations.\nFourier coefficients are projections onto orthogonal global directions.\nParseval’s identity generalizes the Pythagorean theorem.\nLow frequencies describe coarse structure; high frequencies describe fine detail.\nFourier coefficients have magnitude and phase.\nConvolution becomes multiplication in the Fourier domain.\nBlur suppresses frequencies, and inverse filtering can amplify noise.",
+    "text": "Takeaways\n\nFourier analysis represents images using oscillations.\nFourier coefficients are projections onto orthogonal global directions.\nParseval’s identity generalizes the Pythagorean theorem.\nFourier gives strong frequency localization but weak spatial localization.\nLow frequencies describe coarse structure; high frequencies describe fine detail.\nFourier coefficients have magnitude and phase.\nConvolution becomes multiplication in the Fourier domain.\nBlur suppresses frequencies, and inverse filtering can amplify noise.",
     "crumbs": [
       "Book",
       "Part I: Foundations",

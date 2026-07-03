@@ -391,12 +391,15 @@ window.Quarto = {
   <li><a href="#gaussian-noise" id="toc-gaussian-noise" class="nav-link" data-scroll-target="#gaussian-noise">Gaussian Noise</a></li>
   <li><a href="#gaussian-data-fidelity" id="toc-gaussian-data-fidelity" class="nav-link" data-scroll-target="#gaussian-data-fidelity">Gaussian Data Fidelity</a></li>
   <li><a href="#gaussian-limitations" id="toc-gaussian-limitations" class="nav-link" data-scroll-target="#gaussian-limitations">Gaussian Limitations</a></li>
+  <li><a href="#weighted-least-squares" id="toc-weighted-least-squares" class="nav-link" data-scroll-target="#weighted-least-squares">Weighted Least Squares</a></li>
   <li><a href="#poisson-noise" id="toc-poisson-noise" class="nav-link" data-scroll-target="#poisson-noise">Poisson Noise</a></li>
   <li><a href="#from-counts-to-intensities" id="toc-from-counts-to-intensities" class="nav-link" data-scroll-target="#from-counts-to-intensities">From Counts To Intensities</a></li>
   <li><a href="#poisson-likelihood" id="toc-poisson-likelihood" class="nav-link" data-scroll-target="#poisson-likelihood">Poisson Likelihood</a></li>
   <li><a href="#gaussian-versus-poisson" id="toc-gaussian-versus-poisson" class="nav-link" data-scroll-target="#gaussian-versus-poisson">Gaussian Versus Poisson</a></li>
+  <li><a href="#noise-versus-model-error" id="toc-noise-versus-model-error" class="nav-link" data-scroll-target="#noise-versus-model-error">Noise Versus Model Error</a></li>
   <li><a href="#repeated-measurements" id="toc-repeated-measurements" class="nav-link" data-scroll-target="#repeated-measurements">Repeated Measurements</a></li>
   <li><a href="#from-likelihood-to-reconstruction" id="toc-from-likelihood-to-reconstruction" class="nav-link" data-scroll-target="#from-likelihood-to-reconstruction">From Likelihood To Reconstruction</a></li>
+  <li><a href="#data-fidelity-as-a-contract" id="toc-data-fidelity-as-a-contract" class="nav-link" data-scroll-target="#data-fidelity-as-a-contract">Data Fidelity As A Contract</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -436,6 +439,7 @@ window.Quarto = {
 <li>model additive Gaussian noise;</li>
 <li>model photon-counting Poisson noise;</li>
 <li>compare absolute and relative noise behavior;</li>
+<li>distinguish random noise from model error;</li>
 <li>derive likelihood-based data terms for reconstruction.</li>
 </ul>
 </section>
@@ -553,6 +557,24 @@ y = f(x)+\eta,
 <p>This is a general lesson: a simple model can be useful without being literally complete.</p>
 <p>Gaussian models are still common for good reasons. They are often reasonable approximations when many independent small error sources are added together, and they lead to convex quadratic objectives that are easy to analyze and optimize. In this course, Gaussian noise is also the cleanest way to understand the bridge from probability to least squares.</p>
 <p>The caution is that “least squares” should not become automatic. Before using it, ask what kind of measurement error is being assumed.</p>
+</section>
+<section id="weighted-least-squares" class="level2">
+<h2 class="anchored" data-anchor-id="weighted-least-squares">Weighted Least Squares</h2>
+<p>The ordinary squared error assumes that each residual has the same variance. If different measurements have different variances, the likelihood leads to a weighted squared error instead.</p>
+<p>Suppose</p>
+<p><span class="math display">
+y_i = f_i(x)+\eta_i,
+\qquad
+\eta_i\sim\mathcal{N}(0,\sigma_i^2),
+</span></p>
+<p>with independent errors. Then the negative log-likelihood contains</p>
+<p><span class="math display">
+\frac12
+\sum_i
+\frac{(f_i(x)-y_i)^2}{\sigma_i^2}.
+</span></p>
+<p>Measurements with smaller variance receive larger weight because they are more reliable under the model. Measurements with larger variance receive smaller weight because larger deviations are less surprising.</p>
+<p>This is the main idea behind many data terms: the residual is not judged only by its numerical size. It is judged relative to the uncertainty of the measurement.</p>
 </section>
 <section id="poisson-noise" class="level2">
 <h2 class="anchored" data-anchor-id="poisson-noise">Poisson Noise</h2>
@@ -672,6 +694,49 @@ z_i \sim \operatorname{Poisson}(f_i(x))
 <p>Real cameras may contain several noise sources at once. A simplified pipeline might include photon noise, electronic read noise, dark current, quantization, clipping, compression, and demosaicing. Modeling every part of that pipeline may be unnecessary for a first reconstruction method, but it is useful to know what has been simplified away.</p>
 <p>This is one reason image restoration papers often specify both the degradation model and the noise model. “Denoising” by itself is not one problem. Denoising Gaussian noise, photon noise, JPEG artifacts, and sensor artifacts are related but not identical tasks.</p>
 </section>
+<section id="noise-versus-model-error" class="level2">
+<h2 class="anchored" data-anchor-id="noise-versus-model-error">Noise Versus Model Error</h2>
+<p>Noise is random variation around a model. Model error means the model itself is wrong or incomplete.</p>
+<p>These two failures can look similar in an image, but they have different meanings:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Issue</th>
+<th>Example</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>random noise</td>
+<td>photon counts fluctuate around the correct mean</td>
+<td>repeated measurements may help</td>
+</tr>
+<tr class="even">
+<td>model error</td>
+<td>the assumed blur kernel is wrong</td>
+<td>repeated measurements repeat the wrong model</td>
+</tr>
+<tr class="odd">
+<td>missing information</td>
+<td>a region was never observed</td>
+<td>a prior is needed to choose a completion</td>
+</tr>
+<tr class="even">
+<td>nonlinear sensor effect</td>
+<td>clipping saturates bright pixels</td>
+<td>Gaussian residuals may be misleading</td>
+</tr>
+</tbody>
+</table>
+<p>Likelihoods describe random data variation conditional on a model. They do not automatically protect us from a wrong forward model, a wrong noise law, or a missing physical effect.</p>
+<p>This distinction becomes important for learned reconstruction. A network may be trained on one degradation model and tested on another. If it performs poorly, the failure may not be “noise” in the usual sense. It may be model mismatch or distribution shift.</p>
+</section>
 <section id="repeated-measurements" class="level2">
 <h2 class="anchored" data-anchor-id="repeated-measurements">Repeated Measurements</h2>
 <p>If</p>
@@ -716,11 +781,26 @@ D(y,f(x)) + \lambda R(x).
 <p>Classical inverse problems usually choose <span class="math inline">R</span> explicitly: smoothness, small energy, total variation, sparsity, or another mathematical prior. Neural methods often learn part of this structure from examples. They may learn a direct map from <span class="math inline">y</span> to <span class="math inline">x</span>, learn a denoiser used inside an algorithm, or learn a regularizer implicitly through training.</p>
 <p>The likelihood still matters in learned methods. A neural reconstruction that ignores the measurement model may produce visually convincing images that are not faithful to the data. In imaging, visual plausibility and measurement consistency are not the same thing.</p>
 </section>
+<section id="data-fidelity-as-a-contract" class="level2">
+<h2 class="anchored" data-anchor-id="data-fidelity-as-a-contract">Data Fidelity As A Contract</h2>
+<p>A data term is a contract between the reconstruction and the measurement process.</p>
+<p>For Gaussian noise, the contract says: large squared residuals are unlikely. For Poisson counts, it says: predicted photon counts should explain the observed counts with the correct signal-dependent uncertainty. For weighted least squares, it says: residuals in reliable measurements matter more than residuals in uncertain measurements.</p>
+<p>This contract is only as good as the assumptions behind it. If the noise model is wrong, the data term may over-penalize harmless deviations or under-penalize serious ones. If the forward model is wrong, the reconstruction may fit the mathematical data term while failing the physical problem.</p>
+<p>The practical habit is simple:</p>
+<ol type="1">
+<li>state the forward model;</li>
+<li>state the noise model;</li>
+<li>derive or choose the data term;</li>
+<li>test whether the residuals behave like the model predicts.</li>
+</ol>
+<p>The fourth step is often where modeling becomes scientific rather than decorative.</p>
+</section>
 <section id="common-mistakes" class="level2">
 <h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
 <p>A first mistake is to treat all noise as Gaussian because squared error is familiar. Squared error is a model choice. Sometimes it is a good one, sometimes it is only a convenient approximation, and sometimes it is misleading.</p>
 <p>A second mistake is to confuse random noise with missing information. Random noise can sometimes be reduced by repeated measurements or averaging. Missing scene content, physical occlusion, or unobserved frequencies require additional assumptions; averaging does not create information that was never measured.</p>
 <p>A third mistake is to think that a lower data term always means a better image. With noisy data, fitting the measurements perfectly can mean fitting noise. This is why likelihood must later be balanced with regularization.</p>
+<p>A fourth mistake is to call every discrepancy “noise.” Some discrepancies are model errors, calibration errors, clipping artifacts, or distribution shifts. A likelihood can only describe the uncertainty it was designed to model.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -739,6 +819,8 @@ D(y,f(x)) + \lambda R(x).
 <li>Compare the shapes of a Gaussian squared-error cost and a Poisson negative log-likelihood for one pixel.</li>
 <li>Give one example where averaging measurements reduces noise, and one example where averaging cannot recover missing scene information.</li>
 <li>In your own words, explain why a neural reconstruction method should still care about the measurement noise model.</li>
+<li>Derive the weighted least-squares data term for independent Gaussian measurements with variances <span class="math inline">\sigma_i^2</span>.</li>
+<li>Give one example of random noise and one example of model error in an imaging experiment.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -746,8 +828,10 @@ D(y,f(x)) + \lambda R(x).
 <ul>
 <li>Noise models connect physical measurement assumptions to mathematical data terms.</li>
 <li>Gaussian additive noise leads to squared-error fidelity.</li>
+<li>Unequal measurement variances lead naturally to weighted least squares.</li>
 <li>Poisson photon-counting noise has variance equal to its mean.</li>
 <li>Low-light images are difficult because relative photon noise is high.</li>
+<li>Noise and model error are different; likelihoods only describe uncertainty under a chosen model.</li>
 <li>Likelihood terms are only one part of reconstruction; regularization is needed when the inverse problem is ambiguous or unstable.</li>
 <li>Learned imaging methods still need data consistency; plausibility alone is not enough.</li>
 </ul>
