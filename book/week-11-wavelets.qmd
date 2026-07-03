@@ -23,6 +23,18 @@ Wavelets are local and multiscale. They can be shifted in position, scaled in si
 
 This makes wavelets a natural representation for localized edges and details.
 
+## Why This Chapter Matters
+
+Chapter 10 explained that sparse reconstruction depends on representation. Wavelets are one of the most important fixed representations for images because they combine three ideas:
+
+- location: where something happens;
+- scale: how large the structure is;
+- direction: whether the structure is horizontal, vertical, or diagonal.
+
+Fourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.
+
+Wavelets also give a concrete example of a representation that is not learned but already feels "feature-like." This makes them a useful stepping stone toward convolutional neural networks.
+
 ## Haar Intuition
 
 The Haar wavelet is the simplest wavelet example.
@@ -45,6 +57,10 @@ The average stores coarse information. The detail stores local change.
 
 Repeating this idea on averages gives a multiscale decomposition: fine details first, then coarser details at larger scales.
 
+The Haar example is simple enough to compute by hand, but it contains the whole idea. If two neighboring values are almost equal, the detail coefficient is small. If they differ strongly, the detail coefficient is large. Thus, detail coefficients detect local changes.
+
+For images, local changes often correspond to edges, texture, or noise. Wavelet methods work because these different phenomena leave different patterns across scales and locations.
+
 ## Multiscale Decomposition
 
 ::: {.figure}
@@ -58,6 +74,10 @@ The approximation contains the broad trend. Coarse details capture large jumps. 
 The transform does not create new information. It reorganizes information into coarse approximation plus details.
 
 For orthogonal wavelets, energy is preserved up to normalization.
+
+This reorganization is useful because many tasks become easier in wavelet coordinates. Compression keeps large coefficients. Denoising removes small detail coefficients. Sparse reconstruction asks for an image whose wavelet coefficients are mostly small or zero.
+
+The original signal and its wavelet coefficients contain the same information when the transform is invertible. The advantage is not extra information; it is a better coordinate system.
 
 ## Two-Dimensional Wavelets
 
@@ -83,6 +103,10 @@ The coefficient layout separates coarse image content from directional details.
 
 Naming conventions vary by library, but the main idea is directional detail at multiple scales.
 
+When reading a 2D wavelet coefficient image, do not interpret it like an ordinary photograph. Large bright coefficients mark locations and scales where the image changes. The LL block shows a coarse version of the image. The detail blocks show where horizontal, vertical, and diagonal changes occur.
+
+At deeper levels, the approximation is decomposed again. This creates a hierarchy: coarse structure near the top of the decomposition, and finer details in smaller-scale subbands.
+
 ## Wavelet Sparsity
 
 Many image regions are locally smooth. Only edges and texture create large detail coefficients.
@@ -94,6 +118,10 @@ Wavelet coefficients often decay quickly for piecewise-smooth images.
 :::
 
 This is why wavelets are useful for sparse imaging: they represent many natural images with many small coefficients and a few large ones.
+
+Wavelet sparsity is especially effective for piecewise-smooth images. Smooth regions produce small detail coefficients. Edges produce significant coefficients, but only near the edge and at relevant scales. This is much more economical than a global Fourier representation, where a local edge can influence many coefficients across the whole domain.
+
+Textures are more complicated. Repeated fine patterns can produce many significant coefficients. This is why wavelet denoising may remove texture along with noise when the threshold is too aggressive.
 
 ## Compression
 
@@ -125,6 +153,10 @@ $$
 
 Soft thresholding is the proximal operator behind l1 regularization.
 
+The difference between hard and soft thresholding is important. Hard thresholding keeps large coefficients unchanged and removes small ones. Soft thresholding removes small coefficients and shrinks the remaining ones. Hard thresholding is closer to pure coefficient selection; soft thresholding is more connected to convex l1 optimization.
+
+Both methods express the same modeling idea: small coefficients are more likely to be noise or insignificant detail than essential structure.
+
 ## Wavelet Denoising
 
 Noise often creates many small detail coefficients. Wavelet denoising:
@@ -147,6 +179,12 @@ The threshold controls the tradeoff.
 Small thresholds leave noise; large thresholds remove real detail.
 :::
 
+Wavelet denoising works best when noise is spread across many small coefficients and the true image is concentrated in fewer larger coefficients. This is often a reasonable approximation for Gaussian noise and piecewise-smooth images.
+
+The threshold can be chosen by theory, heuristic rules, visual inspection, validation data, or task-specific criteria. The wrong threshold can either leave noise or erase meaningful details.
+
+When reading the threshold sweep, look for the moment where the image stops merely becoming cleaner and starts losing structure. That point is the same kind of bias-stability tradeoff seen in Tikhonov, TV, and sparse reconstruction.
+
 ## Wavelets Versus TV
 
 | Model | Prior | Typical strength | Typical artifact |
@@ -157,6 +195,53 @@ Small thresholds leave noise; large thresholds remove real detail.
 Both are sparse priors, but they encode different structure.
 
 Wavelets are not automatic truth machines. The wavelet family, boundary handling, threshold value, texture structure, and forward model all matter.
+
+## Wavelets In Inverse Problems
+
+Wavelets are not only for denoising and compression. They can also be used inside inverse problems:
+
+$$
+\min_x
+D(y,Ax)+\lambda\|Wx\|_1,
+$$
+
+where $W$ is a wavelet transform. This says: fit the measurements, but prefer images with sparse wavelet coefficients.
+
+Equivalently, in a synthesis view,
+
+$$
+x=W^{-1}c,
+$$
+
+and one solves for sparse coefficients $c$:
+
+$$
+\min_c
+D(y,AW^{-1}c)+\lambda\|c\|_1.
+$$
+
+This is the wavelet version of the sparse DCT model from Chapter 10. The difference is that wavelets are localized and multiscale, which often matches images better than global cosine atoms.
+
+## Wavelets And Neural Networks
+
+Wavelets and convolutional neural networks share some intuitions:
+
+- both use localized filters;
+- both respond to structures at different positions;
+- both can represent features at multiple scales;
+- both transform an image into coefficient or feature maps.
+
+The difference is that wavelet filters are designed mathematically, while neural filters are learned from data. This gives neural networks more flexibility, but less immediate interpretability.
+
+Wavelets therefore give students a useful reference point. Before saying that a neural network has learned features, we can understand a fixed feature transform where every coefficient has a clear meaning: scale, location, and orientation.
+
+## Common Mistakes
+
+A first mistake is to say that wavelets are simply another name for Fourier analysis. Both are transforms, but Fourier modes are global while wavelets are localized.
+
+A second mistake is to think thresholding is harmless because small coefficients look unimportant. Many small coefficients can collectively encode texture or subtle detail.
+
+A third mistake is to ignore the wavelet family and boundary handling. Different choices can produce different artifacts, especially near image borders.
 
 ## Computation
 
@@ -170,6 +255,8 @@ python3 examples/week11_wavelets.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+In the notebook, compare compression and denoising. Compression asks how many coefficients are needed to preserve structure. Denoising asks which coefficients are likely to be noise. These are related questions, but they are not identical.
+
 ## Exercises
 
 1. What makes wavelets different from Fourier modes?
@@ -177,6 +264,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. What information does a detail coefficient store?
 4. Why can wavelet coefficients be sparse for piecewise-smooth images?
 5. Compare hard thresholding and soft thresholding.
+6. Explain one similarity and one difference between wavelet features and learned convolutional features.
 
 ## Takeaways
 
@@ -185,3 +273,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Many images are approximately sparse in wavelet coefficients.
 - Thresholding gives compression and denoising algorithms.
 - Representation choice controls the success of sparse reconstruction.
+- Wavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.
