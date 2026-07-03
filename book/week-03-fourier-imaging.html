@@ -389,6 +389,8 @@ window.Quarto = {
   <li><a href="#the-big-idea" id="toc-the-big-idea" class="nav-link" data-scroll-target="#the-big-idea">The Big Idea</a></li>
   <li><a href="#one-dimensional-frequencies" id="toc-one-dimensional-frequencies" class="nav-link" data-scroll-target="#one-dimensional-frequencies">One-Dimensional Frequencies</a></li>
   <li><a href="#the-discrete-fourier-transform" id="toc-the-discrete-fourier-transform" class="nav-link" data-scroll-target="#the-discrete-fourier-transform">The Discrete Fourier Transform</a></li>
+  <li><a href="#orthogonality-and-pythagoras" id="toc-orthogonality-and-pythagoras" class="nav-link" data-scroll-target="#orthogonality-and-pythagoras">Orthogonality And Pythagoras</a></li>
+  <li><a href="#global-support" id="toc-global-support" class="nav-link" data-scroll-target="#global-support">Global Support</a></li>
   <li><a href="#two-dimensional-fourier-transform" id="toc-two-dimensional-fourier-transform" class="nav-link" data-scroll-target="#two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</a></li>
   <li><a href="#reading-a-spectrum" id="toc-reading-a-spectrum" class="nav-link" data-scroll-target="#reading-a-spectrum">Reading A Spectrum</a></li>
   <li><a href="#magnitude-and-phase" id="toc-magnitude-and-phase" class="nav-link" data-scroll-target="#magnitude-and-phase">Magnitude And Phase</a></li>
@@ -484,6 +486,31 @@ x[n]e^{-2\pi i kn/N}.
 <p>Magnitude measures strength. Phase measures alignment.</p>
 <p>The DFT can be read as a change of coordinates. Instead of describing a signal by its values at positions, we describe it by its weights on oscillatory patterns. No information is lost when the full transform is kept. The representation changes, not the signal.</p>
 <p>This coordinate-change view will reappear later with wavelets, DCT coefficients, sparse representations, and learned features. Each representation makes some structure easier to describe.</p>
+</section>
+<section id="orthogonality-and-pythagoras" class="level2">
+<h2 class="anchored" data-anchor-id="orthogonality-and-pythagoras">Orthogonality And Pythagoras</h2>
+<p>The Fourier transform is not just any change of coordinates. It is a projection onto orthogonal oscillatory directions.</p>
+<p>In ordinary Euclidean geometry, if two vectors are orthogonal, the Pythagorean theorem says</p>
+<p><span class="math display">
+\|a+b\|^2=\|a\|^2+\|b\|^2.
+</span></p>
+<p>Fourier analysis extends this idea to many orthogonal directions. A signal can be decomposed into mutually orthogonal frequency vectors, and the squared norm of the signal is the sum of the squared magnitudes of its Fourier components, up to the normalization convention used for the transform.</p>
+<p>This is the meaning of Parseval’s identity. With an orthonormal Fourier basis <span class="math inline">\{\phi_k\}</span>,</p>
+<p><span class="math display">
+\|x\|_2^2
+=
+\sum_k
+|\langle x,\phi_k\rangle|^2.
+</span></p>
+<p>Each coefficient <span class="math inline">\langle x,\phi_k\rangle</span> is the length of the projection of <span class="math inline">x</span> onto one Fourier direction. Parseval says that the total energy is the sum of the energies of these orthogonal projections.</p>
+<p>This is one of the deep links between Fourier analysis and the Pythagorean theorem: Fourier coefficients are not arbitrary measurements. They are coordinates along perpendicular axes in signal space.</p>
+</section>
+<section id="global-support" class="level2">
+<h2 class="anchored" data-anchor-id="global-support">Global Support</h2>
+<p>Fourier vectors are global. In a finite discrete image, each Fourier basis image extends across the whole image domain. In the continuous setting, sine and cosine waves have infinite support.</p>
+<p>This has an important consequence. A local event, such as a sharp edge or a small bright object, cannot be represented by one local Fourier atom. It is spread across many global oscillations. Fourier gives excellent frequency localization, but poor spatial localization.</p>
+<p>This is not a flaw; it is a tradeoff. Fourier analysis is ideal when the question is global frequency content, convolution, blur, periodic texture, or shift-invariant filtering. It is less natural when the question is where a local event occurs.</p>
+<p>Wavelets in Chapter 11 respond to this limitation by using localized atoms. Many wavelets have compact spatial support, so they can represent events by position and scale as well as by frequency content.</p>
 </section>
 <section id="two-dimensional-fourier-transform" class="level2">
 <h2 class="anchored" data-anchor-id="two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</h2>
@@ -637,12 +664,16 @@ y = h*x,
 <li>Which carries more geometric information in a natural image: magnitude or phase?</li>
 <li>Use the convolution theorem to explain why blur attenuates high frequencies.</li>
 <li>Explain why inverse filtering amplifies noise.</li>
+<li>Explain how Parseval’s identity is a version of the Pythagorean theorem.</li>
+<li>Why does a local edge usually require many Fourier coefficients?</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
 <ul>
 <li>Fourier analysis represents images using oscillations.</li>
+<li>Fourier coefficients are projections onto orthogonal global directions.</li>
+<li>Parseval’s identity generalizes the Pythagorean theorem.</li>
 <li>Low frequencies describe coarse structure; high frequencies describe fine detail.</li>
 <li>Fourier coefficients have magnitude and phase.</li>
 <li>Convolution becomes multiplication in the Fourier domain.</li>
