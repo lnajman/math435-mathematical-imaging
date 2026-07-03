@@ -427,6 +427,27 @@
     "text": "Fourier Is Global\nA Fourier coefficient describes a global oscillation.\nThat is powerful for convolution and frequency filtering.\n\nBut a local edge affects many Fourier coefficients."
   },
   {
+    "objectID": "slides/week-11-wavelets.html#global-versus-local-support",
+    "href": "slides/week-11-wavelets.html#global-versus-local-support",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Global Versus Local Support",
+    "text": "Global Versus Local Support\n\n\nFourier atoms\n\nextend over the whole image;\ngive precise frequency information;\nare global directions.\n\n\n\nWavelet atoms\n\ncan have compact or local support;\nlive at a position and a scale;\nrespond to local image structures."
+  },
+  {
+    "objectID": "slides/week-11-wavelets.html#same-pythagoras-different-geometry",
+    "href": "slides/week-11-wavelets.html#same-pythagoras-different-geometry",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Same Pythagoras, Different Geometry",
+    "text": "Same Pythagoras, Different Geometry\nIn an orthonormal basis:\n\n\\|x\\|_2^2 = \\sum_j |c_j|^2.\n\n\n\nFourier coefficient:\nprojection on a global oscillation.\n\n\nWavelet coefficient:\nprojection on a localized pattern.\n\n\n\nBoth are orthogonal decompositions; they organize the same energy differently."
+  },
+  {
+    "objectID": "slides/week-11-wavelets.html#localization-tradeoff",
+    "href": "slides/week-11-wavelets.html#localization-tradeoff",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Localization Tradeoff",
+    "text": "Localization Tradeoff\n\n\n\nRepresentation\nSpatial support\nFrequency description\n\n\n\n\nFourier\nglobal\nvery precise\n\n\nWavelets\nlocal or compact\nscale bands\n\n\n\n\nIf an image has one sharp edge, which representation should need fewer important coefficients?"
+  },
+  {
     "objectID": "slides/week-11-wavelets.html#wavelets-are-local-and-multiscale",
     "href": "slides/week-11-wavelets.html#wavelets-are-local-and-multiscale",
     "title": "Wavelets and Multiscale Representation",
@@ -1692,6 +1713,27 @@
     "title": "Fourier Transform in Imaging",
     "section": "The Discrete Fourier Transform",
     "text": "The Discrete Fourier Transform\nFor a length-N signal:\n\n\\widehat{x}[k] =\n\\sum_{n=0}^{N-1} x[n] e^{-2\\pi i kn/N}.\n\n\nEach coefficient measures how much frequency k is present."
+  },
+  {
+    "objectID": "slides/week-03-fourier-imaging.html#fourier-as-projection",
+    "href": "slides/week-03-fourier-imaging.html#fourier-as-projection",
+    "title": "Fourier Transform in Imaging",
+    "section": "Fourier as Projection",
+    "text": "Fourier as Projection\nThe DFT compares x with oscillating directions:\n\n\\phi_k[n] = e^{2\\pi i kn/N}.\n\n\nA Fourier coefficient is an inner product with a basis vector:\n\n\\widehat{x}[k] = \\langle x,\\phi_k\\rangle\n\nup to the normalization convention."
+  },
+  {
+    "objectID": "slides/week-03-fourier-imaging.html#parseval-pythagoras",
+    "href": "slides/week-03-fourier-imaging.html#parseval-pythagoras",
+    "title": "Fourier Transform in Imaging",
+    "section": "Parseval = Pythagoras",
+    "text": "Parseval = Pythagoras\nFor an orthonormal Fourier basis:\n\n\\|x\\|_2^2 =\n\\sum_k |\\langle x,\\phi_k\\rangle|^2.\n\n\nThe energy of the signal is the sum of the squared lengths of its orthogonal projections.\n\nThis is the Pythagorean theorem in many dimensions."
+  },
+  {
+    "objectID": "slides/week-03-fourier-imaging.html#fourier-atoms-are-global",
+    "href": "slides/week-03-fourier-imaging.html#fourier-atoms-are-global",
+    "title": "Fourier Transform in Imaging",
+    "section": "Fourier Atoms Are Global",
+    "text": "Fourier Atoms Are Global\nEach Fourier basis vector extends across the whole signal or image.\n\n\nGood at describing:\n\nperiodic texture;\nconvolution and filtering;\nglobal frequency content.\n\n\n\nHarder for:\n\nisolated edges;\nsmall objects;\nlocal missing information.\n\n\n\n\nThis will motivate wavelets: local atoms at several scales."
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#complex-coefficients",

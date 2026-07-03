@@ -306,6 +306,74 @@ Laurent Najman
 <p>But a local edge affects many Fourier coefficients.</p>
 </div>
 </section>
+<section id="global-versus-local-support" class="slide level2">
+<h2>Global Versus Local Support</h2>
+<div class="two-col">
+<div class="definition-box">
+<p>Fourier atoms</p>
+<ul>
+<li>extend over the whole image;</li>
+<li>give precise frequency information;</li>
+<li>are global directions.</li>
+</ul>
+</div>
+<div class="takeaway-box">
+<p>Wavelet atoms</p>
+<ul>
+<li>can have compact or local support;</li>
+<li>live at a position and a scale;</li>
+<li>respond to local image structures.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="same-pythagoras-different-geometry" class="slide level2">
+<h2>Same Pythagoras, Different Geometry</h2>
+<p>In an orthonormal basis:</p>
+<p><span class="math display">
+\|x\|_2^2 = \sum_j |c_j|^2.
+</span></p>
+<div class="two-col">
+<div class="model-box">
+<p>Fourier coefficient:</p>
+<p>projection on a global oscillation.</p>
+</div>
+<div class="model-box">
+<p>Wavelet coefficient:</p>
+<p>projection on a localized pattern.</p>
+</div>
+</div>
+<div class="caption">
+<p>Both are orthogonal decompositions; they organize the same energy differently.</p>
+</div>
+</section>
+<section id="localization-tradeoff" class="slide level2">
+<h2>Localization Tradeoff</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Representation</th>
+<th>Spatial support</th>
+<th>Frequency description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fourier</td>
+<td>global</td>
+<td>very precise</td>
+</tr>
+<tr class="even">
+<td>Wavelets</td>
+<td>local or compact</td>
+<td>scale bands</td>
+</tr>
+</tbody>
+</table>
+<div class="question-box">
+<p>If an image has one sharp edge, which representation should need fewer important coefficients?</p>
+</div>
+</section>
 <section id="wavelets-are-local-and-multiscale" class="slide level2">
 <h2>Wavelets Are Local and Multiscale</h2>
 <p>Wavelets are patterns that can be:</p>
