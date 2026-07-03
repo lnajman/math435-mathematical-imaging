@@ -5433,6 +5433,13 @@
     ]
   },
   {
+    "objectID": "classes.html",
+    "href": "classes.html",
+    "title": "Class List",
+    "section": "",
+    "text": "This page lists the class meetings and the corresponding materials.\nThe slide decks are designed for class structure and discussion. The book chapters give the slower narrative version, and the notebooks are where students experiment with the ideas computationally.\n\n\n\nWeek\nClass Topic\nSlides\nNotebook\nBook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\nchapter\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\nchapter\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\nchapter\n\n\n4\nNoise models and likelihoods\nslides\nnotebook / Colab\nchapter\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\nchapter\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab\nchapter\n\n\n7\nVariational formulation\nslides\nnotebook / Colab\nchapter\n\n\n8\nTotal Variation regularization\nslides\nnotebook / Colab\nchapter\n\n\n9\nOptimization methods\nslides\nnotebook / Colab\nchapter\n\n\n10\nSparse reconstruction\nslides\nnotebook / Colab\nchapter\n\n\n11\nWavelets and multiscale representation\nslides\nnotebook / Colab\nchapter\n\n\n12\nModel-based vs data-driven imaging\nslides\nnotebook / Colab\nchapter\n\n\n13\nPlug-and-play and learned regularization\nslides\nnotebook / Colab\nchapter\n\n\n14\nStability, robustness, and ethics\nslides\nnotebook / Colab\nchapter\n\n\n15\nProject presentations and oral defenses\nproject page\n-\n-"
+  },
+  {
     "objectID": "slides/week-02-convolution-blur.html#opening-question",
     "href": "slides/week-02-convolution-blur.html#opening-question",
     "title": "Convolution and Blur",
