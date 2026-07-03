@@ -174,13 +174,24 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#project-question" id="toc-project-question" class="nav-link active" data-scroll-target="#project-question">Project Question</a></li>
-  <li><a href="#required-llm-use" id="toc-required-llm-use" class="nav-link" data-scroll-target="#required-llm-use">Required LLM Use</a></li>
+  <li><a href="#central-question" id="toc-central-question" class="nav-link active" data-scroll-target="#central-question">Central Question</a></li>
+  <li><a href="#expected-timeline" id="toc-expected-timeline" class="nav-link" data-scroll-target="#expected-timeline">Expected Timeline</a></li>
+  <li><a href="#required-llm-use" id="toc-required-llm-use" class="nav-link" data-scroll-target="#required-llm-use">Required LLM Use</a>
+  <ul class="collapse">
+  <li><a href="#llm-use-statement-template" id="toc-llm-use-statement-template" class="nav-link" data-scroll-target="#llm-use-statement-template">LLM-Use Statement Template</a></li>
+  </ul></li>
   <li><a href="#core-requirements" id="toc-core-requirements" class="nav-link" data-scroll-target="#core-requirements">Core Requirements</a></li>
+  <li><a href="#submission-package" id="toc-submission-package" class="nav-link" data-scroll-target="#submission-package">Submission Package</a></li>
+  <li><a href="#notebook-expectations" id="toc-notebook-expectations" class="nav-link" data-scroll-target="#notebook-expectations">Notebook Expectations</a></li>
+  <li><a href="#report-structure" id="toc-report-structure" class="nav-link" data-scroll-target="#report-structure">Report Structure</a></li>
+  <li><a href="#claim-evidence-table" id="toc-claim-evidence-table" class="nav-link" data-scroll-target="#claim-evidence-table">Claim-Evidence Table</a></li>
   <li><a href="#possible-project-topics" id="toc-possible-project-topics" class="nav-link" data-scroll-target="#possible-project-topics">Possible Project Topics</a></li>
-  <li><a href="#recommended-project-structure" id="toc-recommended-project-structure" class="nav-link" data-scroll-target="#recommended-project-structure">Recommended Project Structure</a></li>
+  <li><a href="#choosing-a-good-topic" id="toc-choosing-a-good-topic" class="nav-link" data-scroll-target="#choosing-a-good-topic">Choosing a Good Topic</a></li>
   <li><a href="#grading-rubric" id="toc-grading-rubric" class="nav-link" data-scroll-target="#grading-rubric">Grading Rubric</a></li>
-  <li><a href="#oral-defense" id="toc-oral-defense" class="nav-link" data-scroll-target="#oral-defense">Oral Defense</a></li>
+  <li><a href="#oral-defense" id="toc-oral-defense" class="nav-link" data-scroll-target="#oral-defense">Oral Defense</a>
+  <ul class="collapse">
+  <li><a href="#defense-preparation-checklist" id="toc-defense-preparation-checklist" class="nav-link" data-scroll-target="#defense-preparation-checklist">Defense Preparation Checklist</a></li>
+  </ul></li>
   <li><a href="#what-a-strong-project-shows" id="toc-what-a-strong-project-shows" class="nav-link" data-scroll-target="#what-a-strong-project-shows">What A Strong Project Shows</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/project/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -208,10 +219,10 @@ window.Quarto = {
 
 
 <p>The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.</p>
-<p>Students will work in teams of two. Each team will choose one imaging inverse problem, implement at least two reconstruction approaches, compare them experimentally, and explain when each approach should and should not be trusted.</p>
+<p>Students work in teams of two. Each team chooses one imaging inverse problem, implements at least two reconstruction approaches, compares them experimentally, and explains when each approach should and should not be trusted.</p>
 <p>The goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation.</p>
-<section id="project-question" class="level2">
-<h2 class="anchored" data-anchor-id="project-question">Project Question</h2>
+<section id="central-question" class="level2">
+<h2 class="anchored" data-anchor-id="central-question">Central Question</h2>
 <p>Each project should answer the following question:</p>
 <blockquote class="blockquote">
 <p>Given degraded image data <span class="math inline">y</span>, a forward model <span class="math inline">A</span>, and noise or uncertainty, how can we reconstruct an image <span class="math inline">x</span>, and how do we know when the reconstruction is reliable?</p>
@@ -221,7 +232,67 @@ window.Quarto = {
 y = A x + \eta,
 </span></p>
 <p>or a related model adapted to the chosen degradation.</p>
-<p>The team must define what <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and <span class="math inline">\eta</span> mean in their project.</p>
+<p>The team must define what <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and <span class="math inline">\eta</span> mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.</p>
+<p>The course identity is:</p>
+<p><span class="math display">
+\text{data} + \text{model} + \text{prior} + \text{optimization} \rightarrow \text{reconstruction with limits}.
+</span></p>
+<p>For learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership.</p>
+</section>
+<section id="expected-timeline" class="level2">
+<h2 class="anchored" data-anchor-id="expected-timeline">Expected Timeline</h2>
+<p>Exact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Expected Progress</th>
+<th>What Students Should Have</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Week 6</td>
+<td>Project launch</td>
+<td>Team, tentative topic, first statement of <span class="math inline">x</span>, <span class="math inline">y</span>, forward model, and degradation.</td>
+</tr>
+<tr class="even">
+<td>Week 7</td>
+<td>Proposal checkpoint</td>
+<td>One-page proposal with data source, baseline method, second method, and first reliability question.</td>
+</tr>
+<tr class="odd">
+<td>Week 8</td>
+<td>Baseline checkpoint</td>
+<td>A runnable notebook that creates the degraded data and runs a simple baseline.</td>
+</tr>
+<tr class="even">
+<td>Week 10</td>
+<td>Method checkpoint</td>
+<td>Two reconstruction methods implemented on the same test cases.</td>
+</tr>
+<tr class="odd">
+<td>Week 12</td>
+<td>Evidence checkpoint</td>
+<td>Parameter sweep, quantitative metric, and first robustness or failure test.</td>
+</tr>
+<tr class="even">
+<td>Week 14</td>
+<td>Final preparation</td>
+<td>Complete notebook, report draft, claim-evidence table, and oral-defense preparation.</td>
+</tr>
+<tr class="odd">
+<td>Final project period</td>
+<td>Presentation and oral defense</td>
+<td>Final submission plus individual code walkthrough and defense.</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="required-llm-use" class="level2">
 <h2 class="anchored" data-anchor-id="required-llm-use">Required LLM Use</h2>
@@ -246,6 +317,23 @@ y = A x + \eta,
 <li>at least one mistake, limitation, or misleading suggestion produced by the LLM.</li>
 </ol>
 <p>The LLM-use statement is <strong>required but not graded separately</strong>. A missing or dishonest LLM-use statement makes the project incomplete.</p>
+<section id="llm-use-statement-template" class="level3">
+<h3 class="anchored" data-anchor-id="llm-use-statement-template">LLM-Use Statement Template</h3>
+<p>Students may use the following structure.</p>
+<pre class="text"><code>LLM tools used:
+
+Main uses:
+
+Accepted or modified suggestions:
+
+Rejected suggestions:
+
+Independent verification:
+
+One LLM mistake or limitation we found:
+
+What each teammate can explain without the LLM:</code></pre>
+</section>
 </section>
 <section id="core-requirements" class="level2">
 <h2 class="anchored" data-anchor-id="core-requirements">Core Requirements</h2>
@@ -276,7 +364,7 @@ y = A x + \eta,
 </tr>
 <tr class="even">
 <td>Quantitative comparison</td>
-<td>Use RMSE, PSNR, residual norm, feature contrast, or another justified metric.</td>
+<td>Use RMSE, PSNR, residual norm, feature contrast, SSIM, or another justified metric.</td>
 </tr>
 <tr class="odd">
 <td>Visual comparison</td>
@@ -304,6 +392,112 @@ y = A x + \eta,
 </tr>
 </tbody>
 </table>
+</section>
+<section id="submission-package" class="level2">
+<h2 class="anchored" data-anchor-id="submission-package">Submission Package</h2>
+<p>The final submission should contain four parts.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Notebook</td>
+<td>A runnable notebook that generates or loads the data, runs the methods, produces the figures, and prints the key metrics.</td>
+</tr>
+<tr class="even">
+<td>Report</td>
+<td>A concise written explanation of the model, methods, evidence, limitations, and conclusions.</td>
+</tr>
+<tr class="odd">
+<td>Claim-evidence table</td>
+<td>Three to five claims, each paired with evidence and a limitation or failure mode.</td>
+</tr>
+<tr class="even">
+<td>LLM-use statement</td>
+<td>The required disclosure described above.</td>
+</tr>
+</tbody>
+</table>
+<p>The notebook and report should agree. Every important figure or numerical result in the report should be reproducible from the notebook.</p>
+</section>
+<section id="notebook-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="notebook-expectations">Notebook Expectations</h2>
+<p>The notebook should be readable by another student in the class.</p>
+<p>It should include:</p>
+<ul>
+<li>a short problem statement;</li>
+<li>imports and reproducible random seeds;</li>
+<li>data loading or data generation;</li>
+<li>a baseline method;</li>
+<li>a second reconstruction method;</li>
+<li>parameter sweeps;</li>
+<li>quantitative metrics;</li>
+<li>visual comparisons;</li>
+<li>at least one robustness test;</li>
+<li>at least one failure case;</li>
+<li>comments explaining nontrivial code;</li>
+<li>a final cell summarizing the main claim and limitation.</li>
+</ul>
+<p>A notebook that only shows final images is not enough. The notebook must show how the results were obtained.</p>
+</section>
+<section id="report-structure" class="level2">
+<h2 class="anchored" data-anchor-id="report-structure">Report Structure</h2>
+<p>The report should be concise and structured.</p>
+<ol type="1">
+<li><strong>Problem statement.</strong> What imaging problem is being solved?</li>
+<li><strong>Forward model.</strong> Define <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and the noise or degradation.</li>
+<li><strong>Methods.</strong> Describe the reconstruction algorithms.</li>
+<li><strong>Implementation.</strong> Explain the main computational choices.</li>
+<li><strong>Parameter study.</strong> Show how reconstruction changes as a parameter changes.</li>
+<li><strong>Results.</strong> Present quantitative and visual comparisons.</li>
+<li><strong>Robustness and failure.</strong> Show stress tests and at least one failure case.</li>
+<li><strong>Limitations.</strong> Explain when the method should not be trusted.</li>
+<li><strong>LLM-use statement.</strong> Disclose how the required LLM support was used.</li>
+</ol>
+</section>
+<section id="claim-evidence-table" class="level2">
+<h2 class="anchored" data-anchor-id="claim-evidence-table">Claim-Evidence Table</h2>
+<p>Each project should turn its results into claims that are supported by evidence.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Claim</th>
+<th>Evidence</th>
+<th>Limitation or Failure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Example: TV preserves the main edge better than quadratic smoothing.</td>
+<td>Gradient maps and edge contrast across three noise levels.</td>
+<td>TV creates staircasing on smooth ramps.</td>
+</tr>
+<tr class="even">
+<td>Example: The sparse DCT method works with 40% observed pixels.</td>
+<td>RMSE and visual comparison across five masks.</td>
+<td>It fails on texture-rich images with non-sparse DCT coefficients.</td>
+</tr>
+<tr class="odd">
+<td>Example: A learned prior improves denoising on similar images.</td>
+<td>Test-set RMSE on held-out crops from the same image family.</td>
+<td>It degrades under domain shift to a different image family.</td>
+</tr>
+</tbody>
+</table>
+<p>The table protects against overclaiming. A reconstruction can look impressive while supporting only a modest claim.</p>
 </section>
 <section id="possible-project-topics" class="level2">
 <h2 class="anchored" data-anchor-id="possible-project-topics">Possible Project Topics</h2>
@@ -376,20 +570,25 @@ y = A x + \eta,
 </table>
 <p>The instructor may provide additional test images or degraded observations. These may be used to test whether the submitted notebook generalizes beyond the examples used during development.</p>
 </section>
-<section id="recommended-project-structure" class="level2">
-<h2 class="anchored" data-anchor-id="recommended-project-structure">Recommended Project Structure</h2>
-<p>The report should be concise and structured.</p>
-<ol type="1">
-<li><strong>Problem statement.</strong> What imaging problem is being solved?</li>
-<li><strong>Forward model.</strong> Define <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and the noise or degradation.</li>
-<li><strong>Methods.</strong> Describe the reconstruction algorithms.</li>
-<li><strong>Implementation.</strong> Explain the main computational choices.</li>
-<li><strong>Parameter study.</strong> Show how reconstruction changes as a parameter changes.</li>
-<li><strong>Results.</strong> Present quantitative and visual comparisons.</li>
-<li><strong>Robustness and failure.</strong> Show stress tests and at least one failure case.</li>
-<li><strong>Limitations.</strong> Explain when the method should not be trusted.</li>
-<li><strong>LLM-use statement.</strong> Disclose how the required LLM support was used.</li>
-</ol>
+<section id="choosing-a-good-topic" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-a-good-topic">Choosing a Good Topic</h2>
+<p>A good topic is small enough to test carefully.</p>
+<p>Prefer:</p>
+<ul>
+<li>one clear degradation;</li>
+<li>one or two image families;</li>
+<li>two methods that make different assumptions;</li>
+<li>a metric connected to the scientific question;</li>
+<li>a failure case that can be reproduced.</li>
+</ul>
+<p>Avoid:</p>
+<ul>
+<li>comparing many methods superficially;</li>
+<li>using a neural network without explaining its training data or prior;</li>
+<li>reporting only visual quality;</li>
+<li>using a black-box result that no teammate can explain;</li>
+<li>presenting an LLM-generated notebook that has not been independently tested.</li>
+</ul>
 </section>
 <section id="grading-rubric" class="level2">
 <h2 class="anchored" data-anchor-id="grading-rubric">Grading Rubric</h2>
@@ -449,7 +648,25 @@ y = A x + \eta,
 <li>run the notebook on a new test image or modified degradation;</li>
 <li>explain how LLM assistance was checked.</li>
 </ul>
-<p>The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact.</p>
+<p>The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact. It is the part of the project that cannot be outsourced to an LLM.</p>
+<section id="defense-preparation-checklist" class="level3">
+<h3 class="anchored" data-anchor-id="defense-preparation-checklist">Defense Preparation Checklist</h3>
+<p>Each student should be ready to answer:</p>
+<ul>
+<li>What does <span class="math inline">x</span> represent in your project?</li>
+<li>What does <span class="math inline">y</span> represent?</li>
+<li>What is known, unknown, or estimated in the forward model?</li>
+<li>Which method is your baseline?</li>
+<li>Which method uses a stronger prior?</li>
+<li>Which parameter matters most?</li>
+<li>What happens when that parameter is too small or too large?</li>
+<li>Which result is supported by the data?</li>
+<li>Which result is mostly imposed by the prior?</li>
+<li>What is your clearest failure case?</li>
+<li>Which part of the code would you change first if the method failed on a new image?</li>
+<li>What did the LLM help with, and how did you verify it?</li>
+</ul>
+</section>
 </section>
 <section id="what-a-strong-project-shows" class="level2">
 <h2 class="anchored" data-anchor-id="what-a-strong-project-shows">What A Strong Project Shows</h2>

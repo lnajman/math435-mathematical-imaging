@@ -4,28 +4,63 @@
     "href": "project/index.html",
     "title": "Final Modeling Project",
     "section": "",
-    "text": "The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.\nStudents will work in teams of two. Each team will choose one imaging inverse problem, implement at least two reconstruction approaches, compare them experimentally, and explain when each approach should and should not be trusted.\nThe goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation."
+    "text": "The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.\nStudents work in teams of two. Each team chooses one imaging inverse problem, implements at least two reconstruction approaches, compares them experimentally, and explains when each approach should and should not be trusted.\nThe goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation."
   },
   {
-    "objectID": "project/index.html#project-question",
-    "href": "project/index.html#project-question",
+    "objectID": "project/index.html#central-question",
+    "href": "project/index.html#central-question",
     "title": "Final Modeling Project",
-    "section": "Project Question",
-    "text": "Project Question\nEach project should answer the following question:\n\nGiven degraded image data y, a forward model A, and noise or uncertainty, how can we reconstruct an image x, and how do we know when the reconstruction is reliable?\n\nA typical project has the form:\n\ny = A x + \\eta,\n\nor a related model adapted to the chosen degradation.\nThe team must define what x, y, A, and \\eta mean in their project."
+    "section": "Central Question",
+    "text": "Central Question\nEach project should answer the following question:\n\nGiven degraded image data y, a forward model A, and noise or uncertainty, how can we reconstruct an image x, and how do we know when the reconstruction is reliable?\n\nA typical project has the form:\n\ny = A x + \\eta,\n\nor a related model adapted to the chosen degradation.\nThe team must define what x, y, A, and \\eta mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.\nThe course identity is:\n\n\\text{data} + \\text{model} + \\text{prior} + \\text{optimization} \\rightarrow \\text{reconstruction with limits}.\n\nFor learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership."
+  },
+  {
+    "objectID": "project/index.html#expected-timeline",
+    "href": "project/index.html#expected-timeline",
+    "title": "Final Modeling Project",
+    "section": "Expected Timeline",
+    "text": "Expected Timeline\nExact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.\n\n\n\n\n\n\n\n\nStage\nExpected Progress\nWhat Students Should Have\n\n\n\n\nWeek 6\nProject launch\nTeam, tentative topic, first statement of x, y, forward model, and degradation.\n\n\nWeek 7\nProposal checkpoint\nOne-page proposal with data source, baseline method, second method, and first reliability question.\n\n\nWeek 8\nBaseline checkpoint\nA runnable notebook that creates the degraded data and runs a simple baseline.\n\n\nWeek 10\nMethod checkpoint\nTwo reconstruction methods implemented on the same test cases.\n\n\nWeek 12\nEvidence checkpoint\nParameter sweep, quantitative metric, and first robustness or failure test.\n\n\nWeek 14\nFinal preparation\nComplete notebook, report draft, claim-evidence table, and oral-defense preparation.\n\n\nFinal project period\nPresentation and oral defense\nFinal submission plus individual code walkthrough and defense."
   },
   {
     "objectID": "project/index.html#required-llm-use",
     "href": "project/index.html#required-llm-use",
     "title": "Final Modeling Project",
     "section": "Required LLM Use",
-    "text": "Required LLM Use\nUse of an LLM is required for this project.\nStudents may use an LLM for:\n\nbrainstorming project ideas;\nunderstanding mathematical definitions;\ngenerating or debugging code;\nimproving plots;\norganizing the report;\nchecking explanations;\npreparing for the oral defense.\n\nHowever, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.\nEach submission must include an LLM-use statement describing:\n\nwhich LLM tools were used;\nwhat they were used for;\nwhich generated code or text was accepted, modified, or rejected;\nwhat the team verified independently;\nat least one mistake, limitation, or misleading suggestion produced by the LLM.\n\nThe LLM-use statement is required but not graded separately. A missing or dishonest LLM-use statement makes the project incomplete."
+    "text": "Required LLM Use\nUse of an LLM is required for this project.\nStudents may use an LLM for:\n\nbrainstorming project ideas;\nunderstanding mathematical definitions;\ngenerating or debugging code;\nimproving plots;\norganizing the report;\nchecking explanations;\npreparing for the oral defense.\n\nHowever, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.\nEach submission must include an LLM-use statement describing:\n\nwhich LLM tools were used;\nwhat they were used for;\nwhich generated code or text was accepted, modified, or rejected;\nwhat the team verified independently;\nat least one mistake, limitation, or misleading suggestion produced by the LLM.\n\nThe LLM-use statement is required but not graded separately. A missing or dishonest LLM-use statement makes the project incomplete.\n\nLLM-Use Statement Template\nStudents may use the following structure.\nLLM tools used:\n\nMain uses:\n\nAccepted or modified suggestions:\n\nRejected suggestions:\n\nIndependent verification:\n\nOne LLM mistake or limitation we found:\n\nWhat each teammate can explain without the LLM:"
   },
   {
     "objectID": "project/index.html#core-requirements",
     "href": "project/index.html#core-requirements",
     "title": "Final Modeling Project",
     "section": "Core Requirements",
-    "text": "Core Requirements\nEach team must include:\n\n\n\n\n\n\n\nRequirement\nDescription\n\n\n\n\nForward model\nDefine the image, degradation, measurements, and noise model.\n\n\nTwo reconstruction approaches\nCompare at least two methods; at least one must come from the course.\n\n\nParameter study\nSweep at least one important parameter and explain the tradeoff.\n\n\nQuantitative comparison\nUse RMSE, PSNR, residual norm, feature contrast, or another justified metric.\n\n\nVisual comparison\nShow reconstructed images and interpret visible artifacts or improvements.\n\n\nRobustness test\nTest noise level, model mismatch, domain shift, missing data, or another stress case.\n\n\nFailure case\nShow one case where a method fails, and explain why.\n\n\nReproducible notebook\nSubmit a runnable Python notebook with clear inputs, outputs, and plots.\n\n\nWritten report\nExplain the model, methods, experiments, results, and limitations.\n\n\nOral defense\nEach student must individually defend the whole project."
+    "text": "Core Requirements\nEach team must include:\n\n\n\n\n\n\n\nRequirement\nDescription\n\n\n\n\nForward model\nDefine the image, degradation, measurements, and noise model.\n\n\nTwo reconstruction approaches\nCompare at least two methods; at least one must come from the course.\n\n\nParameter study\nSweep at least one important parameter and explain the tradeoff.\n\n\nQuantitative comparison\nUse RMSE, PSNR, residual norm, feature contrast, SSIM, or another justified metric.\n\n\nVisual comparison\nShow reconstructed images and interpret visible artifacts or improvements.\n\n\nRobustness test\nTest noise level, model mismatch, domain shift, missing data, or another stress case.\n\n\nFailure case\nShow one case where a method fails, and explain why.\n\n\nReproducible notebook\nSubmit a runnable Python notebook with clear inputs, outputs, and plots.\n\n\nWritten report\nExplain the model, methods, experiments, results, and limitations.\n\n\nOral defense\nEach student must individually defend the whole project."
+  },
+  {
+    "objectID": "project/index.html#submission-package",
+    "href": "project/index.html#submission-package",
+    "title": "Final Modeling Project",
+    "section": "Submission Package",
+    "text": "Submission Package\nThe final submission should contain four parts.\n\n\n\n\n\n\n\nPart\nContent\n\n\n\n\nNotebook\nA runnable notebook that generates or loads the data, runs the methods, produces the figures, and prints the key metrics.\n\n\nReport\nA concise written explanation of the model, methods, evidence, limitations, and conclusions.\n\n\nClaim-evidence table\nThree to five claims, each paired with evidence and a limitation or failure mode.\n\n\nLLM-use statement\nThe required disclosure described above.\n\n\n\nThe notebook and report should agree. Every important figure or numerical result in the report should be reproducible from the notebook."
+  },
+  {
+    "objectID": "project/index.html#notebook-expectations",
+    "href": "project/index.html#notebook-expectations",
+    "title": "Final Modeling Project",
+    "section": "Notebook Expectations",
+    "text": "Notebook Expectations\nThe notebook should be readable by another student in the class.\nIt should include:\n\na short problem statement;\nimports and reproducible random seeds;\ndata loading or data generation;\na baseline method;\na second reconstruction method;\nparameter sweeps;\nquantitative metrics;\nvisual comparisons;\nat least one robustness test;\nat least one failure case;\ncomments explaining nontrivial code;\na final cell summarizing the main claim and limitation.\n\nA notebook that only shows final images is not enough. The notebook must show how the results were obtained."
+  },
+  {
+    "objectID": "project/index.html#report-structure",
+    "href": "project/index.html#report-structure",
+    "title": "Final Modeling Project",
+    "section": "Report Structure",
+    "text": "Report Structure\nThe report should be concise and structured.\n\nProblem statement. What imaging problem is being solved?\nForward model. Define x, y, A, and the noise or degradation.\nMethods. Describe the reconstruction algorithms.\nImplementation. Explain the main computational choices.\nParameter study. Show how reconstruction changes as a parameter changes.\nResults. Present quantitative and visual comparisons.\nRobustness and failure. Show stress tests and at least one failure case.\nLimitations. Explain when the method should not be trusted.\nLLM-use statement. Disclose how the required LLM support was used."
+  },
+  {
+    "objectID": "project/index.html#claim-evidence-table",
+    "href": "project/index.html#claim-evidence-table",
+    "title": "Final Modeling Project",
+    "section": "Claim-Evidence Table",
+    "text": "Claim-Evidence Table\nEach project should turn its results into claims that are supported by evidence.\n\n\n\n\n\n\n\n\nClaim\nEvidence\nLimitation or Failure\n\n\n\n\nExample: TV preserves the main edge better than quadratic smoothing.\nGradient maps and edge contrast across three noise levels.\nTV creates staircasing on smooth ramps.\n\n\nExample: The sparse DCT method works with 40% observed pixels.\nRMSE and visual comparison across five masks.\nIt fails on texture-rich images with non-sparse DCT coefficients.\n\n\nExample: A learned prior improves denoising on similar images.\nTest-set RMSE on held-out crops from the same image family.\nIt degrades under domain shift to a different image family.\n\n\n\nThe table protects against overclaiming. A reconstruction can look impressive while supporting only a modest claim."
   },
   {
     "objectID": "project/index.html#possible-project-topics",
@@ -35,11 +70,11 @@
     "text": "Possible Project Topics\nTeams may choose one of the following topics or propose a related topic.\n\n\n\n\n\n\n\n\nTopic\nPossible Methods\nReliability Question\n\n\n\n\nImage deblurring\nTikhonov vs TV\nWhat happens when the blur kernel is wrong?\n\n\nImage inpainting\ninterpolation vs sparse DCT or TV\nHow many missing pixels can be tolerated?\n\n\nImage denoising\nGaussian smoothing vs wavelets vs TV\nWhich details are removed with the noise?\n\n\nPoisson image denoising\nGaussian model vs Poisson likelihood\nWhen does the Gaussian approximation fail?\n\n\nSparse reconstruction\nminimum norm vs l1 regularization\nHow many measurements are needed?\n\n\nWavelet denoising\nhard vs soft thresholding\nHow should the threshold be chosen?\n\n\nPlug-and-play reconstruction\nclassical regularization vs denoiser prior\nIs the output supported by the data?\n\n\nSmall-feature preservation\nsmoothing vs TV vs wavelets\nDoes the method erase weak structures?\n\n\nDomain shift in denoising\ntrain/test on different image families\nDoes a learned prior generalize?\n\n\nRobustness audit\ncompare several methods under perturbations\nWhich method fails most gracefully?\n\n\n\nThe instructor may provide additional test images or degraded observations. These may be used to test whether the submitted notebook generalizes beyond the examples used during development."
   },
   {
-    "objectID": "project/index.html#recommended-project-structure",
-    "href": "project/index.html#recommended-project-structure",
+    "objectID": "project/index.html#choosing-a-good-topic",
+    "href": "project/index.html#choosing-a-good-topic",
     "title": "Final Modeling Project",
-    "section": "Recommended Project Structure",
-    "text": "Recommended Project Structure\nThe report should be concise and structured.\n\nProblem statement. What imaging problem is being solved?\nForward model. Define x, y, A, and the noise or degradation.\nMethods. Describe the reconstruction algorithms.\nImplementation. Explain the main computational choices.\nParameter study. Show how reconstruction changes as a parameter changes.\nResults. Present quantitative and visual comparisons.\nRobustness and failure. Show stress tests and at least one failure case.\nLimitations. Explain when the method should not be trusted.\nLLM-use statement. Disclose how the required LLM support was used."
+    "section": "Choosing a Good Topic",
+    "text": "Choosing a Good Topic\nA good topic is small enough to test carefully.\nPrefer:\n\none clear degradation;\none or two image families;\ntwo methods that make different assumptions;\na metric connected to the scientific question;\na failure case that can be reproduced.\n\nAvoid:\n\ncomparing many methods superficially;\nusing a neural network without explaining its training data or prior;\nreporting only visual quality;\nusing a black-box result that no teammate can explain;\npresenting an LLM-generated notebook that has not been independently tested."
   },
   {
     "objectID": "project/index.html#grading-rubric",
@@ -53,7 +88,7 @@
     "href": "project/index.html#oral-defense",
     "title": "Final Modeling Project",
     "section": "Oral Defense",
-    "text": "Oral Defense\nThe oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.\nDuring the defense, students may be asked to:\n\ndefine the forward model;\nexplain why the inverse problem is difficult;\nderive or interpret the reconstruction objective;\nexplain how a parameter affects the result;\ninterpret a quantitative metric;\nexplain a figure from the report;\nidentify one failure case;\nwalk through selected lines of code;\nrun the notebook on a new test image or modified degradation;\nexplain how LLM assistance was checked.\n\nThe oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact."
+    "text": "Oral Defense\nThe oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.\nDuring the defense, students may be asked to:\n\ndefine the forward model;\nexplain why the inverse problem is difficult;\nderive or interpret the reconstruction objective;\nexplain how a parameter affects the result;\ninterpret a quantitative metric;\nexplain a figure from the report;\nidentify one failure case;\nwalk through selected lines of code;\nrun the notebook on a new test image or modified degradation;\nexplain how LLM assistance was checked.\n\nThe oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact. It is the part of the project that cannot be outsourced to an LLM.\n\nDefense Preparation Checklist\nEach student should be ready to answer:\n\nWhat does x represent in your project?\nWhat does y represent?\nWhat is known, unknown, or estimated in the forward model?\nWhich method is your baseline?\nWhich method uses a stronger prior?\nWhich parameter matters most?\nWhat happens when that parameter is too small or too large?\nWhich result is supported by the data?\nWhich result is mostly imposed by the prior?\nWhat is your clearest failure case?\nWhich part of the code would you change first if the method failed on a new image?\nWhat did the LLM help with, and how did you verify it?"
   },
   {
     "objectID": "project/index.html#what-a-strong-project-shows",
