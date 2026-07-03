@@ -387,6 +387,7 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#edges-are-not-noise" id="toc-edges-are-not-noise" class="nav-link" data-scroll-target="#edges-are-not-noise">Edges Are Not Noise</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#continuous-total-variation" id="toc-continuous-total-variation" class="nav-link" data-scroll-target="#continuous-total-variation">Continuous Total Variation</a></li>
   <li><a href="#tv-denoising" id="toc-tv-denoising" class="nav-link" data-scroll-target="#tv-denoising">TV Denoising</a></li>
   <li><a href="#l2-versus-tv-penalties" id="toc-l2-versus-tv-penalties" class="nav-link" data-scroll-target="#l2-versus-tv-penalties">l2 Versus TV Penalties</a></li>
@@ -396,7 +397,9 @@ window.Quarto = {
   <li><a href="#choosing-the-tv-weight" id="toc-choosing-the-tv-weight" class="nav-link" data-scroll-target="#choosing-the-tv-weight">Choosing The TV Weight</a></li>
   <li><a href="#staircasing" id="toc-staircasing" class="nav-link" data-scroll-target="#staircasing">Staircasing</a></li>
   <li><a href="#strengths-and-weaknesses" id="toc-strengths-and-weaknesses" class="nav-link" data-scroll-target="#strengths-and-weaknesses">Strengths And Weaknesses</a></li>
+  <li><a href="#tv-and-learned-priors" id="toc-tv-and-learned-priors" class="nav-link" data-scroll-target="#tv-and-learned-priors">TV And Learned Priors</a></li>
   <li><a href="#course-checkpoint" id="toc-course-checkpoint" class="nav-link" data-scroll-target="#course-checkpoint">Course Checkpoint</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -451,6 +454,16 @@ E(u)
 <p>This removes noise, but it also penalizes true edges. Edges and noise both create local changes, so a model must distinguish between unwanted oscillation and meaningful discontinuity.</p>
 <p>Total Variation changes the regularizer.</p>
 </section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>Chapter 7 showed that quadratic smoothness is mathematically clean but visually limited. It treats large gradients as very expensive, so it tends to blur object boundaries. Total Variation is the first regularizer in the course that is explicitly designed around a basic fact of images: important information often lives at edges.</p>
+<p>This is also the first strong example of a nonsmooth prior. The mathematical difficulty is not an accident. The corner in the absolute value is exactly what makes TV able to suppress many small gradients while allowing some large ones.</p>
+<p>TV therefore teaches two lessons at once:</p>
+<ul>
+<li>good image priors should match the structures we want to preserve;</li>
+<li>better priors often require better optimization tools.</li>
+</ul>
+</section>
 <section id="continuous-total-variation" class="level2">
 <h2 class="anchored" data-anchor-id="continuous-total-variation">Continuous Total Variation</h2>
 <p>For a grayscale image <span class="math inline">u:\Omega\to\mathbb{R}</span>,</p>
@@ -468,6 +481,15 @@ E(u)
 \sqrt{(D_xu_i)^2+(D_yu_i)^2}.
 </span></p>
 <p>Here <span class="math inline">D_x</span> and <span class="math inline">D_y</span> are finite differences in horizontal and vertical directions.</p>
+<p>There are two common discrete variants. Isotropic TV uses the Euclidean magnitude</p>
+<p><span class="math display">
+\sqrt{(D_xu_i)^2+(D_yu_i)^2}.
+</span></p>
+<p>Anisotropic TV instead uses</p>
+<p><span class="math display">
+|D_xu_i|+|D_yu_i|.
+</span></p>
+<p>Both encourage small total variation, but they can behave differently with respect to diagonal edges and grid directions. In this course, isotropic TV is the default because it is less tied to horizontal and vertical axes.</p>
 </section>
 <section id="tv-denoising" class="level2">
 <h2 class="anchored" data-anchor-id="tv-denoising">TV Denoising</h2>
@@ -482,6 +504,14 @@ u_\lambda
 </span></p>
 <p>The data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.</p>
 <p>This regularizer says: among images that fit the data, prefer images with small total variation.</p>
+<p>For Gaussian denoising, the ROF model uses a squared-error fidelity because the noise assumption is Gaussian. If the data were photon counts, we would usually replace the fidelity term with a Poisson likelihood while keeping a TV prior:</p>
+<p><span class="math display">
+\operatorname*{argmin}_u
+D_{\text{Poisson}}(y,u)
++
+\lambda\operatorname{TV}(u).
+</span></p>
+<p>This is the modular power of variational modeling. The data model and image prior can be changed separately.</p>
 </section>
 <section id="l2-versus-tv-penalties" class="level2">
 <h2 class="anchored" data-anchor-id="l2-versus-tv-penalties">l2 Versus TV Penalties</h2>
@@ -497,12 +527,19 @@ u_\lambda
 </div>
 <p>For example, if <span class="math inline">g=4</span>, then <span class="math inline">\frac12g^2=8</span>, while <span class="math inline">|g|=4</span>. The difference becomes larger as <span class="math inline">|g|</span> grows.</p>
 <p>This is the basic reason TV preserves edges better: it penalizes the existence of change, but it is less aggressive toward large jumps than a squared-gradient model.</p>
+<p>The comparison should be read as a statement about priorities. A quadratic gradient penalty says that one large jump is much worse than several small changes. TV is more tolerant of a concentrated jump. For images containing objects, this is often desirable: an edge should remain an edge, not be spread into a blurry ramp.</p>
+<p>At the same time, TV does not know which edges are meaningful. It may preserve strong noise spikes or remove weak true details depending on the parameter and the data. Edge preservation is a modeling tendency, not a guarantee of semantic correctness.</p>
 </section>
 <section id="nonsmoothness" class="level2">
 <h2 class="anchored" data-anchor-id="nonsmoothness">Nonsmoothness</h2>
 <p>The function <span class="math inline">|g|</span> is not differentiable at <span class="math inline">g=0</span>. This is not a minor technicality. It changes the optimization problem.</p>
 <p>Quadratic smoothing leads to smooth linear equations. TV denoising is convex but nonsmooth. That makes it powerful for edge preservation and more delicate to solve.</p>
 <p>Optimization methods for nonsmooth convex problems appear in the next chapter.</p>
+<p>One common classroom workaround is to replace <span class="math inline">|\nabla u|</span> by a smoothed approximation:</p>
+<p><span class="math display">
+\sqrt{|\nabla u|^2+\epsilon^2}.
+</span></p>
+<p>This makes derivatives easier to write, but it also slightly changes the model. As <span class="math inline">\epsilon</span> becomes smaller, the approximation is closer to TV and the optimization becomes more delicate. This is a recurring theme: numerical convenience and modeling fidelity must be balanced.</p>
 </section>
 <section id="one-dimensional-edge-preservation" class="level2">
 <h2 class="anchored" data-anchor-id="one-dimensional-edge-preservation">One-Dimensional Edge Preservation</h2>
@@ -513,6 +550,8 @@ u_\lambda
 </div>
 <p>TV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.</p>
 <p>This is useful when the image contains objects separated by edges.</p>
+<p>The same property can be expressed as sparsity of the gradient. TV does not usually make the image itself sparse. Instead, it encourages the gradient image to be sparse: many pixels have nearly zero gradient, and relatively few pixels carry transitions.</p>
+<p>This idea prepares the next part of the course. Sparse reconstruction generalizes the question: in which representation should an image be simple? TV answers: the gradient representation. Wavelets answer differently. Neural representations answer differently again.</p>
 </section>
 <section id="image-denoising" class="level2">
 <h2 class="anchored" data-anchor-id="image-denoising">Image Denoising</h2>
@@ -526,6 +565,8 @@ u_\lambda
 <p><img src="../assets/figures/week08-gradient-maps.png" class="img-fluid" alt="Gradient magnitude maps of original, noisy, l2 smoothed, and TV denoised images"></p>
 <p>Noise creates many small gradients. TV suppresses weak fluctuations while retaining stronger edges.</p>
 </div>
+<p>When reading the gradient maps, compare density rather than only brightness. The noisy image has gradients almost everywhere. The TV result has a more selective gradient map: many weak fluctuations disappear, while some coherent boundaries remain.</p>
+<p>This selectivity is why TV can improve segmentation, object boundaries, and cartoon-like reconstructions. It is also why TV can damage textures, because texture often consists of many meaningful gradients.</p>
 </section>
 <section id="choosing-the-tv-weight" class="level2">
 <h2 class="anchored" data-anchor-id="choosing-the-tv-weight">Choosing The TV Weight</h2>
@@ -544,6 +585,7 @@ u_\lambda
 <p>The best value of <span class="math inline">\lambda</span> depends on the task.</p>
 </div>
 <p>For a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.</p>
+<p>The parameter <span class="math inline">\lambda</span> has the same conceptual role as in Tikhonov, but the visual effect is different. Increasing <span class="math inline">\lambda</span> does not simply blur the image. It tends to remove weak oscillations and simplify the edge set. This can look like denoising, segmentation, or cartoonization depending on the image and the parameter.</p>
 </section>
 <section id="staircasing" class="level2">
 <h2 class="anchored" data-anchor-id="staircasing">Staircasing</h2>
@@ -553,6 +595,8 @@ u_\lambda
 <p>TV can turn smooth variation into piecewise-flat plateaus.</p>
 </div>
 <p>This staircasing effect is the signature artifact of TV. TV preserves edges, but it can create artificial plateaus in regions that should vary smoothly.</p>
+<p>Staircasing is not a bug in a particular implementation. It follows from the prior. TV rewards sparse gradients, so a smooth ramp can be approximated by flat regions separated by jumps. If the true image contains gentle shading, smooth surfaces, or illumination gradients, pure TV can be too aggressive.</p>
+<p>Higher-order regularizers and combined models were developed partly to reduce this artifact.</p>
 </section>
 <section id="strengths-and-weaknesses" class="level2">
 <h2 class="anchored" data-anchor-id="strengths-and-weaknesses">Strengths And Weaknesses</h2>
@@ -600,6 +644,43 @@ u_\lambda
 <p>TV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.</p>
 <p>This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.</p>
 </section>
+<section id="tv-and-learned-priors" class="level2">
+<h2 class="anchored" data-anchor-id="tv-and-learned-priors">TV And Learned Priors</h2>
+<p>TV is a hand-designed prior. It expresses a clear belief: good images often have sparse gradients. Neural priors are usually less explicit. They may learn from many examples that natural images contain edges, textures, repeated patterns, object shapes, and correlations across distant regions.</p>
+<p>This comparison is useful:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prior</th>
+<th>What it can express</th>
+<th>Main risk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TV</td>
+<td>sparse gradients and sharp boundaries</td>
+<td>staircasing, loss of texture</td>
+</tr>
+<tr class="even">
+<td>Wavelet sparsity</td>
+<td>multiscale structure</td>
+<td>basis mismatch</td>
+</tr>
+<tr class="odd">
+<td>Learned prior</td>
+<td>complex training-set statistics</td>
+<td>hallucination or dataset bias</td>
+</tr>
+</tbody>
+</table>
+<p>TV is therefore not made obsolete by neural networks. It is a simple, interpretable example of a prior. It helps us ask the right question about learned priors: what structure are they imposing, and when should we trust it?</p>
+</section>
 <section id="course-checkpoint" class="level2">
 <h2 class="anchored" data-anchor-id="course-checkpoint">Course Checkpoint</h2>
 <p>At this point in the course, students should be able to connect:</p>
@@ -611,6 +692,13 @@ u_\lambda
 <li>Tikhonov, variational energies, and TV.</li>
 </ul>
 <p>TV is the bridge from smooth quadratic models to nonsmooth optimization and sparse reconstruction.</p>
+<p>It is also a bridge toward the ethics of reconstruction. Once a method preserves or creates edges, it can affect interpretation. In scientific or medical settings, an artificial edge can be as consequential as a blurred one. This is another reason data consistency and uncertainty matter.</p>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<p>A first mistake is to say that TV preserves all edges. TV preserves some strong transitions better than quadratic smoothing, but weak edges can still disappear and noise edges can remain.</p>
+<p>A second mistake is to think that TV is always more accurate because it looks sharper. Sharpness is not the same as truth.</p>
+<p>A third mistake is to ignore staircasing. If the true image contains smooth shading, TV may replace it with artificial plateaus.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -618,6 +706,7 @@ u_\lambda
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week08_total_variation.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>In the notebook, look at both the reconstructed image and the gradient map. Try to find a value of <span class="math inline">\lambda</span> that removes noise but keeps important boundaries, then increase <span class="math inline">\lambda</span> until staircasing becomes visible.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
@@ -627,6 +716,7 @@ u_\lambda
 <li>Compare the quadratic and TV costs for gradient values <span class="math inline">g=1</span> and <span class="math inline">g=4</span>.</li>
 <li>Explain why TV preserves edges better than quadratic smoothing.</li>
 <li>Describe staircasing and give one situation where it would be undesirable.</li>
+<li>Compare TV as a hand-designed prior with a learned prior. Give one advantage and one risk of each.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -637,6 +727,7 @@ u_\lambda
 <li>Compared with l2 smoothing, TV preserves stronger edges.</li>
 <li>TV is convex but nonsmooth.</li>
 <li>TV can create staircasing artifacts, so it is not always the right prior.</li>
+<li>TV is an interpretable prior, useful both practically and as a reference point for learned priors.</li>
 </ul>
 
 

@@ -387,6 +387,7 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#models-are-not-enough" id="toc-models-are-not-enough" class="nav-link" data-scroll-target="#models-are-not-enough">Models Are Not Enough</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
   <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
   <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
@@ -397,6 +398,7 @@ window.Quarto = {
   <li><a href="#soft-thresholding" id="toc-soft-thresholding" class="nav-link" data-scroll-target="#soft-thresholding">Soft Thresholding</a></li>
   <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
   <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
+  <li><a href="#optimization-and-neural-networks" id="toc-optimization-and-neural-networks" class="nav-link" data-scroll-target="#optimization-and-neural-networks">Optimization And Neural Networks</a></li>
   <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -452,6 +454,12 @@ u^0,\ u^1,\ u^2,\ldots
 <p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
 <p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
 </section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>Chapters 7 and 8 defined reconstructions as minimizers of energies. This chapter asks how those minimizers are actually found. In imaging, this is not a small implementation detail. The image can contain hundreds of thousands or millions of unknowns, and the objective may be nonsmooth.</p>
+<p>Optimization is also the bridge to neural networks. Many neural reconstruction methods can be understood as learned or unrolled optimization algorithms. The steps of an iterative method become layers of a network, and parameters such as thresholds, filters, or step sizes may be learned from data.</p>
+<p>Before learning those steps, we need to understand what the classical steps do.</p>
+</section>
 <section id="convexity" class="level2">
 <h2 class="anchored" data-anchor-id="convexity">Convexity</h2>
 <p>A set <span class="math inline">C</span> is convex if the segment between any two points in <span class="math inline">C</span> stays in <span class="math inline">C</span>:</p>
@@ -476,6 +484,13 @@ E((1-t)x+ty)
 <li>optimality conditions are meaningful.</li>
 </ul>
 <p>TV and l1 energies can be convex but nonsmooth. Convexity says the landscape is well behaved; smoothness says which algorithms are straightforward.</p>
+<p>The figure separates three ideas that students often mix together:</p>
+<ul>
+<li>convex and smooth: gradient descent is natural;</li>
+<li>convex and nonsmooth: the global landscape is safe, but ordinary gradients are not enough;</li>
+<li>nonconvex: local minima, initialization, and training dynamics become important.</li>
+</ul>
+<p>Deep learning usually lives in the third category during training. Many classical imaging models in this chapter live in the first two.</p>
 </section>
 <section id="gradient-descent" class="level2">
 <h2 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h2>
@@ -489,6 +504,8 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <p><img src="../assets/figures/week09-gradient-descent-path.png" class="img-fluid" alt="Gradient descent paths over contour lines of a quadratic energy"></p>
 <p>Gradient descent uses local slope information to move downhill.</p>
 </div>
+<p>For a quadratic imaging energy, each gradient step has a concrete meaning. The residual <span class="math inline">Au^k-y</span> measures disagreement with the data. The adjoint <span class="math inline">A^\top</span> transports that disagreement back to image space. The regularizer contributes another force, often smoothing or shrinking the image. The update combines these forces.</p>
+<p>This interpretation matters more than the formula. If an implementation has the wrong adjoint, the algorithm may still run and decrease some quantity, but not the intended reconstruction energy.</p>
 </section>
 <section id="step-size" class="level2">
 <h2 class="anchored" data-anchor-id="step-size">Step Size</h2>
@@ -517,6 +534,8 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 \tau\leq \frac{1}{L}
 </span></p>
 <p>for stable monotone decrease.</p>
+<p>The Lipschitz constant is a measure of how quickly the gradient can change. A steep or badly conditioned energy requires a smaller step size. This is the optimization version of the singular-value story from Chapter 5: directions with very different sensitivities make naive algorithms slow or unstable.</p>
+<p>In practice, step sizes may be chosen by theory, backtracking line search, heuristic tuning, or learned parameters in an unrolled method.</p>
 </section>
 <section id="stopping-criteria" class="level2">
 <h2 class="anchored" data-anchor-id="stopping-criteria">Stopping Criteria</h2>
@@ -529,6 +548,8 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <li>visual or task-driven stopping.</li>
 </ul>
 <p>Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.</p>
+<p>Early stopping can help because the first iterations often recover stable, large-scale structure, while later iterations may fit noise or unstable components. This is not guaranteed for every algorithm, but it is a useful phenomenon to recognize.</p>
+<p>When reporting computational experiments, it is therefore not enough to state the final image. One should also state the number of iterations, stopping rule, step size, and objective being minimized.</p>
 </section>
 <section id="nonsmooth-terms" class="level2">
 <h2 class="anchored" data-anchor-id="nonsmooth-terms">Nonsmooth Terms</h2>
@@ -555,6 +576,7 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 </span></p>
 <p>This is the subgradient intuition. A full convex analysis treatment makes this precise, but the imaging message is simple: nonsmooth terms need optimization tools that respect their corners.</p>
 <p>Treating TV or l1 penalties as if they were ordinary smooth functions can produce unstable or incorrect algorithms.</p>
+<p>The corner at zero is what allows exact zeros. A smooth quadratic penalty can make coefficients small, but it usually does not set them exactly to zero. The l1 penalty can. This is why nonsmoothness is not merely a nuisance; it is part of the modeling power.</p>
 </section>
 <section id="proximal-operators" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-operators">Proximal Operators</h2>
@@ -567,6 +589,34 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 </span></p>
 <p>It balances staying near <span class="math inline">v</span> with reducing the regularizer.</p>
 <p>This is a central idea: instead of differentiating a nonsmooth term, solve a small regularized problem exactly or efficiently.</p>
+<p>The proximal operator can be read as a denoising or simplification step. It asks: starting from <span class="math inline">v</span>, what nearby point has a lower regularizer? For different regularizers, this question gives different operations:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Regularizer</th>
+<th>Proximal behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>l2 norm squared</td>
+<td>shrink smoothly</td>
+</tr>
+<tr class="even">
+<td>l1 norm</td>
+<td>soft-threshold coefficients</td>
+</tr>
+<tr class="odd">
+<td>indicator of a convex set</td>
+<td>project onto the set</td>
+</tr>
+<tr class="even">
+<td>TV</td>
+<td>perform TV denoising subproblem</td>
+</tr>
+</tbody>
+</table>
+<p>This point is central for plug-and-play methods later in the course. If a proximal operator behaves like a denoiser, one can ask what happens when a learned denoiser replaces it.</p>
 </section>
 <section id="soft-thresholding" class="level2">
 <h2 class="anchored" data-anchor-id="soft-thresholding">Soft Thresholding</h2>
@@ -581,6 +631,8 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <p>Soft thresholding sets small coefficients to zero and shrinks large coefficients toward zero.</p>
 </div>
 <p>Soft thresholding is nonlinear and is a key operation behind many sparse reconstruction methods.</p>
+<p>Small coefficients become exactly zero. Large coefficients survive but are reduced. This matches the idea that many coefficients are likely to be noise or insignificant, while a smaller number carry meaningful structure.</p>
+<p>Soft thresholding is simple enough to write in one line of code, but conceptually it is a complete prior step.</p>
 </section>
 <section id="proximal-gradient" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
@@ -597,6 +649,7 @@ u^{k+1}
 \left(u^k-\tau\nabla f(u^k)\right).
 </span></p>
 <p>The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.</p>
+<p>This split is useful because the two parts of the energy require different tools. We use derivatives where derivatives are reliable, and proximal operators where nonsmooth structure matters.</p>
 </section>
 <section id="ista" class="level2">
 <h2 class="anchored" data-anchor-id="ista">ISTA</h2>
@@ -639,6 +692,14 @@ S_{\tau\lambda}
 </tr>
 </tbody>
 </table>
+<p>Reading ISTA as an inverse-problem algorithm:</p>
+<ol type="1">
+<li>simulate the current measurement <span class="math inline">Ax^k</span>;</li>
+<li>compare it with the observed data <span class="math inline">y</span>;</li>
+<li>backproject the error through <span class="math inline">A^\top</span>;</li>
+<li>take a data-consistency step;</li>
+<li>apply the sparse prior through soft thresholding.</li>
+</ol>
 <div class="figure">
 <p><img src="../assets/figures/week09-ista-sparse-signal.png" class="img-fluid" alt="Sparse signal reconstruction with ISTA and energy decrease"></p>
 <p>ISTA alternates between data correction and sparsity promotion.</p>
@@ -647,6 +708,27 @@ S_{\tau\lambda}
 <p><img src="../assets/figures/week09-ista-image.png" class="img-fluid" alt="Original image, blurred noisy observation, ISTA estimate, and sparse DCT coefficients"></p>
 <p>The same pattern appears in image reconstruction with transform-domain sparsity.</p>
 </div>
+<p>This pattern will appear again in modern neural imaging. Unrolled networks often keep the data-consistency step and replace the hand-designed proximal or thresholding step with a learned module.</p>
+</section>
+<section id="optimization-and-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="optimization-and-neural-networks">Optimization And Neural Networks</h2>
+<p>Optimization methods do not disappear when neural networks enter the course. They reappear in two ways.</p>
+<p>First, neural networks are trained by optimization. Training chooses parameters <span class="math inline">\theta</span> to reduce a loss over examples:</p>
+<p><span class="math display">
+\min_\theta
+\sum_j
+\mathcal{L}(f_\theta(y_j),x_j).
+</span></p>
+<p>Second, some reconstruction networks are built from optimization algorithms. A classical iteration such as</p>
+<p><span class="math display">
+x^{k+1}
+=
+\operatorname{prox}_{\tau R}
+\left(x^k-\tau A^\top(Ax^k-y)\right)
+</span></p>
+<p>can be turned into a network by learning parts of the update. For example, one may learn thresholds, filters, step sizes, or replace the proximal operator with a convolutional neural network.</p>
+<p>This is called unrolling. It is powerful because the architecture inherits the logic of an inverse-problem algorithm while gaining flexibility from data.</p>
+<p>The central caution remains: learned updates should still respect the measurements. A visually plausible image is not automatically a data-consistent reconstruction.</p>
 </section>
 <section id="common-failure-modes" class="level2">
 <h2 class="anchored" data-anchor-id="common-failure-modes">Common Failure Modes</h2>
@@ -659,6 +741,7 @@ S_{\tau\lambda}
 <li>a nonsmooth term is treated as if it were smooth.</li>
 </ul>
 <p>The more sophisticated the model, the more important it is to know what the algorithm is actually minimizing.</p>
+<p>For learned or unrolled methods, the failure modes become broader. A network may perform well on validation examples but fail under a different noise level, a different scanner, a different anatomy, or a different image distribution. Optimization diagnostics and data-consistency checks remain useful because they help separate numerical failure from modeling failure.</p>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
@@ -666,6 +749,7 @@ S_{\tau\lambda}
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week09_optimization.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>In the notebook, compare three curves or quantities when possible: objective value, reconstruction error, and visual quality. They often move together at first, but they do not always tell the same story.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
@@ -675,6 +759,7 @@ S_{\tau\lambda}
 <li>Why does the absolute value penalty encourage exact zero values?</li>
 <li>Write the proximal operator definition for a regularizer <span class="math inline">R</span>.</li>
 <li>Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.</li>
+<li>Explain how an unrolled neural network can be viewed as a learned version of an iterative reconstruction algorithm.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -685,6 +770,7 @@ S_{\tau\lambda}
 <li>Step size controls stability and speed.</li>
 <li>l1 and TV are convex but nonsmooth.</li>
 <li>Proximal operators are central for sparse and edge-preserving imaging.</li>
+<li>Unrolled neural networks reuse the structure of iterative inverse-problem algorithms while learning some of their components.</li>
 </ul>
 
 
