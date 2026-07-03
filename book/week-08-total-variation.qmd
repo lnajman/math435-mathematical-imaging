@@ -13,6 +13,7 @@ By the end of this chapter, you should be able to:
 - compare TV with quadratic smoothness;
 - explain why TV preserves edges better;
 - identify staircasing artifacts;
+- distinguish edge preservation from semantic correctness;
 - use TV as a modeling prior for image denoising.
 
 ## Edges Are Not Noise
@@ -241,6 +242,22 @@ TV may struggle with texture, fine repeated patterns, gradual shading, curved sm
 
 This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.
 
+## Edge Preservation Is Not Truth
+
+TV is attractive because it can preserve sharp transitions. But an edge-preserving reconstruction is not automatically a true reconstruction.
+
+There are three different claims:
+
+| Claim | Meaning |
+|---|---|
+| the method preserves edges | large gradients are not penalized as aggressively as in quadratic smoothing |
+| the edge is data-supported | the measured data contain evidence for that transition |
+| the edge is meaningful | the transition corresponds to a real structure for the task |
+
+TV mostly addresses the first claim. The second claim requires checking the forward model and residual. The third claim may require domain knowledge.
+
+This distinction matters in scientific and medical imaging. A sharp boundary can improve interpretation when it is real. It can also mislead when it is an artifact of the prior, parameter choice, or preprocessing.
+
 ## TV And Learned Priors
 
 TV is a hand-designed prior. It expresses a clear belief: good images often have sparse gradients. Neural priors are usually less explicit. They may learn from many examples that natural images contain edges, textures, repeated patterns, object shapes, and correlations across distant regions.
@@ -277,6 +294,8 @@ A second mistake is to think that TV is always more accurate because it looks sh
 
 A third mistake is to ignore staircasing. If the true image contains smooth shading, TV may replace it with artificial plateaus.
 
+A fourth mistake is to equate sharpness with evidence. A sharp edge still needs support from the measured data.
+
 ## Computation
 
 The Week 8 notebook lets you change the TV weight, compare TV and l2 smoothing, inspect gradient maps, and find staircasing examples.
@@ -299,12 +318,14 @@ In the notebook, look at both the reconstructed image and the gradient map. Try 
 4. Explain why TV preserves edges better than quadratic smoothing.
 5. Describe staircasing and give one situation where it would be undesirable.
 6. Compare TV as a hand-designed prior with a learned prior. Give one advantage and one risk of each.
+7. Give an example where an edge-preserving method could create a misleading result.
 
 ## Takeaways
 
 - Total Variation uses $\operatorname{TV}(u)=\int_\Omega |\nabla u|\,dx$.
 - TV favors images with small total change.
 - Compared with l2 smoothing, TV preserves stronger edges.
+- Edge preservation is not the same as proof that an edge is real.
 - TV is convex but nonsmooth.
 - TV can create staircasing artifacts, so it is not always the right prior.
 - TV is an interpretable prior, useful both practically and as a reference point for learned priors.

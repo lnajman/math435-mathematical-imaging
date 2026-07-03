@@ -12,6 +12,7 @@ By the end of this chapter, you should be able to:
 - interpret reconstruction as energy minimization;
 - separate data fidelity and regularization;
 - explain why convexity matters;
+- read an energy functional as a record of modeling choices;
 - derive the Euler-Lagrange equation for a quadratic smoothing model;
 - connect optimality equations to gradient descent.
 
@@ -104,6 +105,29 @@ Variational reconstruction separates modeling from computation. This is one of i
 | Regularizer | what images are plausible? | small norm, smoothness, TV, sparsity |
 
 The optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.
+
+## Reading An Energy As An Audit Trail
+
+An energy functional is an audit trail for the reconstruction.
+
+For example,
+
+$$
+E(x)=D(Ax,y)+\lambda R(x)
+$$
+
+records at least four choices:
+
+| Part | What it records |
+|---|---|
+| $A$ | what measurement process is assumed |
+| $D$ | what noise or discrepancy model is assumed |
+| $R$ | what image structures are preferred |
+| $\lambda$ | how data fit and prior are balanced |
+
+This is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.
+
+Learned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.
 
 ## A First Variational Denoising Model
 
@@ -382,6 +406,8 @@ A second mistake is to confuse the minimizer of an energy with the true image. I
 
 A third mistake is to ignore boundary conditions. Many artifacts near image borders come from assumptions made silently by convolution, finite differences, or Fourier transforms.
 
+A fourth mistake is to discuss a reconstruction without naming the energy or loss that produced it. Without that, the assumptions are difficult to inspect.
+
 ## Computation
 
 The Week 7 notebook lets you change $\lambda$, vary the gradient descent step size, and compare a closed-form solution with gradient descent iterates.
@@ -404,6 +430,7 @@ In the notebook, watch both the image and the energy curve. Find parameter setti
 4. Explain why the Euler-Lagrange equation for quadratic denoising is $u-\lambda\Delta u=y$.
 5. In gradient descent, what can go wrong if the step size is too large?
 6. Explain how a neural reconstruction method can be described using the same roles as a variational model, even when the regularizer is learned.
+7. For an energy of the form $D(Ax,y)+\lambda R(x)$, list the modeling assumptions associated with $A$, $D$, $R$, and $\lambda$.
 
 ## Takeaways
 
@@ -411,5 +438,6 @@ In the notebook, watch both the image and the energy curve. Find parameter setti
 - Energies combine data fidelity and regularization.
 - Convexity gives a safer optimization landscape.
 - Euler-Lagrange equations express first-order optimality.
+- An energy functional is also a record of assumptions.
 - Quadratic smoothness is clear and useful, but it blurs edges.
 - Variational thinking provides a vocabulary for learned priors and unrolled neural reconstruction.

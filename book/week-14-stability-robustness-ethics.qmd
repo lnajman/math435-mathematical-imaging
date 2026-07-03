@@ -448,6 +448,21 @@ The goal is not to choose one camp forever. The goal is to ask the right questio
 
 That is the path from mathematical imaging to neural imaging without losing scientific discipline.
 
+## Claim Versus Evidence
+
+The final habit is to match every claim to evidence.
+
+| Claim | Evidence to provide |
+|---|---|
+| the model fits the data | residuals consistent with the noise model |
+| the method is stable | perturbation tests and parameter sweeps |
+| the prior is appropriate | comparison across image families or known structures |
+| the method improves reconstruction | meaningful baselines and task-relevant metrics |
+| failures are understood | documented failure cases and limitations |
+| learned components generalize | tests outside the training distribution |
+
+This table is useful for the final project. It also protects against overclaiming. A reconstruction can be visually impressive while only supporting a modest claim. Conversely, a simple method with clear evidence may be more trustworthy than a complex method with only a polished example.
+
 ## Project Checkpoint
 
 By the end of the course project, your report should include:
@@ -503,6 +518,7 @@ The notebook is the best place to change parameters and see how sensitive the co
 
 5. **Ethics paragraph.** Write five sentences explaining when your method should not be used.
 6. **Uncertainty statement.** Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.
+7. **Claim-evidence table.** Write three claims about your project results and list the evidence that supports each one.
 
 ## Takeaways
 
@@ -510,5 +526,6 @@ The notebook is the best place to change parameters and see how sensitive the co
 - A good-looking image can still be unreliable.
 - Learned priors inherit assumptions from training data.
 - Robustness must be tested across realistic and stressful cases.
+- Every reconstruction claim should be matched with evidence.
 - Ethical reconstruction means documenting assumptions, failures, and limits.
 - The final goal is not only reconstruction, but trustworthy reconstruction.

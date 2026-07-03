@@ -288,6 +288,24 @@ Distribution shift can be subtle. A denoiser trained on natural photographs may 
 
 This is why training data are part of the method. In a paper or project, one should describe not only the network but also what it was trained on and how the test data differ from the training data.
 
+## Training Data As A Prior
+
+Training data act like a prior, even when no regularization term is written down.
+
+A learned model is shaped by:
+
+| Training choice | Prior effect |
+|---|---|
+| image family | which structures are expected |
+| degradation model | which inverse problem is learned |
+| loss function | which errors are penalized |
+| augmentation | which variations are treated as normal |
+| architecture | which computations are easy for the model |
+
+This does not make learned methods bad. It makes them honest mathematical objects: they encode assumptions, only in a different form from TV, wavelets, or Tikhonov.
+
+When evaluating a learned reconstruction, ask what the training process made likely. Then ask whether the test case belongs to that world.
+
 ## Comparing The Philosophies
 
 | Question | Model-based | Data-driven |
@@ -340,6 +358,8 @@ A second mistake is to think that a visually impressive reconstruction is automa
 
 A third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.
 
+A fourth mistake is to describe the network but not the training distribution. For learned imaging, the training set is part of the method.
+
 ## Computation
 
 The Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.
@@ -362,6 +382,7 @@ In the notebook, train or fit the patch prior on one image family and test it on
 4. What is distribution shift?
 5. Give one reason hallucinated structure is dangerous in scientific imaging.
 6. Explain why data consistency is still important for a supervised neural reconstruction method.
+7. In what sense can training data be viewed as a prior?
 
 ## Takeaways
 
@@ -369,5 +390,6 @@ In the notebook, train or fit the patch prior on one image family and test it on
 - Data-driven methods learn assumptions from examples.
 - Neural networks are parameterized nonlinear operators.
 - Learned methods can be powerful but depend on training data.
+- Training data, loss, architecture, and augmentation encode assumptions.
 - Modern imaging often combines physics, optimization, and learning.
 - A learned reconstruction should be judged by both plausibility and consistency with measured data.

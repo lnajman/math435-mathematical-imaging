@@ -266,6 +266,22 @@ This is not a universal promise. The representation, measurements, noise level, 
 
 When reading the reconstruction figure, compare three things: observed pixels, filled-in smooth regions, and fine details. Sparse DCT priors often reconstruct broad structure well, but they can struggle with localized sharp details or texture. This is not surprising: DCT atoms are global cosine patterns, not localized edge atoms.
 
+## Sparsity Is Evidence Only With A Model
+
+A sparse reconstruction is persuasive only when the sparse model is appropriate.
+
+The statement "this image has a sparse representation" is incomplete. We must ask:
+
+- sparse in which representation?
+- under which measurement operator?
+- at what noise level?
+- with what regularization weight?
+- for which image class?
+
+If the representation matches the image and the measurements are informative enough, sparsity can strongly stabilize reconstruction. If the representation is mismatched, sparsity can select the wrong explanation with great confidence.
+
+This is the same lesson as before, now in coefficient language. The data term checks the measurement. The sparse prior chooses among images that fit the measurement. The reconstruction should not be trusted unless both parts are reasonable.
+
 ## l1 Versus l2
 
 | Feature | l2 | l1 |
@@ -304,6 +320,8 @@ A second mistake is to believe that l1 always recovers the true sparse signal. R
 
 A third mistake is to equate compression quality with reconstruction reliability. A representation that compresses natural images well may still fail for a particular inverse problem if the measurements do not contain the right information.
 
+A fourth mistake is to forget that sparsity is a claim about coefficients, not automatically a claim about truth in the scene.
+
 ## Computation
 
 The Week 10 notebook lets you change the number of measurements, the sparsity level, the l1 regularization weight, and the observed-pixel fraction in the image example.
@@ -326,6 +344,7 @@ In the notebook, vary the number of measurements and the sparsity level separate
 4. Give one reason l1 recovery can fail even when the true signal is sparse.
 5. In the sparse DCT image model, what are the roles of $M$, $D^{-1}$, and $c$?
 6. Explain how sparse reconstruction anticipates learned representations in neural imaging.
+7. Explain why sparse coefficients are useful evidence only after a representation and measurement model have been chosen.
 
 ## Takeaways
 
@@ -334,4 +353,5 @@ In the notebook, vary the number of measurements and the sparsity level separate
 - l1 is a convex surrogate for sparse selection.
 - l1 and l2 encode different priors.
 - Sparse reconstruction works when the measurement model and sparse representation are compatible.
+- Sparsity can stabilize reconstruction, but a mismatched representation can select the wrong explanation.
 - Learned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.

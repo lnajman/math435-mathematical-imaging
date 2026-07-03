@@ -13,6 +13,7 @@ By the end of this chapter, you should be able to:
 - derive the normal equations;
 - interpret the regularization parameter $\lambda$;
 - read Tikhonov filter factors;
+- audit whether $\lambda$ is under- or over-regularizing;
 - explain the bias-stability tradeoff.
 
 ## Why Regularize?
@@ -277,6 +278,24 @@ In a low-stakes photograph, a visually pleasing reconstruction may be enough. In
 
 When reading the image panel, do not search only for the prettiest image. Ask what changed as $\lambda$ increased. Are noise oscillations reduced? Are edges softened? Are small features removed? The correct parameter depends on which errors matter for the application.
 
+## Lambda As A Trust Parameter
+
+The regularization parameter can be read as a trust parameter.
+
+Small $\lambda$ trusts the data fit strongly, including components that may be mostly noise. Large $\lambda$ trusts the prior strongly, including the possibility that the prior suppresses true structure.
+
+This is not a moral choice between data and prior. Both are needed. The question is how much confidence the data deserve in each situation.
+
+| Regime | Data residual | Image appearance | Risk |
+|---|---|---|---|
+| too small $\lambda$ | very small | noisy or oscillatory | fits noise and unstable directions |
+| moderate $\lambda$ | compatible with noise level | structure preserved, artifacts controlled | task-dependent compromise |
+| too large $\lambda$ | unnecessarily large | over-smoothed or low contrast | ignores measured detail |
+
+The middle row does not mean perfect truth. It means the reconstruction is using the data and prior in a defensible balance.
+
+In projects and notebooks, this is why a parameter sweep is more informative than a single chosen image. A sweep shows whether the conclusion is stable across a reasonable range or whether it depends on one fragile value.
+
 ## Bias And Variance
 
 Imagine repeating the noisy measurement many times.
@@ -297,6 +316,26 @@ The error can be large for two opposite reasons:
 - if $\lambda$ is too large, the reconstruction is over-smoothed and biased.
 
 This language will reappear when we discuss learned methods. A neural network can also reduce variance by restricting reconstructions to images that look familiar from training data. But that restriction can introduce bias: unusual structures may be suppressed because they are not well represented in the training set.
+
+## Residual Checks
+
+A regularized reconstruction should not be judged only by the image. The residual
+
+$$
+r_\lambda = Ax_\lambda-y
+$$
+
+also contains information.
+
+If the residual is much smaller than the expected noise level, the method may be fitting noise. If the residual is much larger than expected, the method may be over-regularized, using a wrong forward model, or using a prior that is too restrictive.
+
+The residual is not a proof of correctness. In an ill-posed problem, many images can have similar residuals. But residual checks help separate three different situations:
+
+- the reconstruction does not explain the data;
+- the reconstruction explains the data but looks implausible;
+- the reconstruction looks plausible but is not data-consistent.
+
+This diagnostic remains useful for neural reconstruction. A learned output should still be passed through the forward model and compared with the measurement whenever $A$ is known.
 
 ## What Tikhonov Does Not Solve
 
@@ -332,6 +371,8 @@ A second mistake is to judge $\lambda$ only by visual smoothness. Smooth images 
 
 A third mistake is to form large dense matrices because the formula contains $A^TA$. The formula is useful for analysis, but practical imaging code often works with operators.
 
+A fourth mistake is to choose $\lambda$ from one image only and then treat it as universal. The best value can change with noise level, blur strength, image content, and the task.
+
 ## Computation
 
 The Week 6 notebook lets you change blur strength, noise level, and $\lambda$, then observe the resulting bias-stability tradeoff.
@@ -354,6 +395,7 @@ In the notebook, try to find three regimes: under-regularized, reasonable, and o
 4. For $\sigma=0.001$ and $\lambda=0.01$, compare $1/\sigma$ with $\sigma/(\sigma^2+\lambda)$.
 5. Explain why increasing $\lambda$ can both improve and damage a reconstruction.
 6. Explain how Tikhonov regularization anticipates the role of learned priors in neural imaging.
+7. Describe what you would expect to see in the residual if $\lambda$ is much too small or much too large.
 
 ## Takeaways
 
@@ -361,5 +403,6 @@ In the notebook, try to find three regimes: under-regularized, reasonable, and o
 - The normal equations are $(A^TA+\lambda I)x=A^Ty$.
 - In SVD coordinates, Tikhonov damps weak singular directions.
 - $\lambda$ controls a bias-stability tradeoff.
+- Residual checks help judge whether regularization is consistent with the data and noise model.
 - Regularization is a modeling choice, not magic.
 - Neural reconstruction methods can be viewed as replacing or enriching simple regularizers with learned image models.

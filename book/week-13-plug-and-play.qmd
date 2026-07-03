@@ -320,6 +320,22 @@ Useful diagnostics include:
 
 The goal is to understand not only whether the output looks good, but whether the algorithm is behaving consistently.
 
+## Denoiser Strength As Regularization
+
+The denoiser strength plays a role similar to a regularization parameter.
+
+Weak denoising trusts the data-consistency step more and leaves more artifacts. Strong denoising trusts the image prior more and may remove structures that the measurements support.
+
+In plug-and-play, this balance is especially delicate because the denoiser may not correspond to an explicit penalty $R(x)$. The parameter still changes the implicit prior. Therefore it should be swept and reported, just like $\lambda$ in Tikhonov or TV.
+
+When reading PnP results, compare:
+
+- the image quality;
+- the data residual;
+- the fixed-point change;
+- sensitivity to denoiser strength;
+- behavior on images outside the denoiser's training distribution.
+
 ## Failure Modes
 
 ::: {.figure}
@@ -362,6 +378,8 @@ A second mistake is to think a stronger denoiser is always better. Strong denois
 
 A third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.
 
+A fourth mistake is to report one denoiser strength without showing how sensitive the conclusion is to that choice.
+
 ## Computation
 
 The Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.
@@ -384,6 +402,7 @@ In the notebook, compare the data residual and the visual result as denoising st
 4. What is a fixed point of the PnP iteration?
 5. Give two safeguards for using learned denoisers in high-stakes imaging.
 6. Explain the difference between convergence of a PnP iteration and correctness of the reconstruction.
+7. Explain why denoiser strength should be swept like a regularization parameter.
 
 ## Takeaways
 
@@ -391,5 +410,6 @@ In the notebook, compare the data residual and the visual result as denoising st
 - The denoiser acts as an implicit prior.
 - Learned denoisers can improve reconstructions when data match training.
 - PnP needs careful validation because objective and convergence guarantees change.
+- Denoiser strength controls an implicit regularization tradeoff.
 - Always check both image quality and consistency with measurements.
 - Hybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.

@@ -13,6 +13,7 @@ By the end of this chapter, you should be able to:
 - identify non-uniqueness in missing-data imaging;
 - distinguish missing recorded pixels from physical occlusion;
 - explain stability and instability;
+- separate data-supported information from prior-selected information;
 - interpret small singular values as noise-amplifying directions.
 
 ## The Inverse Problem
@@ -159,6 +160,26 @@ To choose between possible reconstructions, we need extra information: smoothnes
 This is the role of a prior. A prior does not create measured information. It ranks possible explanations. A smoothness prior prefers smooth completions. A sparsity prior prefers images with a concise representation. A learned prior prefers images that resemble the training distribution.
 
 The strength and danger of priors are the same: they make choices. A good prior can stabilize an impossible problem. A bad or mismatched prior can hallucinate structure, erase unusual details, or make a reconstruction look more certain than the data justify.
+
+## What The Data Determine
+
+Ill-posedness forces a useful question:
+
+> Which parts of the reconstruction are determined by the data, and which parts are selected by the prior?
+
+For a well-observed direction, the data strongly constrain the answer. For a nullspace direction, the data do not constrain the answer at all. For a weak singular direction, the data contain some information, but it is fragile because noise and model error are amplified.
+
+This gives three regimes:
+
+| Direction type | Data support | Reconstruction risk |
+|---|---|---|
+| strongly observed | high | usually reliable if the model is correct |
+| weakly observed | partial | sensitive to noise and regularization |
+| invisible/nullspace | none | chosen entirely by assumptions |
+
+This table is a better mental model than asking whether a method "recovers" the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.
+
+For learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.
 
 ## Stability
 
@@ -344,6 +365,8 @@ A second mistake is to believe that if an image looks plausible, it must have be
 
 A third mistake is to collapse all missing information into the word "masking." Recorded-pixel masking and physical occlusion can both create missing information, but they describe different imaging processes.
 
+A fourth mistake is to treat every pixel in a reconstruction as equally supported by the data. Ill-posedness is directional: some structures are well observed, some are weakly observed, and some are not observed at all.
+
 ## Computation
 
 The Week 5 notebook lets you vary blur strength, noise level, and the number of singular values kept.
@@ -366,12 +389,14 @@ When using the notebook, watch for the point where the formal inverse begins to 
 4. For singular values $1,0.7,0.3,0.02,0.0001$, identify the dangerous directions to invert.
 5. Explain in your own words why direct deblurring can fail even when the blur model is known.
 6. Explain how a learned prior can help an ill-posed inverse problem, and give one risk of using such a prior.
+7. Give an example of a reconstruction feature that might be data-supported and one that might be prior-selected.
 
 ## Takeaways
 
 - Ill-posedness is a structural issue, not merely a computational inconvenience.
 - Hadamard's conditions are existence, uniqueness, and stability.
 - Missing information causes non-uniqueness.
+- A reconstruction can contain both data-supported and prior-selected structures.
 - Small singular values cause instability because inverse formulas divide by them.
 - Regularization is motivated by the need for stable reconstruction.
 - Neural reconstruction methods can be understood as learned ways to choose or stabilize solutions.

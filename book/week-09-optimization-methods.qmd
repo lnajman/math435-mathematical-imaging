@@ -13,7 +13,8 @@ By the end of this chapter, you should be able to:
 - use gradient descent for smooth energies;
 - explain why step size matters;
 - understand subgradient intuition for nonsmooth terms;
-- describe proximal operators and ISTA.
+- describe proximal operators and ISTA;
+- use optimization diagnostics to separate solver failure from model failure.
 
 ## Models Are Not Enough
 
@@ -355,6 +356,24 @@ The more sophisticated the model, the more important it is to know what the algo
 
 For learned or unrolled methods, the failure modes become broader. A network may perform well on validation examples but fail under a different noise level, a different scanner, a different anatomy, or a different image distribution. Optimization diagnostics and data-consistency checks remain useful because they help separate numerical failure from modeling failure.
 
+## Optimization Diagnostics
+
+A final reconstruction image is not enough evidence that an optimization method behaved well.
+
+Useful diagnostics include:
+
+| Diagnostic | What it can reveal |
+|---|---|
+| objective value versus iteration | whether the algorithm is actually decreasing the chosen energy |
+| residual norm $\|Ax^k-y\|$ | whether data consistency is improving or being sacrificed |
+| regularizer value $R(x^k)$ | whether the prior term is dominating |
+| step norm $\|x^{k+1}-x^k\|$ | whether the algorithm is stabilizing |
+| visual snapshots | whether numerical progress matches meaningful image improvement |
+
+These diagnostics do not prove the model is correct. They tell us whether the solver is doing what the model asks it to do.
+
+This distinction is especially important for unrolled neural networks. An unrolled network may look like an iterative algorithm, but some steps are learned and may no longer minimize a known objective. In that case, diagnostics such as data residuals, parameter sensitivity, and failure cases become even more important.
+
 ## Computation
 
 The Week 9 notebook lets you change the gradient descent step size, vary the soft-threshold value, run ISTA with different regularization weights, and compare energy decrease with image quality.
@@ -377,6 +396,7 @@ In the notebook, compare three curves or quantities when possible: objective val
 4. Write the proximal operator definition for a regularizer $R$.
 5. Explain ISTA as a two-step algorithm: one step for data fidelity, one step for sparsity.
 6. Explain how an unrolled neural network can be viewed as a learned version of an iterative reconstruction algorithm.
+7. Name two diagnostics you would plot to check whether an iterative reconstruction method is behaving sensibly.
 
 ## Takeaways
 
@@ -385,4 +405,5 @@ In the notebook, compare three curves or quantities when possible: objective val
 - Step size controls stability and speed.
 - l1 and TV are convex but nonsmooth.
 - Proximal operators are central for sparse and edge-preserving imaging.
+- Optimization diagnostics help distinguish solver behavior from modeling quality.
 - Unrolled neural networks reuse the structure of iterative inverse-problem algorithms while learning some of their components.
