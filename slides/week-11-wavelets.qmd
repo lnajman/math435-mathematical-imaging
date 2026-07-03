@@ -64,6 +64,63 @@ That is powerful for convolution and frequency filtering.
 But a local edge affects many Fourier coefficients.
 :::
 
+## Global Versus Local Support
+
+::: {.two-col}
+::: {.definition-box}
+Fourier atoms
+
+- extend over the whole image;
+- give precise frequency information;
+- are global directions.
+:::
+
+::: {.takeaway-box}
+Wavelet atoms
+
+- can have compact or local support;
+- live at a position and a scale;
+- respond to local image structures.
+:::
+:::
+
+## Same Pythagoras, Different Geometry
+
+In an orthonormal basis:
+
+$$
+\|x\|_2^2 = \sum_j |c_j|^2.
+$$
+
+::: {.two-col}
+::: {.model-box}
+Fourier coefficient:
+
+projection on a global oscillation.
+:::
+
+::: {.model-box}
+Wavelet coefficient:
+
+projection on a localized pattern.
+:::
+:::
+
+::: {.caption}
+Both are orthogonal decompositions; they organize the same energy differently.
+:::
+
+## Localization Tradeoff
+
+| Representation | Spatial support | Frequency description |
+|---|---|---|
+| Fourier | global | very precise |
+| Wavelets | local or compact | scale bands |
+
+::: {.question-box}
+If an image has one sharp edge, which representation should need fewer important coefficients?
+:::
+
 ## Wavelets Are Local and Multiscale
 
 Wavelets are patterns that can be:

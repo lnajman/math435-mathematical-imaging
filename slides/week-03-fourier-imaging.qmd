@@ -119,6 +119,65 @@ $$
 Each coefficient measures how much frequency $k$ is present.
 :::
 
+## Fourier as Projection
+
+The DFT compares $x$ with oscillating directions:
+
+$$
+\phi_k[n] = e^{2\pi i kn/N}.
+$$
+
+::: {.takeaway-box}
+A Fourier coefficient is an inner product with a basis vector:
+
+$$
+\widehat{x}[k] = \langle x,\phi_k\rangle
+$$
+
+up to the normalization convention.
+:::
+
+## Parseval = Pythagoras
+
+For an orthonormal Fourier basis:
+
+$$
+\|x\|_2^2 =
+\sum_k |\langle x,\phi_k\rangle|^2.
+$$
+
+::: {.model-box}
+The energy of the signal is the sum of the squared lengths of its orthogonal projections.
+:::
+
+This is the Pythagorean theorem in many dimensions.
+
+## Fourier Atoms Are Global
+
+Each Fourier basis vector extends across the whole signal or image.
+
+::: {.two-col}
+::: {.definition-box}
+Good at describing:
+
+- periodic texture;
+- convolution and filtering;
+- global frequency content.
+:::
+
+::: {.question-box}
+Harder for:
+
+- isolated edges;
+- small objects;
+- local missing information.
+:::
+:::
+
+::: {.caption}
+This will motivate wavelets: local atoms at several scales.
+:::
+
 ## Complex Coefficients
 
 Fourier coefficients are usually complex:
