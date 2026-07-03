@@ -103,7 +103,7 @@ website:
               text: "12. Model-based vs data-driven imaging"
             - href: book/week-13-plug-and-play.qmd
               text: "13. Plug-and-play and learned regularization"
-        - section: "Part V: Reliability and Projects"
+        - section: "Part V: Reliability"
           contents:
             - href: book/week-14-stability-robustness-ethics.qmd
               text: "14. Stability, robustness, and ethics"

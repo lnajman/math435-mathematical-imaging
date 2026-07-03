@@ -6,9 +6,23 @@ subtitle: "Online book for MATH 435"
 This online book is the narrative companion to the MATH 435 slides and notebooks.
 The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.
 
-The central identity of the course is developed in the [motivation chapter](motivation.qmd): mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms.
+The [motivation chapter](motivation.qmd) develops the central identity of the course:
 
-The book grows from the stabilized course materials. Each chapter connects:
+$$
+y = Ax+\eta
+\qquad\Longrightarrow\qquad
+\hat{x}
+=
+\arg\min_x D(Ax,y)+\lambda R(x)
+\qquad\Longrightarrow\qquad
+\hat{x}=f_\theta(y).
+$$
+
+Mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.
+
+The book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the [project page](../project/index.qmd).
+
+Each chapter connects:
 
 - the mathematical model;
 - the computational idea;
@@ -18,7 +32,7 @@ The book grows from the stabilized course materials. Each chapter connects:
 
 ## How To Use This Book
 
-Read each chapter before or after the corresponding class. Use the slides for the lecture structure and the notebook for experiments.
+Read each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc.
 
 For each chapter, students should be able to answer:
 
@@ -48,9 +62,9 @@ For each chapter, students should be able to answer:
 | 13 | Plug-and-play and learned regularization | [slides](../slides/week-13-plug-and-play.html) | [notebook](../notebooks/week13_plug_and_play.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
 | 14 | Stability, robustness, and ethics | [slides](../slides/week-14-stability-robustness-ethics.html) | [notebook](../notebooks/week14_stability_robustness.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
 
-## Roadmap
+## Book Arc
 
-The complete book will follow the course arc:
+The book follows the course arc:
 
 | Part | Chapters | Theme |
 |---|---|---|
@@ -59,9 +73,9 @@ The complete book will follow the course arc:
 | II | 4-6 | Noise, likelihoods, ill-posedness, Tikhonov regularization |
 | III | 7-9 | Variational models, TV, and optimization |
 | IV | 10-13 | Sparsity, wavelets, learned priors, plug-and-play methods |
-| V | 14-15 | Robustness, ethics, project reporting, oral defense |
+| V | 14 | Robustness, ethics, and responsible reconstruction |
 
-The first writing pass now contains Chapters 1-14. The remaining writing work is the project/reporting chapter.
+The course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.
 
 ## Notation
 

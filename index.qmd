@@ -29,7 +29,7 @@ and to hybrid methods such as plug-and-play reconstruction, where the forward mo
 |---|---|
 | [Class list and slides](classes.qmd) | Find the material for each class meeting. |
 | [Notebooks](notebooks/index.qmd) | Run and modify the computational experiments, including Colab links. |
-| [Online book](book/index.qmd) | Read the slower narrative version of the course. |
+| [Online book](book/index.qmd) | Read the motivation chapter and fourteen narrative chapters. |
 | [Syllabus](syllabus.qmd) | Check course policies, schedule, and grading. |
 | [Final project](project/index.qmd) | Understand the LLM-aware project, rubric, and oral defense. |
 
@@ -41,7 +41,7 @@ and to hybrid methods such as plug-and-play reconstruction, where the forward mo
 | Inverse problems | 4-6 | What makes reconstruction unstable, and how does regularization help? |
 | Variational methods | 7-9 | How do we turn modeling assumptions into optimization problems? |
 | Sparse and learned priors | 10-13 | How do representations, data, and denoisers encode prior knowledge? |
-| Reliability and projects | 14-15 | When should a reconstruction be trusted, and how do students defend their work? |
+| Reliability and projects | 14, then Week 15 defense | When should a reconstruction be trusted, and how do students defend their work? |
 
 ## Central Idea
 
