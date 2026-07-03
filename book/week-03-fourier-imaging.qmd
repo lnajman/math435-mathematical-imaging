@@ -82,6 +82,41 @@ The DFT can be read as a change of coordinates. Instead of describing a signal b
 
 This coordinate-change view will reappear later with wavelets, DCT coefficients, sparse representations, and learned features. Each representation makes some structure easier to describe.
 
+## Orthogonality And Pythagoras
+
+The Fourier transform is not just any change of coordinates. It is a projection onto orthogonal oscillatory directions.
+
+In ordinary Euclidean geometry, if two vectors are orthogonal, the Pythagorean theorem says
+
+$$
+\|a+b\|^2=\|a\|^2+\|b\|^2.
+$$
+
+Fourier analysis extends this idea to many orthogonal directions. A signal can be decomposed into mutually orthogonal frequency vectors, and the squared norm of the signal is the sum of the squared magnitudes of its Fourier components, up to the normalization convention used for the transform.
+
+This is the meaning of Parseval's identity. With an orthonormal Fourier basis $\{\phi_k\}$,
+
+$$
+\|x\|_2^2
+=
+\sum_k
+|\langle x,\phi_k\rangle|^2.
+$$
+
+Each coefficient $\langle x,\phi_k\rangle$ is the length of the projection of $x$ onto one Fourier direction. Parseval says that the total energy is the sum of the energies of these orthogonal projections.
+
+This is one of the deep links between Fourier analysis and the Pythagorean theorem: Fourier coefficients are not arbitrary measurements. They are coordinates along perpendicular axes in signal space.
+
+## Global Support
+
+Fourier vectors are global. In a finite discrete image, each Fourier basis image extends across the whole image domain. In the continuous setting, sine and cosine waves have infinite support.
+
+This has an important consequence. A local event, such as a sharp edge or a small bright object, cannot be represented by one local Fourier atom. It is spread across many global oscillations. Fourier gives excellent frequency localization, but poor spatial localization.
+
+This is not a flaw; it is a tradeoff. Fourier analysis is ideal when the question is global frequency content, convolution, blur, periodic texture, or shift-invariant filtering. It is less natural when the question is where a local event occurs.
+
+Wavelets in Chapter 11 respond to this limitation by using localized atoms. Many wavelets have compact spatial support, so they can represent events by position and scale as well as by frequency content.
+
 ## Two-Dimensional Fourier Transform
 
 For an image $x[m,n]$, the 2D Fourier transform uses horizontal and vertical frequency indices:
@@ -266,10 +301,14 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Which carries more geometric information in a natural image: magnitude or phase?
 4. Use the convolution theorem to explain why blur attenuates high frequencies.
 5. Explain why inverse filtering amplifies noise.
+6. Explain how Parseval's identity is a version of the Pythagorean theorem.
+7. Why does a local edge usually require many Fourier coefficients?
 
 ## Takeaways
 
 - Fourier analysis represents images using oscillations.
+- Fourier coefficients are projections onto orthogonal global directions.
+- Parseval's identity generalizes the Pythagorean theorem.
 - Low frequencies describe coarse structure; high frequencies describe fine detail.
 - Fourier coefficients have magnitude and phase.
 - Convolution becomes multiplication in the Fourier domain.

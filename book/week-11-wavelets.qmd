@@ -23,6 +23,15 @@ Wavelets are local and multiscale. They can be shifted in position, scaled in si
 
 This makes wavelets a natural representation for localized edges and details.
 
+The contrast can be stated sharply:
+
+- Fourier basis functions have global support over the whole discrete image, or infinite support in the continuous setting.
+- Many wavelet basis functions have compact support, so each atom lives only on a limited region of the domain.
+
+This difference changes how information is organized. Fourier asks: which global oscillations are present? Wavelets ask: what changes occur, where do they occur, and at what scale?
+
+There is still a Pythagorean idea in the background. Orthogonal Fourier bases and orthogonal wavelet bases both decompose an image into perpendicular directions. In both cases, energy can be expressed as a sum of squared coefficients when the basis is orthonormal. What changes is the geometry of the basis vectors: global oscillations for Fourier, localized multiscale atoms for wavelets.
+
 ## Why This Chapter Matters
 
 Chapter 10 explained that sparse reconstruction depends on representation. Wavelets are one of the most important fixed representations for images because they combine three ideas:
@@ -34,6 +43,8 @@ Chapter 10 explained that sparse reconstruction depends on representation. Wavel
 Fourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.
 
 Wavelets also give a concrete example of a representation that is not learned but already feels "feature-like." This makes them a useful stepping stone toward convolutional neural networks.
+
+The price is a localization tradeoff. Fourier is perfectly localized in frequency but not in space. Compactly supported wavelets are localized in space and scale, but they do not isolate a single exact frequency. This is a practical form of the time-frequency or space-frequency uncertainty principle: one cannot be perfectly localized in both domains at once.
 
 ## Haar Intuition
 
@@ -78,6 +89,18 @@ For orthogonal wavelets, energy is preserved up to normalization.
 This reorganization is useful because many tasks become easier in wavelet coordinates. Compression keeps large coefficients. Denoising removes small detail coefficients. Sparse reconstruction asks for an image whose wavelet coefficients are mostly small or zero.
 
 The original signal and its wavelet coefficients contain the same information when the transform is invertible. The advantage is not extra information; it is a better coordinate system.
+
+For orthogonal wavelets, the Pythagorean viewpoint remains valid:
+
+$$
+\|x\|_2^2
+=
+\sum_j |c_j|^2,
+$$
+
+up to normalization, where $c_j$ are wavelet coefficients. This is the same energy-conservation logic as Parseval's identity for Fourier coefficients.
+
+The difference is interpretive. A large Fourier coefficient means a global oscillation is present. A large wavelet coefficient means a localized pattern is present at a particular scale and location.
 
 ## Two-Dimensional Wavelets
 
@@ -222,6 +245,15 @@ $$
 
 This is the wavelet version of the sparse DCT model from Chapter 10. The difference is that wavelets are localized and multiscale, which often matches images better than global cosine atoms.
 
+This is also the bridge back to Chapter 3. Fourier diagonalizes convolution and is therefore natural for blur. Wavelets do not make convolution as simple, but they often make local image structure sparse. The choice of representation depends on which part of the inverse problem we want to simplify:
+
+| Representation | What it simplifies | Main limitation |
+|---|---|---|
+| Fourier | convolution, blur, global frequency response | poor spatial localization |
+| Wavelets | local edges, multiscale sparse structure | less exact frequency localization |
+
+For imaging, both are valuable. Fourier explains the physics of blur and instability. Wavelets explain why local edges and multiscale details can be represented sparsely.
+
 ## Wavelets And Neural Networks
 
 Wavelets and convolutional neural networks share some intuitions:
@@ -265,10 +297,14 @@ In the notebook, compare compression and denoising. Compression asks how many co
 4. Why can wavelet coefficients be sparse for piecewise-smooth images?
 5. Compare hard thresholding and soft thresholding.
 6. Explain one similarity and one difference between wavelet features and learned convolutional features.
+7. Explain the support difference between Fourier atoms and compactly supported wavelets.
+8. How does the Pythagorean theorem appear in both Fourier and orthogonal wavelet decompositions?
 
 ## Takeaways
 
 - Wavelets represent images across position, scale, and direction.
+- Fourier atoms are global; many wavelets are compactly supported and localized.
+- Orthogonal wavelet decompositions preserve energy through the same Pythagorean principle as Fourier decompositions.
 - A wavelet transform splits images into coarse approximation and detail subbands.
 - Many images are approximately sparse in wavelet coefficients.
 - Thresholding gives compression and denoising algorithms.
