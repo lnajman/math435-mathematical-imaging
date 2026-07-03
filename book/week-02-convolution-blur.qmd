@@ -13,6 +13,7 @@ By the end of this chapter, you should be able to:
 - interpret a blur kernel as a point spread function;
 - explain why fixed blur is a linear operator;
 - describe the role of boundary conditions;
+- distinguish convolutional blur from other image degradations;
 - explain why deblurring is unstable.
 
 ## Why Blur Is The First Model
@@ -149,6 +150,41 @@ The matrix $A$ is usually not formed explicitly for large images. It would be en
 
 This is a recurring pattern in computational imaging. We may never build the full matrix, but we still reason as if an operator is present.
 
+## A Small Blur Matrix
+
+For a short one-dimensional signal with zero boundary conditions, the kernel
+
+$$
+h =
+\begin{bmatrix}
+\frac14 & \frac12 & \frac14
+\end{bmatrix}
+$$
+
+acts like multiplication by a matrix such as
+
+$$
+A=
+\begin{bmatrix}
+\frac12 & \frac14 & 0 & 0\\
+\frac14 & \frac12 & \frac14 & 0\\
+0 & \frac14 & \frac12 & \frac14\\
+0 & 0 & \frac14 & \frac12
+\end{bmatrix}.
+$$
+
+The repeated diagonals show that the same local rule is being applied at each position. The missing entries near the corners show the boundary convention.
+
+This small matrix is useful because it makes two facts visible. First, blur mixes neighboring values. Second, the inverse problem depends on the full operator, not only on the central weight of the kernel. Changing the boundary rule changes the matrix, and changing the matrix changes the inverse problem.
+
+For real images the matrix is far too large to write down, but the idea is the same:
+
+$$
+\text{apply convolution}
+\quad\text{means}\quad
+\text{apply a structured linear operator}.
+$$
+
 ## Real Image Blur
 
 ::: {.figure}
@@ -214,12 +250,46 @@ The unstable oscillations in the figure are not mysterious. They are the visible
 
 Regularization will solve this by refusing to trust every inverted component equally. A neural reconstruction method may solve it differently, by learning from examples what sharp images tend to look like. But the danger is the same in both cases: the method may add structure that is not strongly supported by the data.
 
+## Weakened Is Not The Same As Missing
+
+Blur often weakens information rather than deleting it completely. This is why partial deblurring is possible.
+
+It is useful to separate three cases:
+
+| Component type | What blur does | Inverse consequence |
+|---|---|---|
+| strongly transmitted | mostly preserved | can be recovered reliably |
+| weakly transmitted | reduced in contrast | recovery amplifies noise |
+| nearly removed | almost absent from data | recovery depends heavily on assumptions |
+
+The course will revisit this table in several languages. Fourier analysis describes it through frequency attenuation. SVD describes it through small singular values. Regularization describes it through damping unstable directions. Learned methods describe it through training-set expectations.
+
+The key idea is the same in all cases: when the data weakly support a detail, the reconstruction must decide how much to trust the data and how much to trust the prior.
+
+## When Convolution Is The Wrong Model
+
+Convolution is a strong assumption. It says that the same fixed local spreading rule applies everywhere.
+
+Many degradations do not have this form:
+
+- spatially varying defocus;
+- saturation or clipped sensor values;
+- rolling-shutter motion;
+- compression artifacts;
+- shadows and reflections;
+- physical occlusion.
+
+If the degradation is not well modeled by convolution, then deconvolution may solve the wrong inverse problem. The result can look sharper while becoming less faithful to the measured scene.
+
+This matters for neural methods too. A network trained to undo one degradation may fail on another degradation, even if the input images look superficially similar. The forward model is therefore not a technical detail. It is the contract between the reconstruction and the data.
+
 ## Common Mistakes
 
 1. **Thinking blur only removes information.** Blur also mixes information spatially. That mixing can sometimes be partially undone, but not stably without assumptions.
 2. **Confusing the kernel with the image.** The kernel describes the imaging system, not the object being imaged.
 3. **Ignoring boundary conditions.** Boundary rules are part of the operator $A$.
 4. **Assuming deblurring is just sharpening.** Sharpening may improve appearance, but deblurring is an inverse problem tied to a forward model.
+5. **Using convolution when the degradation is not convolutional.** A wrong forward model can produce a confident but misleading reconstruction.
 
 ## Computation
 
@@ -246,6 +316,8 @@ or open the notebook in Colab from the link at the top of this chapter.
 2. Explain why a normalized blur kernel preserves constant images.
 3. Compare zero-padding and reflection near an image boundary.
 4. Explain in your own words why deblurring amplifies noise.
+5. Write the matrix for a length-5 zero-boundary blur using the kernel $[1/4,1/2,1/4]$.
+6. Give one example of an image degradation that is not well modeled by fixed convolution, and explain why.
 
 ## Takeaways
 
@@ -254,3 +326,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Fixed blur is linear and can be written as $y=Ax$.
 - Boundary conditions are modeling choices.
 - Deblurring is unstable because blur weakens information that inversion tries to recover.
+- A deblurring method is only as meaningful as the forward model it assumes.

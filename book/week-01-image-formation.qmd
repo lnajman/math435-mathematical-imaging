@@ -13,6 +13,7 @@ By the end of this chapter, you should be able to:
 - explain why vectorization is useful for linear algebra;
 - write a first forward model $y=Ax+\eta$;
 - distinguish recorded missing pixels from hidden scene content;
+- explain the difference between a measurement model and a prior;
 - run a small NumPy experiment with image arrays and masks.
 
 ## Why This Chapter Matters
@@ -113,6 +114,23 @@ Vectorization also hides spatial structure. Two pixels that are neighbors in the
 Vector notation is a language for computation, not a denial that images have geometry.
 :::
 
+## What The Grid Remembers
+
+An image array is not only a collection of numbers. It is a collection of numbers with an organization.
+
+The grid tells us which pixels are neighbors. It also tells us which directions are horizontal, vertical, or diagonal. In scientific and medical imaging, the grid may also have physical spacing: one pixel might correspond to a known length, one slice might be farther from the next slice than a pixel is from its neighbor, and different imaging devices may use different resolutions.
+
+This matters because many assumptions in imaging are spatial assumptions:
+
+- nearby pixels often have related values;
+- edges are meaningful changes across space;
+- textures repeat at particular scales;
+- small structures may be important because of their location.
+
+If we keep only the vector $x$ and forget the grid, these assumptions become invisible. They must be reintroduced by operators. A finite-difference gradient remembers neighboring pixels. A convolution kernel remembers local neighborhoods. A wavelet transform remembers position and scale. A convolutional neural network remembers local neighborhoods through learned filters.
+
+This is one reason images are not just long one-dimensional signals. The spatial arrangement is part of the information we use when we reconstruct.
+
 ## Forward Models
 
 Once the unknown image is written as a vector $x$, a controlled measurement process can often be written as
@@ -144,6 +162,34 @@ The forward model points in the direction of measurement: from image to data. Re
 
 It is tempting to think of $A^{-1}$ as the goal. But in imaging, the forward operator may not be invertible, may be badly conditioned, or may not capture the full physical scene. Even when $A$ is linear, the inverse problem may require assumptions about what images are likely. Those assumptions later appear as regularizers, priors, learned denoisers, and neural networks.
 
+## Measurement Model Versus Prior
+
+The forward operator and the prior play different roles.
+
+The forward operator says what the measurement system did:
+
+$$
+x \longmapsto y.
+$$
+
+The prior says what kinds of images we consider plausible when the data do not determine a unique stable answer.
+
+For example, a mask $M$ says which pixels were observed. It does not say how missing pixels should be filled. A smoothness prior might fill them by continuing nearby intensities. A sparsity prior might fill them by choosing a concise transform representation. A learned prior might fill them using patterns common in training images.
+
+These are different statements. Confusing them is dangerous. The measurement model is evidence about the data. The prior is an assumption used to choose among explanations.
+
+Throughout the course, a reconstruction should be read as a combination:
+
+$$
+\text{reconstruction}
+=
+\text{data consistency}
++
+\text{image assumption}.
+$$
+
+The balance between those two terms is the central tension of mathematical imaging.
+
 In neural-network language, a learned reconstruction map
 
 $$
@@ -151,6 +197,8 @@ $$
 $$
 
 can be viewed as a learned attempt to go from measured data to an image. The question remains the same: what has the method learned, and what evidence in $y$ supports the output?
+
+A neural network sees the data it is given, not the hidden physical scene itself. If the input is a masked image, the network sees observed pixels and perhaps a mask. If the input is a blurred image, it sees the blurred measurement. Its output may be excellent, but the same distinction remains: which features are supported by measured data, and which features are supplied by learned prior knowledge?
 
 ## Masking Recorded Pixels
 
@@ -193,6 +241,7 @@ This distinction will matter again when we discuss hallucination. A reconstructi
 2. **Thinking vectorization destroys the image.** Vectorization changes the ordering of values, but the original array can be recovered if the shape and ordering are known.
 3. **Assuming every imaging process is linear.** Some useful models are linear, but physical image formation can include occlusion, saturation, motion, nonlinear sensors, and other effects.
 4. **Treating missing pixels and hidden scene content as the same problem.** Missing entries in an array are not the same as unobserved physical reality.
+5. **Confusing the forward model with the prior.** The operator describes how data were measured; the prior describes assumptions used during reconstruction.
 
 ## Computation
 
@@ -218,10 +267,14 @@ or open the notebook in Colab from the link at the top of this chapter.
 2. Give an example of a forward operator $A$ that is linear.
 3. Give an example from real imaging where the physical process is not well described by a linear operator.
 4. Explain why a mask can model missing recorded pixels but not seeing behind an occluder.
+5. In a masked-image problem, identify one statement that belongs to the forward model and one statement that belongs to the prior.
+6. Explain why a neural network reconstruction should still be evaluated using the measurement model.
 
 ## Takeaways
 
 - An image can be viewed as a function, an array, or a vector.
 - Vectorization lets us write imaging models using linear algebra.
+- The image grid contains spatial information that must be respected by operators or priors.
 - The forward model $y=Ax+\eta$ separates the unknown image, the measurement rule, and noise.
+- The measurement model describes evidence; the prior supplies assumptions when evidence is incomplete.
 - Missing data in an array is not the same as hidden information in the physical scene.
