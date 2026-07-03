@@ -9,6 +9,7 @@ project:
     - syllabus.qmd
     - notebooks/index.qmd
     - book/index.qmd
+    - book/motivation.qmd
     - book/week-01-image-formation.qmd
     - book/week-02-convolution-blur.qmd
     - book/week-03-fourier-imaging.qmd
@@ -24,7 +25,6 @@ project:
     - book/week-13-plug-and-play.qmd
     - book/week-14-stability-robustness-ethics.qmd
     - slides/index.qmd
-    - slides/template.qmd
     - slides/week-01-image-formation.qmd
     - slides/week-02-convolution-blur.qmd
     - slides/week-03-fourier-imaging.qmd
@@ -50,7 +50,7 @@ website:
       - href: index.qmd
         text: Home
       - href: slides/index.qmd
-        text: Slides
+        text: Classes
       - href: notebooks/index.qmd
         text: Notebooks
       - href: book/index.qmd
@@ -66,6 +66,8 @@ website:
       contents:
         - href: book/index.qmd
           text: Book home
+        - href: book/motivation.qmd
+          text: "Motivation: inverse problems to neural networks"
         - section: "Part I: Foundations"
           contents:
             - href: book/week-01-image-formation.qmd

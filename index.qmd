@@ -1,25 +1,56 @@
 ---
 title: "MATH 435: Mathematical Imaging"
-subtitle: "Course materials"
+subtitle: "From inverse problems to neural networks"
 ---
 
-This repository contains the working course materials for MATH 435: Mathematical Imaging.
+MATH 435 studies images through one central question:
 
-The course develops the mathematical foundations of imaging science from an inverse problems perspective. We will move from image formation and convolution to Fourier analysis, noise models, ill-posedness, regularization, variational models, optimization, sparse reconstruction, wavelets, and modern learned reconstruction methods.
+> When an imaging system gives us incomplete, blurred, noisy, or transformed data, how can we reconstruct the image, and how do we know whether the reconstruction should be trusted?
 
-## Current Focus
+The course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.
 
-- Build lecture slides first.
-- Keep Python examples close to the lectures.
-- Grow the [online book](book/index.qmd) from the stabilized slide material.
-- Publish everything from GitHub using Quarto and GitHub Pages.
+The guiding progression is:
+
+$$
+y = Ax+\eta
+\qquad\Longrightarrow\qquad
+\hat{x}
+=
+\arg\min_x D(Ax,y)+\lambda R(x)
+\qquad\Longrightarrow\qquad
+\hat{x}=f_\theta(y)
+$$
+
+and to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data.
+
+## How To Use This Site
+
+| Resource | Use it for |
+|---|---|
+| [Class list and slides](slides/index.qmd) | Find the material for each class meeting. |
+| [Notebooks](notebooks/index.qmd) | Run and modify the computational experiments, including Colab links. |
+| [Online book](book/index.qmd) | Read the slower narrative version of the course. |
+| [Syllabus](syllabus.qmd) | Check course policies, schedule, and grading. |
+| [Final project](project/index.qmd) | Understand the LLM-aware project, rubric, and oral defense. |
 
 ## Course Arc
 
-1. Images as mathematical objects and linear systems.
-2. Blur, convolution, Fourier analysis, and noise.
-3. Ill-posed inverse problems and regularization.
-4. Variational imaging and optimization.
-5. Sparse and multiscale representations.
-6. Model-based, data-driven, and plug-and-play reconstruction.
-7. Stability, robustness, ethics, and project defenses.
+| Part | Weeks | Main Question |
+|---|---:|---|
+| Foundations | 1-3 | What is an image mathematically, and how do imaging systems transform it? |
+| Inverse problems | 4-6 | What makes reconstruction unstable, and how does regularization help? |
+| Variational methods | 7-9 | How do we turn modeling assumptions into optimization problems? |
+| Sparse and learned priors | 10-13 | How do representations, data, and denoisers encode prior knowledge? |
+| Reliability and projects | 14-15 | When should a reconstruction be trusted, and how do students defend their work? |
+
+## Central Idea
+
+Classical imaging asks:
+
+> What assumptions should we impose on the unknown image?
+
+Neural imaging asks:
+
+> Can those assumptions, or the reconstruction algorithm itself, be learned from examples?
+
+The course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences.

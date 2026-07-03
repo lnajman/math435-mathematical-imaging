@@ -1,0 +1,122 @@
+---
+title: "Motivation"
+subtitle: "From inverse problems to neural networks"
+---
+
+## The Central Question
+
+This course is about images, but it is not mainly about displaying images. It is about recovering, interpreting, and trusting images from imperfect data.
+
+The central question is:
+
+> Given measurements produced by an imaging system, what can we infer about the image or object that produced them?
+
+This is an inverse problem. The data are not the object itself. The data are the result of a measurement process.
+
+In its simplest form, we write
+
+$$
+y = A x + \eta.
+$$
+
+Here $x$ is the unknown image or object, $A$ is the forward model, $y$ is the measured data, and $\eta$ represents noise or error. The forward model tells us how an image would produce data. The inverse problem asks us to go in the opposite direction.
+
+That opposite direction is usually difficult. Information may have been blurred, sampled, hidden, corrupted, or compressed. Some information may be weakened. Some may be missing entirely. A reconstruction method must therefore do more than invert a formula. It must use assumptions.
+
+## Why Images Are Different
+
+Images are not just long signals. They are spatial objects. A pixel has neighbors. Edges have geometry. Textures have scale and orientation. Objects can occlude other objects. Small structures may matter.
+
+This makes imaging richer than many one-dimensional signal problems. It also makes imaging more dangerous. A reconstruction can look visually plausible while being wrong in a way that matters.
+
+For example, if pixels are missing from an already recorded image, we can model that as a mask and try to fill in the missing values. But if a person is physically hidden behind a tree, the camera did not measure the hidden part. A method may guess what could be behind the tree, but that guess is not recovered evidence. It is an assumption.
+
+This distinction is one reason the course returns repeatedly to the same question:
+
+> Which part of the result comes from the data, and which part comes from the model?
+
+## Classical Reconstruction
+
+Classical mathematical imaging often solves an optimization problem:
+
+$$
+\hat{x}
+=
+\arg\min_x
+D(Ax,y)+\lambda R(x).
+$$
+
+The term $D(Ax,y)$ measures agreement with the data. It asks whether the reconstructed image, when passed through the forward model, produces measurements close to $y$.
+
+The term $R(x)$ expresses prior knowledge. It may prefer smooth images, sparse coefficients, small gradients, or piecewise-constant regions. The parameter $\lambda$ controls the balance between fitting the data and trusting the prior.
+
+This formula is not only a computational recipe. It is a statement of responsibility. Every reconstruction has assumptions, and those assumptions must be made visible.
+
+## The Move Toward Neural Networks
+
+Neural networks enter naturally once the course has developed this language.
+
+Instead of hand-designing a prior $R(x)$, we may try to learn prior knowledge from examples. Instead of designing every step of an iterative algorithm, we may learn part of the reconstruction rule. Instead of writing a closed-form regularizer, we may use a trained denoiser inside an algorithm.
+
+This gives several views of neural reconstruction:
+
+| View | Mathematical form | Interpretation |
+|---|---|---|
+| learned inverse map | $\hat{x}=f_\theta(y)$ | learn the reconstruction directly from data |
+| learned prior | $R_\theta(x)$ | learn what plausible images look like |
+| learned denoiser | $D_\theta(z)$ | use a network as an image-cleaning operator |
+| unrolled algorithm | $x^{k+1}=F_{\theta,k}(x^k,y)$ | learn parts of an iterative solver |
+| plug-and-play method | $x^{k+1}=D_\theta(x^k-\tau A^\top(Ax^k-y))$ | combine data consistency with a learned denoiser |
+
+This is why the course does not treat neural networks as a separate topic added at the end. Neural networks are one answer to questions that arise naturally from inverse problems:
+
+- What assumptions should we impose on unknown images?
+- Can those assumptions be learned from data?
+- How do we keep reconstructions consistent with measurements?
+- How do we detect hallucinations or failures?
+- How do we evaluate reliability under distribution shift?
+
+## What This Course Is Not
+
+This course is not a general course on deep learning. It does not begin with architectures, optimizers, and benchmark datasets.
+
+Instead, it asks what neural networks mean in an imaging context. A network that reconstructs an image is part of an inverse problem, explicitly or implicitly. It may replace an inverse operator, approximate a prior, act as a denoiser, or imitate an optimization algorithm.
+
+That perspective changes the questions we ask. We do not only ask whether the output looks good. We ask:
+
+- What forward model is being inverted?
+- What data were measured?
+- What information was lost?
+- What prior knowledge was used?
+- Was the prior hand-designed or learned?
+- Is the output data-consistent?
+- What happens under noise, model mismatch, or domain shift?
+
+## How The Book Develops The Idea
+
+The book follows the course arc.
+
+Chapters 1-3 build the foundation: images as mathematical objects, blur as a forward model, and Fourier analysis as a way to see what blur removes.
+
+Chapters 4-6 introduce noise, likelihoods, ill-posedness, and regularization. These chapters explain why reconstruction requires assumptions.
+
+Chapters 7-9 show how assumptions become variational problems and numerical algorithms.
+
+Chapters 10-13 introduce sparsity, wavelets, data-driven priors, and plug-and-play methods. This is where the bridge to neural reconstruction becomes explicit.
+
+Chapter 14 asks how to trust any reconstruction, classical or learned.
+
+The final project asks students to use these ideas in a concrete inverse problem, with LLM assistance required but ownership tested through experiments and oral defense.
+
+## The Habit Of Mind
+
+The most important habit in the course is to read a reconstruction as an argument.
+
+A reconstructed image argues that a certain unknown $x$ is compatible with measured data $y$, a forward model $A$, a noise model, and a set of assumptions. The image may be beautiful, but beauty is not evidence by itself.
+
+The course therefore trains two instincts at the same time:
+
+1. how to build reconstruction methods;
+2. how to question reconstruction methods.
+
+That double instinct is essential for modern imaging. It is also essential for neural networks, because learned reconstructions can be powerful precisely where they can also be misleading.

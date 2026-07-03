@@ -15,6 +15,18 @@ By the end of this chapter, you should be able to:
 - distinguish recorded missing pixels from hidden scene content;
 - run a small NumPy experiment with image arrays and masks.
 
+## Why This Chapter Matters
+
+The first step in an inverse problem is to decide what the unknown is. In this course, the unknown is usually an image, but the word "image" can mean several things: a physical scene, a continuous intensity function, a digital array, a vector of numbers, or a displayed picture.
+
+Those meanings are connected, but they are not identical. A camera does not record a mathematical function directly. It records finite measurements. A display does not show an abstract vector directly. It turns numbers into light. A reconstruction algorithm works with arrays and vectors, even when we interpret the output as a scene, an object, or a medical image.
+
+This chapter establishes the basic habit of the course:
+
+> separate the object we want to know from the data we actually have.
+
+That separation is what makes inverse problems possible to formulate. It is also what later allows us to understand neural networks as maps from measured data to reconstructed images.
+
 ## Images As Functions
 
 At the mathematical level, a grayscale image is often modeled as a function
@@ -33,6 +45,10 @@ u : \Omega \to \mathbb{R}^3.
 $$
 
 For a video, a 3D volume, or a multispectral image, the range and the domain can have even more dimensions. The same principle remains: an image is data organized over space, and sometimes over time, wavelength, or slice index.
+
+The continuous model is an idealization. It lets us talk about geometry, edges, derivatives, integrals, and physical image formation. A digital image, by contrast, is finite. It has a limited number of pixels and a limited numerical precision. The two views are not competitors. The continuous view helps us formulate models; the discrete view lets us compute.
+
+Many mathematical imaging methods quietly move between these two views. For example, a smoothness assumption may be written using derivatives of a continuous function, then implemented using finite differences on an array. Good modeling means remembering which level we are working at.
 
 ## Images As Arrays
 
@@ -60,6 +76,10 @@ The displayed photograph is not the mathematical object by itself. The mathemati
 Real image data can be inspected as an array, a pixel crop, or a vector.
 :::
 
+When reading this figure, notice the change of scale. At normal viewing size, the photograph looks like a continuous visual object. After zooming, the pixel grid becomes visible. After vectorization, the same data no longer looks like an image at all, but the numerical information is still present.
+
+This is a recurring tension in the course. Humans interpret images spatially. Algorithms often manipulate numbers algebraically. A good reconstruction method must respect both views: it must compute with arrays or vectors, but it must preserve structures that matter visually and scientifically.
+
 ## Images As Vectors
 
 For linear algebra, we often reshape the image matrix $U$ into a vector
@@ -84,6 +104,14 @@ U =
 $$
 
 Vectorization does not change the information. It changes the shape so that matrix-vector notation can be used.
+
+Vectorization is powerful because it allows us to write large imaging operations as matrix-vector products. A blur, a mask, a Fourier sampling operator, or a projection can all be treated as operators acting on $x$.
+
+Vectorization also hides spatial structure. Two pixels that are neighbors in the image may not look special as entries in a long vector unless the operator or regularizer remembers the grid. This is why later chapters will introduce operators such as gradients, wavelets, and convolution kernels. They encode spatial relationships that the raw vector notation does not show by itself.
+
+::: {.callout-note}
+Vector notation is a language for computation, not a denial that images have geometry.
+:::
 
 ## Forward Models
 
@@ -112,6 +140,18 @@ Examples of forward operators include:
 | Fourier sampling | records frequency coefficients |
 | projection | records line integrals or summaries |
 
+The forward model points in the direction of measurement: from image to data. Reconstruction points in the opposite direction: from data back to an image estimate. The rest of the course is largely about why the reverse direction is harder.
+
+It is tempting to think of $A^{-1}$ as the goal. But in imaging, the forward operator may not be invertible, may be badly conditioned, or may not capture the full physical scene. Even when $A$ is linear, the inverse problem may require assumptions about what images are likely. Those assumptions later appear as regularizers, priors, learned denoisers, and neural networks.
+
+In neural-network language, a learned reconstruction map
+
+$$
+\hat{x}=f_\theta(y)
+$$
+
+can be viewed as a learned attempt to go from measured data to an image. The question remains the same: what has the method learned, and what evidence in $y$ supports the output?
+
 ## Masking Recorded Pixels
 
 A binary mask models which recorded pixels are available. If $M$ selects a subset of entries of $x$, then
@@ -130,6 +170,10 @@ Masking recorded pixels creates missing entries in the digital observation.
 
 The inverse problem is then to infer something about the missing values from the observed ones and from assumptions about images.
 
+The word "infer" is important. If a missing pixel is surrounded by similar pixels, interpolation may be reasonable. If a missing region crosses an edge, a smooth interpolation may be wrong. If a missing region is large, there may be many plausible completions. The data alone do not choose among them.
+
+This is the first small example of a prior. A prior is a preference or assumption about the unknown image. It may be as simple as "nearby pixels are similar" or as complex as a neural network trained on many examples.
+
 ## Missing Pixels Versus Occlusion
 
 It is important to distinguish two situations:
@@ -141,9 +185,24 @@ The first case is a missing-data problem in the recorded image. The second is a 
 
 If a person is behind a tree, the camera did not record the hidden part of the person. No mathematical method can recover information that was never measured without adding assumptions from outside the measurement. This is one reason image inverse problems are different from many idealized signal separation problems.
 
+This distinction will matter again when we discuss hallucination. A reconstruction method can produce a plausible face, vessel, texture, or object part. Plausibility is not the same as measurement. In high-stakes imaging, the difference between "recovered from data" and "guessed from prior knowledge" must be visible.
+
+## Common Mistakes
+
+1. **Confusing the display with the data.** A displayed image is a visualization of numbers. Changing contrast or colormap changes the display, not necessarily the underlying data.
+2. **Thinking vectorization destroys the image.** Vectorization changes the ordering of values, but the original array can be recovered if the shape and ordering are known.
+3. **Assuming every imaging process is linear.** Some useful models are linear, but physical image formation can include occlusion, saturation, motion, nonlinear sensors, and other effects.
+4. **Treating missing pixels and hidden scene content as the same problem.** Missing entries in an array are not the same as unobserved physical reality.
+
 ## Computation
 
 The Week 1 notebook asks you to inspect image arrays, reshape them, and apply simple masks.
+
+While running the notebook, try to answer three questions for each operation:
+
+1. What is the unknown image $x$?
+2. What is the observed data $y$?
+3. What assumption would be needed to reconstruct what is missing?
 
 Run:
 
@@ -166,4 +225,3 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Vectorization lets us write imaging models using linear algebra.
 - The forward model $y=Ax+\eta$ separates the unknown image, the measurement rule, and noise.
 - Missing data in an array is not the same as hidden information in the physical scene.
-

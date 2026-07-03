@@ -15,6 +15,24 @@ By the end of this chapter, you should be able to:
 - describe the role of boundary conditions;
 - explain why deblurring is unstable.
 
+## Why Blur Is The First Model
+
+Blur is one of the cleanest examples of the course philosophy. It is simple enough to write down, visible enough to understand by looking at images, and serious enough to reveal the main difficulty of inverse problems.
+
+In a blurred image, information has not simply disappeared at random. It has been mixed. A bright point spreads into nearby pixels. An edge becomes a transition zone. Fine texture becomes weaker. If the blur is known, we can write a forward model. But going backward remains unstable because the blur has reduced the contrast of the very details we may want to recover.
+
+This makes blur a good bridge between the first chapter and the rest of the course:
+
+$$
+\text{image } x
+\quad\longrightarrow\quad
+\text{blurred data } y
+\quad\longrightarrow\quad
+\text{reconstruction } \hat{x}.
+$$
+
+The first arrow is image formation. The second arrow is the inverse problem.
+
 ## Local Weighted Averages
 
 Convolution begins with a local rule. For a one-dimensional signal $x$, define
@@ -42,6 +60,10 @@ If the weights are nonnegative and sum to 1, the operation preserves average bri
 Convolution spreads a local peak into neighboring positions.
 :::
 
+The figure should be read from left to right. The original signal contains a localized structure. The kernel says how each value is distributed to its neighbors. The output is less sharp because information from nearby locations has been averaged together.
+
+This is not just smoothing for visual effect. It is a measurement model. If an optical system cannot record a point exactly, then every recorded pixel contains contributions from a neighborhood of the object.
+
 ## The Convolution Formula
 
 One common discrete convention is
@@ -60,6 +82,10 @@ $$
 
 It is also shift-invariant: the same local rule is applied at every position.
 
+Linearity means that if we double the input intensity, the output doubles, and if we add two inputs, the outputs add. Shift-invariance means that the rule does not depend on where we are in the image. Together, these assumptions make convolution mathematically convenient.
+
+They are also assumptions. Real imaging systems may have spatially varying blur, saturation, nonlinear sensor response, or motion that changes during acquisition. We begin with convolution because it is the right model in many controlled situations and because it teaches the structure of inverse problems clearly.
+
 ## Two-Dimensional Convolution
 
 For an image $x[i,j]$ and a 2D kernel $h[a,b]$,
@@ -73,6 +99,8 @@ y[i,j]
 $$
 
 The output pixel is a weighted combination of nearby input pixels.
+
+The two-dimensional formula looks more complicated than the one-dimensional formula, but the idea is the same. Each output pixel is a local weighted average. What changes is the geometry of the neighborhood: the kernel now has horizontal and vertical extent, so it can model circular blur, directional blur, or other spatial spreading patterns.
 
 ## Point Spread Function
 
@@ -92,6 +120,10 @@ Common kernels model different kinds of blur.
 | box average | local averaging | simple smoothing |
 | Gaussian | smooth blur | defocus or optics |
 | motion | directional streak | camera or object motion |
+
+The identity kernel is useful as a reference: it represents a system that records each pixel without spreading. A box kernel says that all pixels in a small neighborhood contribute equally. A Gaussian kernel gives more weight to the center and less to farther pixels. A motion kernel spreads energy along a direction.
+
+Each kernel tells a story about the imaging system. The inverse problem should be interpreted relative to that story. If the wrong kernel is used, a deblurring method may confidently solve the wrong problem.
 
 ## Blur As A Forward Operator
 
@@ -113,6 +145,10 @@ where $A$ is the matrix that represents convolution by $h$ under the chosen boun
 A fixed blur is linear. This does not mean every image formation process is linear. It means this particular controlled model is linear.
 :::
 
+The matrix $A$ is usually not formed explicitly for large images. It would be enormous. Instead, software applies the convolution rule directly. Still, the matrix viewpoint is valuable because it lets us use linear algebra words: range, nullspace, singular values, conditioning, and adjoint.
+
+This is a recurring pattern in computational imaging. We may never build the full matrix, but we still reason as if an operator is present.
+
 ## Real Image Blur
 
 ::: {.figure}
@@ -122,6 +158,14 @@ Different kernels remove different details from the same image.
 :::
 
 Blur reduces local contrast. Edges become less sharp, fine textures disappear, and point-like structures spread into neighborhoods.
+
+When reading blurred images, look separately at three kinds of information:
+
+- strong edges, which may survive but become wider;
+- fine texture, which may almost disappear;
+- small bright or dark structures, which may spread and lose contrast.
+
+These distinctions matter later. A method that improves edge sharpness may still destroy fine texture. A method that makes the image visually pleasing may still remove a small structure that matters for a task.
 
 ## Boundary Conditions
 
@@ -144,6 +188,10 @@ The same kernel can produce different edge behavior depending on the boundary ru
 
 Boundary choices are part of the mathematical model. They should not be treated as harmless implementation details.
 
+Boundary conditions are easy to ignore because they live at the edge of the image, but they can affect computations throughout an inverse problem. A periodic boundary condition, for example, pretends that the left and right sides of the image touch. That may be convenient for Fourier analysis, but it can create artificial wrap-around artifacts.
+
+In project work, a good report should state the boundary convention when convolution or deconvolution is used.
+
 ## Why Deblurring Is Hard
 
 Deblurring asks for an image $x$ from a blurred observation $y$:
@@ -162,9 +210,27 @@ Naive inversion can turn small noise into large oscillations.
 
 This is the first appearance of a central course theme: reconstruction is not only inversion. It is stabilized inversion.
 
+The unstable oscillations in the figure are not mysterious. They are the visible form of amplified weak information. Blur has made some components of the signal small. Naive inversion divides by small numbers, and noise becomes large.
+
+Regularization will solve this by refusing to trust every inverted component equally. A neural reconstruction method may solve it differently, by learning from examples what sharp images tend to look like. But the danger is the same in both cases: the method may add structure that is not strongly supported by the data.
+
+## Common Mistakes
+
+1. **Thinking blur only removes information.** Blur also mixes information spatially. That mixing can sometimes be partially undone, but not stably without assumptions.
+2. **Confusing the kernel with the image.** The kernel describes the imaging system, not the object being imaged.
+3. **Ignoring boundary conditions.** Boundary rules are part of the operator $A$.
+4. **Assuming deblurring is just sharpening.** Sharpening may improve appearance, but deblurring is an inverse problem tied to a forward model.
+
 ## Computation
 
 The Week 2 notebook lets you change kernels, boundary modes, and deblurring stabilizers.
+
+When using the notebook, compare two questions:
+
+1. What happens visually when the blur kernel gets wider?
+2. What happens numerically when the deblurring stabilizer gets weaker?
+
+The first question is about the forward problem. The second is about the inverse problem.
 
 Run:
 
@@ -188,4 +254,3 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Fixed blur is linear and can be written as $y=Ax$.
 - Boundary conditions are modeling choices.
 - Deblurring is unstable because blur weakens information that inversion tries to recover.
-

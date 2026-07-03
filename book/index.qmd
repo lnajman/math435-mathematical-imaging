@@ -4,7 +4,9 @@ subtitle: "Online book for MATH 435"
 ---
 
 This online book is the narrative companion to the MATH 435 slides and notebooks.
-The slides are designed for 75-minute class meetings; the book is designed for slower reading, review, and project preparation.
+The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.
+
+The central identity of the course is developed in the [motivation chapter](motivation.qmd): mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms.
 
 The book grows from the stabilized course materials. Each chapter connects:
 
@@ -30,6 +32,7 @@ For each chapter, students should be able to answer:
 
 | Chapter | Topic | Slides | Notebook |
 |---:|---|---|---|
+| - | [Motivation: from inverse problems to neural networks](motivation.qmd) | - | - |
 | 1 | Images as mathematical objects | [slides](../slides/week-01-image-formation.html) | [notebook](../notebooks/week01_image_formation.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |
 | 2 | Convolution and blur | [slides](../slides/week-02-convolution-blur.html) | [notebook](../notebooks/week02_convolution_blur.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
 | 3 | Fourier transform in imaging | [slides](../slides/week-03-fourier-imaging.html) | [notebook](../notebooks/week03_fourier_imaging.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) |
@@ -51,6 +54,7 @@ The complete book will follow the course arc:
 
 | Part | Chapters | Theme |
 |---|---|---|
+| Start | Motivation | Inverse problems as the path toward neural reconstruction |
 | I | 1-3 | Images, operators, convolution, Fourier analysis |
 | II | 4-6 | Noise, likelihoods, ill-posedness, Tikhonov regularization |
 | III | 7-9 | Variational models, TV, and optimization |

@@ -23,6 +23,12 @@ Low frequencies describe slow variation. High frequencies describe rapid variati
 
 For imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.
 
+This chapter gives the first deep explanation of instability. In Chapter 2, we saw that deblurring can amplify noise. Fourier analysis explains where that amplification comes from. Blur does not damage all components equally. It preserves some frequencies, weakens others, and may almost eliminate the finest oscillations.
+
+If the forward model weakens a frequency component, then inversion must amplify that component to recover it. If noise is present in the same component, the noise is amplified too.
+
+This is why Fourier analysis is not only a transform. In imaging, it is a diagnostic tool.
+
 ## One-Dimensional Frequencies
 
 A basic length-$N$ oscillation is
@@ -38,6 +44,10 @@ The integer $k$ is the frequency index. A larger $k$ means more oscillations ove
 
 The Fourier magnitude reveals which oscillations are present.
 :::
+
+The figure is a small dictionary. One sinusoid oscillates slowly; another oscillates quickly; their sum contains both. The Fourier magnitude identifies the active frequencies without caring where we happened to start drawing the signal.
+
+This is useful because many imaging operations are easier to understand by asking which frequencies they keep, suppress, or amplify. A smoothing filter suppresses high frequencies. An edge detector emphasizes high frequencies. A deblurring filter tries to restore frequencies that blur has weakened.
 
 ## The Discrete Fourier Transform
 
@@ -68,6 +78,10 @@ $$
 
 Magnitude measures strength. Phase measures alignment.
 
+The DFT can be read as a change of coordinates. Instead of describing a signal by its values at positions, we describe it by its weights on oscillatory patterns. No information is lost when the full transform is kept. The representation changes, not the signal.
+
+This coordinate-change view will reappear later with wavelets, DCT coefficients, sparse representations, and learned features. Each representation makes some structure easier to describe.
+
 ## Two-Dimensional Fourier Transform
 
 For an image $x[m,n]$, the 2D Fourier transform uses horizontal and vertical frequency indices:
@@ -87,6 +101,10 @@ The coefficient $\widehat{x}[u,v]$ measures an oscillation with horizontal frequ
 The centered log magnitude is a common way to display an image spectrum.
 :::
 
+The logarithm in the display is important. Fourier magnitudes can vary over a large range, and without a log scale the strongest low-frequency values can hide weaker but meaningful high-frequency components.
+
+When looking at a spectrum, do not expect it to look like the original image. It is not a picture of objects. It is a picture of oscillatory content: scale, direction, and strength.
+
 ## Reading A Spectrum
 
 In a centered spectrum:
@@ -96,6 +114,12 @@ In a centered spectrum:
 - direction in the spectrum corresponds to orientation in the image.
 
 Strong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.
+
+The spectrum is especially useful for recognizing anisotropy. Motion blur in one direction, periodic texture, repeated stripes, and grid artifacts often leave directional signatures. This is one reason Fourier analysis remains useful even in the era of neural networks: it gives interpretable evidence about what is present in the data.
+
+::: {.callout-note}
+A Fourier spectrum is not a neural feature map, but both are representations. The spectrum is hand-designed and interpretable; learned representations are data-adapted and often harder to interpret.
+:::
 
 ## Magnitude And Phase
 
@@ -116,6 +140,10 @@ Phase carries much of the recognizable geometry of an image.
 :::
 
 Magnitude is visually important, but phase is often crucial for the location of edges and structures.
+
+This is one of the most surprising facts for students. The magnitude tells us how much of each frequency exists, but phase tells us how those oscillations line up. Edges, contours, and recognizable geometry depend strongly on alignment.
+
+For inverse problems, this matters because preserving energy at the right frequencies is not enough. A reconstruction also has to place structures correctly. A visually sharp but spatially wrong image may have impressive high-frequency content and still be unreliable.
 
 ## The Convolution Theorem
 
@@ -141,6 +169,10 @@ $$
 \widehat{y} = \widehat{h}\,\widehat{x}.
 $$
 
+This theorem is the reason blur is often analyzed in frequency space. A large convolution matrix in the pixel domain becomes pointwise multiplication after the Fourier transform, at least under compatible boundary assumptions. Instead of one large coupled operation, each frequency can be studied separately.
+
+This does not make the inverse problem disappear. It makes the difficulty visible.
+
 ## Blur In Frequency Space
 
 A blur kernel usually has a Fourier transform that is large at low frequencies and small at high frequencies. That means
@@ -159,6 +191,10 @@ is much smaller where $|\widehat{h}[u,v]|$ is small.
 Blur is easier to analyze after the Fourier transform because frequencies are multiplied independently.
 :::
 
+The quantity $\widehat{h}$ is sometimes called the transfer function of the blur. Where $|\widehat{h}|$ is near 1, the corresponding frequency passes through the imaging system. Where $|\widehat{h}|$ is small, that frequency is strongly attenuated.
+
+If a frequency is strongly attenuated, then the measured data contain only weak evidence about that part of the original image. Any method that restores it must rely partly on assumptions.
+
 ## Low-Pass And High-Pass Filtering
 
 A low-pass filter keeps slow variation and removes fine detail. A high-pass filter emphasizes rapid changes such as edges and texture.
@@ -168,6 +204,10 @@ A low-pass filter keeps slow variation and removes fine detail. A high-pass filt
 
 Frequency filtering gives direct control over coarse and fine image components.
 :::
+
+Low-pass filtering often makes an image look cleaner because it removes rapid fluctuations, including noise. But it also removes fine texture and can blur small structures. High-pass filtering can reveal edges, but it can also amplify noise and produce unnatural contrast.
+
+This is a simple version of a tradeoff that will appear throughout the course: suppressing artifacts can also suppress information.
 
 ## Why Inverse Filtering Is Dangerous
 
@@ -189,9 +229,27 @@ Inverse filtering recovers some detail but can amplify noise dramatically.
 
 This frequency-domain view explains why regularization will be necessary in later chapters.
 
+Regularized deblurring modifies the dangerous division. Instead of dividing fully by small values of $\widehat{h}$, it limits the amplification. Classical methods do this with explicit formulas or optimization penalties. Learned methods may do it implicitly by learning which recovered details are plausible.
+
+The reliability question is the same in both cases. When a method restores high frequencies, are those frequencies supported by the measurement, or are they supplied mainly by the prior?
+
+## Common Mistakes
+
+1. **Thinking high frequency means noise only.** Edges and fine structures are also high-frequency content.
+2. **Thinking low frequency means unimportant.** Illumination, smooth shading, and large shapes are low-frequency content.
+3. **Ignoring phase.** Phase is essential for the placement of structures.
+4. **Treating inverse filtering as a safe inverse.** Division by small Fourier values is a mechanism for noise amplification.
+
 ## Computation
 
 The Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.
+
+When running the notebook, pay attention to the connection between visual changes and spectral changes:
+
+1. Which frequencies disappear after blur?
+2. Which frequencies are emphasized by sharpening?
+3. What changes when magnitude is kept but phase is altered?
+4. Where does inverse filtering become unstable?
 
 Run:
 
@@ -216,4 +274,3 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Fourier coefficients have magnitude and phase.
 - Convolution becomes multiplication in the Fourier domain.
 - Blur suppresses frequencies, and inverse filtering can amplify noise.
-
