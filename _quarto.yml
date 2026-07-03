@@ -4,6 +4,7 @@ project:
   resources:
     - examples/
     - notebooks/*.ipynb
+    - slides/index.html
   render:
     - index.qmd
     - syllabus.qmd
