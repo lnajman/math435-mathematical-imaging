@@ -390,7 +390,9 @@ window.Quarto = {
   <li><a href="#images-as-functions" id="toc-images-as-functions" class="nav-link" data-scroll-target="#images-as-functions">Images As Functions</a></li>
   <li><a href="#images-as-arrays" id="toc-images-as-arrays" class="nav-link" data-scroll-target="#images-as-arrays">Images As Arrays</a></li>
   <li><a href="#images-as-vectors" id="toc-images-as-vectors" class="nav-link" data-scroll-target="#images-as-vectors">Images As Vectors</a></li>
+  <li><a href="#what-the-grid-remembers" id="toc-what-the-grid-remembers" class="nav-link" data-scroll-target="#what-the-grid-remembers">What The Grid Remembers</a></li>
   <li><a href="#forward-models" id="toc-forward-models" class="nav-link" data-scroll-target="#forward-models">Forward Models</a></li>
+  <li><a href="#measurement-model-versus-prior" id="toc-measurement-model-versus-prior" class="nav-link" data-scroll-target="#measurement-model-versus-prior">Measurement Model Versus Prior</a></li>
   <li><a href="#masking-recorded-pixels" id="toc-masking-recorded-pixels" class="nav-link" data-scroll-target="#masking-recorded-pixels">Masking Recorded Pixels</a></li>
   <li><a href="#missing-pixels-versus-occlusion" id="toc-missing-pixels-versus-occlusion" class="nav-link" data-scroll-target="#missing-pixels-versus-occlusion">Missing Pixels Versus Occlusion</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
@@ -432,6 +434,7 @@ window.Quarto = {
 <li>explain why vectorization is useful for linear algebra;</li>
 <li>write a first forward model <span class="math inline">y=Ax+\eta</span>;</li>
 <li>distinguish recorded missing pixels from hidden scene content;</li>
+<li>explain the difference between a measurement model and a prior;</li>
 <li>run a small NumPy experiment with image arrays and masks.</li>
 </ul>
 </section>
@@ -529,6 +532,20 @@ Note
 </div>
 </div>
 </section>
+<section id="what-the-grid-remembers" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-grid-remembers">What The Grid Remembers</h2>
+<p>An image array is not only a collection of numbers. It is a collection of numbers with an organization.</p>
+<p>The grid tells us which pixels are neighbors. It also tells us which directions are horizontal, vertical, or diagonal. In scientific and medical imaging, the grid may also have physical spacing: one pixel might correspond to a known length, one slice might be farther from the next slice than a pixel is from its neighbor, and different imaging devices may use different resolutions.</p>
+<p>This matters because many assumptions in imaging are spatial assumptions:</p>
+<ul>
+<li>nearby pixels often have related values;</li>
+<li>edges are meaningful changes across space;</li>
+<li>textures repeat at particular scales;</li>
+<li>small structures may be important because of their location.</li>
+</ul>
+<p>If we keep only the vector <span class="math inline">x</span> and forget the grid, these assumptions become invisible. They must be reintroduced by operators. A finite-difference gradient remembers neighboring pixels. A convolution kernel remembers local neighborhoods. A wavelet transform remembers position and scale. A convolutional neural network remembers local neighborhoods through learned filters.</p>
+<p>This is one reason images are not just long one-dimensional signals. The spatial arrangement is part of the information we use when we reconstruct.</p>
+</section>
 <section id="forward-models" class="level2">
 <h2 class="anchored" data-anchor-id="forward-models">Forward Models</h2>
 <p>Once the unknown image is written as a vector <span class="math inline">x</span>, a controlled measurement process can often be written as</p>
@@ -576,11 +593,32 @@ y = Ax + \eta.
 </table>
 <p>The forward model points in the direction of measurement: from image to data. Reconstruction points in the opposite direction: from data back to an image estimate. The rest of the course is largely about why the reverse direction is harder.</p>
 <p>It is tempting to think of <span class="math inline">A^{-1}</span> as the goal. But in imaging, the forward operator may not be invertible, may be badly conditioned, or may not capture the full physical scene. Even when <span class="math inline">A</span> is linear, the inverse problem may require assumptions about what images are likely. Those assumptions later appear as regularizers, priors, learned denoisers, and neural networks.</p>
+</section>
+<section id="measurement-model-versus-prior" class="level2">
+<h2 class="anchored" data-anchor-id="measurement-model-versus-prior">Measurement Model Versus Prior</h2>
+<p>The forward operator and the prior play different roles.</p>
+<p>The forward operator says what the measurement system did:</p>
+<p><span class="math display">
+x \longmapsto y.
+</span></p>
+<p>The prior says what kinds of images we consider plausible when the data do not determine a unique stable answer.</p>
+<p>For example, a mask <span class="math inline">M</span> says which pixels were observed. It does not say how missing pixels should be filled. A smoothness prior might fill them by continuing nearby intensities. A sparsity prior might fill them by choosing a concise transform representation. A learned prior might fill them using patterns common in training images.</p>
+<p>These are different statements. Confusing them is dangerous. The measurement model is evidence about the data. The prior is an assumption used to choose among explanations.</p>
+<p>Throughout the course, a reconstruction should be read as a combination:</p>
+<p><span class="math display">
+\text{reconstruction}
+=
+\text{data consistency}
++
+\text{image assumption}.
+</span></p>
+<p>The balance between those two terms is the central tension of mathematical imaging.</p>
 <p>In neural-network language, a learned reconstruction map</p>
 <p><span class="math display">
 \hat{x}=f_\theta(y)
 </span></p>
 <p>can be viewed as a learned attempt to go from measured data to an image. The question remains the same: what has the method learned, and what evidence in <span class="math inline">y</span> supports the output?</p>
+<p>A neural network sees the data it is given, not the hidden physical scene itself. If the input is a masked image, the network sees observed pixels and perhaps a mask. If the input is a blurred image, it sees the blurred measurement. Its output may be excellent, but the same distinction remains: which features are supported by measured data, and which features are supplied by learned prior knowledge?</p>
 </section>
 <section id="masking-recorded-pixels" class="level2">
 <h2 class="anchored" data-anchor-id="masking-recorded-pixels">Masking Recorded Pixels</h2>
@@ -615,6 +653,7 @@ y = Mx
 <li><strong>Thinking vectorization destroys the image.</strong> Vectorization changes the ordering of values, but the original array can be recovered if the shape and ordering are known.</li>
 <li><strong>Assuming every imaging process is linear.</strong> Some useful models are linear, but physical image formation can include occlusion, saturation, motion, nonlinear sensors, and other effects.</li>
 <li><strong>Treating missing pixels and hidden scene content as the same problem.</strong> Missing entries in an array are not the same as unobserved physical reality.</li>
+<li><strong>Confusing the forward model with the prior.</strong> The operator describes how data were measured; the prior describes assumptions used during reconstruction.</li>
 </ol>
 </section>
 <section id="computation" class="level2">
@@ -637,6 +676,8 @@ y = Mx
 <li>Give an example of a forward operator <span class="math inline">A</span> that is linear.</li>
 <li>Give an example from real imaging where the physical process is not well described by a linear operator.</li>
 <li>Explain why a mask can model missing recorded pixels but not seeing behind an occluder.</li>
+<li>In a masked-image problem, identify one statement that belongs to the forward model and one statement that belongs to the prior.</li>
+<li>Explain why a neural network reconstruction should still be evaluated using the measurement model.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -644,7 +685,9 @@ y = Mx
 <ul>
 <li>An image can be viewed as a function, an array, or a vector.</li>
 <li>Vectorization lets us write imaging models using linear algebra.</li>
+<li>The image grid contains spatial information that must be respected by operators or priors.</li>
 <li>The forward model <span class="math inline">y=Ax+\eta</span> separates the unknown image, the measurement rule, and noise.</li>
+<li>The measurement model describes evidence; the prior supplies assumptions when evidence is incomplete.</li>
 <li>Missing data in an array is not the same as hidden information in the physical scene.</li>
 </ul>
 

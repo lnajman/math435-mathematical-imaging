@@ -392,9 +392,12 @@ window.Quarto = {
   <li><a href="#two-dimensional-convolution" id="toc-two-dimensional-convolution" class="nav-link" data-scroll-target="#two-dimensional-convolution">Two-Dimensional Convolution</a></li>
   <li><a href="#point-spread-function" id="toc-point-spread-function" class="nav-link" data-scroll-target="#point-spread-function">Point Spread Function</a></li>
   <li><a href="#blur-as-a-forward-operator" id="toc-blur-as-a-forward-operator" class="nav-link" data-scroll-target="#blur-as-a-forward-operator">Blur As A Forward Operator</a></li>
+  <li><a href="#a-small-blur-matrix" id="toc-a-small-blur-matrix" class="nav-link" data-scroll-target="#a-small-blur-matrix">A Small Blur Matrix</a></li>
   <li><a href="#real-image-blur" id="toc-real-image-blur" class="nav-link" data-scroll-target="#real-image-blur">Real Image Blur</a></li>
   <li><a href="#boundary-conditions" id="toc-boundary-conditions" class="nav-link" data-scroll-target="#boundary-conditions">Boundary Conditions</a></li>
   <li><a href="#why-deblurring-is-hard" id="toc-why-deblurring-is-hard" class="nav-link" data-scroll-target="#why-deblurring-is-hard">Why Deblurring Is Hard</a></li>
+  <li><a href="#weakened-is-not-the-same-as-missing" id="toc-weakened-is-not-the-same-as-missing" class="nav-link" data-scroll-target="#weakened-is-not-the-same-as-missing">Weakened Is Not The Same As Missing</a></li>
+  <li><a href="#when-convolution-is-the-wrong-model" id="toc-when-convolution-is-the-wrong-model" class="nav-link" data-scroll-target="#when-convolution-is-the-wrong-model">When Convolution Is The Wrong Model</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -434,6 +437,7 @@ window.Quarto = {
 <li>interpret a blur kernel as a point spread function;</li>
 <li>explain why fixed blur is a linear operator;</li>
 <li>describe the role of boundary conditions;</li>
+<li>distinguish convolutional blur from other image degradations;</li>
 <li>explain why deblurring is unstable.</li>
 </ul>
 </section>
@@ -570,6 +574,34 @@ Note
 <p>The matrix <span class="math inline">A</span> is usually not formed explicitly for large images. It would be enormous. Instead, software applies the convolution rule directly. Still, the matrix viewpoint is valuable because it lets us use linear algebra words: range, nullspace, singular values, conditioning, and adjoint.</p>
 <p>This is a recurring pattern in computational imaging. We may never build the full matrix, but we still reason as if an operator is present.</p>
 </section>
+<section id="a-small-blur-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="a-small-blur-matrix">A Small Blur Matrix</h2>
+<p>For a short one-dimensional signal with zero boundary conditions, the kernel</p>
+<p><span class="math display">
+h =
+\begin{bmatrix}
+\frac14 &amp; \frac12 &amp; \frac14
+\end{bmatrix}
+</span></p>
+<p>acts like multiplication by a matrix such as</p>
+<p><span class="math display">
+A=
+\begin{bmatrix}
+\frac12 &amp; \frac14 &amp; 0 &amp; 0\\
+\frac14 &amp; \frac12 &amp; \frac14 &amp; 0\\
+0 &amp; \frac14 &amp; \frac12 &amp; \frac14\\
+0 &amp; 0 &amp; \frac14 &amp; \frac12
+\end{bmatrix}.
+</span></p>
+<p>The repeated diagonals show that the same local rule is being applied at each position. The missing entries near the corners show the boundary convention.</p>
+<p>This small matrix is useful because it makes two facts visible. First, blur mixes neighboring values. Second, the inverse problem depends on the full operator, not only on the central weight of the kernel. Changing the boundary rule changes the matrix, and changing the matrix changes the inverse problem.</p>
+<p>For real images the matrix is far too large to write down, but the idea is the same:</p>
+<p><span class="math display">
+\text{apply convolution}
+\quad\text{means}\quad
+\text{apply a structured linear operator}.
+</span></p>
+</section>
 <section id="real-image-blur" class="level2">
 <h2 class="anchored" data-anchor-id="real-image-blur">Real Image Blur</h2>
 <div class="figure">
@@ -638,6 +670,59 @@ y = Ax + \eta.
 <p>The unstable oscillations in the figure are not mysterious. They are the visible form of amplified weak information. Blur has made some components of the signal small. Naive inversion divides by small numbers, and noise becomes large.</p>
 <p>Regularization will solve this by refusing to trust every inverted component equally. A neural reconstruction method may solve it differently, by learning from examples what sharp images tend to look like. But the danger is the same in both cases: the method may add structure that is not strongly supported by the data.</p>
 </section>
+<section id="weakened-is-not-the-same-as-missing" class="level2">
+<h2 class="anchored" data-anchor-id="weakened-is-not-the-same-as-missing">Weakened Is Not The Same As Missing</h2>
+<p>Blur often weakens information rather than deleting it completely. This is why partial deblurring is possible.</p>
+<p>It is useful to separate three cases:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component type</th>
+<th>What blur does</th>
+<th>Inverse consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>strongly transmitted</td>
+<td>mostly preserved</td>
+<td>can be recovered reliably</td>
+</tr>
+<tr class="even">
+<td>weakly transmitted</td>
+<td>reduced in contrast</td>
+<td>recovery amplifies noise</td>
+</tr>
+<tr class="odd">
+<td>nearly removed</td>
+<td>almost absent from data</td>
+<td>recovery depends heavily on assumptions</td>
+</tr>
+</tbody>
+</table>
+<p>The course will revisit this table in several languages. Fourier analysis describes it through frequency attenuation. SVD describes it through small singular values. Regularization describes it through damping unstable directions. Learned methods describe it through training-set expectations.</p>
+<p>The key idea is the same in all cases: when the data weakly support a detail, the reconstruction must decide how much to trust the data and how much to trust the prior.</p>
+</section>
+<section id="when-convolution-is-the-wrong-model" class="level2">
+<h2 class="anchored" data-anchor-id="when-convolution-is-the-wrong-model">When Convolution Is The Wrong Model</h2>
+<p>Convolution is a strong assumption. It says that the same fixed local spreading rule applies everywhere.</p>
+<p>Many degradations do not have this form:</p>
+<ul>
+<li>spatially varying defocus;</li>
+<li>saturation or clipped sensor values;</li>
+<li>rolling-shutter motion;</li>
+<li>compression artifacts;</li>
+<li>shadows and reflections;</li>
+<li>physical occlusion.</li>
+</ul>
+<p>If the degradation is not well modeled by convolution, then deconvolution may solve the wrong inverse problem. The result can look sharper while becoming less faithful to the measured scene.</p>
+<p>This matters for neural methods too. A network trained to undo one degradation may fail on another degradation, even if the input images look superficially similar. The forward model is therefore not a technical detail. It is the contract between the reconstruction and the data.</p>
+</section>
 <section id="common-mistakes" class="level2">
 <h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
 <ol type="1">
@@ -645,6 +730,7 @@ y = Ax + \eta.
 <li><strong>Confusing the kernel with the image.</strong> The kernel describes the imaging system, not the object being imaged.</li>
 <li><strong>Ignoring boundary conditions.</strong> Boundary rules are part of the operator <span class="math inline">A</span>.</li>
 <li><strong>Assuming deblurring is just sharpening.</strong> Sharpening may improve appearance, but deblurring is an inverse problem tied to a forward model.</li>
+<li><strong>Using convolution when the degradation is not convolutional.</strong> A wrong forward model can produce a confident but misleading reconstruction.</li>
 </ol>
 </section>
 <section id="computation" class="level2">
@@ -667,6 +753,8 @@ y = Ax + \eta.
 <li>Explain why a normalized blur kernel preserves constant images.</li>
 <li>Compare zero-padding and reflection near an image boundary.</li>
 <li>Explain in your own words why deblurring amplifies noise.</li>
+<li>Write the matrix for a length-5 zero-boundary blur using the kernel <span class="math inline">[1/4,1/2,1/4]</span>.</li>
+<li>Give one example of an image degradation that is not well modeled by fixed convolution, and explain why.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -677,6 +765,7 @@ y = Ax + \eta.
 <li>Fixed blur is linear and can be written as <span class="math inline">y=Ax</span>.</li>
 <li>Boundary conditions are modeling choices.</li>
 <li>Deblurring is unstable because blur weakens information that inversion tries to recover.</li>
+<li>A deblurring method is only as meaningful as the forward model it assumes.</li>
 </ul>
 
 
