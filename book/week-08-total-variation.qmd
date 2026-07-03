@@ -31,6 +31,17 @@ This removes noise, but it also penalizes true edges. Edges and noise both creat
 
 Total Variation changes the regularizer.
 
+## Why This Chapter Matters
+
+Chapter 7 showed that quadratic smoothness is mathematically clean but visually limited. It treats large gradients as very expensive, so it tends to blur object boundaries. Total Variation is the first regularizer in the course that is explicitly designed around a basic fact of images: important information often lives at edges.
+
+This is also the first strong example of a nonsmooth prior. The mathematical difficulty is not an accident. The corner in the absolute value is exactly what makes TV able to suppress many small gradients while allowing some large ones.
+
+TV therefore teaches two lessons at once:
+
+- good image priors should match the structures we want to preserve;
+- better priors often require better optimization tools.
+
 ## Continuous Total Variation
 
 For a grayscale image $u:\Omega\to\mathbb{R}$,
@@ -54,6 +65,20 @@ $$
 
 Here $D_x$ and $D_y$ are finite differences in horizontal and vertical directions.
 
+There are two common discrete variants. Isotropic TV uses the Euclidean magnitude
+
+$$
+\sqrt{(D_xu_i)^2+(D_yu_i)^2}.
+$$
+
+Anisotropic TV instead uses
+
+$$
+|D_xu_i|+|D_yu_i|.
+$$
+
+Both encourage small total variation, but they can behave differently with respect to diagonal edges and grid directions. In this course, isotropic TV is the default because it is less tied to horizontal and vertical axes.
+
 ## TV Denoising
 
 The classical Rudin-Osher-Fatemi model is
@@ -70,6 +95,17 @@ $$
 The data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.
 
 This regularizer says: among images that fit the data, prefer images with small total variation.
+
+For Gaussian denoising, the ROF model uses a squared-error fidelity because the noise assumption is Gaussian. If the data were photon counts, we would usually replace the fidelity term with a Poisson likelihood while keeping a TV prior:
+
+$$
+\operatorname*{argmin}_u
+D_{\text{Poisson}}(y,u)
++
+\lambda\operatorname{TV}(u).
+$$
+
+This is the modular power of variational modeling. The data model and image prior can be changed separately.
 
 ## l2 Versus TV Penalties
 
@@ -91,6 +127,10 @@ For example, if $g=4$, then $\frac12g^2=8$, while $|g|=4$. The difference become
 
 This is the basic reason TV preserves edges better: it penalizes the existence of change, but it is less aggressive toward large jumps than a squared-gradient model.
 
+The comparison should be read as a statement about priorities. A quadratic gradient penalty says that one large jump is much worse than several small changes. TV is more tolerant of a concentrated jump. For images containing objects, this is often desirable: an edge should remain an edge, not be spread into a blurry ramp.
+
+At the same time, TV does not know which edges are meaningful. It may preserve strong noise spikes or remove weak true details depending on the parameter and the data. Edge preservation is a modeling tendency, not a guarantee of semantic correctness.
+
 ## Nonsmoothness
 
 The function $|g|$ is not differentiable at $g=0$. This is not a minor technicality. It changes the optimization problem.
@@ -98,6 +138,14 @@ The function $|g|$ is not differentiable at $g=0$. This is not a minor technical
 Quadratic smoothing leads to smooth linear equations. TV denoising is convex but nonsmooth. That makes it powerful for edge preservation and more delicate to solve.
 
 Optimization methods for nonsmooth convex problems appear in the next chapter.
+
+One common classroom workaround is to replace $|\nabla u|$ by a smoothed approximation:
+
+$$
+\sqrt{|\nabla u|^2+\epsilon^2}.
+$$
+
+This makes derivatives easier to write, but it also slightly changes the model. As $\epsilon$ becomes smaller, the approximation is closer to TV and the optimization becomes more delicate. This is a recurring theme: numerical convenience and modeling fidelity must be balanced.
 
 ## One-Dimensional Edge Preservation
 
@@ -112,6 +160,10 @@ Quadratic smoothing rounds jumps, while TV keeps flatter regions and sharper tra
 TV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.
 
 This is useful when the image contains objects separated by edges.
+
+The same property can be expressed as sparsity of the gradient. TV does not usually make the image itself sparse. Instead, it encourages the gradient image to be sparse: many pixels have nearly zero gradient, and relatively few pixels carry transitions.
+
+This idea prepares the next part of the course. Sparse reconstruction generalizes the question: in which representation should an image be simple? TV answers: the gradient representation. Wavelets answer differently. Neural representations answer differently again.
 
 ## Image Denoising
 
@@ -130,6 +182,10 @@ Gradient maps make the behavior easier to see.
 
 Noise creates many small gradients. TV suppresses weak fluctuations while retaining stronger edges.
 :::
+
+When reading the gradient maps, compare density rather than only brightness. The noisy image has gradients almost everywhere. The TV result has a more selective gradient map: many weak fluctuations disappear, while some coherent boundaries remain.
+
+This selectivity is why TV can improve segmentation, object boundaries, and cartoon-like reconstructions. It is also why TV can damage textures, because texture often consists of many meaningful gradients.
 
 ## Choosing The TV Weight
 
@@ -153,6 +209,8 @@ The best value of $\lambda$ depends on the task.
 
 For a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.
 
+The parameter $\lambda$ has the same conceptual role as in Tikhonov, but the visual effect is different. Increasing $\lambda$ does not simply blur the image. It tends to remove weak oscillations and simplify the edge set. This can look like denoising, segmentation, or cartoonization depending on the image and the parameter.
+
 ## Staircasing
 
 TV favors sparse gradients. That means many locations with zero gradient and a smaller number of jumps.
@@ -164,6 +222,10 @@ TV can turn smooth variation into piecewise-flat plateaus.
 :::
 
 This staircasing effect is the signature artifact of TV. TV preserves edges, but it can create artificial plateaus in regions that should vary smoothly.
+
+Staircasing is not a bug in a particular implementation. It follows from the prior. TV rewards sparse gradients, so a smooth ramp can be approximated by flat regions separated by jumps. If the true image contains gentle shading, smooth surfaces, or illumination gradients, pure TV can be too aggressive.
+
+Higher-order regularizers and combined models were developed partly to reduce this artifact.
 
 ## Strengths And Weaknesses
 
@@ -179,6 +241,20 @@ TV may struggle with texture, fine repeated patterns, gradual shading, curved sm
 
 This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.
 
+## TV And Learned Priors
+
+TV is a hand-designed prior. It expresses a clear belief: good images often have sparse gradients. Neural priors are usually less explicit. They may learn from many examples that natural images contain edges, textures, repeated patterns, object shapes, and correlations across distant regions.
+
+This comparison is useful:
+
+| Prior | What it can express | Main risk |
+|---|---|---|
+| TV | sparse gradients and sharp boundaries | staircasing, loss of texture |
+| Wavelet sparsity | multiscale structure | basis mismatch |
+| Learned prior | complex training-set statistics | hallucination or dataset bias |
+
+TV is therefore not made obsolete by neural networks. It is a simple, interpretable example of a prior. It helps us ask the right question about learned priors: what structure are they imposing, and when should we trust it?
+
 ## Course Checkpoint
 
 At this point in the course, students should be able to connect:
@@ -190,6 +266,16 @@ At this point in the course, students should be able to connect:
 - Tikhonov, variational energies, and TV.
 
 TV is the bridge from smooth quadratic models to nonsmooth optimization and sparse reconstruction.
+
+It is also a bridge toward the ethics of reconstruction. Once a method preserves or creates edges, it can affect interpretation. In scientific or medical settings, an artificial edge can be as consequential as a blurred one. This is another reason data consistency and uncertainty matter.
+
+## Common Mistakes
+
+A first mistake is to say that TV preserves all edges. TV preserves some strong transitions better than quadratic smoothing, but weak edges can still disappear and noise edges can remain.
+
+A second mistake is to think that TV is always more accurate because it looks sharper. Sharpness is not the same as truth.
+
+A third mistake is to ignore staircasing. If the true image contains smooth shading, TV may replace it with artificial plateaus.
 
 ## Computation
 
@@ -203,6 +289,8 @@ python3 examples/week08_total_variation.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+In the notebook, look at both the reconstructed image and the gradient map. Try to find a value of $\lambda$ that removes noise but keeps important boundaries, then increase $\lambda$ until staircasing becomes visible.
+
 ## Exercises
 
 1. Write the continuous definition of $\operatorname{TV}(u)$.
@@ -210,6 +298,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Compare the quadratic and TV costs for gradient values $g=1$ and $g=4$.
 4. Explain why TV preserves edges better than quadratic smoothing.
 5. Describe staircasing and give one situation where it would be undesirable.
+6. Compare TV as a hand-designed prior with a learned prior. Give one advantage and one risk of each.
 
 ## Takeaways
 
@@ -218,3 +307,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Compared with l2 smoothing, TV preserves stronger edges.
 - TV is convex but nonsmooth.
 - TV can create staircasing artifacts, so it is not always the right prior.
+- TV is an interpretable prior, useful both practically and as a reference point for learned priors.

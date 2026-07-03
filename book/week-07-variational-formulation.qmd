@@ -41,6 +41,29 @@ $$
 
 The data fidelity term $D(y,f(x))$ measures agreement with the observations. The regularizer $R(x)$ encodes preferred image structure.
 
+## Why This Chapter Matters
+
+The previous chapters introduced several pieces separately: a forward model, a noise model, instability, and regularization. Variational formulation is the language that puts these pieces into one object.
+
+Once a reconstruction is written as
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(y,f(x))+\lambda R(x),
+$$
+
+we can ask precise questions:
+
+- what does it mean to fit the data?
+- what kinds of images does the regularizer prefer?
+- is the minimizer unique?
+- can we compute it reliably?
+- what will happen when the assumptions are wrong?
+
+This is why variational methods remain useful even in a course that leads to neural networks. A neural network may replace the regularizer, approximate the optimizer, or learn the inverse map directly, but the same tension remains: the reconstruction must negotiate between data consistency and image plausibility.
+
 ## Energy As A Model
 
 An energy is not only a numerical function. It is a modeling statement.
@@ -66,6 +89,22 @@ Examples from previous chapters fit this pattern.
 | Quadratic smoothing | $\|u-y\|_2^2+\lambda\|\nabla u\|_2^2$ |
 | Poisson data | $\sum_i f_i(x)-z_i\log f_i(x)$ |
 
+The figure should be read as a compromise. The data term may prefer a candidate that stays close to a noisy measurement. The regularizer may prefer a smoother or simpler candidate. The total energy chooses the point where the two preferences balance.
+
+This balance is not automatically correct. If the data term is wrong, the reconstruction may be faithful to the wrong measurement model. If the regularizer is wrong, the reconstruction may look clean but lose meaningful structures. If $\lambda$ is poorly chosen, one term dominates the other.
+
+## The Three Modeling Choices
+
+Variational reconstruction separates modeling from computation. This is one of its strengths.
+
+| Choice | Typical question | Example |
+|---|---|---|
+| Forward model | how does $x$ produce data? | blur, masking, Fourier sampling |
+| Data fidelity | how should mismatch be measured? | Gaussian least squares, Poisson likelihood |
+| Regularizer | what images are plausible? | small norm, smoothness, TV, sparsity |
+
+The optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.
+
 ## A First Variational Denoising Model
 
 For a noisy image $y$, consider
@@ -85,6 +124,10 @@ The parameter $\lambda$ controls the strength of smoothing:
 - small $\lambda$: the reconstruction stays close to the data;
 - large $\lambda$: the reconstruction becomes smoother;
 - too large $\lambda$: meaningful edges are blurred.
+
+This model is deliberately simple. It is useful because every part can be understood. The data term is quadratic, the regularizer is quadratic, the energy is convex, and the optimality equation is linear.
+
+It is also useful because its weakness is visible. Squared gradients penalize large changes strongly, so edges become expensive. The model does not know the difference between a small oscillation caused by noise and a strong transition caused by an object boundary. This limitation motivates Total Variation in the next chapter.
 
 ## Convexity
 
@@ -113,6 +156,10 @@ E(u)
 $$
 
 is convex for $\lambda\ge 0$.
+
+Convexity also clarifies what can go wrong in nonconvex learned models. Neural networks are usually trained with nonconvex objectives. Their success is practical and empirical, not guaranteed by the same convex theory. This does not make them invalid, but it means we need different forms of evidence: validation, robustness tests, ablation studies, and data consistency checks.
+
+For this chapter, convexity gives us a clean laboratory. We can separate the conceptual role of the energy from the numerical complications of harder objectives.
 
 ## Euler-Lagrange Equation
 
@@ -201,6 +248,21 @@ $$
 
 The minimizer solves a differential equation.
 
+This equation has a physical interpretation. The term $u-y$ pulls the reconstruction toward the noisy image. The term $-\lambda\Delta u$ diffuses or smooths the reconstruction. At equilibrium, data attraction and smoothing balance.
+
+The derivation also shows why variational calculus is more than formal manipulation. Starting from a modeling principle, we obtain a condition that the reconstruction must satisfy. In simple cases, that condition can be solved directly. In harder cases, it guides the design of iterative algorithms.
+
+## Boundary Conditions
+
+The integration-by-parts step hides a boundary choice. In imaging, the boundary behavior is not neutral. Common choices include:
+
+- periodic boundaries, where the image wraps around;
+- Neumann boundaries, where the normal derivative is zero;
+- Dirichlet boundaries, where values are fixed at the border;
+- reflective boundaries, often used to reduce visible edge artifacts.
+
+Different choices can change the reconstruction near the image border. For small classroom examples this may look like a technicality. For real imaging tasks, boundary assumptions can create visible artifacts.
+
 ## Discrete Version
 
 On a pixel grid, the same idea leads to
@@ -234,6 +296,10 @@ Finite differences turn the continuous optimality equation into a grid equation.
 :::
 
 This is Tikhonov with a different penalty: instead of penalizing $\|x\|_2^2$, we penalize squared image gradients.
+
+The operator $D^TD$ is a discrete version of a negative Laplacian. It spreads local information to neighboring pixels. This is why quadratic variational denoising looks like smoothing: each update or equation couples a pixel to its neighbors.
+
+The discrete formula also explains why large dense matrices are usually avoided. We do not need to store $D$ explicitly to apply finite differences. We can compute gradients, divergences, and Laplacians directly on the image grid.
 
 ## Gradient Descent
 
@@ -277,6 +343,10 @@ If $\tau$ is too large, gradient descent can overshoot or diverge even for a con
 The energy can decrease while image quality first improves and then becomes too smooth.
 :::
 
+This last observation is subtle. The algorithm may be doing exactly what we asked: decreasing the chosen energy. But the image quality can still become worse if the energy does not perfectly match the desired task, or if the regularization weight is not appropriate. Optimization success and reconstruction success are related, but they are not identical.
+
+This distinction will become important for learned models. A neural network can minimize its training loss very well and still fail on images that differ from the training distribution.
+
 ## Real Image Denoising
 
 Quadratic smoothing is transparent and useful. It is convex, its optimality condition is linear, and it reduces Gaussian-like noise.
@@ -288,6 +358,29 @@ Quadratic smoothing reduces noise, but it also blurs edges.
 :::
 
 The weakness is also clear: edges are large gradients, and the term $\|\nabla u\|_2^2$ penalizes large gradients strongly. The next chapter replaces squared gradients with gradient magnitudes to better preserve edges.
+
+When reading the figure, compare three regions separately: flat areas, edges, and texture. Quadratic smoothing often improves flat areas by reducing random fluctuations. It softens edges because edges have large gradients. It can damage texture because texture is made of many local changes, even when those changes are meaningful.
+
+## From Variational Models To Neural Models
+
+Variational formulation gives a useful vocabulary for neural imaging.
+
+| Classical variational object | Learned analogue |
+|---|---|
+| data term $D(y,f(x))$ | data-consistency loss or physics layer |
+| regularizer $R(x)$ | learned prior, denoiser, score, or generator |
+| iterative optimizer | unrolled network or learned update rule |
+| parameter $\lambda$ | learned tradeoff or architecture-dependent balance |
+
+This does not mean every neural network secretly minimizes a known explicit energy. Some do, some do approximately, and some do not. The point is that variational thinking tells us what roles must be played: respecting the measurements, imposing image structure, and computing a reconstruction.
+
+## Common Mistakes
+
+A first mistake is to think that an energy is objective truth. An energy is a model. It encodes choices, approximations, and priorities.
+
+A second mistake is to confuse the minimizer of an energy with the true image. If the energy is poorly matched to the data or the task, the minimizer can be clean and wrong.
+
+A third mistake is to ignore boundary conditions. Many artifacts near image borders come from assumptions made silently by convolution, finite differences, or Fourier transforms.
 
 ## Computation
 
@@ -301,6 +394,8 @@ python3 examples/week07_variational.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+In the notebook, watch both the image and the energy curve. Find parameter settings where the energy decreases but the image becomes too smooth. That is the key lesson: optimization follows the model, so the model must be chosen with care.
+
 ## Exercises
 
 1. In $E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2$, identify the data term, regularizer, and parameter.
@@ -308,6 +403,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Derive the variation of the data term $\frac12\int_\Omega (u-y)^2\,dx$.
 4. Explain why the Euler-Lagrange equation for quadratic denoising is $u-\lambda\Delta u=y$.
 5. In gradient descent, what can go wrong if the step size is too large?
+6. Explain how a neural reconstruction method can be described using the same roles as a variational model, even when the regularizer is learned.
 
 ## Takeaways
 
@@ -316,3 +412,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Convexity gives a safer optimization landscape.
 - Euler-Lagrange equations express first-order optimality.
 - Quadratic smoothness is clear and useful, but it blurs edges.
+- Variational thinking provides a vocabulary for learned priors and unrolled neural reconstruction.
