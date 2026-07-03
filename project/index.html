@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modeling Project – MATH 435: Mathematical Imaging</title>
+<title>Final Modeling Project – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -126,15 +169,28 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-question" id="toc-project-question" class="nav-link active" data-scroll-target="#project-question">Project Question</a></li>
+  <li><a href="#required-llm-use" id="toc-required-llm-use" class="nav-link" data-scroll-target="#required-llm-use">Required LLM Use</a></li>
+  <li><a href="#core-requirements" id="toc-core-requirements" class="nav-link" data-scroll-target="#core-requirements">Core Requirements</a></li>
+  <li><a href="#possible-project-topics" id="toc-possible-project-topics" class="nav-link" data-scroll-target="#possible-project-topics">Possible Project Topics</a></li>
+  <li><a href="#recommended-project-structure" id="toc-recommended-project-structure" class="nav-link" data-scroll-target="#recommended-project-structure">Recommended Project Structure</a></li>
+  <li><a href="#grading-rubric" id="toc-grading-rubric" class="nav-link" data-scroll-target="#grading-rubric">Grading Rubric</a></li>
+  <li><a href="#oral-defense" id="toc-oral-defense" class="nav-link" data-scroll-target="#oral-defense">Oral Defense</a></li>
+  <li><a href="#what-a-strong-project-shows" id="toc-what-a-strong-project-shows" class="nav-link" data-scroll-target="#what-a-strong-project-shows">What A Strong Project Shows</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/project/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Modeling Project</h1>
+<h1 class="title">Final Modeling Project</h1>
 </div>
 
 
@@ -151,18 +207,267 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.</p>
-<p>Each team will:</p>
+<p>The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.</p>
+<p>Students will work in teams of two. Each team will choose one imaging inverse problem, implement at least two reconstruction approaches, compare them experimentally, and explain when each approach should and should not be trusted.</p>
+<p>The goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation.</p>
+<section id="project-question" class="level2">
+<h2 class="anchored" data-anchor-id="project-question">Project Question</h2>
+<p>Each project should answer the following question:</p>
+<blockquote class="blockquote">
+<p>Given degraded image data <span class="math inline">y</span>, a forward model <span class="math inline">A</span>, and noise or uncertainty, how can we reconstruct an image <span class="math inline">x</span>, and how do we know when the reconstruction is reliable?</p>
+</blockquote>
+<p>A typical project has the form:</p>
+<p><span class="math display">
+y = A x + \eta,
+</span></p>
+<p>or a related model adapted to the chosen degradation.</p>
+<p>The team must define what <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and <span class="math inline">\eta</span> mean in their project.</p>
+</section>
+<section id="required-llm-use" class="level2">
+<h2 class="anchored" data-anchor-id="required-llm-use">Required LLM Use</h2>
+<p>Use of an LLM is required for this project.</p>
+<p>Students may use an LLM for:</p>
+<ul>
+<li>brainstorming project ideas;</li>
+<li>understanding mathematical definitions;</li>
+<li>generating or debugging code;</li>
+<li>improving plots;</li>
+<li>organizing the report;</li>
+<li>checking explanations;</li>
+<li>preparing for the oral defense.</li>
+</ul>
+<p>However, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.</p>
+<p>Each submission must include an <strong>LLM-use statement</strong> describing:</p>
+<ol type="1">
+<li>which LLM tools were used;</li>
+<li>what they were used for;</li>
+<li>which generated code or text was accepted, modified, or rejected;</li>
+<li>what the team verified independently;</li>
+<li>at least one mistake, limitation, or misleading suggestion produced by the LLM.</li>
+</ol>
+<p>The LLM-use statement is <strong>required but not graded separately</strong>. A missing or dishonest LLM-use statement makes the project incomplete.</p>
+</section>
+<section id="core-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="core-requirements">Core Requirements</h2>
+<p>Each team must include:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Requirement</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Forward model</td>
+<td>Define the image, degradation, measurements, and noise model.</td>
+</tr>
+<tr class="even">
+<td>Two reconstruction approaches</td>
+<td>Compare at least two methods; at least one must come from the course.</td>
+</tr>
+<tr class="odd">
+<td>Parameter study</td>
+<td>Sweep at least one important parameter and explain the tradeoff.</td>
+</tr>
+<tr class="even">
+<td>Quantitative comparison</td>
+<td>Use RMSE, PSNR, residual norm, feature contrast, or another justified metric.</td>
+</tr>
+<tr class="odd">
+<td>Visual comparison</td>
+<td>Show reconstructed images and interpret visible artifacts or improvements.</td>
+</tr>
+<tr class="even">
+<td>Robustness test</td>
+<td>Test noise level, model mismatch, domain shift, missing data, or another stress case.</td>
+</tr>
+<tr class="odd">
+<td>Failure case</td>
+<td>Show one case where a method fails, and explain why.</td>
+</tr>
+<tr class="even">
+<td>Reproducible notebook</td>
+<td>Submit a runnable Python notebook with clear inputs, outputs, and plots.</td>
+</tr>
+<tr class="odd">
+<td>Written report</td>
+<td>Explain the model, methods, experiments, results, and limitations.</td>
+</tr>
+<tr class="even">
+<td>Oral defense</td>
+<td>Each student must individually defend the whole project.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="possible-project-topics" class="level2">
+<h2 class="anchored" data-anchor-id="possible-project-topics">Possible Project Topics</h2>
+<p>Teams may choose one of the following topics or propose a related topic.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Topic</th>
+<th>Possible Methods</th>
+<th>Reliability Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Image deblurring</td>
+<td>Tikhonov vs TV</td>
+<td>What happens when the blur kernel is wrong?</td>
+</tr>
+<tr class="even">
+<td>Image inpainting</td>
+<td>interpolation vs sparse DCT or TV</td>
+<td>How many missing pixels can be tolerated?</td>
+</tr>
+<tr class="odd">
+<td>Image denoising</td>
+<td>Gaussian smoothing vs wavelets vs TV</td>
+<td>Which details are removed with the noise?</td>
+</tr>
+<tr class="even">
+<td>Poisson image denoising</td>
+<td>Gaussian model vs Poisson likelihood</td>
+<td>When does the Gaussian approximation fail?</td>
+</tr>
+<tr class="odd">
+<td>Sparse reconstruction</td>
+<td>minimum norm vs l1 regularization</td>
+<td>How many measurements are needed?</td>
+</tr>
+<tr class="even">
+<td>Wavelet denoising</td>
+<td>hard vs soft thresholding</td>
+<td>How should the threshold be chosen?</td>
+</tr>
+<tr class="odd">
+<td>Plug-and-play reconstruction</td>
+<td>classical regularization vs denoiser prior</td>
+<td>Is the output supported by the data?</td>
+</tr>
+<tr class="even">
+<td>Small-feature preservation</td>
+<td>smoothing vs TV vs wavelets</td>
+<td>Does the method erase weak structures?</td>
+</tr>
+<tr class="odd">
+<td>Domain shift in denoising</td>
+<td>train/test on different image families</td>
+<td>Does a learned prior generalize?</td>
+</tr>
+<tr class="even">
+<td>Robustness audit</td>
+<td>compare several methods under perturbations</td>
+<td>Which method fails most gracefully?</td>
+</tr>
+</tbody>
+</table>
+<p>The instructor may provide additional test images or degraded observations. These may be used to test whether the submitted notebook generalizes beyond the examples used during development.</p>
+</section>
+<section id="recommended-project-structure" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-project-structure">Recommended Project Structure</h2>
+<p>The report should be concise and structured.</p>
+<ol type="1">
+<li><strong>Problem statement.</strong> What imaging problem is being solved?</li>
+<li><strong>Forward model.</strong> Define <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and the noise or degradation.</li>
+<li><strong>Methods.</strong> Describe the reconstruction algorithms.</li>
+<li><strong>Implementation.</strong> Explain the main computational choices.</li>
+<li><strong>Parameter study.</strong> Show how reconstruction changes as a parameter changes.</li>
+<li><strong>Results.</strong> Present quantitative and visual comparisons.</li>
+<li><strong>Robustness and failure.</strong> Show stress tests and at least one failure case.</li>
+<li><strong>Limitations.</strong> Explain when the method should not be trusted.</li>
+<li><strong>LLM-use statement.</strong> Disclose how the required LLM support was used.</li>
+</ol>
+</section>
+<section id="grading-rubric" class="level2">
+<h2 class="anchored" data-anchor-id="grading-rubric">Grading Rubric</h2>
+<p>The project is graded on demonstrated understanding, reproducibility, experimental care, and defense of the work.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th style="text-align: right;">Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mathematical model and assumptions</td>
+<td style="text-align: right;">15%</td>
+</tr>
+<tr class="even">
+<td>Reproducible notebook and implementation</td>
+<td style="text-align: right;">15%</td>
+</tr>
+<tr class="odd">
+<td>Experiments and parameter study</td>
+<td style="text-align: right;">15%</td>
+</tr>
+<tr class="even">
+<td>Robustness and failure analysis</td>
+<td style="text-align: right;">20%</td>
+</tr>
+<tr class="odd">
+<td>Written report clarity</td>
+<td style="text-align: right;">10%</td>
+</tr>
+<tr class="even">
+<td>Oral defense and code walkthrough</td>
+<td style="text-align: right;">25%</td>
+</tr>
+<tr class="odd">
+<td>LLM-use statement</td>
+<td style="text-align: right;">Required, ungraded</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="oral-defense" class="level2">
+<h2 class="anchored" data-anchor-id="oral-defense">Oral Defense</h2>
+<p>The oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.</p>
+<p>During the defense, students may be asked to:</p>
 <ul>
 <li>define the forward model;</li>
-<li>implement reconstruction methods in Python;</li>
-<li>analyze parameter sensitivity;</li>
-<li>interpret reconstruction quality;</li>
-<li>submit a written report and code;</li>
-<li>complete an individual oral defense.</li>
+<li>explain why the inverse problem is difficult;</li>
+<li>derive or interpret the reconstruction objective;</li>
+<li>explain how a parameter affects the result;</li>
+<li>interpret a quantitative metric;</li>
+<li>explain a figure from the report;</li>
+<li>identify one failure case;</li>
+<li>walk through selected lines of code;</li>
+<li>run the notebook on a new test image or modified degradation;</li>
+<li>explain how LLM assistance was checked.</li>
 </ul>
+<p>The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact.</p>
+</section>
+<section id="what-a-strong-project-shows" class="level2">
+<h2 class="anchored" data-anchor-id="what-a-strong-project-shows">What A Strong Project Shows</h2>
+<p>A strong project does not simply show that one method looks good on one image.</p>
+<p>It shows:</p>
+<ul>
+<li>a clear mathematical model;</li>
+<li>correct and reproducible computation;</li>
+<li>thoughtful parameter choices;</li>
+<li>comparison against a meaningful baseline;</li>
+<li>evidence from more than one test condition;</li>
+<li>an honest failure case;</li>
+<li>clear explanation of what the method can and cannot claim.</li>
+</ul>
+<p>In mathematical imaging, a reconstruction is not only an image. It is an argument supported by a model, an algorithm, experiments, and interpretation.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -573,7 +878,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/project/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/project/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

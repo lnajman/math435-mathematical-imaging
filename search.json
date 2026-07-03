@@ -2,9 +2,65 @@
   {
     "objectID": "project/index.html",
     "href": "project/index.html",
-    "title": "Modeling Project",
+    "title": "Final Modeling Project",
     "section": "",
-    "text": "The project will be assigned in Week 6. Students will work in teams of two to formulate, analyze, and solve a mathematical imaging reconstruction problem.\nEach team will:\n\ndefine the forward model;\nimplement reconstruction methods in Python;\nanalyze parameter sensitivity;\ninterpret reconstruction quality;\nsubmit a written report and code;\ncomplete an individual oral defense."
+    "text": "The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.\nStudents will work in teams of two. Each team will choose one imaging inverse problem, implement at least two reconstruction approaches, compare them experimentally, and explain when each approach should and should not be trusted.\nThe goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation."
+  },
+  {
+    "objectID": "project/index.html#project-question",
+    "href": "project/index.html#project-question",
+    "title": "Final Modeling Project",
+    "section": "Project Question",
+    "text": "Project Question\nEach project should answer the following question:\n\nGiven degraded image data y, a forward model A, and noise or uncertainty, how can we reconstruct an image x, and how do we know when the reconstruction is reliable?\n\nA typical project has the form:\n\ny = A x + \\eta,\n\nor a related model adapted to the chosen degradation.\nThe team must define what x, y, A, and \\eta mean in their project."
+  },
+  {
+    "objectID": "project/index.html#required-llm-use",
+    "href": "project/index.html#required-llm-use",
+    "title": "Final Modeling Project",
+    "section": "Required LLM Use",
+    "text": "Required LLM Use\nUse of an LLM is required for this project.\nStudents may use an LLM for:\n\nbrainstorming project ideas;\nunderstanding mathematical definitions;\ngenerating or debugging code;\nimproving plots;\norganizing the report;\nchecking explanations;\npreparing for the oral defense.\n\nHowever, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.\nEach submission must include an LLM-use statement describing:\n\nwhich LLM tools were used;\nwhat they were used for;\nwhich generated code or text was accepted, modified, or rejected;\nwhat the team verified independently;\nat least one mistake, limitation, or misleading suggestion produced by the LLM.\n\nThe LLM-use statement is required but not graded separately. A missing or dishonest LLM-use statement makes the project incomplete."
+  },
+  {
+    "objectID": "project/index.html#core-requirements",
+    "href": "project/index.html#core-requirements",
+    "title": "Final Modeling Project",
+    "section": "Core Requirements",
+    "text": "Core Requirements\nEach team must include:\n\n\n\n\n\n\n\nRequirement\nDescription\n\n\n\n\nForward model\nDefine the image, degradation, measurements, and noise model.\n\n\nTwo reconstruction approaches\nCompare at least two methods; at least one must come from the course.\n\n\nParameter study\nSweep at least one important parameter and explain the tradeoff.\n\n\nQuantitative comparison\nUse RMSE, PSNR, residual norm, feature contrast, or another justified metric.\n\n\nVisual comparison\nShow reconstructed images and interpret visible artifacts or improvements.\n\n\nRobustness test\nTest noise level, model mismatch, domain shift, missing data, or another stress case.\n\n\nFailure case\nShow one case where a method fails, and explain why.\n\n\nReproducible notebook\nSubmit a runnable Python notebook with clear inputs, outputs, and plots.\n\n\nWritten report\nExplain the model, methods, experiments, results, and limitations.\n\n\nOral defense\nEach student must individually defend the whole project."
+  },
+  {
+    "objectID": "project/index.html#possible-project-topics",
+    "href": "project/index.html#possible-project-topics",
+    "title": "Final Modeling Project",
+    "section": "Possible Project Topics",
+    "text": "Possible Project Topics\nTeams may choose one of the following topics or propose a related topic.\n\n\n\n\n\n\n\n\nTopic\nPossible Methods\nReliability Question\n\n\n\n\nImage deblurring\nTikhonov vs TV\nWhat happens when the blur kernel is wrong?\n\n\nImage inpainting\ninterpolation vs sparse DCT or TV\nHow many missing pixels can be tolerated?\n\n\nImage denoising\nGaussian smoothing vs wavelets vs TV\nWhich details are removed with the noise?\n\n\nPoisson image denoising\nGaussian model vs Poisson likelihood\nWhen does the Gaussian approximation fail?\n\n\nSparse reconstruction\nminimum norm vs l1 regularization\nHow many measurements are needed?\n\n\nWavelet denoising\nhard vs soft thresholding\nHow should the threshold be chosen?\n\n\nPlug-and-play reconstruction\nclassical regularization vs denoiser prior\nIs the output supported by the data?\n\n\nSmall-feature preservation\nsmoothing vs TV vs wavelets\nDoes the method erase weak structures?\n\n\nDomain shift in denoising\ntrain/test on different image families\nDoes a learned prior generalize?\n\n\nRobustness audit\ncompare several methods under perturbations\nWhich method fails most gracefully?\n\n\n\nThe instructor may provide additional test images or degraded observations. These may be used to test whether the submitted notebook generalizes beyond the examples used during development."
+  },
+  {
+    "objectID": "project/index.html#recommended-project-structure",
+    "href": "project/index.html#recommended-project-structure",
+    "title": "Final Modeling Project",
+    "section": "Recommended Project Structure",
+    "text": "Recommended Project Structure\nThe report should be concise and structured.\n\nProblem statement. What imaging problem is being solved?\nForward model. Define x, y, A, and the noise or degradation.\nMethods. Describe the reconstruction algorithms.\nImplementation. Explain the main computational choices.\nParameter study. Show how reconstruction changes as a parameter changes.\nResults. Present quantitative and visual comparisons.\nRobustness and failure. Show stress tests and at least one failure case.\nLimitations. Explain when the method should not be trusted.\nLLM-use statement. Disclose how the required LLM support was used."
+  },
+  {
+    "objectID": "project/index.html#grading-rubric",
+    "href": "project/index.html#grading-rubric",
+    "title": "Final Modeling Project",
+    "section": "Grading Rubric",
+    "text": "Grading Rubric\nThe project is graded on demonstrated understanding, reproducibility, experimental care, and defense of the work.\n\n\n\nComponent\nWeight\n\n\n\n\nMathematical model and assumptions\n15%\n\n\nReproducible notebook and implementation\n15%\n\n\nExperiments and parameter study\n15%\n\n\nRobustness and failure analysis\n20%\n\n\nWritten report clarity\n10%\n\n\nOral defense and code walkthrough\n25%\n\n\nLLM-use statement\nRequired, ungraded"
+  },
+  {
+    "objectID": "project/index.html#oral-defense",
+    "href": "project/index.html#oral-defense",
+    "title": "Final Modeling Project",
+    "section": "Oral Defense",
+    "text": "Oral Defense\nThe oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.\nDuring the defense, students may be asked to:\n\ndefine the forward model;\nexplain why the inverse problem is difficult;\nderive or interpret the reconstruction objective;\nexplain how a parameter affects the result;\ninterpret a quantitative metric;\nexplain a figure from the report;\nidentify one failure case;\nwalk through selected lines of code;\nrun the notebook on a new test image or modified degradation;\nexplain how LLM assistance was checked.\n\nThe oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact."
+  },
+  {
+    "objectID": "project/index.html#what-a-strong-project-shows",
+    "href": "project/index.html#what-a-strong-project-shows",
+    "title": "Final Modeling Project",
+    "section": "What A Strong Project Shows",
+    "text": "What A Strong Project Shows\nA strong project does not simply show that one method looks good on one image.\nIt shows:\n\na clear mathematical model;\ncorrect and reproducible computation;\nthoughtful parameter choices;\ncomparison against a meaningful baseline;\nevidence from more than one test condition;\nan honest failure case;\nclear explanation of what the method can and cannot claim.\n\nIn mathematical imaging, a reconstruction is not only an image. It is an argument supported by a model, an algorithm, experiments, and interpretation."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#opening-question",
@@ -3527,7 +3583,7 @@
     "href": "syllabus.html#assessment",
     "title": "Syllabus",
     "section": "Assessment",
-    "text": "Assessment\nAll course learning outcomes are assessed using the following assessment tools.\n\n\n\n\n\n\n\n\n\n\nAssessment Instruments\n\n\nContribution to Course Grade (%)\n\n\nWeek #\n\n\nCLO(s)\n\n\n\n\n\n\n\nQuizzes\n\n\n\n15%\n\n\n4,12\n\n\n1,2\n\n\n\n\n\nTwo-Student Team Modeling\n\n\nProject (Joint Report\n\n\nand Individual Oral Defense)\n\n\n\n30%\n\n\n\nProposal: Week 6\n\n\nReport: Week 14\n\n\nOral Defense: Week 15\n\n\n\n1,2,3,4,5\n\n\n\n\n\nSemester Examination\n\n\n\n25%\n\n\nWeek 8\n\n\n1,2\n\n\n\n\n\nFinal Examination\n\n\n\n30%\n\n\nExam Week\n\n\n1,2,3\n\n\n\n\nStudents may use computational tools and AI assistance for the project, but must be able to justify and defend all modeling decisions during the oral defense."
+    "text": "Assessment\nAll course learning outcomes are assessed using the following assessment tools.\n\n\n\n\n\n\n\n\n\n\nAssessment Instruments\n\n\nContribution to Course Grade (%)\n\n\nWeek #\n\n\nCLO(s)\n\n\n\n\n\n\n\nQuizzes\n\n\n\n15%\n\n\n4,12\n\n\n1,2\n\n\n\n\n\nTwo-Student Team Modeling\n\n\nProject (Joint Report\n\n\nand Individual Oral Defense)\n\n\n\n30%\n\n\n\nProposal: Week 6\n\n\nReport: Week 14\n\n\nOral Defense: Week 15\n\n\n\n1,2,3,4,5\n\n\n\n\n\nSemester Examination\n\n\n\n25%\n\n\nWeek 8\n\n\n1,2\n\n\n\n\n\nFinal Examination\n\n\n\n30%\n\n\nExam Week\n\n\n1,2,3\n\n\n\n\nStudents are required to use an LLM for the project and must submit an LLM-use statement. The statement is required but not graded separately. Students remain responsible for the correctness of all code, models, results, and interpretations, and must be able to justify and defend all modeling decisions during the oral defense."
   },
   {
     "objectID": "syllabus.html#grading-scheme",
@@ -3569,7 +3625,7 @@
     "href": "syllabus.html#additional-information",
     "title": "Syllabus",
     "section": "Additional Information",
-    "text": "Additional Information\n\nAssessment\nLate submission of the group project will not be accepted.\n\n\nProject\nThe project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.\nStudents are required to use Python for all computational implementations and analyses.\nA written report and the corresponding code must be submitted in Week 13.\nIn Week 14, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project.\nFailure to participate in the oral defense will result in a maximum of 50% of the project grade.\n\n\nCalculator Policy\nYou will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.\n\n\nClassroom Policies\nDiscipline is one of the main components of your academic and professional success.\nPlease arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.\nPlease ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.\nIf you are absent for any lecture, it is your responsibility to cover the missed material."
+    "text": "Additional Information\n\nAssessment\nLate submission of the group project will not be accepted.\n\n\nProject\nThe project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.\nStudents are required to use Python for all computational implementations and analyses. Students are also required to use an LLM as part of the project process and disclose how it was used. The LLM-use statement is required but not graded separately.\nA written report and the corresponding code must be submitted in Week 13.\nIn Week 14, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, code, parameter choices, failure analysis, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project. The oral defense and code walkthrough represent 25% of the project grade.\nFailure to participate in the oral defense will result in a zero for the oral defense and code walkthrough component.\n\n\nCalculator Policy\nYou will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.\n\n\nClassroom Policies\nDiscipline is one of the main components of your academic and professional success.\nPlease arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.\nPlease ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.\nIf you are absent for any lecture, it is your responsibility to cover the missed material."
   },
   {
     "objectID": "syllabus.html#weekly-plan-tentative",
