@@ -387,15 +387,19 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#can-a-denoiser-be-a-prior" id="toc-can-a-denoiser-be-a-prior" class="nav-link" data-scroll-target="#can-a-denoiser-be-a-prior">Can A Denoiser Be A Prior?</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#proximal-algorithms" id="toc-proximal-algorithms" class="nav-link" data-scroll-target="#proximal-algorithms">Proximal Algorithms</a></li>
   <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
   <li><a href="#plug-and-play-update" id="toc-plug-and-play-update" class="nav-link" data-scroll-target="#plug-and-play-update">Plug-and-Play Update</a></li>
   <li><a href="#explicit-versus-implicit-prior" id="toc-explicit-versus-implicit-prior" class="nav-link" data-scroll-target="#explicit-versus-implicit-prior">Explicit Versus Implicit Prior</a></li>
   <li><a href="#learned-regularization-views" id="toc-learned-regularization-views" class="nav-link" data-scroll-target="#learned-regularization-views">Learned Regularization Views</a></li>
+  <li><a href="#plug-and-play-red-and-unrolling" id="toc-plug-and-play-red-and-unrolling" class="nav-link" data-scroll-target="#plug-and-play-red-and-unrolling">Plug-and-Play, RED, And Unrolling</a></li>
   <li><a href="#deblurring-example" id="toc-deblurring-example" class="nav-link" data-scroll-target="#deblurring-example">Deblurring Example</a></li>
   <li><a href="#fixed-points" id="toc-fixed-points" class="nav-link" data-scroll-target="#fixed-points">Fixed Points</a></li>
   <li><a href="#convergence-and-trust" id="toc-convergence-and-trust" class="nav-link" data-scroll-target="#convergence-and-trust">Convergence And Trust</a></li>
   <li><a href="#failure-modes" id="toc-failure-modes" class="nav-link" data-scroll-target="#failure-modes">Failure Modes</a></li>
+  <li><a href="#what-students-should-trust" id="toc-what-students-should-trust" class="nav-link" data-scroll-target="#what-students-should-trust">What Students Should Trust</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -446,6 +450,24 @@ y \approx Ax
 <p>and inserts an image-restoration tool that knows what plausible images look like.</p>
 <p>The key question is: where should that image-restoration tool enter the algorithm?</p>
 </section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>Chapter 12 compared explicit model-based reconstruction with data-driven methods. Plug-and-play is the meeting point. It keeps the inverse-problem structure:</p>
+<p><span class="math display">
+y\approx Ax,
+</span></p>
+<p>but replaces an explicit handcrafted proximal prior with a denoising operator.</p>
+<p>This is a beautiful idea because denoising is often easier to learn than full reconstruction. A denoiser learns what clean images tend to look like. Plug-and-play then uses that denoiser inside an algorithm that still knows the forward model.</p>
+<p>In other words:</p>
+<p><span class="math display">
+\text{plug-and-play}
+=
+\text{data consistency}
++
+\text{denoising prior}.
+</span></p>
+<p>This makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.</p>
+</section>
 <section id="proximal-algorithms" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-algorithms">Proximal Algorithms</h2>
 <p>A standard variational model is</p>
@@ -476,6 +498,14 @@ z^k=x^k-\tau A^\top(Ax^k-y).
 \frac{1}{2}\|x-z\|_2^2+\lambda R(x).
 </span></p>
 <p>It asks for an image close to <span class="math inline">z</span> but preferred by the prior <span class="math inline">R</span>.</p>
+<p>The proximal operator can be interpreted as a special kind of denoiser. The input <span class="math inline">z</span> is an intermediate image that has been pulled toward the data but may contain noise, artifacts, or unstable components. The proximal step returns a cleaner or more regular image according to the prior <span class="math inline">R</span>.</p>
+<p>For example:</p>
+<ul>
+<li>an l1 proximal operator performs soft thresholding;</li>
+<li>a TV proximal operator performs TV denoising;</li>
+<li>a constraint proximal operator projects onto an allowed set.</li>
+</ul>
+<p>This interpretation motivates plug-and-play: if a proximal map behaves like a denoiser, can we use a stronger denoiser in its place?</p>
 </section>
 <section id="proximal-gradient" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
@@ -493,6 +523,8 @@ x^{k+1}
 <p><img src="../assets/figures/week13-prox-vs-denoiser.png" class="img-fluid" alt="Comparison of a classical proximal step and a plug-and-play denoising step"></p>
 <p>Plug-and-play replaces a proximal map by a denoising operator.</p>
 </div>
+<p>The replacement is simple to write but conceptually deep. In classical proximal gradient, the denoising step corresponds to a known regularizer <span class="math inline">R</span>. In plug-and-play, the denoiser may not correspond to any explicit <span class="math inline">R</span> that we can write down.</p>
+<p>This gives us a powerful image model, but it changes what we can prove and monitor.</p>
 </section>
 <section id="plug-and-play-update" class="level2">
 <h2 class="anchored" data-anchor-id="plug-and-play-update">Plug-and-Play Update</h2>
@@ -510,6 +542,12 @@ x^{k+1}=D_\sigma(z^k),
 </div>
 <p>The denoiser can be Gaussian smoothing, median filtering, wavelet thresholding, non-local means, a learned neural-network denoiser, or a learned patch prior.</p>
 <p>The data-consistency step still uses the forward model <span class="math inline">A</span>, the adjoint <span class="math inline">A^\top</span>, the measured data <span class="math inline">y</span>, and the data term. PnP does not throw away physics; it uses physics between denoising steps.</p>
+<p>Reading the update as two alternating forces:</p>
+<ul>
+<li>the gradient step asks the reconstruction to explain the measurement;</li>
+<li>the denoiser step asks the reconstruction to look like a clean image.</li>
+</ul>
+<p>The balance between these two forces determines the behavior of the algorithm. If the denoiser dominates, the result can become plausible but inconsistent with the data. If the data term dominates, noise and artifacts may remain.</p>
 </section>
 <section id="explicit-versus-implicit-prior" class="level2">
 <h2 class="anchored" data-anchor-id="explicit-versus-implicit-prior">Explicit Versus Implicit Prior</h2>
@@ -525,6 +563,8 @@ x^{k+1}=D_\sigma(z^k).
 </span></p>
 <p>If <span class="math inline">D_\sigma</span> is not exactly a proximal operator, the iteration may not minimize a known objective. The prior is implicit: it is represented by the behavior of the denoiser.</p>
 <p>This gives flexibility, but it changes the theory.</p>
+<p>An implicit prior can be very expressive. A modern denoiser may know about textures, edges, repeated patterns, and object-like structures in a way that TV or wavelets do not. But the price is that the prior is harder to inspect.</p>
+<p>For a classical prior, we can read the penalty. For a learned denoiser, we often need experiments to understand what it preserves, removes, or invents.</p>
 </section>
 <section id="learned-regularization-views" class="level2">
 <h2 class="anchored" data-anchor-id="learned-regularization-views">Learned Regularization Views</h2>
@@ -547,6 +587,30 @@ x^{k+1}=D_\theta(z^k).
 </span></p>
 <p>The denoiser has learned image statistics from training data, so its training distribution matters.</p>
 </section>
+<section id="plug-and-play-red-and-unrolling" class="level2">
+<h2 class="anchored" data-anchor-id="plug-and-play-red-and-unrolling">Plug-and-Play, RED, And Unrolling</h2>
+<p>There are several related ways to combine learning and reconstruction.</p>
+<p>Plug-and-play replaces a proximal operator with a denoiser:</p>
+<p><span class="math display">
+x^{k+1}=D_\theta(z^k).
+</span></p>
+<p>Regularization by denoising, often called RED, tries to build an explicit regularization idea around the denoiser. The details are more advanced than we need here, but the goal is similar: use denoising behavior as image prior information.</p>
+<p>Unrolled methods take a fixed number of iterations and turn them into a trainable network. A schematic unrolled update is</p>
+<p><span class="math display">
+x^{k+1}
+=
+G_{\theta_k}
+\left(x^k,\ A^\top(Ax^k-y)\right).
+</span></p>
+<p>Here the network receives both the current image and a data-consistency signal. Unrolling is often more flexible than classical PnP because the update itself can be trained end-to-end.</p>
+<p>The common structure is:</p>
+<p><span class="math display">
+\text{measurement model}
++
+\text{learned image correction}.
+</span></p>
+<p>That is the main idea students should keep.</p>
+</section>
 <section id="deblurring-example" class="level2">
 <h2 class="anchored" data-anchor-id="deblurring-example">Deblurring Example</h2>
 <p>Suppose</p>
@@ -559,6 +623,7 @@ y=Ax+\eta
 <p>Different priors create different deblurring behavior.</p>
 </div>
 <p>Tikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.</p>
+<p>When reading this comparison, ask what each prior believes. Tikhonov believes small energy is good. Gaussian denoising believes smoothness is good. A learned patch denoiser believes images should resemble the training patches. The differences in the reconstructions are consequences of those beliefs.</p>
 <div class="figure">
 <p><img src="../assets/figures/week13-iteration-curve.png" class="img-fluid" alt="RMSE and fixed-point change versus plug-and-play iteration"></p>
 <p>Iteration curves help diagnose convergence and reconstruction quality in examples where ground truth is known.</p>
@@ -578,6 +643,8 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <p>Denoising strength controls the tradeoff between stability and fidelity.</p>
 </div>
 <p>If denoising is too weak, noise and inversion artifacts remain. If denoising is too strong, details are removed and the result may move away from measured data.</p>
+<p>A fixed point is not automatically the true image. It is an image that the algorithm no longer changes. The data step and denoising step have reached a balance.</p>
+<p>This distinction is important. Convergence means the iteration settles. Correctness means the settled image is faithful to the scene and measurements. An algorithm can converge to a biased or hallucinated solution.</p>
 </section>
 <section id="convergence-and-trust" class="level2">
 <h2 class="anchored" data-anchor-id="convergence-and-trust">Convergence And Trust</h2>
@@ -595,6 +662,16 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>a fixed point may not be a minimizer.</li>
 </ul>
 <p>This does not make PnP unusable. It means validation becomes central.</p>
+<p>Useful diagnostics include:</p>
+<ul>
+<li>data residual <span class="math inline">\|Ax^k-y\|</span>;</li>
+<li>fixed-point change <span class="math inline">\|x^{k+1}-x^k\|</span>;</li>
+<li>reconstruction error when ground truth is available;</li>
+<li>sensitivity to denoiser strength;</li>
+<li>performance under distribution shift;</li>
+<li>visual inspection of task-critical structures.</li>
+</ul>
+<p>The goal is to understand not only whether the output looks good, but whether the algorithm is behaving consistently.</p>
 </section>
 <section id="failure-modes" class="level2">
 <h2 class="anchored" data-anchor-id="failure-modes">Failure Modes</h2>
@@ -612,12 +689,59 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 </ul>
 <p>Practical learned imaging should report baseline comparisons, data-consistency errors, sensitivity to denoising strength, robustness to distribution shift, uncertainty when possible, and task-based evaluation.</p>
 </section>
+<section id="what-students-should-trust" class="level2">
+<h2 class="anchored" data-anchor-id="what-students-should-trust">What Students Should Trust</h2>
+<p>Trust should be earned by evidence, not by method category. A classical method can fail because the model is wrong. A learned method can fail because the training distribution is wrong. A hybrid method can fail because the denoiser and data term are poorly balanced.</p>
+<p>For a plug-and-play reconstruction, a reasonable checklist is:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Does <span class="math inline">A\hat{x}</span> match <span class="math inline">y</span> within expected noise?</td>
+<td>checks measurement consistency</td>
+</tr>
+<tr class="even">
+<td>Was the denoiser trained on relevant data?</td>
+<td>checks prior relevance</td>
+</tr>
+<tr class="odd">
+<td>Does the result change under small perturbations?</td>
+<td>checks stability</td>
+</tr>
+<tr class="even">
+<td>Does it preserve known structures?</td>
+<td>checks task reliability</td>
+</tr>
+<tr class="odd">
+<td>Does it outperform simple baselines?</td>
+<td>checks practical value</td>
+</tr>
+</tbody>
+</table>
+<p>This is the habit of mind the course aims to build: not “classical good, neural bad” or the reverse, but careful reasoning about what information is measured, what information is assumed, and what evidence supports the reconstruction.</p>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<p>A first mistake is to think PnP is just denoising after reconstruction. It is not. The denoiser is inserted inside the reconstruction loop, alternating with data consistency.</p>
+<p>A second mistake is to think a stronger denoiser is always better. Strong denoising can erase true structures or pull the image away from the data.</p>
+<p>A third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.</p>
+</section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
 <p>The Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.</p>
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week13_plug_and_play.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>In the notebook, compare the data residual and the visual result as denoising strength changes. Look for cases where the image looks cleaner but becomes less faithful to the measured data.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
@@ -627,6 +751,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>Why might PnP not minimize a known objective?</li>
 <li>What is a fixed point of the PnP iteration?</li>
 <li>Give two safeguards for using learned denoisers in high-stakes imaging.</li>
+<li>Explain the difference between convergence of a PnP iteration and correctness of the reconstruction.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -637,6 +762,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>Learned denoisers can improve reconstructions when data match training.</li>
 <li>PnP needs careful validation because objective and convergence guarantees change.</li>
 <li>Always check both image quality and consistency with measurements.</li>
+<li>Hybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.</li>
 </ul>
 
 

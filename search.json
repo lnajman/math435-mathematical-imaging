@@ -2483,11 +2483,35 @@
     ]
   },
   {
+    "objectID": "book/week-12-model-data.html#why-this-chapter-matters",
+    "href": "book/week-12-model-data.html#why-this-chapter-matters",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Why This Chapter Matters",
+    "text": "Why This Chapter Matters\nThis chapter is the explicit turning point of the course. Up to now, we have built reconstruction methods by writing down assumptions:\n\ny = Ax+\\eta,\n\\qquad\n\\hat{x}\n=\n\\operatorname*{argmin}_x\nD(Ax,y)+\\lambda R(x).\n\nThe data term came from a measurement model. The regularizer came from a mathematical prior: small energy, smoothness, sparse gradients, sparse transform coefficients, or wavelet structure.\nData-driven imaging changes where some of that knowledge comes from. Instead of choosing every part by hand, we use examples to learn a map, a prior, a denoiser, a feature representation, or an algorithmic update.\nThe central identity of the course appears here:\n\n\\text{neural imaging}\n=\n\\text{inverse problems}\n+\n\\text{learned image models}.\n\nNeural networks are not outside inverse problems. They are one answer to the same difficulty: the measured data are incomplete, noisy, unstable, or ambiguous, so reconstruction requires additional structure.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
     "objectID": "book/week-12-model-data.html#model-based-imaging",
     "href": "book/week-12-model-data.html#model-based-imaging",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Model-Based Imaging",
-    "text": "Model-Based Imaging\nA classical reconstruction often solves\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x\nD(Ax,y)+\\lambda R(x).\n\nHere D is data fidelity and R is the regularizer or prior.\nIn a model-based method, we specify:\n\nthe forward model A;\nthe noise model or data term;\nthe regularizer;\nthe parameter \\lambda;\nthe optimization method.\n\nExamples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.\nModel-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.",
+    "text": "Model-Based Imaging\nA classical reconstruction often solves\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x\nD(Ax,y)+\\lambda R(x).\n\nHere D is data fidelity and R is the regularizer or prior.\nIn a model-based method, we specify:\n\nthe forward model A;\nthe noise model or data term;\nthe regularizer;\nthe parameter \\lambda;\nthe optimization method.\n\nExamples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.\nModel-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.\nThe advantage of explicit modeling is that each assumption can be inspected. If a reconstruction fails, we can ask whether the forward model was wrong, the noise model was wrong, the regularizer was too simple, or the parameter was badly chosen.\nThe limitation is also clear. Handcrafted priors are usually simple because they must be written in a short mathematical form and optimized. Natural images contain structure beyond smoothness, TV, or wavelet sparsity: repeated patterns, semantic objects, textures, anatomy, material boundaries, and long-range dependencies. Model-based methods may not capture these structures well.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-12-model-data.html#what-model-based-does-not-mean",
+    "href": "book/week-12-model-data.html#what-model-based-does-not-mean",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "What Model-Based Does Not Mean",
+    "text": "What Model-Based Does Not Mean\nModel-based does not mean old-fashioned or inferior. It means the reconstruction rule contains explicit assumptions about the measurement and image. Many excellent modern methods remain model-based.\nModel-based also does not require the whole forward process to be linear. We often write Ax because it is mathematically clear, but a forward model can be nonlinear:\n\ny=f(x)+\\eta.\n\nThe important idea is that the reconstruction respects how the data were produced.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2499,7 +2523,19 @@
     "href": "book/week-12-model-data.html#data-driven-imaging",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Data-Driven Imaging",
-    "text": "Data-Driven Imaging\nInstead of writing the reconstruction rule by hand, a data-driven method learns a function:\n\n\\hat{x}=f_\\theta(y).\n\nThe parameters \\theta are chosen from training data.\nWith supervised training pairs (y_i,x_i), one solves\n\n\\min_\\theta\n\\sum_i\n\\ell(f_\\theta(y_i),x_i).\n\nThe loss tells the network what counts as a good reconstruction on the training set.\nData-driven methods still require choices:\n\ntraining data;\narchitecture;\nloss function;\noptimizer;\nevaluation metric;\ndeployment domain.\n\nThe prior is no longer a short expression such as TV. It is represented by parameters learned from examples.",
+    "text": "Data-Driven Imaging\nInstead of writing the reconstruction rule by hand, a data-driven method learns a function:\n\n\\hat{x}=f_\\theta(y).\n\nThe parameters \\theta are chosen from training data.\nWith supervised training pairs (y_i,x_i), one solves\n\n\\min_\\theta\n\\sum_i\n\\ell(f_\\theta(y_i),x_i).\n\nThe loss tells the network what counts as a good reconstruction on the training set.\nData-driven methods still require choices:\n\ntraining data;\narchitecture;\nloss function;\noptimizer;\nevaluation metric;\ndeployment domain.\n\nThe prior is no longer a short expression such as TV. It is represented by parameters learned from examples.\nThe supervised learning problem should be read as learning an inverse map from examples. The training data contain pairs:\n\n\\text{degraded or measured data } y_i\n\\quad\\longleftrightarrow\\quad\n\\text{desired image } x_i.\n\nThe network is trained so that f_\\theta(y_i) is close to x_i under the chosen loss. After training, the same map is applied to new measurements.\nThis is powerful, but it changes the meaning of the reconstruction. The output is not only determined by the new measurement y. It is also shaped by the training set, the architecture, and the loss.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
+    "objectID": "book/week-12-model-data.html#learned-inverse-maps",
+    "href": "book/week-12-model-data.html#learned-inverse-maps",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Learned Inverse Maps",
+    "text": "Learned Inverse Maps\nThe simplest data-driven imaging picture is\n\n\\hat{x}=f_\\theta(y).\n\nThis is a learned inverse map. It tries to approximate the transformation from data to clean image directly.\nFor denoising, y may be a noisy image and x a clean image. For super-resolution, y may be a low-resolution image and x a high-resolution image. For reconstruction, y may be sensor measurements and x the desired image.\nThe risk is that a direct learned inverse may ignore the physics of the measurement. If the network produces an image that looks plausible but does not satisfy Ax\\approx y, then the image is not faithful to the measured data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2511,7 +2547,7 @@
     "href": "book/week-12-model-data.html#strengths-and-risks",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Strengths And Risks",
-    "text": "Strengths And Risks\nData-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.\nThey can fail when:\n\nthe test distribution changes;\ntraining data is biased;\nthe loss rewards the wrong thing;\nuncertainty is hidden;\nhallucinated structure looks plausible.\n\nThe last point matters especially in medical and scientific imaging: plausible is not the same as measured.",
+    "text": "Strengths And Risks\nData-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.\nThey can fail when:\n\nthe test distribution changes;\ntraining data is biased;\nthe loss rewards the wrong thing;\nuncertainty is hidden;\nhallucinated structure looks plausible.\n\nThe last point matters especially in medical and scientific imaging: plausible is not the same as measured.\nThe phrase “hallucination” means that the method adds structure that was not supported by the measurement. In a low-stakes photographic application, this may be acceptable or even desired. In scientific imaging, medical imaging, forensics, or measurement-driven tasks, it can be dangerous.\nThe problem is not that learned methods are uniquely untrustworthy. Handcrafted priors can also hallucinate in a quieter way: TV can create artificial edges or plateaus, wavelets can remove texture, and Tikhonov can oversmooth. The difference is that learned priors can encode complex training-set expectations that are harder to see directly.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2531,11 +2567,23 @@
     ]
   },
   {
+    "objectID": "book/week-12-model-data.html#hybrid-methods",
+    "href": "book/week-12-model-data.html#hybrid-methods",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Hybrid Methods",
+    "text": "Hybrid Methods\nMany successful imaging methods are neither purely model-based nor purely data-driven. They combine:\n\nexplicit forward model A;\nexplicit data-consistency step;\nlearned denoiser, prior, or update rule;\niterative algorithm structure;\nvalidation on representative data.\n\nA typical hybrid idea is:\n\nx^{k+1}\n=\n\\text{learned correction}\n\\left(x^k,\\ A^\\top(Ax^k-y)\\right).\n\nThe term A^\\top(Ax^k-y) tells the network how the current reconstruction disagrees with the data. The learned part decides how to correct the image using training-set knowledge.\nThis is the safest conceptual bridge to neural imaging: keep the physics where it is known, and learn the image model where handcrafted priors are too limited.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
     "objectID": "book/week-12-model-data.html#a-small-learned-patch-prior",
     "href": "book/week-12-model-data.html#a-small-learned-patch-prior",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "A Small Learned Patch Prior",
-    "text": "A Small Learned Patch Prior\nLearning does not require a large neural network. A simple patch PCA prior already illustrates the main idea.\nWe extract many clean image patches and learn:\n\na mean patch;\nprincipal patch directions;\na low-dimensional patch model.\n\n\n\nPatch PCA learns common directions of variation from examples.\n\nFor each noisy patch, denoising can:\n\nsubtract the learned mean patch;\nproject onto the first few learned directions;\nreconstruct the patch;\naverage overlapping reconstructed patches.\n\nThis is data-driven even though it is not a neural network.\n\n\nHandcrafted and learned priors can be compared on the same denoising task.",
+    "text": "A Small Learned Patch Prior\nLearning does not require a large neural network. A simple patch PCA prior already illustrates the main idea.\nWe extract many clean image patches and learn:\n\na mean patch;\nprincipal patch directions;\na low-dimensional patch model.\n\n\n\nPatch PCA learns common directions of variation from examples.\n\nFor each noisy patch, denoising can:\n\nsubtract the learned mean patch;\nproject onto the first few learned directions;\nreconstruct the patch;\naverage overlapping reconstructed patches.\n\nThis is data-driven even though it is not a neural network.\nThe patch PCA example is important because it removes the mystery from “learning.” We are not yet using a deep network. We are learning a low-dimensional representation from clean patches. The learned components are the directions of variation that appear often in the training patches.\nThis lets students see the basic ingredients of data-driven imaging without the complexity of a large neural architecture:\n\ncollect examples;\nchoose a model class;\nfit parameters;\napply the fitted model to new data;\ntest whether it generalizes.\n\n\n\nHandcrafted and learned priors can be compared on the same denoising task.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2547,7 +2595,7 @@
     "href": "book/week-12-model-data.html#capacity-and-generalization",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Capacity And Generalization",
-    "text": "Capacity And Generalization\nThe number of retained PCA components controls model capacity.\n\n\nToo few components oversmooth; too many components preserve noise.\n\nIf the learned prior is trained on one image family and tested on another, performance can change.\n\n\nGeneralization is central to learned imaging.\n\nDistribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.",
+    "text": "Capacity And Generalization\nThe number of retained PCA components controls model capacity.\n\n\nToo few components oversmooth; too many components preserve noise.\n\nIf the learned prior is trained on one image family and tested on another, performance can change.\n\n\nGeneralization is central to learned imaging.\n\nDistribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.\nDistribution shift can be subtle. A denoiser trained on natural photographs may fail on microscopy. A network trained on one scanner may fail on another scanner. A super-resolution method trained on one degradation model may fail when the real blur or noise is different.\nThis is why training data are part of the method. In a paper or project, one should describe not only the network but also what it was trained on and how the test data differ from the training data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2567,6 +2615,18 @@
     ]
   },
   {
+    "objectID": "book/week-12-model-data.html#data-consistency",
+    "href": "book/week-12-model-data.html#data-consistency",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Data Consistency",
+    "text": "Data Consistency\nData consistency means that the reconstruction should agree with the measurements under the forward model:\n\nA\\hat{x}\\approx y.\n\nThis check is not the whole evaluation, because noisy data should not be fit perfectly. But it is essential. If two reconstructions look equally plausible, the one that better respects the measured data is usually more trustworthy.\nFor a learned method, data consistency can be:\n\nenforced by architecture;\nincluded as a loss term;\napplied as a projection or correction step;\nmonitored as an evaluation metric;\nused inside an unrolled algorithm.\n\nThis is one reason inverse-problem thinking remains useful in deep learning. The forward model gives us a way to test the output against the actual measurement.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
     "objectID": "book/week-12-model-data.html#evaluation",
     "href": "book/week-12-model-data.html#evaluation",
     "title": "Model-Based vs Data-Driven Imaging",
@@ -2579,11 +2639,23 @@
     ]
   },
   {
+    "objectID": "book/week-12-model-data.html#common-mistakes",
+    "href": "book/week-12-model-data.html#common-mistakes",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Common Mistakes",
+    "text": "Common Mistakes\nA first mistake is to think that data-driven methods do not use assumptions. They do. The assumptions are encoded in the data, architecture, loss, optimizer, and training procedure.\nA second mistake is to think that a visually impressive reconstruction is automatically correct. Visual plausibility and measurement consistency are different.\nA third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
     "objectID": "book/week-12-model-data.html#computation",
     "href": "book/week-12-model-data.html#computation",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Computation",
-    "text": "Computation\nThe Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.\nRun:\npython3 examples/week12_model_data.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.\nRun:\npython3 examples/week12_model_data.py\nor open the notebook in Colab from the link at the top of this chapter.\nIn the notebook, train or fit the patch prior on one image family and test it on another. Watch how performance changes. That experiment is the small-scale version of the generalization problem in learned imaging.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2595,7 +2667,7 @@
     "href": "book/week-12-model-data.html#exercises",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat does a model-based method specify explicitly?\nWhat does a data-driven method learn from examples?\nWhy is a neural network a nonlinear operator?\nWhat is distribution shift?\nGive one reason hallucinated structure is dangerous in scientific imaging.",
+    "text": "Exercises\n\nWhat does a model-based method specify explicitly?\nWhat does a data-driven method learn from examples?\nWhy is a neural network a nonlinear operator?\nWhat is distribution shift?\nGive one reason hallucinated structure is dangerous in scientific imaging.\nExplain why data consistency is still important for a supervised neural reconstruction method.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -2607,7 +2679,7 @@
     "href": "book/week-12-model-data.html#takeaways",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Takeaways",
-    "text": "Takeaways\n\nModel-based methods write assumptions explicitly.\nData-driven methods learn assumptions from examples.\nNeural networks are parameterized nonlinear operators.\nLearned methods can be powerful but depend on training data.\nModern imaging often combines physics, optimization, and learning.",
+    "text": "Takeaways\n\nModel-based methods write assumptions explicitly.\nData-driven methods learn assumptions from examples.\nNeural networks are parameterized nonlinear operators.\nLearned methods can be powerful but depend on training data.\nModern imaging often combines physics, optimization, and learning.\nA learned reconstruction should be judged by both plausibility and consistency with measured data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5385,11 +5457,23 @@
     ]
   },
   {
+    "objectID": "book/week-13-plug-and-play.html#why-this-chapter-matters",
+    "href": "book/week-13-plug-and-play.html#why-this-chapter-matters",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Why This Chapter Matters",
+    "text": "Why This Chapter Matters\nChapter 12 compared explicit model-based reconstruction with data-driven methods. Plug-and-play is the meeting point. It keeps the inverse-problem structure:\n\ny\\approx Ax,\n\nbut replaces an explicit handcrafted proximal prior with a denoising operator.\nThis is a beautiful idea because denoising is often easier to learn than full reconstruction. A denoiser learns what clean images tend to look like. Plug-and-play then uses that denoiser inside an algorithm that still knows the forward model.\nIn other words:\n\n\\text{plug-and-play}\n=\n\\text{data consistency}\n+\n\\text{denoising prior}.\n\nThis makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "13. Plug-and-play and learned regularization"
+    ]
+  },
+  {
     "objectID": "book/week-13-plug-and-play.html#proximal-algorithms",
     "href": "book/week-13-plug-and-play.html#proximal-algorithms",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Proximal Algorithms",
-    "text": "Proximal Algorithms\nA standard variational model is\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x\n\\frac{1}{2}\\|Ax-y\\|_2^2+\\lambda R(x).\n\nThe data term uses the forward model. The regularizer encodes image structure.\nFor\n\nD(x)=\\frac{1}{2}\\|Ax-y\\|_2^2,\n\nthe gradient is\n\n\\nabla D(x)=A^\\top(Ax-y).\n\nA data-consistency step is\n\nz^k=x^k-\\tau A^\\top(Ax^k-y).\n\nThe proximal operator of R is\n\n\\operatorname{prox}_{\\lambda R}(z)\n=\n\\operatorname*{argmin}_x\n\\frac{1}{2}\\|x-z\\|_2^2+\\lambda R(x).\n\nIt asks for an image close to z but preferred by the prior R.",
+    "text": "Proximal Algorithms\nA standard variational model is\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x\n\\frac{1}{2}\\|Ax-y\\|_2^2+\\lambda R(x).\n\nThe data term uses the forward model. The regularizer encodes image structure.\nFor\n\nD(x)=\\frac{1}{2}\\|Ax-y\\|_2^2,\n\nthe gradient is\n\n\\nabla D(x)=A^\\top(Ax-y).\n\nA data-consistency step is\n\nz^k=x^k-\\tau A^\\top(Ax^k-y).\n\nThe proximal operator of R is\n\n\\operatorname{prox}_{\\lambda R}(z)\n=\n\\operatorname*{argmin}_x\n\\frac{1}{2}\\|x-z\\|_2^2+\\lambda R(x).\n\nIt asks for an image close to z but preferred by the prior R.\nThe proximal operator can be interpreted as a special kind of denoiser. The input z is an intermediate image that has been pulled toward the data but may contain noise, artifacts, or unstable components. The proximal step returns a cleaner or more regular image according to the prior R.\nFor example:\n\nan l1 proximal operator performs soft thresholding;\na TV proximal operator performs TV denoising;\na constraint proximal operator projects onto an allowed set.\n\nThis interpretation motivates plug-and-play: if a proximal map behaves like a denoiser, can we use a stronger denoiser in its place?",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5401,7 +5485,7 @@
     "href": "book/week-13-plug-and-play.html#proximal-gradient",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Proximal Gradient",
-    "text": "Proximal Gradient\nPutting the steps together gives\n\nz^k=x^k-\\tau A^\\top(Ax^k-y),\n\n\nx^{k+1}\n=\n\\operatorname{prox}_{\\tau\\lambda R}(z^k).\n\nThe proximal step receives a corrupted intermediate image z^k and returns a more regular image. This sounds like denoising.\n\n\nPlug-and-play replaces a proximal map by a denoising operator.",
+    "text": "Proximal Gradient\nPutting the steps together gives\n\nz^k=x^k-\\tau A^\\top(Ax^k-y),\n\n\nx^{k+1}\n=\n\\operatorname{prox}_{\\tau\\lambda R}(z^k).\n\nThe proximal step receives a corrupted intermediate image z^k and returns a more regular image. This sounds like denoising.\n\n\nPlug-and-play replaces a proximal map by a denoising operator.\n\nThe replacement is simple to write but conceptually deep. In classical proximal gradient, the denoising step corresponds to a known regularizer R. In plug-and-play, the denoiser may not correspond to any explicit R that we can write down.\nThis gives us a powerful image model, but it changes what we can prove and monitor.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5413,7 +5497,7 @@
     "href": "book/week-13-plug-and-play.html#plug-and-play-update",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Plug-and-Play Update",
-    "text": "Plug-and-Play Update\nPlug-and-play reconstruction uses\n\nz^k=x^k-\\tau A^\\top(Ax^k-y),\n\n\nx^{k+1}=D_\\sigma(z^k),\n\nwhere D_\\sigma is a denoising operator.\n\n\nPnP alternates between data consistency and denoising.\n\nThe denoiser can be Gaussian smoothing, median filtering, wavelet thresholding, non-local means, a learned neural-network denoiser, or a learned patch prior.\nThe data-consistency step still uses the forward model A, the adjoint A^\\top, the measured data y, and the data term. PnP does not throw away physics; it uses physics between denoising steps.",
+    "text": "Plug-and-Play Update\nPlug-and-play reconstruction uses\n\nz^k=x^k-\\tau A^\\top(Ax^k-y),\n\n\nx^{k+1}=D_\\sigma(z^k),\n\nwhere D_\\sigma is a denoising operator.\n\n\nPnP alternates between data consistency and denoising.\n\nThe denoiser can be Gaussian smoothing, median filtering, wavelet thresholding, non-local means, a learned neural-network denoiser, or a learned patch prior.\nThe data-consistency step still uses the forward model A, the adjoint A^\\top, the measured data y, and the data term. PnP does not throw away physics; it uses physics between denoising steps.\nReading the update as two alternating forces:\n\nthe gradient step asks the reconstruction to explain the measurement;\nthe denoiser step asks the reconstruction to look like a clean image.\n\nThe balance between these two forces determines the behavior of the algorithm. If the denoiser dominates, the result can become plausible but inconsistent with the data. If the data term dominates, noise and artifacts may remain.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5425,7 +5509,7 @@
     "href": "book/week-13-plug-and-play.html#explicit-versus-implicit-prior",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Explicit Versus Implicit Prior",
-    "text": "Explicit Versus Implicit Prior\nIn classical proximal gradient, the regularizer R is explicit:\n\nx^{k+1}\n=\n\\operatorname{prox}_{\\tau\\lambda R}(z^k).\n\nIn plug-and-play,\n\nx^{k+1}=D_\\sigma(z^k).\n\nIf D_\\sigma is not exactly a proximal operator, the iteration may not minimize a known objective. The prior is implicit: it is represented by the behavior of the denoiser.\nThis gives flexibility, but it changes the theory.",
+    "text": "Explicit Versus Implicit Prior\nIn classical proximal gradient, the regularizer R is explicit:\n\nx^{k+1}\n=\n\\operatorname{prox}_{\\tau\\lambda R}(z^k).\n\nIn plug-and-play,\n\nx^{k+1}=D_\\sigma(z^k).\n\nIf D_\\sigma is not exactly a proximal operator, the iteration may not minimize a known objective. The prior is implicit: it is represented by the behavior of the denoiser.\nThis gives flexibility, but it changes the theory.\nAn implicit prior can be very expressive. A modern denoiser may know about textures, edges, repeated patterns, and object-like structures in a way that TV or wavelets do not. But the price is that the prior is harder to inspect.\nFor a classical prior, we can read the penalty. For a learned denoiser, we often need experiments to understand what it preserves, removes, or invents.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5445,11 +5529,23 @@
     ]
   },
   {
+    "objectID": "book/week-13-plug-and-play.html#plug-and-play-red-and-unrolling",
+    "href": "book/week-13-plug-and-play.html#plug-and-play-red-and-unrolling",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Plug-and-Play, RED, And Unrolling",
+    "text": "Plug-and-Play, RED, And Unrolling\nThere are several related ways to combine learning and reconstruction.\nPlug-and-play replaces a proximal operator with a denoiser:\n\nx^{k+1}=D_\\theta(z^k).\n\nRegularization by denoising, often called RED, tries to build an explicit regularization idea around the denoiser. The details are more advanced than we need here, but the goal is similar: use denoising behavior as image prior information.\nUnrolled methods take a fixed number of iterations and turn them into a trainable network. A schematic unrolled update is\n\nx^{k+1}\n=\nG_{\\theta_k}\n\\left(x^k,\\ A^\\top(Ax^k-y)\\right).\n\nHere the network receives both the current image and a data-consistency signal. Unrolling is often more flexible than classical PnP because the update itself can be trained end-to-end.\nThe common structure is:\n\n\\text{measurement model}\n+\n\\text{learned image correction}.\n\nThat is the main idea students should keep.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "13. Plug-and-play and learned regularization"
+    ]
+  },
+  {
     "objectID": "book/week-13-plug-and-play.html#deblurring-example",
     "href": "book/week-13-plug-and-play.html#deblurring-example",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Deblurring Example",
-    "text": "Deblurring Example\nSuppose\n\ny=Ax+\\eta\n\nis a blurred and noisy image. We can compare Tikhonov deblurring, plug-and-play with Gaussian denoising, and plug-and-play with a learned PCA patch denoiser.\n\n\nDifferent priors create different deblurring behavior.\n\nTikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.\n\n\nIteration curves help diagnose convergence and reconstruction quality in examples where ground truth is known.",
+    "text": "Deblurring Example\nSuppose\n\ny=Ax+\\eta\n\nis a blurred and noisy image. We can compare Tikhonov deblurring, plug-and-play with Gaussian denoising, and plug-and-play with a learned PCA patch denoiser.\n\n\nDifferent priors create different deblurring behavior.\n\nTikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.\nWhen reading this comparison, ask what each prior believes. Tikhonov believes small energy is good. Gaussian denoising believes smoothness is good. A learned patch denoiser believes images should resemble the training patches. The differences in the reconstructions are consequences of those beliefs.\n\n\nIteration curves help diagnose convergence and reconstruction quality in examples where ground truth is known.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5461,7 +5557,7 @@
     "href": "book/week-13-plug-and-play.html#fixed-points",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Fixed Points",
-    "text": "Fixed Points\nPnP is often analyzed as a fixed-point iteration:\n\nx^\\star\n=\nD_\\sigma\\!\\left(x^\\star-\\tau A^\\top(Ax^\\star-y)\\right).\n\nThe fixed point balances data consistency with denoiser preference.\n\n\nDenoising strength controls the tradeoff between stability and fidelity.\n\nIf denoising is too weak, noise and inversion artifacts remain. If denoising is too strong, details are removed and the result may move away from measured data.",
+    "text": "Fixed Points\nPnP is often analyzed as a fixed-point iteration:\n\nx^\\star\n=\nD_\\sigma\\!\\left(x^\\star-\\tau A^\\top(Ax^\\star-y)\\right).\n\nThe fixed point balances data consistency with denoiser preference.\n\n\nDenoising strength controls the tradeoff between stability and fidelity.\n\nIf denoising is too weak, noise and inversion artifacts remain. If denoising is too strong, details are removed and the result may move away from measured data.\nA fixed point is not automatically the true image. It is an image that the algorithm no longer changes. The data step and denoising step have reached a balance.\nThis distinction is important. Convergence means the iteration settles. Correctness means the settled image is faithful to the scene and measurements. An algorithm can converge to a biased or hallucinated solution.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5473,7 +5569,7 @@
     "href": "book/week-13-plug-and-play.html#convergence-and-trust",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Convergence And Trust",
-    "text": "Convergence And Trust\nFor convex R and suitable step size, classical proximal gradient has a clear story:\n\nit minimizes a known objective;\nobjective values can be monitored;\nconvergence can be proved under standard assumptions.\n\nFor a general denoiser:\n\nthere may be no explicit R;\nthere may be no decreasing objective;\nconvergence depends on properties of D_\\sigma;\na fixed point may not be a minimizer.\n\nThis does not make PnP unusable. It means validation becomes central.",
+    "text": "Convergence And Trust\nFor convex R and suitable step size, classical proximal gradient has a clear story:\n\nit minimizes a known objective;\nobjective values can be monitored;\nconvergence can be proved under standard assumptions.\n\nFor a general denoiser:\n\nthere may be no explicit R;\nthere may be no decreasing objective;\nconvergence depends on properties of D_\\sigma;\na fixed point may not be a minimizer.\n\nThis does not make PnP unusable. It means validation becomes central.\nUseful diagnostics include:\n\ndata residual \\|Ax^k-y\\|;\nfixed-point change \\|x^{k+1}-x^k\\|;\nreconstruction error when ground truth is available;\nsensitivity to denoiser strength;\nperformance under distribution shift;\nvisual inspection of task-critical structures.\n\nThe goal is to understand not only whether the output looks good, but whether the algorithm is behaving consistently.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5493,11 +5589,35 @@
     ]
   },
   {
+    "objectID": "book/week-13-plug-and-play.html#what-students-should-trust",
+    "href": "book/week-13-plug-and-play.html#what-students-should-trust",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "What Students Should Trust",
+    "text": "What Students Should Trust\nTrust should be earned by evidence, not by method category. A classical method can fail because the model is wrong. A learned method can fail because the training distribution is wrong. A hybrid method can fail because the denoiser and data term are poorly balanced.\nFor a plug-and-play reconstruction, a reasonable checklist is:\n\n\n\n\n\n\n\nQuestion\nWhy it matters\n\n\n\n\nDoes A\\hat{x} match y within expected noise?\nchecks measurement consistency\n\n\nWas the denoiser trained on relevant data?\nchecks prior relevance\n\n\nDoes the result change under small perturbations?\nchecks stability\n\n\nDoes it preserve known structures?\nchecks task reliability\n\n\nDoes it outperform simple baselines?\nchecks practical value\n\n\n\nThis is the habit of mind the course aims to build: not “classical good, neural bad” or the reverse, but careful reasoning about what information is measured, what information is assumed, and what evidence supports the reconstruction.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "13. Plug-and-play and learned regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-13-plug-and-play.html#common-mistakes",
+    "href": "book/week-13-plug-and-play.html#common-mistakes",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Common Mistakes",
+    "text": "Common Mistakes\nA first mistake is to think PnP is just denoising after reconstruction. It is not. The denoiser is inserted inside the reconstruction loop, alternating with data consistency.\nA second mistake is to think a stronger denoiser is always better. Strong denoising can erase true structures or pull the image away from the data.\nA third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "13. Plug-and-play and learned regularization"
+    ]
+  },
+  {
     "objectID": "book/week-13-plug-and-play.html#computation",
     "href": "book/week-13-plug-and-play.html#computation",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Computation",
-    "text": "Computation\nThe Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.\nRun:\npython3 examples/week13_plug_and_play.py\nor open the notebook in Colab from the link at the top of this chapter.",
+    "text": "Computation\nThe Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.\nRun:\npython3 examples/week13_plug_and_play.py\nor open the notebook in Colab from the link at the top of this chapter.\nIn the notebook, compare the data residual and the visual result as denoising strength changes. Look for cases where the image looks cleaner but becomes less faithful to the measured data.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5509,7 +5629,7 @@
     "href": "book/week-13-plug-and-play.html#exercises",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Exercises",
-    "text": "Exercises\n\nWhat does a proximal operator do?\nWhat does plug-and-play replace in proximal gradient?\nWhy might PnP not minimize a known objective?\nWhat is a fixed point of the PnP iteration?\nGive two safeguards for using learned denoisers in high-stakes imaging.",
+    "text": "Exercises\n\nWhat does a proximal operator do?\nWhat does plug-and-play replace in proximal gradient?\nWhy might PnP not minimize a known objective?\nWhat is a fixed point of the PnP iteration?\nGive two safeguards for using learned denoisers in high-stakes imaging.\nExplain the difference between convergence of a PnP iteration and correctness of the reconstruction.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -5521,7 +5641,7 @@
     "href": "book/week-13-plug-and-play.html#takeaways",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Takeaways",
-    "text": "Takeaways\n\nPlug-and-play keeps the forward model and inserts a denoiser.\nThe denoiser acts as an implicit prior.\nLearned denoisers can improve reconstructions when data match training.\nPnP needs careful validation because objective and convergence guarantees change.\nAlways check both image quality and consistency with measurements.",
+    "text": "Takeaways\n\nPlug-and-play keeps the forward model and inserts a denoiser.\nThe denoiser acts as an implicit prior.\nLearned denoisers can improve reconstructions when data match training.\nPnP needs careful validation because objective and convergence guarantees change.\nAlways check both image quality and consistency with measurements.\nHybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",

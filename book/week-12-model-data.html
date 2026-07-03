@@ -387,14 +387,20 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#where-does-prior-knowledge-come-from" id="toc-where-does-prior-knowledge-come-from" class="nav-link" data-scroll-target="#where-does-prior-knowledge-come-from">Where Does Prior Knowledge Come From?</a></li>
+  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#model-based-imaging" id="toc-model-based-imaging" class="nav-link" data-scroll-target="#model-based-imaging">Model-Based Imaging</a></li>
+  <li><a href="#what-model-based-does-not-mean" id="toc-what-model-based-does-not-mean" class="nav-link" data-scroll-target="#what-model-based-does-not-mean">What Model-Based Does Not Mean</a></li>
   <li><a href="#data-driven-imaging" id="toc-data-driven-imaging" class="nav-link" data-scroll-target="#data-driven-imaging">Data-Driven Imaging</a></li>
+  <li><a href="#learned-inverse-maps" id="toc-learned-inverse-maps" class="nav-link" data-scroll-target="#learned-inverse-maps">Learned Inverse Maps</a></li>
   <li><a href="#strengths-and-risks" id="toc-strengths-and-risks" class="nav-link" data-scroll-target="#strengths-and-risks">Strengths And Risks</a></li>
   <li><a href="#neural-networks-as-operators" id="toc-neural-networks-as-operators" class="nav-link" data-scroll-target="#neural-networks-as-operators">Neural Networks As Operators</a></li>
+  <li><a href="#hybrid-methods" id="toc-hybrid-methods" class="nav-link" data-scroll-target="#hybrid-methods">Hybrid Methods</a></li>
   <li><a href="#a-small-learned-patch-prior" id="toc-a-small-learned-patch-prior" class="nav-link" data-scroll-target="#a-small-learned-patch-prior">A Small Learned Patch Prior</a></li>
   <li><a href="#capacity-and-generalization" id="toc-capacity-and-generalization" class="nav-link" data-scroll-target="#capacity-and-generalization">Capacity And Generalization</a></li>
   <li><a href="#comparing-the-philosophies" id="toc-comparing-the-philosophies" class="nav-link" data-scroll-target="#comparing-the-philosophies">Comparing The Philosophies</a></li>
+  <li><a href="#data-consistency" id="toc-data-consistency" class="nav-link" data-scroll-target="#data-consistency">Data Consistency</a></li>
   <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -445,6 +451,29 @@ window.Quarto = {
 <p>Model-based methods write assumptions; data-driven methods learn assumptions from examples.</p>
 </div>
 </section>
+<section id="why-this-chapter-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
+<p>This chapter is the explicit turning point of the course. Up to now, we have built reconstruction methods by writing down assumptions:</p>
+<p><span class="math display">
+y = Ax+\eta,
+\qquad
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R(x).
+</span></p>
+<p>The data term came from a measurement model. The regularizer came from a mathematical prior: small energy, smoothness, sparse gradients, sparse transform coefficients, or wavelet structure.</p>
+<p>Data-driven imaging changes where some of that knowledge comes from. Instead of choosing every part by hand, we use examples to learn a map, a prior, a denoiser, a feature representation, or an algorithmic update.</p>
+<p>The central identity of the course appears here:</p>
+<p><span class="math display">
+\text{neural imaging}
+=
+\text{inverse problems}
++
+\text{learned image models}.
+</span></p>
+<p>Neural networks are not outside inverse problems. They are one answer to the same difficulty: the measured data are incomplete, noisy, unstable, or ambiguous, so reconstruction requires additional structure.</p>
+</section>
 <section id="model-based-imaging" class="level2">
 <h2 class="anchored" data-anchor-id="model-based-imaging">Model-Based Imaging</h2>
 <p>A classical reconstruction often solves</p>
@@ -465,6 +494,17 @@ D(Ax,y)+\lambda R(x).
 </ul>
 <p>Examples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.</p>
 <p>Model-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.</p>
+<p>The advantage of explicit modeling is that each assumption can be inspected. If a reconstruction fails, we can ask whether the forward model was wrong, the noise model was wrong, the regularizer was too simple, or the parameter was badly chosen.</p>
+<p>The limitation is also clear. Handcrafted priors are usually simple because they must be written in a short mathematical form and optimized. Natural images contain structure beyond smoothness, TV, or wavelet sparsity: repeated patterns, semantic objects, textures, anatomy, material boundaries, and long-range dependencies. Model-based methods may not capture these structures well.</p>
+</section>
+<section id="what-model-based-does-not-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-model-based-does-not-mean">What Model-Based Does Not Mean</h2>
+<p>Model-based does not mean old-fashioned or inferior. It means the reconstruction rule contains explicit assumptions about the measurement and image. Many excellent modern methods remain model-based.</p>
+<p>Model-based also does not require the whole forward process to be linear. We often write <span class="math inline">Ax</span> because it is mathematically clear, but a forward model can be nonlinear:</p>
+<p><span class="math display">
+y=f(x)+\eta.
+</span></p>
+<p>The important idea is that the reconstruction respects how the data were produced.</p>
 </section>
 <section id="data-driven-imaging" class="level2">
 <h2 class="anchored" data-anchor-id="data-driven-imaging">Data-Driven Imaging</h2>
@@ -490,6 +530,24 @@ D(Ax,y)+\lambda R(x).
 <li>deployment domain.</li>
 </ul>
 <p>The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.</p>
+<p>The supervised learning problem should be read as learning an inverse map from examples. The training data contain pairs:</p>
+<p><span class="math display">
+\text{degraded or measured data } y_i
+\quad\longleftrightarrow\quad
+\text{desired image } x_i.
+</span></p>
+<p>The network is trained so that <span class="math inline">f_\theta(y_i)</span> is close to <span class="math inline">x_i</span> under the chosen loss. After training, the same map is applied to new measurements.</p>
+<p>This is powerful, but it changes the meaning of the reconstruction. The output is not only determined by the new measurement <span class="math inline">y</span>. It is also shaped by the training set, the architecture, and the loss.</p>
+</section>
+<section id="learned-inverse-maps" class="level2">
+<h2 class="anchored" data-anchor-id="learned-inverse-maps">Learned Inverse Maps</h2>
+<p>The simplest data-driven imaging picture is</p>
+<p><span class="math display">
+\hat{x}=f_\theta(y).
+</span></p>
+<p>This is a learned inverse map. It tries to approximate the transformation from data to clean image directly.</p>
+<p>For denoising, <span class="math inline">y</span> may be a noisy image and <span class="math inline">x</span> a clean image. For super-resolution, <span class="math inline">y</span> may be a low-resolution image and <span class="math inline">x</span> a high-resolution image. For reconstruction, <span class="math inline">y</span> may be sensor measurements and <span class="math inline">x</span> the desired image.</p>
+<p>The risk is that a direct learned inverse may ignore the physics of the measurement. If the network produces an image that looks plausible but does not satisfy <span class="math inline">Ax\approx y</span>, then the image is not faithful to the measured data.</p>
 </section>
 <section id="strengths-and-risks" class="level2">
 <h2 class="anchored" data-anchor-id="strengths-and-risks">Strengths And Risks</h2>
@@ -503,6 +561,8 @@ D(Ax,y)+\lambda R(x).
 <li>hallucinated structure looks plausible.</li>
 </ul>
 <p>The last point matters especially in medical and scientific imaging: plausible is not the same as measured.</p>
+<p>The phrase “hallucination” means that the method adds structure that was not supported by the measurement. In a low-stakes photographic application, this may be acceptable or even desired. In scientific imaging, medical imaging, forensics, or measurement-driven tasks, it can be dangerous.</p>
+<p>The problem is not that learned methods are uniquely untrustworthy. Handcrafted priors can also hallucinate in a quieter way: TV can create artificial edges or plateaus, wavelets can remove texture, and Tikhonov can oversmooth. The difference is that learned priors can encode complex training-set expectations that are harder to see directly.</p>
 </section>
 <section id="neural-networks-as-operators" class="level2">
 <h2 class="anchored" data-anchor-id="neural-networks-as-operators">Neural Networks As Operators</h2>
@@ -523,6 +583,26 @@ x^{k+1}
 \text{learned step using } A,\ A^\top,\ y.
 </span></p>
 <p>This second viewpoint leads naturally to plug-and-play and learned regularization.</p>
+</section>
+<section id="hybrid-methods" class="level2">
+<h2 class="anchored" data-anchor-id="hybrid-methods">Hybrid Methods</h2>
+<p>Many successful imaging methods are neither purely model-based nor purely data-driven. They combine:</p>
+<ul>
+<li>explicit forward model <span class="math inline">A</span>;</li>
+<li>explicit data-consistency step;</li>
+<li>learned denoiser, prior, or update rule;</li>
+<li>iterative algorithm structure;</li>
+<li>validation on representative data.</li>
+</ul>
+<p>A typical hybrid idea is:</p>
+<p><span class="math display">
+x^{k+1}
+=
+\text{learned correction}
+\left(x^k,\ A^\top(Ax^k-y)\right).
+</span></p>
+<p>The term <span class="math inline">A^\top(Ax^k-y)</span> tells the network how the current reconstruction disagrees with the data. The learned part decides how to correct the image using training-set knowledge.</p>
+<p>This is the safest conceptual bridge to neural imaging: keep the physics where it is known, and learn the image model where handcrafted priors are too limited.</p>
 </section>
 <section id="a-small-learned-patch-prior" class="level2">
 <h2 class="anchored" data-anchor-id="a-small-learned-patch-prior">A Small Learned Patch Prior</h2>
@@ -545,6 +625,15 @@ x^{k+1}
 <li>average overlapping reconstructed patches.</li>
 </ol>
 <p>This is data-driven even though it is not a neural network.</p>
+<p>The patch PCA example is important because it removes the mystery from “learning.” We are not yet using a deep network. We are learning a low-dimensional representation from clean patches. The learned components are the directions of variation that appear often in the training patches.</p>
+<p>This lets students see the basic ingredients of data-driven imaging without the complexity of a large neural architecture:</p>
+<ul>
+<li>collect examples;</li>
+<li>choose a model class;</li>
+<li>fit parameters;</li>
+<li>apply the fitted model to new data;</li>
+<li>test whether it generalizes.</li>
+</ul>
 <div class="figure">
 <p><img src="../assets/figures/week12-denoising-comparison.png" class="img-fluid" alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"></p>
 <p>Handcrafted and learned priors can be compared on the same denoising task.</p>
@@ -563,6 +652,8 @@ x^{k+1}
 <p>Generalization is central to learned imaging.</p>
 </div>
 <p>Distribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.</p>
+<p>Distribution shift can be subtle. A denoiser trained on natural photographs may fail on microscopy. A network trained on one scanner may fail on another scanner. A super-resolution method trained on one degradation model may fail when the real blur or noise is different.</p>
+<p>This is why training data are part of the method. In a paper or project, one should describe not only the network but also what it was trained on and how the test data differ from the training data.</p>
 </section>
 <section id="comparing-the-philosophies" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-the-philosophies">Comparing The Philosophies</h2>
@@ -609,6 +700,23 @@ x^{k+1}
 </table>
 <p>Many modern methods combine both philosophies: explicit forward model, learned denoiser or prior, iterative algorithm structure, and data-consistency steps.</p>
 </section>
+<section id="data-consistency" class="level2">
+<h2 class="anchored" data-anchor-id="data-consistency">Data Consistency</h2>
+<p>Data consistency means that the reconstruction should agree with the measurements under the forward model:</p>
+<p><span class="math display">
+A\hat{x}\approx y.
+</span></p>
+<p>This check is not the whole evaluation, because noisy data should not be fit perfectly. But it is essential. If two reconstructions look equally plausible, the one that better respects the measured data is usually more trustworthy.</p>
+<p>For a learned method, data consistency can be:</p>
+<ul>
+<li>enforced by architecture;</li>
+<li>included as a loss term;</li>
+<li>applied as a projection or correction step;</li>
+<li>monitored as an evaluation metric;</li>
+<li>used inside an unrolled algorithm.</li>
+</ul>
+<p>This is one reason inverse-problem thinking remains useful in deep learning. The forward model gives us a way to test the output against the actual measurement.</p>
+</section>
 <section id="evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
 <p>Pixel RMSE is not enough. We may also need:</p>
@@ -621,12 +729,19 @@ x^{k+1}
 </ul>
 <p>This is the doorway to plug-and-play and learned regularization.</p>
 </section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<p>A first mistake is to think that data-driven methods do not use assumptions. They do. The assumptions are encoded in the data, architecture, loss, optimizer, and training procedure.</p>
+<p>A second mistake is to think that a visually impressive reconstruction is automatically correct. Visual plausibility and measurement consistency are different.</p>
+<p>A third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.</p>
+</section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
 <p>The Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.</p>
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week12_model_data.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<p>In the notebook, train or fit the patch prior on one image family and test it on another. Watch how performance changes. That experiment is the small-scale version of the generalization problem in learned imaging.</p>
 </section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
@@ -636,6 +751,7 @@ x^{k+1}
 <li>Why is a neural network a nonlinear operator?</li>
 <li>What is distribution shift?</li>
 <li>Give one reason hallucinated structure is dangerous in scientific imaging.</li>
+<li>Explain why data consistency is still important for a supervised neural reconstruction method.</li>
 </ol>
 </section>
 <section id="takeaways" class="level2">
@@ -646,6 +762,7 @@ x^{k+1}
 <li>Neural networks are parameterized nonlinear operators.</li>
 <li>Learned methods can be powerful but depend on training data.</li>
 <li>Modern imaging often combines physics, optimization, and learning.</li>
+<li>A learned reconstruction should be judged by both plausibility and consistency with measured data.</li>
 </ul>
 
 
