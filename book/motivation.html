@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Model-Based vs Data-Driven Imaging – MATH 435: Mathematical Imaging</title>
+<title>Motivation – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,41 +22,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -204,7 +169,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-12-model-data.html">12. Model-based vs data-driven imaging</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/motivation.html">Motivation: inverse problems to neural networks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -232,7 +197,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/motivation.html" class="sidebar-item-text sidebar-link">
+  <a href="../book/motivation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Motivation: inverse problems to neural networks</span></a>
   </div>
 </li>
@@ -346,7 +311,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../book/week-12-model-data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../book/week-12-model-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">12. Model-based vs data-driven imaging</span></a>
   </div>
 </li>
@@ -385,29 +350,23 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#where-does-prior-knowledge-come-from" id="toc-where-does-prior-knowledge-come-from" class="nav-link" data-scroll-target="#where-does-prior-knowledge-come-from">Where Does Prior Knowledge Come From?</a></li>
-  <li><a href="#model-based-imaging" id="toc-model-based-imaging" class="nav-link" data-scroll-target="#model-based-imaging">Model-Based Imaging</a></li>
-  <li><a href="#data-driven-imaging" id="toc-data-driven-imaging" class="nav-link" data-scroll-target="#data-driven-imaging">Data-Driven Imaging</a></li>
-  <li><a href="#strengths-and-risks" id="toc-strengths-and-risks" class="nav-link" data-scroll-target="#strengths-and-risks">Strengths And Risks</a></li>
-  <li><a href="#neural-networks-as-operators" id="toc-neural-networks-as-operators" class="nav-link" data-scroll-target="#neural-networks-as-operators">Neural Networks As Operators</a></li>
-  <li><a href="#a-small-learned-patch-prior" id="toc-a-small-learned-patch-prior" class="nav-link" data-scroll-target="#a-small-learned-patch-prior">A Small Learned Patch Prior</a></li>
-  <li><a href="#capacity-and-generalization" id="toc-capacity-and-generalization" class="nav-link" data-scroll-target="#capacity-and-generalization">Capacity And Generalization</a></li>
-  <li><a href="#comparing-the-philosophies" id="toc-comparing-the-philosophies" class="nav-link" data-scroll-target="#comparing-the-philosophies">Comparing The Philosophies</a></li>
-  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
-  <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
+  <li><a href="#the-central-question" id="toc-the-central-question" class="nav-link active" data-scroll-target="#the-central-question">The Central Question</a></li>
+  <li><a href="#why-images-are-different" id="toc-why-images-are-different" class="nav-link" data-scroll-target="#why-images-are-different">Why Images Are Different</a></li>
+  <li><a href="#classical-reconstruction" id="toc-classical-reconstruction" class="nav-link" data-scroll-target="#classical-reconstruction">Classical Reconstruction</a></li>
+  <li><a href="#the-move-toward-neural-networks" id="toc-the-move-toward-neural-networks" class="nav-link" data-scroll-target="#the-move-toward-neural-networks">The Move Toward Neural Networks</a></li>
+  <li><a href="#what-this-course-is-not" id="toc-what-this-course-is-not" class="nav-link" data-scroll-target="#what-this-course-is-not">What This Course Is Not</a></li>
+  <li><a href="#how-the-book-develops-the-idea" id="toc-how-the-book-develops-the-idea" class="nav-link" data-scroll-target="#how-the-book-develops-the-idea">How The Book Develops The Idea</a></li>
+  <li><a href="#the-habit-of-mind" id="toc-the-habit-of-mind" class="nav-link" data-scroll-target="#the-habit-of-mind">The Habit Of Mind</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-12-model-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/motivation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../book/week-10-sparse-reconstruction.html">Part IV: Sparse and Learned Priors</a></li><li class="breadcrumb-item"><a href="../book/week-12-model-data.html">12. Model-based vs data-driven imaging</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Model-Based vs Data-Driven Imaging</h1>
-<p class="subtitle lead">Chapter 12</p>
+<h1 class="title">Motivation</h1>
+<p class="subtitle lead">From inverse problems to neural networks</p>
 </div>
 
 
@@ -424,148 +383,49 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../slides/week-12-model-data.html">Slides</a> | <a href="../notebooks/week12_model_data.ipynb">Notebook</a> | <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb">Open in Colab</a></p>
-<section id="learning-goals" class="level2">
-<h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
-<p>By the end of this chapter, you should be able to:</p>
-<ul>
-<li>compare model-based and data-driven imaging;</li>
-<li>identify forward models, priors, solvers, and training data;</li>
-<li>interpret a neural network as a parameterized operator;</li>
-<li>explain a small learned patch prior;</li>
-<li>discuss generalization and failure modes.</li>
-</ul>
+<section id="the-central-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-central-question">The Central Question</h2>
+<p>This course is about images, but it is not mainly about displaying images. It is about recovering, interpreting, and trusting images from imperfect data.</p>
+<p>The central question is:</p>
+<blockquote class="blockquote">
+<p>Given measurements produced by an imaging system, what can we infer about the image or object that produced them?</p>
+</blockquote>
+<p>This is an inverse problem. The data are not the object itself. The data are the result of a measurement process.</p>
+<p>In its simplest form, we write</p>
+<p><span class="math display">
+y = A x + \eta.
+</span></p>
+<p>Here <span class="math inline">x</span> is the unknown image or object, <span class="math inline">A</span> is the forward model, <span class="math inline">y</span> is the measured data, and <span class="math inline">\eta</span> represents noise or error. The forward model tells us how an image would produce data. The inverse problem asks us to go in the opposite direction.</p>
+<p>That opposite direction is usually difficult. Information may have been blurred, sampled, hidden, corrupted, or compressed. Some information may be weakened. Some may be missing entirely. A reconstruction method must therefore do more than invert a formula. It must use assumptions.</p>
 </section>
-<section id="where-does-prior-knowledge-come-from" class="level2">
-<h2 class="anchored" data-anchor-id="where-does-prior-knowledge-come-from">Where Does Prior Knowledge Come From?</h2>
-<p>Wavelets gave us a handcrafted representation. We chose the wavelet family, decomposition level, thresholding rule, and threshold strength.</p>
-<p>Data-driven imaging asks a different question: what if some of these choices are learned from examples?</p>
-<div class="figure">
-<p><img src="../assets/figures/week12-two-philosophies.png" class="img-fluid" alt="Diagram comparing model-based imaging and data-driven imaging workflows"></p>
-<p>Model-based methods write assumptions; data-driven methods learn assumptions from examples.</p>
-</div>
+<section id="why-images-are-different" class="level2">
+<h2 class="anchored" data-anchor-id="why-images-are-different">Why Images Are Different</h2>
+<p>Images are not just long signals. They are spatial objects. A pixel has neighbors. Edges have geometry. Textures have scale and orientation. Objects can occlude other objects. Small structures may matter.</p>
+<p>This makes imaging richer than many one-dimensional signal problems. It also makes imaging more dangerous. A reconstruction can look visually plausible while being wrong in a way that matters.</p>
+<p>For example, if pixels are missing from an already recorded image, we can model that as a mask and try to fill in the missing values. But if a person is physically hidden behind a tree, the camera did not measure the hidden part. A method may guess what could be behind the tree, but that guess is not recovered evidence. It is an assumption.</p>
+<p>This distinction is one reason the course returns repeatedly to the same question:</p>
+<blockquote class="blockquote">
+<p>Which part of the result comes from the data, and which part comes from the model?</p>
+</blockquote>
 </section>
-<section id="model-based-imaging" class="level2">
-<h2 class="anchored" data-anchor-id="model-based-imaging">Model-Based Imaging</h2>
-<p>A classical reconstruction often solves</p>
+<section id="classical-reconstruction" class="level2">
+<h2 class="anchored" data-anchor-id="classical-reconstruction">Classical Reconstruction</h2>
+<p>Classical mathematical imaging often solves an optimization problem:</p>
 <p><span class="math display">
 \hat{x}
 =
-\operatorname*{argmin}_x
+\arg\min_x
 D(Ax,y)+\lambda R(x).
 </span></p>
-<p>Here <span class="math inline">D</span> is data fidelity and <span class="math inline">R</span> is the regularizer or prior.</p>
-<p>In a model-based method, we specify:</p>
-<ul>
-<li>the forward model <span class="math inline">A</span>;</li>
-<li>the noise model or data term;</li>
-<li>the regularizer;</li>
-<li>the parameter <span class="math inline">\lambda</span>;</li>
-<li>the optimization method.</li>
-</ul>
-<p>Examples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.</p>
-<p>Model-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.</p>
+<p>The term <span class="math inline">D(Ax,y)</span> measures agreement with the data. It asks whether the reconstructed image, when passed through the forward model, produces measurements close to <span class="math inline">y</span>.</p>
+<p>The term <span class="math inline">R(x)</span> expresses prior knowledge. It may prefer smooth images, sparse coefficients, small gradients, or piecewise-constant regions. The parameter <span class="math inline">\lambda</span> controls the balance between fitting the data and trusting the prior.</p>
+<p>This formula is not only a computational recipe. It is a statement of responsibility. Every reconstruction has assumptions, and those assumptions must be made visible.</p>
 </section>
-<section id="data-driven-imaging" class="level2">
-<h2 class="anchored" data-anchor-id="data-driven-imaging">Data-Driven Imaging</h2>
-<p>Instead of writing the reconstruction rule by hand, a data-driven method learns a function:</p>
-<p><span class="math display">
-\hat{x}=f_\theta(y).
-</span></p>
-<p>The parameters <span class="math inline">\theta</span> are chosen from training data.</p>
-<p>With supervised training pairs <span class="math inline">(y_i,x_i)</span>, one solves</p>
-<p><span class="math display">
-\min_\theta
-\sum_i
-\ell(f_\theta(y_i),x_i).
-</span></p>
-<p>The loss tells the network what counts as a good reconstruction on the training set.</p>
-<p>Data-driven methods still require choices:</p>
-<ul>
-<li>training data;</li>
-<li>architecture;</li>
-<li>loss function;</li>
-<li>optimizer;</li>
-<li>evaluation metric;</li>
-<li>deployment domain.</li>
-</ul>
-<p>The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.</p>
-</section>
-<section id="strengths-and-risks" class="level2">
-<h2 class="anchored" data-anchor-id="strengths-and-risks">Strengths And Risks</h2>
-<p>Data-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.</p>
-<p>They can fail when:</p>
-<ul>
-<li>the test distribution changes;</li>
-<li>training data is biased;</li>
-<li>the loss rewards the wrong thing;</li>
-<li>uncertainty is hidden;</li>
-<li>hallucinated structure looks plausible.</li>
-</ul>
-<p>The last point matters especially in medical and scientific imaging: plausible is not the same as measured.</p>
-</section>
-<section id="neural-networks-as-operators" class="level2">
-<h2 class="anchored" data-anchor-id="neural-networks-as-operators">Neural Networks As Operators</h2>
-<div class="figure">
-<p><img src="../assets/figures/week12-neural-operator.png" class="img-fluid" alt="Diagram of a neural network as a parameterized operator from input image to output image"></p>
-<p>A neural network is a parameterized map from input data to output image.</p>
-</div>
-<p>At a high level, layers combine linear filtering or mixing, nonlinear activations, many learned parameters, and composition of simple operations.</p>
-<p>A composition of only linear layers is still linear. Nonlinear activations allow the map to adapt to image content.</p>
-<p>Some methods ignore the explicit forward model:</p>
-<p><span class="math display">
-\hat{x}=f_\theta(y).
-</span></p>
-<p>Others include it inside an iterative reconstruction:</p>
-<p><span class="math display">
-x^{k+1}
-=
-\text{learned step using } A,\ A^\top,\ y.
-</span></p>
-<p>This second viewpoint leads naturally to plug-and-play and learned regularization.</p>
-</section>
-<section id="a-small-learned-patch-prior" class="level2">
-<h2 class="anchored" data-anchor-id="a-small-learned-patch-prior">A Small Learned Patch Prior</h2>
-<p>Learning does not require a large neural network. A simple patch PCA prior already illustrates the main idea.</p>
-<p>We extract many clean image patches and learn:</p>
-<ul>
-<li>a mean patch;</li>
-<li>principal patch directions;</li>
-<li>a low-dimensional patch model.</li>
-</ul>
-<div class="figure">
-<p><img src="../assets/figures/week12-pca-atoms.png" class="img-fluid" alt="Mean patch and learned PCA patch atoms from image patches"></p>
-<p>Patch PCA learns common directions of variation from examples.</p>
-</div>
-<p>For each noisy patch, denoising can:</p>
-<ol type="1">
-<li>subtract the learned mean patch;</li>
-<li>project onto the first few learned directions;</li>
-<li>reconstruct the patch;</li>
-<li>average overlapping reconstructed patches.</li>
-</ol>
-<p>This is data-driven even though it is not a neural network.</p>
-<div class="figure">
-<p><img src="../assets/figures/week12-denoising-comparison.png" class="img-fluid" alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"></p>
-<p>Handcrafted and learned priors can be compared on the same denoising task.</p>
-</div>
-</section>
-<section id="capacity-and-generalization" class="level2">
-<h2 class="anchored" data-anchor-id="capacity-and-generalization">Capacity And Generalization</h2>
-<p>The number of retained PCA components controls model capacity.</p>
-<div class="figure">
-<p><img src="../assets/figures/week12-capacity-curve.png" class="img-fluid" alt="Patch PCA singular spectrum and denoising RMSE versus number of components"></p>
-<p>Too few components oversmooth; too many components preserve noise.</p>
-</div>
-<p>If the learned prior is trained on one image family and tested on another, performance can change.</p>
-<div class="figure">
-<p><img src="../assets/figures/week12-distribution-shift.png" class="img-fluid" alt="Learned PCA denoising on a camera crop and a coins crop, showing distribution dependence"></p>
-<p>Generalization is central to learned imaging.</p>
-</div>
-<p>Distribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.</p>
-</section>
-<section id="comparing-the-philosophies" class="level2">
-<h2 class="anchored" data-anchor-id="comparing-the-philosophies">Comparing The Philosophies</h2>
+<section id="the-move-toward-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="the-move-toward-neural-networks">The Move Toward Neural Networks</h2>
+<p>Neural networks enter naturally once the course has developed this language.</p>
+<p>Instead of hand-designing a prior <span class="math inline">R(x)</span>, we may try to learn prior knowledge from examples. Instead of designing every step of an iterative algorithm, we may learn part of the reconstruction rule. Instead of writing a closed-form regularizer, we may use a trained denoiser inside an algorithm.</p>
+<p>This gives several views of neural reconstruction:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -574,79 +434,83 @@ x^{k+1}
 </colgroup>
 <thead>
 <tr class="header">
-<th>Question</th>
-<th>Model-based</th>
-<th>Data-driven</th>
+<th>View</th>
+<th>Mathematical form</th>
+<th>Interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Prior comes from</td>
-<td>formulas and modeling</td>
-<td>examples and loss</td>
+<td>learned inverse map</td>
+<td><span class="math inline">\hat{x}=f_\theta(y)</span></td>
+<td>learn the reconstruction directly from data</td>
 </tr>
 <tr class="even">
-<td>Interpretability</td>
-<td>usually higher</td>
-<td>often lower</td>
+<td>learned prior</td>
+<td><span class="math inline">R_\theta(x)</span></td>
+<td>learn what plausible images look like</td>
 </tr>
 <tr class="odd">
-<td>Data requirement</td>
-<td>lower</td>
-<td>higher</td>
+<td>learned denoiser</td>
+<td><span class="math inline">D_\theta(z)</span></td>
+<td>use a network as an image-cleaning operator</td>
 </tr>
 <tr class="even">
-<td>Physics</td>
-<td>explicit</td>
-<td>sometimes implicit</td>
+<td>unrolled algorithm</td>
+<td><span class="math inline">x^{k+1}=F_{\theta,k}(x^k,y)</span></td>
+<td>learn parts of an iterative solver</td>
 </tr>
 <tr class="odd">
-<td>Failure mode</td>
-<td>wrong model or prior</td>
-<td>distribution shift or hallucination</td>
+<td>plug-and-play method</td>
+<td><span class="math inline">x^{k+1}=D_\theta(x^k-\tau A^\top(Ax^k-y))</span></td>
+<td>combine data consistency with a learned denoiser</td>
 </tr>
 </tbody>
 </table>
-<p>Many modern methods combine both philosophies: explicit forward model, learned denoiser or prior, iterative algorithm structure, and data-consistency steps.</p>
-</section>
-<section id="evaluation" class="level2">
-<h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
-<p>Pixel RMSE is not enough. We may also need:</p>
+<p>This is why the course does not treat neural networks as a separate topic added at the end. Neural networks are one answer to questions that arise naturally from inverse problems:</p>
 <ul>
-<li>task accuracy;</li>
-<li>uncertainty estimates;</li>
-<li>robustness to distribution shift;</li>
-<li>consistency with measured data;</li>
-<li>expert review.</li>
+<li>What assumptions should we impose on unknown images?</li>
+<li>Can those assumptions be learned from data?</li>
+<li>How do we keep reconstructions consistent with measurements?</li>
+<li>How do we detect hallucinations or failures?</li>
+<li>How do we evaluate reliability under distribution shift?</li>
 </ul>
-<p>This is the doorway to plug-and-play and learned regularization.</p>
 </section>
-<section id="computation" class="level2">
-<h2 class="anchored" data-anchor-id="computation">Computation</h2>
-<p>The Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.</p>
-<p>Run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week12_model_data.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or open the notebook in Colab from the link at the top of this chapter.</p>
+<section id="what-this-course-is-not" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-course-is-not">What This Course Is Not</h2>
+<p>This course is not a general course on deep learning. It does not begin with architectures, optimizers, and benchmark datasets.</p>
+<p>Instead, it asks what neural networks mean in an imaging context. A network that reconstructs an image is part of an inverse problem, explicitly or implicitly. It may replace an inverse operator, approximate a prior, act as a denoiser, or imitate an optimization algorithm.</p>
+<p>That perspective changes the questions we ask. We do not only ask whether the output looks good. We ask:</p>
+<ul>
+<li>What forward model is being inverted?</li>
+<li>What data were measured?</li>
+<li>What information was lost?</li>
+<li>What prior knowledge was used?</li>
+<li>Was the prior hand-designed or learned?</li>
+<li>Is the output data-consistent?</li>
+<li>What happens under noise, model mismatch, or domain shift?</li>
+</ul>
 </section>
-<section id="exercises" class="level2">
-<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="how-the-book-develops-the-idea" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-book-develops-the-idea">How The Book Develops The Idea</h2>
+<p>The book follows the course arc.</p>
+<p>Chapters 1-3 build the foundation: images as mathematical objects, blur as a forward model, and Fourier analysis as a way to see what blur removes.</p>
+<p>Chapters 4-6 introduce noise, likelihoods, ill-posedness, and regularization. These chapters explain why reconstruction requires assumptions.</p>
+<p>Chapters 7-9 show how assumptions become variational problems and numerical algorithms.</p>
+<p>Chapters 10-13 introduce sparsity, wavelets, data-driven priors, and plug-and-play methods. This is where the bridge to neural reconstruction becomes explicit.</p>
+<p>Chapter 14 asks how to trust any reconstruction, classical or learned.</p>
+<p>The final project asks students to use these ideas in a concrete inverse problem, with LLM assistance required but ownership tested through experiments and oral defense.</p>
+</section>
+<section id="the-habit-of-mind" class="level2">
+<h2 class="anchored" data-anchor-id="the-habit-of-mind">The Habit Of Mind</h2>
+<p>The most important habit in the course is to read a reconstruction as an argument.</p>
+<p>A reconstructed image argues that a certain unknown <span class="math inline">x</span> is compatible with measured data <span class="math inline">y</span>, a forward model <span class="math inline">A</span>, a noise model, and a set of assumptions. The image may be beautiful, but beauty is not evidence by itself.</p>
+<p>The course therefore trains two instincts at the same time:</p>
 <ol type="1">
-<li>What does a model-based method specify explicitly?</li>
-<li>What does a data-driven method learn from examples?</li>
-<li>Why is a neural network a nonlinear operator?</li>
-<li>What is distribution shift?</li>
-<li>Give one reason hallucinated structure is dangerous in scientific imaging.</li>
+<li>how to build reconstruction methods;</li>
+<li>how to question reconstruction methods.</li>
 </ol>
-</section>
-<section id="takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
-<ul>
-<li>Model-based methods write assumptions explicitly.</li>
-<li>Data-driven methods learn assumptions from examples.</li>
-<li>Neural networks are parameterized nonlinear operators.</li>
-<li>Learned methods can be powerful but depend on training data.</li>
-<li>Modern imaging often combines physics, optimization, and learning.</li>
-</ul>
+<p>That double instinct is essential for modern imaging. It is also essential for neural networks, because learned reconstructions can be powerful precisely where they can also be misleading.</p>
 
 
 </section>
@@ -1060,7 +924,7 @@ x^{k+1}
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/week-12-model-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/motivation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

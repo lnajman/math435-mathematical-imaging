@@ -175,7 +175,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../slides/index.html"> 
-<span class="menu-text">Slides</span></a>
+<span class="menu-text">Classes</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../notebooks/index.html"> 
@@ -228,6 +228,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../book/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Book home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivation: inverse problems to neural networks</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -380,6 +386,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#why-blur-is-the-first-model" id="toc-why-blur-is-the-first-model" class="nav-link" data-scroll-target="#why-blur-is-the-first-model">Why Blur Is The First Model</a></li>
   <li><a href="#local-weighted-averages" id="toc-local-weighted-averages" class="nav-link" data-scroll-target="#local-weighted-averages">Local Weighted Averages</a></li>
   <li><a href="#the-convolution-formula" id="toc-the-convolution-formula" class="nav-link" data-scroll-target="#the-convolution-formula">The Convolution Formula</a></li>
   <li><a href="#two-dimensional-convolution" id="toc-two-dimensional-convolution" class="nav-link" data-scroll-target="#two-dimensional-convolution">Two-Dimensional Convolution</a></li>
@@ -388,6 +395,7 @@ window.Quarto = {
   <li><a href="#real-image-blur" id="toc-real-image-blur" class="nav-link" data-scroll-target="#real-image-blur">Real Image Blur</a></li>
   <li><a href="#boundary-conditions" id="toc-boundary-conditions" class="nav-link" data-scroll-target="#boundary-conditions">Boundary Conditions</a></li>
   <li><a href="#why-deblurring-is-hard" id="toc-why-deblurring-is-hard" class="nav-link" data-scroll-target="#why-deblurring-is-hard">Why Deblurring Is Hard</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -429,6 +437,20 @@ window.Quarto = {
 <li>explain why deblurring is unstable.</li>
 </ul>
 </section>
+<section id="why-blur-is-the-first-model" class="level2">
+<h2 class="anchored" data-anchor-id="why-blur-is-the-first-model">Why Blur Is The First Model</h2>
+<p>Blur is one of the cleanest examples of the course philosophy. It is simple enough to write down, visible enough to understand by looking at images, and serious enough to reveal the main difficulty of inverse problems.</p>
+<p>In a blurred image, information has not simply disappeared at random. It has been mixed. A bright point spreads into nearby pixels. An edge becomes a transition zone. Fine texture becomes weaker. If the blur is known, we can write a forward model. But going backward remains unstable because the blur has reduced the contrast of the very details we may want to recover.</p>
+<p>This makes blur a good bridge between the first chapter and the rest of the course:</p>
+<p><span class="math display">
+\text{image } x
+\quad\longrightarrow\quad
+\text{blurred data } y
+\quad\longrightarrow\quad
+\text{reconstruction } \hat{x}.
+</span></p>
+<p>The first arrow is image formation. The second arrow is the inverse problem.</p>
+</section>
 <section id="local-weighted-averages" class="level2">
 <h2 class="anchored" data-anchor-id="local-weighted-averages">Local Weighted Averages</h2>
 <p>Convolution begins with a local rule. For a one-dimensional signal <span class="math inline">x</span>, define</p>
@@ -448,6 +470,8 @@ h =
 <p><img src="../assets/figures/week02-1d-convolution.png" class="img-fluid" alt="One dimensional signal, convolution kernel, and blurred output"></p>
 <p>Convolution spreads a local peak into neighboring positions.</p>
 </div>
+<p>The figure should be read from left to right. The original signal contains a localized structure. The kernel says how each value is distributed to its neighbors. The output is less sharp because information from nearby locations has been averaged together.</p>
+<p>This is not just smoothing for visual effect. It is a measurement model. If an optical system cannot record a point exactly, then every recorded pixel contains contributions from a neighborhood of the object.</p>
 </section>
 <section id="the-convolution-formula" class="level2">
 <h2 class="anchored" data-anchor-id="the-convolution-formula">The Convolution Formula</h2>
@@ -461,6 +485,8 @@ h =
 h*(a x + b z) = a(h*x)+b(h*z).
 </span></p>
 <p>It is also shift-invariant: the same local rule is applied at every position.</p>
+<p>Linearity means that if we double the input intensity, the output doubles, and if we add two inputs, the outputs add. Shift-invariance means that the rule does not depend on where we are in the image. Together, these assumptions make convolution mathematically convenient.</p>
+<p>They are also assumptions. Real imaging systems may have spatially varying blur, saturation, nonlinear sensor response, or motion that changes during acquisition. We begin with convolution because it is the right model in many controlled situations and because it teaches the structure of inverse problems clearly.</p>
 </section>
 <section id="two-dimensional-convolution" class="level2">
 <h2 class="anchored" data-anchor-id="two-dimensional-convolution">Two-Dimensional Convolution</h2>
@@ -473,6 +499,7 @@ y[i,j]
 \sum_{a,b} h[a,b]\,x[i-a,j-b].
 </span></p>
 <p>The output pixel is a weighted combination of nearby input pixels.</p>
+<p>The two-dimensional formula looks more complicated than the one-dimensional formula, but the idea is the same. Each output pixel is a local weighted average. What changes is the geometry of the neighborhood: the kernel now has horizontal and vertical extent, so it can model circular blur, directional blur, or other spatial spreading patterns.</p>
 </section>
 <section id="point-spread-function" class="level2">
 <h2 class="anchored" data-anchor-id="point-spread-function">Point Spread Function</h2>
@@ -513,6 +540,8 @@ y[i,j]
 </tr>
 </tbody>
 </table>
+<p>The identity kernel is useful as a reference: it represents a system that records each pixel without spreading. A box kernel says that all pixels in a small neighborhood contribute equally. A Gaussian kernel gives more weight to the center and less to farther pixels. A motion kernel spreads energy along a direction.</p>
+<p>Each kernel tells a story about the imaging system. The inverse problem should be interpreted relative to that story. If the wrong kernel is used, a deblurring method may confidently solve the wrong problem.</p>
 </section>
 <section id="blur-as-a-forward-operator" class="level2">
 <h2 class="anchored" data-anchor-id="blur-as-a-forward-operator">Blur As A Forward Operator</h2>
@@ -538,6 +567,8 @@ Note
 <p>A fixed blur is linear. This does not mean every image formation process is linear. It means this particular controlled model is linear.</p>
 </div>
 </div>
+<p>The matrix <span class="math inline">A</span> is usually not formed explicitly for large images. It would be enormous. Instead, software applies the convolution rule directly. Still, the matrix viewpoint is valuable because it lets us use linear algebra words: range, nullspace, singular values, conditioning, and adjoint.</p>
+<p>This is a recurring pattern in computational imaging. We may never build the full matrix, but we still reason as if an operator is present.</p>
 </section>
 <section id="real-image-blur" class="level2">
 <h2 class="anchored" data-anchor-id="real-image-blur">Real Image Blur</h2>
@@ -546,6 +577,13 @@ Note
 <p>Different kernels remove different details from the same image.</p>
 </div>
 <p>Blur reduces local contrast. Edges become less sharp, fine textures disappear, and point-like structures spread into neighborhoods.</p>
+<p>When reading blurred images, look separately at three kinds of information:</p>
+<ul>
+<li>strong edges, which may survive but become wider;</li>
+<li>fine texture, which may almost disappear;</li>
+<li>small bright or dark structures, which may spread and lose contrast.</li>
+</ul>
+<p>These distinctions matter later. A method that improves edge sharpness may still destroy fine texture. A method that makes the image visually pleasing may still remove a small structure that matters for a task.</p>
 </section>
 <section id="boundary-conditions" class="level2">
 <h2 class="anchored" data-anchor-id="boundary-conditions">Boundary Conditions</h2>
@@ -582,6 +620,8 @@ Note
 <p>The same kernel can produce different edge behavior depending on the boundary rule.</p>
 </div>
 <p>Boundary choices are part of the mathematical model. They should not be treated as harmless implementation details.</p>
+<p>Boundary conditions are easy to ignore because they live at the edge of the image, but they can affect computations throughout an inverse problem. A periodic boundary condition, for example, pretends that the left and right sides of the image touch. That may be convenient for Fourier analysis, but it can create artificial wrap-around artifacts.</p>
+<p>In project work, a good report should state the boundary convention when convolution or deconvolution is used.</p>
 </section>
 <section id="why-deblurring-is-hard" class="level2">
 <h2 class="anchored" data-anchor-id="why-deblurring-is-hard">Why Deblurring Is Hard</h2>
@@ -595,10 +635,27 @@ y = Ax + \eta.
 <p>Naive inversion can turn small noise into large oscillations.</p>
 </div>
 <p>This is the first appearance of a central course theme: reconstruction is not only inversion. It is stabilized inversion.</p>
+<p>The unstable oscillations in the figure are not mysterious. They are the visible form of amplified weak information. Blur has made some components of the signal small. Naive inversion divides by small numbers, and noise becomes large.</p>
+<p>Regularization will solve this by refusing to trust every inverted component equally. A neural reconstruction method may solve it differently, by learning from examples what sharp images tend to look like. But the danger is the same in both cases: the method may add structure that is not strongly supported by the data.</p>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<ol type="1">
+<li><strong>Thinking blur only removes information.</strong> Blur also mixes information spatially. That mixing can sometimes be partially undone, but not stably without assumptions.</li>
+<li><strong>Confusing the kernel with the image.</strong> The kernel describes the imaging system, not the object being imaged.</li>
+<li><strong>Ignoring boundary conditions.</strong> Boundary rules are part of the operator <span class="math inline">A</span>.</li>
+<li><strong>Assuming deblurring is just sharpening.</strong> Sharpening may improve appearance, but deblurring is an inverse problem tied to a forward model.</li>
+</ol>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
 <p>The Week 2 notebook lets you change kernels, boundary modes, and deblurring stabilizers.</p>
+<p>When using the notebook, compare two questions:</p>
+<ol type="1">
+<li>What happens visually when the blur kernel gets wider?</li>
+<li>What happens numerically when the deblurring stabilizer gets weaker?</li>
+</ol>
+<p>The first question is about the forward problem. The second is about the inverse problem.</p>
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week02_convolution_blur.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>

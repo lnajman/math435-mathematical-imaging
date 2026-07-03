@@ -175,7 +175,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../slides/index.html"> 
-<span class="menu-text">Slides</span></a>
+<span class="menu-text">Classes</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../notebooks/index.html"> 
@@ -228,6 +228,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../book/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Book home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book/motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivation: inverse problems to neural networks</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -390,6 +396,7 @@ window.Quarto = {
   <li><a href="#blur-in-frequency-space" id="toc-blur-in-frequency-space" class="nav-link" data-scroll-target="#blur-in-frequency-space">Blur In Frequency Space</a></li>
   <li><a href="#low-pass-and-high-pass-filtering" id="toc-low-pass-and-high-pass-filtering" class="nav-link" data-scroll-target="#low-pass-and-high-pass-filtering">Low-Pass And High-Pass Filtering</a></li>
   <li><a href="#why-inverse-filtering-is-dangerous" id="toc-why-inverse-filtering-is-dangerous" class="nav-link" data-scroll-target="#why-inverse-filtering-is-dangerous">Why Inverse Filtering Is Dangerous</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways">Takeaways</a></li>
@@ -436,6 +443,9 @@ window.Quarto = {
 <p>Fourier analysis rewrites a signal or image as a combination of oscillations.</p>
 <p>Low frequencies describe slow variation. High frequencies describe rapid variation, edges, and texture.</p>
 <p>For imaging, this matters because many forward operators act differently on different frequencies. Blur, for example, usually suppresses high frequencies more strongly than low frequencies.</p>
+<p>This chapter gives the first deep explanation of instability. In Chapter 2, we saw that deblurring can amplify noise. Fourier analysis explains where that amplification comes from. Blur does not damage all components equally. It preserves some frequencies, weakens others, and may almost eliminate the finest oscillations.</p>
+<p>If the forward model weakens a frequency component, then inversion must amplify that component to recover it. If noise is present in the same component, the noise is amplified too.</p>
+<p>This is why Fourier analysis is not only a transform. In imaging, it is a diagnostic tool.</p>
 </section>
 <section id="one-dimensional-frequencies" class="level2">
 <h2 class="anchored" data-anchor-id="one-dimensional-frequencies">One-Dimensional Frequencies</h2>
@@ -448,6 +458,8 @@ s_k[n] = \sin(2\pi k n/N).
 <p><img src="../assets/figures/week03-1d-frequencies.png" class="img-fluid" alt="Low frequency sine, high frequency sine, their sum, and Fourier magnitude"></p>
 <p>The Fourier magnitude reveals which oscillations are present.</p>
 </div>
+<p>The figure is a small dictionary. One sinusoid oscillates slowly; another oscillates quickly; their sum contains both. The Fourier magnitude identifies the active frequencies without caring where we happened to start drawing the signal.</p>
+<p>This is useful because many imaging operations are easier to understand by asking which frequencies they keep, suppress, or amplify. A smoothing filter suppresses high frequencies. An edge detector emphasizes high frequencies. A deblurring filter tries to restore frequencies that blur has weakened.</p>
 </section>
 <section id="the-discrete-fourier-transform" class="level2">
 <h2 class="anchored" data-anchor-id="the-discrete-fourier-transform">The Discrete Fourier Transform</h2>
@@ -470,6 +482,8 @@ x[n]e^{-2\pi i kn/N}.
 \arg(\widehat{x}[k]).
 </span></p>
 <p>Magnitude measures strength. Phase measures alignment.</p>
+<p>The DFT can be read as a change of coordinates. Instead of describing a signal by its values at positions, we describe it by its weights on oscillatory patterns. No information is lost when the full transform is kept. The representation changes, not the signal.</p>
+<p>This coordinate-change view will reappear later with wavelets, DCT coefficients, sparse representations, and learned features. Each representation makes some structure easier to describe.</p>
 </section>
 <section id="two-dimensional-fourier-transform" class="level2">
 <h2 class="anchored" data-anchor-id="two-dimensional-fourier-transform">Two-Dimensional Fourier Transform</h2>
@@ -485,6 +499,8 @@ x[m,n]e^{-2\pi i(um/M+vn/N)}.
 <p><img src="../assets/figures/week03-image-spectrum.png" class="img-fluid" alt="Real image and centered log Fourier magnitude"></p>
 <p>The centered log magnitude is a common way to display an image spectrum.</p>
 </div>
+<p>The logarithm in the display is important. Fourier magnitudes can vary over a large range, and without a log scale the strongest low-frequency values can hide weaker but meaningful high-frequency components.</p>
+<p>When looking at a spectrum, do not expect it to look like the original image. It is not a picture of objects. It is a picture of oscillatory content: scale, direction, and strength.</p>
 </section>
 <section id="reading-a-spectrum" class="level2">
 <h2 class="anchored" data-anchor-id="reading-a-spectrum">Reading A Spectrum</h2>
@@ -495,6 +511,20 @@ x[m,n]e^{-2\pi i(um/M+vn/N)}.
 <li>direction in the spectrum corresponds to orientation in the image.</li>
 </ul>
 <p>Strong vertical stripes in an image correspond to horizontal variation in intensity, so the spectrum is strong along the corresponding horizontal frequency direction.</p>
+<p>The spectrum is especially useful for recognizing anisotropy. Motion blur in one direction, periodic texture, repeated stripes, and grid artifacts often leave directional signatures. This is one reason Fourier analysis remains useful even in the era of neural networks: it gives interpretable evidence about what is present in the data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A Fourier spectrum is not a neural feature map, but both are representations. The spectrum is hand-designed and interpretable; learned representations are data-adapted and often harder to interpret.</p>
+</div>
+</div>
 </section>
 <section id="magnitude-and-phase" class="level2">
 <h2 class="anchored" data-anchor-id="magnitude-and-phase">Magnitude And Phase</h2>
@@ -510,6 +540,8 @@ x[m,n]e^{-2\pi i(um/M+vn/N)}.
 <p>Phase carries much of the recognizable geometry of an image.</p>
 </div>
 <p>Magnitude is visually important, but phase is often crucial for the location of edges and structures.</p>
+<p>This is one of the most surprising facts for students. The magnitude tells us how much of each frequency exists, but phase tells us how those oscillations line up. Edges, contours, and recognizable geometry depend strongly on alignment.</p>
+<p>For inverse problems, this matters because preserving energy at the right frequencies is not enough. A reconstruction also has to place structures correctly. A visually sharp but spatially wrong image may have impressive high-frequency content and still be unreliable.</p>
 </section>
 <section id="the-convolution-theorem" class="level2">
 <h2 class="anchored" data-anchor-id="the-convolution-theorem">The Convolution Theorem</h2>
@@ -528,6 +560,8 @@ y = h*x,
 <p><span class="math display">
 \widehat{y} = \widehat{h}\,\widehat{x}.
 </span></p>
+<p>This theorem is the reason blur is often analyzed in frequency space. A large convolution matrix in the pixel domain becomes pointwise multiplication after the Fourier transform, at least under compatible boundary assumptions. Instead of one large coupled operation, each frequency can be studied separately.</p>
+<p>This does not make the inverse problem disappear. It makes the difficulty visible.</p>
 </section>
 <section id="blur-in-frequency-space" class="level2">
 <h2 class="anchored" data-anchor-id="blur-in-frequency-space">Blur In Frequency Space</h2>
@@ -542,6 +576,8 @@ y = h*x,
 <p><img src="../assets/figures/week03-convolution-theorem.png" class="img-fluid" alt="Convolution theorem for a blurred signal or image"></p>
 <p>Blur is easier to analyze after the Fourier transform because frequencies are multiplied independently.</p>
 </div>
+<p>The quantity <span class="math inline">\widehat{h}</span> is sometimes called the transfer function of the blur. Where <span class="math inline">|\widehat{h}|</span> is near 1, the corresponding frequency passes through the imaging system. Where <span class="math inline">|\widehat{h}|</span> is small, that frequency is strongly attenuated.</p>
+<p>If a frequency is strongly attenuated, then the measured data contain only weak evidence about that part of the original image. Any method that restores it must rely partly on assumptions.</p>
 </section>
 <section id="low-pass-and-high-pass-filtering" class="level2">
 <h2 class="anchored" data-anchor-id="low-pass-and-high-pass-filtering">Low-Pass And High-Pass Filtering</h2>
@@ -550,6 +586,8 @@ y = h*x,
 <p><img src="../assets/figures/week03-low-high-pass.png" class="img-fluid" alt="Low-pass and high-pass Fourier filtering on an image"></p>
 <p>Frequency filtering gives direct control over coarse and fine image components.</p>
 </div>
+<p>Low-pass filtering often makes an image look cleaner because it removes rapid fluctuations, including noise. But it also removes fine texture and can blur small structures. High-pass filtering can reveal edges, but it can also amplify noise and produce unnatural contrast.</p>
+<p>This is a simple version of a tradeoff that will appear throughout the course: suppressing artifacts can also suppress information.</p>
 </section>
 <section id="why-inverse-filtering-is-dangerous" class="level2">
 <h2 class="anchored" data-anchor-id="why-inverse-filtering-is-dangerous">Why Inverse Filtering Is Dangerous</h2>
@@ -565,10 +603,28 @@ y = h*x,
 <p>Inverse filtering recovers some detail but can amplify noise dramatically.</p>
 </div>
 <p>This frequency-domain view explains why regularization will be necessary in later chapters.</p>
+<p>Regularized deblurring modifies the dangerous division. Instead of dividing fully by small values of <span class="math inline">\widehat{h}</span>, it limits the amplification. Classical methods do this with explicit formulas or optimization penalties. Learned methods may do it implicitly by learning which recovered details are plausible.</p>
+<p>The reliability question is the same in both cases. When a method restores high frequencies, are those frequencies supported by the measurement, or are they supplied mainly by the prior?</p>
+</section>
+<section id="common-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
+<ol type="1">
+<li><strong>Thinking high frequency means noise only.</strong> Edges and fine structures are also high-frequency content.</li>
+<li><strong>Thinking low frequency means unimportant.</strong> Illumination, smooth shading, and large shapes are low-frequency content.</li>
+<li><strong>Ignoring phase.</strong> Phase is essential for the placement of structures.</li>
+<li><strong>Treating inverse filtering as a safe inverse.</strong> Division by small Fourier values is a mechanism for noise amplification.</li>
+</ol>
 </section>
 <section id="computation" class="level2">
 <h2 class="anchored" data-anchor-id="computation">Computation</h2>
 <p>The Week 3 notebook lets you create 1D spectra, display image spectra, exchange magnitude and phase, and test frequency filters.</p>
+<p>When running the notebook, pay attention to the connection between visual changes and spectral changes:</p>
+<ol type="1">
+<li>Which frequencies disappear after blur?</li>
+<li>Which frequencies are emphasized by sharpening?</li>
+<li>What changes when magnitude is kept but phase is altered?</li>
+<li>Where does inverse filtering become unstable?</li>
+</ol>
 <p>Run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/week03_fourier_imaging.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or open the notebook in Colab from the link at the top of this chapter.</p>
