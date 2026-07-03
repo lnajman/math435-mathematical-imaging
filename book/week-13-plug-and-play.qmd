@@ -27,6 +27,30 @@ and inserts an image-restoration tool that knows what plausible images look like
 
 The key question is: where should that image-restoration tool enter the algorithm?
 
+## Why This Chapter Matters
+
+Chapter 12 compared explicit model-based reconstruction with data-driven methods. Plug-and-play is the meeting point. It keeps the inverse-problem structure:
+
+$$
+y\approx Ax,
+$$
+
+but replaces an explicit handcrafted proximal prior with a denoising operator.
+
+This is a beautiful idea because denoising is often easier to learn than full reconstruction. A denoiser learns what clean images tend to look like. Plug-and-play then uses that denoiser inside an algorithm that still knows the forward model.
+
+In other words:
+
+$$
+\text{plug-and-play}
+=
+\text{data consistency}
++
+\text{denoising prior}.
+$$
+
+This makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.
+
 ## Proximal Algorithms
 
 A standard variational model is
@@ -69,6 +93,16 @@ $$
 
 It asks for an image close to $z$ but preferred by the prior $R$.
 
+The proximal operator can be interpreted as a special kind of denoiser. The input $z$ is an intermediate image that has been pulled toward the data but may contain noise, artifacts, or unstable components. The proximal step returns a cleaner or more regular image according to the prior $R$.
+
+For example:
+
+- an l1 proximal operator performs soft thresholding;
+- a TV proximal operator performs TV denoising;
+- a constraint proximal operator projects onto an allowed set.
+
+This interpretation motivates plug-and-play: if a proximal map behaves like a denoiser, can we use a stronger denoiser in its place?
+
 ## Proximal Gradient
 
 Putting the steps together gives
@@ -90,6 +124,10 @@ The proximal step receives a corrupted intermediate image $z^k$ and returns a mo
 
 Plug-and-play replaces a proximal map by a denoising operator.
 :::
+
+The replacement is simple to write but conceptually deep. In classical proximal gradient, the denoising step corresponds to a known regularizer $R$. In plug-and-play, the denoiser may not correspond to any explicit $R$ that we can write down.
+
+This gives us a powerful image model, but it changes what we can prove and monitor.
 
 ## Plug-and-Play Update
 
@@ -115,6 +153,13 @@ The denoiser can be Gaussian smoothing, median filtering, wavelet thresholding, 
 
 The data-consistency step still uses the forward model $A$, the adjoint $A^\top$, the measured data $y$, and the data term. PnP does not throw away physics; it uses physics between denoising steps.
 
+Reading the update as two alternating forces:
+
+- the gradient step asks the reconstruction to explain the measurement;
+- the denoiser step asks the reconstruction to look like a clean image.
+
+The balance between these two forces determines the behavior of the algorithm. If the denoiser dominates, the result can become plausible but inconsistent with the data. If the data term dominates, noise and artifacts may remain.
+
 ## Explicit Versus Implicit Prior
 
 In classical proximal gradient, the regularizer $R$ is explicit:
@@ -134,6 +179,10 @@ $$
 If $D_\sigma$ is not exactly a proximal operator, the iteration may not minimize a known objective. The prior is implicit: it is represented by the behavior of the denoiser.
 
 This gives flexibility, but it changes the theory.
+
+An implicit prior can be very expressive. A modern denoiser may know about textures, edges, repeated patterns, and object-like structures in a way that TV or wavelets do not. But the price is that the prior is harder to inspect.
+
+For a classical prior, we can read the penalty. For a learned denoiser, we often need experiments to understand what it preserves, removes, or invents.
 
 ## Learned Regularization Views
 
@@ -160,6 +209,39 @@ $$
 
 The denoiser has learned image statistics from training data, so its training distribution matters.
 
+## Plug-and-Play, RED, And Unrolling
+
+There are several related ways to combine learning and reconstruction.
+
+Plug-and-play replaces a proximal operator with a denoiser:
+
+$$
+x^{k+1}=D_\theta(z^k).
+$$
+
+Regularization by denoising, often called RED, tries to build an explicit regularization idea around the denoiser. The details are more advanced than we need here, but the goal is similar: use denoising behavior as image prior information.
+
+Unrolled methods take a fixed number of iterations and turn them into a trainable network. A schematic unrolled update is
+
+$$
+x^{k+1}
+=
+G_{\theta_k}
+\left(x^k,\ A^\top(Ax^k-y)\right).
+$$
+
+Here the network receives both the current image and a data-consistency signal. Unrolling is often more flexible than classical PnP because the update itself can be trained end-to-end.
+
+The common structure is:
+
+$$
+\text{measurement model}
++
+\text{learned image correction}.
+$$
+
+That is the main idea students should keep.
+
 ## Deblurring Example
 
 Suppose
@@ -177,6 +259,8 @@ Different priors create different deblurring behavior.
 :::
 
 Tikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.
+
+When reading this comparison, ask what each prior believes. Tikhonov believes small energy is good. Gaussian denoising believes smoothness is good. A learned patch denoiser believes images should resemble the training patches. The differences in the reconstructions are consequences of those beliefs.
 
 ::: {.figure}
 ![](../assets/figures/week13-iteration-curve.png){fig-alt="RMSE and fixed-point change versus plug-and-play iteration"}
@@ -204,6 +288,10 @@ Denoising strength controls the tradeoff between stability and fidelity.
 
 If denoising is too weak, noise and inversion artifacts remain. If denoising is too strong, details are removed and the result may move away from measured data.
 
+A fixed point is not automatically the true image. It is an image that the algorithm no longer changes. The data step and denoising step have reached a balance.
+
+This distinction is important. Convergence means the iteration settles. Correctness means the settled image is faithful to the scene and measurements. An algorithm can converge to a biased or hallucinated solution.
+
 ## Convergence And Trust
 
 For convex $R$ and suitable step size, classical proximal gradient has a clear story:
@@ -220,6 +308,17 @@ For a general denoiser:
 - a fixed point may not be a minimizer.
 
 This does not make PnP unusable. It means validation becomes central.
+
+Useful diagnostics include:
+
+- data residual $\|Ax^k-y\|$;
+- fixed-point change $\|x^{k+1}-x^k\|$;
+- reconstruction error when ground truth is available;
+- sensitivity to denoiser strength;
+- performance under distribution shift;
+- visual inspection of task-critical structures.
+
+The goal is to understand not only whether the output looks good, but whether the algorithm is behaving consistently.
 
 ## Failure Modes
 
@@ -239,6 +338,30 @@ When using PnP, ask:
 
 Practical learned imaging should report baseline comparisons, data-consistency errors, sensitivity to denoising strength, robustness to distribution shift, uncertainty when possible, and task-based evaluation.
 
+## What Students Should Trust
+
+Trust should be earned by evidence, not by method category. A classical method can fail because the model is wrong. A learned method can fail because the training distribution is wrong. A hybrid method can fail because the denoiser and data term are poorly balanced.
+
+For a plug-and-play reconstruction, a reasonable checklist is:
+
+| Question | Why it matters |
+|---|---|
+| Does $A\hat{x}$ match $y$ within expected noise? | checks measurement consistency |
+| Was the denoiser trained on relevant data? | checks prior relevance |
+| Does the result change under small perturbations? | checks stability |
+| Does it preserve known structures? | checks task reliability |
+| Does it outperform simple baselines? | checks practical value |
+
+This is the habit of mind the course aims to build: not "classical good, neural bad" or the reverse, but careful reasoning about what information is measured, what information is assumed, and what evidence supports the reconstruction.
+
+## Common Mistakes
+
+A first mistake is to think PnP is just denoising after reconstruction. It is not. The denoiser is inserted inside the reconstruction loop, alternating with data consistency.
+
+A second mistake is to think a stronger denoiser is always better. Strong denoising can erase true structures or pull the image away from the data.
+
+A third mistake is to assume that convergence proves correctness. A fixed point can still be biased, oversmoothed, or distribution-shifted.
+
 ## Computation
 
 The Week 13 notebook lets you change denoiser strength, number of PnP iterations, and denoiser type, then compare residuals and reconstruction quality.
@@ -251,6 +374,8 @@ python3 examples/week13_plug_and_play.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+In the notebook, compare the data residual and the visual result as denoising strength changes. Look for cases where the image looks cleaner but becomes less faithful to the measured data.
+
 ## Exercises
 
 1. What does a proximal operator do?
@@ -258,6 +383,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Why might PnP not minimize a known objective?
 4. What is a fixed point of the PnP iteration?
 5. Give two safeguards for using learned denoisers in high-stakes imaging.
+6. Explain the difference between convergence of a PnP iteration and correctness of the reconstruction.
 
 ## Takeaways
 
@@ -266,3 +392,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Learned denoisers can improve reconstructions when data match training.
 - PnP needs careful validation because objective and convergence guarantees change.
 - Always check both image quality and consistency with measurements.
+- Hybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.

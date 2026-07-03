@@ -27,6 +27,35 @@ Data-driven imaging asks a different question: what if some of these choices are
 Model-based methods write assumptions; data-driven methods learn assumptions from examples.
 :::
 
+## Why This Chapter Matters
+
+This chapter is the explicit turning point of the course. Up to now, we have built reconstruction methods by writing down assumptions:
+
+$$
+y = Ax+\eta,
+\qquad
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(Ax,y)+\lambda R(x).
+$$
+
+The data term came from a measurement model. The regularizer came from a mathematical prior: small energy, smoothness, sparse gradients, sparse transform coefficients, or wavelet structure.
+
+Data-driven imaging changes where some of that knowledge comes from. Instead of choosing every part by hand, we use examples to learn a map, a prior, a denoiser, a feature representation, or an algorithmic update.
+
+The central identity of the course appears here:
+
+$$
+\text{neural imaging}
+=
+\text{inverse problems}
++
+\text{learned image models}.
+$$
+
+Neural networks are not outside inverse problems. They are one answer to the same difficulty: the measured data are incomplete, noisy, unstable, or ambiguous, so reconstruction requires additional structure.
+
 ## Model-Based Imaging
 
 A classical reconstruction often solves
@@ -51,6 +80,22 @@ In a model-based method, we specify:
 Examples from this course include Tikhonov regularization, TV, l1 sparse reconstruction, and wavelet thresholding.
 
 Model-based methods are often interpretable, grounded in physics, usable with limited training data, and easier to analyze mathematically. They can struggle when the forward model is incomplete or the handcrafted prior is too simple.
+
+The advantage of explicit modeling is that each assumption can be inspected. If a reconstruction fails, we can ask whether the forward model was wrong, the noise model was wrong, the regularizer was too simple, or the parameter was badly chosen.
+
+The limitation is also clear. Handcrafted priors are usually simple because they must be written in a short mathematical form and optimized. Natural images contain structure beyond smoothness, TV, or wavelet sparsity: repeated patterns, semantic objects, textures, anatomy, material boundaries, and long-range dependencies. Model-based methods may not capture these structures well.
+
+## What Model-Based Does Not Mean
+
+Model-based does not mean old-fashioned or inferior. It means the reconstruction rule contains explicit assumptions about the measurement and image. Many excellent modern methods remain model-based.
+
+Model-based also does not require the whole forward process to be linear. We often write $Ax$ because it is mathematically clear, but a forward model can be nonlinear:
+
+$$
+y=f(x)+\eta.
+$$
+
+The important idea is that the reconstruction respects how the data were produced.
 
 ## Data-Driven Imaging
 
@@ -83,6 +128,32 @@ Data-driven methods still require choices:
 
 The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.
 
+The supervised learning problem should be read as learning an inverse map from examples. The training data contain pairs:
+
+$$
+\text{degraded or measured data } y_i
+\quad\longleftrightarrow\quad
+\text{desired image } x_i.
+$$
+
+The network is trained so that $f_\theta(y_i)$ is close to $x_i$ under the chosen loss. After training, the same map is applied to new measurements.
+
+This is powerful, but it changes the meaning of the reconstruction. The output is not only determined by the new measurement $y$. It is also shaped by the training set, the architecture, and the loss.
+
+## Learned Inverse Maps
+
+The simplest data-driven imaging picture is
+
+$$
+\hat{x}=f_\theta(y).
+$$
+
+This is a learned inverse map. It tries to approximate the transformation from data to clean image directly.
+
+For denoising, $y$ may be a noisy image and $x$ a clean image. For super-resolution, $y$ may be a low-resolution image and $x$ a high-resolution image. For reconstruction, $y$ may be sensor measurements and $x$ the desired image.
+
+The risk is that a direct learned inverse may ignore the physics of the measurement. If the network produces an image that looks plausible but does not satisfy $Ax\approx y$, then the image is not faithful to the measured data.
+
 ## Strengths And Risks
 
 Data-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.
@@ -96,6 +167,10 @@ They can fail when:
 - hallucinated structure looks plausible.
 
 The last point matters especially in medical and scientific imaging: plausible is not the same as measured.
+
+The phrase "hallucination" means that the method adds structure that was not supported by the measurement. In a low-stakes photographic application, this may be acceptable or even desired. In scientific imaging, medical imaging, forensics, or measurement-driven tasks, it can be dangerous.
+
+The problem is not that learned methods are uniquely untrustworthy. Handcrafted priors can also hallucinate in a quieter way: TV can create artificial edges or plateaus, wavelets can remove texture, and Tikhonov can oversmooth. The difference is that learned priors can encode complex training-set expectations that are harder to see directly.
 
 ## Neural Networks As Operators
 
@@ -125,6 +200,29 @@ $$
 
 This second viewpoint leads naturally to plug-and-play and learned regularization.
 
+## Hybrid Methods
+
+Many successful imaging methods are neither purely model-based nor purely data-driven. They combine:
+
+- explicit forward model $A$;
+- explicit data-consistency step;
+- learned denoiser, prior, or update rule;
+- iterative algorithm structure;
+- validation on representative data.
+
+A typical hybrid idea is:
+
+$$
+x^{k+1}
+=
+\text{learned correction}
+\left(x^k,\ A^\top(Ax^k-y)\right).
+$$
+
+The term $A^\top(Ax^k-y)$ tells the network how the current reconstruction disagrees with the data. The learned part decides how to correct the image using training-set knowledge.
+
+This is the safest conceptual bridge to neural imaging: keep the physics where it is known, and learn the image model where handcrafted priors are too limited.
+
 ## A Small Learned Patch Prior
 
 Learning does not require a large neural network. A simple patch PCA prior already illustrates the main idea.
@@ -149,6 +247,16 @@ For each noisy patch, denoising can:
 4. average overlapping reconstructed patches.
 
 This is data-driven even though it is not a neural network.
+
+The patch PCA example is important because it removes the mystery from "learning." We are not yet using a deep network. We are learning a low-dimensional representation from clean patches. The learned components are the directions of variation that appear often in the training patches.
+
+This lets students see the basic ingredients of data-driven imaging without the complexity of a large neural architecture:
+
+- collect examples;
+- choose a model class;
+- fit parameters;
+- apply the fitted model to new data;
+- test whether it generalizes.
 
 ::: {.figure}
 ![](../assets/figures/week12-denoising-comparison.png){fig-alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"}
@@ -176,6 +284,10 @@ Generalization is central to learned imaging.
 
 Distribution shift means the test data differ from the training data. A learned prior is not universal just because it is learned.
 
+Distribution shift can be subtle. A denoiser trained on natural photographs may fail on microscopy. A network trained on one scanner may fail on another scanner. A super-resolution method trained on one degradation model may fail when the real blur or noise is different.
+
+This is why training data are part of the method. In a paper or project, one should describe not only the network but also what it was trained on and how the test data differ from the training data.
+
 ## Comparing The Philosophies
 
 | Question | Model-based | Data-driven |
@@ -187,6 +299,26 @@ Distribution shift means the test data differ from the training data. A learned 
 | Failure mode | wrong model or prior | distribution shift or hallucination |
 
 Many modern methods combine both philosophies: explicit forward model, learned denoiser or prior, iterative algorithm structure, and data-consistency steps.
+
+## Data Consistency
+
+Data consistency means that the reconstruction should agree with the measurements under the forward model:
+
+$$
+A\hat{x}\approx y.
+$$
+
+This check is not the whole evaluation, because noisy data should not be fit perfectly. But it is essential. If two reconstructions look equally plausible, the one that better respects the measured data is usually more trustworthy.
+
+For a learned method, data consistency can be:
+
+- enforced by architecture;
+- included as a loss term;
+- applied as a projection or correction step;
+- monitored as an evaluation metric;
+- used inside an unrolled algorithm.
+
+This is one reason inverse-problem thinking remains useful in deep learning. The forward model gives us a way to test the output against the actual measurement.
 
 ## Evaluation
 
@@ -200,6 +332,14 @@ Pixel RMSE is not enough. We may also need:
 
 This is the doorway to plug-and-play and learned regularization.
 
+## Common Mistakes
+
+A first mistake is to think that data-driven methods do not use assumptions. They do. The assumptions are encoded in the data, architecture, loss, optimizer, and training procedure.
+
+A second mistake is to think that a visually impressive reconstruction is automatically correct. Visual plausibility and measurement consistency are different.
+
+A third mistake is to compare a learned method only to a weak baseline. A fair evaluation should include appropriate model-based methods, ablations, and tests under distribution shift.
+
 ## Computation
 
 The Week 12 notebook lets you change the number of learned PCA components, noise level, training crop, and test image.
@@ -212,6 +352,8 @@ python3 examples/week12_model_data.py
 
 or open the notebook in Colab from the link at the top of this chapter.
 
+In the notebook, train or fit the patch prior on one image family and test it on another. Watch how performance changes. That experiment is the small-scale version of the generalization problem in learned imaging.
+
 ## Exercises
 
 1. What does a model-based method specify explicitly?
@@ -219,6 +361,7 @@ or open the notebook in Colab from the link at the top of this chapter.
 3. Why is a neural network a nonlinear operator?
 4. What is distribution shift?
 5. Give one reason hallucinated structure is dangerous in scientific imaging.
+6. Explain why data consistency is still important for a supervised neural reconstruction method.
 
 ## Takeaways
 
@@ -227,3 +370,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Neural networks are parameterized nonlinear operators.
 - Learned methods can be powerful but depend on training data.
 - Modern imaging often combines physics, optimization, and learning.
+- A learned reconstruction should be judged by both plausibility and consistency with measured data.
