@@ -4,11 +4,11 @@ title: "Final Modeling Project"
 
 The final project asks each team to build, test, and defend a mathematical imaging reconstruction method.
 
-Students will work in teams of two. Each team will choose one imaging inverse problem, implement at least two reconstruction approaches, compare them experimentally, and explain when each approach should and should not be trusted.
+Students work in teams of two. Each team chooses one imaging inverse problem, implements at least two reconstruction approaches, compares them experimentally, and explains when each approach should and should not be trusted.
 
 The goal is not only to produce a nice reconstructed image. The goal is to show ownership of the model, the code, the experiments, the failures, and the interpretation.
 
-## Project Question
+## Central Question
 
 Each project should answer the following question:
 
@@ -22,7 +22,29 @@ $$
 
 or a related model adapted to the chosen degradation.
 
-The team must define what $x$, $y$, $A$, and $\eta$ mean in their project.
+The team must define what $x$, $y$, $A$, and $\eta$ mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.
+
+The course identity is:
+
+$$
+\text{data} + \text{model} + \text{prior} + \text{optimization} \rightarrow \text{reconstruction with limits}.
+$$
+
+For learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership.
+
+## Expected Timeline
+
+Exact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.
+
+| Stage | Expected Progress | What Students Should Have |
+|---|---|---|
+| Week 6 | Project launch | Team, tentative topic, first statement of $x$, $y$, forward model, and degradation. |
+| Week 7 | Proposal checkpoint | One-page proposal with data source, baseline method, second method, and first reliability question. |
+| Week 8 | Baseline checkpoint | A runnable notebook that creates the degraded data and runs a simple baseline. |
+| Week 10 | Method checkpoint | Two reconstruction methods implemented on the same test cases. |
+| Week 12 | Evidence checkpoint | Parameter sweep, quantitative metric, and first robustness or failure test. |
+| Week 14 | Final preparation | Complete notebook, report draft, claim-evidence table, and oral-defense preparation. |
+| Final project period | Presentation and oral defense | Final submission plus individual code walkthrough and defense. |
 
 ## Required LLM Use
 
@@ -50,6 +72,26 @@ Each submission must include an **LLM-use statement** describing:
 
 The LLM-use statement is **required but not graded separately**. A missing or dishonest LLM-use statement makes the project incomplete.
 
+### LLM-Use Statement Template
+
+Students may use the following structure.
+
+```text
+LLM tools used:
+
+Main uses:
+
+Accepted or modified suggestions:
+
+Rejected suggestions:
+
+Independent verification:
+
+One LLM mistake or limitation we found:
+
+What each teammate can explain without the LLM:
+```
+
 ## Core Requirements
 
 Each team must include:
@@ -59,13 +101,73 @@ Each team must include:
 | Forward model | Define the image, degradation, measurements, and noise model. |
 | Two reconstruction approaches | Compare at least two methods; at least one must come from the course. |
 | Parameter study | Sweep at least one important parameter and explain the tradeoff. |
-| Quantitative comparison | Use RMSE, PSNR, residual norm, feature contrast, or another justified metric. |
+| Quantitative comparison | Use RMSE, PSNR, residual norm, feature contrast, SSIM, or another justified metric. |
 | Visual comparison | Show reconstructed images and interpret visible artifacts or improvements. |
 | Robustness test | Test noise level, model mismatch, domain shift, missing data, or another stress case. |
 | Failure case | Show one case where a method fails, and explain why. |
 | Reproducible notebook | Submit a runnable Python notebook with clear inputs, outputs, and plots. |
 | Written report | Explain the model, methods, experiments, results, and limitations. |
 | Oral defense | Each student must individually defend the whole project. |
+
+## Submission Package
+
+The final submission should contain four parts.
+
+| Part | Content |
+|---|---|
+| Notebook | A runnable notebook that generates or loads the data, runs the methods, produces the figures, and prints the key metrics. |
+| Report | A concise written explanation of the model, methods, evidence, limitations, and conclusions. |
+| Claim-evidence table | Three to five claims, each paired with evidence and a limitation or failure mode. |
+| LLM-use statement | The required disclosure described above. |
+
+The notebook and report should agree. Every important figure or numerical result in the report should be reproducible from the notebook.
+
+## Notebook Expectations
+
+The notebook should be readable by another student in the class.
+
+It should include:
+
+- a short problem statement;
+- imports and reproducible random seeds;
+- data loading or data generation;
+- a baseline method;
+- a second reconstruction method;
+- parameter sweeps;
+- quantitative metrics;
+- visual comparisons;
+- at least one robustness test;
+- at least one failure case;
+- comments explaining nontrivial code;
+- a final cell summarizing the main claim and limitation.
+
+A notebook that only shows final images is not enough. The notebook must show how the results were obtained.
+
+## Report Structure
+
+The report should be concise and structured.
+
+1. **Problem statement.** What imaging problem is being solved?
+2. **Forward model.** Define $x$, $y$, $A$, and the noise or degradation.
+3. **Methods.** Describe the reconstruction algorithms.
+4. **Implementation.** Explain the main computational choices.
+5. **Parameter study.** Show how reconstruction changes as a parameter changes.
+6. **Results.** Present quantitative and visual comparisons.
+7. **Robustness and failure.** Show stress tests and at least one failure case.
+8. **Limitations.** Explain when the method should not be trusted.
+9. **LLM-use statement.** Disclose how the required LLM support was used.
+
+## Claim-Evidence Table
+
+Each project should turn its results into claims that are supported by evidence.
+
+| Claim | Evidence | Limitation or Failure |
+|---|---|---|
+| Example: TV preserves the main edge better than quadratic smoothing. | Gradient maps and edge contrast across three noise levels. | TV creates staircasing on smooth ramps. |
+| Example: The sparse DCT method works with 40% observed pixels. | RMSE and visual comparison across five masks. | It fails on texture-rich images with non-sparse DCT coefficients. |
+| Example: A learned prior improves denoising on similar images. | Test-set RMSE on held-out crops from the same image family. | It degrades under domain shift to a different image family. |
+
+The table protects against overclaiming. A reconstruction can look impressive while supporting only a modest claim.
 
 ## Possible Project Topics
 
@@ -86,19 +188,25 @@ Teams may choose one of the following topics or propose a related topic.
 
 The instructor may provide additional test images or degraded observations. These may be used to test whether the submitted notebook generalizes beyond the examples used during development.
 
-## Recommended Project Structure
+## Choosing a Good Topic
 
-The report should be concise and structured.
+A good topic is small enough to test carefully.
 
-1. **Problem statement.** What imaging problem is being solved?
-2. **Forward model.** Define $x$, $y$, $A$, and the noise or degradation.
-3. **Methods.** Describe the reconstruction algorithms.
-4. **Implementation.** Explain the main computational choices.
-5. **Parameter study.** Show how reconstruction changes as a parameter changes.
-6. **Results.** Present quantitative and visual comparisons.
-7. **Robustness and failure.** Show stress tests and at least one failure case.
-8. **Limitations.** Explain when the method should not be trusted.
-9. **LLM-use statement.** Disclose how the required LLM support was used.
+Prefer:
+
+- one clear degradation;
+- one or two image families;
+- two methods that make different assumptions;
+- a metric connected to the scientific question;
+- a failure case that can be reproduced.
+
+Avoid:
+
+- comparing many methods superficially;
+- using a neural network without explaining its training data or prior;
+- reporting only visual quality;
+- using a black-box result that no teammate can explain;
+- presenting an LLM-generated notebook that has not been independently tested.
 
 ## Grading Rubric
 
@@ -131,7 +239,24 @@ During the defense, students may be asked to:
 - run the notebook on a new test image or modified degradation;
 - explain how LLM assistance was checked.
 
-The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact.
+The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact. It is the part of the project that cannot be outsourced to an LLM.
+
+### Defense Preparation Checklist
+
+Each student should be ready to answer:
+
+- What does $x$ represent in your project?
+- What does $y$ represent?
+- What is known, unknown, or estimated in the forward model?
+- Which method is your baseline?
+- Which method uses a stronger prior?
+- Which parameter matters most?
+- What happens when that parameter is too small or too large?
+- Which result is supported by the data?
+- Which result is mostly imposed by the prior?
+- What is your clearest failure case?
+- Which part of the code would you change first if the method failed on a new image?
+- What did the LLM help with, and how did you verify it?
 
 ## What A Strong Project Shows
 
