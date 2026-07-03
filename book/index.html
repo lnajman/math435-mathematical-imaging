@@ -326,7 +326,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Part V: Reliability and Projects</span></a>
+ <span class="menu-text">Part V: Reliability</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -352,7 +352,7 @@ window.Quarto = {
   <ul>
   <li><a href="#how-to-use-this-book" id="toc-how-to-use-this-book" class="nav-link active" data-scroll-target="#how-to-use-this-book">How To Use This Book</a></li>
   <li><a href="#current-chapters" id="toc-current-chapters" class="nav-link" data-scroll-target="#current-chapters">Current Chapters</a></li>
-  <li><a href="#roadmap" id="toc-roadmap" class="nav-link" data-scroll-target="#roadmap">Roadmap</a></li>
+  <li><a href="#book-arc" id="toc-book-arc" class="nav-link" data-scroll-target="#book-arc">Book Arc</a></li>
   <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -381,8 +381,19 @@ window.Quarto = {
 
 
 <p>This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.</p>
-<p>The central identity of the course is developed in the <a href="../book/motivation.html">motivation chapter</a>: mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms.</p>
-<p>The book grows from the stabilized course materials. Each chapter connects:</p>
+<p>The <a href="../book/motivation.html">motivation chapter</a> develops the central identity of the course:</p>
+<p><span class="math display">
+y = Ax+\eta
+\qquad\Longrightarrow\qquad
+\hat{x}
+=
+\arg\min_x D(Ax,y)+\lambda R(x)
+\qquad\Longrightarrow\qquad
+\hat{x}=f_\theta(y).
+</span></p>
+<p>Mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.</p>
+<p>The book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the <a href="../project/index.html">project page</a>.</p>
+<p>Each chapter connects:</p>
 <ul>
 <li>the mathematical model;</li>
 <li>the computational idea;</li>
@@ -392,7 +403,7 @@ window.Quarto = {
 </ul>
 <section id="how-to-use-this-book" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-book">How To Use This Book</h2>
-<p>Read each chapter before or after the corresponding class. Use the slides for the lecture structure and the notebook for experiments.</p>
+<p>Read each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc.</p>
 <p>For each chapter, students should be able to answer:</p>
 <ol type="1">
 <li>What is the mathematical object?</li>
@@ -507,9 +518,9 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-<section id="roadmap" class="level2">
-<h2 class="anchored" data-anchor-id="roadmap">Roadmap</h2>
-<p>The complete book will follow the course arc:</p>
+<section id="book-arc" class="level2">
+<h2 class="anchored" data-anchor-id="book-arc">Book Arc</h2>
+<p>The book follows the course arc:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -551,12 +562,12 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>V</td>
-<td>14-15</td>
-<td>Robustness, ethics, project reporting, oral defense</td>
+<td>14</td>
+<td>Robustness, ethics, and responsible reconstruction</td>
 </tr>
 </tbody>
 </table>
-<p>The first writing pass now contains Chapters 1-14. The remaining writing work is the project/reporting chapter.</p>
+<p>The course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.</p>
 </section>
 <section id="notation" class="level2">
 <h2 class="anchored" data-anchor-id="notation">Notation</h2>

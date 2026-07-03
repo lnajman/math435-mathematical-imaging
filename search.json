@@ -2268,7 +2268,7 @@
     "text": "Slides | Notebook | Open in Colab",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2280,7 +2280,7 @@
     "text": "Learning Goals\nBy the end of this chapter, you should be able to:\n\nexplain stability as sensitivity to perturbations;\ntest how parameter choices affect a reconstruction;\nmeasure perturbation amplification in an inverse problem;\ndesign a robustness test across noise, models, and image families;\ndistinguish visual plausibility from measurement support;\ndocument assumptions, failures, and limitations responsibly.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2292,7 +2292,7 @@
     "text": "Reliability Is Tested\nPrevious chapters built more expressive reconstruction methods: Tikhonov regularization, variational models, TV, sparse priors, wavelets, learned patch priors, and plug-and-play denoisers.\nThe natural final question is not only:\n\nDoes the reconstruction look good?\n\nIt is also:\n\nUnder what conditions should we trust it?\n\n\n\nReliability is not a single final score. It is a loop of modeling, testing, stress testing, and documenting what has been learned.\n\nIn mathematical imaging, a beautiful output can still be unsafe if it is unstable, outside the tested domain, or visually plausible but unsupported by the measurements.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2304,7 +2304,7 @@
     "text": "Why This Chapter Matters\nThis final chapter returns to the beginning of the course. We started with the inverse-problem question:\n\ny = Ax+\\eta,\n\\qquad\n\\text{recover } x \\text{ from } y.\n\nWe then saw why this is difficult: information can be lost, noise can be amplified, and many images can be compatible with the same data. Regularization, sparse priors, wavelets, learned priors, neural networks, and plug-and-play algorithms are all ways to make reconstruction possible.\nBut the final question is not only whether reconstruction is possible. It is whether the result should be trusted for the intended use.\nThis is where the course becomes a habit of mind. Every reconstruction should be read as a mixture of:\n\nmeasured evidence;\nforward-model assumptions;\nnoise assumptions;\nprior information;\nalgorithmic choices;\ntraining-data influence, if learning is used.\n\nReliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2316,7 +2316,7 @@
     "text": "Stability\nAn imaging method is stable if small changes in the data tend to produce small changes in the reconstruction.\nIf y is the measured data and \\hat{x}(y) is the reconstructed image, stability asks whether a small perturbation \\delta y produces a controlled change\n\n\\hat{x}(y+\\delta y)-\\hat{x}(y).\n\nThis is the practical form of the third Hadamard condition from Chapter 5: continuous dependence on the data.\nPerturbations are not only random noise. They can come from:\n\nsensor noise;\ncalibration error;\nan imperfect blur kernel;\ndiscretization choices;\npreprocessing;\na change in acquisition protocol;\na mismatch between training data and test data.\n\nThe central danger is error amplification. Forward imaging often loses information: blur weakens high frequencies, masks discard observations, subsampling removes coefficients, and noise corrupts weak signal components. Trying to undo that loss can magnify small errors.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2328,7 +2328,7 @@
     "text": "Stability Of The Whole Pipeline\nStability is not only a property of one formula. It is a property of the whole pipeline:\n\n\\text{raw data}\n\\rightarrow\n\\text{preprocessing}\n\\rightarrow\n\\text{reconstruction}\n\\rightarrow\n\\text{postprocessing}\n\\rightarrow\n\\text{decision}.\n\nSmall changes can enter at any stage. A different normalization, crop, interpolation rule, stopping criterion, or threshold can affect the final image. For learned methods, a small change in the input can interact with a nonlinear network in unexpected ways.\nFor this reason, a responsible stability test should perturb more than one thing when possible. Perturb the measured data, the assumed model, the parameter values, and the preprocessing choices. Then ask whether the conclusion changes.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2340,7 +2340,7 @@
     "text": "Parameter Sensitivity\nRegularization makes inverse problems more stable, but the amount of regularization matters.\nFor Tikhonov regularization,\n\n\\hat{x}_\\lambda\n=\n\\arg\\min_x\n\\frac12\\|Ax-y\\|_2^2\n+\n\\frac{\\lambda}{2}\\|Lx\\|_2^2,\n\nthe parameter \\lambda controls the balance between data consistency and prior smoothness.\n\n\nThe reconstruction can change substantially as \\lambda moves from weak to strong regularization.\n\nWeak regularization often:\n\nfits unstable directions;\namplifies noise;\ngives a low data residual but poor image quality.\n\nStrong regularization often:\n\nsuppresses noise and artifacts;\nalso suppresses details;\nmay fit the data poorly.\n\nThe goal is not to find a magic value of \\lambda. The goal is to understand whether there is a reasonable interval of parameter values where the result is stable and scientifically meaningful.\nIf a conclusion depends on one extremely precise parameter value, that conclusion is fragile. A robust conclusion should survive a reasonable neighborhood of choices. This is especially important in student projects: it is better to show a parameter range with clear tradeoffs than to present one polished image with no explanation of how it was obtained.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2352,7 +2352,7 @@
     "text": "Perturbation Amplification\nA simple stability diagnostic is to perturb the data and compare relative input and output changes.\nTake an observation y and add a small perturbation \\delta y. Compute\n\n\\frac{\\|\\delta y\\|}{\\|y\\|}\n\\qquad\\text{and}\\qquad\n\\frac{\\|\\hat{x}(y+\\delta y)-\\hat{x}(y)\\|}{\\|\\hat{x}(y)\\|}.\n\nThe ratio\n\n\\frac{\n\\|\\hat{x}(y+\\delta y)-\\hat{x}(y)\\|/\\|\\hat{x}(y)\\|\n}{\n\\|\\delta y\\|/\\|y\\|\n}\n\nis an empirical amplification factor.\n\n\nWeak regularization can make the reconstruction much more sensitive to small perturbations in the data.\n\nThis diagnostic is useful even when the exact ground truth is not available. It asks whether the reconstruction method reacts smoothly to small measurement changes.\nThe amplification factor is not a universal score. It depends on the perturbation direction, the norm, and the reconstruction method. Still, it is useful because it turns the abstract idea of stability into an experiment students can run.\nWhen possible, repeat the test with several perturbations. If one small perturbation causes a large change in a task-critical region, that is evidence of fragility even if the average metric looks acceptable.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2364,7 +2364,7 @@
     "text": "Singular Values And Stability\nFor a linear forward model y=Ax+\\eta, singular values explain why inversion can be unstable.\nIf\n\nA = U\\Sigma V^\\top,\n\nthen direct inversion divides by singular values:\n\nx\n=\n\\sum_i\n\\frac{u_i^\\top y}{\\sigma_i}v_i.\n\nWhen \\sigma_i is small, the factor 1/\\sigma_i is large. Noise or modeling error in the corresponding data direction is amplified.\nRegularization limits this amplification. For example, standard Tikhonov filtering replaces 1/\\sigma_i by\n\n\\frac{\\sigma_i}{\\sigma_i^2+\\lambda}.\n\nThis factor does not explode when \\sigma_i is small. The price is bias: some true details are also reduced.\nThis is the same tradeoff that appeared throughout the course. Stability is bought by refusing to trust weakly measured directions too much. The question is which details are sacrificed, and whether those details matter for the task.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2376,7 +2376,7 @@
     "text": "Robustness\nStability asks about sensitivity to small changes. Robustness asks whether a method continues to work acceptably across a meaningful range of conditions.\nA method is robust only relative to a testing plan. Useful axes include:\n\nnoise level;\nblur or sampling mismatch;\nparameter settings;\nimage class;\nacquisition device;\nrare but important structures;\npreprocessing choices.\n\nA minimal robustness table might look like this:\n\n\n\nTest\nQuestion\n\n\n\n\nnoise sweep\nDoes performance degrade smoothly?\n\n\nparameter sweep\nIs there a wide safe range?\n\n\nmodel mismatch\nWhat happens if A is wrong?\n\n\nimage family shift\nDoes the prior overfit one domain?\n\n\nsmall feature test\nAre weak structures preserved?\n\n\n\nRobustness is not proven by one successful example. It is supported by a pattern of successful and failed tests.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2388,7 +2388,7 @@
     "text": "Robustness For Learned Methods\nFor learned imaging, robustness testing must include the training distribution. A method may be stable for images similar to the training set and unreliable outside it.\nUseful learned-method tests include:\n\ntrain/test domain comparison;\nnoise levels not seen during training;\nforward models different from the simulated training model;\nrare structures or unusual cases;\nadversarial or worst-case perturbations when appropriate;\ncomparison with simple model-based baselines.\n\nThe goal is not to make learning look bad. The goal is to know where the learned prior is useful and where it becomes an unsupported assumption.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2400,7 +2400,7 @@
     "text": "Domain Robustness\nLearned priors are powerful, but they learn from the examples they see.\n\n\nA denoiser trained on one image family can be less reliable on another image family.\n\nThis is not a defect of learning itself. It is an assumption that must be named. The training set acts like a prior: it says which images and structures are expected.\nIn inverse problems, overfitting can mean:\n\nexcellent results on benchmark images;\npoor behavior on new acquisition conditions;\nlearned texture that is not supported by the data;\nhidden failure on rare cases;\nperformance differences across populations, instruments, or sites.\n\nThe ethical issue is not only average performance. A method that works well on average can still fail systematically for a subgroup, acquisition device, or rare structure. Robustness should therefore be reported across meaningful categories, not only as one global number.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2412,7 +2412,7 @@
     "text": "Hallucination\nIn reconstruction, hallucination means producing structure that looks plausible but is not supported by the measurements.\nThis can happen with learned methods, but the general risk is older than deep learning. Any strong prior can add, remove, or reshape information when the data are insufficient.\nThere are two symmetric dangers:\n\na false positive: the method invents a structure;\na false negative: the method removes a real but weak structure.\n\nBoth matter. Which one is worse depends on the task.\nIn some applications, false positives are costly: a reconstruction may suggest a defect, lesion, object, or event that is not actually supported by the data. In other applications, false negatives are worse: a method may remove a weak but important signal. The evaluation should match the risk.\nThis is why “looks good” is not a scientific criterion by itself. The reconstruction must be evaluated against the task and the possible harm of different errors.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2424,7 +2424,7 @@
     "text": "Small Feature Risk\nSmall or low-contrast features are often the hardest to handle responsibly. They may be exactly the features that matter.\n\n\nStrong regularization and smoothing can make an image look calmer while reducing the contrast of a small real feature.\n\nThis is why image quality cannot be judged only by smoothness or visual appeal. A visually pleasing reconstruction may be worse for a detection task.\nFor a small-feature test, measure something task-specific, for example:\n\nfeature contrast;\nlocalization error;\ndetection rate;\nfalse positive rate;\nfalse negative rate.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2436,7 +2436,7 @@
     "text": "Data Consistency Is Necessary\nAn output should be compatible with the measurement model:\n\nA\\hat{x}\\approx y.\n\nData consistency is necessary, but it is not sufficient. In an ill-posed inverse problem, many images can explain the same measurement within noise tolerance.\nThis is exactly why priors are useful, and also why priors must be tested. The reconstruction is a combination of measurement evidence and modeling assumptions.\nData consistency should be interpreted with the noise model. Exact equality A\\hat{x}=y is not always desirable when y is noisy. A good reconstruction should fit the data within the expected noise and model error, not necessarily fit every fluctuation.\nFor learned reconstructions, data consistency is a guardrail. It does not prove truth, but it can reveal when a visually plausible output has drifted away from the measurement.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2448,7 +2448,7 @@
     "text": "Uncertainty\nA reconstruction is usually not complete without uncertainty. In an inverse problem, uncertainty can come from noise, missing data, model mismatch, parameter choice, and training distribution.\nUncertainty can be communicated in several ways:\n\nshow sensitivity to noise or perturbations;\nreport confidence intervals for scalar measurements;\ndisplay uncertainty maps when available;\ncompare multiple plausible reconstructions;\nidentify regions dominated by prior assumptions.\n\nThe last point is essential. If a region is weakly measured and mostly determined by the prior, the user should know that.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2460,7 +2460,7 @@
     "text": "Evaluation\nNo single evaluation number is enough.\nWhen ground truth is available, report quantitative metrics such as RMSE or PSNR. But also check whether those metrics hide localized failures.\nWhen ground truth is not available, use indirect tests:\n\ndata residuals;\nperturbation sensitivity;\nparameter sweeps;\nmodel mismatch tests;\ncomparison with simpler baselines;\nexpert or domain review;\nuncertainty or confidence reporting.\n\nFor project reports, a failure case is not a weakness. It is evidence that the method has been tested honestly.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2472,7 +2472,7 @@
     "text": "Reproducibility\nA reconstruction should be reproducible enough that another person can understand how it was produced. This requires more than code.\nDocument:\n\nsoftware versions and random seeds when relevant;\npreprocessing steps;\nparameter values;\ntraining data or simulated data generation;\nstopping criteria;\nevaluation scripts;\nknown nondeterminism.\n\nReproducibility is part of ethics because it allows others to inspect, challenge, and improve the result.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2484,7 +2484,7 @@
     "text": "Ethics And Responsibility\nMathematical imaging methods can influence decisions in science, engineering, medicine, remote sensing, cultural heritage, and security. The same reconstruction can be both mathematically interesting and socially consequential.\n\n\nBefore deployment, ask who could be harmed by false positives, false negatives, missing uncertainty, or untested domain shift.\n\nEthical failure modes include:\n\na method works worse for some populations or acquisition sites;\na reconstruction removes rare but important signs;\na plausible output is treated as direct measurement;\nusers are not told when the method is outside its tested domain;\ncode and parameters are not reproducible.\n\nEthics here is not separate from mathematics. Stability, robustness, reproducibility, and honest communication are part of responsible modeling.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2496,7 +2496,7 @@
     "text": "Common Mistakes\nA first mistake is to treat a high-quality visual result as proof. It is evidence of visual plausibility, not necessarily measurement support.\nA second mistake is to report only the best example. Reliability is learned from variation: easy cases, hard cases, parameter sweeps, and failure cases.\nA third mistake is to hide prior influence. Every method uses assumptions. The responsible move is to name them.\nA fourth mistake is to think ethics begins after the mathematics. In imaging, the mathematical choices determine what can be seen, hidden, amplified, or invented.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2508,7 +2508,7 @@
     "text": "What To Document\nFor a reconstruction method, document:\n\nthe forward model and its assumptions;\nthe noise model;\nthe regularizer or learned prior;\ntraining data, if any;\nparameter choices;\nvalidation cases;\nknown failures;\nuncertainty and limitations;\nintended use and non-use.\n\nThis documentation makes the reconstruction inspectable. It also helps future users understand what the image is, and what it is not.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2520,7 +2520,7 @@
     "text": "Final Course Synthesis\nThe course can be summarized in one line:\n\n\\text{reconstruction}\n=\n\\text{measurement consistency}\n+\n\\text{prior information}\n+\n\\text{optimization or learning}.\n\nClassical methods make the prior explicit. Learned methods often make the prior more powerful but less transparent. Hybrid methods try to keep the best of both: physics and measurement consistency from inverse problems, expressive image models from data.\nThe goal is not to choose one camp forever. The goal is to ask the right questions:\n\nWhat information was measured?\nWhat information was assumed?\nWhat was learned from examples?\nWhat is stable under perturbation?\nWhat fails under domain shift?\nWhat should the user be told?\n\nThat is the path from mathematical imaging to neural imaging without losing scientific discipline.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2532,7 +2532,7 @@
     "text": "Project Checkpoint\nBy the end of the course project, your report should include:\n\nthe mathematical model;\nthe reconstruction algorithm;\na parameter study;\nresults on multiple cases;\na failure or limitation analysis;\ncode and reproducibility notes.\n\nFor the oral defense, both teammates should be able to explain:\n\nthe forward model;\nthe inverse problem;\nthe role of the prior or regularizer;\nthe numerical algorithm;\nthe main success;\nthe main limitation.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2544,7 +2544,7 @@
     "text": "Computation\nThe Week 14 notebook makes the reliability checks concrete.\nUse it to:\n\nSweep Tikhonov \\lambda.\nMeasure perturbation amplification.\nTrack small-feature contrast.\nCompare denoising across image families.\nWrite a reliability checklist for the project.\n\nTo regenerate the Week 14 examples from the repository root:\npython3 examples/week14_stability_robustness.py\npython3 examples/make_week14_figures.py\npython3 scripts/build_notebooks.py\n./scripts/quarto render\nThe notebook is the best place to change parameters and see how sensitive the conclusions are.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2556,7 +2556,7 @@
     "text": "Exercises\n\nParameter sensitivity. Choose two nearby values of \\lambda in a Tikhonov problem. Compare the data residual, RMSE if ground truth is available, and visual detail.\nPerturbation test. Add a small perturbation to the data. Compute the empirical amplification factor. Repeat for weak and strong regularization.\nRobustness table. For your course project, make a table with at least four tests: a noise sweep, a parameter sweep, a model mismatch test, and a failure case.\nSmall-feature test. Construct or choose an image with a weak localized feature. Measure whether the reconstruction preserves or removes it.\nEthics paragraph. Write five sentences explaining when your method should not be used.\nUncertainty statement. Identify one region or quantity in your reconstruction that is weakly supported by the data. Explain how you would communicate that uncertainty.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -2568,7 +2568,7 @@
     "text": "Takeaways\n\nIll-posed inverse problems require stability checks.\nA good-looking image can still be unreliable.\nLearned priors inherit assumptions from training data.\nRobustness must be tested across realistic and stressful cases.\nEthical reconstruction means documenting assumptions, failures, and limits.\nThe final goal is not only reconstruction, but trustworthy reconstruction.",
     "crumbs": [
       "Book",
-      "Part V: Reliability and Projects",
+      "Part V: Reliability",
       "14. Stability, robustness, and ethics"
     ]
   },
@@ -3970,14 +3970,14 @@
     "href": "index.html#how-to-use-this-site",
     "title": "MATH 435: Mathematical Imaging",
     "section": "How To Use This Site",
-    "text": "How To Use This Site\n\n\n\nResource\nUse it for\n\n\n\n\nClass list and slides\nFind the material for each class meeting.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the slower narrative version of the course.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense."
+    "text": "How To Use This Site\n\n\n\nResource\nUse it for\n\n\n\n\nClass list and slides\nFind the material for each class meeting.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense."
   },
   {
     "objectID": "index.html#course-arc",
     "href": "index.html#course-arc",
     "title": "MATH 435: Mathematical Imaging",
     "section": "Course Arc",
-    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14-15\nWhen should a reconstruction be trusted, and how do students defend their work?"
+    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
   },
   {
     "objectID": "index.html#central-idea",
@@ -4236,7 +4236,7 @@
     "href": "book/index.html",
     "title": "Mathematical Imaging",
     "section": "",
-    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.\nThe central identity of the course is developed in the motivation chapter: mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms.\nThe book grows from the stabilized course materials. Each chapter connects:",
+    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.\nThe motivation chapter develops the central identity of the course:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y).\nMathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.\nThe book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the project page.\nEach chapter connects:",
     "crumbs": [
       "Book",
       "Book home"
@@ -4247,7 +4247,7 @@
     "href": "book/index.html#how-to-use-this-book",
     "title": "Mathematical Imaging",
     "section": "How To Use This Book",
-    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure and the notebook for experiments.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat can go wrong?",
+    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat can go wrong?",
     "crumbs": [
       "Book",
       "Book home"
@@ -4265,11 +4265,11 @@
     ]
   },
   {
-    "objectID": "book/index.html#roadmap",
-    "href": "book/index.html#roadmap",
+    "objectID": "book/index.html#book-arc",
+    "href": "book/index.html#book-arc",
     "title": "Mathematical Imaging",
-    "section": "Roadmap",
-    "text": "Roadmap\nThe complete book will follow the course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nStart\nMotivation\nInverse problems as the path toward neural reconstruction\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14-15\nRobustness, ethics, project reporting, oral defense\n\n\n\nThe first writing pass now contains Chapters 1-14. The remaining writing work is the project/reporting chapter.",
+    "section": "Book Arc",
+    "text": "Book Arc\nThe book follows the course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nStart\nMotivation\nInverse problems as the path toward neural reconstruction\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14\nRobustness, ethics, and responsible reconstruction\n\n\n\nThe course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.",
     "crumbs": [
       "Book",
       "Book home"
