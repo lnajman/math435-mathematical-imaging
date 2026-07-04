@@ -155,7 +155,8 @@ def make_strength_tradeoff(path: Path) -> None:
     errors = [row["rmse"] for row in rows]
     residuals = [row["residual"] for row in rows]
 
-    fig, ax1 = plt.subplots(figsize=(8.8, 4.8), dpi=150)
+    fig, ax1 = plt.subplots(figsize=(8.8, 5.2), dpi=150)
+    fig.subplots_adjust(left=0.10, right=0.90, top=0.84, bottom=0.24)
     ax1.plot(sigmas, errors, "-o", color="#24536b", linewidth=2.2, label="RMSE")
     ax1.set_xlabel("Gaussian denoiser sigma")
     ax1.set_ylabel("RMSE", color="#24536b")
@@ -168,7 +169,14 @@ def make_strength_tradeoff(path: Path) -> None:
     ax2.tick_params(axis="y", labelcolor="#9a5b2f")
 
     ax1.set_title("denoising strength tradeoff", fontsize=16, color="#1f4f63", pad=10)
-    fig.text(0.5, 0.01, "Stronger denoising can improve stability but may move farther from the measured data.", ha="center", fontsize=12.5, color="#202428")
+    fig.text(
+        0.5,
+        0.055,
+        "Stronger denoising can improve stability but may move farther from the measured data.",
+        ha="center",
+        fontsize=12.5,
+        color="#202428",
+    )
     save(fig, path)
 
 
