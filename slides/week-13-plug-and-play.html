@@ -240,6 +240,7 @@ Laurent Najman
 <ul>
 <li>Recall proximal algorithms for regularized inverse problems.</li>
 <li>Define plug-and-play reconstruction.</li>
+<li>Explain how learned algorithms can keep data consistency in the loop.</li>
 <li>Compare explicit and implicit regularization.</li>
 <li>Run a deblurring example with handcrafted and learned denoisers.</li>
 <li>Discuss fixed points, convergence, and trust.</li>
@@ -269,11 +270,11 @@ Laurent Najman
 <td>plug-and-play idea and update equations</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">38-52 min</td>
-<td>learned regularization and examples</td>
+<td style="text-align: right;">38-50 min</td>
+<td>learned regularization and unrolled algorithms</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">52-62 min</td>
+<td style="text-align: right;">50-62 min</td>
 <td>convergence, fixed points, and failure modes</td>
 </tr>
 <tr class="even">
@@ -383,6 +384,20 @@ x^{k+1}
 <p>If a proximal step already behaves like a denoiser, why not use a strong denoiser directly?</p>
 </div>
 </section>
+<section id="plug-and-play-is-a-bridge" class="slide level2">
+<h2>Plug-and-Play Is A Bridge</h2>
+<p>In proximal gradient, the algorithm alternates:</p>
+<div class="checklist">
+<ul>
+<li>move toward the measured data;</li>
+<li>move toward images preferred by the prior.</li>
+</ul>
+</div>
+<p>Plug-and-play keeps this structure, but lets the prior step be a denoiser.</p>
+<div class="takeaway-box">
+<p>Learning enters where the inverse problem already needed prior information.</p>
+</div>
+</section>
 <section id="proximal-step-versus-denoiser" class="slide level2">
 <h2>Proximal Step Versus Denoiser</h2>
 <div class="figure-frame">
@@ -440,6 +455,21 @@ x^{k+1}=D_\sigma(z^k),
 </div>
 <div class="takeaway-box">
 <p>PnP does not throw away physics. It uses physics between denoising steps.</p>
+</div>
+</section>
+<section id="data-consistency-keeps-asking" class="slide level2">
+<h2>Data Consistency Keeps Asking</h2>
+<p>The residual</p>
+<p><span class="math display">
+Ax^k-y
+</span></p>
+<p>asks how the current image disagrees with the measurement.</p>
+<p>The adjoint step sends that disagreement back to image space:</p>
+<p><span class="math display">
+A^\top(Ax^k-y).
+</span></p>
+<div class="caption">
+<p>The denoiser acts after a measurement-based correction, not instead of one.</p>
 </div>
 </section>
 <section id="what-is-no-longer-classical" class="slide level2">
@@ -518,6 +548,18 @@ x^0 \rightarrow x^1 \rightarrow \cdots \rightarrow x^K.
 <li>denoising or regularization blocks;</li>
 <li>learned step sizes or filters.</li>
 </ul>
+</div>
+</section>
+<section id="unrolled-networks" class="slide level2">
+<h2>Unrolled Networks</h2>
+<p>A schematic learned update is:</p>
+<p><span class="math display">
+x^{k+1}
+=
+G_{\theta_k}\left(x^k,\ A^\top(Ax^k-y)\right).
+</span></p>
+<div class="takeaway-box">
+<p>This is a neural network, but it is still shaped by the forward model.</p>
 </div>
 </section>
 <section id="why-this-is-attractive" class="slide level2">
@@ -697,6 +739,21 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>uncertainty or confidence when possible;</li>
 <li>task-based evaluation.</li>
 </ul>
+</div>
+</section>
+<section id="reading-a-pnp-result" class="slide level2">
+<h2>Reading A PnP Result</h2>
+<p>Ask four questions:</p>
+<div class="checklist">
+<ul>
+<li>Does <span class="math inline">A\hat{x}</span> match <span class="math inline">y</span> within expected noise?</li>
+<li>Was the denoiser trained or chosen for this image family?</li>
+<li>Does the fixed-point change decrease?</li>
+<li>Does the result preserve task-critical structures?</li>
+</ul>
+</div>
+<div class="question-box">
+<p>Where do you see measurement evidence, and where do you see prior influence?</p>
 </div>
 </section>
 <section id="code-demo-run-week-13-examples" class="slide level2 code-small">

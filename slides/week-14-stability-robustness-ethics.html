@@ -240,6 +240,7 @@ Laurent Najman
 <li>Define stability and parameter sensitivity.</li>
 <li>See how small perturbations can become large reconstruction changes.</li>
 <li>Explain robustness across noise levels, models, and image families.</li>
+<li>Audit learned reconstructions across measurement, training, and decision domains.</li>
 <li>Discuss hallucination and small-feature suppression.</li>
 <li>Connect mathematical validation to ethical responsibility.</li>
 </ul>
@@ -269,7 +270,7 @@ Laurent Najman
 </tr>
 <tr class="even">
 <td style="text-align: right;">36-50 min</td>
-<td>robustness and distribution shift</td>
+<td>robustness and learned-domain shift</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">50-62 min</td>
@@ -298,6 +299,21 @@ Laurent Najman
 </div>
 <div class="question-box">
 <p>How do we know whether the result should be trusted?</p>
+</div>
+</section>
+<section id="final-course-identity" class="slide level2">
+<h2>Final Course Identity</h2>
+<div class="model-box">
+<p>Neural imaging = inverse problems + learned image models.</p>
+</div>
+<p>Reliability asks whether:</p>
+<div class="checklist">
+<ul>
+<li>the measurement supports the reconstruction;</li>
+<li>the prior or training data add relevant information;</li>
+<li>the two sources of information conflict;</li>
+<li>the conflict is visible to the user.</li>
+</ul>
 </div>
 </section>
 <section id="reliability-is-tested" class="slide level2">
@@ -495,6 +511,34 @@ Laurent Najman
 <p>Learning from data does not remove assumptions. It moves assumptions into the training set.</p>
 </div>
 </section>
+<section id="three-domains-to-audit" class="slide level2">
+<h2>Three Domains To Audit</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Reliability question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>measurement</td>
+<td>Does the forward model match the real acquisition?</td>
+</tr>
+<tr class="even">
+<td>training</td>
+<td>Do examples represent the cases where the method is used?</td>
+</tr>
+<tr class="odd">
+<td>decision</td>
+<td>Does the metric match the task or risk?</td>
+</tr>
+</tbody>
+</table>
+<div class="caption">
+<p>A neural reconstruction can pass one domain and fail another.</p>
+</div>
+</section>
 <section id="overfitting-in-inverse-problems" class="slide level2">
 <h2>Overfitting in Inverse Problems</h2>
 <p>Overfitting can mean:</p>
@@ -548,6 +592,20 @@ Laurent Najman
 <p>Strong regularization and smoothing make the image look calmer, but reduce feature contrast.</p>
 <div class="takeaway-box">
 <p>The right reconstruction depends on the task, not only on visual smoothness.</p>
+</div>
+</section>
+<section id="same-question-different-mechanism" class="slide level2">
+<h2>Same Question, Different Mechanism</h2>
+<p>Different priors can erase small information in different ways:</p>
+<div class="checklist">
+<ul>
+<li>TV may remove weak texture by preferring piecewise smooth regions.</li>
+<li>Wavelet thresholding may remove small coefficients.</li>
+<li>A learned prior may remove structures absent from training data.</li>
+</ul>
+</div>
+<div class="question-box">
+<p>Did the method preserve the information needed for the task?</p>
 </div>
 </section>
 <section id="data-consistency-is-necessary" class="slide level2">
@@ -734,6 +792,13 @@ Ax \approx y.
 <li>Ethical reconstruction means documenting assumptions, failures, and limits.</li>
 </ul>
 </div>
+</section>
+<section id="final-boundary-question" class="slide level2">
+<h2>Final Boundary Question</h2>
+<div class="question-box">
+<p>Which parts of the reconstruction are dictated by the measurement, and which parts are supplied by prior knowledge?</p>
+</div>
+<p>This is the boundary modern imaging has to test.</p>
 </section>
 <section id="after-class" class="slide level2">
 <h2>After Class</h2>

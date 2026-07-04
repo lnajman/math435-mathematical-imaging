@@ -239,6 +239,7 @@ Laurent Najman
 <div class="checklist">
 <ul>
 <li>Compare model-based and data-driven imaging.</li>
+<li>Explain why neural imaging is still an inverse-problem story.</li>
 <li>Identify forward models, priors, solvers, and training data.</li>
 <li>Interpret a neural network as a parameterized operator.</li>
 <li>Learn a small patch prior from image data.</li>
@@ -261,19 +262,19 @@ Laurent Najman
 <td>recap: TV, sparsity, wavelets</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-22 min</td>
-<td>model-based imaging pipeline</td>
+<td style="text-align: right;">8-16 min</td>
+<td>central identity and model-based pipeline</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">22-36 min</td>
+<td style="text-align: right;">16-32 min</td>
 <td>data-driven imaging pipeline</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">36-48 min</td>
-<td>neural networks as operators</td>
+<td style="text-align: right;">32-44 min</td>
+<td>neural networks as learned operators</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">48-60 min</td>
+<td style="text-align: right;">44-60 min</td>
 <td>learned patch prior example</td>
 </tr>
 <tr class="even">
@@ -301,6 +302,22 @@ Laurent Najman
 </div>
 <div class="question-box">
 <p>What if these choices were learned from data instead?</p>
+</div>
+</section>
+<section id="central-identity" class="slide level2">
+<h2>Central Identity</h2>
+<div class="model-box">
+<p>Neural imaging = inverse problems + learned image models.</p>
+</div>
+<p>The same questions remain:</p>
+<div class="checklist">
+<ul>
+<li>What was measured?</li>
+<li>What information is missing or unstable?</li>
+<li>What prior information is added?</li>
+<li>Where does that prior come from?</li>
+<li>How do we test whether the reconstruction is supported by the data?</li>
+</ul>
 </div>
 </section>
 <section id="two-philosophies" class="slide level2">
@@ -456,6 +473,42 @@ D(Ax,y)+\lambda R(x).
 <p>A learned method can encode image structure that is hard to write as a simple formula.</p>
 <div class="model-box">
 <p>The prior is no longer a short expression like TV; it is represented by parameters learned from examples.</p>
+</div>
+</section>
+<section id="what-can-be-learned" class="slide level2">
+<h2>What Can Be Learned?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Learned object</th>
+<th>Role in the inverse problem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>inverse map <span class="math inline">f_\theta(y)</span></td>
+<td>direct reconstruction rule</td>
+</tr>
+<tr class="even">
+<td>prior <span class="math inline">R_\theta(x)</span></td>
+<td>learned image preference</td>
+</tr>
+<tr class="odd">
+<td>denoiser <span class="math inline">D_\theta(z)</span></td>
+<td>implicit proximal-like step</td>
+</tr>
+<tr class="even">
+<td>representation <span class="math inline">\Phi_\theta(x)</span></td>
+<td>learned coordinates</td>
+</tr>
+<tr class="odd">
+<td>update rule <span class="math inline">G_\theta</span></td>
+<td>learned algorithmic step</td>
+</tr>
+</tbody>
+</table>
+<div class="caption">
+<p>Different neural methods learn different parts of the reconstruction story.</p>
 </div>
 </section>
 <section id="strengths-1" class="slide level2">
@@ -686,6 +739,19 @@ x^{k+1}
 <p>A learned method may produce a plausible image that is not supported by the data.</p>
 <div class="question-box">
 <p>In medical or scientific imaging, why is plausible-but-false structure dangerous?</p>
+</div>
+</section>
+<section id="fit-versus-resemble" class="slide level2">
+<h2>Fit Versus Resemble</h2>
+<p>A learned reconstruction should be read with two verbs:</p>
+<div class="checklist">
+<ul>
+<li>it <strong>fits</strong> the measured data;</li>
+<li>it <strong>resembles</strong> the training examples.</li>
+</ul>
+</div>
+<div class="takeaway-box">
+<p>A good reconstruction needs both measurement support and relevant learned prior information.</p>
 </div>
 </section>
 <section id="evaluation-matters" class="slide level2">

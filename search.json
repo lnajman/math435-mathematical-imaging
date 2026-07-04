@@ -109,14 +109,14 @@
     "href": "slides/week-13-plug-and-play.html#today",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Today",
-    "text": "Today\n\n\nRecall proximal algorithms for regularized inverse problems.\nDefine plug-and-play reconstruction.\nCompare explicit and implicit regularization.\nRun a deblurring example with handcrafted and learned denoisers.\nDiscuss fixed points, convergence, and trust."
+    "text": "Today\n\n\nRecall proximal algorithms for regularized inverse problems.\nDefine plug-and-play reconstruction.\nExplain how learned algorithms can keep data consistency in the loop.\nCompare explicit and implicit regularization.\nRun a deblurring example with handcrafted and learned denoisers.\nDiscuss fixed points, convergence, and trust."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#minute-plan",
     "href": "slides/week-13-plug-and-play.html#minute-plan",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "75-Minute Plan",
-    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: model-based vs data-driven\n\n\n8-22 min\nproximal steps as denoising-like operations\n\n\n22-38 min\nplug-and-play idea and update equations\n\n\n38-52 min\nlearned regularization and examples\n\n\n52-62 min\nconvergence, fixed points, and failure modes\n\n\n62-72 min\nnotebook activity\n\n\n72-75 min\nsynthesis and exit check"
+    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: model-based vs data-driven\n\n\n8-22 min\nproximal steps as denoising-like operations\n\n\n22-38 min\nplug-and-play idea and update equations\n\n\n38-50 min\nlearned regularization and unrolled algorithms\n\n\n50-62 min\nconvergence, fixed points, and failure modes\n\n\n62-72 min\nnotebook activity\n\n\n72-75 min\nsynthesis and exit check"
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#bridge-from-week-12",
@@ -175,6 +175,13 @@
     "text": "A Denoising Interpretation\nThe proximal step receives a corrupted intermediate image z^k and returns a more regular image.\nThat sounds like denoising.\n\nIf a proximal step already behaves like a denoiser, why not use a strong denoiser directly?"
   },
   {
+    "objectID": "slides/week-13-plug-and-play.html#plug-and-play-is-a-bridge",
+    "href": "slides/week-13-plug-and-play.html#plug-and-play-is-a-bridge",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Plug-and-Play Is A Bridge",
+    "text": "Plug-and-Play Is A Bridge\nIn proximal gradient, the algorithm alternates:\n\n\nmove toward the measured data;\nmove toward images preferred by the prior.\n\n\nPlug-and-play keeps this structure, but lets the prior step be a denoiser.\n\nLearning enters where the inverse problem already needed prior information."
+  },
+  {
     "objectID": "slides/week-13-plug-and-play.html#proximal-step-versus-denoiser",
     "href": "slides/week-13-plug-and-play.html#proximal-step-versus-denoiser",
     "title": "Plug-and-Play and Learned Regularization",
@@ -215,6 +222,13 @@
     "title": "Plug-and-Play and Learned Regularization",
     "section": "What Is Still Model-Based?",
     "text": "What Is Still Model-Based?\nThe data-consistency step still uses:\n\n\nthe forward model A;\nthe adjoint A^\\top;\nthe measured data y;\nthe noise model through the data term.\n\n\n\nPnP does not throw away physics. It uses physics between denoising steps."
+  },
+  {
+    "objectID": "slides/week-13-plug-and-play.html#data-consistency-keeps-asking",
+    "href": "slides/week-13-plug-and-play.html#data-consistency-keeps-asking",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Data Consistency Keeps Asking",
+    "text": "Data Consistency Keeps Asking\nThe residual\n\nAx^k-y\n\nasks how the current image disagrees with the measurement.\nThe adjoint step sends that disagreement back to image space:\n\nA^\\top(Ax^k-y).\n\n\nThe denoiser acts after a measurement-based correction, not instead of one."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#what-is-no-longer-classical",
@@ -264,6 +278,13 @@
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Unrolled Algorithm Form",
     "text": "Unrolled Algorithm Form\nInstead of running an algorithm until convergence, fix a number of iterations:\n\nx^0 \\rightarrow x^1 \\rightarrow \\cdots \\rightarrow x^K.\n\nThen learn parameters inside the K stages.\n\n\ndata-consistency blocks;\ndenoising or regularization blocks;\nlearned step sizes or filters."
+  },
+  {
+    "objectID": "slides/week-13-plug-and-play.html#unrolled-networks",
+    "href": "slides/week-13-plug-and-play.html#unrolled-networks",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Unrolled Networks",
+    "text": "Unrolled Networks\nA schematic learned update is:\n\nx^{k+1}\n=\nG_{\\theta_k}\\left(x^k,\\ A^\\top(Ax^k-y)\\right).\n\n\nThis is a neural network, but it is still shaped by the forward model."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#why-this-is-attractive",
@@ -383,6 +404,13 @@
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Safeguards",
     "text": "Safeguards\nPractical learned imaging should report:\n\n\nbaseline comparisons;\ndata-consistency errors;\nsensitivity to denoising strength;\nrobustness to distribution shift;\nuncertainty or confidence when possible;\ntask-based evaluation."
+  },
+  {
+    "objectID": "slides/week-13-plug-and-play.html#reading-a-pnp-result",
+    "href": "slides/week-13-plug-and-play.html#reading-a-pnp-result",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Reading A PnP Result",
+    "text": "Reading A PnP Result\nAsk four questions:\n\n\nDoes A\\hat{x} match y within expected noise?\nWas the denoiser trained or chosen for this image family?\nDoes the fixed-point change decrease?\nDoes the result preserve task-critical structures?\n\n\n\nWhere do you see measurement evidence, and where do you see prior influence?"
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#code-demo-run-week-13-examples",
@@ -7869,14 +7897,14 @@
     "href": "slides/week-12-model-data.html#today",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Today",
-    "text": "Today\n\n\nCompare model-based and data-driven imaging.\nIdentify forward models, priors, solvers, and training data.\nInterpret a neural network as a parameterized operator.\nLearn a small patch prior from image data.\nDiscuss generalization and failure modes."
+    "text": "Today\n\n\nCompare model-based and data-driven imaging.\nExplain why neural imaging is still an inverse-problem story.\nIdentify forward models, priors, solvers, and training data.\nInterpret a neural network as a parameterized operator.\nLearn a small patch prior from image data.\nDiscuss generalization and failure modes."
   },
   {
     "objectID": "slides/week-12-model-data.html#minute-plan",
     "href": "slides/week-12-model-data.html#minute-plan",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "75-Minute Plan",
-    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: TV, sparsity, wavelets\n\n\n8-22 min\nmodel-based imaging pipeline\n\n\n22-36 min\ndata-driven imaging pipeline\n\n\n36-48 min\nneural networks as operators\n\n\n48-60 min\nlearned patch prior example\n\n\n60-70 min\nnotebook activity\n\n\n70-75 min\nsynthesis and exit check"
+    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: TV, sparsity, wavelets\n\n\n8-16 min\ncentral identity and model-based pipeline\n\n\n16-32 min\ndata-driven imaging pipeline\n\n\n32-44 min\nneural networks as learned operators\n\n\n44-60 min\nlearned patch prior example\n\n\n60-70 min\nnotebook activity\n\n\n70-75 min\nsynthesis and exit check"
   },
   {
     "objectID": "slides/week-12-model-data.html#bridge-from-week-11",
@@ -7884,6 +7912,13 @@
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Bridge from Week 11",
     "text": "Bridge from Week 11\nWavelets gave us a handcrafted representation.\nWe chose:\n\n\nthe wavelet family;\nthe decomposition level;\nthe thresholding rule;\nthe threshold strength.\n\n\n\nWhat if these choices were learned from data instead?"
+  },
+  {
+    "objectID": "slides/week-12-model-data.html#central-identity",
+    "href": "slides/week-12-model-data.html#central-identity",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Central Identity",
+    "text": "Central Identity\n\nNeural imaging = inverse problems + learned image models.\n\nThe same questions remain:\n\n\nWhat was measured?\nWhat information is missing or unstable?\nWhat prior information is added?\nWhere does that prior come from?\nHow do we test whether the reconstruction is supported by the data?"
   },
   {
     "objectID": "slides/week-12-model-data.html#two-philosophies",
@@ -7975,6 +8010,13 @@
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Learned Prior View",
     "text": "Learned Prior View\nA learned method can encode image structure that is hard to write as a simple formula.\n\nThe prior is no longer a short expression like TV; it is represented by parameters learned from examples."
+  },
+  {
+    "objectID": "slides/week-12-model-data.html#what-can-be-learned",
+    "href": "slides/week-12-model-data.html#what-can-be-learned",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "What Can Be Learned?",
+    "text": "What Can Be Learned?\n\n\n\nLearned object\nRole in the inverse problem\n\n\n\n\ninverse map f_\\theta(y)\ndirect reconstruction rule\n\n\nprior R_\\theta(x)\nlearned image preference\n\n\ndenoiser D_\\theta(z)\nimplicit proximal-like step\n\n\nrepresentation \\Phi_\\theta(x)\nlearned coordinates\n\n\nupdate rule G_\\theta\nlearned algorithmic step\n\n\n\n\nDifferent neural methods learn different parts of the reconstruction story."
   },
   {
     "objectID": "slides/week-12-model-data.html#strengths-1",
@@ -8117,6 +8159,13 @@
     "text": "Hallucination Risk\nA learned method may produce a plausible image that is not supported by the data.\n\nIn medical or scientific imaging, why is plausible-but-false structure dangerous?"
   },
   {
+    "objectID": "slides/week-12-model-data.html#fit-versus-resemble",
+    "href": "slides/week-12-model-data.html#fit-versus-resemble",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Fit Versus Resemble",
+    "text": "Fit Versus Resemble\nA learned reconstruction should be read with two verbs:\n\n\nit fits the measured data;\nit resembles the training examples.\n\n\n\nA good reconstruction needs both measurement support and relevant learned prior information."
+  },
+  {
     "objectID": "slides/week-12-model-data.html#evaluation-matters",
     "href": "slides/week-12-model-data.html#evaluation-matters",
     "title": "Model-Based vs Data-Driven Imaging",
@@ -8191,14 +8240,14 @@
     "href": "slides/week-14-stability-robustness-ethics.html#today",
     "title": "Stability, Robustness, and Ethics",
     "section": "Today",
-    "text": "Today\n\n\nDefine stability and parameter sensitivity.\nSee how small perturbations can become large reconstruction changes.\nExplain robustness across noise levels, models, and image families.\nDiscuss hallucination and small-feature suppression.\nConnect mathematical validation to ethical responsibility."
+    "text": "Today\n\n\nDefine stability and parameter sensitivity.\nSee how small perturbations can become large reconstruction changes.\nExplain robustness across noise levels, models, and image families.\nAudit learned reconstructions across measurement, training, and decision domains.\nDiscuss hallucination and small-feature suppression.\nConnect mathematical validation to ethical responsibility."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#minute-plan",
     "href": "slides/week-14-stability-robustness-ethics.html#minute-plan",
     "title": "Stability, Robustness, and Ethics",
     "section": "75-Minute Plan",
-    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: plug-and-play and learned priors\n\n\n8-23 min\nstability and parameter sensitivity\n\n\n23-36 min\nperturbation amplification\n\n\n36-50 min\nrobustness and distribution shift\n\n\n50-62 min\nhallucination, small features, reliability\n\n\n62-72 min\nnotebook activity and project report preparation\n\n\n72-75 min\nsynthesis and exit check"
+    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: plug-and-play and learned priors\n\n\n8-23 min\nstability and parameter sensitivity\n\n\n23-36 min\nperturbation amplification\n\n\n36-50 min\nrobustness and learned-domain shift\n\n\n50-62 min\nhallucination, small features, reliability\n\n\n62-72 min\nnotebook activity and project report preparation\n\n\n72-75 min\nsynthesis and exit check"
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#bridge-from-week-13",
@@ -8206,6 +8255,13 @@
     "title": "Stability, Robustness, and Ethics",
     "section": "Bridge from Week 13",
     "text": "Bridge from Week 13\nPlug-and-play gave us a hybrid loop:\n\n\nuse the forward model for data consistency;\nuse a denoiser as an implicit prior;\nmonitor fixed-point behavior.\n\n\n\nHow do we know whether the result should be trusted?"
+  },
+  {
+    "objectID": "slides/week-14-stability-robustness-ethics.html#final-course-identity",
+    "href": "slides/week-14-stability-robustness-ethics.html#final-course-identity",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Final Course Identity",
+    "text": "Final Course Identity\n\nNeural imaging = inverse problems + learned image models.\n\nReliability asks whether:\n\n\nthe measurement supports the reconstruction;\nthe prior or training data add relevant information;\nthe two sources of information conflict;\nthe conflict is visible to the user."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#reliability-is-tested",
@@ -8334,6 +8390,13 @@
     "text": "Reading the Domain Test\nThe learned patch prior was trained on camera-like patches.\nIt helps on a camera crop.\nIt is less competitive on a different image family.\n\nLearning from data does not remove assumptions. It moves assumptions into the training set."
   },
   {
+    "objectID": "slides/week-14-stability-robustness-ethics.html#three-domains-to-audit",
+    "href": "slides/week-14-stability-robustness-ethics.html#three-domains-to-audit",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Three Domains To Audit",
+    "text": "Three Domains To Audit\n\n\n\nDomain\nReliability question\n\n\n\n\nmeasurement\nDoes the forward model match the real acquisition?\n\n\ntraining\nDo examples represent the cases where the method is used?\n\n\ndecision\nDoes the metric match the task or risk?\n\n\n\n\nA neural reconstruction can pass one domain and fail another."
+  },
+  {
     "objectID": "slides/week-14-stability-robustness-ethics.html#overfitting-in-inverse-problems",
     "href": "slides/week-14-stability-robustness-ethics.html#overfitting-in-inverse-problems",
     "title": "Stability, Robustness, and Ethics",
@@ -8374,6 +8437,13 @@
     "title": "Stability, Robustness, and Ethics",
     "section": "Reading the Small Feature Example",
     "text": "Reading the Small Feature Example\nThe feature is visible in the clean image.\nWith blur and noise, it is hard to recover.\nStrong regularization and smoothing make the image look calmer, but reduce feature contrast.\n\nThe right reconstruction depends on the task, not only on visual smoothness."
+  },
+  {
+    "objectID": "slides/week-14-stability-robustness-ethics.html#same-question-different-mechanism",
+    "href": "slides/week-14-stability-robustness-ethics.html#same-question-different-mechanism",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Same Question, Different Mechanism",
+    "text": "Same Question, Different Mechanism\nDifferent priors can erase small information in different ways:\n\n\nTV may remove weak texture by preferring piecewise smooth regions.\nWavelet thresholding may remove small coefficients.\nA learned prior may remove structures absent from training data.\n\n\n\nDid the method preserve the information needed for the task?"
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#data-consistency-is-necessary",
@@ -8472,6 +8542,13 @@
     "title": "Stability, Robustness, and Ethics",
     "section": "What Students Should Remember",
     "text": "What Students Should Remember\n\n\nIll-posed inverse problems require stability checks.\nA good-looking image can still be unreliable.\nLearned priors inherit assumptions from training data.\nRobustness must be tested across realistic and stressful cases.\nEthical reconstruction means documenting assumptions, failures, and limits."
+  },
+  {
+    "objectID": "slides/week-14-stability-robustness-ethics.html#final-boundary-question",
+    "href": "slides/week-14-stability-robustness-ethics.html#final-boundary-question",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Final Boundary Question",
+    "text": "Final Boundary Question\n\nWhich parts of the reconstruction are dictated by the measurement, and which parts are supplied by prior knowledge?\n\nThis is the boundary modern imaging has to test."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#after-class",
