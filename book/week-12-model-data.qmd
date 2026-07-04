@@ -337,7 +337,7 @@ The number of retained PCA components controls model capacity.
 ::: {.figure}
 ![](../assets/figures/week12-capacity-curve.png){fig-alt="Patch PCA singular spectrum and denoising RMSE versus number of components"}
 
-Too few components oversmooth; too many components preserve noise.
+The error curve has a useful middle region: too little capacity removes image detail, while too much capacity begins to preserve noise.
 :::
 
 If the learned prior is trained on one image family and tested on another, performance can change.
