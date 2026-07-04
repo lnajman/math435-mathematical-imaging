@@ -486,7 +486,7 @@ x_\lambda
 </section>
 <section id="python-demo-normal-equations" class="slide level2 code-small">
 <h2>Python Demo: Normal Equations</h2>
-<div id="e8dcd7f8" class="cell">
+<div id="a425732a" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
 <span id="cb1-2"><a></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
 <span id="cb1-3"><a></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -759,6 +759,16 @@ x_\lambda
 <li>In SVD coordinates, Tikhonov damps weak singular directions.</li>
 <li><span class="math inline">\lambda</span> controls a bias-stability tradeoff.</li>
 <li>Regularization is not magic; it encodes a modeling choice.</li>
+</ul>
+</div>
+</section>
+<section id="after-class" class="slide level2">
+<h2>After Class</h2>
+<div class="checklist">
+<ul>
+<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and weekly deliverable.</li>
+<li>Run the week notebook and change at least one important parameter.</li>
+<li>Write one claim-evidence-limit sentence about today’s model.</li>
 </ul>
 </div>
 </section>

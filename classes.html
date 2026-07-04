@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Class List – MATH 435: Mathematical Imaging</title>
+<title>Class Roadmap – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -126,15 +169,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#at-a-glance" id="toc-at-a-glance" class="nav-link active" data-scroll-target="#at-a-glance">At a Glance</a></li>
+  <li><a href="#weekly-work-plan" id="toc-weekly-work-plan" class="nav-link" data-scroll-target="#weekly-work-plan">Weekly Work Plan</a></li>
+  <li><a href="#project-milestones" id="toc-project-milestones" class="nav-link" data-scroll-target="#project-milestones">Project Milestones</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/classes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Class List</h1>
+<h1 class="title">Class Roadmap</h1>
 </div>
 
 
@@ -151,13 +202,22 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This page lists the class meetings and the corresponding materials.</p>
-<p>The slide decks are designed for class structure and discussion. The book chapters give the slower narrative version, and the notebooks are where students experiment with the ideas computationally.</p>
+<p>This page is the weekly entry point for the course.</p>
+<p>The slide decks organize the 75-minute class meetings. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.</p>
+<p>Use each week as a checklist:</p>
+<ul>
+<li><strong>Before class:</strong> read enough of the book chapter to recognize the main objects.</li>
+<li><strong>In class:</strong> use the slides for discussion, derivation, and guided examples.</li>
+<li><strong>After class:</strong> run the notebook, change parameters, and answer the checks.</li>
+<li><strong>Deliverable:</strong> keep a short written record of what the data support, what the model assumes, and what can fail.</li>
+</ul>
+<section id="at-a-glance" class="level2">
+<h2 class="anchored" data-anchor-id="at-a-glance">At a Glance</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: right;">Week</th>
-<th>Class Topic</th>
+<th>Topic</th>
 <th>Slides</th>
 <th>Notebook</th>
 <th>Book</th>
@@ -271,8 +331,200 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</section>
+<section id="weekly-work-plan" class="level2">
+<h2 class="anchored" data-anchor-id="weekly-work-plan">Weekly Work Plan</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Week</th>
+<th>Before Class</th>
+<th>In Class</th>
+<th>After Class</th>
+<th>Deliverable</th>
+<th>Course Identity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>Read the image formation chapter.</td>
+<td>Discuss images as arrays, vectors, and unknowns.</td>
+<td>Run the Week 1 notebook and modify the mask.</td>
+<td>State what the observation records and what it discards.</td>
+<td>An image becomes an unknown <span class="math inline">x</span>; data are produced by a forward process.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>Read the convolution and blur chapter.</td>
+<td>Interpret blur kernels, boundary conditions, and point spread functions.</td>
+<td>Run the Week 2 notebook and vary blur strength.</td>
+<td>Describe one modeling assumption behind convolution.</td>
+<td>The forward model <span class="math inline">A</span> can be a blur operator, but its assumptions matter.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>Read the Fourier chapter.</td>
+<td>Connect projections, energy, and frequency-domain filtering.</td>
+<td>Run the Week 3 notebook and change cutoff or regularization.</td>
+<td>Explain why one Fourier coefficient affects the whole image.</td>
+<td>Fourier gives global orthogonal directions and a Pythagorean energy view.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>Read the noise and likelihood chapter.</td>
+<td>Compare Gaussian and Poisson noise models.</td>
+<td>Run the Week 4 notebook and change photon counts or noise level.</td>
+<td>Match a noise model to a data-fidelity term.</td>
+<td>Likelihood decides what it means for a reconstruction to fit the data.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>Read the ill-posed inverse problems chapter.</td>
+<td>Diagnose non-uniqueness, instability, and singular values.</td>
+<td>Run the Week 5 notebook and inspect SVD coefficients.</td>
+<td>Name one supported direction and one invisible direction.</td>
+<td>Inverse problems fail when data are missing, unstable, or nonunique.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>Read the Tikhonov chapter and the project page.</td>
+<td>Derive the regularized least-squares model and assign projects.</td>
+<td>Run the Week 6 notebook and sweep lambda.</td>
+<td>Submit or refine a project topic and first forward model.</td>
+<td>Regularization adds a prior so weak data directions do not dominate.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>Read the variational formulation chapter.</td>
+<td>Turn reconstruction into energy minimization.</td>
+<td>Run the Week 7 notebook and track energy/residuals.</td>
+<td>Identify data term, prior term, and optimality condition.</td>
+<td>Reconstruction becomes data agreement plus image structure.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>Read the Total Variation chapter.</td>
+<td>Compare quadratic smoothing with TV edge preservation.</td>
+<td>Run the Week 8 notebook and vary TV weight.</td>
+<td>Explain one edge-preservation success and one staircasing failure.</td>
+<td>A prior can protect edges, but it can also create artifacts.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>Read the optimization chapter.</td>
+<td>Study gradient descent, proximal steps, and ISTA.</td>
+<td>Run the Week 9 notebook and change step size or lambda.</td>
+<td>Report convergence evidence, not only a final image.</td>
+<td>Algorithms turn models and priors into computable reconstructions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>Read the sparse reconstruction chapter.</td>
+<td>Compare l1 and l2 solutions in underdetermined problems.</td>
+<td>Run the Week 10 notebook and change sampling density.</td>
+<td>State where the unknown is sparse and where that prior fails.</td>
+<td>Sparse priors can recover information only when the representation fits.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>Read the wavelets chapter.</td>
+<td>Contrast global Fourier vectors with compactly supported wavelets.</td>
+<td>Run the Week 11 notebook and compare thresholds/wavelets.</td>
+<td>Relate coefficient energy to local image features.</td>
+<td>Wavelets make sparse, multiscale, localized priors possible.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>Read the model-based vs data-driven chapter.</td>
+<td>Interpret learned priors and training data as part of the model.</td>
+<td>Run the Week 12 notebook and test distribution shift.</td>
+<td>Describe what the training data teach the method to expect.</td>
+<td>Neural networks act like learned inverse-problem priors or operators.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>Read the plug-and-play chapter.</td>
+<td>Combine data-consistency steps with denoisers.</td>
+<td>Run the Week 13 notebook and compare residual/change/RMSE.</td>
+<td>Explain what the denoiser contributes and what it cannot prove.</td>
+<td>Learned regularization can be inserted into iterative reconstruction.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>Read the stability, robustness, and ethics chapter.</td>
+<td>Build reliability checks and project defense arguments.</td>
+<td>Run the Week 14 notebook and complete a claim-evidence table.</td>
+<td>Prepare project failure case and oral-defense checklist.</td>
+<td>A reconstruction is trustworthy only with tested limits.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>Review the project page and final notebook/report.</td>
+<td>Present results and complete individual oral defense.</td>
+<td>Archive code, report, and LLM-use statement.</td>
+<td>Defend the whole project without relying on the LLM.</td>
+<td>Ownership is shown by explaining the model, code, evidence, and failure cases.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="project-milestones" class="level2">
+<h2 class="anchored" data-anchor-id="project-milestones">Project Milestones</h2>
+<p>The project is assigned in Week 6. These checkpoints help keep the work from becoming a last-minute coding exercise.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 57%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Week</th>
+<th>Milestone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td>Team, tentative topic, and first forward model.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td>One-page proposal: data source, baseline, second method, reliability question.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td>Baseline notebook: create degraded data and run a simple reconstruction.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>Two methods implemented on the same test cases.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td>Parameter sweep, quantitative metric, and first robustness or failure test.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>Final notebook, report draft, claim-evidence table, and oral-defense preparation.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>Final submission and individual oral defense.</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -683,7 +935,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/classes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/classes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
