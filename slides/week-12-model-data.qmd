@@ -487,6 +487,14 @@ Answer quickly:
 - Modern imaging often combines physics, optimization, and learning.
 :::
 
+## After Class
+
+::: {.checklist}
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly deliverable.
+- Run the week notebook and change at least one important parameter.
+- Write one claim-evidence-limit sentence about today's model.
+:::
+
 ## Next Time
 
 Plug-and-play and learned regularization:

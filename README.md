@@ -17,6 +17,12 @@ Use the helper script for local rendering:
 ./scripts/quarto preview
 ```
 
+After rendering, audit internal links:
+
+```bash
+python3 scripts/audit_site_links.py
+```
+
 To preview the Week 1 slides specifically:
 
 ```bash

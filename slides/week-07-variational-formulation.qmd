@@ -566,6 +566,14 @@ Answer in one sentence each:
 - Quadratic smoothness is clear and useful, but it blurs edges.
 :::
 
+## After Class
+
+::: {.checklist}
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly deliverable.
+- Run the week notebook and change at least one important parameter.
+- Write one claim-evidence-limit sentence about today's model.
+:::
+
 ## Next Time
 
 Total Variation regularization:

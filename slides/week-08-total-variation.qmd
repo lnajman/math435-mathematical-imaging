@@ -422,6 +422,14 @@ Answer in one sentence each:
 - The choice of regularizer is a modeling decision.
 :::
 
+## After Class
+
+::: {.checklist}
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly deliverable.
+- Run the week notebook and change at least one important parameter.
+- Write one claim-evidence-limit sentence about today's model.
+:::
+
 ## Next Time
 
 Optimization methods:

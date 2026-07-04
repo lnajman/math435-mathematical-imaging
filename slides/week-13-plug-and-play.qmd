@@ -539,6 +539,14 @@ Answer quickly:
 - Always check both image quality and consistency with measurements.
 :::
 
+## After Class
+
+::: {.checklist}
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly deliverable.
+- Run the week notebook and change at least one important parameter.
+- Write one claim-evidence-limit sentence about today's model.
+:::
+
 ## Next Time
 
 Stability, robustness, and ethics:

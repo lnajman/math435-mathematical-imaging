@@ -511,6 +511,14 @@ For each item, give one sentence:
 - Deblurring is an inverse problem and is usually unstable.
 :::
 
+## After Class
+
+::: {.checklist}
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly deliverable.
+- Run the week notebook and change at least one important parameter.
+- Write one claim-evidence-limit sentence about today's model.
+:::
+
 ## Next Time
 
 Fourier transform in imaging:
