@@ -162,7 +162,8 @@ def make_capacity_curve(path: Path) -> None:
         for count in counts
     ]
 
-    fig, axes = plt.subplots(1, 2, figsize=(12.0, 4.5), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(12.0, 5.0), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.85, bottom=0.24, wspace=0.20)
     axes[0].plot(singular_values[:30], "-o", color="#24536b", linewidth=2.2, markersize=4)
     axes[0].set_title("learned patch spectrum", fontsize=15, color="#1f4f63", pad=9)
     axes[0].set_xlabel("component index")
@@ -174,7 +175,14 @@ def make_capacity_curve(path: Path) -> None:
     axes[1].set_xlabel("PCA components used")
     axes[1].set_ylabel("RMSE on noisy denoising task")
     axes[1].grid(True, alpha=0.22)
-    fig.text(0.5, 0.02, "too few components oversmooth; too many components start preserving noise", ha="center", fontsize=13, color="#202428")
+    fig.text(
+        0.5,
+        0.055,
+        "too few components oversmooth; too many components start preserving noise",
+        ha="center",
+        fontsize=12.5,
+        color="#202428",
+    )
     save(fig, path)
 
 
