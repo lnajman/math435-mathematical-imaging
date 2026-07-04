@@ -394,9 +394,9 @@ The project will be assigned in Week 6 of the semester. Students will work in pa
 
 Students are required to use Python for all computational implementations and analyses. Students are also required to use an LLM as part of the project process and disclose how it was used. The LLM-use statement is required but not graded separately.
 
-A written report and the corresponding code must be submitted in Week 13.
+A written report and the corresponding code must be submitted in Week 14.
 
-In Week 14, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, code, parameter choices, failure analysis, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project. The oral defense and code walkthrough represent 25% of the project grade.
+In Week 15, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, code, parameter choices, failure analysis, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project. The oral defense and code walkthrough represent 25% of the project grade.
 
 Failure to participate in the oral defense will result in a zero for the oral defense and code walkthrough component.
 

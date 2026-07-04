@@ -39,7 +39,7 @@ If exact inversion is unstable, what should we give up: exact data fit, sharpnes
 | 48-60 min | parameter effects |
 | 60-68 min | bias-variance tradeoff |
 | 68-72 min | project assignment note |
-| 72-75 min | exit checkpoint |
+| 72-75 min | exit question |
 
 ## Bridge from Week 5
 
@@ -475,7 +475,7 @@ This week the modeling project is assigned.
 
 ::: {.checklist}
 - Teams choose or receive an imaging reconstruction problem.
-- The report and code are due later in the semester.
+- The proposal, report, and oral defense follow the dates stated in the syllabus.
 - Each student should understand the entire model and implementation.
 :::
 

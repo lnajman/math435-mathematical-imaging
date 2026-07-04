@@ -56,6 +56,17 @@ $$
 
 Neural networks are not outside inverse problems. They are one answer to the same difficulty: the measured data are incomplete, noisy, unstable, or ambiguous, so reconstruction requires additional structure.
 
+This identity is more than a slogan. It says that a neural method should be read with the same questions we used for Tikhonov, TV, sparse reconstruction, and wavelets:
+
+- What is measured?
+- What is unknown?
+- Which information is missing or unstable?
+- What prior information is being added?
+- Where does that prior information come from?
+- How can we test whether the result is supported by the data?
+
+In a classical method, the prior may be a formula such as $\|Lx\|^2$, $\|\nabla x\|_1$, or $\|\alpha\|_1$ in a wavelet basis. In a learned method, the prior may be spread across the training set, architecture, loss, optimizer, and learned parameters. The mathematical discipline is the same: do not confuse the prior with the measurement.
+
 ## Model-Based Imaging
 
 A classical reconstruction often solves
@@ -128,6 +139,10 @@ Data-driven methods still require choices:
 
 The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.
 
+This means that a learned method is not assumption-free. It has simply moved many assumptions from the page into the training process. A convolutional network assumes that local filters and repeated spatial patterns are useful. A U-Net assumes that multiscale features and skip connections are useful. A training set of face images assumes that test images will share face-like structures. A loss such as mean squared error assumes that pixelwise average error is the right quantity to minimize.
+
+Those assumptions can be excellent. They can also be wrong. The point is not to avoid assumptions; reconstruction is impossible without them. The point is to name them.
+
 The supervised learning problem should be read as learning an inverse map from examples. The training data contain pairs:
 
 $$
@@ -154,6 +169,46 @@ For denoising, $y$ may be a noisy image and $x$ a clean image. For super-resolut
 
 The risk is that a direct learned inverse may ignore the physics of the measurement. If the network produces an image that looks plausible but does not satisfy $Ax\approx y$, then the image is not faithful to the measured data.
 
+This is the main conceptual difference between image synthesis and image reconstruction. A synthesis method may be judged by whether the output looks plausible. A reconstruction method must also be judged by whether the output is compatible with the observation.
+
+For a learned inverse map, the forward model gives a simple audit:
+
+$$
+\hat{x}=f_\theta(y),
+\qquad
+\text{then check}
+\qquad
+A\hat{x}\approx y.
+$$
+
+If this check fails beyond the expected noise and modeling error, the network may have produced a good-looking image that is not a good reconstruction. If the check passes, the reconstruction is still not automatically true, because many images may satisfy the same measurement. But data consistency is a necessary guardrail.
+
+## What Can Be Learned?
+
+Different neural imaging methods learn different objects. It is useful to separate them.
+
+| Learned object | Mathematical role | Example question |
+|---|---|---|
+| inverse map $f_\theta(y)$ | direct reconstruction rule | Can the network map noisy data to a clean image? |
+| prior or regularizer $R_\theta(x)$ | learned image preference | Which images should be considered plausible? |
+| denoiser $D_\theta(z)$ | implicit proximal-like step | Can a learned denoiser replace a handcrafted prior step? |
+| feature representation $\Phi_\theta(x)$ | learned coordinates | Which features make comparison meaningful? |
+| algorithmic update $G_\theta$ | learned iteration | Can the network learn how to improve an iterate? |
+
+These are not the same mathematical object. A direct inverse map may be fast, but it can hide data inconsistency. A learned prior or denoiser can be inserted into an inverse-problem algorithm. An unrolled update can use both the current image and the data residual. Each design choice answers the inverse problem in a different way.
+
+For this course, the safest mental model is:
+
+$$
+\text{measured data}
++
+\text{learned prior information}
+\rightarrow
+\text{reconstruction to be tested}.
+$$
+
+The learned part is powerful because it can encode richer image structure than a small handcrafted formula. It is risky because the learned structure may not belong to the image being reconstructed.
+
 ## Strengths And Risks
 
 Data-driven methods can exploit complex image statistics, be fast at inference time, adapt to a specific scanner or modality, and outperform handcrafted priors when training and test data match.
@@ -171,6 +226,13 @@ The last point matters especially in medical and scientific imaging: plausible i
 The phrase "hallucination" means that the method adds structure that was not supported by the measurement. In a low-stakes photographic application, this may be acceptable or even desired. In scientific imaging, medical imaging, forensics, or measurement-driven tasks, it can be dangerous.
 
 The problem is not that learned methods are uniquely untrustworthy. Handcrafted priors can also hallucinate in a quieter way: TV can create artificial edges or plateaus, wavelets can remove texture, and Tikhonov can oversmooth. The difference is that learned priors can encode complex training-set expectations that are harder to see directly.
+
+This is why a learned reconstruction should be described with two verbs:
+
+- it **fits** the measured data;
+- it **resembles** the training examples.
+
+Good performance often requires both. If the method fits the data but has no useful prior, the reconstruction may be noisy or unstable. If it resembles the training examples but ignores the data, the output may be plausible but unsupported. The tension between these two verbs is the neural version of the classical data-prior tradeoff.
 
 ## Neural Networks As Operators
 
@@ -258,6 +320,10 @@ This lets students see the basic ingredients of data-driven imaging without the 
 - apply the fitted model to new data;
 - test whether it generalizes.
 
+The same logic appears in deep learning, only with a much larger model class. A deep network may learn millions of parameters instead of a few principal directions, but the questions remain familiar. What examples were used? What variation did they contain? What loss was minimized? What happens when the test image is different?
+
+The patch PCA example is therefore a bridge. It shows that learning is not magic. It is fitting a model from examples, then using that model as prior information in reconstruction.
+
 ::: {.figure}
 ![](../assets/figures/week12-denoising-comparison.png){fig-alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"}
 
@@ -337,6 +403,32 @@ For a learned method, data consistency can be:
 - used inside an unrolled algorithm.
 
 This is one reason inverse-problem thinking remains useful in deep learning. The forward model gives us a way to test the output against the actual measurement.
+
+## A Neural Network Is Still An Inverse-Problem Choice
+
+It is tempting to draw a sharp line:
+
+$$
+\text{classical method}
+\quad\text{versus}\quad
+\text{neural network}.
+$$
+
+For mathematical imaging, a better line is:
+
+$$
+\text{explicit prior}
+\quad\text{versus}\quad
+\text{learned prior}.
+$$
+
+Both live inside the inverse problem. Both can be useful. Both can fail. The neural network changes how the prior is represented and how it is fitted, but it does not remove the need for a forward model, a noise model, validation, and careful interpretation.
+
+This is the main reason the course naturally leads to neural networks. Once students understand that reconstruction is impossible from data alone, the next question is unavoidable:
+
+> If handcrafted priors are too simple, can the prior be learned?
+
+That question is the door from classical inverse problems to modern neural imaging.
 
 ## Evaluation
 

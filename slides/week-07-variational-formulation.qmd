@@ -38,7 +38,7 @@ What does it mean to reconstruct an image by minimizing an energy?
 | 32-50 min | Euler-Lagrange derivation for $\ell_2$ smoothing |
 | 50-62 min | gradient descent intuition |
 | 62-70 min | real-image quadratic denoising |
-| 70-75 min | checkpoint |
+| 70-75 min | synthesis check |
 
 ## Bridge from Week 6
 

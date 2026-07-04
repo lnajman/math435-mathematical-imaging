@@ -39,7 +39,7 @@ If two pixels have the same recorded value, do we have the same confidence in bo
 | 47-58 min | SNR and repeated measurements |
 | 58-68 min | likelihoods and data fidelity |
 | 68-73 min | notebook activity |
-| 73-75 min | exit checkpoint |
+| 73-75 min | exit question |
 
 ## Bridge from Week 3
 

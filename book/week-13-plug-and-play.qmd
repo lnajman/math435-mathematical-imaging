@@ -103,6 +103,15 @@ For example:
 
 This interpretation motivates plug-and-play: if a proximal map behaves like a denoiser, can we use a stronger denoiser in its place?
 
+This is one of the most important bridges in the course. It shows that learning does not have to replace the whole inverse-problem pipeline. Learning can enter at the point where classical mathematics already asks for an image-prior operation.
+
+In proximal gradient, the algorithm alternates between two roles:
+
+1. move toward the measured data;
+2. move toward images preferred by the prior.
+
+Plug-and-play keeps this alternation. It simply lets the second role be played by a denoiser that may have been learned from examples. That is why PnP is easier to understand after studying variational methods: it is not a mysterious neural trick, but a modification of a familiar optimization template.
+
 ## Proximal Gradient
 
 Putting the steps together gives
@@ -159,6 +168,22 @@ Reading the update as two alternating forces:
 - the denoiser step asks the reconstruction to look like a clean image.
 
 The balance between these two forces determines the behavior of the algorithm. If the denoiser dominates, the result can become plausible but inconsistent with the data. If the data term dominates, noise and artifacts may remain.
+
+The data-consistency step is the part that keeps the denoiser honest. The residual
+
+$$
+Ax^k-y
+$$
+
+measures how the current reconstruction disagrees with the observation. The adjoint action
+
+$$
+A^\top(Ax^k-y)
+$$
+
+translates that disagreement back into image space. The denoiser then acts on an image that has just been corrected using the measurement.
+
+This is why the order matters. PnP is not "run a neural network and hope." It is an iterative conversation between measured data and image prior. The forward model keeps asking, "Does this image explain the data?" The denoiser keeps asking, "Does this image look like a plausible clean image?"
 
 ## Explicit Versus Implicit Prior
 
@@ -221,16 +246,7 @@ $$
 
 Regularization by denoising, often called RED, tries to build an explicit regularization idea around the denoiser. The details are more advanced than we need here, but the goal is similar: use denoising behavior as image prior information.
 
-Unrolled methods take a fixed number of iterations and turn them into a trainable network. A schematic unrolled update is
-
-$$
-x^{k+1}
-=
-G_{\theta_k}
-\left(x^k,\ A^\top(Ax^k-y)\right).
-$$
-
-Here the network receives both the current image and a data-consistency signal. Unrolling is often more flexible than classical PnP because the update itself can be trained end-to-end.
+Unrolled methods take a fixed number of iterations and turn them into a trainable network. They are often more flexible than classical PnP because the update itself can be trained end-to-end.
 
 The common structure is:
 
@@ -241,6 +257,35 @@ $$
 $$
 
 That is the main idea students should keep.
+
+## Unrolled Networks As Learned Algorithms
+
+Unrolled networks make the connection to neural networks especially visible. Start with an iterative algorithm such as gradient descent, ISTA, ADMM, or a proximal-gradient method. Then fix a number of iterations and replace some operations by trainable modules.
+
+A schematic unrolled reconstruction may look like
+
+$$
+x^{k+1}
+=
+G_{\theta_k}
+\left(
+x^k,\ A^\top(Ax^k-y)
+\right),
+\qquad
+k=0,\ldots,K-1.
+$$
+
+This is a neural network because the maps $G_{\theta_k}$ are learned. It is also an inverse-problem algorithm because the forward model still appears through the data-consistency signal. The network does not receive only the image. It receives information about how the current image fails to explain the data.
+
+This gives a useful way to compare direct neural reconstruction and unrolled reconstruction:
+
+| Method | Uses $A$ during reconstruction? | Main risk |
+|---|---|---|
+| direct map $\hat{x}=f_\theta(y)$ | maybe not | plausible image that ignores measurement physics |
+| PnP iteration | yes, through data steps | denoiser may not correspond to an explicit objective |
+| unrolled network | yes, if data-consistency layers are included | learned updates may overfit the training setting |
+
+Unrolling is attractive because it can learn richer corrections than a handcrafted proximal step while preserving the structure of an inverse-problem solver. But it still needs the same reliability questions: data consistency, distribution shift, parameter sensitivity, and failure cases.
 
 ## Deblurring Example
 
@@ -261,6 +306,15 @@ Different priors create different deblurring behavior.
 Tikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.
 
 When reading this comparison, ask what each prior believes. Tikhonov believes small energy is good. Gaussian denoising believes smoothness is good. A learned patch denoiser believes images should resemble the training patches. The differences in the reconstructions are consequences of those beliefs.
+
+This language is deliberately anthropomorphic, but useful. Each prior has a preference:
+
+- Tikhonov prefers low-energy or smooth solutions;
+- TV prefers piecewise smooth images with sharp edges;
+- wavelets prefer sparse multiscale coefficients;
+- a learned denoiser prefers images similar to its training examples.
+
+The reconstruction is what happens when those preferences meet the measurement. If two methods produce different images from the same data, the difference is not only numerical. It reveals different assumptions about what a plausible image should be.
 
 ::: {.figure}
 ![](../assets/figures/week13-iteration-curve.png){fig-alt="RMSE and fixed-point change versus plug-and-play iteration"}
@@ -353,6 +407,19 @@ When using PnP, ask:
 - Does it preserve task-critical structures?
 
 Practical learned imaging should report baseline comparisons, data-consistency errors, sensitivity to denoising strength, robustness to distribution shift, uncertainty when possible, and task-based evaluation.
+
+## Reading A PnP Result
+
+When a plug-and-play result is shown, do not ask only which image is prettiest. Ask four questions in order.
+
+1. **Data support.** Does $A\hat{x}$ match $y$ within the expected noise and model error?
+2. **Prior relevance.** Was the denoiser trained or chosen for this image family and degradation?
+3. **Algorithm behavior.** Does the fixed-point change decrease, and is the result stable to reasonable parameter changes?
+4. **Task reliability.** Does the method preserve the structures that matter for the intended use?
+
+These questions prevent a common confusion. A learned denoiser can improve visual quality while also moving the image away from the measured data. Conversely, a reconstruction can have a strong data fit while keeping artifacts that make it unusable. The trustworthy region is where data consistency and prior relevance support the same conclusion.
+
+For project work, a PnP experiment should therefore include at least one simple baseline. A learned method that only beats a poor baseline teaches little. A learned method that beats a reasonable Tikhonov, TV, wavelet, or sparse baseline under fair conditions is much more convincing.
 
 ## What Students Should Trust
 

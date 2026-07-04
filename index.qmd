@@ -25,6 +25,8 @@ and to hybrid methods such as plug-and-play reconstruction, where the forward mo
 
 ## How To Use This Site
 
+The [syllabus](syllabus.qmd) is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.
+
 | Resource | Use it for |
 |---|---|
 | [Class roadmap and slides](classes.qmd) | Find the material for each class meeting. |

@@ -37,7 +37,7 @@ If a scanner gives us imperfect data, what exactly are we trying to recover?
 | 30-45 min | hand activity and NumPy representation |
 | 45-60 min | forward model and inverse problem |
 | 60-72 min | masking example with a real image |
-| 72-75 min | exit checkpoint |
+| 72-75 min | exit question |
 
 ## The Course Pattern
 

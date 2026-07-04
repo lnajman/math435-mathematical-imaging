@@ -50,7 +50,7 @@ Example:
 
 ## Weekly Practice Guide
 
-| Week | Topic | Ungraded Practice | Notebook Checkpoint | Useful Links |
+| Week | Topic | Ungraded Practice | Notebook Focus | Useful Links |
 |---:|---|---|---|---|
 | 1 | Images as mathematical objects | Identify $x$, $y$, the observation process, and one piece of missing information in a masked image. | From Scene to Data | [book](book/week-01-image-formation.qmd), [slides](slides/week-01-image-formation.qmd), [notebook](notebooks/week01_image_formation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |
 | 2 | Convolution and blur | Choose a blur kernel and boundary condition; write one assumption that makes the model reasonable. | Blur as a Forward Model | [book](book/week-02-convolution-blur.qmd), [slides](slides/week-02-convolution-blur.qmd), [notebook](notebooks/week02_convolution_blur.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
@@ -68,9 +68,9 @@ Example:
 | 14 | Stability, robustness, and ethics | Write three project-style claims and pair each with evidence and a limitation. | From Notebook to Project Defense | [book](book/week-14-stability-robustness-ethics.qmd), [slides](slides/week-14-stability-robustness-ethics.qmd), [notebook](notebooks/week14_stability_robustness.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
 | 15 | Project presentations and oral defenses | Review the model, code, evidence, limitations, and LLM-use statement for the final project. | Not applicable | [project page](project/index.qmd), [syllabus](syllabus.qmd) |
 
-## Project Preparation Checkpoints
+## Project Preparation Guide
 
-The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project checkpoints below are study and planning aids for the final modeling project described on the [project page](project/index.qmd); they do not create additional graded items.
+The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project notes below are study and planning aids for the final modeling project described on the [project page](project/index.qmd); they do not create additional graded items.
 
 | Week | Planning Aid |
 |---:|---|

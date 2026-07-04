@@ -38,7 +38,7 @@ What does it mean, mathematically, for an image to be blurred?
 | 40-55 min | real image blur demo |
 | 55-65 min | boundary conditions |
 | 65-72 min | why deblurring is hard |
-| 72-75 min | exit checkpoint |
+| 72-75 min | exit question |
 
 ## Reminder from Week 1
 

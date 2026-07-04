@@ -55,7 +55,7 @@ Weekly practice notes are study aids, not separate graded assignments. Course gr
 | 14 | Read the stability, robustness, and ethics chapter. | Build reliability checks and project defense arguments. | Run the Week 14 notebook and complete a claim-evidence table. | Prepare project failure case and oral-defense checklist. | A reconstruction is trustworthy only with tested limits. |
 | 15 | Review the project page and final notebook/report. | Present results and complete individual oral defense. | Archive code, report, and LLM-use statement. | Defend the whole project without relying on the LLM. | Ownership is shown by explaining the model, code, evidence, and failure cases. |
 
-## Project Preparation Checkpoints
+## Project Preparation Guide
 
 The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the [project page](project/index.qmd). They do not create a separate grading category.
 

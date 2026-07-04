@@ -38,7 +38,7 @@ How can a regularizer remove noise without treating every edge as a mistake?
 | 38-52 min | image denoising: l2 versus TV |
 | 52-62 min | staircasing and limitations |
 | 62-69 min | notebook activity |
-| 69-75 min | midterm/course checkpoint |
+| 69-75 min | midterm/course synthesis |
 
 ## Bridge from Week 7
 

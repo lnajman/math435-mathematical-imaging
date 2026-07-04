@@ -37,7 +37,7 @@ An image can look plausible and still be wrong in a way that matters.
 | 23-36 min | perturbation amplification |
 | 36-50 min | robustness and distribution shift |
 | 50-62 min | hallucination, small features, reliability |
-| 62-72 min | notebook activity and project report check |
+| 62-72 min | notebook activity and project report preparation |
 | 72-75 min | synthesis and exit check |
 
 ## Bridge from Week 13
@@ -393,7 +393,7 @@ For a reconstruction method, document:
 ## Project Reports Due
 
 ::: {.time-tag}
-Week 14 checkpoint
+Week 14 report
 :::
 
 Your project report should include:

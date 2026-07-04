@@ -38,7 +38,7 @@ Can a problem have a solution, a unique solution, and still be impossible to sol
 | 32-48 min | stability and inverse sensitivity |
 | 48-62 min | singular values and conceptual SVD |
 | 62-70 min | notebook activity |
-| 70-75 min | synthesis and exit checkpoint |
+| 70-75 min | synthesis and exit question |
 
 ## Bridge from Week 4
 

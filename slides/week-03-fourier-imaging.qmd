@@ -38,7 +38,7 @@ What does it mean for an image to contain high frequencies?
 | 40-52 min | magnitude, phase, and geometry |
 | 52-63 min | convolution theorem |
 | 63-72 min | filtering and deblurring |
-| 72-75 min | exit checkpoint |
+| 72-75 min | exit question |
 
 ## Reminder from Week 2
 
