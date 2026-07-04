@@ -35,6 +35,7 @@ The [syllabus](syllabus.qmd) is the authority for course grading, assessment dat
 | [Online book](book/index.qmd) | Read the motivation chapter and fourteen narrative chapters. |
 | [Syllabus](syllabus.qmd) | Check course policies, schedule, and grading. |
 | [Final project](project/index.qmd) | Understand the LLM-aware project, rubric, and oral defense. |
+| [LLM-use statement](llm-use.qmd) | Read how Codex assisted development and how instructor responsibility was maintained. |
 
 ## Course Arc
 

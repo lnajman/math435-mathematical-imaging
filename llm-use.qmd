@@ -1,0 +1,17 @@
+---
+title: "LLM-Use Statement"
+---
+
+This statement describes how LLM assistance was used to develop this course website. It does not change course policies: the [syllabus](syllabus.qmd) and instructor announcements are authoritative.
+
+This course website was developed with assistance from OpenAI Codex, a GPT-5-based coding and writing assistant in the Codex desktop environment. Codex was used to help draft, organize, revise, and technically implement course materials, including the Quarto website, slides, notebooks, book chapters, project materials, and supporting pages.
+
+All course policies, assessment rules, mathematical content, project expectations, and final editorial decisions remain the responsibility of the instructor. LLM-generated suggestions were reviewed, modified, accepted, or rejected by the instructor during development.
+
+Some parts of the course reflect instructor choices that an LLM could not determine on its own. For example, the central pedagogical idea that neural networks should be introduced as a natural continuation of inverse problems was supplied and refined by the instructor. The instructor also determined institutional constraints, such as the fact that only work listed in the syllabus can be graded. Codex helped turn these choices into website structure, prose, slides, notebooks, and project materials, but did not determine the course philosophy or grading authority.
+
+Producing the final course materials required many rounds of prompting, correction, revision, testing, and review. Codex often produced useful drafts or implementation steps, but these had to be checked against the instructor's mathematical goals, institutional constraints, and teaching style. The published website should therefore be understood as the result of an iterative collaboration guided by the instructor's course vision, not as a one-shot LLM-generated artifact.
+
+Students should treat this website as instructor-authored course material, not as automatically generated content. If an error, ambiguity, or inconsistency is found, the syllabus and instructor announcements are authoritative.
+
+Computational examples and notebooks should be tested and interpreted critically; correct execution does not by itself guarantee mathematical correctness.

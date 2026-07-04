@@ -8,6 +8,7 @@ project:
   render:
     - index.qmd
     - syllabus.qmd
+    - llm-use.qmd
     - practice.qmd
     - notebooks/index.qmd
     - book/index.qmd
@@ -63,6 +64,8 @@ website:
         text: Syllabus
       - href: project/index.qmd
         text: Project
+      - href: llm-use.qmd
+        text: LLM Use
   sidebar:
     - title: "Online Book"
       style: "docked"
