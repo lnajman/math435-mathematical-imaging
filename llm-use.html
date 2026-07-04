@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MATH 435: Mathematical Imaging</title>
+<title>LLM-Use Statement – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,49 +71,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -135,7 +92,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -163,7 +120,7 @@ window.Quarto = {
 <span class="menu-text">Project</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./llm-use.html"> 
+    <a class="nav-link active" href="./llm-use.html" aria-current="page"> 
 <span class="menu-text">LLM Use</span></a>
   </li>  
 </ul>
@@ -177,24 +134,15 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#how-to-use-this-site" id="toc-how-to-use-this-site" class="nav-link active" data-scroll-target="#how-to-use-this-site">How To Use This Site</a></li>
-  <li><a href="#course-arc" id="toc-course-arc" class="nav-link" data-scroll-target="#course-arc">Course Arc</a></li>
-  <li><a href="#central-idea" id="toc-central-idea" class="nav-link" data-scroll-target="#central-idea">Central Idea</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MATH 435: Mathematical Imaging</h1>
-<p class="subtitle lead">From inverse problems to neural networks</p>
+<h1 class="title">LLM-Use Statement</h1>
 </div>
 
 
@@ -211,122 +159,15 @@ window.Quarto = {
 </header>
 
 
-<p>MATH 435 studies images through one central question:</p>
-<blockquote class="blockquote">
-<p>When an imaging system gives us incomplete, blurred, noisy, or transformed data, how can we reconstruct the image, and how do we know whether the reconstruction should be trusted?</p>
-</blockquote>
-<p>The course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.</p>
-<p>The guiding progression is:</p>
-<p><span class="math display">
-y = Ax+\eta
-\qquad\Longrightarrow\qquad
-\hat{x}
-=
-\arg\min_x D(Ax,y)+\lambda R(x)
-\qquad\Longrightarrow\qquad
-\hat{x}=f_\theta(y)
-</span></p>
-<p>and to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data.</p>
-<section id="how-to-use-this-site" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-this-site">How To Use This Site</h2>
-<p>The <a href="./syllabus.html">syllabus</a> is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Resource</th>
-<th>Use it for</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="./classes.html">Class roadmap and slides</a></td>
-<td>Find the material for each class meeting.</td>
-</tr>
-<tr class="even">
-<td><a href="./practice.html">Ungraded weekly practice</a></td>
-<td>Use optional practice prompts connected to the notebooks.</td>
-</tr>
-<tr class="odd">
-<td><a href="./notebooks/index.html">Notebooks</a></td>
-<td>Run and modify the computational experiments, including Colab links.</td>
-</tr>
-<tr class="even">
-<td><a href="./book/index.html">Online book</a></td>
-<td>Read the motivation chapter and fourteen narrative chapters.</td>
-</tr>
-<tr class="odd">
-<td><a href="./syllabus.html">Syllabus</a></td>
-<td>Check course policies, schedule, and grading.</td>
-</tr>
-<tr class="even">
-<td><a href="./project/index.html">Final project</a></td>
-<td>Understand the LLM-aware project, rubric, and oral defense.</td>
-</tr>
-<tr class="odd">
-<td><a href="./llm-use.html">LLM-use statement</a></td>
-<td>Read how Codex assisted development and how instructor responsibility was maintained.</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="course-arc" class="level2">
-<h2 class="anchored" data-anchor-id="course-arc">Course Arc</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Part</th>
-<th style="text-align: right;">Weeks</th>
-<th>Main Question</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Foundations</td>
-<td style="text-align: right;">1-3</td>
-<td>What is an image mathematically, and how do imaging systems transform it?</td>
-</tr>
-<tr class="even">
-<td>Inverse problems</td>
-<td style="text-align: right;">4-6</td>
-<td>What makes reconstruction unstable, and how does regularization help?</td>
-</tr>
-<tr class="odd">
-<td>Variational methods</td>
-<td style="text-align: right;">7-9</td>
-<td>How do we turn modeling assumptions into optimization problems?</td>
-</tr>
-<tr class="even">
-<td>Sparse and learned priors</td>
-<td style="text-align: right;">10-13</td>
-<td>How do representations, data, and denoisers encode prior knowledge?</td>
-</tr>
-<tr class="odd">
-<td>Reliability and projects</td>
-<td style="text-align: right;">14, then Week 15 defense</td>
-<td>When should a reconstruction be trusted, and how do students defend their work?</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="central-idea" class="level2">
-<h2 class="anchored" data-anchor-id="central-idea">Central Idea</h2>
-<p>Classical imaging asks:</p>
-<blockquote class="blockquote">
-<p>What assumptions should we impose on the unknown image?</p>
-</blockquote>
-<p>Neural imaging asks:</p>
-<blockquote class="blockquote">
-<p>Can those assumptions, or the reconstruction algorithm itself, be learned from examples?</p>
-</blockquote>
-<p>The course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences.</p>
+<p>This statement describes how LLM assistance was used to develop this course website. It does not change course policies: the <a href="./syllabus.html">syllabus</a> and instructor announcements are authoritative.</p>
+<p>This course website was developed with assistance from OpenAI Codex, a GPT-5-based coding and writing assistant in the Codex desktop environment. Codex was used to help draft, organize, revise, and technically implement course materials, including the Quarto website, slides, notebooks, book chapters, project materials, and supporting pages.</p>
+<p>All course policies, assessment rules, mathematical content, project expectations, and final editorial decisions remain the responsibility of the instructor. LLM-generated suggestions were reviewed, modified, accepted, or rejected by the instructor during development.</p>
+<p>Some parts of the course reflect instructor choices that an LLM could not determine on its own. For example, the central pedagogical idea that neural networks should be introduced as a natural continuation of inverse problems was supplied and refined by the instructor. The instructor also determined institutional constraints, such as the fact that only work listed in the syllabus can be graded. Codex helped turn these choices into website structure, prose, slides, notebooks, and project materials, but did not determine the course philosophy or grading authority.</p>
+<p>Producing the final course materials required many rounds of prompting, correction, revision, testing, and review. Codex often produced useful drafts or implementation steps, but these had to be checked against the instructor’s mathematical goals, institutional constraints, and teaching style. The published website should therefore be understood as the result of an iterative collaboration guided by the instructor’s course vision, not as a one-shot LLM-generated artifact.</p>
+<p>Students should treat this website as instructor-authored course material, not as automatically generated content. If an error, ambiguity, or inconsistency is found, the syllabus and instructor announcements are authoritative.</p>
+<p>Computational examples and notebooks should be tested and interpreted critically; correct execution does not by itself guarantee mathematical correctness.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -737,7 +578,7 @@ y = Ax+\eta
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/llm-use.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

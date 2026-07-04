@@ -4239,6 +4239,41 @@
     "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
   },
   {
+    "objectID": "llm-use.html",
+    "href": "llm-use.html",
+    "title": "LLM-Use Statement",
+    "section": "",
+    "text": "This statement describes how LLM assistance was used to develop this course website. It does not change course policies: the syllabus and instructor announcements are authoritative.\nThis course website was developed with assistance from OpenAI Codex, a GPT-5-based coding and writing assistant in the Codex desktop environment. Codex was used to help draft, organize, revise, and technically implement course materials, including the Quarto website, slides, notebooks, book chapters, project materials, and supporting pages.\nAll course policies, assessment rules, mathematical content, project expectations, and final editorial decisions remain the responsibility of the instructor. LLM-generated suggestions were reviewed, modified, accepted, or rejected by the instructor during development.\nSome parts of the course reflect instructor choices that an LLM could not determine on its own. For example, the central pedagogical idea that neural networks should be introduced as a natural continuation of inverse problems was supplied and refined by the instructor. The instructor also determined institutional constraints, such as the fact that only work listed in the syllabus can be graded. Codex helped turn these choices into website structure, prose, slides, notebooks, and project materials, but did not determine the course philosophy or grading authority.\nProducing the final course materials required many rounds of prompting, correction, revision, testing, and review. Codex often produced useful drafts or implementation steps, but these had to be checked against the instructor’s mathematical goals, institutional constraints, and teaching style. The published website should therefore be understood as the result of an iterative collaboration guided by the instructor’s course vision, not as a one-shot LLM-generated artifact.\nStudents should treat this website as instructor-authored course material, not as automatically generated content. If an error, ambiguity, or inconsistency is found, the syllabus and instructor announcements are authoritative.\nComputational examples and notebooks should be tested and interpreted critically; correct execution does not by itself guarantee mathematical correctness."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "",
+    "text": "MATH 435 studies images through one central question:\nThe course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.\nThe guiding progression is:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y)\nand to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data."
+  },
+  {
+    "objectID": "index.html#how-to-use-this-site",
+    "href": "index.html#how-to-use-this-site",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "How To Use This Site",
+    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nUngraded weekly practice\nUse optional practice prompts connected to the notebooks.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
+  },
+  {
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
+  },
+  {
+    "objectID": "index.html#central-idea",
+    "href": "index.html#central-idea",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Central Idea",
+    "text": "Central Idea\nClassical imaging asks:\n\nWhat assumptions should we impose on the unknown image?\n\nNeural imaging asks:\n\nCan those assumptions, or the reconstruction algorithm itself, be learned from examples?\n\nThe course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences."
+  },
+  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -4482,34 +4517,6 @@
     "title": "Syllabus",
     "section": "Week 15 – Oral Defenses",
     "text": "Week 15 – Oral Defenses\nActivities\n\nIndividual oral defense per student\nEvaluation of:\n\nModeling understanding\nParameter reasoning\nInterpretation of results\nTeam collaboration\n\n\nLearning Goal\nStudents demonstrate independent mastery of project content."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "MATH 435 studies images through one central question:\nThe course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.\nThe guiding progression is:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y)\nand to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data."
-  },
-  {
-    "objectID": "index.html#how-to-use-this-site",
-    "href": "index.html#how-to-use-this-site",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "How To Use This Site",
-    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nUngraded weekly practice\nUse optional practice prompts connected to the notebooks.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense."
-  },
-  {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
-  },
-  {
-    "objectID": "index.html#central-idea",
-    "href": "index.html#central-idea",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Central Idea",
-    "text": "Central Idea\nClassical imaging asks:\n\nWhat assumptions should we impose on the unknown image?\n\nNeural imaging asks:\n\nCan those assumptions, or the reconstruction algorithm itself, be learned from examples?\n\nThe course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences."
   },
   {
     "objectID": "practice.html",
