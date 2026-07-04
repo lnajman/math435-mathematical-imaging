@@ -18,7 +18,7 @@
     "href": "project/index.html#expected-timeline",
     "title": "Final Modeling Project",
     "section": "Expected Timeline",
-    "text": "Expected Timeline\nExact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.\n\n\n\n\n\n\n\n\nStage\nExpected Progress\nWhat Students Should Have\n\n\n\n\nWeek 6\nProject launch\nTeam, tentative topic, first statement of x, y, forward model, and degradation.\n\n\nWeek 7\nProposal checkpoint\nOne-page proposal with data source, baseline method, second method, and first reliability question.\n\n\nWeek 8\nBaseline checkpoint\nA runnable notebook that creates the degraded data and runs a simple baseline.\n\n\nWeek 10\nMethod checkpoint\nTwo reconstruction methods implemented on the same test cases.\n\n\nWeek 12\nEvidence checkpoint\nParameter sweep, quantitative metric, and first robustness or failure test.\n\n\nWeek 14\nFinal preparation\nComplete notebook, report draft, claim-evidence table, and oral-defense preparation.\n\n\nFinal project period\nPresentation and oral defense\nFinal submission plus individual code walkthrough and defense."
+    "text": "Expected Timeline\nExact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The intermediate rows below are for feedback and preparation; they do not create additional graded items outside the syllabus.\n\n\n\n\n\n\n\n\nStage\nExpected Progress\nWhat Students Should Have\n\n\n\n\nWeek 6\nProject proposal\nTeam, tentative topic, data source, baseline method, second method, first statement of x, y, forward model, degradation, and reliability question.\n\n\nWeek 7\nPlanning feedback\nRefined model statement, data access, and first implementation choices.\n\n\nWeek 8\nBaseline preparation\nA runnable notebook that creates the degraded data and runs a simple baseline.\n\n\nWeek 10\nMethod development\nTwo reconstruction methods implemented on the same test cases.\n\n\nWeek 12\nEvidence development\nParameter sweep, quantitative metric, and first robustness or failure test.\n\n\nWeek 14\nProject report\nComplete notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.\n\n\nWeek 15\nPresentation and oral defense\nFinal submission plus individual code walkthrough and defense."
   },
   {
     "objectID": "project/index.html#required-llm-use",
@@ -424,7 +424,7 @@
     "href": "slides/week-13-plug-and-play.html#after-class",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#next-time",
@@ -725,7 +725,7 @@
     "href": "slides/week-11-wavelets.html#after-class",
     "title": "Wavelets and Multiscale Representation",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-11-wavelets.html#next-time",
@@ -1033,7 +1033,7 @@
     "href": "slides/week-09-optimization-methods.html#after-class",
     "title": "Optimization Methods",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-09-optimization-methods.html#next-time",
@@ -1369,7 +1369,7 @@
     "href": "slides/week-07-variational-formulation.html#after-class",
     "title": "Variational Formulation",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#next-time",
@@ -1705,7 +1705,7 @@
     "href": "slides/week-05-ill-posed-inverse-problems.html#after-class",
     "title": "Ill-Posed Inverse Problems",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#next-time",
@@ -2034,7 +2034,7 @@
     "href": "slides/week-03-fourier-imaging.html#after-class",
     "title": "Fourier Transform in Imaging",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#next-time",
@@ -2335,7 +2335,7 @@
     "href": "slides/week-01-image-formation.html#after-class",
     "title": "Images as Mathematical Objects",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-01-image-formation.html#next-time",
@@ -4187,34 +4187,6 @@
     "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "MATH 435 studies images through one central question:\nThe course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.\nThe guiding progression is:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y)\nand to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data."
-  },
-  {
-    "objectID": "index.html#how-to-use-this-site",
-    "href": "index.html#how-to-use-this-site",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "How To Use This Site",
-    "text": "How To Use This Site\n\n\n\nResource\nUse it for\n\n\n\n\nClass list and slides\nFind the material for each class meeting.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense."
-  },
-  {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
-  },
-  {
-    "objectID": "index.html#central-idea",
-    "href": "index.html#central-idea",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Central Idea",
-    "text": "Central Idea\nClassical imaging asks:\n\nWhat assumptions should we impose on the unknown image?\n\nNeural imaging asks:\n\nCan those assumptions, or the reconstruction algorithm itself, be learned from examples?\n\nThe course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences."
-  },
-  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -4458,6 +4430,76 @@
     "title": "Syllabus",
     "section": "Week 15 – Oral Defenses",
     "text": "Week 15 – Oral Defenses\nActivities\n\nIndividual oral defense per student\nEvaluation of:\n\nModeling understanding\nParameter reasoning\nInterpretation of results\nTeam collaboration\n\n\nLearning Goal\nStudents demonstrate independent mastery of project content."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "",
+    "text": "MATH 435 studies images through one central question:\nThe course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.\nThe guiding progression is:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y)\nand to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data."
+  },
+  {
+    "objectID": "index.html#how-to-use-this-site",
+    "href": "index.html#how-to-use-this-site",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "How To Use This Site",
+    "text": "How To Use This Site\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nUngraded weekly practice\nUse optional practice prompts connected to the notebooks.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense."
+  },
+  {
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
+  },
+  {
+    "objectID": "index.html#central-idea",
+    "href": "index.html#central-idea",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Central Idea",
+    "text": "Central Idea\nClassical imaging asks:\n\nWhat assumptions should we impose on the unknown image?\n\nNeural imaging asks:\n\nCan those assumptions, or the reconstruction algorithm itself, be learned from examples?\n\nThe course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences."
+  },
+  {
+    "objectID": "practice.html",
+    "href": "practice.html",
+    "title": "Ungraded Weekly Practice",
+    "section": "",
+    "text": "This page gives optional weekly practice prompts connected to the book, slides, and notebooks.\nThe purpose is to help students keep a running record of the central habit of the course:\nStudents may keep these notes privately, use them while studying, or bring questions from them to class."
+  },
+  {
+    "objectID": "practice.html#how-to-use-this-page",
+    "href": "practice.html#how-to-use-this-page",
+    "title": "Ungraded Weekly Practice",
+    "section": "How To Use This Page",
+    "text": "How To Use This Page\nFor each week:\n\nread the connected book chapter;\nattend class and use the slide deck as the discussion structure;\nrun the notebook in Python or Google Colab;\nwrite a short claim-evidence-limit note for yourself.\n\nThe notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category."
+  },
+  {
+    "objectID": "practice.html#claim-evidence-limit-template",
+    "href": "practice.html#claim-evidence-limit-template",
+    "title": "Ungraded Weekly Practice",
+    "section": "Claim-Evidence-Limit Template",
+    "text": "Claim-Evidence-Limit Template\nUse this short format when a notebook or class discussion produces a reconstruction result.\nClaim:\n\nEvidence:\n\nModel assumption:\n\nLimit or failure case:\nExample:\n\n\n\n\n\n\n\nItem\nExample\n\n\n\n\nClaim\nTV denoising keeps the main edge sharper than quadratic smoothing.\n\n\nEvidence\nGradient maps and edge contrast stay high across three TV weights.\n\n\nModel assumption\nThe image is approximately piecewise smooth.\n\n\nLimit or failure case\nTV creates staircasing on smooth intensity ramps."
+  },
+  {
+    "objectID": "practice.html#weekly-practice-guide",
+    "href": "practice.html#weekly-practice-guide",
+    "title": "Ungraded Weekly Practice",
+    "section": "Weekly Practice Guide",
+    "text": "Weekly Practice Guide\n\n\n\nWeek\nTopic\nUngraded Practice\nNotebook Checkpoint\nUseful Links\n\n\n\n\n1\nImages as mathematical objects\nIdentify x, y, the observation process, and one piece of missing information in a masked image.\nFrom Scene to Data\nbook, slides, notebook, Colab\n\n\n2\nConvolution and blur\nChoose a blur kernel and boundary condition; write one assumption that makes the model reasonable.\nBlur as a Forward Model\nbook, slides, notebook, Colab\n\n\n3\nFourier transform in imaging\nExplain how Fourier coefficients act as global projections and why blur weakens some frequencies.\nFourier Projection and Stability\nbook, slides, notebook, Colab\n\n\n4\nNoise models and likelihoods\nMatch Gaussian or Poisson noise to a data-fidelity term and say what averaging can and cannot fix.\nLikelihood as Data Evidence\nbook, slides, notebook, Colab\n\n\n5\nIll-posed inverse problems\nName one well-measured direction, one unstable direction, and one invisible change.\nDirections and Evidence\nbook, slides, notebook, Colab\n\n\n6\nTikhonov regularization\nSweep \\lambda and explain which observable diagnostic you would report if the true image were unknown.\nChoosing Lambda Without the Truth\nbook, slides, notebook, Colab\n\n\n7\nVariational formulation\nIdentify the data term, regularizer, and optimality condition for one energy.\nEnergy as an Audit Trail\nbook, slides, notebook, Colab\n\n\n8\nTotal Variation regularization\nCompare one preserved edge with one possible artifact or staircasing failure.\nEdge Preservation Is Not Proof\nbook, slides, notebook, Colab\n\n\n9\nOptimization methods\nReport whether energy, fixed-point change, or active coefficients show stable iteration.\nOptimization Diagnostics\nbook, slides, notebook, Colab\n\n\n10\nSparse reconstruction\nState the representation where the image is assumed sparse and design one mismatch example.\nRepresentation Mismatch\nbook, slides, notebook, Colab\n\n\n11\nWavelets and multiscale representation\nExplain which local features wavelets capture better than global Fourier modes.\nFourier, Wavelets, and Energy\nbook, slides, notebook, Colab\n\n\n12\nModel-based vs data-driven imaging\nDescribe what the training data teach the learned prior to expect and test one distribution shift.\nTraining Data as a Prior\nbook, slides, notebook, Colab\n\n\n13\nPlug-and-play and learned regularization\nCompare data residual, RMSE when available, and fixed-point change for two denoisers.\nImplicit Prior Strength\nbook, slides, notebook, Colab\n\n\n14\nStability, robustness, and ethics\nWrite three project-style claims and pair each with evidence and a limitation.\nFrom Notebook to Project Defense\nbook, slides, notebook, Colab\n\n\n15\nProject presentations and oral defenses\nReview the model, code, evidence, limitations, and LLM-use statement for the final project.\nNot applicable\nproject page, syllabus"
+  },
+  {
+    "objectID": "practice.html#project-preparation-checkpoints",
+    "href": "practice.html#project-preparation-checkpoints",
+    "title": "Ungraded Weekly Practice",
+    "section": "Project Preparation Checkpoints",
+    "text": "Project Preparation Checkpoints\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project checkpoints below are study and planning aids for the final modeling project described on the project page; they do not create additional graded items.\n\n\n\n\n\n\n\nWeek\nPlanning Aid\n\n\n\n\n6\nPrepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of x, y, and the forward process.\n\n\n7\nRefine the model statement, data access, and implementation choices after feedback.\n\n\n8\nMake sure the notebook can generate or load data and run a simple baseline.\n\n\n10\nCheck that both methods run on the same test cases.\n\n\n12\nAdd one parameter sweep, one metric, and one robustness or failure test.\n\n\n14\nPrepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations."
+  },
+  {
+    "objectID": "practice.html#grading-boundary",
+    "href": "practice.html#grading-boundary",
+    "title": "Ungraded Weekly Practice",
+    "section": "Grading Boundary",
+    "text": "Grading Boundary\nThis page does not modify the syllabus.\nFormal grading is based on the grading categories and policies stated in the syllabus, together with any explicit instructor announcements. Weekly practice notes are meant to support learning and project preparation; they are not an additional hidden assessment."
   },
   {
     "objectID": "book/index.html",
@@ -6127,7 +6169,7 @@
     "href": "classes.html",
     "title": "Class Roadmap",
     "section": "",
-    "text": "This page is the weekly entry point for the course.\nThe slide decks organize the 75-minute class meetings. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each week as a checklist:"
+    "text": "This page is the weekly entry point for the course.\nThe slide decks organize the 75-minute class meetings. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each week as a checklist:\nWeekly practice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus."
   },
   {
     "objectID": "classes.html#at-a-glance",
@@ -6141,14 +6183,14 @@
     "href": "classes.html#weekly-work-plan",
     "title": "Class Roadmap",
     "section": "Weekly Work Plan",
-    "text": "Weekly Work Plan\n\n\n\n\n\n\n\n\n\n\n\nWeek\nBefore Class\nIn Class\nAfter Class\nDeliverable\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the Week 1 notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the Week 2 notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the Week 3 notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models.\nRun the Week 4 notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the Week 5 notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the Week 6 notebook and sweep lambda.\nSubmit or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the Week 7 notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the Week 8 notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the Week 9 notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the Week 10 notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the Week 11 notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model.\nRun the Week 12 notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the Week 13 notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the Week 14 notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
+    "text": "Weekly Work Plan\n\n\n\n\n\n\n\n\n\n\n\nWeek\nBefore Class\nIn Class\nAfter Class\nUngraded Practice Note\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the Week 1 notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the Week 2 notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the Week 3 notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models.\nRun the Week 4 notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the Week 5 notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the Week 6 notebook and sweep lambda.\nDraft or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the Week 7 notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the Week 8 notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the Week 9 notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the Week 10 notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the Week 11 notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model.\nRun the Week 12 notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the Week 13 notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the Week 14 notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
   },
   {
-    "objectID": "classes.html#project-milestones",
-    "href": "classes.html#project-milestones",
+    "objectID": "classes.html#project-preparation-checkpoints",
+    "href": "classes.html#project-preparation-checkpoints",
     "title": "Class Roadmap",
-    "section": "Project Milestones",
-    "text": "Project Milestones\nThe project is assigned in Week 6. These checkpoints help keep the work from becoming a last-minute coding exercise.\n\n\n\n\n\n\n\nWeek\nMilestone\n\n\n\n\n6\nTeam, tentative topic, and first forward model.\n\n\n7\nOne-page proposal: data source, baseline, second method, reliability question.\n\n\n8\nBaseline notebook: create degraded data and run a simple reconstruction.\n\n\n10\nTwo methods implemented on the same test cases.\n\n\n12\nParameter sweep, quantitative metric, and first robustness or failure test.\n\n\n14\nFinal notebook, report draft, claim-evidence table, and oral-defense preparation.\n\n\n15\nFinal submission and individual oral defense."
+    "section": "Project Preparation Checkpoints",
+    "text": "Project Preparation Checkpoints\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the project page. They do not create a separate grading category.\n\n\n\n\n\n\n\nWeek\nMilestone\n\n\n\n\n6\nProject proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question.\n\n\n7\nPlanning feedback: refine the model statement, data access, and implementation choices.\n\n\n8\nBaseline preparation: create degraded data and run a simple reconstruction.\n\n\n10\nMethod development: implement two methods on the same test cases.\n\n\n12\nEvidence development: add a parameter sweep, quantitative metric, and first robustness or failure test.\n\n\n14\nProject report: final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.\n\n\n15\nFinal submission and individual oral defense."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#opening-question",
@@ -6449,7 +6491,7 @@
     "href": "slides/week-02-convolution-blur.html#after-class",
     "title": "Convolution and Blur",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#next-time",
@@ -6834,7 +6876,7 @@
     "href": "slides/week-04-noise-likelihood.html#after-class",
     "title": "Noise Models and Likelihoods",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#next-time",
@@ -7163,7 +7205,7 @@
     "href": "slides/week-06-tikhonov-regularization.html#after-class",
     "title": "Tikhonov Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#next-time",
@@ -7450,7 +7492,7 @@
     "href": "slides/week-08-total-variation.html#after-class",
     "title": "Total Variation Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-08-total-variation.html#next-time",
@@ -7758,7 +7800,7 @@
     "href": "slides/week-10-sparse-reconstruction.html#after-class",
     "title": "Sparse Reconstruction",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#next-time",
@@ -8080,7 +8122,7 @@
     "href": "slides/week-12-model-data.html#after-class",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-12-model-data.html#next-time",
@@ -8388,7 +8430,7 @@
     "href": "slides/week-14-stability-robustness-ethics.html#after-class",
     "title": "Stability, Robustness, and Ethics",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly deliverable.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#next-time",
