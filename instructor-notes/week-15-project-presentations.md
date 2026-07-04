@@ -27,6 +27,18 @@ Adjust the timing to the number of teams. A useful default is:
 
 If there are many teams, move oral defenses into scheduled individual slots outside the shared presentation block, following the syllabus constraints.
 
+## Timing Variants
+
+Use one of these formats depending on enrollment and room constraints:
+
+| Format | Best Use | Instructor Move |
+|---|---|---|
+| Short talks plus live questions | Small class or few teams | Keep a visible timer and ask one model question plus one evidence question per team. |
+| Presentations in class, defenses scheduled separately | Many teams | Use class time for shared results and reserve individual ownership checks for scheduled slots. |
+| Poster or table rotation | Very large or time-constrained group | Ask each student one targeted oral-defense question at the project station. |
+
+Do not let the format change the assessment boundary. The syllabus and project page define what is assessed; the format only changes how the defense is organized.
+
 ## Presentation Listening Targets
 
 For each project, listen for:

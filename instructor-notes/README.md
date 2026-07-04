@@ -17,6 +17,16 @@ Each week includes:
 
 The notes are meant to support class flow, not to create additional graded work. The syllabus remains the authority for assessment.
 
+## Practical Pacing Rules
+
+Treat each weekly note as a teaching menu, not a checklist to exhaust. For most classes, protect three things:
+
+1. the central modeling sentence for the week;
+2. one board derivation that students can follow by hand;
+3. one live notebook experiment with a parameter change.
+
+If time is short, cut extra live-code cells before cutting discussion of assumptions, failure modes, or evidence. The recurring goal is not to show every figure; it is to help students ask what the data support, what the model assumes, and where the reconstruction can fail.
+
 ## Current Files
 
 - `week-01-image-formation.md`
