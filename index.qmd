@@ -27,7 +27,8 @@ and to hybrid methods such as plug-and-play reconstruction, where the forward mo
 
 | Resource | Use it for |
 |---|---|
-| [Class list and slides](classes.qmd) | Find the material for each class meeting. |
+| [Class roadmap and slides](classes.qmd) | Find the material for each class meeting. |
+| [Ungraded weekly practice](practice.qmd) | Use optional practice prompts connected to the notebooks. |
 | [Notebooks](notebooks/index.qmd) | Run and modify the computational experiments, including Colab links. |
 | [Online book](book/index.qmd) | Read the motivation chapter and fourteen narrative chapters. |
 | [Syllabus](syllabus.qmd) | Check course policies, schedule, and grading. |

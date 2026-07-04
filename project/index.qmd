@@ -36,15 +36,17 @@ For learned methods, the training data and architecture become part of the prior
 
 Exact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.
 
+The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The intermediate rows below are for feedback and preparation; they do not create additional graded items outside the syllabus.
+
 | Stage | Expected Progress | What Students Should Have |
 |---|---|---|
-| Week 6 | Project launch | Team, tentative topic, first statement of $x$, $y$, forward model, and degradation. |
-| Week 7 | Proposal checkpoint | One-page proposal with data source, baseline method, second method, and first reliability question. |
-| Week 8 | Baseline checkpoint | A runnable notebook that creates the degraded data and runs a simple baseline. |
-| Week 10 | Method checkpoint | Two reconstruction methods implemented on the same test cases. |
-| Week 12 | Evidence checkpoint | Parameter sweep, quantitative metric, and first robustness or failure test. |
-| Week 14 | Final preparation | Complete notebook, report draft, claim-evidence table, and oral-defense preparation. |
-| Final project period | Presentation and oral defense | Final submission plus individual code walkthrough and defense. |
+| Week 6 | Project proposal | Team, tentative topic, data source, baseline method, second method, first statement of $x$, $y$, forward model, degradation, and reliability question. |
+| Week 7 | Planning feedback | Refined model statement, data access, and first implementation choices. |
+| Week 8 | Baseline preparation | A runnable notebook that creates the degraded data and runs a simple baseline. |
+| Week 10 | Method development | Two reconstruction methods implemented on the same test cases. |
+| Week 12 | Evidence development | Parameter sweep, quantitative metric, and first robustness or failure test. |
+| Week 14 | Project report | Complete notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation. |
+| Week 15 | Presentation and oral defense | Final submission plus individual code walkthrough and defense. |
 
 ## Required LLM Use
 

@@ -679,7 +679,7 @@ For each situation, identify $x$, $y$, $A$, and one reasonable prior:
 ## After Class
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly deliverable.
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
 - Run the week notebook and change at least one important parameter.
 - Write one claim-evidence-limit sentence about today's model.
 :::

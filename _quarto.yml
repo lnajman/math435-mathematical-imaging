@@ -8,6 +8,7 @@ project:
   render:
     - index.qmd
     - syllabus.qmd
+    - practice.qmd
     - notebooks/index.qmd
     - book/index.qmd
     - book/motivation.qmd
@@ -52,6 +53,8 @@ website:
         text: Home
       - href: classes.qmd
         text: Classes
+      - href: practice.qmd
+        text: Practice
       - href: notebooks/index.qmd
         text: Notebooks
       - href: book/index.qmd

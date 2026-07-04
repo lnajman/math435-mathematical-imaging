@@ -1,0 +1,88 @@
+---
+title: "Ungraded Weekly Practice"
+---
+
+This page gives optional weekly practice prompts connected to the book, slides, and notebooks.
+
+::: {.callout-important}
+These activities are for practice and preparation. They are **not separate graded assignments** unless the instructor explicitly announces otherwise. Course grading is governed by the [syllabus](syllabus.qmd).
+:::
+
+The purpose is to help students keep a running record of the central habit of the course:
+
+> What does the data support, what does the model assume, and where can the reconstruction fail?
+
+Students may keep these notes privately, use them while studying, or bring questions from them to class.
+
+## How To Use This Page
+
+For each week:
+
+- read the connected book chapter;
+- attend class and use the slide deck as the discussion structure;
+- run the notebook in Python or Google Colab;
+- write a short claim-evidence-limit note for yourself.
+
+The notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.
+
+## Claim-Evidence-Limit Template
+
+Use this short format when a notebook or class discussion produces a reconstruction result.
+
+```text
+Claim:
+
+Evidence:
+
+Model assumption:
+
+Limit or failure case:
+```
+
+Example:
+
+| Item | Example |
+|---|---|
+| Claim | TV denoising keeps the main edge sharper than quadratic smoothing. |
+| Evidence | Gradient maps and edge contrast stay high across three TV weights. |
+| Model assumption | The image is approximately piecewise smooth. |
+| Limit or failure case | TV creates staircasing on smooth intensity ramps. |
+
+## Weekly Practice Guide
+
+| Week | Topic | Ungraded Practice | Notebook Checkpoint | Useful Links |
+|---:|---|---|---|---|
+| 1 | Images as mathematical objects | Identify $x$, $y$, the observation process, and one piece of missing information in a masked image. | From Scene to Data | [book](book/week-01-image-formation.qmd), [slides](slides/week-01-image-formation.qmd), [notebook](notebooks/week01_image_formation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |
+| 2 | Convolution and blur | Choose a blur kernel and boundary condition; write one assumption that makes the model reasonable. | Blur as a Forward Model | [book](book/week-02-convolution-blur.qmd), [slides](slides/week-02-convolution-blur.qmd), [notebook](notebooks/week02_convolution_blur.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
+| 3 | Fourier transform in imaging | Explain how Fourier coefficients act as global projections and why blur weakens some frequencies. | Fourier Projection and Stability | [book](book/week-03-fourier-imaging.qmd), [slides](slides/week-03-fourier-imaging.qmd), [notebook](notebooks/week03_fourier_imaging.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) |
+| 4 | Noise models and likelihoods | Match Gaussian or Poisson noise to a data-fidelity term and say what averaging can and cannot fix. | Likelihood as Data Evidence | [book](book/week-04-noise-likelihood.qmd), [slides](slides/week-04-noise-likelihood.qmd), [notebook](notebooks/week04_noise_likelihood.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb) |
+| 5 | Ill-posed inverse problems | Name one well-measured direction, one unstable direction, and one invisible change. | Directions and Evidence | [book](book/week-05-ill-posed-inverse-problems.qmd), [slides](slides/week-05-ill-posed-inverse-problems.qmd), [notebook](notebooks/week05_ill_posed_inverse_problems.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) |
+| 6 | Tikhonov regularization | Sweep $\lambda$ and explain which observable diagnostic you would report if the true image were unknown. | Choosing Lambda Without the Truth | [book](book/week-06-tikhonov-regularization.qmd), [slides](slides/week-06-tikhonov-regularization.qmd), [notebook](notebooks/week06_tikhonov_regularization.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb) |
+| 7 | Variational formulation | Identify the data term, regularizer, and optimality condition for one energy. | Energy as an Audit Trail | [book](book/week-07-variational-formulation.qmd), [slides](slides/week-07-variational-formulation.qmd), [notebook](notebooks/week07_variational_formulation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) |
+| 8 | Total Variation regularization | Compare one preserved edge with one possible artifact or staircasing failure. | Edge Preservation Is Not Proof | [book](book/week-08-total-variation.qmd), [slides](slides/week-08-total-variation.qmd), [notebook](notebooks/week08_total_variation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) |
+| 9 | Optimization methods | Report whether energy, fixed-point change, or active coefficients show stable iteration. | Optimization Diagnostics | [book](book/week-09-optimization-methods.qmd), [slides](slides/week-09-optimization-methods.qmd), [notebook](notebooks/week09_optimization_methods.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb) |
+| 10 | Sparse reconstruction | State the representation where the image is assumed sparse and design one mismatch example. | Representation Mismatch | [book](book/week-10-sparse-reconstruction.qmd), [slides](slides/week-10-sparse-reconstruction.qmd), [notebook](notebooks/week10_sparse_reconstruction.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb) |
+| 11 | Wavelets and multiscale representation | Explain which local features wavelets capture better than global Fourier modes. | Fourier, Wavelets, and Energy | [book](book/week-11-wavelets.qmd), [slides](slides/week-11-wavelets.qmd), [notebook](notebooks/week11_wavelets.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) |
+| 12 | Model-based vs data-driven imaging | Describe what the training data teach the learned prior to expect and test one distribution shift. | Training Data as a Prior | [book](book/week-12-model-data.qmd), [slides](slides/week-12-model-data.qmd), [notebook](notebooks/week12_model_data.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) |
+| 13 | Plug-and-play and learned regularization | Compare data residual, RMSE when available, and fixed-point change for two denoisers. | Implicit Prior Strength | [book](book/week-13-plug-and-play.qmd), [slides](slides/week-13-plug-and-play.qmd), [notebook](notebooks/week13_plug_and_play.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
+| 14 | Stability, robustness, and ethics | Write three project-style claims and pair each with evidence and a limitation. | From Notebook to Project Defense | [book](book/week-14-stability-robustness-ethics.qmd), [slides](slides/week-14-stability-robustness-ethics.qmd), [notebook](notebooks/week14_stability_robustness.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
+| 15 | Project presentations and oral defenses | Review the model, code, evidence, limitations, and LLM-use statement for the final project. | Not applicable | [project page](project/index.qmd), [syllabus](syllabus.qmd) |
+
+## Project Preparation Checkpoints
+
+The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project checkpoints below are study and planning aids for the final modeling project described on the [project page](project/index.qmd); they do not create additional graded items.
+
+| Week | Planning Aid |
+|---:|---|
+| 6 | Prepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of $x$, $y$, and the forward process. |
+| 7 | Refine the model statement, data access, and implementation choices after feedback. |
+| 8 | Make sure the notebook can generate or load data and run a simple baseline. |
+| 10 | Check that both methods run on the same test cases. |
+| 12 | Add one parameter sweep, one metric, and one robustness or failure test. |
+| 14 | Prepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations. |
+
+## Grading Boundary
+
+This page does not modify the syllabus.
+
+Formal grading is based on the grading categories and policies stated in the [syllabus](syllabus.qmd), together with any explicit instructor announcements. Weekly practice notes are meant to support learning and project preparation; they are not an additional hidden assessment.
