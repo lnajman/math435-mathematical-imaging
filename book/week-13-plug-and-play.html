@@ -398,11 +398,13 @@ window.Quarto = {
   <li><a href="#explicit-versus-implicit-prior" id="toc-explicit-versus-implicit-prior" class="nav-link" data-scroll-target="#explicit-versus-implicit-prior">Explicit Versus Implicit Prior</a></li>
   <li><a href="#learned-regularization-views" id="toc-learned-regularization-views" class="nav-link" data-scroll-target="#learned-regularization-views">Learned Regularization Views</a></li>
   <li><a href="#plug-and-play-red-and-unrolling" id="toc-plug-and-play-red-and-unrolling" class="nav-link" data-scroll-target="#plug-and-play-red-and-unrolling">Plug-and-Play, RED, And Unrolling</a></li>
+  <li><a href="#unrolled-networks-as-learned-algorithms" id="toc-unrolled-networks-as-learned-algorithms" class="nav-link" data-scroll-target="#unrolled-networks-as-learned-algorithms">Unrolled Networks As Learned Algorithms</a></li>
   <li><a href="#deblurring-example" id="toc-deblurring-example" class="nav-link" data-scroll-target="#deblurring-example">Deblurring Example</a></li>
   <li><a href="#fixed-points" id="toc-fixed-points" class="nav-link" data-scroll-target="#fixed-points">Fixed Points</a></li>
   <li><a href="#convergence-and-trust" id="toc-convergence-and-trust" class="nav-link" data-scroll-target="#convergence-and-trust">Convergence And Trust</a></li>
   <li><a href="#denoiser-strength-as-regularization" id="toc-denoiser-strength-as-regularization" class="nav-link" data-scroll-target="#denoiser-strength-as-regularization">Denoiser Strength As Regularization</a></li>
   <li><a href="#failure-modes" id="toc-failure-modes" class="nav-link" data-scroll-target="#failure-modes">Failure Modes</a></li>
+  <li><a href="#reading-a-pnp-result" id="toc-reading-a-pnp-result" class="nav-link" data-scroll-target="#reading-a-pnp-result">Reading A PnP Result</a></li>
   <li><a href="#what-students-should-trust" id="toc-what-students-should-trust" class="nav-link" data-scroll-target="#what-students-should-trust">What Students Should Trust</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
@@ -511,6 +513,13 @@ z^k=x^k-\tau A^\top(Ax^k-y).
 <li>a constraint proximal operator projects onto an allowed set.</li>
 </ul>
 <p>This interpretation motivates plug-and-play: if a proximal map behaves like a denoiser, can we use a stronger denoiser in its place?</p>
+<p>This is one of the most important bridges in the course. It shows that learning does not have to replace the whole inverse-problem pipeline. Learning can enter at the point where classical mathematics already asks for an image-prior operation.</p>
+<p>In proximal gradient, the algorithm alternates between two roles:</p>
+<ol type="1">
+<li>move toward the measured data;</li>
+<li>move toward images preferred by the prior.</li>
+</ol>
+<p>Plug-and-play keeps this alternation. It simply lets the second role be played by a denoiser that may have been learned from examples. That is why PnP is easier to understand after studying variational methods: it is not a mysterious neural trick, but a modification of a familiar optimization template.</p>
 </section>
 <section id="proximal-gradient" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-gradient">Proximal Gradient</h2>
@@ -553,6 +562,16 @@ x^{k+1}=D_\sigma(z^k),
 <li>the denoiser step asks the reconstruction to look like a clean image.</li>
 </ul>
 <p>The balance between these two forces determines the behavior of the algorithm. If the denoiser dominates, the result can become plausible but inconsistent with the data. If the data term dominates, noise and artifacts may remain.</p>
+<p>The data-consistency step is the part that keeps the denoiser honest. The residual</p>
+<p><span class="math display">
+Ax^k-y
+</span></p>
+<p>measures how the current reconstruction disagrees with the observation. The adjoint action</p>
+<p><span class="math display">
+A^\top(Ax^k-y)
+</span></p>
+<p>translates that disagreement back into image space. The denoiser then acts on an image that has just been corrected using the measurement.</p>
+<p>This is why the order matters. PnP is not “run a neural network and hope.” It is an iterative conversation between measured data and image prior. The forward model keeps asking, “Does this image explain the data?” The denoiser keeps asking, “Does this image look like a plausible clean image?”</p>
 </section>
 <section id="explicit-versus-implicit-prior" class="level2">
 <h2 class="anchored" data-anchor-id="explicit-versus-implicit-prior">Explicit Versus Implicit Prior</h2>
@@ -600,14 +619,7 @@ x^{k+1}=D_\theta(z^k).
 x^{k+1}=D_\theta(z^k).
 </span></p>
 <p>Regularization by denoising, often called RED, tries to build an explicit regularization idea around the denoiser. The details are more advanced than we need here, but the goal is similar: use denoising behavior as image prior information.</p>
-<p>Unrolled methods take a fixed number of iterations and turn them into a trainable network. A schematic unrolled update is</p>
-<p><span class="math display">
-x^{k+1}
-=
-G_{\theta_k}
-\left(x^k,\ A^\top(Ax^k-y)\right).
-</span></p>
-<p>Here the network receives both the current image and a data-consistency signal. Unrolling is often more flexible than classical PnP because the update itself can be trained end-to-end.</p>
+<p>Unrolled methods take a fixed number of iterations and turn them into a trainable network. They are often more flexible than classical PnP because the update itself can be trained end-to-end.</p>
 <p>The common structure is:</p>
 <p><span class="math display">
 \text{measurement model}
@@ -615,6 +627,55 @@ G_{\theta_k}
 \text{learned image correction}.
 </span></p>
 <p>That is the main idea students should keep.</p>
+</section>
+<section id="unrolled-networks-as-learned-algorithms" class="level2">
+<h2 class="anchored" data-anchor-id="unrolled-networks-as-learned-algorithms">Unrolled Networks As Learned Algorithms</h2>
+<p>Unrolled networks make the connection to neural networks especially visible. Start with an iterative algorithm such as gradient descent, ISTA, ADMM, or a proximal-gradient method. Then fix a number of iterations and replace some operations by trainable modules.</p>
+<p>A schematic unrolled reconstruction may look like</p>
+<p><span class="math display">
+x^{k+1}
+=
+G_{\theta_k}
+\left(
+x^k,\ A^\top(Ax^k-y)
+\right),
+\qquad
+k=0,\ldots,K-1.
+</span></p>
+<p>This is a neural network because the maps <span class="math inline">G_{\theta_k}</span> are learned. It is also an inverse-problem algorithm because the forward model still appears through the data-consistency signal. The network does not receive only the image. It receives information about how the current image fails to explain the data.</p>
+<p>This gives a useful way to compare direct neural reconstruction and unrolled reconstruction:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Uses <span class="math inline">A</span> during reconstruction?</th>
+<th>Main risk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>direct map <span class="math inline">\hat{x}=f_\theta(y)</span></td>
+<td>maybe not</td>
+<td>plausible image that ignores measurement physics</td>
+</tr>
+<tr class="even">
+<td>PnP iteration</td>
+<td>yes, through data steps</td>
+<td>denoiser may not correspond to an explicit objective</td>
+</tr>
+<tr class="odd">
+<td>unrolled network</td>
+<td>yes, if data-consistency layers are included</td>
+<td>learned updates may overfit the training setting</td>
+</tr>
+</tbody>
+</table>
+<p>Unrolling is attractive because it can learn richer corrections than a handcrafted proximal step while preserving the structure of an inverse-problem solver. But it still needs the same reliability questions: data consistency, distribution shift, parameter sensitivity, and failure cases.</p>
 </section>
 <section id="deblurring-example" class="level2">
 <h2 class="anchored" data-anchor-id="deblurring-example">Deblurring Example</h2>
@@ -629,6 +690,14 @@ y=Ax+\eta
 </div>
 <p>Tikhonov restores detail but can amplify texture-like noise. Gaussian PnP is stable but can oversmooth. Learned PnP can preserve plausible structure when training and test images match.</p>
 <p>When reading this comparison, ask what each prior believes. Tikhonov believes small energy is good. Gaussian denoising believes smoothness is good. A learned patch denoiser believes images should resemble the training patches. The differences in the reconstructions are consequences of those beliefs.</p>
+<p>This language is deliberately anthropomorphic, but useful. Each prior has a preference:</p>
+<ul>
+<li>Tikhonov prefers low-energy or smooth solutions;</li>
+<li>TV prefers piecewise smooth images with sharp edges;</li>
+<li>wavelets prefer sparse multiscale coefficients;</li>
+<li>a learned denoiser prefers images similar to its training examples.</li>
+</ul>
+<p>The reconstruction is what happens when those preferences meet the measurement. If two methods produce different images from the same data, the difference is not only numerical. It reveals different assumptions about what a plausible image should be.</p>
 <div class="figure">
 <p><img src="../assets/figures/week13-iteration-curve.png" class="img-fluid" alt="RMSE and fixed-point change versus plug-and-play iteration"></p>
 <p>Iteration curves help diagnose convergence and reconstruction quality in examples where ground truth is known.</p>
@@ -707,6 +776,18 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>Does it preserve task-critical structures?</li>
 </ul>
 <p>Practical learned imaging should report baseline comparisons, data-consistency errors, sensitivity to denoising strength, robustness to distribution shift, uncertainty when possible, and task-based evaluation.</p>
+</section>
+<section id="reading-a-pnp-result" class="level2">
+<h2 class="anchored" data-anchor-id="reading-a-pnp-result">Reading A PnP Result</h2>
+<p>When a plug-and-play result is shown, do not ask only which image is prettiest. Ask four questions in order.</p>
+<ol type="1">
+<li><strong>Data support.</strong> Does <span class="math inline">A\hat{x}</span> match <span class="math inline">y</span> within the expected noise and model error?</li>
+<li><strong>Prior relevance.</strong> Was the denoiser trained or chosen for this image family and degradation?</li>
+<li><strong>Algorithm behavior.</strong> Does the fixed-point change decrease, and is the result stable to reasonable parameter changes?</li>
+<li><strong>Task reliability.</strong> Does the method preserve the structures that matter for the intended use?</li>
+</ol>
+<p>These questions prevent a common confusion. A learned denoiser can improve visual quality while also moving the image away from the measured data. Conversely, a reconstruction can have a strong data fit while keeping artifacts that make it unusable. The trustworthy region is where data consistency and prior relevance support the same conclusion.</p>
+<p>For project work, a PnP experiment should therefore include at least one simple baseline. A learned method that only beats a poor baseline teaches little. A learned method that beats a reasonable Tikhonov, TV, wavelet, or sparse baseline under fair conditions is much more convincing.</p>
 </section>
 <section id="what-students-should-trust" class="level2">
 <h2 class="anchored" data-anchor-id="what-students-should-trust">What Students Should Trust</h2>

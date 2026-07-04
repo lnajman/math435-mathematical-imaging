@@ -491,6 +491,15 @@ y = Ax+\eta,
 <li>training-data influence, if learning is used.</li>
 </ul>
 <p>Reliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.</p>
+<p>This is especially important for neural imaging. A neural method can make an inverse problem look solved because it produces a sharp, realistic output. But sharpness is not the same as evidence. The central identity remains:</p>
+<p><span class="math display">
+\text{neural imaging}
+=
+\text{inverse problems}
++
+\text{learned image models}.
+</span></p>
+<p>The inverse-problem part asks what the measurement supports. The learned-model part adds expectations from examples. Reliability asks whether those two sources of information agree, conflict, or become impossible to separate.</p>
 </section>
 <section id="stability" class="level2">
 <h2 class="anchored" data-anchor-id="stability">Stability</h2>
@@ -668,6 +677,35 @@ x
 <li>comparison with simple model-based baselines.</li>
 </ul>
 <p>The goal is not to make learning look bad. The goal is to know where the learned prior is useful and where it becomes an unsupported assumption.</p>
+<p>For a learned reconstruction, a useful robustness audit separates three domains:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>measurement domain</td>
+<td>Does the forward model match the real acquisition process?</td>
+</tr>
+<tr class="even">
+<td>training domain</td>
+<td>Do the training examples represent the cases where the method will be used?</td>
+</tr>
+<tr class="odd">
+<td>decision domain</td>
+<td>Is the evaluation metric connected to the actual task?</td>
+</tr>
+</tbody>
+</table>
+<p>A method can pass in one domain and fail in another. For example, a network may fit simulated blur very well but fail on real optical blur. It may perform well on average RMSE but erase rare small structures. It may generalize across natural photographs but not microscopy, satellite images, or medical scans.</p>
+<p>This is why neural imaging needs both mathematical and empirical validation. The mathematics tells us what the forward model and data-consistency checks mean. The experiments tell us whether the learned prior behaves responsibly on the cases that matter.</p>
 </section>
 <section id="domain-robustness" class="level2">
 <h2 class="anchored" data-anchor-id="domain-robustness">Domain Robustness</h2>
@@ -716,6 +754,12 @@ x
 <li>false positive rate;</li>
 <li>false negative rate.</li>
 </ul>
+<p>Small-feature tests are also a good way to reveal the difference between classical and learned priors. A TV method may remove a weak texture because it prefers piecewise smooth regions. A wavelet method may remove coefficients below a threshold. A learned method may remove a rare structure because it was uncommon in the training set.</p>
+<p>These are different mechanisms, but the practical question is the same:</p>
+<blockquote class="blockquote">
+<p>Did the method preserve the information needed for the task?</p>
+</blockquote>
+<p>If the answer is no, the method may still look visually good. That is exactly the danger.</p>
 </section>
 <section id="data-consistency-is-necessary" class="level2">
 <h2 class="anchored" data-anchor-id="data-consistency-is-necessary">Data Consistency Is Necessary</h2>
@@ -835,6 +879,16 @@ A\hat{x}\approx y.
 <li>What should the user be told?</li>
 </ul>
 <p>That is the path from mathematical imaging to neural imaging without losing scientific discipline.</p>
+<p>The final lesson is that neural networks are not an escape from inverse problems. They are a new way of supplying the missing information that inverse problems require. Sometimes they supply that information better than a handcrafted prior. Sometimes they supply the wrong information very convincingly.</p>
+<p>The responsible question is therefore not:</p>
+<blockquote class="blockquote">
+<p>Should we use classical methods or neural networks?</p>
+</blockquote>
+<p>It is:</p>
+<blockquote class="blockquote">
+<p>Which parts of the reconstruction should be dictated by the measurement, which parts are supplied by prior knowledge, and how do we test the boundary between them?</p>
+</blockquote>
+<p>That boundary is the central object of modern imaging.</p>
 </section>
 <section id="claim-versus-evidence" class="level2">
 <h2 class="anchored" data-anchor-id="claim-versus-evidence">Claim Versus Evidence</h2>

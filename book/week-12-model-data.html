@@ -396,6 +396,7 @@ window.Quarto = {
   <li><a href="#what-model-based-does-not-mean" id="toc-what-model-based-does-not-mean" class="nav-link" data-scroll-target="#what-model-based-does-not-mean">What Model-Based Does Not Mean</a></li>
   <li><a href="#data-driven-imaging" id="toc-data-driven-imaging" class="nav-link" data-scroll-target="#data-driven-imaging">Data-Driven Imaging</a></li>
   <li><a href="#learned-inverse-maps" id="toc-learned-inverse-maps" class="nav-link" data-scroll-target="#learned-inverse-maps">Learned Inverse Maps</a></li>
+  <li><a href="#what-can-be-learned" id="toc-what-can-be-learned" class="nav-link" data-scroll-target="#what-can-be-learned">What Can Be Learned?</a></li>
   <li><a href="#strengths-and-risks" id="toc-strengths-and-risks" class="nav-link" data-scroll-target="#strengths-and-risks">Strengths And Risks</a></li>
   <li><a href="#neural-networks-as-operators" id="toc-neural-networks-as-operators" class="nav-link" data-scroll-target="#neural-networks-as-operators">Neural Networks As Operators</a></li>
   <li><a href="#hybrid-methods" id="toc-hybrid-methods" class="nav-link" data-scroll-target="#hybrid-methods">Hybrid Methods</a></li>
@@ -404,6 +405,7 @@ window.Quarto = {
   <li><a href="#training-data-as-a-prior" id="toc-training-data-as-a-prior" class="nav-link" data-scroll-target="#training-data-as-a-prior">Training Data As A Prior</a></li>
   <li><a href="#comparing-the-philosophies" id="toc-comparing-the-philosophies" class="nav-link" data-scroll-target="#comparing-the-philosophies">Comparing The Philosophies</a></li>
   <li><a href="#data-consistency" id="toc-data-consistency" class="nav-link" data-scroll-target="#data-consistency">Data Consistency</a></li>
+  <li><a href="#a-neural-network-is-still-an-inverse-problem-choice" id="toc-a-neural-network-is-still-an-inverse-problem-choice" class="nav-link" data-scroll-target="#a-neural-network-is-still-an-inverse-problem-choice">A Neural Network Is Still An Inverse-Problem Choice</a></li>
   <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
@@ -478,6 +480,16 @@ D(Ax,y)+\lambda R(x).
 \text{learned image models}.
 </span></p>
 <p>Neural networks are not outside inverse problems. They are one answer to the same difficulty: the measured data are incomplete, noisy, unstable, or ambiguous, so reconstruction requires additional structure.</p>
+<p>This identity is more than a slogan. It says that a neural method should be read with the same questions we used for Tikhonov, TV, sparse reconstruction, and wavelets:</p>
+<ul>
+<li>What is measured?</li>
+<li>What is unknown?</li>
+<li>Which information is missing or unstable?</li>
+<li>What prior information is being added?</li>
+<li>Where does that prior information come from?</li>
+<li>How can we test whether the result is supported by the data?</li>
+</ul>
+<p>In a classical method, the prior may be a formula such as <span class="math inline">\|Lx\|^2</span>, <span class="math inline">\|\nabla x\|_1</span>, or <span class="math inline">\|\alpha\|_1</span> in a wavelet basis. In a learned method, the prior may be spread across the training set, architecture, loss, optimizer, and learned parameters. The mathematical discipline is the same: do not confuse the prior with the measurement.</p>
 </section>
 <section id="model-based-imaging" class="level2">
 <h2 class="anchored" data-anchor-id="model-based-imaging">Model-Based Imaging</h2>
@@ -535,6 +547,8 @@ y=f(x)+\eta.
 <li>deployment domain.</li>
 </ul>
 <p>The prior is no longer a short expression such as TV. It is represented by parameters learned from examples.</p>
+<p>This means that a learned method is not assumption-free. It has simply moved many assumptions from the page into the training process. A convolutional network assumes that local filters and repeated spatial patterns are useful. A U-Net assumes that multiscale features and skip connections are useful. A training set of face images assumes that test images will share face-like structures. A loss such as mean squared error assumes that pixelwise average error is the right quantity to minimize.</p>
+<p>Those assumptions can be excellent. They can also be wrong. The point is not to avoid assumptions; reconstruction is impossible without them. The point is to name them.</p>
 <p>The supervised learning problem should be read as learning an inverse map from examples. The training data contain pairs:</p>
 <p><span class="math display">
 \text{degraded or measured data } y_i
@@ -553,6 +567,71 @@ y=f(x)+\eta.
 <p>This is a learned inverse map. It tries to approximate the transformation from data to clean image directly.</p>
 <p>For denoising, <span class="math inline">y</span> may be a noisy image and <span class="math inline">x</span> a clean image. For super-resolution, <span class="math inline">y</span> may be a low-resolution image and <span class="math inline">x</span> a high-resolution image. For reconstruction, <span class="math inline">y</span> may be sensor measurements and <span class="math inline">x</span> the desired image.</p>
 <p>The risk is that a direct learned inverse may ignore the physics of the measurement. If the network produces an image that looks plausible but does not satisfy <span class="math inline">Ax\approx y</span>, then the image is not faithful to the measured data.</p>
+<p>This is the main conceptual difference between image synthesis and image reconstruction. A synthesis method may be judged by whether the output looks plausible. A reconstruction method must also be judged by whether the output is compatible with the observation.</p>
+<p>For a learned inverse map, the forward model gives a simple audit:</p>
+<p><span class="math display">
+\hat{x}=f_\theta(y),
+\qquad
+\text{then check}
+\qquad
+A\hat{x}\approx y.
+</span></p>
+<p>If this check fails beyond the expected noise and modeling error, the network may have produced a good-looking image that is not a good reconstruction. If the check passes, the reconstruction is still not automatically true, because many images may satisfy the same measurement. But data consistency is a necessary guardrail.</p>
+</section>
+<section id="what-can-be-learned" class="level2">
+<h2 class="anchored" data-anchor-id="what-can-be-learned">What Can Be Learned?</h2>
+<p>Different neural imaging methods learn different objects. It is useful to separate them.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Learned object</th>
+<th>Mathematical role</th>
+<th>Example question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>inverse map <span class="math inline">f_\theta(y)</span></td>
+<td>direct reconstruction rule</td>
+<td>Can the network map noisy data to a clean image?</td>
+</tr>
+<tr class="even">
+<td>prior or regularizer <span class="math inline">R_\theta(x)</span></td>
+<td>learned image preference</td>
+<td>Which images should be considered plausible?</td>
+</tr>
+<tr class="odd">
+<td>denoiser <span class="math inline">D_\theta(z)</span></td>
+<td>implicit proximal-like step</td>
+<td>Can a learned denoiser replace a handcrafted prior step?</td>
+</tr>
+<tr class="even">
+<td>feature representation <span class="math inline">\Phi_\theta(x)</span></td>
+<td>learned coordinates</td>
+<td>Which features make comparison meaningful?</td>
+</tr>
+<tr class="odd">
+<td>algorithmic update <span class="math inline">G_\theta</span></td>
+<td>learned iteration</td>
+<td>Can the network learn how to improve an iterate?</td>
+</tr>
+</tbody>
+</table>
+<p>These are not the same mathematical object. A direct inverse map may be fast, but it can hide data inconsistency. A learned prior or denoiser can be inserted into an inverse-problem algorithm. An unrolled update can use both the current image and the data residual. Each design choice answers the inverse problem in a different way.</p>
+<p>For this course, the safest mental model is:</p>
+<p><span class="math display">
+\text{measured data}
++
+\text{learned prior information}
+\rightarrow
+\text{reconstruction to be tested}.
+</span></p>
+<p>The learned part is powerful because it can encode richer image structure than a small handcrafted formula. It is risky because the learned structure may not belong to the image being reconstructed.</p>
 </section>
 <section id="strengths-and-risks" class="level2">
 <h2 class="anchored" data-anchor-id="strengths-and-risks">Strengths And Risks</h2>
@@ -568,6 +647,12 @@ y=f(x)+\eta.
 <p>The last point matters especially in medical and scientific imaging: plausible is not the same as measured.</p>
 <p>The phrase “hallucination” means that the method adds structure that was not supported by the measurement. In a low-stakes photographic application, this may be acceptable or even desired. In scientific imaging, medical imaging, forensics, or measurement-driven tasks, it can be dangerous.</p>
 <p>The problem is not that learned methods are uniquely untrustworthy. Handcrafted priors can also hallucinate in a quieter way: TV can create artificial edges or plateaus, wavelets can remove texture, and Tikhonov can oversmooth. The difference is that learned priors can encode complex training-set expectations that are harder to see directly.</p>
+<p>This is why a learned reconstruction should be described with two verbs:</p>
+<ul>
+<li>it <strong>fits</strong> the measured data;</li>
+<li>it <strong>resembles</strong> the training examples.</li>
+</ul>
+<p>Good performance often requires both. If the method fits the data but has no useful prior, the reconstruction may be noisy or unstable. If it resembles the training examples but ignores the data, the output may be plausible but unsupported. The tension between these two verbs is the neural version of the classical data-prior tradeoff.</p>
 </section>
 <section id="neural-networks-as-operators" class="level2">
 <h2 class="anchored" data-anchor-id="neural-networks-as-operators">Neural Networks As Operators</h2>
@@ -639,6 +724,8 @@ x^{k+1}
 <li>apply the fitted model to new data;</li>
 <li>test whether it generalizes.</li>
 </ul>
+<p>The same logic appears in deep learning, only with a much larger model class. A deep network may learn millions of parameters instead of a few principal directions, but the questions remain familiar. What examples were used? What variation did they contain? What loss was minimized? What happens when the test image is different?</p>
+<p>The patch PCA example is therefore a bridge. It shows that learning is not magic. It is fitting a model from examples, then using that model as prior information in reconstruction.</p>
 <div class="figure">
 <p><img src="../assets/figures/week12-denoising-comparison.png" class="img-fluid" alt="Clean, noisy, Gaussian, wavelet, and learned PCA denoising comparison"></p>
 <p>Handcrafted and learned priors can be compared on the same denoising task.</p>
@@ -758,6 +845,27 @@ A\hat{x}\approx y.
 <li>used inside an unrolled algorithm.</li>
 </ul>
 <p>This is one reason inverse-problem thinking remains useful in deep learning. The forward model gives us a way to test the output against the actual measurement.</p>
+</section>
+<section id="a-neural-network-is-still-an-inverse-problem-choice" class="level2">
+<h2 class="anchored" data-anchor-id="a-neural-network-is-still-an-inverse-problem-choice">A Neural Network Is Still An Inverse-Problem Choice</h2>
+<p>It is tempting to draw a sharp line:</p>
+<p><span class="math display">
+\text{classical method}
+\quad\text{versus}\quad
+\text{neural network}.
+</span></p>
+<p>For mathematical imaging, a better line is:</p>
+<p><span class="math display">
+\text{explicit prior}
+\quad\text{versus}\quad
+\text{learned prior}.
+</span></p>
+<p>Both live inside the inverse problem. Both can be useful. Both can fail. The neural network changes how the prior is represented and how it is fitted, but it does not remove the need for a forward model, a noise model, validation, and careful interpretation.</p>
+<p>This is the main reason the course naturally leads to neural networks. Once students understand that reconstruction is impossible from data alone, the next question is unavoidable:</p>
+<blockquote class="blockquote">
+<p>If handcrafted priors are too simple, can the prior be learned?</p>
+</blockquote>
+<p>That question is the door from classical inverse problems to modern neural imaging.</p>
 </section>
 <section id="evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
