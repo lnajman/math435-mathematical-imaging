@@ -22,6 +22,7 @@ Should an imaging algorithm use a prior we write down, or one it learns from exa
 
 ::: {.checklist}
 - Compare model-based and data-driven imaging.
+- Explain why neural imaging is still an inverse-problem story.
 - Identify forward models, priors, solvers, and training data.
 - Interpret a neural network as a parameterized operator.
 - Learn a small patch prior from image data.
@@ -33,10 +34,10 @@ Should an imaging algorithm use a prior we write down, or one it learns from exa
 | Time | Work |
 |---:|---|
 | 0-8 min | recap: TV, sparsity, wavelets |
-| 8-22 min | model-based imaging pipeline |
-| 22-36 min | data-driven imaging pipeline |
-| 36-48 min | neural networks as operators |
-| 48-60 min | learned patch prior example |
+| 8-16 min | central identity and model-based pipeline |
+| 16-32 min | data-driven imaging pipeline |
+| 32-44 min | neural networks as learned operators |
+| 44-60 min | learned patch prior example |
 | 60-70 min | notebook activity |
 | 70-75 min | synthesis and exit check |
 
@@ -55,6 +56,22 @@ We chose:
 
 ::: {.question-box}
 What if these choices were learned from data instead?
+:::
+
+## Central Identity
+
+::: {.model-box}
+Neural imaging = inverse problems + learned image models.
+:::
+
+The same questions remain:
+
+::: {.checklist}
+- What was measured?
+- What information is missing or unstable?
+- What prior information is added?
+- Where does that prior come from?
+- How do we test whether the reconstruction is supported by the data?
 :::
 
 ## Two Philosophies
@@ -195,6 +212,20 @@ A learned method can encode image structure that is hard to write as a simple fo
 
 ::: {.model-box}
 The prior is no longer a short expression like TV; it is represented by parameters learned from examples.
+:::
+
+## What Can Be Learned?
+
+| Learned object | Role in the inverse problem |
+|---|---|
+| inverse map $f_\theta(y)$ | direct reconstruction rule |
+| prior $R_\theta(x)$ | learned image preference |
+| denoiser $D_\theta(z)$ | implicit proximal-like step |
+| representation $\Phi_\theta(x)$ | learned coordinates |
+| update rule $G_\theta$ | learned algorithmic step |
+
+::: {.caption}
+Different neural methods learn different parts of the reconstruction story.
 :::
 
 ## Strengths
@@ -399,6 +430,19 @@ A learned method may produce a plausible image that is not supported by the data
 
 ::: {.question-box}
 In medical or scientific imaging, why is plausible-but-false structure dangerous?
+:::
+
+## Fit Versus Resemble
+
+A learned reconstruction should be read with two verbs:
+
+::: {.checklist}
+- it **fits** the measured data;
+- it **resembles** the training examples.
+:::
+
+::: {.takeaway-box}
+A good reconstruction needs both measurement support and relevant learned prior information.
 :::
 
 ## Evaluation Matters

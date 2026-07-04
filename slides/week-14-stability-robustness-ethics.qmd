@@ -24,6 +24,7 @@ An image can look plausible and still be wrong in a way that matters.
 - Define stability and parameter sensitivity.
 - See how small perturbations can become large reconstruction changes.
 - Explain robustness across noise levels, models, and image families.
+- Audit learned reconstructions across measurement, training, and decision domains.
 - Discuss hallucination and small-feature suppression.
 - Connect mathematical validation to ethical responsibility.
 :::
@@ -35,7 +36,7 @@ An image can look plausible and still be wrong in a way that matters.
 | 0-8 min | recap: plug-and-play and learned priors |
 | 8-23 min | stability and parameter sensitivity |
 | 23-36 min | perturbation amplification |
-| 36-50 min | robustness and distribution shift |
+| 36-50 min | robustness and learned-domain shift |
 | 50-62 min | hallucination, small features, reliability |
 | 62-72 min | notebook activity and project report preparation |
 | 72-75 min | synthesis and exit check |
@@ -52,6 +53,21 @@ Plug-and-play gave us a hybrid loop:
 
 ::: {.question-box}
 How do we know whether the result should be trusted?
+:::
+
+## Final Course Identity
+
+::: {.model-box}
+Neural imaging = inverse problems + learned image models.
+:::
+
+Reliability asks whether:
+
+::: {.checklist}
+- the measurement supports the reconstruction;
+- the prior or training data add relevant information;
+- the two sources of information conflict;
+- the conflict is visible to the user.
 :::
 
 ## Reliability Is Tested
@@ -241,6 +257,18 @@ It is less competitive on a different image family.
 Learning from data does not remove assumptions. It moves assumptions into the training set.
 :::
 
+## Three Domains To Audit
+
+| Domain | Reliability question |
+|---|---|
+| measurement | Does the forward model match the real acquisition? |
+| training | Do examples represent the cases where the method is used? |
+| decision | Does the metric match the task or risk? |
+
+::: {.caption}
+A neural reconstruction can pass one domain and fail another.
+:::
+
 ## Overfitting in Inverse Problems
 
 Overfitting can mean:
@@ -298,6 +326,20 @@ Strong regularization and smoothing make the image look calmer, but reduce featu
 
 ::: {.takeaway-box}
 The right reconstruction depends on the task, not only on visual smoothness.
+:::
+
+## Same Question, Different Mechanism
+
+Different priors can erase small information in different ways:
+
+::: {.checklist}
+- TV may remove weak texture by preferring piecewise smooth regions.
+- Wavelet thresholding may remove small coefficients.
+- A learned prior may remove structures absent from training data.
+:::
+
+::: {.question-box}
+Did the method preserve the information needed for the task?
 :::
 
 ## Data Consistency Is Necessary
@@ -463,6 +505,14 @@ Answer quickly:
 - Robustness must be tested across realistic and stressful cases.
 - Ethical reconstruction means documenting assumptions, failures, and limits.
 :::
+
+## Final Boundary Question
+
+::: {.question-box}
+Which parts of the reconstruction are dictated by the measurement, and which parts are supplied by prior knowledge?
+:::
+
+This is the boundary modern imaging has to test.
 
 ## After Class
 

@@ -25,6 +25,7 @@ Can you insert it inside an inverse-problem solver?
 ::: {.checklist}
 - Recall proximal algorithms for regularized inverse problems.
 - Define plug-and-play reconstruction.
+- Explain how learned algorithms can keep data consistency in the loop.
 - Compare explicit and implicit regularization.
 - Run a deblurring example with handcrafted and learned denoisers.
 - Discuss fixed points, convergence, and trust.
@@ -37,8 +38,8 @@ Can you insert it inside an inverse-problem solver?
 | 0-8 min | recap: model-based vs data-driven |
 | 8-22 min | proximal steps as denoising-like operations |
 | 22-38 min | plug-and-play idea and update equations |
-| 38-52 min | learned regularization and examples |
-| 52-62 min | convergence, fixed points, and failure modes |
+| 38-50 min | learned regularization and unrolled algorithms |
+| 50-62 min | convergence, fixed points, and failure modes |
 | 62-72 min | notebook activity |
 | 72-75 min | synthesis and exit check |
 
@@ -156,6 +157,21 @@ That sounds like denoising.
 If a proximal step already behaves like a denoiser, why not use a strong denoiser directly?
 :::
 
+## Plug-and-Play Is A Bridge
+
+In proximal gradient, the algorithm alternates:
+
+::: {.checklist}
+- move toward the measured data;
+- move toward images preferred by the prior.
+:::
+
+Plug-and-play keeps this structure, but lets the prior step be a denoiser.
+
+::: {.takeaway-box}
+Learning enters where the inverse problem already needed prior information.
+:::
+
 ## Proximal Step Versus Denoiser
 
 ::: {.figure-frame}
@@ -216,6 +232,26 @@ The data-consistency step still uses:
 
 ::: {.takeaway-box}
 PnP does not throw away physics. It uses physics between denoising steps.
+:::
+
+## Data Consistency Keeps Asking
+
+The residual
+
+$$
+Ax^k-y
+$$
+
+asks how the current image disagrees with the measurement.
+
+The adjoint step sends that disagreement back to image space:
+
+$$
+A^\top(Ax^k-y).
+$$
+
+::: {.caption}
+The denoiser acts after a measurement-based correction, not instead of one.
 :::
 
 ## What Is No Longer Classical?
@@ -302,6 +338,20 @@ Then learn parameters inside the $K$ stages.
 - data-consistency blocks;
 - denoising or regularization blocks;
 - learned step sizes or filters.
+:::
+
+## Unrolled Networks
+
+A schematic learned update is:
+
+$$
+x^{k+1}
+=
+G_{\theta_k}\left(x^k,\ A^\top(Ax^k-y)\right).
+$$
+
+::: {.takeaway-box}
+This is a neural network, but it is still shaped by the forward model.
 :::
 
 ## Why This Is Attractive
@@ -480,6 +530,21 @@ Practical learned imaging should report:
 - robustness to distribution shift;
 - uncertainty or confidence when possible;
 - task-based evaluation.
+:::
+
+## Reading A PnP Result
+
+Ask four questions:
+
+::: {.checklist}
+- Does $A\hat{x}$ match $y$ within expected noise?
+- Was the denoiser trained or chosen for this image family?
+- Does the fixed-point change decrease?
+- Does the result preserve task-critical structures?
+:::
+
+::: {.question-box}
+Where do you see measurement evidence, and where do you see prior influence?
 :::
 
 ## Code Demo: Run Week 13 Examples {.code-small}
