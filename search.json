@@ -4336,88 +4336,88 @@
     "text": "Working Locally\nFrom the repository root:\npython3 -m pip install -r requirements.txt\njupyter notebook\nThe notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect."
   },
   {
-    "objectID": "llm-use.html",
-    "href": "llm-use.html",
-    "title": "LLM-Use Statement",
+    "objectID": "instructor-readiness.html",
+    "href": "instructor-readiness.html",
+    "title": "Course Readiness Checklist",
     "section": "",
-    "text": "This statement describes how LLM assistance was used to develop this course website. It does not change course policies: the syllabus and instructor announcements are authoritative.\nThis course website was developed with assistance from OpenAI Codex, a GPT-5-based coding and writing assistant in the Codex desktop environment. Codex was used to help draft, organize, revise, and technically implement course materials, including the Quarto website, slides, notebooks, book chapters, project materials, and supporting pages.\nAll course policies, assessment rules, mathematical content, project expectations, and final editorial decisions remain the responsibility of the instructor. LLM-generated suggestions were reviewed, modified, accepted, or rejected by the instructor during development.\nSome parts of the course reflect instructor choices that an LLM could not determine on its own. For example, the central pedagogical idea that neural networks should be introduced as a natural continuation of inverse problems was supplied and refined by the instructor. The instructor also determined institutional constraints, such as the fact that only work listed in the syllabus can be graded. Codex helped turn these choices into website structure, prose, slides, notebooks, and project materials, but did not determine the course philosophy or grading authority.\nProducing the final course materials required many rounds of prompting, correction, revision, testing, and review. Codex often produced useful drafts or implementation steps, but these had to be checked against the instructor’s mathematical goals, institutional constraints, and teaching style. The published website should therefore be understood as the result of an iterative collaboration guided by the instructor’s course vision, not as a one-shot LLM-generated artifact.\nStudents should treat this website as instructor-authored course material, not as automatically generated content. If an error, ambiguity, or inconsistency is found, the syllabus and instructor announcements are authoritative.\nComputational examples and notebooks should be tested and interpreted critically; correct execution does not by itself guarantee mathematical correctness."
+    "text": "Note\n\n\n\nThis page is an instructor maintenance aid. It is rendered for convenience, but it is not linked from the main student navigation and it does not modify the syllabus, grading, or course policies."
   },
   {
-    "objectID": "preparation.html",
-    "href": "preparation.html",
-    "title": "How To Prepare For Class",
+    "objectID": "instructor-readiness.html#current-readiness",
+    "href": "instructor-readiness.html#current-readiness",
+    "title": "Course Readiness Checklist",
+    "section": "Current Readiness",
+    "text": "Current Readiness\nLast live smoke test: July 6, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nRepresentative weekly paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that weekly practice notes are not separate graded assignments.\n\n\nQuiz logistics\nReady\nLive quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long.\n\n\nProject boundary\nReady\nLive project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nCourse arc\nReady\nHome, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language."
+  },
+  {
+    "objectID": "instructor-readiness.html#before-the-semester",
+    "href": "instructor-readiness.html#before-the-semester",
+    "title": "Course Readiness Checklist",
+    "section": "Before The Semester",
+    "text": "Before The Semester\n\nConfirm official semester dates, room, calendar exceptions, and university policy language in the syllabus.\nReview the syllabus grading table against the official course record.\nConfirm that quiz timing and permitted tools match what will be announced in class.\nOpen the Week 1 notebook from Colab using a student-like browser session.\nSkim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.\nRead the final project page end to end and confirm the project rubric language.\nDecide whether this readiness page should remain unlinked or be moved to private notes."
+  },
+  {
+    "objectID": "instructor-readiness.html#before-each-class",
+    "href": "instructor-readiness.html#before-each-class",
+    "title": "Course Readiness Checklist",
+    "section": "Before Each Class",
+    "text": "Before Each Class\n\nOpen the class roadmap for the week.\nCheck the corresponding book chapter, slide deck, notebook, and Colab link.\nRun the notebook if code or dependencies changed.\nCheck whether the week has a quiz, project milestone, or special timing constraint.\nDecide which notebook result should become the main in-class discussion point."
+  },
+  {
+    "objectID": "instructor-readiness.html#when-editing-the-site",
+    "href": "instructor-readiness.html#when-editing-the-site",
+    "title": "Course Readiness Checklist",
+    "section": "When Editing The Site",
+    "text": "When Editing The Site\nUse the same validation rhythm after content changes:\n./scripts/quarto render\npython3 scripts/audit_site_links.py\nWhen notebooks change:\npython3 scripts/build_notebooks.py\npython3 scripts/validate_notebooks.py\nWhen slides change:\npython3 -m http.server 8024 --directory _site\n/Users/laurentnajman/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/audit_slide_fit.mjs"
+  },
+  {
+    "objectID": "instructor-readiness.html#instructor-review-items",
+    "href": "instructor-readiness.html#instructor-review-items",
+    "title": "Course Readiness Checklist",
+    "section": "Instructor Review Items",
+    "text": "Instructor Review Items\nThese items need human judgment, not only automated checks.\n\nDoes the home page express the course vision clearly enough for students?\nDo the first two weeks make the inverse-problem viewpoint concrete?\nAre the quiz weeks paced realistically for 55 minutes of teaching plus a 20-minute quiz?\nAre the project expectations ambitious enough but still feasible with LLM assistance?\nDo the book chapters have enough prose for students who miss a class?\nAre examples and images appropriate for Khalifa University students and course policies?"
+  },
+  {
+    "objectID": "instructor-readiness.html#boundary-reminder",
+    "href": "instructor-readiness.html#boundary-reminder",
+    "title": "Course Readiness Checklist",
+    "section": "Boundary Reminder",
+    "text": "Boundary Reminder\nThe syllabus remains the authority for grading, assessment dates, and formal course policies. Practice prompts, notebook notes, project planning aids, and this readiness checklist support teaching and preparation; they do not create hidden assignments or extra graded categories."
+  },
+  {
+    "objectID": "quizzes.html",
+    "href": "quizzes.html",
+    "title": "Quiz Information",
     "section": "",
-    "text": "This page gives a weekly rhythm for using the course materials. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the syllabus.\nThe course has several resources because they do different jobs:"
+    "text": "This page summarizes student-facing quiz logistics. The syllabus remains the authority for grading, assessment policies, approved absences, and course rules.\nFor the ordinary weekly study workflow before and after quiz weeks, see How To Prepare For Class.\nThere are two quizzes in the course. Each quiz is 20 minutes long."
   },
   {
-    "objectID": "preparation.html#weekly-rhythm",
-    "href": "preparation.html#weekly-rhythm",
-    "title": "How To Prepare For Class",
-    "section": "Weekly Rhythm",
-    "text": "Weekly Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore class\nOpen the class roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path.\nOne question you want class to answer.\n\n\nDuring class\nUse the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure.\nAnnotated notes around the main model.\n\n\nAfter class\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nWeekly consolidation\nTurn the notebook note into a short claim-evidence-limit note using the practice page.\nA study note you can reuse for quizzes, exams, and projects.\n\n\nBefore the next class\nRevisit the previous week only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
+    "objectID": "quizzes.html#allowed-tools",
+    "href": "quizzes.html#allowed-tools",
+    "title": "Quiz Information",
+    "section": "Allowed Tools",
+    "text": "Allowed Tools\nThe syllabus states that only a basic calculator is permitted in quizzes. Unless the instructor explicitly announces a formal change, this means no notebooks, no internet, no course website, no code execution, and no LLM assistance during the quiz."
   },
   {
-    "objectID": "preparation.html#the-five-questions",
-    "href": "preparation.html#the-five-questions",
-    "title": "How To Prepare For Class",
-    "section": "The Five Questions",
-    "text": "The Five Questions\nFor every method in the course, classical or learned, ask:\n\nWhat is measured?\nWhat is unknown?\nWhat forward process connects them?\nWhat prior, regularizer, or learned assumption is added?\nWhat could fail, even if the image looks plausible?\n\nThese questions are more important than memorizing code. The code is there to test the model."
+    "objectID": "quizzes.html#what-to-prepare",
+    "href": "quizzes.html#what-to-prepare",
+    "title": "Quiz Information",
+    "section": "What To Prepare",
+    "text": "What To Prepare\nQuiz preparation should focus on the mathematical story of the course, not on memorizing code.\n\n\n\n\n\n\n\nQuiz\nMain Preparation Focus\n\n\n\n\nQuiz 1\nimages as unknowns, forward models, convolution and blur, Fourier-domain interpretation, Gaussian and Poisson noise, likelihoods, and what data can or cannot reveal\n\n\nQuiz 2\nill-posedness, regularization, variational models, optimization ideas, sparse and wavelet representations, model-based versus data-driven reconstruction, learned priors, and reliability risks\n\n\n\nFor each topic, students should be able to identify:\n\nwhat is measured;\nwhat is unknown;\nwhat assumptions are made;\nwhat mathematical term or algorithm follows from those assumptions;\nwhat can fail."
   },
   {
-    "objectID": "preparation.html#a-minimal-30-minute-preparation",
-    "href": "preparation.html#a-minimal-30-minute-preparation",
-    "title": "How To Prepare For Class",
-    "section": "A Minimal 30-Minute Preparation",
-    "text": "A Minimal 30-Minute Preparation\nWhen time is short before class:\n\nRead the first page or introduction of the book chapter.\nLook at the timing slide in the weekly deck.\nFind the main formula or model.\nWrite one question about what the model assumes.\nCheck whether the week has a quiz, project milestone, or special constraint.\n\nThis is enough to enter the class discussion without treating the materials as a pile of disconnected files."
+    "objectID": "quizzes.html#how-to-study",
+    "href": "quizzes.html#how-to-study",
+    "title": "Quiz Information",
+    "section": "How To Study",
+    "text": "How To Study\nUse the class roadmap as the main study guide:\n\nreview the corresponding book chapters;\nrerun the relevant notebooks and change one important parameter;\nanswer the weekly practice prompt in your own words;\nexplain the central identity of the course without relying on code:\n\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}."
   },
   {
-    "objectID": "preparation.html#quiz-weeks",
-    "href": "preparation.html#quiz-weeks",
-    "title": "How To Prepare For Class",
-    "section": "Quiz Weeks",
-    "text": "Quiz Weeks\nWeeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:\n\nuse the quiz information page to check timing and permitted tools;\nreview the weekly practice prompts from the preceding material;\nfocus on explaining concepts and models without code;\nremember that only a basic calculator is permitted unless the instructor explicitly announces a change.\n\nActual quiz questions and solution keys are not published on this website before the quizzes."
-  },
-  {
-    "objectID": "preparation.html#project-weeks",
-    "href": "preparation.html#project-weeks",
-    "title": "How To Prepare For Class",
-    "section": "Project Weeks",
-    "text": "Project Weeks\nThe project should grow from the same weekly rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
-  },
-  {
-    "objectID": "preparation.html#llm-use-while-studying",
-    "href": "preparation.html#llm-use-while-studying",
-    "title": "How To Prepare For Class",
-    "section": "LLM Use While Studying",
-    "text": "LLM Use While Studying\nLLMs can be useful for explanation, debugging, and alternative examples, but they should not replace the student’s own model of the problem. A good use pattern is:\n\ntry the notebook or derivation yourself;\nask the LLM to explain one obstacle;\nverify the answer against the book, slides, notebook output, or instructor guidance;\nwrite the final understanding in your own words.\n\nLLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "",
-    "text": "MATH 435 studies images through one central question:\nThe course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.\nThe guiding progression is:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y)\nand to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data."
-  },
-  {
-    "objectID": "index.html#how-to-use-this-site",
-    "href": "index.html#how-to-use-this-site",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "How To Use This Site",
-    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nHow to prepare for class\nUse the weekly rhythm connecting book, slides, notebooks, practice, quizzes, and projects.\n\n\nUngraded weekly practice\nUse optional practice prompts connected to the notebooks.\n\n\nQuiz information\nCheck quiz timing, allowed tools, and preparation guidance.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
-  },
-  {
-    "objectID": "index.html#course-arc",
-    "href": "index.html#course-arc",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Course Arc",
-    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
-  },
-  {
-    "objectID": "index.html#central-idea",
-    "href": "index.html#central-idea",
-    "title": "MATH 435: Mathematical Imaging",
-    "section": "Central Idea",
-    "text": "Central Idea\nClassical imaging asks:\n\nWhat assumptions should we impose on the unknown image?\n\nNeural imaging asks:\n\nCan those assumptions, or the reconstruction algorithm itself, be learned from examples?\n\nThe course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences."
+    "objectID": "quizzes.html#what-will-not-be-published-here",
+    "href": "quizzes.html#what-will-not-be-published-here",
+    "title": "Quiz Information",
+    "section": "What Will Not Be Published Here",
+    "text": "What Will Not Be Published Here\nActual quiz questions and solution keys will not be posted on this public website before the quizzes. Public pages may contain practice prompts and conceptual checks, but those are study aids rather than the quiz itself."
   },
   {
     "objectID": "syllabus.html",
@@ -4665,39 +4665,88 @@
     "text": "Week 15 – Oral Defenses\nActivities\n\nIndividual oral defense per student\nEvaluation of:\n\nModeling understanding\nParameter reasoning\nInterpretation of results\nTeam collaboration\n\n\nLearning Goal\nStudents demonstrate independent mastery of project content."
   },
   {
-    "objectID": "quizzes.html",
-    "href": "quizzes.html",
-    "title": "Quiz Information",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 435: Mathematical Imaging",
     "section": "",
-    "text": "This page summarizes student-facing quiz logistics. The syllabus remains the authority for grading, assessment policies, approved absences, and course rules.\nFor the ordinary weekly study workflow before and after quiz weeks, see How To Prepare For Class.\nThere are two quizzes in the course. Each quiz is 20 minutes long."
+    "text": "MATH 435 studies images through one central question:\nThe course begins with classical mathematical imaging: images as arrays and functions, convolution, Fourier analysis, noise, ill-posedness, regularization, variational models, sparsity, and wavelets. These ideas naturally lead to modern neural reconstruction methods. In this course, neural networks are not introduced as magic black boxes. They appear as learned inverse maps, learned priors, learned denoisers, or learned components inside reconstruction algorithms.\nThe guiding progression is:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y)\nand to hybrid methods such as plug-and-play reconstruction, where the forward model is still used but part of the prior knowledge is learned from data."
   },
   {
-    "objectID": "quizzes.html#allowed-tools",
-    "href": "quizzes.html#allowed-tools",
-    "title": "Quiz Information",
-    "section": "Allowed Tools",
-    "text": "Allowed Tools\nThe syllabus states that only a basic calculator is permitted in quizzes. Unless the instructor explicitly announces a formal change, this means no notebooks, no internet, no course website, no code execution, and no LLM assistance during the quiz."
+    "objectID": "index.html#how-to-use-this-site",
+    "href": "index.html#how-to-use-this-site",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "How To Use This Site",
+    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nHow to prepare for class\nUse the weekly rhythm connecting book, slides, notebooks, practice, quizzes, and projects.\n\n\nUngraded weekly practice\nUse optional practice prompts connected to the notebooks.\n\n\nQuiz information\nCheck quiz timing, allowed tools, and preparation guidance.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
   },
   {
-    "objectID": "quizzes.html#what-to-prepare",
-    "href": "quizzes.html#what-to-prepare",
-    "title": "Quiz Information",
-    "section": "What To Prepare",
-    "text": "What To Prepare\nQuiz preparation should focus on the mathematical story of the course, not on memorizing code.\n\n\n\n\n\n\n\nQuiz\nMain Preparation Focus\n\n\n\n\nQuiz 1\nimages as unknowns, forward models, convolution and blur, Fourier-domain interpretation, Gaussian and Poisson noise, likelihoods, and what data can or cannot reveal\n\n\nQuiz 2\nill-posedness, regularization, variational models, optimization ideas, sparse and wavelet representations, model-based versus data-driven reconstruction, learned priors, and reliability risks\n\n\n\nFor each topic, students should be able to identify:\n\nwhat is measured;\nwhat is unknown;\nwhat assumptions are made;\nwhat mathematical term or algorithm follows from those assumptions;\nwhat can fail."
+    "objectID": "index.html#course-arc",
+    "href": "index.html#course-arc",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Course Arc",
+    "text": "Course Arc\n\n\n\n\n\n\n\n\nPart\nWeeks\nMain Question\n\n\n\n\nFoundations\n1-3\nWhat is an image mathematically, and how do imaging systems transform it?\n\n\nInverse problems\n4-6\nWhat makes reconstruction unstable, and how does regularization help?\n\n\nVariational methods\n7-9\nHow do we turn modeling assumptions into optimization problems?\n\n\nSparse and learned priors\n10-13\nHow do representations, data, and denoisers encode prior knowledge?\n\n\nReliability and projects\n14, then Week 15 defense\nWhen should a reconstruction be trusted, and how do students defend their work?"
   },
   {
-    "objectID": "quizzes.html#how-to-study",
-    "href": "quizzes.html#how-to-study",
-    "title": "Quiz Information",
-    "section": "How To Study",
-    "text": "How To Study\nUse the class roadmap as the main study guide:\n\nreview the corresponding book chapters;\nrerun the relevant notebooks and change one important parameter;\nanswer the weekly practice prompt in your own words;\nexplain the central identity of the course without relying on code:\n\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}."
+    "objectID": "index.html#central-idea",
+    "href": "index.html#central-idea",
+    "title": "MATH 435: Mathematical Imaging",
+    "section": "Central Idea",
+    "text": "Central Idea\nClassical imaging asks:\n\nWhat assumptions should we impose on the unknown image?\n\nNeural imaging asks:\n\nCan those assumptions, or the reconstruction algorithm itself, be learned from examples?\n\nThe course treats both questions as part of the same mathematical story. Every method, classical or learned, must still be judged by its forward model, its assumptions, its stability, its failures, and its consequences."
   },
   {
-    "objectID": "quizzes.html#what-will-not-be-published-here",
-    "href": "quizzes.html#what-will-not-be-published-here",
-    "title": "Quiz Information",
-    "section": "What Will Not Be Published Here",
-    "text": "What Will Not Be Published Here\nActual quiz questions and solution keys will not be posted on this public website before the quizzes. Public pages may contain practice prompts and conceptual checks, but those are study aids rather than the quiz itself."
+    "objectID": "preparation.html",
+    "href": "preparation.html",
+    "title": "How To Prepare For Class",
+    "section": "",
+    "text": "This page gives a weekly rhythm for using the course materials. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the syllabus.\nThe course has several resources because they do different jobs:"
+  },
+  {
+    "objectID": "preparation.html#weekly-rhythm",
+    "href": "preparation.html#weekly-rhythm",
+    "title": "How To Prepare For Class",
+    "section": "Weekly Rhythm",
+    "text": "Weekly Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore class\nOpen the class roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path.\nOne question you want class to answer.\n\n\nDuring class\nUse the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure.\nAnnotated notes around the main model.\n\n\nAfter class\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nWeekly consolidation\nTurn the notebook note into a short claim-evidence-limit note using the practice page.\nA study note you can reuse for quizzes, exams, and projects.\n\n\nBefore the next class\nRevisit the previous week only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
+  },
+  {
+    "objectID": "preparation.html#the-five-questions",
+    "href": "preparation.html#the-five-questions",
+    "title": "How To Prepare For Class",
+    "section": "The Five Questions",
+    "text": "The Five Questions\nFor every method in the course, classical or learned, ask:\n\nWhat is measured?\nWhat is unknown?\nWhat forward process connects them?\nWhat prior, regularizer, or learned assumption is added?\nWhat could fail, even if the image looks plausible?\n\nThese questions are more important than memorizing code. The code is there to test the model."
+  },
+  {
+    "objectID": "preparation.html#a-minimal-30-minute-preparation",
+    "href": "preparation.html#a-minimal-30-minute-preparation",
+    "title": "How To Prepare For Class",
+    "section": "A Minimal 30-Minute Preparation",
+    "text": "A Minimal 30-Minute Preparation\nWhen time is short before class:\n\nRead the first page or introduction of the book chapter.\nLook at the timing slide in the weekly deck.\nFind the main formula or model.\nWrite one question about what the model assumes.\nCheck whether the week has a quiz, project milestone, or special constraint.\n\nThis is enough to enter the class discussion without treating the materials as a pile of disconnected files."
+  },
+  {
+    "objectID": "preparation.html#quiz-weeks",
+    "href": "preparation.html#quiz-weeks",
+    "title": "How To Prepare For Class",
+    "section": "Quiz Weeks",
+    "text": "Quiz Weeks\nWeeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:\n\nuse the quiz information page to check timing and permitted tools;\nreview the weekly practice prompts from the preceding material;\nfocus on explaining concepts and models without code;\nremember that only a basic calculator is permitted unless the instructor explicitly announces a change.\n\nActual quiz questions and solution keys are not published on this website before the quizzes."
+  },
+  {
+    "objectID": "preparation.html#project-weeks",
+    "href": "preparation.html#project-weeks",
+    "title": "How To Prepare For Class",
+    "section": "Project Weeks",
+    "text": "Project Weeks\nThe project should grow from the same weekly rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
+  },
+  {
+    "objectID": "preparation.html#llm-use-while-studying",
+    "href": "preparation.html#llm-use-while-studying",
+    "title": "How To Prepare For Class",
+    "section": "LLM Use While Studying",
+    "text": "LLM Use While Studying\nLLMs can be useful for explanation, debugging, and alternative examples, but they should not replace the student’s own model of the problem. A good use pattern is:\n\ntry the notebook or derivation yourself;\nask the LLM to explain one obstacle;\nverify the answer against the book, slides, notebook output, or instructor guidance;\nwrite the final understanding in your own words.\n\nLLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense."
+  },
+  {
+    "objectID": "llm-use.html",
+    "href": "llm-use.html",
+    "title": "LLM-Use Statement",
+    "section": "",
+    "text": "This statement describes how LLM assistance was used to develop this course website. It does not change course policies: the syllabus and instructor announcements are authoritative.\nThis course website was developed with assistance from OpenAI Codex, a GPT-5-based coding and writing assistant in the Codex desktop environment. Codex was used to help draft, organize, revise, and technically implement course materials, including the Quarto website, slides, notebooks, book chapters, project materials, and supporting pages.\nAll course policies, assessment rules, mathematical content, project expectations, and final editorial decisions remain the responsibility of the instructor. LLM-generated suggestions were reviewed, modified, accepted, or rejected by the instructor during development.\nSome parts of the course reflect instructor choices that an LLM could not determine on its own. For example, the central pedagogical idea that neural networks should be introduced as a natural continuation of inverse problems was supplied and refined by the instructor. The instructor also determined institutional constraints, such as the fact that only work listed in the syllabus can be graded. Codex helped turn these choices into website structure, prose, slides, notebooks, and project materials, but did not determine the course philosophy or grading authority.\nProducing the final course materials required many rounds of prompting, correction, revision, testing, and review. Codex often produced useful drafts or implementation steps, but these had to be checked against the instructor’s mathematical goals, institutional constraints, and teaching style. The published website should therefore be understood as the result of an iterative collaboration guided by the instructor’s course vision, not as a one-shot LLM-generated artifact.\nStudents should treat this website as instructor-authored course material, not as automatically generated content. If an error, ambiguity, or inconsistency is found, the syllabus and instructor announcements are authoritative.\nComputational examples and notebooks should be tested and interpreted critically; correct execution does not by itself guarantee mathematical correctness."
   },
   {
     "objectID": "practice.html",
