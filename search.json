@@ -3549,6 +3549,18 @@
     ]
   },
   {
+    "objectID": "book/week-06-tikhonov-regularization.html#a-two-direction-calculation",
+    "href": "book/week-06-tikhonov-regularization.html#a-two-direction-calculation",
+    "title": "Tikhonov Regularization",
+    "section": "A Two-Direction Calculation",
+    "text": "A Two-Direction Calculation\nConsider two singular directions. One is strongly observed:\n\n\\sigma_1=1.\n\nThe other is weakly observed:\n\n\\sigma_2=0.01.\n\nDirect inversion uses the factors\n\n\\frac{1}{\\sigma_1}=1,\n\\qquad\n\\frac{1}{\\sigma_2}=100.\n\nSo any noise component in the second direction is multiplied by 100.\nWith Tikhonov regularization and \\lambda=0.01, the factors become\n\n\\frac{\\sigma_1}{\\sigma_1^2+\\lambda}\n=\n\\frac{1}{1.01}\n\\approx 0.99,\n\nand\n\n\\frac{\\sigma_2}{\\sigma_2^2+\\lambda}\n=\n\\frac{0.01}{0.0001+0.01}\n\\approx 0.99.\n\nThe inverse factor for the weak direction is no longer 100. It is brought down to about the same numerical scale as the strong direction.\nBut notice what this means for true image information. A true coefficient in direction v_i is multiplied overall by\n\n\\frac{\\sigma_i^2}{\\sigma_i^2+\\lambda}.\n\nFor the weak direction above, this is\n\n\\frac{0.0001}{0.0101}\n\\approx 0.01.\n\nSo if the true image had important information in that weak direction, most of that information is also damped. Tikhonov does not know whether a weak-direction coefficient is noise or true detail. It only knows that the data do not measure that direction reliably. Regularization is therefore a controlled refusal to trust unstable information too much.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "6. Tikhonov regularization"
+    ]
+  },
+  {
     "objectID": "book/week-06-tikhonov-regularization.html#generalized-tikhonov",
     "href": "book/week-06-tikhonov-regularization.html#generalized-tikhonov",
     "title": "Tikhonov Regularization",
@@ -3566,6 +3578,18 @@
     "title": "Tikhonov Regularization",
     "section": "Choosing Lambda",
     "text": "Choosing Lambda\nThe parameter \\lambda is the lesson.\nSmall \\lambda gives better data fit but more noise amplification. Large \\lambda gives more stability but more bias and blur.\n\n\nThe best parameter balances data fit and regularization.\n\nThe true image is usually unknown, so an RMSE curve is a teaching diagnostic rather than a practical parameter-choice method. In practice, parameter choice may use validation data, discrepancy principles, cross-validation, L-curve heuristics, or domain-specific performance criteria.\n\n\nThe visually best value of \\lambda depends on the task and risk.\n\nIn a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.\nWhen reading the image panel, do not search only for the prettiest image. Ask what changed as \\lambda increased. Are noise oscillations reduced? Are edges softened? Are small features removed? The correct parameter depends on which errors matter for the application.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "6. Tikhonov regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-06-tikhonov-regularization.html#choosing-lambda-without-the-truth",
+    "href": "book/week-06-tikhonov-regularization.html#choosing-lambda-without-the-truth",
+    "title": "Tikhonov Regularization",
+    "section": "Choosing Lambda Without The Truth",
+    "text": "Choosing Lambda Without The Truth\nIn notebooks, we often plot RMSE because the clean image is known. In a real inverse problem, the clean image is usually unknown. That means students should not develop the habit of saying “choose the \\lambda with the lowest RMSE” as if it were always available.\nWithout the truth, useful evidence includes:\n\n\n\n\n\n\n\nEvidence\nQuestion it answers\n\n\n\n\nresidual norm \\|Ax_\\lambda-y\\|\ndoes the reconstruction fit the measured data at the expected noise level?\n\n\nsolution norm or penalty \\|x_\\lambda\\| or \\|Lx_\\lambda\\|\nhow strongly is the prior shaping the image?\n\n\nparameter sweep\ndoes the conclusion survive a range of \\lambda values?\n\n\nvisual inspection of known structures\nare expected features preserved or erased?\n\n\nvalidation data or repeated measurements\ndoes the choice generalize beyond one observation?\n\n\ntask metric\ndoes the reconstruction support the intended scientific or practical decision?\n\n\n\nNo single diagnostic is universal. A residual can be small because the method fit noise. A smooth image can look clean while hiding important detail. A parameter that works for one blur strength or noise level may fail for another.\nThis is why a parameter sweep is often the most honest first report. Instead of showing only one reconstruction, show what changes as \\lambda moves from too small to too large. Then explain why the chosen value is defensible for the task.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -3825,6 +3849,18 @@
     ]
   },
   {
+    "objectID": "book/week-04-noise-likelihood.html#a-one-pixel-likelihood-example",
+    "href": "book/week-04-noise-likelihood.html#a-one-pixel-likelihood-example",
+    "title": "Noise Models and Likelihoods",
+    "section": "A One-Pixel Likelihood Example",
+    "text": "A One-Pixel Likelihood Example\nIt is useful to pause on a single pixel before returning to full images.\nSuppose a sensor records the value\n\ny_i=20.\n\nUnder a Gaussian model with fixed standard deviation \\sigma=5, the candidates x_i=15 and x_i=25 are treated symmetrically. Both are five units away from the observation. The squared residual is the same:\n\n(15-20)^2=(25-20)^2.\n\nUnder a Poisson count model, the comparison is different. If the predicted mean is \\lambda=15, the observation 20 is above the mean. If the predicted mean is \\lambda=25, the observation 20 is below the mean. These two discrepancies are not judged only by their absolute distance from 20. They are judged by how likely a count of 20 is under each proposed mean.\nThis is the main reason likelihood matters. A residual is not self-explanatory. It becomes meaningful only after we say what variability the measurement process allows.\nFor a whole image, the same idea is repeated over many pixels or measurements. The data term adds up many local judgments:\n\nD(f(x),y)\n=\n\\text{total surprise of the observed data if the image were }x.\n\nThis is not a formal definition of every possible data term, but it is a good reading habit. A data term measures how surprising the observation would be under a proposed reconstruction and measurement model.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
     "objectID": "book/week-04-noise-likelihood.html#noise-versus-model-error",
     "href": "book/week-04-noise-likelihood.html#noise-versus-model-error",
     "title": "Noise Models and Likelihoods",
@@ -3866,6 +3902,18 @@
     "title": "Noise Models and Likelihoods",
     "section": "Data Fidelity As A Contract",
     "text": "Data Fidelity As A Contract\nA data term is a contract between the reconstruction and the measurement process.\nFor Gaussian noise, the contract says: large squared residuals are unlikely. For Poisson counts, it says: predicted photon counts should explain the observed counts with the correct signal-dependent uncertainty. For weighted least squares, it says: residuals in reliable measurements matter more than residuals in uncertain measurements.\nThis contract is only as good as the assumptions behind it. If the noise model is wrong, the data term may over-penalize harmless deviations or under-penalize serious ones. If the forward model is wrong, the reconstruction may fit the mathematical data term while failing the physical problem.\nThe practical habit is simple:\n\nstate the forward model;\nstate the noise model;\nderive or choose the data term;\ntest whether the residuals behave like the model predicts.\n\nThe fourth step is often where modeling becomes scientific rather than decorative.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "4. Noise models and likelihoods"
+    ]
+  },
+  {
+    "objectID": "book/week-04-noise-likelihood.html#reading-residual-images",
+    "href": "book/week-04-noise-likelihood.html#reading-residual-images",
+    "title": "Noise Models and Likelihoods",
+    "section": "Reading Residual Images",
+    "text": "Reading Residual Images\nAfter reconstructing an image \\hat{x}, the residual is\n\nr = f(\\hat{x})-y.\n\nA residual image is not just an error picture. It is a diagnostic of the model. If the forward model and noise model are reasonable, the residual should look like the kind of noise the model permits.\nFor Gaussian noise with constant variance, residuals should be roughly centered around zero and should not show strong image structure. If the residual still contains edges, texture, or repeated patterns from the scene, the reconstruction has failed to explain part of the measurement. If the residual is almost exactly zero everywhere, that may sound good, but in noisy data it can also mean the method has fit noise too aggressively.\nFor Poisson data, residuals are harder to read directly because the variability depends on intensity. A raw residual in a bright region and the same raw residual in a dark region do not have the same statistical meaning. One often looks at normalized residuals or uses the negative log-likelihood itself.\nThis gives a practical checklist:\n\n\n\n\n\n\n\nResidual behavior\nPossible interpretation\n\n\n\n\nstructured residual\nwrong forward model, underfitting, or missing component\n\n\nresidual much smaller than expected noise\npossible overfitting to noise\n\n\nresidual much larger than expected noise\nover-regularization, wrong model, or poor parameter choice\n\n\nresidual consistent with noise model\nnecessary but not sufficient evidence\n\n\n\nThe last row is important. A good residual does not prove the reconstruction is true. In an ill-posed problem, several different images can produce statistically acceptable residuals. Residual checks test data consistency, not uniqueness.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",
@@ -5120,11 +5168,35 @@
     ]
   },
   {
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#a-two-pixel-inverse-problem",
+    "href": "book/week-05-ill-posed-inverse-problems.html#a-two-pixel-inverse-problem",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "A Two-Pixel Inverse Problem",
+    "text": "A Two-Pixel Inverse Problem\nA very small example already contains the whole issue. Suppose the unknown is\n\nx=\n\\begin{bmatrix}\nx_1\\\\\nx_2\n\\end{bmatrix},\n\nbut the sensor records only the sum\n\ny=x_1+x_2.\n\nIn matrix form,\n\ny=\n\\begin{bmatrix}\n1 & 1\n\\end{bmatrix}\nx.\n\nIf the observation is y=10, then all of these are exact solutions:\n\n\\begin{bmatrix}5\\\\5\\end{bmatrix},\n\\quad\n\\begin{bmatrix}10\\\\0\\end{bmatrix},\n\\quad\n\\begin{bmatrix}0\\\\10\\end{bmatrix},\n\\quad\n\\begin{bmatrix}20\\\\-10\\end{bmatrix}.\n\nThe data determine the sum, not the two components separately. The vector\n\nz=\n\\begin{bmatrix}\n1\\\\\n-1\n\\end{bmatrix}\n\nis invisible because\n\n\\begin{bmatrix}\n1 & 1\n\\end{bmatrix}\nz=0.\n\nAdding any multiple of z changes the unknown but not the data:\n\n\\begin{bmatrix}5\\\\5\\end{bmatrix}\n+\nt\n\\begin{bmatrix}1\\\\-1\\end{bmatrix}\n\\quad\n\\longmapsto\n\\quad\n10.\n\nTo choose one solution, we must add something that is not in the measurement. If we require nonnegativity, we remove some candidates. If we prefer small norm, we choose (5,5). If we prefer sparsity, we may choose (10,0) or (0,10). The data did not decide among these; the prior did.\nThis tiny example is the same mathematical phenomenon as missing pixels, limited measurements, and many reconstruction tasks. The dimension is smaller, but the logic is identical.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "5. Ill-posed inverse problems"
+    ]
+  },
+  {
     "objectID": "book/week-05-ill-posed-inverse-problems.html#what-the-data-determine",
     "href": "book/week-05-ill-posed-inverse-problems.html#what-the-data-determine",
     "title": "Ill-Posed Inverse Problems",
     "section": "What The Data Determine",
     "text": "What The Data Determine\nIll-posedness forces a useful question:\n\nWhich parts of the reconstruction are determined by the data, and which parts are selected by the prior?\n\nFor a well-observed direction, the data strongly constrain the answer. For a nullspace direction, the data do not constrain the answer at all. For a weak singular direction, the data contain some information, but it is fragile because noise and model error are amplified.\nThis gives three regimes:\n\n\n\nDirection type\nData support\nReconstruction risk\n\n\n\n\nstrongly observed\nhigh\nusually reliable if the model is correct\n\n\nweakly observed\npartial\nsensitive to noise and regularization\n\n\ninvisible/nullspace\nnone\nchosen entirely by assumptions\n\n\n\nThis table is a better mental model than asking whether a method “recovers” the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.\nFor learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.",
+    "crumbs": [
+      "Book",
+      "Part II: Noise and Regularization",
+      "5. Ill-posed inverse problems"
+    ]
+  },
+  {
+    "objectID": "book/week-05-ill-posed-inverse-problems.html#why-a-small-residual-is-not-enough",
+    "href": "book/week-05-ill-posed-inverse-problems.html#why-a-small-residual-is-not-enough",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Why A Small Residual Is Not Enough",
+    "text": "Why A Small Residual Is Not Enough\nIt is tempting to judge a reconstruction by the size of\n\n\\|Ax-y\\|.\n\nA small residual means the reconstruction explains the measurements under the forward model. That is important, but it is not the same as correctness.\nIn a non-unique problem, two images can have exactly the same residual. In a noisy problem, an image can fit the noise too closely. In a model-mismatch problem, an image can fit the mathematical model while failing the real physical situation.\nThis gives a useful separation:\n\n\n\n\n\n\n\nQuestion\nWhat it tests\n\n\n\n\nIs \\|A\\hat{x}-y\\| small?\ndata consistency\n\n\nIs the solution stable under small changes in y?\nrobustness to noise\n\n\nAre invisible or weak directions being chosen reasonably?\nprior suitability\n\n\nDoes the forward model describe the acquisition?\nphysical modeling\n\n\n\nA reconstruction should pass more than the first test. The residual asks whether the answer agrees with the data. Ill-posedness asks whether the data were enough to determine that answer.",
     "crumbs": [
       "Book",
       "Part II: Noise and Regularization",

@@ -401,8 +401,10 @@ window.Quarto = {
   <li><a href="#closed-form-solution" id="toc-closed-form-solution" class="nav-link" data-scroll-target="#closed-form-solution">Closed-Form Solution</a></li>
   <li><a href="#svd-interpretation" id="toc-svd-interpretation" class="nav-link" data-scroll-target="#svd-interpretation">SVD Interpretation</a></li>
   <li><a href="#reading-filter-factors" id="toc-reading-filter-factors" class="nav-link" data-scroll-target="#reading-filter-factors">Reading Filter Factors</a></li>
+  <li><a href="#a-two-direction-calculation" id="toc-a-two-direction-calculation" class="nav-link" data-scroll-target="#a-two-direction-calculation">A Two-Direction Calculation</a></li>
   <li><a href="#generalized-tikhonov" id="toc-generalized-tikhonov" class="nav-link" data-scroll-target="#generalized-tikhonov">Generalized Tikhonov</a></li>
   <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda">Choosing Lambda</a></li>
+  <li><a href="#choosing-lambda-without-the-truth" id="toc-choosing-lambda-without-the-truth" class="nav-link" data-scroll-target="#choosing-lambda-without-the-truth">Choosing Lambda Without The Truth</a></li>
   <li><a href="#lambda-as-a-trust-parameter" id="toc-lambda-as-a-trust-parameter" class="nav-link" data-scroll-target="#lambda-as-a-trust-parameter">Lambda As A Trust Parameter</a></li>
   <li><a href="#bias-and-variance" id="toc-bias-and-variance" class="nav-link" data-scroll-target="#bias-and-variance">Bias And Variance</a></li>
   <li><a href="#residual-checks" id="toc-residual-checks" class="nav-link" data-scroll-target="#residual-checks">Residual Checks</a></li>
@@ -629,6 +631,49 @@ x_\lambda
 <p>The unstable amplification is replaced by strong damping.</p>
 <p>The price is that the same damping also affects true signal components in weakly observed directions. If fine details live in directions with small <span class="math inline">\sigma_i</span>, Tikhonov may remove them along with the noise. This is the central bias-stability tradeoff.</p>
 </section>
+<section id="a-two-direction-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="a-two-direction-calculation">A Two-Direction Calculation</h2>
+<p>Consider two singular directions. One is strongly observed:</p>
+<p><span class="math display">
+\sigma_1=1.
+</span></p>
+<p>The other is weakly observed:</p>
+<p><span class="math display">
+\sigma_2=0.01.
+</span></p>
+<p>Direct inversion uses the factors</p>
+<p><span class="math display">
+\frac{1}{\sigma_1}=1,
+\qquad
+\frac{1}{\sigma_2}=100.
+</span></p>
+<p>So any noise component in the second direction is multiplied by 100.</p>
+<p>With Tikhonov regularization and <span class="math inline">\lambda=0.01</span>, the factors become</p>
+<p><span class="math display">
+\frac{\sigma_1}{\sigma_1^2+\lambda}
+=
+\frac{1}{1.01}
+\approx 0.99,
+</span></p>
+<p>and</p>
+<p><span class="math display">
+\frac{\sigma_2}{\sigma_2^2+\lambda}
+=
+\frac{0.01}{0.0001+0.01}
+\approx 0.99.
+</span></p>
+<p>The inverse factor for the weak direction is no longer 100. It is brought down to about the same numerical scale as the strong direction.</p>
+<p>But notice what this means for true image information. A true coefficient in direction <span class="math inline">v_i</span> is multiplied overall by</p>
+<p><span class="math display">
+\frac{\sigma_i^2}{\sigma_i^2+\lambda}.
+</span></p>
+<p>For the weak direction above, this is</p>
+<p><span class="math display">
+\frac{0.0001}{0.0101}
+\approx 0.01.
+</span></p>
+<p>So if the true image had important information in that weak direction, most of that information is also damped. Tikhonov does not know whether a weak-direction coefficient is noise or true detail. It only knows that the data do not measure that direction reliably. Regularization is therefore a controlled refusal to trust unstable information too much.</p>
+</section>
 <section id="generalized-tikhonov" class="level2">
 <h2 class="anchored" data-anchor-id="generalized-tikhonov">Generalized Tikhonov</h2>
 <p>The basic penalty <span class="math inline">\|x\|_2^2</span> is not the only possibility. A common generalized form is</p>
@@ -656,6 +701,51 @@ x_\lambda
 </div>
 <p>In a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.</p>
 <p>When reading the image panel, do not search only for the prettiest image. Ask what changed as <span class="math inline">\lambda</span> increased. Are noise oscillations reduced? Are edges softened? Are small features removed? The correct parameter depends on which errors matter for the application.</p>
+</section>
+<section id="choosing-lambda-without-the-truth" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-lambda-without-the-truth">Choosing Lambda Without The Truth</h2>
+<p>In notebooks, we often plot RMSE because the clean image is known. In a real inverse problem, the clean image is usually unknown. That means students should not develop the habit of saying “choose the <span class="math inline">\lambda</span> with the lowest RMSE” as if it were always available.</p>
+<p>Without the truth, useful evidence includes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Evidence</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>residual norm <span class="math inline">\|Ax_\lambda-y\|</span></td>
+<td>does the reconstruction fit the measured data at the expected noise level?</td>
+</tr>
+<tr class="even">
+<td>solution norm or penalty <span class="math inline">\|x_\lambda\|</span> or <span class="math inline">\|Lx_\lambda\|</span></td>
+<td>how strongly is the prior shaping the image?</td>
+</tr>
+<tr class="odd">
+<td>parameter sweep</td>
+<td>does the conclusion survive a range of <span class="math inline">\lambda</span> values?</td>
+</tr>
+<tr class="even">
+<td>visual inspection of known structures</td>
+<td>are expected features preserved or erased?</td>
+</tr>
+<tr class="odd">
+<td>validation data or repeated measurements</td>
+<td>does the choice generalize beyond one observation?</td>
+</tr>
+<tr class="even">
+<td>task metric</td>
+<td>does the reconstruction support the intended scientific or practical decision?</td>
+</tr>
+</tbody>
+</table>
+<p>No single diagnostic is universal. A residual can be small because the method fit noise. A smooth image can look clean while hiding important detail. A parameter that works for one blur strength or noise level may fail for another.</p>
+<p>This is why a parameter sweep is often the most honest first report. Instead of showing only one reconstruction, show what changes as <span class="math inline">\lambda</span> moves from too small to too large. Then explain why the chosen value is defensible for the task.</p>
 </section>
 <section id="lambda-as-a-trust-parameter" class="level2">
 <h2 class="anchored" data-anchor-id="lambda-as-a-trust-parameter">Lambda As A Trust Parameter</h2>

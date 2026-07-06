@@ -400,7 +400,9 @@ window.Quarto = {
   <li><a href="#non-uniqueness" id="toc-non-uniqueness" class="nav-link" data-scroll-target="#non-uniqueness">Non-Uniqueness</a></li>
   <li><a href="#masking-versus-occlusion" id="toc-masking-versus-occlusion" class="nav-link" data-scroll-target="#masking-versus-occlusion">Masking Versus Occlusion</a></li>
   <li><a href="#nullspace-language" id="toc-nullspace-language" class="nav-link" data-scroll-target="#nullspace-language">Nullspace Language</a></li>
+  <li><a href="#a-two-pixel-inverse-problem" id="toc-a-two-pixel-inverse-problem" class="nav-link" data-scroll-target="#a-two-pixel-inverse-problem">A Two-Pixel Inverse Problem</a></li>
   <li><a href="#what-the-data-determine" id="toc-what-the-data-determine" class="nav-link" data-scroll-target="#what-the-data-determine">What The Data Determine</a></li>
+  <li><a href="#why-a-small-residual-is-not-enough" id="toc-why-a-small-residual-is-not-enough" class="nav-link" data-scroll-target="#why-a-small-residual-is-not-enough">Why A Small Residual Is Not Enough</a></li>
   <li><a href="#stability" id="toc-stability" class="nav-link" data-scroll-target="#stability">Stability</a></li>
   <li><a href="#imaging-instability" id="toc-imaging-instability" class="nav-link" data-scroll-target="#imaging-instability">Imaging Instability</a></li>
   <li><a href="#singular-values" id="toc-singular-values" class="nav-link" data-scroll-target="#singular-values">Singular Values</a></li>
@@ -591,6 +593,67 @@ D(y,Ax)=D(y,A(x+z)).
 <p>This is the role of a prior. A prior does not create measured information. It ranks possible explanations. A smoothness prior prefers smooth completions. A sparsity prior prefers images with a concise representation. A learned prior prefers images that resemble the training distribution.</p>
 <p>The strength and danger of priors are the same: they make choices. A good prior can stabilize an impossible problem. A bad or mismatched prior can hallucinate structure, erase unusual details, or make a reconstruction look more certain than the data justify.</p>
 </section>
+<section id="a-two-pixel-inverse-problem" class="level2">
+<h2 class="anchored" data-anchor-id="a-two-pixel-inverse-problem">A Two-Pixel Inverse Problem</h2>
+<p>A very small example already contains the whole issue. Suppose the unknown is</p>
+<p><span class="math display">
+x=
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix},
+</span></p>
+<p>but the sensor records only the sum</p>
+<p><span class="math display">
+y=x_1+x_2.
+</span></p>
+<p>In matrix form,</p>
+<p><span class="math display">
+y=
+\begin{bmatrix}
+1 &amp; 1
+\end{bmatrix}
+x.
+</span></p>
+<p>If the observation is <span class="math inline">y=10</span>, then all of these are exact solutions:</p>
+<p><span class="math display">
+\begin{bmatrix}5\\5\end{bmatrix},
+\quad
+\begin{bmatrix}10\\0\end{bmatrix},
+\quad
+\begin{bmatrix}0\\10\end{bmatrix},
+\quad
+\begin{bmatrix}20\\-10\end{bmatrix}.
+</span></p>
+<p>The data determine the sum, not the two components separately. The vector</p>
+<p><span class="math display">
+z=
+\begin{bmatrix}
+1\\
+-1
+\end{bmatrix}
+</span></p>
+<p>is invisible because</p>
+<p><span class="math display">
+\begin{bmatrix}
+1 &amp; 1
+\end{bmatrix}
+z=0.
+</span></p>
+<p>Adding any multiple of <span class="math inline">z</span> changes the unknown but not the data:</p>
+<p><span class="math display">
+\begin{bmatrix}5\\5\end{bmatrix}
++
+t
+\begin{bmatrix}1\\-1\end{bmatrix}
+\quad
+\longmapsto
+\quad
+10.
+</span></p>
+<p>To choose one solution, we must add something that is not in the measurement. If we require nonnegativity, we remove some candidates. If we prefer small norm, we choose <span class="math inline">(5,5)</span>. If we prefer sparsity, we may choose <span class="math inline">(10,0)</span> or <span class="math inline">(0,10)</span>. The data did not decide among these; the prior did.</p>
+<p>This tiny example is the same mathematical phenomenon as missing pixels, limited measurements, and many reconstruction tasks. The dimension is smaller, but the logic is identical.</p>
+</section>
 <section id="what-the-data-determine" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-data-determine">What The Data Determine</h2>
 <p>Ill-posedness forces a useful question:</p>
@@ -627,6 +690,47 @@ D(y,Ax)=D(y,A(x+z)).
 </table>
 <p>This table is a better mental model than asking whether a method “recovers” the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.</p>
 <p>For learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.</p>
+</section>
+<section id="why-a-small-residual-is-not-enough" class="level2">
+<h2 class="anchored" data-anchor-id="why-a-small-residual-is-not-enough">Why A Small Residual Is Not Enough</h2>
+<p>It is tempting to judge a reconstruction by the size of</p>
+<p><span class="math display">
+\|Ax-y\|.
+</span></p>
+<p>A small residual means the reconstruction explains the measurements under the forward model. That is important, but it is not the same as correctness.</p>
+<p>In a non-unique problem, two images can have exactly the same residual. In a noisy problem, an image can fit the noise too closely. In a model-mismatch problem, an image can fit the mathematical model while failing the real physical situation.</p>
+<p>This gives a useful separation:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>What it tests</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Is <span class="math inline">\|A\hat{x}-y\|</span> small?</td>
+<td>data consistency</td>
+</tr>
+<tr class="even">
+<td>Is the solution stable under small changes in <span class="math inline">y</span>?</td>
+<td>robustness to noise</td>
+</tr>
+<tr class="odd">
+<td>Are invisible or weak directions being chosen reasonably?</td>
+<td>prior suitability</td>
+</tr>
+<tr class="even">
+<td>Does the forward model describe the acquisition?</td>
+<td>physical modeling</td>
+</tr>
+</tbody>
+</table>
+<p>A reconstruction should pass more than the first test. The residual asks whether the answer agrees with the data. Ill-posedness asks whether the data were enough to determine that answer.</p>
 </section>
 <section id="stability" class="level2">
 <h2 class="anchored" data-anchor-id="stability">Stability</h2>

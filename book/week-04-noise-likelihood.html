@@ -404,10 +404,12 @@ window.Quarto = {
   <li><a href="#from-counts-to-intensities" id="toc-from-counts-to-intensities" class="nav-link" data-scroll-target="#from-counts-to-intensities">From Counts To Intensities</a></li>
   <li><a href="#poisson-likelihood" id="toc-poisson-likelihood" class="nav-link" data-scroll-target="#poisson-likelihood">Poisson Likelihood</a></li>
   <li><a href="#gaussian-versus-poisson" id="toc-gaussian-versus-poisson" class="nav-link" data-scroll-target="#gaussian-versus-poisson">Gaussian Versus Poisson</a></li>
+  <li><a href="#a-one-pixel-likelihood-example" id="toc-a-one-pixel-likelihood-example" class="nav-link" data-scroll-target="#a-one-pixel-likelihood-example">A One-Pixel Likelihood Example</a></li>
   <li><a href="#noise-versus-model-error" id="toc-noise-versus-model-error" class="nav-link" data-scroll-target="#noise-versus-model-error">Noise Versus Model Error</a></li>
   <li><a href="#repeated-measurements" id="toc-repeated-measurements" class="nav-link" data-scroll-target="#repeated-measurements">Repeated Measurements</a></li>
   <li><a href="#from-likelihood-to-reconstruction" id="toc-from-likelihood-to-reconstruction" class="nav-link" data-scroll-target="#from-likelihood-to-reconstruction">From Likelihood To Reconstruction</a></li>
   <li><a href="#data-fidelity-as-a-contract" id="toc-data-fidelity-as-a-contract" class="nav-link" data-scroll-target="#data-fidelity-as-a-contract">Data Fidelity As A Contract</a></li>
+  <li><a href="#reading-residual-images" id="toc-reading-residual-images" class="nav-link" data-scroll-target="#reading-residual-images">Reading Residual Images</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common Mistakes</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -702,6 +704,27 @@ z_i \sim \operatorname{Poisson}(f_i(x))
 <p>Real cameras may contain several noise sources at once. A simplified pipeline might include photon noise, electronic read noise, dark current, quantization, clipping, compression, and demosaicing. Modeling every part of that pipeline may be unnecessary for a first reconstruction method, but it is useful to know what has been simplified away.</p>
 <p>This is one reason image restoration papers often specify both the degradation model and the noise model. “Denoising” by itself is not one problem. Denoising Gaussian noise, photon noise, JPEG artifacts, and sensor artifacts are related but not identical tasks.</p>
 </section>
+<section id="a-one-pixel-likelihood-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-one-pixel-likelihood-example">A One-Pixel Likelihood Example</h2>
+<p>It is useful to pause on a single pixel before returning to full images.</p>
+<p>Suppose a sensor records the value</p>
+<p><span class="math display">
+y_i=20.
+</span></p>
+<p>Under a Gaussian model with fixed standard deviation <span class="math inline">\sigma=5</span>, the candidates <span class="math inline">x_i=15</span> and <span class="math inline">x_i=25</span> are treated symmetrically. Both are five units away from the observation. The squared residual is the same:</p>
+<p><span class="math display">
+(15-20)^2=(25-20)^2.
+</span></p>
+<p>Under a Poisson count model, the comparison is different. If the predicted mean is <span class="math inline">\lambda=15</span>, the observation <span class="math inline">20</span> is above the mean. If the predicted mean is <span class="math inline">\lambda=25</span>, the observation <span class="math inline">20</span> is below the mean. These two discrepancies are not judged only by their absolute distance from 20. They are judged by how likely a count of 20 is under each proposed mean.</p>
+<p>This is the main reason likelihood matters. A residual is not self-explanatory. It becomes meaningful only after we say what variability the measurement process allows.</p>
+<p>For a whole image, the same idea is repeated over many pixels or measurements. The data term adds up many local judgments:</p>
+<p><span class="math display">
+D(f(x),y)
+=
+\text{total surprise of the observed data if the image were }x.
+</span></p>
+<p>This is not a formal definition of every possible data term, but it is a good reading habit. A data term measures how surprising the observation would be under a proposed reconstruction and measurement model.</p>
+</section>
 <section id="noise-versus-model-error" class="level2">
 <h2 class="anchored" data-anchor-id="noise-versus-model-error">Noise Versus Model Error</h2>
 <p>Noise is random variation around a model. Model error means the model itself is wrong or incomplete.</p>
@@ -802,6 +825,48 @@ D(y,f(x)) + \lambda R(x).
 <li>test whether the residuals behave like the model predicts.</li>
 </ol>
 <p>The fourth step is often where modeling becomes scientific rather than decorative.</p>
+</section>
+<section id="reading-residual-images" class="level2">
+<h2 class="anchored" data-anchor-id="reading-residual-images">Reading Residual Images</h2>
+<p>After reconstructing an image <span class="math inline">\hat{x}</span>, the residual is</p>
+<p><span class="math display">
+r = f(\hat{x})-y.
+</span></p>
+<p>A residual image is not just an error picture. It is a diagnostic of the model. If the forward model and noise model are reasonable, the residual should look like the kind of noise the model permits.</p>
+<p>For Gaussian noise with constant variance, residuals should be roughly centered around zero and should not show strong image structure. If the residual still contains edges, texture, or repeated patterns from the scene, the reconstruction has failed to explain part of the measurement. If the residual is almost exactly zero everywhere, that may sound good, but in noisy data it can also mean the method has fit noise too aggressively.</p>
+<p>For Poisson data, residuals are harder to read directly because the variability depends on intensity. A raw residual in a bright region and the same raw residual in a dark region do not have the same statistical meaning. One often looks at normalized residuals or uses the negative log-likelihood itself.</p>
+<p>This gives a practical checklist:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Residual behavior</th>
+<th>Possible interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>structured residual</td>
+<td>wrong forward model, underfitting, or missing component</td>
+</tr>
+<tr class="even">
+<td>residual much smaller than expected noise</td>
+<td>possible overfitting to noise</td>
+</tr>
+<tr class="odd">
+<td>residual much larger than expected noise</td>
+<td>over-regularization, wrong model, or poor parameter choice</td>
+</tr>
+<tr class="even">
+<td>residual consistent with noise model</td>
+<td>necessary but not sufficient evidence</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is important. A good residual does not prove the reconstruction is true. In an ill-posed problem, several different images can produce statistically acceptable residuals. Residual checks test data consistency, not uniqueness.</p>
 </section>
 <section id="common-mistakes" class="level2">
 <h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
