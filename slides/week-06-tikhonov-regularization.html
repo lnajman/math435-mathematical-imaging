@@ -246,8 +246,8 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-plan" class="slide level2">
-<h2>75-Minute Plan</h2>
+<section id="minute-live-path" class="slide level2">
+<h2>75-Minute Live Path</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -486,7 +486,7 @@ x_\lambda
 </section>
 <section id="python-demo-normal-equations" class="slide level2 code-small">
 <h2>Python Demo: Normal Equations</h2>
-<div id="83057900" class="cell">
+<div id="058fb5b8" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
 <span id="cb1-2"><a></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
 <span id="cb1-3"><a></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -674,13 +674,15 @@ x_\lambda
 <p>See the project page for the current project structure and expectations.</p>
 </div>
 </section>
-<section id="code-demo-run-week-6-examples" class="slide level2 code-small">
-<h2>Code Demo: Run Week 6 Examples</h2>
-<p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week06_tikhonov.py</span>
-<span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week06_figures.py</span>
-<span id="cb2-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
-<span id="cb2-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="notebook-demo-and-code-reference" class="slide level2 code-small">
+<h2>Notebook Demo and Code Reference</h2>
+<div class="checklist">
+<ul>
+<li>Use the Week 6 notebook for the live experiment.</li>
+<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
+</ul>
+</div>
 </section>
 <section id="in-class-notebook-activity" class="slide level2">
 <h2>In-Class Notebook Activity</h2>
@@ -720,35 +722,6 @@ x_\lambda
 <li>What happens when <span class="math inline">\lambda</span> is too large?</li>
 </ol>
 </div>
-</section>
-<section id="suggested-answers" class="slide level2">
-<h2>Suggested Answers</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Question</th>
-<th>Short answer</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Tikhonov objective</td>
-<td>data fit plus <span class="math inline">\ell_2</span> penalty</td>
-</tr>
-<tr class="even">
-<td>stability</td>
-<td>small eigenvalues are shifted away from zero</td>
-</tr>
-<tr class="odd">
-<td>too small</td>
-<td>noise amplification remains</td>
-</tr>
-<tr class="even">
-<td>too large</td>
-<td>solution is biased and over-smoothed</td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="what-students-should-remember" class="slide level2">
 <h2>What Students Should Remember</h2>

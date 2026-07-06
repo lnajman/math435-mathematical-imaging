@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ungraded Weekly Practice – MATH 435: Mathematical Imaging</title>
+<title>Quiz Information – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -143,11 +143,11 @@ window.Quarto = {
 <span class="menu-text">Classes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./practice.html" aria-current="page"> 
+    <a class="nav-link" href="./practice.html"> 
 <span class="menu-text">Practice</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./quizzes.html"> 
+    <a class="nav-link active" href="./quizzes.html" aria-current="page"> 
 <span class="menu-text">Quizzes</span></a>
   </li>  
   <li class="nav-item">
@@ -186,20 +186,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-to-use-this-page" id="toc-how-to-use-this-page" class="nav-link active" data-scroll-target="#how-to-use-this-page">How To Use This Page</a></li>
-  <li><a href="#claim-evidence-limit-template" id="toc-claim-evidence-limit-template" class="nav-link" data-scroll-target="#claim-evidence-limit-template">Claim-Evidence-Limit Template</a></li>
-  <li><a href="#weekly-practice-guide" id="toc-weekly-practice-guide" class="nav-link" data-scroll-target="#weekly-practice-guide">Weekly Practice Guide</a></li>
-  <li><a href="#project-preparation-guide" id="toc-project-preparation-guide" class="nav-link" data-scroll-target="#project-preparation-guide">Project Preparation Guide</a></li>
-  <li><a href="#grading-boundary" id="toc-grading-boundary" class="nav-link" data-scroll-target="#grading-boundary">Grading Boundary</a></li>
+  <li><a href="#allowed-tools" id="toc-allowed-tools" class="nav-link active" data-scroll-target="#allowed-tools">Allowed Tools</a></li>
+  <li><a href="#what-to-prepare" id="toc-what-to-prepare" class="nav-link" data-scroll-target="#what-to-prepare">What To Prepare</a></li>
+  <li><a href="#how-to-study" id="toc-how-to-study" class="nav-link" data-scroll-target="#how-to-study">How To Study</a></li>
+  <li><a href="#what-will-not-be-published-here" id="toc-what-will-not-be-published-here" class="nav-link" data-scroll-target="#what-will-not-be-published-here">What Will Not Be Published Here</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/practice.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/quizzes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Ungraded Weekly Practice</h1>
+<h1 class="title">Quiz Information</h1>
 </div>
 
 
@@ -216,245 +215,92 @@ window.Quarto = {
 </header>
 
 
-<p>This page gives optional weekly practice prompts connected to the book, slides, and notebooks.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>These activities are for practice and preparation. They are <strong>not separate graded assignments</strong> unless the instructor explicitly announces otherwise. Course grading is governed by the <a href="./syllabus.html">syllabus</a>.</p>
-</div>
-</div>
-<p>The purpose is to help students keep a running record of the central habit of the course:</p>
-<blockquote class="blockquote">
-<p>What does the data support, what does the model assume, and where can the reconstruction fail?</p>
-</blockquote>
-<p>Students may keep these notes privately, use them while studying, or bring questions from them to class.</p>
-<section id="how-to-use-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-this-page">How To Use This Page</h2>
-<p>For each week:</p>
-<ul>
-<li>read the connected book chapter;</li>
-<li>attend class and use the slide deck as the discussion structure;</li>
-<li>run the notebook in Python or Google Colab;</li>
-<li>write a short claim-evidence-limit note for yourself.</li>
-</ul>
-<p>The notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.</p>
-</section>
-<section id="claim-evidence-limit-template" class="level2">
-<h2 class="anchored" data-anchor-id="claim-evidence-limit-template">Claim-Evidence-Limit Template</h2>
-<p>Use this short format when a notebook or class discussion produces a reconstruction result.</p>
-<pre class="text"><code>Claim:
-
-Evidence:
-
-Model assumption:
-
-Limit or failure case:</code></pre>
-<p>Example:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Item</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Claim</td>
-<td>TV denoising keeps the main edge sharper than quadratic smoothing.</td>
-</tr>
-<tr class="even">
-<td>Evidence</td>
-<td>Gradient maps and edge contrast stay high across three TV weights.</td>
-</tr>
-<tr class="odd">
-<td>Model assumption</td>
-<td>The image is approximately piecewise smooth.</td>
-</tr>
-<tr class="even">
-<td>Limit or failure case</td>
-<td>TV creates staircasing on smooth intensity ramps.</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="weekly-practice-guide" class="level2">
-<h2 class="anchored" data-anchor-id="weekly-practice-guide">Weekly Practice Guide</h2>
+<p>This page summarizes student-facing quiz logistics. The <a href="./syllabus.html">syllabus</a> remains the authority for grading, assessment policies, approved absences, and course rules.</p>
+<p>There are two quizzes in the course. Each quiz is 20 minutes long.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
+<th>Quiz</th>
 <th style="text-align: right;">Week</th>
-<th>Topic</th>
-<th>Ungraded Practice</th>
-<th>Notebook Focus</th>
-<th>Useful Links</th>
+<th>Timing in Class</th>
+<th style="text-align: right;">Weight</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td>Images as mathematical objects</td>
-<td>Identify <span class="math inline">x</span>, <span class="math inline">y</span>, the observation process, and one piece of missing information in a masked image.</td>
-<td>From Scene to Data</td>
-<td><a href="./book/week-01-image-formation.html">book</a>, <a href="./slides/week-01-image-formation.html">slides</a>, <a href="notebooks/week01_image_formation.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb">Colab</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td>Convolution and blur</td>
-<td>Choose a blur kernel and boundary condition; write one assumption that makes the model reasonable.</td>
-<td>Blur as a Forward Model</td>
-<td><a href="./book/week-02-convolution-blur.html">book</a>, <a href="./slides/week-02-convolution-blur.html">slides</a>, <a href="notebooks/week02_convolution_blur.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td>Fourier transform in imaging</td>
-<td>Explain how Fourier coefficients act as global projections and why blur weakens some frequencies.</td>
-<td>Fourier Projection and Stability</td>
-<td><a href="./book/week-03-fourier-imaging.html">book</a>, <a href="./slides/week-03-fourier-imaging.html">slides</a>, <a href="notebooks/week03_fourier_imaging.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb">Colab</a></td>
-</tr>
-<tr class="even">
+<td>Quiz 1</td>
 <td style="text-align: right;">4</td>
-<td>Noise models and likelihoods</td>
-<td>Match Gaussian or Poisson noise to a data-fidelity term and say what averaging can and cannot fix.</td>
-<td>Likelihood as Data Evidence</td>
-<td><a href="./book/week-04-noise-likelihood.html">book</a>, <a href="./slides/week-04-noise-likelihood.html">slides</a>, <a href="notebooks/week04_noise_likelihood.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td>Ill-posed inverse problems</td>
-<td>Name one well-measured direction, one unstable direction, and one invisible change.</td>
-<td>Directions and Evidence</td>
-<td><a href="./book/week-05-ill-posed-inverse-problems.html">book</a>, <a href="./slides/week-05-ill-posed-inverse-problems.html">slides</a>, <a href="notebooks/week05_ill_posed_inverse_problems.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb">Colab</a></td>
+<td>final 20 minutes of the Week 4 meeting</td>
+<td style="text-align: right;">7.5%</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">6</td>
-<td>Tikhonov regularization</td>
-<td>Sweep <span class="math inline">\lambda</span> and explain which observable diagnostic you would report if the true image were unknown.</td>
-<td>Choosing Lambda Without the Truth</td>
-<td><a href="./book/week-06-tikhonov-regularization.html">book</a>, <a href="./slides/week-06-tikhonov-regularization.html">slides</a>, <a href="notebooks/week06_tikhonov_regularization.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td>Variational formulation</td>
-<td>Identify the data term, regularizer, and optimality condition for one energy.</td>
-<td>Energy as an Audit Trail</td>
-<td><a href="./book/week-07-variational-formulation.html">book</a>, <a href="./slides/week-07-variational-formulation.html">slides</a>, <a href="notebooks/week07_variational_formulation.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb">Colab</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td>Total Variation regularization</td>
-<td>Compare one preserved edge with one possible artifact or staircasing failure.</td>
-<td>Edge Preservation Is Not Proof</td>
-<td><a href="./book/week-08-total-variation.html">book</a>, <a href="./slides/week-08-total-variation.html">slides</a>, <a href="notebooks/week08_total_variation.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">9</td>
-<td>Optimization methods</td>
-<td>Report whether energy, fixed-point change, or active coefficients show stable iteration.</td>
-<td>Optimization Diagnostics</td>
-<td><a href="./book/week-09-optimization-methods.html">book</a>, <a href="./slides/week-09-optimization-methods.html">slides</a>, <a href="notebooks/week09_optimization_methods.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb">Colab</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td>Sparse reconstruction</td>
-<td>State the representation where the image is assumed sparse and design one mismatch example.</td>
-<td>Representation Mismatch</td>
-<td><a href="./book/week-10-sparse-reconstruction.html">book</a>, <a href="./slides/week-10-sparse-reconstruction.html">slides</a>, <a href="notebooks/week10_sparse_reconstruction.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-<td>Wavelets and multiscale representation</td>
-<td>Explain which local features wavelets capture better than global Fourier modes.</td>
-<td>Fourier, Wavelets, and Energy</td>
-<td><a href="./book/week-11-wavelets.html">book</a>, <a href="./slides/week-11-wavelets.html">slides</a>, <a href="notebooks/week11_wavelets.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb">Colab</a></td>
-</tr>
-<tr class="even">
+<td>Quiz 2</td>
 <td style="text-align: right;">12</td>
-<td>Model-based vs data-driven imaging</td>
-<td>Describe what the training data teach the learned prior to expect and test one distribution shift.</td>
-<td>Training Data as a Prior</td>
-<td><a href="./book/week-12-model-data.html">book</a>, <a href="./slides/week-12-model-data.html">slides</a>, <a href="notebooks/week12_model_data.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">13</td>
-<td>Plug-and-play and learned regularization</td>
-<td>Compare data residual, RMSE when available, and fixed-point change for two denoisers.</td>
-<td>Implicit Prior Strength</td>
-<td><a href="./book/week-13-plug-and-play.html">book</a>, <a href="./slides/week-13-plug-and-play.html">slides</a>, <a href="notebooks/week13_plug_and_play.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb">Colab</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td>Stability, robustness, and ethics</td>
-<td>Write three project-style claims and pair each with evidence and a limitation.</td>
-<td>From Notebook to Project Defense</td>
-<td><a href="./book/week-14-stability-robustness-ethics.html">book</a>, <a href="./slides/week-14-stability-robustness-ethics.html">slides</a>, <a href="notebooks/week14_stability_robustness.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb">Colab</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
-<td>Project presentations and oral defenses</td>
-<td>Review the model, code, evidence, limitations, and LLM-use statement for the final project.</td>
-<td>Not applicable</td>
-<td><a href="./project/index.html">project page</a>, <a href="./syllabus.html">syllabus</a></td>
+<td>final 20 minutes of the Week 12 meeting</td>
+<td style="text-align: right;">7.5%</td>
 </tr>
 </tbody>
 </table>
+<section id="allowed-tools" class="level2">
+<h2 class="anchored" data-anchor-id="allowed-tools">Allowed Tools</h2>
+<p>The syllabus states that only a basic calculator is permitted in quizzes. Unless the instructor explicitly announces a formal change, this means no notebooks, no internet, no course website, no code execution, and no LLM assistance during the quiz.</p>
 </section>
-<section id="project-preparation-guide" class="level2">
-<h2 class="anchored" data-anchor-id="project-preparation-guide">Project Preparation Guide</h2>
-<p>The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project notes below are study and planning aids for the final modeling project described on the <a href="./project/index.html">project page</a>; they do not create additional graded items.</p>
+<section id="what-to-prepare" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-prepare">What To Prepare</h2>
+<p>Quiz preparation should focus on the mathematical story of the course, not on memorizing code.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 57%">
-<col style="width: 42%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Week</th>
-<th>Planning Aid</th>
+<th>Quiz</th>
+<th>Main Preparation Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">6</td>
-<td>Prepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of <span class="math inline">x</span>, <span class="math inline">y</span>, and the forward process.</td>
+<td>Quiz 1</td>
+<td>images as unknowns, forward models, convolution and blur, Fourier-domain interpretation, Gaussian and Poisson noise, likelihoods, and what data can or cannot reveal</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">7</td>
-<td>Refine the model statement, data access, and implementation choices after feedback.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">8</td>
-<td>Make sure the notebook can generate or load data and run a simple baseline.</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td>Check that both methods run on the same test cases.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">12</td>
-<td>Add one parameter sweep, one metric, and one robustness or failure test.</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td>Prepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations.</td>
+<td>Quiz 2</td>
+<td>ill-posedness, regularization, variational models, optimization ideas, sparse and wavelet representations, model-based versus data-driven reconstruction, learned priors, and reliability risks</td>
 </tr>
 </tbody>
 </table>
+<p>For each topic, students should be able to identify:</p>
+<ul>
+<li>what is measured;</li>
+<li>what is unknown;</li>
+<li>what assumptions are made;</li>
+<li>what mathematical term or algorithm follows from those assumptions;</li>
+<li>what can fail.</li>
+</ul>
 </section>
-<section id="grading-boundary" class="level2">
-<h2 class="anchored" data-anchor-id="grading-boundary">Grading Boundary</h2>
-<p>This page does not modify the syllabus.</p>
-<p>Formal grading is based on the grading categories and policies stated in the <a href="./syllabus.html">syllabus</a>, together with any explicit instructor announcements. Weekly practice notes are meant to support learning and project preparation; they are not an additional hidden assessment.</p>
+<section id="how-to-study" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-study">How To Study</h2>
+<p>Use the class roadmap as the main study guide:</p>
+<ul>
+<li>review the corresponding book chapters;</li>
+<li>rerun the relevant notebooks and change one important parameter;</li>
+<li>answer the weekly practice prompt in your own words;</li>
+<li>explain the central identity of the course without relying on code:</li>
+</ul>
+<p><span class="math display">
+\text{measurement}
+\quad+\quad
+\text{prior or learned assumption}
+\quad+\quad
+\text{algorithm}
+\quad\Longrightarrow\quad
+\text{reconstruction}.
+</span></p>
+</section>
+<section id="what-will-not-be-published-here" class="level2">
+<h2 class="anchored" data-anchor-id="what-will-not-be-published-here">What Will Not Be Published Here</h2>
+<p>Actual quiz questions and solution keys will not be posted on this public website before the quizzes. Public pages may contain practice prompts and conceptual checks, but those are study aids rather than the quiz itself.</p>
 
 
 </section>
@@ -868,7 +714,7 @@ Limit or failure case:</code></pre>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/practice.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/quizzes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

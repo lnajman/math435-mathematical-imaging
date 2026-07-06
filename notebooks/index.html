@@ -182,6 +182,10 @@ window.Quarto = {
 <span class="menu-text">Practice</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../quizzes.html"> 
+<span class="menu-text">Quizzes</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="../notebooks/index.html" aria-current="page"> 
 <span class="menu-text">Notebooks</span></a>
   </li>  
@@ -218,6 +222,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#how-to-use-them" id="toc-how-to-use-them" class="nav-link active" data-scroll-target="#how-to-use-them">How To Use Them</a></li>
+  <li><a href="#repository-examples" id="toc-repository-examples" class="nav-link" data-scroll-target="#repository-examples">Repository Examples</a></li>
   <li><a href="#working-locally" id="toc-working-locally" class="nav-link" data-scroll-target="#working-locally">Working Locally</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/notebooks/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -364,11 +369,20 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
+<section id="repository-examples" class="level2">
+<h2 class="anchored" data-anchor-id="repository-examples">Repository Examples</h2>
+<p>The slide decks use short code-reference slides so that command-line details do not interrupt the live class path. If you work locally, example scripts live in the <code>examples/</code> directory.</p>
+<p>Typical local commands are:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> examples/weekXX_topic_name.py</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>weekXX_topic_name.py</code> with the example script for the week you are studying. Students who do not want a local setup should use the Colab links above.</p>
+</section>
 <section id="working-locally" class="level2">
 <h2 class="anchored" data-anchor-id="working-locally">Working Locally</h2>
 <p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pip install <span class="at">-r</span> requirements.txt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The notebooks use Plotly for interactive figures, so they are especially useful for changing parameters and immediately seeing the effect.</p>
 
 

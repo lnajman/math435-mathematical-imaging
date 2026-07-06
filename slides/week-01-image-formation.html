@@ -249,8 +249,8 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-plan" class="slide level2">
-<h2>75-Minute Plan</h2>
+<section id="minute-live-path" class="slide level2">
+<h2>75-Minute Live Path</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -439,7 +439,7 @@ x \mapsto Ax.
 </section>
 <section id="first-numpy-representation" class="slide level2 code-small">
 <h2>First NumPy Representation</h2>
-<div id="c2d90ea9" class="cell">
+<div id="08709279" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
@@ -458,7 +458,7 @@ x \mapsto Ax.
 <section id="vectorization-convention" class="slide level2">
 <h2>Vectorization Convention</h2>
 <p>NumPy uses row-major order by default:</p>
-<div id="97ed0f10" class="cell">
+<div id="5aad559d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
 <span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
 <span id="cb3-3"><a></a></span>
@@ -686,7 +686,7 @@ x = A^{-1}y.
 <section id="a-toy-masking-operator" class="slide level2">
 <h2>A Toy Masking Operator</h2>
 <p>Suppose a fixed set of pixels is measured.</p>
-<div id="d4c88063" class="cell">
+<div id="d66361a4" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
@@ -761,7 +761,7 @@ x.
 </section>
 <section id="python-demo-masking-a-real-image" class="slide level2 code-small">
 <h2>Python Demo: Masking a Real Image</h2>
-<div id="eccccdbd" class="cell">
+<div id="3054c9e2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb5-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-3"><a></a></span>
@@ -863,45 +863,6 @@ y = h * x + \eta.
 <li>an old photograph with scratches and missing regions.</li>
 </ol>
 </div>
-</section>
-<section id="suggested-answers" class="slide level2">
-<h2>Suggested Answers</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Situation</th>
-<th><span class="math inline">A</span></th>
-<th>Possible prior</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>blurred photo</td>
-<td>convolution</td>
-<td>sharp edges, natural-image smoothness</td>
-</tr>
-<tr class="even">
-<td>few-angle CT</td>
-<td>projection operator</td>
-<td>piecewise smooth anatomy</td>
-</tr>
-<tr class="odd">
-<td>missing regions</td>
-<td>fixed masking, if mask is known</td>
-<td>texture or geometric continuation</td>
-</tr>
-<tr class="even">
-<td>object hidden by a tree</td>
-<td>nonlinear visibility/occlusion</td>
-<td>cannot recover true appearance from one image alone</td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="what-students-should-remember" class="slide level2">
 <h2>What Students Should Remember</h2>
