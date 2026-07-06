@@ -44,6 +44,21 @@ This chapter is the conceptual center of the course. If inverse problems were al
 
 The same idea will later explain why neural networks enter the story. A neural network is not magic information recovery. It is a learned way of choosing among possible reconstructions, stabilizing an unstable inverse, or encoding what images tend to look like in a training set.
 
+## Four Kinds Of Information
+
+Before choosing an algorithm, it is useful to ask what kind of information the data contain. Not every reconstruction error has the same cause.
+
+| Situation | What happened physically or mathematically | What a method can do |
+|---|---|---|
+| well measured | the data strongly constrain the feature | recover it mainly from data |
+| noisy but measured | the feature affects the data, but randomly | reduce uncertainty with statistics or repeated data |
+| weakly measured | the feature affects the data only slightly | stabilize the estimate and report uncertainty |
+| not measured | the feature did not affect the data | choose a plausible completion using assumptions |
+
+This distinction is central for imaging. A hidden object behind an opaque occluder is not the same as a faint object corrupted by noise. In the first case, the missing information did not reach the sensor from that viewpoint. In the second, the information may be present but unreliable.
+
+The language of inverse problems helps prevent a common confusion. Reconstruction does not always mean recovery of measured truth. Sometimes it means estimating, stabilizing, completing, or choosing among possibilities. Those are legitimate tasks, but they should not be described as if all details came directly from the data.
+
 ## Hadamard Well-Posedness
 
 Hadamard called a problem well posed if three conditions hold:
@@ -134,6 +149,10 @@ Both create missing information, but they are not the same physical model. If a 
 This distinction is important pedagogically because images are not one-dimensional audio mixtures. In audio, under favorable conditions, several sources can contribute additively to the same microphone signal. Separation can sometimes exploit that mixture structure. In a single photograph, an occluder may block light from the hidden object entirely. The hidden surface did not contribute additively to the measured pixel values.
 
 The mathematical question is therefore not only "can we invert $A$?" It is also "was the information present in the data at all?"
+
+This is one of the differences between image reconstruction and source separation. If two instruments contribute to one audio recording, the measurement may contain a mixture of both sources. Under the right assumptions, one can sometimes separate the components because both contributed to the observed signal. But if a tree blocks a person in a single photograph, the hidden person's light did not contribute to the blocked pixels. A method may infer that a person is likely to continue behind the tree, but that continuation is a prior-based completion, not a direct measurement.
+
+This does not make completion useless. Human vision does this constantly, and image algorithms often need to do it. The important distinction is epistemic: the completed region may be plausible, coherent, and useful, while still being less data-supported than visible regions.
 
 ## Nullspace Language
 
@@ -256,6 +275,22 @@ This gives three regimes:
 This table is a better mental model than asking whether a method "recovers" the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.
 
 For learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.
+
+## A Reconstruction Audit
+
+A good habit is to annotate a reconstruction by evidence, not only by appearance. For any visible structure in a reconstructed image, ask:
+
+| Audit question | Why it matters |
+|---|---|
+| Did this structure affect the measured data? | separates recovery from hallucinated completion |
+| Is it in a strongly or weakly observed direction? | estimates sensitivity to noise |
+| Would a different prior produce a different structure? | detects prior-selected content |
+| Does the residual change if the structure is removed? | tests data support through the forward model |
+| Is the feature important for the task? | connects mathematics to risk |
+
+The same audit applies to classical and neural methods. A Tikhonov reconstruction, a total variation reconstruction, and a neural reconstruction may all produce plausible images. The inverse-problem question is more precise: which parts are forced by the data, which parts are stabilized by the prior, and which parts are essentially chosen by the model?
+
+This question will become increasingly important as the course moves toward neural networks. Learned methods can make prior-selected content look extremely convincing. That visual strength is useful, but it increases the need to distinguish measurement evidence from learned plausibility.
 
 ## Why A Small Residual Is Not Enough
 

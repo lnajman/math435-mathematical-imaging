@@ -48,6 +48,27 @@ $$
 
 Here the data term comes from the Gaussian noise model of Chapter 4, and the regularization term is a simple prior on the image. This makes Tikhonov a useful bridge: it is elementary enough to derive completely, but it already contains the logic behind many modern reconstruction methods.
 
+The three preceding ideas now meet:
+
+| Ingredient | Source in the course | Role in Tikhonov |
+|---|---|---|
+| forward model | image formation and degradation | predict $Ax$ from $x$ |
+| noise model | Chapter 4 | justify $\|Ax-y\|_2^2$ |
+| ill-posedness | Chapter 5 | explain why data fit alone is unsafe |
+| prior | this chapter | choose and stabilize a reconstruction |
+
+This is why Tikhonov is more than a historical method. It is the simplest complete laboratory for the course identity:
+
+$$
+\text{reconstruction}
+=
+\text{data consistency}
++
+\text{image model}.
+$$
+
+The image model is intentionally simple here. Later chapters will replace it with edge-aware, sparse, multiscale, or learned models, but the logical structure remains the same.
+
 ## Tikhonov Regularization
 
 The simplest Tikhonov model is
@@ -70,6 +91,16 @@ The objective has two terms:
 
 If two images explain the data similarly, Tikhonov prefers the one with smaller norm.
 
+In the notation of the course template,
+
+$$
+D(Ax,y)=\|Ax-y\|_2^2,
+\qquad
+R(x)=\|x\|_2^2.
+$$
+
+The first term asks the reconstruction to explain the data under a Gaussian noise model. The second term expresses a prior preference for small-energy images. The parameter $\lambda$ decides how strongly that prior is allowed to influence the answer.
+
 ::: {.figure}
 ![](../assets/figures/week06-tikhonov-path.png){fig-alt="True signal, blurred noisy data, and Tikhonov reconstructions for three lambda values"}
 
@@ -79,6 +110,8 @@ Changing $\lambda$ moves the reconstruction along a path from unstable to over-d
 Very small $\lambda$ leaves unstable directions barely damped. Moderate $\lambda$ can control noise while preserving structure. Large $\lambda$ over-damps the solution.
 
 The phrase "smaller-energy solution" should be interpreted carefully. For a signal represented as a vector, $\|x\|_2^2$ penalizes large coefficients. For images, this can shrink contrast and suppress detail. It does not directly say "prefer sharp edges" or "prefer natural texture." This is why basic Tikhonov is stable but often visually too smooth.
+
+This limitation is pedagogically useful. Because the prior is so simple, we can see exactly what it buys and what it costs. It buys stability. It costs bias toward low-energy, often over-smoothed reconstructions. More advanced priors will try to buy stability while losing less important image structure.
 
 ## Probabilistic Interpretation
 
@@ -373,6 +406,8 @@ This is not a moral choice between data and prior. Both are needed. The question
 The middle row does not mean perfect truth. It means the reconstruction is using the data and prior in a defensible balance.
 
 In projects and notebooks, this is why a parameter sweep is more informative than a single chosen image. A sweep shows whether the conclusion is stable across a reasonable range or whether it depends on one fragile value.
+
+This interpretation also prepares the neural-network part of the course. A learned prior can be very strong: it may know a great deal about typical images in a training set. But strength does not automatically mean truth. If the learned prior is trusted too much, the reconstruction may become visually convincing while moving away from the measurement. If the data term is trusted too much, the reconstruction may fit noise or unstable directions. The old Tikhonov question remains, even when the prior is learned: how much should the algorithm trust the data, and how much should it trust the image model?
 
 ## Bias And Variance
 

@@ -45,6 +45,16 @@ This matters because reconstruction methods are not built from regularization al
 
 Noise models are how we derive the first ingredient. Without them, a cost function such as $\|Ax-y\|_2^2$ can look like a purely algebraic habit. With them, the same expression becomes a statement about the measurement process.
 
+This is the first step in a three-chapter bridge:
+
+| Chapter | Main question | Mathematical object |
+|---|---|---|
+| Chapter 4 | How should disagreement with the data be measured? | likelihood and data fidelity |
+| Chapter 5 | Why is data agreement not enough? | ill-posedness and invisible directions |
+| Chapter 6 | How do we stabilize the reconstruction? | regularization and priors |
+
+The key point is that the data term is not neutral. It encodes a claim about the acquisition. If the claim is wrong, the reconstruction may optimize a beautiful formula for the wrong physical problem.
+
 ## Seeing Noise Before Modeling It
 
 The same clean image can be corrupted in visibly different ways. Additive Gaussian noise has a roughly brightness-independent texture. Photon-counting noise changes with the number of photons reaching each pixel.
@@ -67,6 +77,29 @@ A useful noise model answers:
 When you look at the figure, pay attention to two different effects. The Gaussian image has a similar grain in dark and bright regions. The Poisson image is more uneven in low-light regions because the number of photons there is small. The important point is not only that the images look different. The important point is that the same numerical error may have different statistical meanings in different parts of the image.
 
 For example, an error of five gray levels may be large in a dark region and ordinary in a bright region under a photon-counting model. A good data term should know this.
+
+## From Acquisition To Data Term
+
+Most reconstruction methods in this course can be read through the same sequence:
+
+1. propose how an image $x$ would generate a noiseless prediction $f(x)$;
+2. propose how the sensor randomly turns that prediction into data $y$;
+3. compute the likelihood $p(y\mid x)$;
+4. minimize the negative log-likelihood as the data fidelity term.
+
+Symbolically,
+
+$$
+\text{physics}+\text{noise}
+\quad\longrightarrow\quad
+p(y\mid x)
+\quad\longrightarrow\quad
+D(f(x),y).
+$$
+
+This is not only a probabilistic derivation. It is also a modeling discipline. Before writing a reconstruction objective, we should be able to say what kind of disagreement the objective treats as surprising.
+
+For example, a squared residual treats positive and negative errors symmetrically and treats the same residual size the same way everywhere. That is reasonable for additive Gaussian noise with constant variance. It is less natural for photon counts, where uncertainty depends on brightness. The form of the cost function should remember the form of the measurement.
 
 ## Gaussian Noise
 
@@ -426,6 +459,8 @@ For Gaussian noise, the contract says: large squared residuals are unlikely. For
 
 This contract is only as good as the assumptions behind it. If the noise model is wrong, the data term may over-penalize harmless deviations or under-penalize serious ones. If the forward model is wrong, the reconstruction may fit the mathematical data term while failing the physical problem.
 
+This is especially important in imaging because the forward model may include nonlinear or irreversible effects. A data term can say whether a proposed image is compatible with the recorded pixels under the chosen model. It cannot by itself say whether the model included every physical effect that mattered.
+
 The practical habit is simple:
 
 1. state the forward model;
@@ -434,6 +469,8 @@ The practical habit is simple:
 4. test whether the residuals behave like the model predicts.
 
 The fourth step is often where modeling becomes scientific rather than decorative.
+
+In later chapters, the same habit will apply to neural methods. A neural network may provide a powerful image model, but if the measurement is known, its output should still be checked against the data term. The network can help choose a plausible reconstruction; the likelihood helps say whether that reconstruction explains the measurement.
 
 ## Reading Residual Images
 
