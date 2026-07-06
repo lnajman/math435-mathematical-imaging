@@ -106,6 +106,25 @@ Variational reconstruction separates modeling from computation. This is one of i
 
 The optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.
 
+## Energy As Negotiation
+
+It is helpful to read a variational model as a negotiation between terms.
+
+Suppose two candidate reconstructions are possible:
+
+- $x_1$ fits the measurements very closely but contains many oscillations;
+- $x_2$ is smoother or simpler but does not fit every measurement exactly.
+
+The energy
+
+$$
+E(x)=D(Ax,y)+\lambda R(x)
+$$
+
+does not know which candidate is "true" in an absolute sense. It only knows how to score candidates according to the two terms that we wrote down. The data term asks whether the candidate is compatible with the observed data and forward model. The regularizer asks whether the candidate looks plausible according to the chosen prior. The parameter $\lambda$ decides how much disagreement between these two voices is tolerated.
+
+This is why the same image data can lead to different reconstructions under different energies. A reconstruction method is not only a numerical recipe. It is a set of priorities.
+
 ## Reading An Energy As An Audit Trail
 
 An energy functional is an audit trail for the reconstruction.
@@ -128,6 +147,16 @@ records at least four choices:
 This is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.
 
 Learned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.
+
+## What The Energy Cannot See
+
+The energy can only evaluate the information represented in its terms.
+
+If the forward model is masking, pixels hidden behind the mask are not directly observed. The energy may still fill them in using a prior, but that fill-in is inferred structure, not recovered measurement. If an object is occluded by another object, the missing part is not secretly available to the algorithm. The method can guess using context, training data, or regularity assumptions, but the guess should not be confused with evidence.
+
+This is a central difference between many image problems and idealized signal separation. In sound, under favorable assumptions, one may hope to separate mixed sources because the signals are superposed. In images, occlusion is often not a linear mixture. A hidden object may leave no measured trace at all.
+
+The variational language makes this distinction visible. The data term says what was measured. The regularizer says how missing or unstable information is completed. Both are needed, but they have different epistemic status.
 
 ## A First Variational Denoising Model
 
@@ -370,6 +399,22 @@ The energy can decrease while image quality first improves and then becomes too 
 This last observation is subtle. The algorithm may be doing exactly what we asked: decreasing the chosen energy. But the image quality can still become worse if the energy does not perfectly match the desired task, or if the regularization weight is not appropriate. Optimization success and reconstruction success are related, but they are not identical.
 
 This distinction will become important for learned models. A neural network can minimize its training loss very well and still fail on images that differ from the training distribution.
+
+## Optimality Is Not Truth
+
+The phrase "optimal solution" can be misleading if it is detached from the model. A minimizer is optimal for a particular energy, not necessarily for the real-world task.
+
+For a reconstruction $\hat{x}$, three statements are different:
+
+| Statement | What it means |
+|---|---|
+| $\hat{x}$ minimizes $E$ | the computation solved the chosen mathematical problem |
+| $\hat{x}$ fits the measurements | the residual is small under the assumed forward model |
+| $\hat{x}$ is a faithful image | the reconstruction preserves the structures that matter for the task |
+
+The first statement is about optimization. The second is about data consistency. The third is about interpretation. A good imaging workflow tries to check all three, especially when ground truth is unavailable.
+
+This is why residual images, parameter sweeps, and sensitivity tests matter. They help us see whether the reconstruction is supported by the data or mainly imposed by the prior.
 
 ## Real Image Denoising
 

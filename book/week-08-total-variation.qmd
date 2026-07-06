@@ -80,6 +80,24 @@ $$
 
 Both encourage small total variation, but they can behave differently with respect to diagonal edges and grid directions. In this course, isotropic TV is the default because it is less tied to horizontal and vertical axes.
 
+## What TV Actually Counts
+
+TV counts accumulated local change. It does not count objects, textures, anatomical structures, or semantic meaning.
+
+This distinction is important. If an image contains a sharp boundary between two regions, TV sees a concentrated set of large gradients. If an image contains fine texture, TV sees many gradients. If an image contains random noise, TV also sees many gradients. The regularizer has no direct way to know which gradients are meaningful. It only expresses a preference for images whose gradient map is simple.
+
+For this reason, TV should be described as a structural prior rather than as an edge detector. It encourages a certain kind of image organization:
+
+| Image behavior | How TV tends to respond |
+|---|---|
+| flat region with small noise | suppress many weak gradients |
+| strong coherent edge | often keep a sharper transition |
+| fine texture | may remove or simplify it |
+| smooth shading | may replace it by plateaus |
+| isolated noise spike | may keep it if it is strong enough |
+
+This table also explains why TV is useful in a course leading to neural networks. Learned priors are richer, but they still impose structure. TV gives a transparent first example of what it means for a prior to prefer some image explanations over others.
+
 ## TV Denoising
 
 The classical Rudin-Osher-Fatemi model is
@@ -158,7 +176,7 @@ TV is easiest to understand on a step signal.
 Quadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.
 :::
 
-TV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.
+TV is well matched to piecewise-constant structure. It counts the amount of change, not the square of the change. In one dimension, a unit jump and a monotone ramp of total height one can have comparable TV, while a quadratic gradient penalty strongly prefers spreading the change across many samples. TV is therefore much less biased toward blurring an edge into a ramp.
 
 This is useful when the image contains objects separated by edges.
 
@@ -188,6 +206,21 @@ When reading the gradient maps, compare density rather than only brightness. The
 
 This selectivity is why TV can improve segmentation, object boundaries, and cartoon-like reconstructions. It is also why TV can damage textures, because texture often consists of many meaningful gradients.
 
+## How To Read A TV Result
+
+When looking at a TV reconstruction, it is useful to inspect four regions separately.
+
+| Region | Useful question |
+|---|---|
+| flat background | did noise decrease without changing the average intensity? |
+| object boundary | did the edge stay localized or become displaced? |
+| textured region | was meaningful texture mistaken for noise? |
+| smooth shading | did staircasing create artificial plateaus? |
+
+The residual should also be inspected. If the TV image looks clean but the residual contains structured edges, the regularizer may have removed information that the measurements supported. If the residual is mostly noise-like, the reconstruction is more credible, although still not automatically true.
+
+This habit prepares students for learned reconstruction. A neural output can look much more natural than a TV output, but the same questions remain: what changed, where did the evidence come from, and what does the residual still contain?
+
 ## Choosing The TV Weight
 
 In
@@ -211,6 +244,20 @@ The best value of $\lambda$ depends on the task.
 For a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.
 
 The parameter $\lambda$ has the same conceptual role as in Tikhonov, but the visual effect is different. Increasing $\lambda$ does not simply blur the image. It tends to remove weak oscillations and simplify the edge set. This can look like denoising, segmentation, or cartoonization depending on the image and the parameter.
+
+## Choosing Without The Truth
+
+In notebooks, we can sometimes compare a reconstruction to a known clean image. In real inverse problems, the ground truth is usually unavailable. Then $\lambda$ must be chosen using indirect evidence.
+
+Possible evidence includes:
+
+- knowledge of the noise level;
+- the residual norm and residual image;
+- stability under small parameter changes;
+- preservation of task-relevant structures;
+- comparison with independent measurements or expert judgment.
+
+No single criterion is universal. A visually attractive TV result may be too simple for measurement or diagnosis. A data-fitting result may preserve noise. Parameter choice is therefore part of the scientific argument, not only part of the computation.
 
 ## Staircasing
 

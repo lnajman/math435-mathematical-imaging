@@ -34,6 +34,20 @@ Regularization chooses the model. Optimization chooses how the model is solved.
 
 This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.
 
+## Three Questions For Any Algorithm
+
+When reading or reporting an iterative reconstruction method, ask three questions.
+
+| Question | Why it matters |
+|---|---|
+| What objective or fixed point is being targeted? | identifies the mathematical goal |
+| What update rule is used? | identifies the computational method |
+| What evidence shows the iteration behaved well? | separates convergence evidence from visual impression |
+
+For classical convex optimization, the target is often an explicit energy. For plug-and-play or learned methods, the target may be a fixed point rather than a known energy. This difference matters, but the reporting habit is the same: name the target, name the update, and show diagnostics.
+
+This habit is especially useful in projects. If ground truth is unavailable, students can still report objective curves, residuals, iterate changes, parameter sensitivity, and qualitative failure cases. A reconstruction image alone is rarely enough.
+
 ## Why This Chapter Matters
 
 Chapters 7 and 8 defined reconstructions as minimizers of energies. This chapter asks how those minimizers are actually found. In imaging, this is not a small implementation detail. The image can contain hundreds of thousands or millions of unknowns, and the objective may be nonsmooth.
@@ -142,6 +156,16 @@ for stable monotone decrease.
 The Lipschitz constant is a measure of how quickly the gradient can change. A steep or badly conditioned energy requires a smaller step size. This is the optimization version of the singular-value story from Chapter 5: directions with very different sensitivities make naive algorithms slow or unstable.
 
 In practice, step sizes may be chosen by theory, backtracking line search, heuristic tuning, or learned parameters in an unrolled method.
+
+## Conditioning And Slow Directions
+
+Even when a step size is stable, gradient descent may be slow.
+
+For a quadratic energy, level sets can be nearly circular or highly elongated. In a nearly circular landscape, the gradient direction points efficiently toward the minimizer. In an elongated landscape, the method may zigzag: a step size large enough to move along the flat direction may be too large for the steep direction.
+
+This connects optimization back to ill-posed inverse problems. If the forward operator has singular values with very different magnitudes, the objective has directions with very different curvature. Stable directions and unstable directions coexist. Regularization improves the model, but conditioning still affects how quickly an algorithm computes the solution.
+
+Preconditioning, variable splitting, and more advanced methods are partly ways to reshape the computational problem. We will not develop all of them in this course, but students should recognize the symptom: a method can be mathematically correct and still converge too slowly to be useful.
 
 ## Stopping Criteria
 
@@ -266,6 +290,24 @@ The gradient step improves the smooth data term. The proximal step imposes the n
 
 This split is useful because the two parts of the energy require different tools. We use derivatives where derivatives are reliable, and proximal operators where nonsmooth structure matters.
 
+## Data Step, Prior Step
+
+Proximal gradient has a useful interpretation for imaging:
+
+1. take a data-consistency step;
+2. take a prior-enforcing step;
+3. repeat until the two are balanced.
+
+This is one of the central patterns of the course. It appears in sparse reconstruction, TV algorithms, plug-and-play methods, and unrolled neural networks. The formula may change, but the architecture of the thought remains recognizable:
+
+$$
+\text{measurement correction}
+\quad \longleftrightarrow \quad
+\text{image prior}.
+$$
+
+In classical optimization, the prior step is mathematically tied to a regularizer through a proximal operator. In plug-and-play methods, the prior step may be replaced by a denoiser. In an unrolled neural network, the update may be learned from training data. The more learned the step becomes, the more important it is to check data consistency and failure cases.
+
 ## ISTA
 
 For the l1-regularized problem
@@ -314,6 +356,30 @@ The same pattern appears in image reconstruction with transform-domain sparsity.
 :::
 
 This pattern will appear again in modern neural imaging. Unrolled networks often keep the data-consistency step and replace the hand-designed proximal or thresholding step with a learned module.
+
+## From ISTA To A Learned Iteration
+
+ISTA is useful not only because it solves an l1 problem. It is useful because its structure is visible:
+
+$$
+x^{k+1}
+=
+S_{\tau\lambda}
+\left(x^k-\tau A^\top(Ax^k-y)\right).
+$$
+
+The term $A^\top(Ax^k-y)$ is tied to the measurements. The soft-thresholding operator is tied to the sparse prior. An unrolled learned method may keep the first part and replace the second part:
+
+$$
+x^{k+1}
+=
+\mathcal{D}_{\theta_k}
+\left(x^k-\tau_k A^\top(Ax^k-y)\right),
+$$
+
+where $\mathcal{D}_{\theta_k}$ is a learned denoising or correction module.
+
+This formula should not be read as saying that every network is ISTA. It shows the conceptual bridge. A classical algorithm alternates between what the data say and what the prior says. A learned algorithm can keep that alternation while learning a more flexible prior step.
 
 ## Optimization And Neural Networks
 
