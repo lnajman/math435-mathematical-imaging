@@ -21,7 +21,7 @@ For each week:
 - read the connected book chapter;
 - attend class and use the slide deck as the discussion structure;
 - run the notebook in Python or Google Colab;
-- write a short claim-evidence-limit note for yourself.
+- write a short four-thread or claim-evidence-limit note for yourself.
 
 The notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.
 
@@ -50,6 +50,17 @@ Example:
 | Model assumption | The image is approximately piecewise smooth. |
 | Limit or failure case | TV creates staircasing on smooth intensity ramps. |
 
+## Four-Thread Notebook Note
+
+Several notebooks now end with a short four-thread note. It is the same habit in a slightly more structured form:
+
+| Thread | Question |
+|---|---|
+| Measurement | What did the data record? |
+| Prior | What assumption, regularizer, denoiser, or learned information entered? |
+| Computation | What algorithm, update, transform, or learned map produced the result? |
+| Evidence | What output, residual, metric, sweep, or failure case supports the claim? |
+
 ## Weekly Practice Guide
 
 | Week | Topic | Ungraded Practice | Notebook Focus | Useful Links |
@@ -63,11 +74,11 @@ Example:
 | 7 | Variational formulation | Identify the data term, regularizer, and optimality condition for one energy. | Energy as an Audit Trail | [book](book/week-07-variational-formulation.qmd), [slides](slides/week-07-variational-formulation.qmd), [notebook](notebooks/week07_variational_formulation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) |
 | 8 | Total Variation regularization | Compare one preserved edge with one possible artifact or staircasing failure. | Edge Preservation Is Not Proof | [book](book/week-08-total-variation.qmd), [slides](slides/week-08-total-variation.qmd), [notebook](notebooks/week08_total_variation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) |
 | 9 | Optimization methods | Report whether energy, fixed-point change, or active coefficients show stable iteration. | Optimization Diagnostics | [book](book/week-09-optimization-methods.qmd), [slides](slides/week-09-optimization-methods.qmd), [notebook](notebooks/week09_optimization_methods.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb) |
-| 10 | Sparse reconstruction | State the representation where the image is assumed sparse and design one mismatch example. | Representation Mismatch | [book](book/week-10-sparse-reconstruction.qmd), [slides](slides/week-10-sparse-reconstruction.qmd), [notebook](notebooks/week10_sparse_reconstruction.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb) |
-| 11 | Wavelets and multiscale representation | Explain which local features wavelets capture better than global Fourier modes. | Fourier, Wavelets, and Energy | [book](book/week-11-wavelets.qmd), [slides](slides/week-11-wavelets.qmd), [notebook](notebooks/week11_wavelets.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) |
-| 12 | Model-based vs data-driven imaging | Describe what the training data teach the learned prior to expect and test one distribution shift. | Training Data as a Prior | [book](book/week-12-model-data.qmd), [slides](slides/week-12-model-data.qmd), [notebook](notebooks/week12_model_data.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) |
-| 13 | Plug-and-play and learned regularization | Compare data residual, RMSE when available, and fixed-point change for two denoisers. | Implicit Prior Strength | [book](book/week-13-plug-and-play.qmd), [slides](slides/week-13-plug-and-play.qmd), [notebook](notebooks/week13_plug_and_play.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
-| 14 | Stability, robustness, and ethics | Write three project-style claims and pair each with evidence and a limitation. | From Notebook to Project Defense | [book](book/week-14-stability-robustness-ethics.qmd), [slides](slides/week-14-stability-robustness-ethics.qmd), [notebook](notebooks/week14_stability_robustness.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
+| 10 | Sparse reconstruction | Fill the four-thread note for sparse DCT reconstruction and design one representation-mismatch example. | Representation Mismatch | [book](book/week-10-sparse-reconstruction.qmd), [slides](slides/week-10-sparse-reconstruction.qmd), [notebook](notebooks/week10_sparse_reconstruction.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb) |
+| 11 | Wavelets and multiscale representation | Fill the four-thread note for wavelet denoising: task, wavelet prior, thresholding step, and one lost detail. | Fourier, Wavelets, and Energy | [book](book/week-11-wavelets.qmd), [slides](slides/week-11-wavelets.qmd), [notebook](notebooks/week11_wavelets.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb) |
+| 12 | Model-based vs data-driven imaging | Fill the four-thread note for learned PCA denoising and test one distribution shift. | Training Data as a Prior | [book](book/week-12-model-data.qmd), [slides](slides/week-12-model-data.qmd), [notebook](notebooks/week12_model_data.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb) |
+| 13 | Plug-and-play and learned regularization | Fill the four-thread note for PnP, including residual, fixed-point change, denoiser prior, and failure case. | Implicit Prior Strength | [book](book/week-13-plug-and-play.qmd), [slides](slides/week-13-plug-and-play.qmd), [notebook](notebooks/week13_plug_and_play.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
+| 14 | Stability, robustness, and ethics | Turn one four-thread note into three project-style claims with evidence and limitations. | From Notebook to Project Defense | [book](book/week-14-stability-robustness-ethics.qmd), [slides](slides/week-14-stability-robustness-ethics.qmd), [notebook](notebooks/week14_stability_robustness.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
 | 15 | Project presentations and oral defenses | Review the model, code, evidence, limitations, and LLM-use statement for the final project. | Not applicable | [project page](project/index.qmd), [syllabus](syllabus.qmd) |
 
 ## Project Preparation Guide

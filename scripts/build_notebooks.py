@@ -31,6 +31,20 @@ def coherence_checkpoint(title: str, prompts: list[tuple[str, str]]) -> nbf.Note
     )
 
 
+def four_thread_note(title: str, prompts: list[tuple[str, str]]) -> nbf.NotebookNode:
+    rows = "\n".join(f"- **{label}.** {prompt}" for label, prompt in prompts)
+    return md(
+        f"""
+        ### Four-Thread Notebook Note - {title}
+
+        Use this short note to connect the code output to the course reading threads:
+        measurement, prior, computation, and evidence.
+
+        {rows}
+        """
+    )
+
+
 def make_notebook(cells: list[nbf.NotebookNode]) -> nbf.NotebookNode:
     notebook = nbf.v4.new_notebook(cells=cells)
     notebook.metadata = {
@@ -4355,6 +4369,15 @@ def week10_cells() -> list[nbf.NotebookNode]:
             print("active DCT coefficients:", active_count(test_coefficients, tolerance=1e-3))
             """
         ),
+        four_thread_note(
+            "Sparse Reconstruction",
+            [
+                ("Measurement", "Name the masking operator and what part of the image it records."),
+                ("Prior", "State the representation where sparsity is assumed."),
+                ("Computation", "Identify the step that imposes l1 shrinkage or sparsity."),
+                ("Evidence", "Report one residual, error, or visual comparison, and one mismatch risk."),
+            ],
+        ),
         coherence_checkpoint(
             "Representation Mismatch",
             [
@@ -4769,6 +4792,15 @@ def week11_cells() -> list[nbf.NotebookNode]:
 
             show_image_grid(sweep_images, sweep_titles, height=430)
             """
+        ),
+        four_thread_note(
+            "Wavelet Denoising",
+            [
+                ("Measurement", "State whether this notebook is modeling compression, denoising, or inverse reconstruction."),
+                ("Prior", "Name the wavelet family and threshold rule, and what coefficient pattern they assume."),
+                ("Computation", "Identify the transform, thresholding, and inverse-transform steps."),
+                ("Evidence", "Compare one preserved structure with one texture or detail that may be lost."),
+            ],
         ),
         coherence_checkpoint(
             "Fourier, Wavelets, and Energy",
@@ -5202,6 +5234,15 @@ def week12_cells() -> list[nbf.NotebookNode]:
                 height=430,
             )
             """
+        ),
+        four_thread_note(
+            "Learned Patch Prior",
+            [
+                ("Measurement", "State the degradation or noise used to create the observation."),
+                ("Prior", "Describe what the learned PCA patch model learned from training patches."),
+                ("Computation", "Name the fit and apply steps of the learned patch prior."),
+                ("Evidence", "Compare an in-distribution result with one shifted-training or shifted-test result."),
+            ],
         ),
         coherence_checkpoint(
             "Training Data as a Prior",
@@ -5728,6 +5769,15 @@ def week13_cells() -> list[nbf.NotebookNode]:
             )
             """
         ),
+        four_thread_note(
+            "Plug-and-Play Reconstruction",
+            [
+                ("Measurement", "Report how data consistency is measured in the PnP loop."),
+                ("Prior", "Name the denoiser and what image family or assumption it brings."),
+                ("Computation", "Separate the data step from the denoising step."),
+                ("Evidence", "Use residual, fixed-point change, and one failure case to justify trust."),
+            ],
+        ),
         coherence_checkpoint(
             "Implicit Prior Strength",
             [
@@ -6247,6 +6297,15 @@ def week14_cells() -> list[nbf.NotebookNode]:
                 print("  evidence:", row["evidence"])
                 print("  limit:", row["failure_or_limit"])
             """
+        ),
+        four_thread_note(
+            "Robustness and Project Defense",
+            [
+                ("Measurement", "State which perturbations or model mismatches were tested."),
+                ("Prior", "Name the prior, regularizer, denoiser, or learned model being stress-tested."),
+                ("Computation", "Record the parameter sweep or robustness procedure."),
+                ("Evidence", "Write one claim-evidence-limit line suitable for a project defense."),
+            ],
         ),
         coherence_checkpoint(
             "From Notebook to Project Defense",
