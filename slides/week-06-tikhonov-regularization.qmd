@@ -28,7 +28,7 @@ If exact inversion is unstable, what should we give up: exact data fit, sharpnes
 - Explain the bias-stability tradeoff.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -483,16 +483,13 @@ This week the modeling project is assigned.
 See the project page for the current project structure and expectations.
 :::
 
-## Code Demo: Run Week 6 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week06_tikhonov.py
-python3 examples/make_week06_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 6 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -530,15 +527,6 @@ Answer in one sentence each:
 3. What happens when $\lambda$ is too small?
 4. What happens when $\lambda$ is too large?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| Tikhonov objective | data fit plus $\ell_2$ penalty |
-| stability | small eigenvalues are shifted away from zero |
-| too small | noise amplification remains |
-| too large | solution is biased and over-smoothed |
 
 ## What Students Should Remember
 

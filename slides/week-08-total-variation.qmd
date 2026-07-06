@@ -28,7 +28,7 @@ How can a regularizer remove noise without treating every edge as a mistake?
 - Use TV denoising on signals and images.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -355,16 +355,13 @@ Week 8 is also the midterm week in the syllabus.
 - Tikhonov, variational energies, and TV.
 :::
 
-## Code Demo: Run Week 8 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week08_total_variation.py
-python3 examples/make_week08_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 8 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -402,15 +399,6 @@ Answer in one sentence each:
 3. What is staircasing?
 4. Why is TV optimization more delicate than quadratic smoothing?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| TV | sum or integral of gradient magnitude |
-| edge preservation | linear gradient penalty is less harsh on large jumps |
-| staircasing | smooth variation becomes piecewise flat |
-| optimization | TV is convex but nonsmooth |
 
 ## What Students Should Remember
 

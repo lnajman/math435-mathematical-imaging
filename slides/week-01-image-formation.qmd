@@ -28,7 +28,7 @@ If a scanner gives us imperfect data, what exactly are we trying to recover?
 - Write the first NumPy representations.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -656,15 +656,6 @@ For each situation, identify $x$, $y$, $A$, and one reasonable prior:
 2. a CT scan with few projection angles;
 3. an old photograph with scratches and missing regions.
 :::
-
-## Suggested Answers
-
-| Situation | $A$ | Possible prior |
-|---|---|---|
-| blurred photo | convolution | sharp edges, natural-image smoothness |
-| few-angle CT | projection operator | piecewise smooth anatomy |
-| missing regions | fixed masking, if mask is known | texture or geometric continuation |
-| object hidden by a tree | nonlinear visibility/occlusion | cannot recover true appearance from one image alone |
 
 ## What Students Should Remember
 

@@ -28,7 +28,7 @@ If the reconstructed image is defined as a minimizer, how do we actually find it
 - Use proximal and ISTA ideas for sparse regularization.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -426,16 +426,13 @@ The same pattern appears repeatedly:
 - proximal step: applies the prior without pretending it is smooth.
 :::
 
-## Code Demo: Run Week 9 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week09_optimization.py
-python3 examples/make_week09_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 9 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -473,16 +470,6 @@ Match each idea to its role:
 4. proximal operator;
 5. ISTA.
 :::
-
-## Suggested Answers
-
-| Idea | Role |
-|---|---|
-| gradient | local direction of increase |
-| step size | amount of movement |
-| subgradient | generalized slope for convex nonsmooth functions |
-| proximal operator | solves a small regularized problem |
-| ISTA | gradient step plus soft thresholding |
 
 ## What Students Should Remember
 

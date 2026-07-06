@@ -28,7 +28,7 @@ What does it mean for an image to contain high frequencies?
 - Explain blur and deblurring in frequency space.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -534,15 +534,6 @@ For each item, give one sentence:
 3. What does the convolution theorem say?
 4. Why does inverse filtering amplify noise?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| Fourier magnitude | strength of each frequency |
-| centered low frequencies | near the center |
-| convolution theorem | convolution in space is multiplication in frequency |
-| noise amplification | division by small blur response magnifies noise |
 
 ## What Students Should Remember
 

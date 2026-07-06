@@ -28,7 +28,7 @@ What does it mean to reconstruct an image by minimizing an energy?
 - Connect optimality to gradient descent.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -499,16 +499,13 @@ $$
 This changes the behavior near edges.
 :::
 
-## Code Demo: Run Week 7 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week07_variational.py
-python3 examples/make_week07_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 7 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -546,15 +543,6 @@ Answer in one sentence each:
 3. What is an Euler-Lagrange equation?
 4. What does gradient descent do?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| variational model | reconstruct by minimizing an energy |
-| convexity | local minima are global minima |
-| Euler-Lagrange | first-order optimality condition for an energy |
-| gradient descent | iterative movement opposite the energy gradient |
 
 ## What Students Should Remember
 

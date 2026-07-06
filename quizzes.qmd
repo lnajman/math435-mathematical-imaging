@@ -1,0 +1,56 @@
+---
+title: "Quiz Information"
+---
+
+This page summarizes student-facing quiz logistics. The [syllabus](syllabus.qmd) remains the authority for grading, assessment policies, approved absences, and course rules.
+
+There are two quizzes in the course. Each quiz is 20 minutes long.
+
+| Quiz | Week | Timing in Class | Weight |
+|---|---:|---|---:|
+| Quiz 1 | 4 | final 20 minutes of the Week 4 meeting | 7.5% |
+| Quiz 2 | 12 | final 20 minutes of the Week 12 meeting | 7.5% |
+
+## Allowed Tools
+
+The syllabus states that only a basic calculator is permitted in quizzes. Unless the instructor explicitly announces a formal change, this means no notebooks, no internet, no course website, no code execution, and no LLM assistance during the quiz.
+
+## What To Prepare
+
+Quiz preparation should focus on the mathematical story of the course, not on memorizing code.
+
+| Quiz | Main Preparation Focus |
+|---|---|
+| Quiz 1 | images as unknowns, forward models, convolution and blur, Fourier-domain interpretation, Gaussian and Poisson noise, likelihoods, and what data can or cannot reveal |
+| Quiz 2 | ill-posedness, regularization, variational models, optimization ideas, sparse and wavelet representations, model-based versus data-driven reconstruction, learned priors, and reliability risks |
+
+For each topic, students should be able to identify:
+
+- what is measured;
+- what is unknown;
+- what assumptions are made;
+- what mathematical term or algorithm follows from those assumptions;
+- what can fail.
+
+## How To Study
+
+Use the class roadmap as the main study guide:
+
+- review the corresponding book chapters;
+- rerun the relevant notebooks and change one important parameter;
+- answer the weekly practice prompt in your own words;
+- explain the central identity of the course without relying on code:
+
+$$
+\text{measurement}
+\quad+\quad
+\text{prior or learned assumption}
+\quad+\quad
+\text{algorithm}
+\quad\Longrightarrow\quad
+\text{reconstruction}.
+$$
+
+## What Will Not Be Published Here
+
+Actual quiz questions and solution keys will not be posted on this public website before the quizzes. Public pages may contain practice prompts and conceptual checks, but those are study aids rather than the quiz itself.

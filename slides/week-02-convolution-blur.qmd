@@ -28,7 +28,7 @@ What does it mean, mathematically, for an image to be blurred?
 - See why deblurring is already a hard inverse problem.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -491,15 +491,6 @@ For each item, give one sentence:
 3. Name two boundary conditions.
 4. Why is deblurring sensitive to noise?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| PSF | image of one ideal point after the imaging system |
-| kernel sum | preserves average brightness |
-| boundary | zero, reflect, wrap, valid/crop |
-| noise | inverse filtering amplifies weak frequencies |
 
 ## What Students Should Remember
 

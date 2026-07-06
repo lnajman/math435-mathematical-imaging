@@ -47,6 +47,20 @@ When a figure improves, ask what caused the improvement: stronger data consisten
 | 13 | Plug-and-play and learned regularization | [Download](week13_plug_and_play.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb) |
 | 14 | Stability, robustness, and ethics | [Download](week14_stability_robustness.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) |
 
+## Repository Examples
+
+The slide decks use short code-reference slides so that command-line details do not interrupt the live class path. If you work locally, example scripts live in the `examples/` directory.
+
+Typical local commands are:
+
+```bash
+python3 examples/weekXX_topic_name.py
+python3 scripts/build_notebooks.py
+./scripts/quarto render
+```
+
+Replace `weekXX_topic_name.py` with the example script for the week you are studying. Students who do not want a local setup should use the Colab links above.
+
 ## Working Locally
 
 From the repository root:

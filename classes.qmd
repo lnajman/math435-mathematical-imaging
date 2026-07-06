@@ -15,7 +15,7 @@ Use each week as a checklist:
 
 Weekly practice notes are study aids, not separate graded assignments. Course grading is governed by the [syllabus](syllabus.qmd).
 
-Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long.
+Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long. See the [quiz information page](quizzes.qmd) for student-facing logistics and preparation guidance.
 
 ## At a Glance
 

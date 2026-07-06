@@ -29,7 +29,7 @@ An image can look plausible and still be wrong in a way that matters.
 - Connect mathematical validation to ethical responsibility.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -449,16 +449,13 @@ Your project report should include:
 - code and reproducibility notes.
 :::
 
-## Code Demo: Run Week 14 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week14_stability_robustness.py
-python3 examples/make_week14_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 14 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -486,15 +483,6 @@ Answer quickly:
 3. What is hallucination in reconstruction?
 4. Why is robustness testing an ethical issue?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| stability | small data changes give small reconstruction changes |
-| sensitivity | output changes strongly when a parameter changes |
-| hallucination | plausible structure not supported by data |
-| ethics | failures affect real decisions and people |
 
 ## What Students Should Remember
 

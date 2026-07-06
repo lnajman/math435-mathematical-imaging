@@ -31,7 +31,7 @@ Can you insert it inside an inverse-problem solver?
 - Discuss fixed points, convergence, and trust.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -547,16 +547,13 @@ Ask four questions:
 Where do you see measurement evidence, and where do you see prior influence?
 :::
 
-## Code Demo: Run Week 13 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week13_plug_and_play.py
-python3 examples/make_week13_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 13 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -584,15 +581,6 @@ Answer quickly:
 3. Why might PnP not minimize a known objective?
 4. What is a fixed point?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| proximal operator | balances closeness to input and regularization |
-| PnP replacement | replaces prox with a denoiser |
-| no known objective | denoiser may not equal any prox |
-| fixed point | an iterate unchanged by the update rule |
 
 ## What Students Should Remember
 

@@ -367,7 +367,7 @@ This syllabus must be augmented by a syllabus supplement for students.
 
 ### Quizzes
 
-There will be two quizzes: Quiz 1 in Week 4 and Quiz 2 in Week 12. Each quiz is 20 minutes long.
+There will be two quizzes: Quiz 1 in Week 4 and Quiz 2 in Week 12. Each quiz is 20 minutes long. A student-facing preparation summary is available on the [quiz information page](quizzes.qmd).
 
 There will be no make-up quizzes. If the student fails to attend a scheduled quiz **without** an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.
 

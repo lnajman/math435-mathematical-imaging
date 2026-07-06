@@ -30,7 +30,7 @@ How can we also know where they occur?
 - Compare wavelet denoising with ordinary smoothing.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -405,16 +405,13 @@ Wavelets are not automatic truth machines.
 - Inverse problems still need the forward model.
 :::
 
-## Code Demo: Run Week 11 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week11_wavelets.py
-python3 examples/make_week11_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 11 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -442,15 +439,6 @@ Answer quickly:
 3. Why can wavelet coefficients be sparse for images?
 4. What does thresholding do?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| Fourier vs wavelet | global frequency vs localized multiscale pattern |
-| detail coefficient | local difference at a scale and orientation |
-| sparsity | smooth regions give small details; edges give few large details |
-| thresholding | removes or shrinks small coefficients |
 
 ## What Students Should Remember
 

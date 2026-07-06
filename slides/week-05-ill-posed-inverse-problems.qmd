@@ -28,7 +28,7 @@ Can a problem have a solution, a unique solution, and still be impossible to sol
 - Connect inverse filtering to SVD noise amplification.
 :::
 
-## 75-Minute Plan
+## 75-Minute Live Path
 
 | Time | Work |
 |---:|---|
@@ -514,16 +514,13 @@ $$
 Regularization is a controlled way to trade exact data fit for stability.
 :::
 
-## Code Demo: Run Week 5 Examples {.code-small}
+## Notebook Demo and Code Reference {.code-small}
 
-From the repository root:
-
-```bash
-python3 examples/week05_ill_posed.py
-python3 examples/make_week05_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
+::: {.checklist}
+- Use the Week 5 notebook for the live experiment.
+- Example scripts live in `examples/` for after-class reruns.
+- General run instructions are on the [notebooks page](../notebooks/index.html).
+:::
 
 ## In-Class Notebook Activity
 
@@ -561,15 +558,6 @@ Answer in one sentence each:
 3. Why do small singular values cause instability?
 4. What does truncated SVD trade away?
 :::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| Hadamard conditions | existence, uniqueness, stability |
-| nullspace | changes that the operator maps to zero |
-| small singular values | inverse divides by them and amplifies noise |
-| truncated SVD | trades fine detail or bias for stability |
 
 ## What Students Should Remember
 
