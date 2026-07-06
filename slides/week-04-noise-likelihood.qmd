@@ -506,7 +506,7 @@ Noise can average out, missing information cannot
 
 Independence matters
 
-## Averaging and Its Limit
+## Averaging Gaussian Noise
 
 If
 
@@ -524,16 +524,22 @@ $$
 
 has noise standard deviation $\sigma/\sqrt{m}$.
 
+::: {.takeaway-box}
+Independent random noise decreases like $1/\sqrt{m}$ when we average repeated measurements.
+:::
+
+## Averaging Picture and Limit
+
 ::: {.figure-frame}
-![](../assets/figures/week04-averaging.png){fig-alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"}
+![](../assets/figures/week04-averaging.png){fig-alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations" height=260}
 :::
 
 ::: {.question-box}
-If the person is hidden behind a tree, can averaging many photographs reveal the hidden person?
+Hidden behind a tree: can averaging reveal what never reached the sensor?
 :::
 
 ::: {.takeaway-box}
-Averaging reduces random noise in recorded data. It does not recover scene content that never reached the sensor.
+Averaging reduces random noise. It cannot recover unobserved scene content.
 :::
 
 ## Part 5: From Likelihood to Reconstruction {.section-slide}
@@ -589,7 +595,7 @@ $R$ is a regularizer encoding prior information.
 
 ## Examples of Data Terms
 
-::: {.two-col}
+::: {.two-col .compact}
 ::: {.definition-box}
 Gaussian:
 

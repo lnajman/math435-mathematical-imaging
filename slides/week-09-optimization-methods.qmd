@@ -339,7 +339,7 @@ $$
 $$
 
 ::: {.figure-frame}
-![](../assets/figures/week09-soft-threshold.png){fig-alt="Absolute value nonsmoothness and soft-thresholding proximal operator"}
+![](../assets/figures/week09-soft-threshold.png){fig-alt="Absolute value nonsmoothness and soft-thresholding proximal operator" height=315}
 :::
 
 ## Reading Soft Thresholding

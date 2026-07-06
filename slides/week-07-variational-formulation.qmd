@@ -319,7 +319,7 @@ $$
 where $L$ is a discrete negative Laplacian.
 
 ::: {.figure-frame}
-![](../assets/figures/week07-euler-lagrange-stencil.png){fig-alt="Finite-difference neighborhood and Euler-Lagrange equations for quadratic smoothing"}
+![](../assets/figures/week07-euler-lagrange-stencil.png){fig-alt="Finite-difference neighborhood and Euler-Lagrange equations for quadratic smoothing" height=300}
 :::
 
 ## Activity 3: Fill the Gap
