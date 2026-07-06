@@ -4316,6 +4316,13 @@
     "text": "The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.\nUse the Google Colab links if you want to work in a browser without installing Python locally."
   },
   {
+    "objectID": "notebooks/index.html#how-to-use-them",
+    "href": "notebooks/index.html#how-to-use-them",
+    "title": "Notebooks",
+    "section": "How To Use Them",
+    "text": "How To Use Them\nFor each notebook:\n\nrun the setup cells first;\nrun the demonstration cells without changing anything;\nchange the marked parameters or TODO cells;\ncompare the image, residual, coefficient, or curve before and after the change;\nanswer the final coherence check in your own words.\n\nThe notebooks are not only code examples. They are experiments for the course identity:\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}.\n\nWhen a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.\n\n\n\nWeek\nTopic\nNotebook\nGoogle Colab\n\n\n\n\n1\nImage formation as arrays\nDownload / GitHub\nOpen in Colab\n\n\n2\nConvolution and blur\nDownload / GitHub\nOpen in Colab\n\n\n3\nFourier transform in imaging\nDownload / GitHub\nOpen in Colab\n\n\n4\nNoise models and likelihoods\nDownload / GitHub\nOpen in Colab\n\n\n5\nIll-posed inverse problems\nDownload / GitHub\nOpen in Colab\n\n\n6\nTikhonov regularization\nDownload / GitHub\nOpen in Colab\n\n\n7\nVariational formulation\nDownload / GitHub\nOpen in Colab\n\n\n8\nTotal Variation regularization\nDownload / GitHub\nOpen in Colab\n\n\n9\nOptimization methods\nDownload / GitHub\nOpen in Colab\n\n\n10\nSparse reconstruction\nDownload / GitHub\nOpen in Colab\n\n\n11\nWavelets and multiscale representation\nDownload / GitHub\nOpen in Colab\n\n\n12\nModel-based vs data-driven imaging\nDownload / GitHub\nOpen in Colab\n\n\n13\nPlug-and-play and learned regularization\nDownload / GitHub\nOpen in Colab\n\n\n14\nStability, robustness, and ethics\nDownload / GitHub\nOpen in Colab"
+  },
+  {
     "objectID": "notebooks/index.html#working-locally",
     "href": "notebooks/index.html#working-locally",
     "title": "Notebooks",

@@ -106,6 +106,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -174,7 +217,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#working-locally" id="toc-working-locally" class="nav-link active" data-scroll-target="#working-locally">Working Locally</a></li>
+  <li><a href="#how-to-use-them" id="toc-how-to-use-them" class="nav-link active" data-scroll-target="#how-to-use-them">How To Use Them</a></li>
+  <li><a href="#working-locally" id="toc-working-locally" class="nav-link" data-scroll-target="#working-locally">Working Locally</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/notebooks/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -202,6 +246,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.</p>
 <p>Use the Google Colab links if you want to work in a browser without installing Python locally.</p>
+<section id="how-to-use-them" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-them">How To Use Them</h2>
+<p>For each notebook:</p>
+<ol type="1">
+<li>run the setup cells first;</li>
+<li>run the demonstration cells without changing anything;</li>
+<li>change the marked parameters or <code>TODO</code> cells;</li>
+<li>compare the image, residual, coefficient, or curve before and after the change;</li>
+<li>answer the final coherence check in your own words.</li>
+</ol>
+<p>The notebooks are not only code examples. They are experiments for the course identity:</p>
+<p><span class="math display">
+\text{measurement}
+\quad+\quad
+\text{prior or learned assumption}
+\quad+\quad
+\text{algorithm}
+\quad\Longrightarrow\quad
+\text{reconstruction}.
+</span></p>
+<p>When a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -298,6 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+</section>
 <section id="working-locally" class="level2">
 <h2 class="anchored" data-anchor-id="working-locally">Working Locally</h2>
 <p>From the repository root:</p>
