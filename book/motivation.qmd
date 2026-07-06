@@ -23,6 +23,18 @@ Here $x$ is the unknown image or object, $A$ is the forward model, $y$ is the me
 
 That opposite direction is usually difficult. Information may have been blurred, sampled, hidden, corrupted, or compressed. Some information may be weakened. Some may be missing entirely. A reconstruction method must therefore do more than invert a formula. It must use assumptions.
 
+The course follows one identity in several forms:
+
+$$
+\text{measurement model}
+\quad\Longrightarrow\quad
+\text{regularized reconstruction}
+\quad\Longrightarrow\quad
+\text{learned reconstruction}.
+$$
+
+The point is not that every problem must use a neural network. The point is that neural networks become natural once we understand why data alone often cannot determine a stable image. Learning is one way to supply prior information; it does not remove the inverse problem.
+
 ## Why Images Are Different
 
 Images are not just long signals. They are spatial objects. A pixel has neighbors. Edges have geometry. Textures have scale and orientation. Objects can occlude other objects. Small structures may matter.

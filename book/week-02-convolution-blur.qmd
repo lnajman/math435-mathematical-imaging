@@ -34,6 +34,8 @@ $$
 
 The first arrow is image formation. The second arrow is the inverse problem.
 
+This chapter gives the first concrete operator $A$ that is more interesting than a mask. A blur operator still has a clear physical interpretation, but it already shows why reconstruction cannot be only "apply the inverse." Some image components pass through the forward model clearly; others pass through weakly and need stabilizing assumptions.
+
 ## Local Weighted Averages
 
 Convolution begins with a local rule. For a one-dimensional signal $x$, define
@@ -327,3 +329,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Boundary conditions are modeling choices.
 - Deblurring is unstable because blur weakens information that inversion tries to recover.
 - A deblurring method is only as meaningful as the forward model it assumes.
+- Blur introduces the course pattern: forward operators can be easy to apply and difficult to invert responsibly.

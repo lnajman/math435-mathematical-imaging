@@ -30,6 +30,8 @@ If the forward model weakens a frequency component, then inversion must amplify 
 
 This is why Fourier analysis is not only a transform. In imaging, it is a diagnostic tool.
 
+In the course arc, Fourier analysis is the first representation that lets us separate data-supported components from fragile components. It gives a language for saying which directions of the image space are transmitted strongly, which are transmitted weakly, and which are dangerous to reconstruct without regularization.
+
 ## One-Dimensional Frequencies
 
 A basic length-$N$ oscillation is
@@ -338,3 +340,4 @@ or open the notebook in Colab from the link at the top of this chapter.
 - Fourier coefficients have magnitude and phase.
 - Convolution becomes multiplication in the Fourier domain.
 - Blur suppresses frequencies, and inverse filtering can amplify noise.
+- Fourier analysis prepares the later regularization question: which weakened components should be trusted, damped, or supplied by a prior?

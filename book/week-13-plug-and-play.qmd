@@ -51,6 +51,8 @@ $$
 
 This makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.
 
+PnP is also where the middle and right parts of the course identity meet. Classical variational reconstruction gives an iteration with a data step and a prior step. Neural reconstruction can replace the prior step by a learned denoiser. The forward model still asks for measurement consistency, while the denoiser supplies learned image structure.
+
 ## Proximal Algorithms
 
 A standard variational model is
@@ -480,3 +482,4 @@ In the notebook, compare the data residual and the visual result as denoising st
 - Denoiser strength controls an implicit regularization tradeoff.
 - Always check both image quality and consistency with measurements.
 - Hybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.
+- PnP shows learning entering exactly where classical reconstruction already needed prior information.

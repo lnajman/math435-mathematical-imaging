@@ -469,6 +469,17 @@ $$
 
 Classical methods make the prior explicit. Learned methods often make the prior more powerful but less transparent. Hybrid methods try to keep the best of both: physics and measurement consistency from inverse problems, expressive image models from data.
 
+The chapters can also be read as a sequence of roles:
+
+| Course role | Where it appears |
+|---|---|
+| define the unknown and measurement | images, masks, blur, Fourier analysis |
+| understand uncertainty and instability | noise, likelihoods, ill-posedness |
+| choose explicit prior information | Tikhonov, TV, sparsity, wavelets |
+| compute the reconstruction | gradient, proximal, and iterative methods |
+| learn prior information | data-driven priors, denoisers, unrolled updates |
+| justify trust | residuals, robustness, failures, and documentation |
+
 The goal is not to choose one camp forever. The goal is to ask the right questions:
 
 - What information was measured?

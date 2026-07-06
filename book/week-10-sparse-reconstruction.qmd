@@ -312,6 +312,8 @@ In each case, we hope that the representation separates meaningful structure fro
 
 Fixed sparse priors are transparent but limited. Learned representations are expressive but can be harder to analyze. This tradeoff will become central in the later chapters.
 
+This is the chapter where the prior moves from "the image should be smooth" to "the image should be simple in the right coordinates." That change matters. A neural network can later be understood as learning coordinates, filters, or features in which the reconstruction task becomes easier. Sparse reconstruction is the interpretable version of that idea.
+
 ## Common Mistakes
 
 A first mistake is to say that sparsity is an intrinsic property of an image. Sparsity depends on the representation.
@@ -355,3 +357,4 @@ In the notebook, vary the number of measurements and the sparsity level separate
 - Sparse reconstruction works when the measurement model and sparse representation are compatible.
 - Sparsity can stabilize reconstruction, but a mismatched representation can select the wrong explanation.
 - Learned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.
+- The central question becomes: who chose the representation, and why should it fit this imaging task?

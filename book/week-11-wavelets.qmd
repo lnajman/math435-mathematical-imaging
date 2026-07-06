@@ -46,6 +46,8 @@ Wavelets also give a concrete example of a representation that is not learned bu
 
 The price is a localization tradeoff. Fourier is perfectly localized in frequency but not in space. Compactly supported wavelets are localized in space and scale, but they do not isolate a single exact frequency. This is a practical form of the time-frequency or space-frequency uncertainty principle: one cannot be perfectly localized in both domains at once.
 
+In the course arc, wavelets resolve a tension introduced in Chapter 3. Fourier gives orthogonal directions and a Pythagorean energy decomposition, but those directions are global. Wavelets keep the orthogonal-decomposition viewpoint while making many basis functions local. That is why wavelets are a natural last fixed representation before learned features enter the course.
+
 ## Haar Intuition
 
 The Haar wavelet is the simplest wavelet example.
@@ -324,3 +326,4 @@ In the notebook, compare compression and denoising. Compression asks how many co
 - Wavelet family, scale depth, threshold, and boundary handling are modeling choices.
 - Representation choice controls the success of sparse reconstruction.
 - Wavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.
+- Wavelets make the Fourier-to-neural bridge concrete: from global handcrafted coordinates to localized handcrafted features to learned features.

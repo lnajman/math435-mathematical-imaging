@@ -20,6 +20,8 @@ $$
 
 Mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.
 
+The formula above should be read as the spine of the book, not as three separate topics. The left side describes how measurements are formed. The middle describes how classical reconstruction balances data fit and prior assumptions. The right side describes one modern possibility: a learned map or learned component. The course keeps asking when these arrows are justified.
+
 The book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the [project page](../project/index.qmd).
 
 Each chapter connects:
@@ -40,7 +42,10 @@ For each chapter, students should be able to answer:
 2. What is the forward model?
 3. What information is lost or degraded?
 4. What computation tests the idea?
-5. What can go wrong?
+5. What prior, regularizer, or learned information is being used?
+6. What can go wrong?
+
+The same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.
 
 ## Current Chapters
 
