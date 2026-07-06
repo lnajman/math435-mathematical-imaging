@@ -339,12 +339,12 @@ This syllabus must be augmented by a syllabus supplement for students.
 <tr>
 <td rowspan="3"><strong>Coursework</strong>.</td>
 <td colspan="2">Quiz 1</td>
-<td>Week 4 (7.5%)</td>
+<td>Week 4 (7.5%, 20 minutes)</td>
 <td rowspan="3">45%</td>
 </tr>
 <tr>
 <td colspan="2">Quiz 2</td>
-<td>Week 12 (7.5%)</td>
+<td>Week 12 (7.5%, 20 minutes)</td>
 </tr>
 <tr>
 <td colspan="2">Project and Presentation</td>
@@ -366,6 +366,8 @@ This syllabus must be augmented by a syllabus supplement for students.
 ## Instructor Policy on Late Submission of Assignments
 
 ### Quizzes
+
+There will be two quizzes: Quiz 1 in Week 4 and Quiz 2 in Week 12. Each quiz is 20 minutes long.
 
 There will be no make-up quizzes. If the student fails to attend a scheduled quiz **without** an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.
 
@@ -443,7 +445,7 @@ Please ensure that you sign your name on the Attendance register. If you do not 
 <tr>
 <td style="text-align: center;">04</td>
 <td>Noise models: Gaussian and Poisson; likelihood formulation<br />
-Quiz 1</td>
+Quiz 1 (20 minutes)</td>
 </tr>
 <tr>
 <td style="text-align: center;">05</td>
@@ -478,7 +480,7 @@ Midterm</td>
 <tr>
 <td style="text-align: center;">12</td>
 <td>Modern computational imaging: model-based vs data-driven reconstruction<br />
-Quiz 2</td>
+Quiz 2 (20 minutes)</td>
 </tr>
 <tr>
 <td style="text-align: center;">13</td>

@@ -25,21 +25,21 @@ Should an imaging algorithm use a prior we write down, or one it learns from exa
 - Explain why neural imaging is still an inverse-problem story.
 - Identify forward models, priors, solvers, and training data.
 - Interpret a neural network as a parameterized operator.
-- Learn a small patch prior from image data.
 - Discuss generalization and failure modes.
+- Leave the final 20 minutes for Quiz 2.
 :::
 
-## 75-Minute Plan
+## Teaching Plan + Quiz 2
 
 | Time | Work |
 |---:|---|
-| 0-8 min | recap: TV, sparsity, wavelets |
-| 8-16 min | central identity and model-based pipeline |
-| 16-32 min | data-driven imaging pipeline |
-| 32-44 min | neural networks as learned operators |
-| 44-60 min | learned patch prior example |
-| 60-70 min | notebook activity |
-| 70-75 min | synthesis and exit check |
+| 0-6 min | recap: TV, sparsity, wavelets |
+| 6-15 min | central identity and model-based pipeline |
+| 15-28 min | data-driven imaging pipeline |
+| 28-40 min | neural networks as learned operators |
+| 40-52 min | learned priors, shift, and risk |
+| 52-55 min | quiz transition |
+| 55-75 min | Quiz 2 (20 minutes) |
 
 ## Bridge from Week 11
 
@@ -474,52 +474,16 @@ Many modern methods combine both philosophies:
 This is the doorway to plug-and-play and learned regularization.
 :::
 
-## Code Demo: Run Week 12 Examples {.code-small}
-
-From the repository root:
-
-```bash
-python3 examples/week12_model_data.py
-python3 examples/make_week12_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
-
-## In-Class Notebook Activity
-
-::: {.time-tag}
-10 minutes
-:::
+## Before Quiz 2
 
 ::: {.exercise-box}
-Open the Week 12 notebook.
+Use the central identity as the organizing question:
 
-1. Change the number of learned PCA components.
-2. Change the noise level.
-3. Change the training crop.
-4. Compare Gaussian, wavelet, and learned patch priors.
-5. Test on a different image.
+1. What part of the method comes from the forward model?
+2. What part comes from an explicit prior?
+3. What part is learned from examples?
+4. How could the reconstruction fail on new data?
 :::
-
-## Quiz-Style Check
-
-::: {.exercise-box}
-Answer quickly:
-
-1. What does a model-based method specify explicitly?
-2. What does a data-driven method learn?
-3. Why is a neural network an operator?
-4. What is distribution shift?
-:::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| model-based | forward model, data term, prior, solver |
-| data-driven | parameters from examples and a loss |
-| neural operator | maps an input image to an output image |
-| distribution shift | test data differs from training data |
 
 ## What Students Should Remember
 
@@ -535,15 +499,6 @@ Answer quickly:
 
 ::: {.checklist}
 - Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
-- Run the week notebook and change at least one important parameter.
+- Run the Week 12 notebook and test one distribution shift.
 - Write one claim-evidence-limit sentence about today's model.
 :::
-
-## Next Time
-
-Plug-and-play and learned regularization:
-
-- iterative algorithms with learned denoisers;
-- replacing proximal operators;
-- learned priors inside optimization loops;
-- convergence questions.

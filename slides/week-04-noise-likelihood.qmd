@@ -24,22 +24,21 @@ If two pixels have the same recorded value, do we have the same confidence in bo
 - Distinguish deterministic degradation from random noise.
 - Model additive Gaussian noise.
 - Model photon-counting Poisson noise.
-- Compare signal-to-noise behavior.
 - Derive likelihood-based data terms for reconstruction.
+- Leave the final 20 minutes for Quiz 1.
 :::
 
-## 75-Minute Plan
+## Teaching Plan + Quiz 1
 
 | Time | Work |
 |---:|---|
-| 0-8 min | recap Fourier and inverse filtering |
-| 8-18 min | observe noise in real images |
-| 18-32 min | Gaussian noise model |
-| 32-47 min | Poisson noise model |
-| 47-58 min | SNR and repeated measurements |
-| 58-68 min | likelihoods and data fidelity |
-| 68-73 min | notebook activity |
-| 73-75 min | exit question |
+| 0-5 min | recap Fourier and inverse filtering |
+| 5-17 min | observe noise and introduce likelihood |
+| 17-29 min | Gaussian noise and least squares |
+| 29-41 min | Poisson noise and photon counts |
+| 41-52 min | likelihoods as data-fidelity terms |
+| 52-55 min | quiz transition |
+| 55-75 min | Quiz 1 (20 minutes) |
 
 ## Bridge from Week 3
 
@@ -499,15 +498,15 @@ Which one is symmetric around its minimizer? Which one requires $x>0$?
 | Natural for | read noise, aggregate errors | photon-limited imaging |
 | Constraint | often unconstrained | positive mean |
 
-## Part 4: Repeated Measurements {.section-slide}
+## Part 4: What Repetition Can Fix {.section-slide}
 
 ::: {.section-kicker}
-Noise can average out
+Noise can average out, missing information cannot
 :::
 
 Independence matters
 
-## Averaging Gaussian Noise
+## Averaging and Its Limit
 
 If
 
@@ -525,13 +524,9 @@ $$
 
 has noise standard deviation $\sigma/\sqrt{m}$.
 
-## Averaging Picture
-
 ::: {.figure-frame}
 ![](../assets/figures/week04-averaging.png){fig-alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"}
 :::
-
-## What Averaging Cannot Do
 
 ::: {.question-box}
 If the person is hidden behind a tree, can averaging many photographs reveal the hidden person?
@@ -614,61 +609,16 @@ $$
 :::
 :::
 
-## Code Demo: Run Week 4 Examples {.code-small}
-
-From the repository root:
-
-```bash
-python3 examples/week04_noise_likelihood.py
-python3 examples/make_week04_figures.py
-python3 scripts/build_notebooks.py
-./scripts/quarto render
-```
-
-## In-Class Notebook Activity
-
-::: {.time-tag}
-5 minutes
-:::
+## Before Quiz 1
 
 ::: {.exercise-box}
-Open the Week 4 notebook.
+Use the same questions we used all morning:
 
-1. Change Gaussian `sigma`.
-2. Change Poisson `peak_photons`.
-3. Compare RMSE, residual histograms, and image appearance.
+1. What was measured?
+2. What uncertainty model is assumed?
+3. What data term follows from that assumption?
+4. What information is still missing from the data?
 :::
-
-## Quiz-Style Check
-
-::: {.exercise-box}
-For each observation, choose Gaussian, Poisson, or neither:
-
-1. independent additive errors with fixed variance;
-2. photon counts with variance equal to the mean;
-3. saturation at the maximum sensor value;
-4. low-light measurements with very few photons.
-:::
-
-## End-of-Class Checkpoint
-
-::: {.exercise-box}
-Answer in one sentence each:
-
-1. Why does Gaussian noise lead to least squares?
-2. Why is Poisson noise signal-dependent?
-3. What is SNR?
-4. What does a likelihood contribute to an inverse problem?
-:::
-
-## Suggested Answers
-
-| Question | Short answer |
-|---|---|
-| Gaussian to least squares | the negative log of a Gaussian density is quadratic |
-| Poisson signal dependence | mean and variance are both $\lambda$ |
-| SNR | signal strength divided by typical noise size |
-| likelihood role | it defines the data fidelity term |
 
 ## What Students Should Remember
 
@@ -684,15 +634,6 @@ Answer in one sentence each:
 
 ::: {.checklist}
 - Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
-- Run the week notebook and change at least one important parameter.
+- Run the Week 4 notebook and change Gaussian `sigma` or Poisson `peak_photons`.
 - Write one claim-evidence-limit sentence about today's model.
 :::
-
-## Next Time
-
-Bayesian and variational reconstruction:
-
-- priors and regularization;
-- maximum a posteriori estimation;
-- Tikhonov regularization;
-- choosing the balance parameter.
