@@ -7042,11 +7042,18 @@
     "text": "Part 4: What Repetition Can Fix\n\nNoise can average out, missing information cannot\n\nIndependence matters"
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#averaging-and-its-limit",
-    "href": "slides/week-04-noise-likelihood.html#averaging-and-its-limit",
+    "objectID": "slides/week-04-noise-likelihood.html#averaging-gaussian-noise",
+    "href": "slides/week-04-noise-likelihood.html#averaging-gaussian-noise",
     "title": "Noise Models and Likelihoods",
-    "section": "Averaging and Its Limit",
-    "text": "Averaging and Its Limit\nIf\n\ny^{(j)} = x + \\eta^{(j)},\n\\qquad\n\\eta^{(j)}\\sim\\mathcal{N}(0,\\sigma^2),\n\nand the noise samples are independent, then\n\n\\bar{y}=\\frac{1}{m}\\sum_{j=1}^m y^{(j)}\n\nhas noise standard deviation \\sigma/\\sqrt{m}.\n\n\n\n\nIf the person is hidden behind a tree, can averaging many photographs reveal the hidden person?\n\n\nAveraging reduces random noise in recorded data. It does not recover scene content that never reached the sensor."
+    "section": "Averaging Gaussian Noise",
+    "text": "Averaging Gaussian Noise\nIf\n\ny^{(j)} = x + \\eta^{(j)},\n\\qquad\n\\eta^{(j)}\\sim\\mathcal{N}(0,\\sigma^2),\n\nand the noise samples are independent, then\n\n\\bar{y}=\\frac{1}{m}\\sum_{j=1}^m y^{(j)}\n\nhas noise standard deviation \\sigma/\\sqrt{m}.\n\nIndependent random noise decreases like 1/\\sqrt{m} when we average repeated measurements."
+  },
+  {
+    "objectID": "slides/week-04-noise-likelihood.html#averaging-picture-and-limit",
+    "href": "slides/week-04-noise-likelihood.html#averaging-picture-and-limit",
+    "title": "Noise Models and Likelihoods",
+    "section": "Averaging Picture and Limit",
+    "text": "Averaging Picture and Limit\n\n\n\n\nHidden behind a tree: can averaging reveal what never reached the sensor?\n\n\nAveraging reduces random noise. It cannot recover unobserved scene content."
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#part-5-from-likelihood-to-reconstruction",

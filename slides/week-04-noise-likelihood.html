@@ -511,7 +511,7 @@ y = f(x)+\eta,
 </section>
 <section id="python-demo-gaussian-noise" class="slide level2 code-small">
 <h2>Python Demo: Gaussian Noise</h2>
-<div id="4dad8cac" class="cell">
+<div id="d8519442" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb1-3"><a></a></span>
@@ -726,8 +726,8 @@ z_i \sim \operatorname{Poisson}(f_i(x)).
 </div>
 <p>Independence matters</p>
 </section>
-<section id="averaging-and-its-limit" class="slide level2">
-<h2>Averaging and Its Limit</h2>
+<section id="averaging-gaussian-noise" class="slide level2">
+<h2>Averaging Gaussian Noise</h2>
 <p>If</p>
 <p><span class="math display">
 y^{(j)} = x + \eta^{(j)},
@@ -739,14 +739,20 @@ y^{(j)} = x + \eta^{(j)},
 \bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
 </span></p>
 <p>has noise standard deviation <span class="math inline">\sigma/\sqrt{m}</span>.</p>
+<div class="takeaway-box">
+<p>Independent random noise decreases like <span class="math inline">1/\sqrt{m}</span> when we average repeated measurements.</p>
+</div>
+</section>
+<section id="averaging-picture-and-limit" class="slide level2">
+<h2>Averaging Picture and Limit</h2>
 <div class="figure-frame">
-<p><img data-src="../assets/figures/week04-averaging.png" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"></p>
+<p><img data-src="../assets/figures/week04-averaging.png" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations" height="260"></p>
 </div>
 <div class="question-box">
-<p>If the person is hidden behind a tree, can averaging many photographs reveal the hidden person?</p>
+<p>Hidden behind a tree: can averaging reveal what never reached the sensor?</p>
 </div>
 <div class="takeaway-box">
-<p>Averaging reduces random noise in recorded data. It does not recover scene content that never reached the sensor.</p>
+<p>Averaging reduces random noise. It cannot recover unobserved scene content.</p>
 </div>
 </section>
 <section id="part-5-from-likelihood-to-reconstruction" class="slide level2 section-slide">
@@ -794,7 +800,7 @@ D(y, f(x)) + \lambda R(x).
 </section>
 <section id="examples-of-data-terms" class="slide level2">
 <h2>Examples of Data Terms</h2>
-<div class="two-col">
+<div class="two-col compact">
 <div class="definition-box">
 <p>Gaussian:</p>
 <p><span class="math display">
