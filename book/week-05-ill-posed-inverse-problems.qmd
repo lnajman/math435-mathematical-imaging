@@ -161,6 +161,82 @@ This is the role of a prior. A prior does not create measured information. It ra
 
 The strength and danger of priors are the same: they make choices. A good prior can stabilize an impossible problem. A bad or mismatched prior can hallucinate structure, erase unusual details, or make a reconstruction look more certain than the data justify.
 
+## A Two-Pixel Inverse Problem
+
+A very small example already contains the whole issue. Suppose the unknown is
+
+$$
+x=
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix},
+$$
+
+but the sensor records only the sum
+
+$$
+y=x_1+x_2.
+$$
+
+In matrix form,
+
+$$
+y=
+\begin{bmatrix}
+1 & 1
+\end{bmatrix}
+x.
+$$
+
+If the observation is $y=10$, then all of these are exact solutions:
+
+$$
+\begin{bmatrix}5\\5\end{bmatrix},
+\quad
+\begin{bmatrix}10\\0\end{bmatrix},
+\quad
+\begin{bmatrix}0\\10\end{bmatrix},
+\quad
+\begin{bmatrix}20\\-10\end{bmatrix}.
+$$
+
+The data determine the sum, not the two components separately. The vector
+
+$$
+z=
+\begin{bmatrix}
+1\\
+-1
+\end{bmatrix}
+$$
+
+is invisible because
+
+$$
+\begin{bmatrix}
+1 & 1
+\end{bmatrix}
+z=0.
+$$
+
+Adding any multiple of $z$ changes the unknown but not the data:
+
+$$
+\begin{bmatrix}5\\5\end{bmatrix}
++
+t
+\begin{bmatrix}1\\-1\end{bmatrix}
+\quad
+\longmapsto
+\quad
+10.
+$$
+
+To choose one solution, we must add something that is not in the measurement. If we require nonnegativity, we remove some candidates. If we prefer small norm, we choose $(5,5)$. If we prefer sparsity, we may choose $(10,0)$ or $(0,10)$. The data did not decide among these; the prior did.
+
+This tiny example is the same mathematical phenomenon as missing pixels, limited measurements, and many reconstruction tasks. The dimension is smaller, but the logic is identical.
+
 ## What The Data Determine
 
 Ill-posedness forces a useful question:
@@ -180,6 +256,29 @@ This gives three regimes:
 This table is a better mental model than asking whether a method "recovers" the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.
 
 For learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.
+
+## Why A Small Residual Is Not Enough
+
+It is tempting to judge a reconstruction by the size of
+
+$$
+\|Ax-y\|.
+$$
+
+A small residual means the reconstruction explains the measurements under the forward model. That is important, but it is not the same as correctness.
+
+In a non-unique problem, two images can have exactly the same residual. In a noisy problem, an image can fit the noise too closely. In a model-mismatch problem, an image can fit the mathematical model while failing the real physical situation.
+
+This gives a useful separation:
+
+| Question | What it tests |
+|---|---|
+| Is $\|A\hat{x}-y\|$ small? | data consistency |
+| Is the solution stable under small changes in $y$? | robustness to noise |
+| Are invisible or weak directions being chosen reasonably? | prior suitability |
+| Does the forward model describe the acquisition? | physical modeling |
+
+A reconstruction should pass more than the first test. The residual asks whether the answer agrees with the data. Ill-posedness asks whether the data were enough to determine that answer.
 
 ## Stability
 

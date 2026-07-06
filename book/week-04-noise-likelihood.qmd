@@ -311,6 +311,36 @@ Real cameras may contain several noise sources at once. A simplified pipeline mi
 
 This is one reason image restoration papers often specify both the degradation model and the noise model. "Denoising" by itself is not one problem. Denoising Gaussian noise, photon noise, JPEG artifacts, and sensor artifacts are related but not identical tasks.
 
+## A One-Pixel Likelihood Example
+
+It is useful to pause on a single pixel before returning to full images.
+
+Suppose a sensor records the value
+
+$$
+y_i=20.
+$$
+
+Under a Gaussian model with fixed standard deviation $\sigma=5$, the candidates $x_i=15$ and $x_i=25$ are treated symmetrically. Both are five units away from the observation. The squared residual is the same:
+
+$$
+(15-20)^2=(25-20)^2.
+$$
+
+Under a Poisson count model, the comparison is different. If the predicted mean is $\lambda=15$, the observation $20$ is above the mean. If the predicted mean is $\lambda=25$, the observation $20$ is below the mean. These two discrepancies are not judged only by their absolute distance from 20. They are judged by how likely a count of 20 is under each proposed mean.
+
+This is the main reason likelihood matters. A residual is not self-explanatory. It becomes meaningful only after we say what variability the measurement process allows.
+
+For a whole image, the same idea is repeated over many pixels or measurements. The data term adds up many local judgments:
+
+$$
+D(f(x),y)
+=
+\text{total surprise of the observed data if the image were }x.
+$$
+
+This is not a formal definition of every possible data term, but it is a good reading habit. A data term measures how surprising the observation would be under a proposed reconstruction and measurement model.
+
 ## Noise Versus Model Error
 
 Noise is random variation around a model. Model error means the model itself is wrong or incomplete.
@@ -404,6 +434,31 @@ The practical habit is simple:
 4. test whether the residuals behave like the model predicts.
 
 The fourth step is often where modeling becomes scientific rather than decorative.
+
+## Reading Residual Images
+
+After reconstructing an image $\hat{x}$, the residual is
+
+$$
+r = f(\hat{x})-y.
+$$
+
+A residual image is not just an error picture. It is a diagnostic of the model. If the forward model and noise model are reasonable, the residual should look like the kind of noise the model permits.
+
+For Gaussian noise with constant variance, residuals should be roughly centered around zero and should not show strong image structure. If the residual still contains edges, texture, or repeated patterns from the scene, the reconstruction has failed to explain part of the measurement. If the residual is almost exactly zero everywhere, that may sound good, but in noisy data it can also mean the method has fit noise too aggressively.
+
+For Poisson data, residuals are harder to read directly because the variability depends on intensity. A raw residual in a bright region and the same raw residual in a dark region do not have the same statistical meaning. One often looks at normalized residuals or uses the negative log-likelihood itself.
+
+This gives a practical checklist:
+
+| Residual behavior | Possible interpretation |
+|---|---|
+| structured residual | wrong forward model, underfitting, or missing component |
+| residual much smaller than expected noise | possible overfitting to noise |
+| residual much larger than expected noise | over-regularization, wrong model, or poor parameter choice |
+| residual consistent with noise model | necessary but not sufficient evidence |
+
+The last row is important. A good residual does not prove the reconstruction is true. In an ill-posed problem, several different images can produce statistically acceptable residuals. Residual checks test data consistency, not uniqueness.
 
 ## Common Mistakes
 

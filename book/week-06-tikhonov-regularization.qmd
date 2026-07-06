@@ -239,6 +239,65 @@ The unstable amplification is replaced by strong damping.
 
 The price is that the same damping also affects true signal components in weakly observed directions. If fine details live in directions with small $\sigma_i$, Tikhonov may remove them along with the noise. This is the central bias-stability tradeoff.
 
+## A Two-Direction Calculation
+
+Consider two singular directions. One is strongly observed:
+
+$$
+\sigma_1=1.
+$$
+
+The other is weakly observed:
+
+$$
+\sigma_2=0.01.
+$$
+
+Direct inversion uses the factors
+
+$$
+\frac{1}{\sigma_1}=1,
+\qquad
+\frac{1}{\sigma_2}=100.
+$$
+
+So any noise component in the second direction is multiplied by 100.
+
+With Tikhonov regularization and $\lambda=0.01$, the factors become
+
+$$
+\frac{\sigma_1}{\sigma_1^2+\lambda}
+=
+\frac{1}{1.01}
+\approx 0.99,
+$$
+
+and
+
+$$
+\frac{\sigma_2}{\sigma_2^2+\lambda}
+=
+\frac{0.01}{0.0001+0.01}
+\approx 0.99.
+$$
+
+The inverse factor for the weak direction is no longer 100. It is brought down to about the same numerical scale as the strong direction.
+
+But notice what this means for true image information. A true coefficient in direction $v_i$ is multiplied overall by
+
+$$
+\frac{\sigma_i^2}{\sigma_i^2+\lambda}.
+$$
+
+For the weak direction above, this is
+
+$$
+\frac{0.0001}{0.0101}
+\approx 0.01.
+$$
+
+So if the true image had important information in that weak direction, most of that information is also damped. Tikhonov does not know whether a weak-direction coefficient is noise or true detail. It only knows that the data do not measure that direction reliably. Regularization is therefore a controlled refusal to trust unstable information too much.
+
 ## Generalized Tikhonov
 
 The basic penalty $\|x\|_2^2$ is not the only possibility. A common generalized form is
@@ -277,6 +336,25 @@ The visually best value of $\lambda$ depends on the task and risk.
 In a low-stakes photograph, a visually pleasing reconstruction may be enough. In medical imaging, a parameter that hides small structures can be unacceptable even if the image looks smoother.
 
 When reading the image panel, do not search only for the prettiest image. Ask what changed as $\lambda$ increased. Are noise oscillations reduced? Are edges softened? Are small features removed? The correct parameter depends on which errors matter for the application.
+
+## Choosing Lambda Without The Truth
+
+In notebooks, we often plot RMSE because the clean image is known. In a real inverse problem, the clean image is usually unknown. That means students should not develop the habit of saying "choose the $\lambda$ with the lowest RMSE" as if it were always available.
+
+Without the truth, useful evidence includes:
+
+| Evidence | Question it answers |
+|---|---|
+| residual norm $\|Ax_\lambda-y\|$ | does the reconstruction fit the measured data at the expected noise level? |
+| solution norm or penalty $\|x_\lambda\|$ or $\|Lx_\lambda\|$ | how strongly is the prior shaping the image? |
+| parameter sweep | does the conclusion survive a range of $\lambda$ values? |
+| visual inspection of known structures | are expected features preserved or erased? |
+| validation data or repeated measurements | does the choice generalize beyond one observation? |
+| task metric | does the reconstruction support the intended scientific or practical decision? |
+
+No single diagnostic is universal. A residual can be small because the method fit noise. A smooth image can look clean while hiding important detail. A parameter that works for one blur strength or noise level may fail for another.
+
+This is why a parameter sweep is often the most honest first report. Instead of showing only one reconstruction, show what changes as $\lambda$ moves from too small to too large. Then explain why the chosen value is defensible for the task.
 
 ## Lambda As A Trust Parameter
 
