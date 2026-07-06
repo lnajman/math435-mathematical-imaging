@@ -34,6 +34,18 @@ Regularization chooses the model. Optimization chooses how the model is solved.
 
 This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.
 
+Optimization is therefore not an afterthought. It is the mechanism by which a modeling idea becomes an image.
+
+In this course, an iterative method should be read as a sequence of questions:
+
+1. what does the current image predict?
+2. how does that prediction disagree with the data?
+3. how should the disagreement be transported back to image space?
+4. how should the prior modify the result?
+5. when should the iteration stop?
+
+This reading will make sparse reconstruction, plug-and-play methods, and unrolled neural networks feel like variations on a common pattern rather than unrelated techniques.
+
 ## Three Questions For Any Algorithm
 
 When reading or reporting an iterative reconstruction method, ask three questions.
@@ -118,6 +130,23 @@ For a quadratic imaging energy, each gradient step has a concrete meaning. The r
 
 This interpretation matters more than the formula. If an implementation has the wrong adjoint, the algorithm may still run and decrease some quantity, but not the intended reconstruction energy.
 
+## The Adjoint Is Part Of The Model
+
+The term $A^\top(Au-y)$ is easy to write and easy to underestimate. In imaging, $A^\top$ is not just "the inverse of $A$." It is the adjoint operator: the operation that moves measurement-space residuals back into image-space directions.
+
+Examples:
+
+| Forward operation $A$ | Adjoint role $A^\top$ |
+|---|---|
+| blur | correlate with the flipped blur kernel |
+| masking | put residuals back on observed pixels and zeros elsewhere |
+| Fourier sampling | place sampled Fourier residuals back and inverse transform |
+| tomography projection | backproject projection residuals |
+
+If $A^\top$ is wrong, the update points in the wrong direction. The resulting image may look plausible, but the iteration is no longer solving the stated variational problem.
+
+This point matters for neural methods too. A learned reconstruction block may be flexible, but the data-consistency part should still use the correct measurement operator when the physics are known.
+
 ## Step Size
 
 Step size controls stability.
@@ -182,6 +211,20 @@ Stopping is not a purely technical detail. In some iterative reconstructions, ea
 Early stopping can help because the first iterations often recover stable, large-scale structure, while later iterations may fit noise or unstable components. This is not guaranteed for every algorithm, but it is a useful phenomenon to recognize.
 
 When reporting computational experiments, it is therefore not enough to state the final image. One should also state the number of iterations, stopping rule, step size, and objective being minimized.
+
+## When Descent Is Not Enough
+
+For an explicit energy, a decreasing objective is good news, but it is not the whole story. The algorithm may be faithfully minimizing a model whose assumptions are wrong or whose parameter is poorly chosen.
+
+Three situations should be kept separate:
+
+| Observation | Possible meaning |
+|---|---|
+| objective decreases and image improves | solver and model are working together |
+| objective decreases but image worsens | the model or parameter may be wrong for the task |
+| objective fails to decrease | solver, step size, implementation, or nonsmooth handling may be wrong |
+
+This is why optimization diagnostics should be paired with reconstruction diagnostics. Objective curves say whether the solver is following the mathematical model. Residuals, parameter sweeps, and task checks say whether the model deserves trust.
 
 ## Nonsmooth Terms
 
@@ -407,6 +450,22 @@ can be turned into a network by learning parts of the update. For example, one m
 This is called unrolling. It is powerful because the architecture inherits the logic of an inverse-problem algorithm while gaining flexibility from data.
 
 The central caution remains: learned updates should still respect the measurements. A visually plausible image is not automatically a data-consistent reconstruction.
+
+## What Unrolling Learns
+
+An unrolled network begins from an iterative algorithm and keeps only a finite number of steps. Some parts may remain fixed by the physics, while other parts are learned.
+
+| Classical ingredient | Possible learned replacement |
+|---|---|
+| fixed step size | learned step size per layer |
+| fixed threshold | learned threshold or shrinkage function |
+| hand-designed proximal map | CNN denoiser or learned correction block |
+| fixed transform | learned filters or learned representation |
+| many iterations to convergence | fixed-depth trained architecture |
+
+This makes unrolling attractive for imaging. It can preserve the discipline of data consistency while replacing a simple prior with a richer learned prior.
+
+But it also changes the kind of evidence required. A classical convex algorithm can sometimes be justified by convergence theory. An unrolled network is usually justified by training data, validation experiments, robustness checks, and measurement-consistency tests. The mathematics does not disappear; it changes role.
 
 ## Common Failure Modes
 

@@ -43,6 +43,18 @@ TV therefore teaches two lessons at once:
 - good image priors should match the structures we want to preserve;
 - better priors often require better optimization tools.
 
+## From Smoothness To Edge Sparsity
+
+Quadratic smoothing and TV differ because they express different beliefs about images.
+
+Quadratic smoothing says that large gradients are expensive. If a reconstruction contains a sharp jump, the squared-gradient penalty strongly prefers to spread that jump over several pixels. This is why edges become ramps.
+
+TV says something different: many gradients should be zero or small, but some large gradients are acceptable. In other words, TV is a sparsity prior on the gradient image. It does not say that the image itself should be sparse. It says that the set of places where the image changes should be relatively simple.
+
+This is a major conceptual step. We are no longer only asking for a small image or a smooth image. We are asking for an image whose important changes are concentrated. That is closer to how many objects appear in images: nearly constant regions separated by boundaries.
+
+The same idea will later reappear in wavelets and neural networks. A prior is often a claim that the image is simple in some representation. TV chooses the gradient representation.
+
 ## Continuous Total Variation
 
 For a grayscale image $u:\Omega\to\mathbb{R}$,
@@ -125,6 +137,24 @@ D_{\text{Poisson}}(y,u)
 $$
 
 This is the modular power of variational modeling. The data model and image prior can be changed separately.
+
+The same modularity applies beyond denoising. For deblurring, one may write
+
+$$
+\operatorname*{argmin}_u
+\frac12\|Au-y\|_2^2+\lambda\operatorname{TV}(u).
+$$
+
+For inpainting with a masking operator $M$, one may write
+
+$$
+\operatorname*{argmin}_u
+\frac12\|Mu-y\|_2^2+\lambda\operatorname{TV}(u).
+$$
+
+The TV term is the same kind of prior in both cases, but the data term changes because the measurement process changes. This reinforces the course template: the prior describes preferred images; the fidelity term describes the experiment.
+
+This distinction matters when interpreting the result. A TV inpainting method can create sharp boundaries inside a missing region, but those boundaries are prior-selected unless the data term actually measured them.
 
 ## l2 Versus TV Penalties
 
@@ -288,6 +318,22 @@ Higher-order regularizers and combined models were developed partly to reduce th
 TV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.
 
 This is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.
+
+## What TV Buys And What It Cannot Buy
+
+TV buys a very specific kind of robustness. It can suppress many small oscillations without forcing every strong transition to become blurry. This is why it is useful for denoising, deblurring, segmentation-like preprocessing, and some inverse problems where boundaries matter.
+
+But TV cannot buy information that the data did not contain. If the measurement has a nullspace, TV chooses one point among many possible explanations. If an edge is hidden by occlusion, TV may draw a plausible continuation, but the edge is not thereby measured. If a texture is meaningful for the task, TV may simplify it because texture looks like many gradients.
+
+The right way to praise TV is therefore precise:
+
+| Good claim | Too strong a claim |
+|---|---|
+| TV can preserve some sharp transitions better than quadratic smoothing. | TV recovers the true edges. |
+| TV is useful when images have sparse gradients. | TV understands objects. |
+| TV gives an interpretable prior. | TV removes only noise. |
+
+This precision prepares the comparison with learned priors. Neural methods may preserve richer structures than TV, but they face the same epistemic question: did the structure come from the data, or from the prior?
 
 ## Edge Preservation Is Not Truth
 

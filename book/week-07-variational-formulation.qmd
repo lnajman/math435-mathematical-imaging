@@ -65,6 +65,31 @@ we can ask precise questions:
 
 This is why variational methods remain useful even in a course that leads to neural networks. A neural network may replace the regularizer, approximate the optimizer, or learn the inverse map directly, but the same tension remains: the reconstruction must negotiate between data consistency and image plausibility.
 
+## The Course Identity Revisited
+
+The central identity of the course can now be written in its most explicit form:
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(y,f(x))+\lambda R(x).
+$$
+
+This formula should be read from left to right as a story.
+
+| Symbol | Question it answers |
+|---|---|
+| $x$ | what image or object are we trying to recover? |
+| $f(x)$ | what would the sensor measure if $x$ were true? |
+| $D(y,f(x))$ | how surprising is the measured data under that prediction? |
+| $R(x)$ | what image structures are preferred before or beyond the data? |
+| $\lambda$ | how strongly should the prior influence the reconstruction? |
+
+The formula is compact, but it contains nearly every modeling choice. A change in $D$ changes the assumed noise or discrepancy. A change in $R$ changes the image prior. A change in $f$ changes the physics. A change in $\lambda$ changes the trust balance.
+
+This is why a variational model is more than a way to compute an image. It is a way to say what the reconstruction is allowed to believe.
+
 ## Energy As A Model
 
 An energy is not only a numerical function. It is a modeling statement.
@@ -105,6 +130,38 @@ Variational reconstruction separates modeling from computation. This is one of i
 | Regularizer | what images are plausible? | small norm, smoothness, TV, sparsity |
 
 The optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.
+
+## Penalized And Constrained Views
+
+The same reconstruction idea can often be written in more than one form. The penalized form is
+
+$$
+\min_x D(y,f(x))+\lambda R(x).
+$$
+
+A constrained version may instead write
+
+$$
+\min_x R(x)
+\quad\text{subject to}\quad
+D(y,f(x))\leq \delta.
+$$
+
+This says: among images that explain the data to the expected noise level $\delta$, choose the most regular one.
+
+Another version is
+
+$$
+\min_x D(y,f(x))
+\quad\text{subject to}\quad
+R(x)\leq c.
+$$
+
+This says: among sufficiently plausible images, choose the one that fits the data best.
+
+These formulations are not always exactly interchangeable in every technical setting, but they teach the same modeling idea. Reconstruction is a negotiation between data agreement and prior structure. The parameters $\lambda$, $\delta$, and $c$ are different ways of expressing how strict that negotiation should be.
+
+The constrained view is useful pedagogically because it reminds us that perfect data fit is usually not the goal. If the data are noisy, a residual of zero may mean overfitting. A good reconstruction should fit the data about as well as the measurement model justifies, not more faithfully than the sensor deserves.
 
 ## Energy As Negotiation
 
@@ -147,6 +204,20 @@ records at least four choices:
 This is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.
 
 Learned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.
+
+## Model, Solver, Evidence
+
+It is useful to keep three layers separate:
+
+| Layer | Typical question |
+|---|---|
+| model | what objective, loss, or fixed point defines the desired reconstruction? |
+| solver | what algorithm or network produces the reconstruction? |
+| evidence | how do we know the result is data-consistent, stable, and useful? |
+
+Classical variational reconstruction often makes the first layer explicit. We write an energy, then design an algorithm to minimize it. Neural reconstruction may blur the layers: the network architecture, training loss, and data set can all shape the effective prior. The variational viewpoint remains helpful because it asks us to recover the hidden audit trail.
+
+For student projects, this separation is practical. A project report should not only show a final image. It should say what model is being solved or approximated, what procedure produced the image, and what evidence supports the interpretation.
 
 ## What The Energy Cannot See
 
