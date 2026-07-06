@@ -8,6 +8,7 @@ project:
   render:
     - index.qmd
     - syllabus.qmd
+    - preparation.qmd
     - quizzes.qmd
     - llm-use.qmd
     - practice.qmd
@@ -55,6 +56,8 @@ website:
         text: Home
       - href: classes.qmd
         text: Classes
+      - href: preparation.qmd
+        text: Prepare
       - href: practice.qmd
         text: Practice
       - href: quizzes.qmd

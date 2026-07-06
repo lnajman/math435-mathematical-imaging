@@ -6,7 +6,7 @@ This page is the weekly entry point for the course.
 
 Most slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.
 
-Use each week as a checklist:
+Use each week as a checklist. The [preparation rhythm](preparation.qmd) explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.
 
 - **Before class:** read enough of the book chapter to recognize the main objects.
 - **In class:** use the slides for discussion, derivation, and guided examples.

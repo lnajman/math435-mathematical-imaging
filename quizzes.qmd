@@ -4,6 +4,8 @@ title: "Quiz Information"
 
 This page summarizes student-facing quiz logistics. The [syllabus](syllabus.qmd) remains the authority for grading, assessment policies, approved absences, and course rules.
 
+For the ordinary weekly study workflow before and after quiz weeks, see [How To Prepare For Class](preparation.qmd).
+
 There are two quizzes in the course. Each quiz is 20 minutes long.
 
 | Quiz | Week | Timing in Class | Weight |

@@ -25,6 +25,8 @@ For each week:
 
 The notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.
 
+For the full weekly workflow connecting book, slides, notebooks, and these practice notes, see [How To Prepare For Class](preparation.qmd).
+
 ## Claim-Evidence-Limit Template
 
 Use this short format when a notebook or class discussion produces a reconstruction result.

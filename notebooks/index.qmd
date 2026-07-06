@@ -6,6 +6,8 @@ The notebooks are student-facing companions to the slide decks. They are designe
 
 Use the Google Colab links if you want to work in a browser without installing Python locally.
 
+The [preparation rhythm](../preparation.qmd) explains when to use notebooks in relation to the book, slides, weekly practice, quizzes, and project work.
+
 ## How To Use Them
 
 For each notebook:

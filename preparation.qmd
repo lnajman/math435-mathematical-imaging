@@ -1,0 +1,86 @@
+---
+title: "How To Prepare For Class"
+---
+
+This page gives a weekly rhythm for using the course materials. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the [syllabus](syllabus.qmd).
+
+The course has several resources because they do different jobs:
+
+| Resource | Main Role |
+|---|---|
+| [Class roadmap](classes.qmd) | Find the week, slides, notebook, book chapter, quiz timing, and project milestones. |
+| [Book](book/index.qmd) | Read the slower explanation and connect the mathematics to the course arc. |
+| [Slides](classes.qmd) | Follow the live class path: questions, derivations, examples, and discussion. |
+| [Notebooks](notebooks/index.qmd) | Change parameters, run experiments, and see what the model does. |
+| [Practice](practice.qmd) | Keep short ungraded notes about evidence, assumptions, and failure cases. |
+| [Quizzes](quizzes.qmd) | Check quiz timing, permitted tools, and preparation focus. |
+| [Project](project/index.qmd) | Prepare the modeling project, report, LLM-use statement, and oral defense. |
+
+## Weekly Rhythm
+
+| Moment | What To Do | Output |
+|---|---|---|
+| Before class | Open the [class roadmap](classes.qmd). Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path. | One question you want class to answer. |
+| During class | Use the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure. | Annotated notes around the main model. |
+| After class | Run the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter. | One observation about what changed and why. |
+| Weekly consolidation | Write a short claim-evidence-limit note using the [practice page](practice.qmd). | A study note you can reuse for quizzes, exams, and projects. |
+| Before the next class | Revisit the previous week only enough to state the central idea without looking. | A one-sentence bridge to the next topic. |
+
+## The Five Questions
+
+For every method in the course, classical or learned, ask:
+
+1. What is measured?
+2. What is unknown?
+3. What forward process connects them?
+4. What prior, regularizer, or learned assumption is added?
+5. What could fail, even if the image looks plausible?
+
+These questions are more important than memorizing code. The code is there to test the model.
+
+## A Minimal 30-Minute Preparation
+
+When time is short before class:
+
+1. Read the first page or introduction of the book chapter.
+2. Look at the timing slide in the weekly deck.
+3. Find the main formula or model.
+4. Write one question about what the model assumes.
+5. Check whether the week has a quiz, project milestone, or special constraint.
+
+This is enough to enter the class discussion without treating the materials as a pile of disconnected files.
+
+## Quiz Weeks
+
+Weeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:
+
+- use the [quiz information page](quizzes.qmd) to check timing and permitted tools;
+- review the weekly practice prompts from the preceding material;
+- focus on explaining concepts and models without code;
+- remember that only a basic calculator is permitted unless the instructor explicitly announces a change.
+
+Actual quiz questions and solution keys are not published on this website before the quizzes.
+
+## Project Weeks
+
+The project should grow from the same weekly rhythm. Each project should be able to answer:
+
+- What is the forward model?
+- What is the reconstruction method?
+- What evidence supports the result?
+- What parameter or modeling choice matters?
+- What failure case did the team test?
+- What role did the LLM play, and what did the students verify themselves?
+
+Use the [project page](project/index.qmd) for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus.
+
+## LLM Use While Studying
+
+LLMs can be useful for explanation, debugging, and alternative examples, but they should not replace the student's own model of the problem. A good use pattern is:
+
+1. try the notebook or derivation yourself;
+2. ask the LLM to explain one obstacle;
+3. verify the answer against the book, slides, notebook output, or instructor guidance;
+4. write the final understanding in your own words.
+
+LLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense.
