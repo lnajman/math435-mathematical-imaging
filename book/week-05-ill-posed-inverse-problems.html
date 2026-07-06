@@ -403,6 +403,7 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#the-inverse-problem" id="toc-the-inverse-problem" class="nav-link" data-scroll-target="#the-inverse-problem">The Inverse Problem</a></li>
+  <li><a href="#four-kinds-of-information" id="toc-four-kinds-of-information" class="nav-link" data-scroll-target="#four-kinds-of-information">Four Kinds Of Information</a></li>
   <li><a href="#hadamard-well-posedness" id="toc-hadamard-well-posedness" class="nav-link" data-scroll-target="#hadamard-well-posedness">Hadamard Well-Posedness</a></li>
   <li><a href="#existence" id="toc-existence" class="nav-link" data-scroll-target="#existence">Existence</a></li>
   <li><a href="#non-uniqueness" id="toc-non-uniqueness" class="nav-link" data-scroll-target="#non-uniqueness">Non-Uniqueness</a></li>
@@ -410,6 +411,7 @@ window.Quarto = {
   <li><a href="#nullspace-language" id="toc-nullspace-language" class="nav-link" data-scroll-target="#nullspace-language">Nullspace Language</a></li>
   <li><a href="#a-two-pixel-inverse-problem" id="toc-a-two-pixel-inverse-problem" class="nav-link" data-scroll-target="#a-two-pixel-inverse-problem">A Two-Pixel Inverse Problem</a></li>
   <li><a href="#what-the-data-determine" id="toc-what-the-data-determine" class="nav-link" data-scroll-target="#what-the-data-determine">What The Data Determine</a></li>
+  <li><a href="#a-reconstruction-audit" id="toc-a-reconstruction-audit" class="nav-link" data-scroll-target="#a-reconstruction-audit">A Reconstruction Audit</a></li>
   <li><a href="#why-a-small-residual-is-not-enough" id="toc-why-a-small-residual-is-not-enough" class="nav-link" data-scroll-target="#why-a-small-residual-is-not-enough">Why A Small Residual Is Not Enough</a></li>
   <li><a href="#stability" id="toc-stability" class="nav-link" data-scroll-target="#stability">Stability</a></li>
   <li><a href="#imaging-instability" id="toc-imaging-instability" class="nav-link" data-scroll-target="#imaging-instability">Imaging Instability</a></li>
@@ -480,6 +482,48 @@ y = Ax.
 <p>Linear models include idealized blur, Fourier sampling, and recorded-pixel selection after image formation. But physical scene occlusion is different: hidden content may never reach the sensor, so the inverse problem is not simply “undoing a linear operator.”</p>
 <p>This chapter is the conceptual center of the course. If inverse problems were always well posed, imaging would be mostly an exercise in applying the inverse of a known transformation. The interesting part begins when the inverse map is missing, ambiguous, or unstable.</p>
 <p>The same idea will later explain why neural networks enter the story. A neural network is not magic information recovery. It is a learned way of choosing among possible reconstructions, stabilizing an unstable inverse, or encoding what images tend to look like in a training set.</p>
+</section>
+<section id="four-kinds-of-information" class="level2">
+<h2 class="anchored" data-anchor-id="four-kinds-of-information">Four Kinds Of Information</h2>
+<p>Before choosing an algorithm, it is useful to ask what kind of information the data contain. Not every reconstruction error has the same cause.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>What happened physically or mathematically</th>
+<th>What a method can do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>well measured</td>
+<td>the data strongly constrain the feature</td>
+<td>recover it mainly from data</td>
+</tr>
+<tr class="even">
+<td>noisy but measured</td>
+<td>the feature affects the data, but randomly</td>
+<td>reduce uncertainty with statistics or repeated data</td>
+</tr>
+<tr class="odd">
+<td>weakly measured</td>
+<td>the feature affects the data only slightly</td>
+<td>stabilize the estimate and report uncertainty</td>
+</tr>
+<tr class="even">
+<td>not measured</td>
+<td>the feature did not affect the data</td>
+<td>choose a plausible completion using assumptions</td>
+</tr>
+</tbody>
+</table>
+<p>This distinction is central for imaging. A hidden object behind an opaque occluder is not the same as a faint object corrupted by noise. In the first case, the missing information did not reach the sensor from that viewpoint. In the second, the information may be present but unreliable.</p>
+<p>The language of inverse problems helps prevent a common confusion. Reconstruction does not always mean recovery of measured truth. Sometimes it means estimating, stabilizing, completing, or choosing among possibilities. Those are legitimate tasks, but they should not be described as if all details came directly from the data.</p>
 </section>
 <section id="hadamard-well-posedness" class="level2">
 <h2 class="anchored" data-anchor-id="hadamard-well-posedness">Hadamard Well-Posedness</h2>
@@ -582,6 +626,8 @@ Mx_1 = Mx_2.
 <p>Both create missing information, but they are not the same physical model. If a person is hidden behind a tree in a single image, the hidden content is not encoded in the pixels behind the tree. No inverse algorithm can recover exact information that was never measured.</p>
 <p>This distinction is important pedagogically because images are not one-dimensional audio mixtures. In audio, under favorable conditions, several sources can contribute additively to the same microphone signal. Separation can sometimes exploit that mixture structure. In a single photograph, an occluder may block light from the hidden object entirely. The hidden surface did not contribute additively to the measured pixel values.</p>
 <p>The mathematical question is therefore not only “can we invert <span class="math inline">A</span>?” It is also “was the information present in the data at all?”</p>
+<p>This is one of the differences between image reconstruction and source separation. If two instruments contribute to one audio recording, the measurement may contain a mixture of both sources. Under the right assumptions, one can sometimes separate the components because both contributed to the observed signal. But if a tree blocks a person in a single photograph, the hidden person’s light did not contribute to the blocked pixels. A method may infer that a person is likely to continue behind the tree, but that continuation is a prior-based completion, not a direct measurement.</p>
+<p>This does not make completion useless. Human vision does this constantly, and image algorithms often need to do it. The important distinction is epistemic: the completed region may be plausible, coherent, and useful, while still being less data-supported than visible regions.</p>
 </section>
 <section id="nullspace-language" class="level2">
 <h2 class="anchored" data-anchor-id="nullspace-language">Nullspace Language</h2>
@@ -698,6 +744,46 @@ t
 </table>
 <p>This table is a better mental model than asking whether a method “recovers” the image. Different parts of the image may be supported to different degrees. A large smooth structure may be strongly supported while a small edge, texture, or hidden region is mostly prior-selected.</p>
 <p>For learned methods, the same question remains. A network may produce a plausible detail in a weakly observed direction, but plausibility does not tell us whether the detail was measured. It tells us that the detail is compatible with what the network has learned.</p>
+</section>
+<section id="a-reconstruction-audit" class="level2">
+<h2 class="anchored" data-anchor-id="a-reconstruction-audit">A Reconstruction Audit</h2>
+<p>A good habit is to annotate a reconstruction by evidence, not only by appearance. For any visible structure in a reconstructed image, ask:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Audit question</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Did this structure affect the measured data?</td>
+<td>separates recovery from hallucinated completion</td>
+</tr>
+<tr class="even">
+<td>Is it in a strongly or weakly observed direction?</td>
+<td>estimates sensitivity to noise</td>
+</tr>
+<tr class="odd">
+<td>Would a different prior produce a different structure?</td>
+<td>detects prior-selected content</td>
+</tr>
+<tr class="even">
+<td>Does the residual change if the structure is removed?</td>
+<td>tests data support through the forward model</td>
+</tr>
+<tr class="odd">
+<td>Is the feature important for the task?</td>
+<td>connects mathematics to risk</td>
+</tr>
+</tbody>
+</table>
+<p>The same audit applies to classical and neural methods. A Tikhonov reconstruction, a total variation reconstruction, and a neural reconstruction may all produce plausible images. The inverse-problem question is more precise: which parts are forced by the data, which parts are stabilized by the prior, and which parts are essentially chosen by the model?</p>
+<p>This question will become increasingly important as the course moves toward neural networks. Learned methods can make prior-selected content look extremely convincing. That visual strength is useful, but it increases the need to distinguish measurement evidence from learned plausibility.</p>
 </section>
 <section id="why-a-small-residual-is-not-enough" class="level2">
 <h2 class="anchored" data-anchor-id="why-a-small-residual-is-not-enough">Why A Small Residual Is Not Enough</h2>

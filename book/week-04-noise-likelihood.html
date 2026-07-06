@@ -404,6 +404,7 @@ window.Quarto = {
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#why-noise-models-matter" id="toc-why-noise-models-matter" class="nav-link" data-scroll-target="#why-noise-models-matter">Why Noise Models Matter</a></li>
   <li><a href="#seeing-noise-before-modeling-it" id="toc-seeing-noise-before-modeling-it" class="nav-link" data-scroll-target="#seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</a></li>
+  <li><a href="#from-acquisition-to-data-term" id="toc-from-acquisition-to-data-term" class="nav-link" data-scroll-target="#from-acquisition-to-data-term">From Acquisition To Data Term</a></li>
   <li><a href="#gaussian-noise" id="toc-gaussian-noise" class="nav-link" data-scroll-target="#gaussian-noise">Gaussian Noise</a></li>
   <li><a href="#gaussian-data-fidelity" id="toc-gaussian-data-fidelity" class="nav-link" data-scroll-target="#gaussian-data-fidelity">Gaussian Data Fidelity</a></li>
   <li><a href="#gaussian-limitations" id="toc-gaussian-limitations" class="nav-link" data-scroll-target="#gaussian-limitations">Gaussian Limitations</a></li>
@@ -481,6 +482,39 @@ y = Ax + \eta.
 <li>a prior or regularizer, which tells us what kinds of images are plausible when the data are incomplete or unstable.</li>
 </ul>
 <p>Noise models are how we derive the first ingredient. Without them, a cost function such as <span class="math inline">\|Ax-y\|_2^2</span> can look like a purely algebraic habit. With them, the same expression becomes a statement about the measurement process.</p>
+<p>This is the first step in a three-chapter bridge:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chapter</th>
+<th>Main question</th>
+<th>Mathematical object</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Chapter 4</td>
+<td>How should disagreement with the data be measured?</td>
+<td>likelihood and data fidelity</td>
+</tr>
+<tr class="even">
+<td>Chapter 5</td>
+<td>Why is data agreement not enough?</td>
+<td>ill-posedness and invisible directions</td>
+</tr>
+<tr class="odd">
+<td>Chapter 6</td>
+<td>How do we stabilize the reconstruction?</td>
+<td>regularization and priors</td>
+</tr>
+</tbody>
+</table>
+<p>The key point is that the data term is not neutral. It encodes a claim about the acquisition. If the claim is wrong, the reconstruction may optimize a beautiful formula for the wrong physical problem.</p>
 </section>
 <section id="seeing-noise-before-modeling-it" class="level2">
 <h2 class="anchored" data-anchor-id="seeing-noise-before-modeling-it">Seeing Noise Before Modeling It</h2>
@@ -499,6 +533,26 @@ y = Ax + \eta.
 </ul>
 <p>When you look at the figure, pay attention to two different effects. The Gaussian image has a similar grain in dark and bright regions. The Poisson image is more uneven in low-light regions because the number of photons there is small. The important point is not only that the images look different. The important point is that the same numerical error may have different statistical meanings in different parts of the image.</p>
 <p>For example, an error of five gray levels may be large in a dark region and ordinary in a bright region under a photon-counting model. A good data term should know this.</p>
+</section>
+<section id="from-acquisition-to-data-term" class="level2">
+<h2 class="anchored" data-anchor-id="from-acquisition-to-data-term">From Acquisition To Data Term</h2>
+<p>Most reconstruction methods in this course can be read through the same sequence:</p>
+<ol type="1">
+<li>propose how an image <span class="math inline">x</span> would generate a noiseless prediction <span class="math inline">f(x)</span>;</li>
+<li>propose how the sensor randomly turns that prediction into data <span class="math inline">y</span>;</li>
+<li>compute the likelihood <span class="math inline">p(y\mid x)</span>;</li>
+<li>minimize the negative log-likelihood as the data fidelity term.</li>
+</ol>
+<p>Symbolically,</p>
+<p><span class="math display">
+\text{physics}+\text{noise}
+\quad\longrightarrow\quad
+p(y\mid x)
+\quad\longrightarrow\quad
+D(f(x),y).
+</span></p>
+<p>This is not only a probabilistic derivation. It is also a modeling discipline. Before writing a reconstruction objective, we should be able to say what kind of disagreement the objective treats as surprising.</p>
+<p>For example, a squared residual treats positive and negative errors symmetrically and treats the same residual size the same way everywhere. That is reasonable for additive Gaussian noise with constant variance. It is less natural for photon counts, where uncertainty depends on brightness. The form of the cost function should remember the form of the measurement.</p>
 </section>
 <section id="gaussian-noise" class="level2">
 <h2 class="anchored" data-anchor-id="gaussian-noise">Gaussian Noise</h2>
@@ -825,6 +879,7 @@ D(y,f(x)) + \lambda R(x).
 <p>A data term is a contract between the reconstruction and the measurement process.</p>
 <p>For Gaussian noise, the contract says: large squared residuals are unlikely. For Poisson counts, it says: predicted photon counts should explain the observed counts with the correct signal-dependent uncertainty. For weighted least squares, it says: residuals in reliable measurements matter more than residuals in uncertain measurements.</p>
 <p>This contract is only as good as the assumptions behind it. If the noise model is wrong, the data term may over-penalize harmless deviations or under-penalize serious ones. If the forward model is wrong, the reconstruction may fit the mathematical data term while failing the physical problem.</p>
+<p>This is especially important in imaging because the forward model may include nonlinear or irreversible effects. A data term can say whether a proposed image is compatible with the recorded pixels under the chosen model. It cannot by itself say whether the model included every physical effect that mattered.</p>
 <p>The practical habit is simple:</p>
 <ol type="1">
 <li>state the forward model;</li>
@@ -833,6 +888,7 @@ D(y,f(x)) + \lambda R(x).
 <li>test whether the residuals behave like the model predicts.</li>
 </ol>
 <p>The fourth step is often where modeling becomes scientific rather than decorative.</p>
+<p>In later chapters, the same habit will apply to neural methods. A neural network may provide a powerful image model, but if the measurement is known, its output should still be checked against the data term. The network can help choose a plausible reconstruction; the likelihood helps say whether that reconstruction explains the measurement.</p>
 </section>
 <section id="reading-residual-images" class="level2">
 <h2 class="anchored" data-anchor-id="reading-residual-images">Reading Residual Images</h2>
