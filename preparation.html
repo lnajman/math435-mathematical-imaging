@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Quiz Information – MATH 435: Mathematical Imaging</title>
+<title>How To Prepare For Class – MATH 435: Mathematical Imaging</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,49 +71,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -143,7 +100,7 @@ window.Quarto = {
 <span class="menu-text">Classes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./preparation.html"> 
+    <a class="nav-link active" href="./preparation.html" aria-current="page"> 
 <span class="menu-text">Prepare</span></a>
   </li>  
   <li class="nav-item">
@@ -151,7 +108,7 @@ window.Quarto = {
 <span class="menu-text">Practice</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./quizzes.html" aria-current="page"> 
+    <a class="nav-link" href="./quizzes.html"> 
 <span class="menu-text">Quizzes</span></a>
   </li>  
   <li class="nav-item">
@@ -190,19 +147,21 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#allowed-tools" id="toc-allowed-tools" class="nav-link active" data-scroll-target="#allowed-tools">Allowed Tools</a></li>
-  <li><a href="#what-to-prepare" id="toc-what-to-prepare" class="nav-link" data-scroll-target="#what-to-prepare">What To Prepare</a></li>
-  <li><a href="#how-to-study" id="toc-how-to-study" class="nav-link" data-scroll-target="#how-to-study">How To Study</a></li>
-  <li><a href="#what-will-not-be-published-here" id="toc-what-will-not-be-published-here" class="nav-link" data-scroll-target="#what-will-not-be-published-here">What Will Not Be Published Here</a></li>
+  <li><a href="#weekly-rhythm" id="toc-weekly-rhythm" class="nav-link active" data-scroll-target="#weekly-rhythm">Weekly Rhythm</a></li>
+  <li><a href="#the-five-questions" id="toc-the-five-questions" class="nav-link" data-scroll-target="#the-five-questions">The Five Questions</a></li>
+  <li><a href="#a-minimal-30-minute-preparation" id="toc-a-minimal-30-minute-preparation" class="nav-link" data-scroll-target="#a-minimal-30-minute-preparation">A Minimal 30-Minute Preparation</a></li>
+  <li><a href="#quiz-weeks" id="toc-quiz-weeks" class="nav-link" data-scroll-target="#quiz-weeks">Quiz Weeks</a></li>
+  <li><a href="#project-weeks" id="toc-project-weeks" class="nav-link" data-scroll-target="#project-weeks">Project Weeks</a></li>
+  <li><a href="#llm-use-while-studying" id="toc-llm-use-while-studying" class="nav-link" data-scroll-target="#llm-use-while-studying">LLM Use While Studying</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/quizzes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/preparation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quiz Information</h1>
+<h1 class="title">How To Prepare For Class</h1>
 </div>
 
 
@@ -219,93 +178,143 @@ window.Quarto = {
 </header>
 
 
-<p>This page summarizes student-facing quiz logistics. The <a href="./syllabus.html">syllabus</a> remains the authority for grading, assessment policies, approved absences, and course rules.</p>
-<p>For the ordinary weekly study workflow before and after quiz weeks, see <a href="./preparation.html">How To Prepare For Class</a>.</p>
-<p>There are two quizzes in the course. Each quiz is 20 minutes long.</p>
+<p>This page gives a weekly rhythm for using the course materials. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the <a href="./syllabus.html">syllabus</a>.</p>
+<p>The course has several resources because they do different jobs:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Quiz</th>
-<th style="text-align: right;">Week</th>
-<th>Timing in Class</th>
-<th style="text-align: right;">Weight</th>
+<th>Resource</th>
+<th>Main Role</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Quiz 1</td>
-<td style="text-align: right;">4</td>
-<td>final 20 minutes of the Week 4 meeting</td>
-<td style="text-align: right;">7.5%</td>
+<td><a href="./classes.html">Class roadmap</a></td>
+<td>Find the week, slides, notebook, book chapter, quiz timing, and project milestones.</td>
 </tr>
 <tr class="even">
-<td>Quiz 2</td>
-<td style="text-align: right;">12</td>
-<td>final 20 minutes of the Week 12 meeting</td>
-<td style="text-align: right;">7.5%</td>
+<td><a href="./book/index.html">Book</a></td>
+<td>Read the slower explanation and connect the mathematics to the course arc.</td>
+</tr>
+<tr class="odd">
+<td><a href="./classes.html">Slides</a></td>
+<td>Follow the live class path: questions, derivations, examples, and discussion.</td>
+</tr>
+<tr class="even">
+<td><a href="./notebooks/index.html">Notebooks</a></td>
+<td>Change parameters, run experiments, and see what the model does.</td>
+</tr>
+<tr class="odd">
+<td><a href="./practice.html">Practice</a></td>
+<td>Keep short ungraded notes about evidence, assumptions, and failure cases.</td>
+</tr>
+<tr class="even">
+<td><a href="./quizzes.html">Quizzes</a></td>
+<td>Check quiz timing, permitted tools, and preparation focus.</td>
+</tr>
+<tr class="odd">
+<td><a href="./project/index.html">Project</a></td>
+<td>Prepare the modeling project, report, LLM-use statement, and oral defense.</td>
 </tr>
 </tbody>
 </table>
-<section id="allowed-tools" class="level2">
-<h2 class="anchored" data-anchor-id="allowed-tools">Allowed Tools</h2>
-<p>The syllabus states that only a basic calculator is permitted in quizzes. Unless the instructor explicitly announces a formal change, this means no notebooks, no internet, no course website, no code execution, and no LLM assistance during the quiz.</p>
-</section>
-<section id="what-to-prepare" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-prepare">What To Prepare</h2>
-<p>Quiz preparation should focus on the mathematical story of the course, not on memorizing code.</p>
+<section id="weekly-rhythm" class="level2">
+<h2 class="anchored" data-anchor-id="weekly-rhythm">Weekly Rhythm</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Quiz</th>
-<th>Main Preparation Focus</th>
+<th>Moment</th>
+<th>What To Do</th>
+<th>Output</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Quiz 1</td>
-<td>images as unknowns, forward models, convolution and blur, Fourier-domain interpretation, Gaussian and Poisson noise, likelihoods, and what data can or cannot reveal</td>
+<td>Before class</td>
+<td>Open the <a href="./classes.html">class roadmap</a>. Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path.</td>
+<td>One question you want class to answer.</td>
 </tr>
 <tr class="even">
-<td>Quiz 2</td>
-<td>ill-posedness, regularization, variational models, optimization ideas, sparse and wavelet representations, model-based versus data-driven reconstruction, learned priors, and reliability risks</td>
+<td>During class</td>
+<td>Use the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure.</td>
+<td>Annotated notes around the main model.</td>
+</tr>
+<tr class="odd">
+<td>After class</td>
+<td>Run the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.</td>
+<td>One observation about what changed and why.</td>
+</tr>
+<tr class="even">
+<td>Weekly consolidation</td>
+<td>Write a short claim-evidence-limit note using the <a href="./practice.html">practice page</a>.</td>
+<td>A study note you can reuse for quizzes, exams, and projects.</td>
+</tr>
+<tr class="odd">
+<td>Before the next class</td>
+<td>Revisit the previous week only enough to state the central idea without looking.</td>
+<td>A one-sentence bridge to the next topic.</td>
 </tr>
 </tbody>
 </table>
-<p>For each topic, students should be able to identify:</p>
-<ul>
-<li>what is measured;</li>
-<li>what is unknown;</li>
-<li>what assumptions are made;</li>
-<li>what mathematical term or algorithm follows from those assumptions;</li>
-<li>what can fail.</li>
-</ul>
 </section>
-<section id="how-to-study" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-study">How To Study</h2>
-<p>Use the class roadmap as the main study guide:</p>
-<ul>
-<li>review the corresponding book chapters;</li>
-<li>rerun the relevant notebooks and change one important parameter;</li>
-<li>answer the weekly practice prompt in your own words;</li>
-<li>explain the central identity of the course without relying on code:</li>
-</ul>
-<p><span class="math display">
-\text{measurement}
-\quad+\quad
-\text{prior or learned assumption}
-\quad+\quad
-\text{algorithm}
-\quad\Longrightarrow\quad
-\text{reconstruction}.
-</span></p>
+<section id="the-five-questions" class="level2">
+<h2 class="anchored" data-anchor-id="the-five-questions">The Five Questions</h2>
+<p>For every method in the course, classical or learned, ask:</p>
+<ol type="1">
+<li>What is measured?</li>
+<li>What is unknown?</li>
+<li>What forward process connects them?</li>
+<li>What prior, regularizer, or learned assumption is added?</li>
+<li>What could fail, even if the image looks plausible?</li>
+</ol>
+<p>These questions are more important than memorizing code. The code is there to test the model.</p>
 </section>
-<section id="what-will-not-be-published-here" class="level2">
-<h2 class="anchored" data-anchor-id="what-will-not-be-published-here">What Will Not Be Published Here</h2>
-<p>Actual quiz questions and solution keys will not be posted on this public website before the quizzes. Public pages may contain practice prompts and conceptual checks, but those are study aids rather than the quiz itself.</p>
+<section id="a-minimal-30-minute-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="a-minimal-30-minute-preparation">A Minimal 30-Minute Preparation</h2>
+<p>When time is short before class:</p>
+<ol type="1">
+<li>Read the first page or introduction of the book chapter.</li>
+<li>Look at the timing slide in the weekly deck.</li>
+<li>Find the main formula or model.</li>
+<li>Write one question about what the model assumes.</li>
+<li>Check whether the week has a quiz, project milestone, or special constraint.</li>
+</ol>
+<p>This is enough to enter the class discussion without treating the materials as a pile of disconnected files.</p>
+</section>
+<section id="quiz-weeks" class="level2">
+<h2 class="anchored" data-anchor-id="quiz-weeks">Quiz Weeks</h2>
+<p>Weeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:</p>
+<ul>
+<li>use the <a href="./quizzes.html">quiz information page</a> to check timing and permitted tools;</li>
+<li>review the weekly practice prompts from the preceding material;</li>
+<li>focus on explaining concepts and models without code;</li>
+<li>remember that only a basic calculator is permitted unless the instructor explicitly announces a change.</li>
+</ul>
+<p>Actual quiz questions and solution keys are not published on this website before the quizzes.</p>
+</section>
+<section id="project-weeks" class="level2">
+<h2 class="anchored" data-anchor-id="project-weeks">Project Weeks</h2>
+<p>The project should grow from the same weekly rhythm. Each project should be able to answer:</p>
+<ul>
+<li>What is the forward model?</li>
+<li>What is the reconstruction method?</li>
+<li>What evidence supports the result?</li>
+<li>What parameter or modeling choice matters?</li>
+<li>What failure case did the team test?</li>
+<li>What role did the LLM play, and what did the students verify themselves?</li>
+</ul>
+<p>Use the <a href="./project/index.html">project page</a> for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus.</p>
+</section>
+<section id="llm-use-while-studying" class="level2">
+<h2 class="anchored" data-anchor-id="llm-use-while-studying">LLM Use While Studying</h2>
+<p>LLMs can be useful for explanation, debugging, and alternative examples, but they should not replace the student’s own model of the problem. A good use pattern is:</p>
+<ol type="1">
+<li>try the notebook or derivation yourself;</li>
+<li>ask the LLM to explain one obstacle;</li>
+<li>verify the answer against the book, slides, notebook output, or instructor guidance;</li>
+<li>write the final understanding in your own words.</li>
+</ol>
+<p>LLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense.</p>
 
 
 </section>
@@ -719,7 +728,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/quizzes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/preparation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
