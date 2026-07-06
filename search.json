@@ -3200,6 +3200,18 @@
     ]
   },
   {
+    "objectID": "book/week-08-total-variation.html#from-smoothness-to-edge-sparsity",
+    "href": "book/week-08-total-variation.html#from-smoothness-to-edge-sparsity",
+    "title": "Total Variation Regularization",
+    "section": "From Smoothness To Edge Sparsity",
+    "text": "From Smoothness To Edge Sparsity\nQuadratic smoothing and TV differ because they express different beliefs about images.\nQuadratic smoothing says that large gradients are expensive. If a reconstruction contains a sharp jump, the squared-gradient penalty strongly prefers to spread that jump over several pixels. This is why edges become ramps.\nTV says something different: many gradients should be zero or small, but some large gradients are acceptable. In other words, TV is a sparsity prior on the gradient image. It does not say that the image itself should be sparse. It says that the set of places where the image changes should be relatively simple.\nThis is a major conceptual step. We are no longer only asking for a small image or a smooth image. We are asking for an image whose important changes are concentrated. That is closer to how many objects appear in images: nearly constant regions separated by boundaries.\nThe same idea will later reappear in wavelets and neural networks. A prior is often a claim that the image is simple in some representation. TV chooses the gradient representation.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
     "objectID": "book/week-08-total-variation.html#continuous-total-variation",
     "href": "book/week-08-total-variation.html#continuous-total-variation",
     "title": "Total Variation Regularization",
@@ -3228,7 +3240,7 @@
     "href": "book/week-08-total-variation.html#tv-denoising",
     "title": "Total Variation Regularization",
     "section": "TV Denoising",
-    "text": "TV Denoising\nThe classical Rudin-Osher-Fatemi model is\n\nu_\\lambda\n=\n\\operatorname*{argmin}_u\n\\frac12\\|u-y\\|_2^2\n+\n\\lambda\\,\\operatorname{TV}(u).\n\nThe data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.\nThis regularizer says: among images that fit the data, prefer images with small total variation.\nFor Gaussian denoising, the ROF model uses a squared-error fidelity because the noise assumption is Gaussian. If the data were photon counts, we would usually replace the fidelity term with a Poisson likelihood while keeping a TV prior:\n\n\\operatorname*{argmin}_u\nD_{\\text{Poisson}}(y,u)\n+\n\\lambda\\operatorname{TV}(u).\n\nThis is the modular power of variational modeling. The data model and image prior can be changed separately.",
+    "text": "TV Denoising\nThe classical Rudin-Osher-Fatemi model is\n\nu_\\lambda\n=\n\\operatorname*{argmin}_u\n\\frac12\\|u-y\\|_2^2\n+\n\\lambda\\,\\operatorname{TV}(u).\n\nThe data fidelity term keeps the reconstruction close to the noisy data. The TV term controls the total amount of change.\nThis regularizer says: among images that fit the data, prefer images with small total variation.\nFor Gaussian denoising, the ROF model uses a squared-error fidelity because the noise assumption is Gaussian. If the data were photon counts, we would usually replace the fidelity term with a Poisson likelihood while keeping a TV prior:\n\n\\operatorname*{argmin}_u\nD_{\\text{Poisson}}(y,u)\n+\n\\lambda\\operatorname{TV}(u).\n\nThis is the modular power of variational modeling. The data model and image prior can be changed separately.\nThe same modularity applies beyond denoising. For deblurring, one may write\n\n\\operatorname*{argmin}_u\n\\frac12\\|Au-y\\|_2^2+\\lambda\\operatorname{TV}(u).\n\nFor inpainting with a masking operator M, one may write\n\n\\operatorname*{argmin}_u\n\\frac12\\|Mu-y\\|_2^2+\\lambda\\operatorname{TV}(u).\n\nThe TV term is the same kind of prior in both cases, but the data term changes because the measurement process changes. This reinforces the course template: the prior describes preferred images; the fidelity term describes the experiment.\nThis distinction matters when interpreting the result. A TV inpainting method can create sharp boundaries inside a missing region, but those boundaries are prior-selected unless the data term actually measured them.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -3337,6 +3349,18 @@
     "title": "Total Variation Regularization",
     "section": "Strengths And Weaknesses",
     "text": "Strengths And Weaknesses\n\n\n\n\n\n\n\n\nProperty\nl2 smoothing\nTV\n\n\n\n\nNoise removal\nyes\nyes\n\n\nEdge preservation\nweak\nstrong\n\n\nOptimization\nsmooth linear problem\nnonsmooth convex problem\n\n\nTypical artifact\nblur\nstaircasing\n\n\nBest for\nsmooth images\npiecewise-smooth or piecewise-constant images\n\n\n\nTV may struggle with texture, fine repeated patterns, gradual shading, curved smooth surfaces, and strongly nonlocal structure.\nThis is not a failure of mathematics. It is a reminder that every regularizer is a modeling choice.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#what-tv-buys-and-what-it-cannot-buy",
+    "href": "book/week-08-total-variation.html#what-tv-buys-and-what-it-cannot-buy",
+    "title": "Total Variation Regularization",
+    "section": "What TV Buys And What It Cannot Buy",
+    "text": "What TV Buys And What It Cannot Buy\nTV buys a very specific kind of robustness. It can suppress many small oscillations without forcing every strong transition to become blurry. This is why it is useful for denoising, deblurring, segmentation-like preprocessing, and some inverse problems where boundaries matter.\nBut TV cannot buy information that the data did not contain. If the measurement has a nullspace, TV chooses one point among many possible explanations. If an edge is hidden by occlusion, TV may draw a plausible continuation, but the edge is not thereby measured. If a texture is meaningful for the task, TV may simplify it because texture looks like many gradients.\nThe right way to praise TV is therefore precise:\n\n\n\n\n\n\n\nGood claim\nToo strong a claim\n\n\n\n\nTV can preserve some sharp transitions better than quadratic smoothing.\nTV recovers the true edges.\n\n\nTV is useful when images have sparse gradients.\nTV understands objects.\n\n\nTV gives an interpretable prior.\nTV removes only noise.\n\n\n\nThis precision prepares the comparison with learned priors. Neural methods may preserve richer structures than TV, but they face the same epistemic question: did the structure come from the data, or from the prior?",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5517,6 +5541,18 @@
     ]
   },
   {
+    "objectID": "book/week-07-variational-formulation.html#the-course-identity-revisited",
+    "href": "book/week-07-variational-formulation.html#the-course-identity-revisited",
+    "title": "Variational Formulation",
+    "section": "The Course Identity Revisited",
+    "text": "The Course Identity Revisited\nThe central identity of the course can now be written in its most explicit form:\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x\nD(y,f(x))+\\lambda R(x).\n\nThis formula should be read from left to right as a story.\n\n\n\n\n\n\n\nSymbol\nQuestion it answers\n\n\n\n\nx\nwhat image or object are we trying to recover?\n\n\nf(x)\nwhat would the sensor measure if x were true?\n\n\nD(y,f(x))\nhow surprising is the measured data under that prediction?\n\n\nR(x)\nwhat image structures are preferred before or beyond the data?\n\n\n\\lambda\nhow strongly should the prior influence the reconstruction?\n\n\n\nThe formula is compact, but it contains nearly every modeling choice. A change in D changes the assumed noise or discrepancy. A change in R changes the image prior. A change in f changes the physics. A change in \\lambda changes the trust balance.\nThis is why a variational model is more than a way to compute an image. It is a way to say what the reconstruction is allowed to believe.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
     "objectID": "book/week-07-variational-formulation.html#energy-as-a-model",
     "href": "book/week-07-variational-formulation.html#energy-as-a-model",
     "title": "Variational Formulation",
@@ -5541,6 +5577,18 @@
     ]
   },
   {
+    "objectID": "book/week-07-variational-formulation.html#penalized-and-constrained-views",
+    "href": "book/week-07-variational-formulation.html#penalized-and-constrained-views",
+    "title": "Variational Formulation",
+    "section": "Penalized And Constrained Views",
+    "text": "Penalized And Constrained Views\nThe same reconstruction idea can often be written in more than one form. The penalized form is\n\n\\min_x D(y,f(x))+\\lambda R(x).\n\nA constrained version may instead write\n\n\\min_x R(x)\n\\quad\\text{subject to}\\quad\nD(y,f(x))\\leq \\delta.\n\nThis says: among images that explain the data to the expected noise level \\delta, choose the most regular one.\nAnother version is\n\n\\min_x D(y,f(x))\n\\quad\\text{subject to}\\quad\nR(x)\\leq c.\n\nThis says: among sufficiently plausible images, choose the one that fits the data best.\nThese formulations are not always exactly interchangeable in every technical setting, but they teach the same modeling idea. Reconstruction is a negotiation between data agreement and prior structure. The parameters \\lambda, \\delta, and c are different ways of expressing how strict that negotiation should be.\nThe constrained view is useful pedagogically because it reminds us that perfect data fit is usually not the goal. If the data are noisy, a residual of zero may mean overfitting. A good reconstruction should fit the data about as well as the measurement model justifies, not more faithfully than the sensor deserves.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
     "objectID": "book/week-07-variational-formulation.html#energy-as-negotiation",
     "href": "book/week-07-variational-formulation.html#energy-as-negotiation",
     "title": "Variational Formulation",
@@ -5558,6 +5606,18 @@
     "title": "Variational Formulation",
     "section": "Reading An Energy As An Audit Trail",
     "text": "Reading An Energy As An Audit Trail\nAn energy functional is an audit trail for the reconstruction.\nFor example,\n\nE(x)=D(Ax,y)+\\lambda R(x)\n\nrecords at least four choices:\n\n\n\nPart\nWhat it records\n\n\n\n\nA\nwhat measurement process is assumed\n\n\nD\nwhat noise or discrepancy model is assumed\n\n\nR\nwhat image structures are preferred\n\n\n\\lambda\nhow data fit and prior are balanced\n\n\n\nThis is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.\nLearned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
+    "objectID": "book/week-07-variational-formulation.html#model-solver-evidence",
+    "href": "book/week-07-variational-formulation.html#model-solver-evidence",
+    "title": "Variational Formulation",
+    "section": "Model, Solver, Evidence",
+    "text": "Model, Solver, Evidence\nIt is useful to keep three layers separate:\n\n\n\n\n\n\n\nLayer\nTypical question\n\n\n\n\nmodel\nwhat objective, loss, or fixed point defines the desired reconstruction?\n\n\nsolver\nwhat algorithm or network produces the reconstruction?\n\n\nevidence\nhow do we know the result is data-consistent, stable, and useful?\n\n\n\nClassical variational reconstruction often makes the first layer explicit. We write an energy, then design an algorithm to minimize it. Neural reconstruction may blur the layers: the network architecture, training loss, and data set can all shape the effective prior. The variational viewpoint remains helpful because it asks us to recover the hidden audit trail.\nFor student projects, this separation is practical. A project report should not only show a final image. It should say what model is being solved or approximated, what procedure produced the image, and what evidence supports the interpretation.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5785,7 +5845,7 @@
     "href": "book/week-09-optimization-methods.html#models-are-not-enough",
     "title": "Optimization Methods",
     "section": "Models Are Not Enough",
-    "text": "Models Are Not Enough\nA variational model defines a reconstruction as a minimizer:\n\n\\min_u E(u).\n\nAn optimization method gives a procedure for finding that minimizer:\n\nu^0,\\ u^1,\\ u^2,\\ldots\n\nRegularization chooses the model. Optimization chooses how the model is solved.\nThis distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.",
+    "text": "Models Are Not Enough\nA variational model defines a reconstruction as a minimizer:\n\n\\min_u E(u).\n\nAn optimization method gives a procedure for finding that minimizer:\n\nu^0,\\ u^1,\\ u^2,\\ldots\n\nRegularization chooses the model. Optimization chooses how the model is solved.\nThis distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.\nOptimization is therefore not an afterthought. It is the mechanism by which a modeling idea becomes an image.\nIn this course, an iterative method should be read as a sequence of questions:\n\nwhat does the current image predict?\nhow does that prediction disagree with the data?\nhow should the disagreement be transported back to image space?\nhow should the prior modify the result?\nwhen should the iteration stop?\n\nThis reading will make sparse reconstruction, plug-and-play methods, and unrolled neural networks feel like variations on a common pattern rather than unrelated techniques.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5841,6 +5901,18 @@
     ]
   },
   {
+    "objectID": "book/week-09-optimization-methods.html#the-adjoint-is-part-of-the-model",
+    "href": "book/week-09-optimization-methods.html#the-adjoint-is-part-of-the-model",
+    "title": "Optimization Methods",
+    "section": "The Adjoint Is Part Of The Model",
+    "text": "The Adjoint Is Part Of The Model\nThe term A^\\top(Au-y) is easy to write and easy to underestimate. In imaging, A^\\top is not just “the inverse of A.” It is the adjoint operator: the operation that moves measurement-space residuals back into image-space directions.\nExamples:\n\n\n\n\n\n\n\nForward operation A\nAdjoint role A^\\top\n\n\n\n\nblur\ncorrelate with the flipped blur kernel\n\n\nmasking\nput residuals back on observed pixels and zeros elsewhere\n\n\nFourier sampling\nplace sampled Fourier residuals back and inverse transform\n\n\ntomography projection\nbackproject projection residuals\n\n\n\nIf A^\\top is wrong, the update points in the wrong direction. The resulting image may look plausible, but the iteration is no longer solving the stated variational problem.\nThis point matters for neural methods too. A learned reconstruction block may be flexible, but the data-consistency part should still use the correct measurement operator when the physics are known.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
     "objectID": "book/week-09-optimization-methods.html#step-size",
     "href": "book/week-09-optimization-methods.html#step-size",
     "title": "Optimization Methods",
@@ -5870,6 +5942,18 @@
     "title": "Optimization Methods",
     "section": "Stopping Criteria",
     "text": "Stopping Criteria\nCommon stopping rules include:\n\nmaximum number of iterations;\nsmall change in energy;\nsmall change in the image;\nsmall gradient norm;\nvisual or task-driven stopping.\n\nStopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.\nEarly stopping can help because the first iterations often recover stable, large-scale structure, while later iterations may fit noise or unstable components. This is not guaranteed for every algorithm, but it is a useful phenomenon to recognize.\nWhen reporting computational experiments, it is therefore not enough to state the final image. One should also state the number of iterations, stopping rule, step size, and objective being minimized.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#when-descent-is-not-enough",
+    "href": "book/week-09-optimization-methods.html#when-descent-is-not-enough",
+    "title": "Optimization Methods",
+    "section": "When Descent Is Not Enough",
+    "text": "When Descent Is Not Enough\nFor an explicit energy, a decreasing objective is good news, but it is not the whole story. The algorithm may be faithfully minimizing a model whose assumptions are wrong or whose parameter is poorly chosen.\nThree situations should be kept separate:\n\n\n\n\n\n\n\nObservation\nPossible meaning\n\n\n\n\nobjective decreases and image improves\nsolver and model are working together\n\n\nobjective decreases but image worsens\nthe model or parameter may be wrong for the task\n\n\nobjective fails to decrease\nsolver, step size, implementation, or nonsmooth handling may be wrong\n\n\n\nThis is why optimization diagnostics should be paired with reconstruction diagnostics. Objective curves say whether the solver is following the mathematical model. Residuals, parameter sweeps, and task checks say whether the model deserves trust.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5978,6 +6062,18 @@
     "title": "Optimization Methods",
     "section": "Optimization And Neural Networks",
     "text": "Optimization And Neural Networks\nOptimization methods do not disappear when neural networks enter the course. They reappear in two ways.\nFirst, neural networks are trained by optimization. Training chooses parameters \\theta to reduce a loss over examples:\n\n\\min_\\theta\n\\sum_j\n\\mathcal{L}(f_\\theta(y_j),x_j).\n\nSecond, some reconstruction networks are built from optimization algorithms. A classical iteration such as\n\nx^{k+1}\n=\n\\operatorname{prox}_{\\tau R}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right)\n\ncan be turned into a network by learning parts of the update. For example, one may learn thresholds, filters, step sizes, or replace the proximal operator with a convolutional neural network.\nThis is called unrolling. It is powerful because the architecture inherits the logic of an inverse-problem algorithm while gaining flexibility from data.\nThe central caution remains: learned updates should still respect the measurements. A visually plausible image is not automatically a data-consistent reconstruction.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#what-unrolling-learns",
+    "href": "book/week-09-optimization-methods.html#what-unrolling-learns",
+    "title": "Optimization Methods",
+    "section": "What Unrolling Learns",
+    "text": "What Unrolling Learns\nAn unrolled network begins from an iterative algorithm and keeps only a finite number of steps. Some parts may remain fixed by the physics, while other parts are learned.\n\n\n\n\n\n\n\nClassical ingredient\nPossible learned replacement\n\n\n\n\nfixed step size\nlearned step size per layer\n\n\nfixed threshold\nlearned threshold or shrinkage function\n\n\nhand-designed proximal map\nCNN denoiser or learned correction block\n\n\nfixed transform\nlearned filters or learned representation\n\n\nmany iterations to convergence\nfixed-depth trained architecture\n\n\n\nThis makes unrolling attractive for imaging. It can preserve the discipline of data consistency while replacing a simple prior with a richer learned prior.\nBut it also changes the kind of evidence required. A classical convex algorithm can sometimes be justified by convergence theory. An unrolled network is usually justified by training data, validation experiments, robustness checks, and measurement-consistency tests. The mathematics does not disappear; it changes role.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",

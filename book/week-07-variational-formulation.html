@@ -404,10 +404,13 @@ window.Quarto = {
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#from-one-model-to-a-framework" id="toc-from-one-model-to-a-framework" class="nav-link" data-scroll-target="#from-one-model-to-a-framework">From One Model To A Framework</a></li>
   <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
+  <li><a href="#the-course-identity-revisited" id="toc-the-course-identity-revisited" class="nav-link" data-scroll-target="#the-course-identity-revisited">The Course Identity Revisited</a></li>
   <li><a href="#energy-as-a-model" id="toc-energy-as-a-model" class="nav-link" data-scroll-target="#energy-as-a-model">Energy As A Model</a></li>
   <li><a href="#the-three-modeling-choices" id="toc-the-three-modeling-choices" class="nav-link" data-scroll-target="#the-three-modeling-choices">The Three Modeling Choices</a></li>
+  <li><a href="#penalized-and-constrained-views" id="toc-penalized-and-constrained-views" class="nav-link" data-scroll-target="#penalized-and-constrained-views">Penalized And Constrained Views</a></li>
   <li><a href="#energy-as-negotiation" id="toc-energy-as-negotiation" class="nav-link" data-scroll-target="#energy-as-negotiation">Energy As Negotiation</a></li>
   <li><a href="#reading-an-energy-as-an-audit-trail" id="toc-reading-an-energy-as-an-audit-trail" class="nav-link" data-scroll-target="#reading-an-energy-as-an-audit-trail">Reading An Energy As An Audit Trail</a></li>
+  <li><a href="#model-solver-evidence" id="toc-model-solver-evidence" class="nav-link" data-scroll-target="#model-solver-evidence">Model, Solver, Evidence</a></li>
   <li><a href="#what-the-energy-cannot-see" id="toc-what-the-energy-cannot-see" class="nav-link" data-scroll-target="#what-the-energy-cannot-see">What The Energy Cannot See</a></li>
   <li><a href="#a-first-variational-denoising-model" id="toc-a-first-variational-denoising-model" class="nav-link" data-scroll-target="#a-first-variational-denoising-model">A First Variational Denoising Model</a></li>
   <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
@@ -502,6 +505,53 @@ D(y,f(x))+\lambda R(x),
 </ul>
 <p>This is why variational methods remain useful even in a course that leads to neural networks. A neural network may replace the regularizer, approximate the optimizer, or learn the inverse map directly, but the same tension remains: the reconstruction must negotiate between data consistency and image plausibility.</p>
 </section>
+<section id="the-course-identity-revisited" class="level2">
+<h2 class="anchored" data-anchor-id="the-course-identity-revisited">The Course Identity Revisited</h2>
+<p>The central identity of the course can now be written in its most explicit form:</p>
+<p><span class="math display">
+\hat{x}
+=
+\operatorname*{argmin}_x
+D(y,f(x))+\lambda R(x).
+</span></p>
+<p>This formula should be read from left to right as a story.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">x</span></td>
+<td>what image or object are we trying to recover?</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">f(x)</span></td>
+<td>what would the sensor measure if <span class="math inline">x</span> were true?</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">D(y,f(x))</span></td>
+<td>how surprising is the measured data under that prediction?</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">R(x)</span></td>
+<td>what image structures are preferred before or beyond the data?</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\lambda</span></td>
+<td>how strongly should the prior influence the reconstruction?</td>
+</tr>
+</tbody>
+</table>
+<p>The formula is compact, but it contains nearly every modeling choice. A change in <span class="math inline">D</span> changes the assumed noise or discrepancy. A change in <span class="math inline">R</span> changes the image prior. A change in <span class="math inline">f</span> changes the physics. A change in <span class="math inline">\lambda</span> changes the trust balance.</p>
+<p>This is why a variational model is more than a way to compute an image. It is a way to say what the reconstruction is allowed to believe.</p>
+</section>
 <section id="energy-as-a-model" class="level2">
 <h2 class="anchored" data-anchor-id="energy-as-a-model">Energy As A Model</h2>
 <p>An energy is not only a numerical function. It is a modeling statement.</p>
@@ -581,6 +631,29 @@ D(y,f(x))+\lambda R(x),
 </table>
 <p>The optimization algorithm is a fourth choice, but it should be chosen after the energy has been specified. Otherwise it becomes easy to confuse a modeling idea with the numerical method used to solve it.</p>
 </section>
+<section id="penalized-and-constrained-views" class="level2">
+<h2 class="anchored" data-anchor-id="penalized-and-constrained-views">Penalized And Constrained Views</h2>
+<p>The same reconstruction idea can often be written in more than one form. The penalized form is</p>
+<p><span class="math display">
+\min_x D(y,f(x))+\lambda R(x).
+</span></p>
+<p>A constrained version may instead write</p>
+<p><span class="math display">
+\min_x R(x)
+\quad\text{subject to}\quad
+D(y,f(x))\leq \delta.
+</span></p>
+<p>This says: among images that explain the data to the expected noise level <span class="math inline">\delta</span>, choose the most regular one.</p>
+<p>Another version is</p>
+<p><span class="math display">
+\min_x D(y,f(x))
+\quad\text{subject to}\quad
+R(x)\leq c.
+</span></p>
+<p>This says: among sufficiently plausible images, choose the one that fits the data best.</p>
+<p>These formulations are not always exactly interchangeable in every technical setting, but they teach the same modeling idea. Reconstruction is a negotiation between data agreement and prior structure. The parameters <span class="math inline">\lambda</span>, <span class="math inline">\delta</span>, and <span class="math inline">c</span> are different ways of expressing how strict that negotiation should be.</p>
+<p>The constrained view is useful pedagogically because it reminds us that perfect data fit is usually not the goal. If the data are noisy, a residual of zero may mean overfitting. A good reconstruction should fit the data about as well as the measurement model justifies, not more faithfully than the sensor deserves.</p>
+</section>
 <section id="energy-as-negotiation" class="level2">
 <h2 class="anchored" data-anchor-id="energy-as-negotiation">Energy As Negotiation</h2>
 <p>It is helpful to read a variational model as a negotiation between terms.</p>
@@ -632,6 +705,38 @@ E(x)=D(Ax,y)+\lambda R(x)
 </table>
 <p>This is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.</p>
 <p>Learned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.</p>
+</section>
+<section id="model-solver-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="model-solver-evidence">Model, Solver, Evidence</h2>
+<p>It is useful to keep three layers separate:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Typical question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>model</td>
+<td>what objective, loss, or fixed point defines the desired reconstruction?</td>
+</tr>
+<tr class="even">
+<td>solver</td>
+<td>what algorithm or network produces the reconstruction?</td>
+</tr>
+<tr class="odd">
+<td>evidence</td>
+<td>how do we know the result is data-consistent, stable, and useful?</td>
+</tr>
+</tbody>
+</table>
+<p>Classical variational reconstruction often makes the first layer explicit. We write an energy, then design an algorithm to minimize it. Neural reconstruction may blur the layers: the network architecture, training loss, and data set can all shape the effective prior. The variational viewpoint remains helpful because it asks us to recover the hidden audit trail.</p>
+<p>For student projects, this separation is practical. A project report should not only show a final image. It should say what model is being solved or approximated, what procedure produced the image, and what evidence supports the interpretation.</p>
 </section>
 <section id="what-the-energy-cannot-see" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-energy-cannot-see">What The Energy Cannot See</h2>

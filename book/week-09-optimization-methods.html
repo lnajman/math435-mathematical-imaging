@@ -407,9 +407,11 @@ window.Quarto = {
   <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
   <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
+  <li><a href="#the-adjoint-is-part-of-the-model" id="toc-the-adjoint-is-part-of-the-model" class="nav-link" data-scroll-target="#the-adjoint-is-part-of-the-model">The Adjoint Is Part Of The Model</a></li>
   <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
   <li><a href="#conditioning-and-slow-directions" id="toc-conditioning-and-slow-directions" class="nav-link" data-scroll-target="#conditioning-and-slow-directions">Conditioning And Slow Directions</a></li>
   <li><a href="#stopping-criteria" id="toc-stopping-criteria" class="nav-link" data-scroll-target="#stopping-criteria">Stopping Criteria</a></li>
+  <li><a href="#when-descent-is-not-enough" id="toc-when-descent-is-not-enough" class="nav-link" data-scroll-target="#when-descent-is-not-enough">When Descent Is Not Enough</a></li>
   <li><a href="#nonsmooth-terms" id="toc-nonsmooth-terms" class="nav-link" data-scroll-target="#nonsmooth-terms">Nonsmooth Terms</a></li>
   <li><a href="#subgradient-intuition" id="toc-subgradient-intuition" class="nav-link" data-scroll-target="#subgradient-intuition">Subgradient Intuition</a></li>
   <li><a href="#proximal-operators" id="toc-proximal-operators" class="nav-link" data-scroll-target="#proximal-operators">Proximal Operators</a></li>
@@ -419,6 +421,7 @@ window.Quarto = {
   <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
   <li><a href="#from-ista-to-a-learned-iteration" id="toc-from-ista-to-a-learned-iteration" class="nav-link" data-scroll-target="#from-ista-to-a-learned-iteration">From ISTA To A Learned Iteration</a></li>
   <li><a href="#optimization-and-neural-networks" id="toc-optimization-and-neural-networks" class="nav-link" data-scroll-target="#optimization-and-neural-networks">Optimization And Neural Networks</a></li>
+  <li><a href="#what-unrolling-learns" id="toc-what-unrolling-learns" class="nav-link" data-scroll-target="#what-unrolling-learns">What Unrolling Learns</a></li>
   <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
   <li><a href="#optimization-diagnostics" id="toc-optimization-diagnostics" class="nav-link" data-scroll-target="#optimization-diagnostics">Optimization Diagnostics</a></li>
   <li><a href="#computation" id="toc-computation" class="nav-link" data-scroll-target="#computation">Computation</a></li>
@@ -475,6 +478,16 @@ u^0,\ u^1,\ u^2,\ldots
 </span></p>
 <p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
 <p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
+<p>Optimization is therefore not an afterthought. It is the mechanism by which a modeling idea becomes an image.</p>
+<p>In this course, an iterative method should be read as a sequence of questions:</p>
+<ol type="1">
+<li>what does the current image predict?</li>
+<li>how does that prediction disagree with the data?</li>
+<li>how should the disagreement be transported back to image space?</li>
+<li>how should the prior modify the result?</li>
+<li>when should the iteration stop?</li>
+</ol>
+<p>This reading will make sparse reconstruction, plug-and-play methods, and unrolled neural networks feel like variations on a common pattern rather than unrelated techniques.</p>
 </section>
 <section id="three-questions-for-any-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="three-questions-for-any-algorithm">Three Questions For Any Algorithm</h2>
@@ -561,6 +574,43 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <p>For a quadratic imaging energy, each gradient step has a concrete meaning. The residual <span class="math inline">Au^k-y</span> measures disagreement with the data. The adjoint <span class="math inline">A^\top</span> transports that disagreement back to image space. The regularizer contributes another force, often smoothing or shrinking the image. The update combines these forces.</p>
 <p>This interpretation matters more than the formula. If an implementation has the wrong adjoint, the algorithm may still run and decrease some quantity, but not the intended reconstruction energy.</p>
 </section>
+<section id="the-adjoint-is-part-of-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-adjoint-is-part-of-the-model">The Adjoint Is Part Of The Model</h2>
+<p>The term <span class="math inline">A^\top(Au-y)</span> is easy to write and easy to underestimate. In imaging, <span class="math inline">A^\top</span> is not just “the inverse of <span class="math inline">A</span>.” It is the adjoint operator: the operation that moves measurement-space residuals back into image-space directions.</p>
+<p>Examples:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Forward operation <span class="math inline">A</span></th>
+<th>Adjoint role <span class="math inline">A^\top</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>blur</td>
+<td>correlate with the flipped blur kernel</td>
+</tr>
+<tr class="even">
+<td>masking</td>
+<td>put residuals back on observed pixels and zeros elsewhere</td>
+</tr>
+<tr class="odd">
+<td>Fourier sampling</td>
+<td>place sampled Fourier residuals back and inverse transform</td>
+</tr>
+<tr class="even">
+<td>tomography projection</td>
+<td>backproject projection residuals</td>
+</tr>
+</tbody>
+</table>
+<p>If <span class="math inline">A^\top</span> is wrong, the update points in the wrong direction. The resulting image may look plausible, but the iteration is no longer solving the stated variational problem.</p>
+<p>This point matters for neural methods too. A learned reconstruction block may be flexible, but the data-consistency part should still use the correct measurement operator when the physics are known.</p>
+</section>
 <section id="step-size" class="level2">
 <h2 class="anchored" data-anchor-id="step-size">Step Size</h2>
 <p>Step size controls stability.</p>
@@ -611,6 +661,38 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <p>Stopping is not a purely technical detail. In some iterative reconstructions, early stopping itself acts like a form of regularization.</p>
 <p>Early stopping can help because the first iterations often recover stable, large-scale structure, while later iterations may fit noise or unstable components. This is not guaranteed for every algorithm, but it is a useful phenomenon to recognize.</p>
 <p>When reporting computational experiments, it is therefore not enough to state the final image. One should also state the number of iterations, stopping rule, step size, and objective being minimized.</p>
+</section>
+<section id="when-descent-is-not-enough" class="level2">
+<h2 class="anchored" data-anchor-id="when-descent-is-not-enough">When Descent Is Not Enough</h2>
+<p>For an explicit energy, a decreasing objective is good news, but it is not the whole story. The algorithm may be faithfully minimizing a model whose assumptions are wrong or whose parameter is poorly chosen.</p>
+<p>Three situations should be kept separate:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Observation</th>
+<th>Possible meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>objective decreases and image improves</td>
+<td>solver and model are working together</td>
+</tr>
+<tr class="even">
+<td>objective decreases but image worsens</td>
+<td>the model or parameter may be wrong for the task</td>
+</tr>
+<tr class="odd">
+<td>objective fails to decrease</td>
+<td>solver, step size, implementation, or nonsmooth handling may be wrong</td>
+</tr>
+</tbody>
+</table>
+<p>This is why optimization diagnostics should be paired with reconstruction diagnostics. Objective curves say whether the solver is following the mathematical model. Residuals, parameter sweeps, and task checks say whether the model deserves trust.</p>
 </section>
 <section id="nonsmooth-terms" class="level2">
 <h2 class="anchored" data-anchor-id="nonsmooth-terms">Nonsmooth Terms</h2>
@@ -825,6 +907,46 @@ x^{k+1}
 <p>can be turned into a network by learning parts of the update. For example, one may learn thresholds, filters, step sizes, or replace the proximal operator with a convolutional neural network.</p>
 <p>This is called unrolling. It is powerful because the architecture inherits the logic of an inverse-problem algorithm while gaining flexibility from data.</p>
 <p>The central caution remains: learned updates should still respect the measurements. A visually plausible image is not automatically a data-consistent reconstruction.</p>
+</section>
+<section id="what-unrolling-learns" class="level2">
+<h2 class="anchored" data-anchor-id="what-unrolling-learns">What Unrolling Learns</h2>
+<p>An unrolled network begins from an iterative algorithm and keeps only a finite number of steps. Some parts may remain fixed by the physics, while other parts are learned.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Classical ingredient</th>
+<th>Possible learned replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fixed step size</td>
+<td>learned step size per layer</td>
+</tr>
+<tr class="even">
+<td>fixed threshold</td>
+<td>learned threshold or shrinkage function</td>
+</tr>
+<tr class="odd">
+<td>hand-designed proximal map</td>
+<td>CNN denoiser or learned correction block</td>
+</tr>
+<tr class="even">
+<td>fixed transform</td>
+<td>learned filters or learned representation</td>
+</tr>
+<tr class="odd">
+<td>many iterations to convergence</td>
+<td>fixed-depth trained architecture</td>
+</tr>
+</tbody>
+</table>
+<p>This makes unrolling attractive for imaging. It can preserve the discipline of data consistency while replacing a simple prior with a richer learned prior.</p>
+<p>But it also changes the kind of evidence required. A classical convex algorithm can sometimes be justified by convergence theory. An unrolled network is usually justified by training data, validation experiments, robustness checks, and measurement-consistency tests. The mathematics does not disappear; it changes role.</p>
 </section>
 <section id="common-failure-modes" class="level2">
 <h2 class="anchored" data-anchor-id="common-failure-modes">Common Failure Modes</h2>
