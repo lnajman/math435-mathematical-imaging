@@ -1,0 +1,78 @@
+---
+title: "Course Readiness Checklist"
+subtitle: "Instructor-facing maintenance page"
+---
+
+::: {.callout-note}
+This page is an instructor maintenance aid. It is rendered for convenience, but it is not linked from the main student navigation and it does not modify the syllabus, grading, or course policies.
+:::
+
+## Current Readiness
+
+Last live smoke test: July 6, 2026.
+
+| Area | Status | Evidence |
+|---|---|---|
+| Public entry path | Ready | Home, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site. |
+| Representative weekly paths | Ready | Weeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links. |
+| Colab access | Ready | All fourteen Google Colab notebook links returned HTTP 200. |
+| Grading boundary | Ready | Live pages state that the syllabus is authoritative and that weekly practice notes are not separate graded assignments. |
+| Quiz logistics | Ready | Live quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long. |
+| Project boundary | Ready | Live project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade. |
+| Course arc | Ready | Home, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language. |
+
+## Before The Semester
+
+- [ ] Confirm official semester dates, room, calendar exceptions, and university policy language in the syllabus.
+- [ ] Review the syllabus grading table against the official course record.
+- [ ] Confirm that quiz timing and permitted tools match what will be announced in class.
+- [ ] Open the Week 1 notebook from Colab using a student-like browser session.
+- [ ] Skim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.
+- [ ] Read the final project page end to end and confirm the project rubric language.
+- [ ] Decide whether this readiness page should remain unlinked or be moved to private notes.
+
+## Before Each Class
+
+- [ ] Open the class roadmap for the week.
+- [ ] Check the corresponding book chapter, slide deck, notebook, and Colab link.
+- [ ] Run the notebook if code or dependencies changed.
+- [ ] Check whether the week has a quiz, project milestone, or special timing constraint.
+- [ ] Decide which notebook result should become the main in-class discussion point.
+
+## When Editing The Site
+
+Use the same validation rhythm after content changes:
+
+```bash
+./scripts/quarto render
+python3 scripts/audit_site_links.py
+```
+
+When notebooks change:
+
+```bash
+python3 scripts/build_notebooks.py
+python3 scripts/validate_notebooks.py
+```
+
+When slides change:
+
+```bash
+python3 -m http.server 8024 --directory _site
+/Users/laurentnajman/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/audit_slide_fit.mjs
+```
+
+## Instructor Review Items
+
+These items need human judgment, not only automated checks.
+
+- [ ] Does the home page express the course vision clearly enough for students?
+- [ ] Do the first two weeks make the inverse-problem viewpoint concrete?
+- [ ] Are the quiz weeks paced realistically for 55 minutes of teaching plus a 20-minute quiz?
+- [ ] Are the project expectations ambitious enough but still feasible with LLM assistance?
+- [ ] Do the book chapters have enough prose for students who miss a class?
+- [ ] Are examples and images appropriate for Khalifa University students and course policies?
+
+## Boundary Reminder
+
+The syllabus remains the authority for grading, assessment dates, and formal course policies. Practice prompts, notebook notes, project planning aids, and this readiness checklist support teaching and preparation; they do not create hidden assignments or extra graded categories.

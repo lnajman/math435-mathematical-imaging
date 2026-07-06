@@ -11,6 +11,7 @@ project:
     - preparation.qmd
     - quizzes.qmd
     - llm-use.qmd
+    - instructor-readiness.qmd
     - practice.qmd
     - notebooks/index.qmd
     - book/index.qmd
