@@ -698,6 +698,7 @@ Ax=y.
 </span></p>
 <p>In each case, we hope that the representation separates meaningful structure from noise, ambiguity, or missing data. What changes is how flexible the representation is and how easy it is to interpret.</p>
 <p>Fixed sparse priors are transparent but limited. Learned representations are expressive but can be harder to analyze. This tradeoff will become central in the later chapters.</p>
+<p>This is the chapter where the prior moves from “the image should be smooth” to “the image should be simple in the right coordinates.” That change matters. A neural network can later be understood as learning coordinates, filters, or features in which the reconstruction task becomes easier. Sparse reconstruction is the interpretable version of that idea.</p>
 </section>
 <section id="common-mistakes" class="level2">
 <h2 class="anchored" data-anchor-id="common-mistakes">Common Mistakes</h2>
@@ -736,6 +737,7 @@ Ax=y.
 <li>Sparse reconstruction works when the measurement model and sparse representation are compatible.</li>
 <li>Sparsity can stabilize reconstruction, but a mismatched representation can select the wrong explanation.</li>
 <li>Learned imaging methods can be seen as replacing fixed sparse transforms with trainable representations.</li>
+<li>The central question becomes: who chose the representation, and why should it fit this imaging task?</li>
 </ul>
 
 

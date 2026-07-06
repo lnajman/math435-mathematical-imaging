@@ -405,6 +405,15 @@ y = A x + \eta.
 </span></p>
 <p>Here <span class="math inline">x</span> is the unknown image or object, <span class="math inline">A</span> is the forward model, <span class="math inline">y</span> is the measured data, and <span class="math inline">\eta</span> represents noise or error. The forward model tells us how an image would produce data. The inverse problem asks us to go in the opposite direction.</p>
 <p>That opposite direction is usually difficult. Information may have been blurred, sampled, hidden, corrupted, or compressed. Some information may be weakened. Some may be missing entirely. A reconstruction method must therefore do more than invert a formula. It must use assumptions.</p>
+<p>The course follows one identity in several forms:</p>
+<p><span class="math display">
+\text{measurement model}
+\quad\Longrightarrow\quad
+\text{regularized reconstruction}
+\quad\Longrightarrow\quad
+\text{learned reconstruction}.
+</span></p>
+<p>The point is not that every problem must use a neural network. The point is that neural networks become natural once we understand why data alone often cannot determine a stable image. Learning is one way to supply prior information; it does not remove the inverse problem.</p>
 </section>
 <section id="why-images-are-different" class="level2">
 <h2 class="anchored" data-anchor-id="why-images-are-different">Why Images Are Different</h2>

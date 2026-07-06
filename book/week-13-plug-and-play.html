@@ -478,6 +478,7 @@ y\approx Ax,
 \text{denoising prior}.
 </span></p>
 <p>This makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.</p>
+<p>PnP is also where the middle and right parts of the course identity meet. Classical variational reconstruction gives an iteration with a data step and a prior step. Neural reconstruction can replace the prior step by a learned denoiser. The forward model still asks for measurement consistency, while the denoiser supplies learned image structure.</p>
 </section>
 <section id="proximal-algorithms" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-algorithms">Proximal Algorithms</h2>
@@ -870,6 +871,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <li>Denoiser strength controls an implicit regularization tradeoff.</li>
 <li>Always check both image quality and consistency with measurements.</li>
 <li>Hybrid learned reconstruction is most trustworthy when data consistency, prior relevance, and robustness are tested together.</li>
+<li>PnP shows learning entering exactly where classical reconstruction already needed prior information.</li>
 </ul>
 
 

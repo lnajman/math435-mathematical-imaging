@@ -873,6 +873,45 @@ A\hat{x}\approx y.
 \text{optimization or learning}.
 </span></p>
 <p>Classical methods make the prior explicit. Learned methods often make the prior more powerful but less transparent. Hybrid methods try to keep the best of both: physics and measurement consistency from inverse problems, expressive image models from data.</p>
+<p>The chapters can also be read as a sequence of roles:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Course role</th>
+<th>Where it appears</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>define the unknown and measurement</td>
+<td>images, masks, blur, Fourier analysis</td>
+</tr>
+<tr class="even">
+<td>understand uncertainty and instability</td>
+<td>noise, likelihoods, ill-posedness</td>
+</tr>
+<tr class="odd">
+<td>choose explicit prior information</td>
+<td>Tikhonov, TV, sparsity, wavelets</td>
+</tr>
+<tr class="even">
+<td>compute the reconstruction</td>
+<td>gradient, proximal, and iterative methods</td>
+</tr>
+<tr class="odd">
+<td>learn prior information</td>
+<td>data-driven priors, denoisers, unrolled updates</td>
+</tr>
+<tr class="even">
+<td>justify trust</td>
+<td>residuals, robustness, failures, and documentation</td>
+</tr>
+</tbody>
+</table>
 <p>The goal is not to choose one camp forever. The goal is to ask the right questions:</p>
 <ul>
 <li>What information was measured?</li>

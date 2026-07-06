@@ -458,6 +458,7 @@ window.Quarto = {
 <p>This chapter gives the first deep explanation of instability. In Chapter 2, we saw that deblurring can amplify noise. Fourier analysis explains where that amplification comes from. Blur does not damage all components equally. It preserves some frequencies, weakens others, and may almost eliminate the finest oscillations.</p>
 <p>If the forward model weakens a frequency component, then inversion must amplify that component to recover it. If noise is present in the same component, the noise is amplified too.</p>
 <p>This is why Fourier analysis is not only a transform. In imaging, it is a diagnostic tool.</p>
+<p>In the course arc, Fourier analysis is the first representation that lets us separate data-supported components from fragile components. It gives a language for saying which directions of the image space are transmitted strongly, which are transmitted weakly, and which are dangerous to reconstruct without regularization.</p>
 </section>
 <section id="one-dimensional-frequencies" class="level2">
 <h2 class="anchored" data-anchor-id="one-dimensional-frequencies">One-Dimensional Frequencies</h2>
@@ -736,6 +737,7 @@ y = h*x,
 <li>Fourier coefficients have magnitude and phase.</li>
 <li>Convolution becomes multiplication in the Fourier domain.</li>
 <li>Blur suppresses frequencies, and inverse filtering can amplify noise.</li>
+<li>Fourier analysis prepares the later regularization question: which weakened components should be trusted, damped, or supplied by a prior?</li>
 </ul>
 
 

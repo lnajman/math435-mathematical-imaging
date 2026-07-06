@@ -472,6 +472,7 @@ window.Quarto = {
 <p>Fourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.</p>
 <p>Wavelets also give a concrete example of a representation that is not learned but already feels “feature-like.” This makes them a useful stepping stone toward convolutional neural networks.</p>
 <p>The price is a localization tradeoff. Fourier is perfectly localized in frequency but not in space. Compactly supported wavelets are localized in space and scale, but they do not isolate a single exact frequency. This is a practical form of the time-frequency or space-frequency uncertainty principle: one cannot be perfectly localized in both domains at once.</p>
+<p>In the course arc, wavelets resolve a tension introduced in Chapter 3. Fourier gives orthogonal directions and a Pythagorean energy decomposition, but those directions are global. Wavelets keep the orthogonal-decomposition viewpoint while making many basis functions local. That is why wavelets are a natural last fixed representation before learned features enter the course.</p>
 </section>
 <section id="haar-intuition" class="level2">
 <h2 class="anchored" data-anchor-id="haar-intuition">Haar Intuition</h2>
@@ -752,6 +753,7 @@ D(y,AW^{-1}c)+\lambda\|c\|_1.
 <li>Wavelet family, scale depth, threshold, and boundary handling are modeling choices.</li>
 <li>Representation choice controls the success of sparse reconstruction.</li>
 <li>Wavelets are fixed multiscale features; neural networks can learn more flexible feature representations from data.</li>
+<li>Wavelets make the Fourier-to-neural bridge concrete: from global handcrafted coordinates to localized handcrafted features to learned features.</li>
 </ul>
 
 

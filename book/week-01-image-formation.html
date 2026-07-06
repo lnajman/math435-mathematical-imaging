@@ -621,6 +621,7 @@ x \longmapsto y.
 \text{image assumption}.
 </span></p>
 <p>The balance between those two terms is the central tension of mathematical imaging.</p>
+<p>This is the first form of the course identity. Later chapters will give mathematical names to both sides of the balance: the measurement side becomes a data term such as <span class="math inline">D(Ax,y)</span>, and the assumption side becomes a prior, a regularizer <span class="math inline">R(x)</span>, a learned denoiser, or a neural network trained from examples.</p>
 <p>In neural-network language, a learned reconstruction map</p>
 <p><span class="math display">
 \hat{x}=f_\theta(y)
@@ -697,6 +698,7 @@ y = Mx
 <li>The forward model <span class="math inline">y=Ax+\eta</span> separates the unknown image, the measurement rule, and noise.</li>
 <li>The measurement model describes evidence; the prior supplies assumptions when evidence is incomplete.</li>
 <li>Missing data in an array is not the same as hidden information in the physical scene.</li>
+<li>The central question begins here: which parts of a reconstruction are measured, and which parts are inferred?</li>
 </ul>
 
 

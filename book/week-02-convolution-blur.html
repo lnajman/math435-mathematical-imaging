@@ -462,6 +462,7 @@ window.Quarto = {
 \text{reconstruction } \hat{x}.
 </span></p>
 <p>The first arrow is image formation. The second arrow is the inverse problem.</p>
+<p>This chapter gives the first concrete operator <span class="math inline">A</span> that is more interesting than a mask. A blur operator still has a clear physical interpretation, but it already shows why reconstruction cannot be only “apply the inverse.” Some image components pass through the forward model clearly; others pass through weakly and need stabilizing assumptions.</p>
 </section>
 <section id="local-weighted-averages" class="level2">
 <h2 class="anchored" data-anchor-id="local-weighted-averages">Local Weighted Averages</h2>
@@ -774,6 +775,7 @@ y = Ax + \eta.
 <li>Boundary conditions are modeling choices.</li>
 <li>Deblurring is unstable because blur weakens information that inversion tries to recover.</li>
 <li>A deblurring method is only as meaningful as the forward model it assumes.</li>
+<li>Blur introduces the course pattern: forward operators can be easy to apply and difficult to invert responsibly.</li>
 </ul>
 
 
