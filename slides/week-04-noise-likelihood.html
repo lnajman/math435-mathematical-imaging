@@ -241,13 +241,13 @@ Laurent Najman
 <li>Distinguish deterministic degradation from random noise.</li>
 <li>Model additive Gaussian noise.</li>
 <li>Model photon-counting Poisson noise.</li>
-<li>Compare signal-to-noise behavior.</li>
 <li>Derive likelihood-based data terms for reconstruction.</li>
+<li>Leave the final 20 minutes for Quiz 1.</li>
 </ul>
 </div>
 </section>
-<section id="minute-plan" class="slide level2">
-<h2>75-Minute Plan</h2>
+<section id="teaching-plan-quiz-1" class="slide level2">
+<h2>Teaching Plan + Quiz 1</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -257,36 +257,32 @@ Laurent Najman
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
+<td style="text-align: right;">0-5 min</td>
 <td>recap Fourier and inverse filtering</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-18 min</td>
-<td>observe noise in real images</td>
+<td style="text-align: right;">5-17 min</td>
+<td>observe noise and introduce likelihood</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">18-32 min</td>
-<td>Gaussian noise model</td>
+<td style="text-align: right;">17-29 min</td>
+<td>Gaussian noise and least squares</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">32-47 min</td>
-<td>Poisson noise model</td>
+<td style="text-align: right;">29-41 min</td>
+<td>Poisson noise and photon counts</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">47-58 min</td>
-<td>SNR and repeated measurements</td>
+<td style="text-align: right;">41-52 min</td>
+<td>likelihoods as data-fidelity terms</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">58-68 min</td>
-<td>likelihoods and data fidelity</td>
+<td style="text-align: right;">52-55 min</td>
+<td>quiz transition</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">68-73 min</td>
-<td>notebook activity</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">73-75 min</td>
-<td>exit question</td>
+<td style="text-align: right;">55-75 min</td>
+<td>Quiz 1 (20 minutes)</td>
 </tr>
 </tbody>
 </table>
@@ -515,7 +511,7 @@ y = f(x)+\eta,
 </section>
 <section id="python-demo-gaussian-noise" class="slide level2 code-small">
 <h2>Python Demo: Gaussian Noise</h2>
-<div id="0fc03af0" class="cell">
+<div id="a0de8261" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb1-3"><a></a></span>
@@ -723,15 +719,15 @@ z_i \sim \operatorname{Poisson}(f_i(x)).
 </tbody>
 </table>
 </section>
-<section id="part-4-repeated-measurements" class="slide level2 section-slide">
-<h2>Part 4: Repeated Measurements</h2>
+<section id="part-4-what-repetition-can-fix" class="slide level2 section-slide">
+<h2>Part 4: What Repetition Can Fix</h2>
 <div class="section-kicker">
-<p>Noise can average out</p>
+<p>Noise can average out, missing information cannot</p>
 </div>
 <p>Independence matters</p>
 </section>
-<section id="averaging-gaussian-noise" class="slide level2">
-<h2>Averaging Gaussian Noise</h2>
+<section id="averaging-and-its-limit" class="slide level2">
+<h2>Averaging and Its Limit</h2>
 <p>If</p>
 <p><span class="math display">
 y^{(j)} = x + \eta^{(j)},
@@ -743,15 +739,9 @@ y^{(j)} = x + \eta^{(j)},
 \bar{y}=\frac{1}{m}\sum_{j=1}^m y^{(j)}
 </span></p>
 <p>has noise standard deviation <span class="math inline">\sigma/\sqrt{m}</span>.</p>
-</section>
-<section id="averaging-picture" class="slide level2">
-<h2>Averaging Picture</h2>
 <div class="figure-frame">
 <p><img data-src="../assets/figures/week04-averaging.png" alt="Clean image and averages of 1, 2, 4, and 16 Gaussian noisy observations"></p>
 </div>
-</section>
-<section id="what-averaging-cannot-do" class="slide level2">
-<h2>What Averaging Cannot Do</h2>
 <div class="question-box">
 <p>If the person is hidden behind a tree, can averaging many photographs reveal the hidden person?</p>
 </div>
@@ -821,84 +811,17 @@ D(z,f(x))=
 </div>
 </div>
 </section>
-<section id="code-demo-run-week-4-examples" class="slide level2 code-small">
-<h2>Code Demo: Run Week 4 Examples</h2>
-<p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week04_noise_likelihood.py</span>
-<span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week04_figures.py</span>
-<span id="cb2-3"><a></a><span class="ex">python3</span> scripts/build_notebooks.py</span>
-<span id="cb2-4"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="in-class-notebook-activity" class="slide level2">
-<h2>In-Class Notebook Activity</h2>
-<div class="time-tag">
-<p>5 minutes</p>
-</div>
+<section id="before-quiz-1" class="slide level2">
+<h2>Before Quiz 1</h2>
 <div class="exercise-box">
-<p>Open the Week 4 notebook.</p>
+<p>Use the same questions we used all morning:</p>
 <ol type="1">
-<li>Change Gaussian <code>sigma</code>.</li>
-<li>Change Poisson <code>peak_photons</code>.</li>
-<li>Compare RMSE, residual histograms, and image appearance.</li>
+<li>What was measured?</li>
+<li>What uncertainty model is assumed?</li>
+<li>What data term follows from that assumption?</li>
+<li>What information is still missing from the data?</li>
 </ol>
 </div>
-</section>
-<section id="quiz-style-check" class="slide level2">
-<h2>Quiz-Style Check</h2>
-<div class="exercise-box">
-<p>For each observation, choose Gaussian, Poisson, or neither:</p>
-<ol type="1">
-<li>independent additive errors with fixed variance;</li>
-<li>photon counts with variance equal to the mean;</li>
-<li>saturation at the maximum sensor value;</li>
-<li>low-light measurements with very few photons.</li>
-</ol>
-</div>
-</section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
-<div class="exercise-box">
-<p>Answer in one sentence each:</p>
-<ol type="1">
-<li>Why does Gaussian noise lead to least squares?</li>
-<li>Why is Poisson noise signal-dependent?</li>
-<li>What is SNR?</li>
-<li>What does a likelihood contribute to an inverse problem?</li>
-</ol>
-</div>
-</section>
-<section id="suggested-answers" class="slide level2">
-<h2>Suggested Answers</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Question</th>
-<th>Short answer</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Gaussian to least squares</td>
-<td>the negative log of a Gaussian density is quadratic</td>
-</tr>
-<tr class="even">
-<td>Poisson signal dependence</td>
-<td>mean and variance are both <span class="math inline">\lambda</span></td>
-</tr>
-<tr class="odd">
-<td>SNR</td>
-<td>signal strength divided by typical noise size</td>
-</tr>
-<tr class="even">
-<td>likelihood role</td>
-<td>it defines the data fidelity term</td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="what-students-should-remember" class="slide level2">
 <h2>What Students Should Remember</h2>
@@ -917,20 +840,10 @@ D(z,f(x))=
 <div class="checklist">
 <ul>
 <li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and weekly practice prompt.</li>
-<li>Run the week notebook and change at least one important parameter.</li>
+<li>Run the Week 4 notebook and change Gaussian <code>sigma</code> or Poisson <code>peak_photons</code>.</li>
 <li>Write one claim-evidence-limit sentence about today’s model.</li>
 </ul>
 </div>
-</section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
-<p>Bayesian and variational reconstruction:</p>
-<ul>
-<li>priors and regularization;</li>
-<li>maximum a posteriori estimation;</li>
-<li>Tikhonov regularization;</li>
-<li>choosing the balance parameter.</li>
-</ul>
 
 
 </section>

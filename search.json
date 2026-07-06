@@ -4474,14 +4474,14 @@
     "href": "syllabus.html#syllabus-supplement",
     "title": "Syllabus",
     "section": "Syllabus Supplement",
-    "text": "Syllabus Supplement\n\n\n\n\n\n\n\n\n\n\n\nOrganizational Details\n\n\n\n\nCourse Code and Title:\n\n\nMATH 435 – Mathematical Imaging\n\n\n\n\nSemester:\n\n\n\n\n\n\nSchedule:\n\n\n\n\n\n\nInstructor:\n\n\n\n\n\n\nContact Email:\n\n\n\n\n\n\nOffice Room Number:\n\n\n\n\n\n\nOffice Hours:\n\n\n\n\n\n\nAssessment Methodology\n\n\n\n\n\n\nTentative Dates\n\n\nWeight\n\n\n\n\nCoursework.\n\n\nQuiz 1\n\n\nWeek 4 (7.5%)\n\n\n45%\n\n\n\n\nQuiz 2\n\n\nWeek 12 (7.5%)\n\n\n\n\nProject and Presentation\n\n\nWeek 14/15 (30%)\n\n\n\n\nMidterm Examination.\n\n\nWeek 8\n\n\n25%\n\n\n\n\nFinal Examination.\n\n\nTBD by the Registrar’s Office\n\n\n30%"
+    "text": "Syllabus Supplement\n\n\n\n\n\n\n\n\n\n\n\nOrganizational Details\n\n\n\n\nCourse Code and Title:\n\n\nMATH 435 – Mathematical Imaging\n\n\n\n\nSemester:\n\n\n\n\n\n\nSchedule:\n\n\n\n\n\n\nInstructor:\n\n\n\n\n\n\nContact Email:\n\n\n\n\n\n\nOffice Room Number:\n\n\n\n\n\n\nOffice Hours:\n\n\n\n\n\n\nAssessment Methodology\n\n\n\n\n\n\nTentative Dates\n\n\nWeight\n\n\n\n\nCoursework.\n\n\nQuiz 1\n\n\nWeek 4 (7.5%, 20 minutes)\n\n\n45%\n\n\n\n\nQuiz 2\n\n\nWeek 12 (7.5%, 20 minutes)\n\n\n\n\nProject and Presentation\n\n\nWeek 14/15 (30%)\n\n\n\n\nMidterm Examination.\n\n\nWeek 8\n\n\n25%\n\n\n\n\nFinal Examination.\n\n\nTBD by the Registrar’s Office\n\n\n30%"
   },
   {
     "objectID": "syllabus.html#instructor-policy-on-late-submission-of-assignments",
     "href": "syllabus.html#instructor-policy-on-late-submission-of-assignments",
     "title": "Syllabus",
     "section": "Instructor Policy on Late Submission of Assignments",
-    "text": "Instructor Policy on Late Submission of Assignments\n\nQuizzes\nThere will be no make-up quizzes. If the student fails to attend a scheduled quiz without an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.\nIf the student fails to attend a quiz and the Student Success Department confirms that the student’s absence from that quiz is approved, then the grade that will be assigned to that quiz is:\n\nthe grade of the Semester examination if that quiz took place before the Semester examination;\nthe grade of the Final Examination if that quiz took place after the Semester examination.\n\n\n\nSemester Examination\nThere will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination without an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.\nIf the student fails to attend the Semester examination and the Student Success Department confirms that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.\nA maximum of 40% of the course grade can be compensated through the above policy."
+    "text": "Instructor Policy on Late Submission of Assignments\n\nQuizzes\nThere will be two quizzes: Quiz 1 in Week 4 and Quiz 2 in Week 12. Each quiz is 20 minutes long.\nThere will be no make-up quizzes. If the student fails to attend a scheduled quiz without an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.\nIf the student fails to attend a quiz and the Student Success Department confirms that the student’s absence from that quiz is approved, then the grade that will be assigned to that quiz is:\n\nthe grade of the Semester examination if that quiz took place before the Semester examination;\nthe grade of the Final Examination if that quiz took place after the Semester examination.\n\n\n\nSemester Examination\nThere will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination without an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.\nIf the student fails to attend the Semester examination and the Student Success Department confirms that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.\nA maximum of 40% of the course grade can be compensated through the above policy."
   },
   {
     "objectID": "syllabus.html#additional-information",
@@ -4495,7 +4495,7 @@
     "href": "syllabus.html#weekly-plan-tentative",
     "title": "Syllabus",
     "section": "Weekly Plan (Tentative)",
-    "text": "Weekly Plan (Tentative)\n\n\n\n\n\n\n\n\nWeek #\n\n\nTopics\n\n\n\n\n\n\n01\n\n\nImage formation models; convolution; linear systems\n\n\n\n\n02\n\n\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n\n\n03\n\n\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n\n\n04\n\n\nNoise models: Gaussian and Poisson; likelihood formulation Quiz 1\n\n\n\n\n05\n\n\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n\n\n06\n\n\nTikhonov regularization; parameter effects; bias–variance tradeoff Project assigned\n\n\n\n\n07\n\n\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n\n\n08\n\n\nTotal Variation regularization; edge preservation; comparison with ℓ2 Midterm\n\n\n\n\n09\n\n\nConvex optimization basics; gradient descent; proximal ideas\n\n\n\n\n10\n\n\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n\n\n11\n\n\nWavelets and multiscale representations; thresholding\n\n\n\n\n12\n\n\nModern computational imaging: model-based vs data-driven reconstruction Quiz 2\n\n\n\n\n13\n\n\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n\n\n14\n\n\nStability, robustness, and limitations of AI-based reconstruction Project report\n\n\n\n\n15\n\n\nProject presentations and oral defenses"
+    "text": "Weekly Plan (Tentative)\n\n\n\n\n\n\n\n\nWeek #\n\n\nTopics\n\n\n\n\n\n\n01\n\n\nImage formation models; convolution; linear systems\n\n\n\n\n02\n\n\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n\n\n03\n\n\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n\n\n04\n\n\nNoise models: Gaussian and Poisson; likelihood formulation Quiz 1 (20 minutes)\n\n\n\n\n05\n\n\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n\n\n06\n\n\nTikhonov regularization; parameter effects; bias–variance tradeoff Project assigned\n\n\n\n\n07\n\n\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n\n\n08\n\n\nTotal Variation regularization; edge preservation; comparison with ℓ2 Midterm\n\n\n\n\n09\n\n\nConvex optimization basics; gradient descent; proximal ideas\n\n\n\n\n10\n\n\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n\n\n11\n\n\nWavelets and multiscale representations; thresholding\n\n\n\n\n12\n\n\nModern computational imaging: model-based vs data-driven reconstruction Quiz 2 (20 minutes)\n\n\n\n\n13\n\n\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n\n\n14\n\n\nStability, robustness, and limitations of AI-based reconstruction Project report\n\n\n\n\n15\n\n\nProject presentations and oral defenses"
   },
   {
     "objectID": "syllabus.html#detailed-weekly-plan-15-weeks-tentative",
@@ -6451,21 +6451,21 @@
     "href": "classes.html",
     "title": "Class Roadmap",
     "section": "",
-    "text": "This page is the weekly entry point for the course.\nThe slide decks organize the 75-minute class meetings. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each week as a checklist:\nWeekly practice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus."
+    "text": "This page is the weekly entry point for the course.\nMost slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each week as a checklist:\nWeekly practice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus.\nQuiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long."
   },
   {
     "objectID": "classes.html#at-a-glance",
     "href": "classes.html#at-a-glance",
     "title": "Class Roadmap",
     "section": "At a Glance",
-    "text": "At a Glance\n\n\n\nWeek\nTopic\nSlides\nNotebook\nBook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\nchapter\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\nchapter\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\nchapter\n\n\n4\nNoise models and likelihoods\nslides\nnotebook / Colab\nchapter\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\nchapter\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab\nchapter\n\n\n7\nVariational formulation\nslides\nnotebook / Colab\nchapter\n\n\n8\nTotal Variation regularization\nslides\nnotebook / Colab\nchapter\n\n\n9\nOptimization methods\nslides\nnotebook / Colab\nchapter\n\n\n10\nSparse reconstruction\nslides\nnotebook / Colab\nchapter\n\n\n11\nWavelets and multiscale representation\nslides\nnotebook / Colab\nchapter\n\n\n12\nModel-based vs data-driven imaging\nslides\nnotebook / Colab\nchapter\n\n\n13\nPlug-and-play and learned regularization\nslides\nnotebook / Colab\nchapter\n\n\n14\nStability, robustness, and ethics\nslides\nnotebook / Colab\nchapter\n\n\n15\nProject presentations and oral defenses\nproject page\n-\n-"
+    "text": "At a Glance\n\n\n\nWeek\nTopic\nSlides\nNotebook\nBook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\nchapter\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\nchapter\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\nchapter\n\n\n4\nNoise models and likelihoods + Quiz 1\nslides\nnotebook / Colab\nchapter\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\nchapter\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab\nchapter\n\n\n7\nVariational formulation\nslides\nnotebook / Colab\nchapter\n\n\n8\nTotal Variation regularization\nslides\nnotebook / Colab\nchapter\n\n\n9\nOptimization methods\nslides\nnotebook / Colab\nchapter\n\n\n10\nSparse reconstruction\nslides\nnotebook / Colab\nchapter\n\n\n11\nWavelets and multiscale representation\nslides\nnotebook / Colab\nchapter\n\n\n12\nModel-based vs data-driven imaging + Quiz 2\nslides\nnotebook / Colab\nchapter\n\n\n13\nPlug-and-play and learned regularization\nslides\nnotebook / Colab\nchapter\n\n\n14\nStability, robustness, and ethics\nslides\nnotebook / Colab\nchapter\n\n\n15\nProject presentations and oral defenses\nproject page\n-\n-"
   },
   {
     "objectID": "classes.html#weekly-work-plan",
     "href": "classes.html#weekly-work-plan",
     "title": "Class Roadmap",
     "section": "Weekly Work Plan",
-    "text": "Weekly Work Plan\n\n\n\n\n\n\n\n\n\n\n\nWeek\nBefore Class\nIn Class\nAfter Class\nUngraded Practice Note\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the Week 1 notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the Week 2 notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the Week 3 notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models.\nRun the Week 4 notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the Week 5 notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the Week 6 notebook and sweep lambda.\nDraft or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the Week 7 notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the Week 8 notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the Week 9 notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the Week 10 notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the Week 11 notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model.\nRun the Week 12 notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the Week 13 notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the Week 14 notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
+    "text": "Weekly Work Plan\n\n\n\n\n\n\n\n\n\n\n\nWeek\nBefore Class\nIn Class\nAfter Class\nUngraded Practice Note\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the Week 1 notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the Week 2 notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the Week 3 notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes).\nRun the Week 4 notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the Week 5 notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the Week 6 notebook and sweep lambda.\nDraft or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the Week 7 notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the Week 8 notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the Week 9 notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the Week 10 notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the Week 11 notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes).\nRun the Week 12 notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the Week 13 notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the Week 14 notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
   },
   {
     "objectID": "classes.html#project-preparation-guide",
@@ -6794,14 +6794,14 @@
     "href": "slides/week-04-noise-likelihood.html#today",
     "title": "Noise Models and Likelihoods",
     "section": "Today",
-    "text": "Today\n\n\nDistinguish deterministic degradation from random noise.\nModel additive Gaussian noise.\nModel photon-counting Poisson noise.\nCompare signal-to-noise behavior.\nDerive likelihood-based data terms for reconstruction."
+    "text": "Today\n\n\nDistinguish deterministic degradation from random noise.\nModel additive Gaussian noise.\nModel photon-counting Poisson noise.\nDerive likelihood-based data terms for reconstruction.\nLeave the final 20 minutes for Quiz 1."
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#minute-plan",
-    "href": "slides/week-04-noise-likelihood.html#minute-plan",
+    "objectID": "slides/week-04-noise-likelihood.html#teaching-plan-quiz-1",
+    "href": "slides/week-04-noise-likelihood.html#teaching-plan-quiz-1",
     "title": "Noise Models and Likelihoods",
-    "section": "75-Minute Plan",
-    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap Fourier and inverse filtering\n\n\n8-18 min\nobserve noise in real images\n\n\n18-32 min\nGaussian noise model\n\n\n32-47 min\nPoisson noise model\n\n\n47-58 min\nSNR and repeated measurements\n\n\n58-68 min\nlikelihoods and data fidelity\n\n\n68-73 min\nnotebook activity\n\n\n73-75 min\nexit question"
+    "section": "Teaching Plan + Quiz 1",
+    "text": "Teaching Plan + Quiz 1\n\n\n\nTime\nWork\n\n\n\n\n0-5 min\nrecap Fourier and inverse filtering\n\n\n5-17 min\nobserve noise and introduce likelihood\n\n\n17-29 min\nGaussian noise and least squares\n\n\n29-41 min\nPoisson noise and photon counts\n\n\n41-52 min\nlikelihoods as data-fidelity terms\n\n\n52-55 min\nquiz transition\n\n\n55-75 min\nQuiz 1 (20 minutes)"
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#bridge-from-week-3",
@@ -7049,32 +7049,18 @@
     "text": "Gaussian vs Poisson\n\n\n\nFeature\nGaussian\nPoisson\n\n\n\n\nData type\ncontinuous intensity\ninteger counts\n\n\nVariance\nconstant \\sigma^2\nequals mean\n\n\nTypical fidelity\nsquared error\ncount likelihood\n\n\nNatural for\nread noise, aggregate errors\nphoton-limited imaging\n\n\nConstraint\noften unconstrained\npositive mean"
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#part-4-repeated-measurements",
-    "href": "slides/week-04-noise-likelihood.html#part-4-repeated-measurements",
+    "objectID": "slides/week-04-noise-likelihood.html#part-4-what-repetition-can-fix",
+    "href": "slides/week-04-noise-likelihood.html#part-4-what-repetition-can-fix",
     "title": "Noise Models and Likelihoods",
-    "section": "Part 4: Repeated Measurements",
-    "text": "Part 4: Repeated Measurements\n\nNoise can average out\n\nIndependence matters"
+    "section": "Part 4: What Repetition Can Fix",
+    "text": "Part 4: What Repetition Can Fix\n\nNoise can average out, missing information cannot\n\nIndependence matters"
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#averaging-gaussian-noise",
-    "href": "slides/week-04-noise-likelihood.html#averaging-gaussian-noise",
+    "objectID": "slides/week-04-noise-likelihood.html#averaging-and-its-limit",
+    "href": "slides/week-04-noise-likelihood.html#averaging-and-its-limit",
     "title": "Noise Models and Likelihoods",
-    "section": "Averaging Gaussian Noise",
-    "text": "Averaging Gaussian Noise\nIf\n\ny^{(j)} = x + \\eta^{(j)},\n\\qquad\n\\eta^{(j)}\\sim\\mathcal{N}(0,\\sigma^2),\n\nand the noise samples are independent, then\n\n\\bar{y}=\\frac{1}{m}\\sum_{j=1}^m y^{(j)}\n\nhas noise standard deviation \\sigma/\\sqrt{m}."
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#averaging-picture",
-    "href": "slides/week-04-noise-likelihood.html#averaging-picture",
-    "title": "Noise Models and Likelihoods",
-    "section": "Averaging Picture",
-    "text": "Averaging Picture"
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#what-averaging-cannot-do",
-    "href": "slides/week-04-noise-likelihood.html#what-averaging-cannot-do",
-    "title": "Noise Models and Likelihoods",
-    "section": "What Averaging Cannot Do",
-    "text": "What Averaging Cannot Do\n\nIf the person is hidden behind a tree, can averaging many photographs reveal the hidden person?\n\n\nAveraging reduces random noise in recorded data. It does not recover scene content that never reached the sensor."
+    "section": "Averaging and Its Limit",
+    "text": "Averaging and Its Limit\nIf\n\ny^{(j)} = x + \\eta^{(j)},\n\\qquad\n\\eta^{(j)}\\sim\\mathcal{N}(0,\\sigma^2),\n\nand the noise samples are independent, then\n\n\\bar{y}=\\frac{1}{m}\\sum_{j=1}^m y^{(j)}\n\nhas noise standard deviation \\sigma/\\sqrt{m}.\n\n\n\n\nIf the person is hidden behind a tree, can averaging many photographs reveal the hidden person?\n\n\nAveraging reduces random noise in recorded data. It does not recover scene content that never reached the sensor."
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#part-5-from-likelihood-to-reconstruction",
@@ -7112,39 +7098,11 @@
     "text": "Examples of Data Terms\n\n\nGaussian:\n\nD(y,f(x))=\n\\frac{1}{2\\sigma^2}\\|y-f(x)\\|_2^2.\n\n\n\nPoisson:\n\nD(z,f(x))=\n\\sum_i f_i(x)-z_i\\log f_i(x)."
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#code-demo-run-week-4-examples",
-    "href": "slides/week-04-noise-likelihood.html#code-demo-run-week-4-examples",
+    "objectID": "slides/week-04-noise-likelihood.html#before-quiz-1",
+    "href": "slides/week-04-noise-likelihood.html#before-quiz-1",
     "title": "Noise Models and Likelihoods",
-    "section": "Code Demo: Run Week 4 Examples",
-    "text": "Code Demo: Run Week 4 Examples\nFrom the repository root:\npython3 examples/week04_noise_likelihood.py\npython3 examples/make_week04_figures.py\npython3 scripts/build_notebooks.py\n./scripts/quarto render"
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#in-class-notebook-activity",
-    "href": "slides/week-04-noise-likelihood.html#in-class-notebook-activity",
-    "title": "Noise Models and Likelihoods",
-    "section": "In-Class Notebook Activity",
-    "text": "In-Class Notebook Activity\n\n5 minutes\n\n\nOpen the Week 4 notebook.\n\nChange Gaussian sigma.\nChange Poisson peak_photons.\nCompare RMSE, residual histograms, and image appearance."
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#quiz-style-check",
-    "href": "slides/week-04-noise-likelihood.html#quiz-style-check",
-    "title": "Noise Models and Likelihoods",
-    "section": "Quiz-Style Check",
-    "text": "Quiz-Style Check\n\nFor each observation, choose Gaussian, Poisson, or neither:\n\nindependent additive errors with fixed variance;\nphoton counts with variance equal to the mean;\nsaturation at the maximum sensor value;\nlow-light measurements with very few photons."
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#end-of-class-checkpoint",
-    "href": "slides/week-04-noise-likelihood.html#end-of-class-checkpoint",
-    "title": "Noise Models and Likelihoods",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nAnswer in one sentence each:\n\nWhy does Gaussian noise lead to least squares?\nWhy is Poisson noise signal-dependent?\nWhat is SNR?\nWhat does a likelihood contribute to an inverse problem?"
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#suggested-answers",
-    "href": "slides/week-04-noise-likelihood.html#suggested-answers",
-    "title": "Noise Models and Likelihoods",
-    "section": "Suggested Answers",
-    "text": "Suggested Answers\n\n\n\n\n\n\n\nQuestion\nShort answer\n\n\n\n\nGaussian to least squares\nthe negative log of a Gaussian density is quadratic\n\n\nPoisson signal dependence\nmean and variance are both \\lambda\n\n\nSNR\nsignal strength divided by typical noise size\n\n\nlikelihood role\nit defines the data fidelity term"
+    "section": "Before Quiz 1",
+    "text": "Before Quiz 1\n\nUse the same questions we used all morning:\n\nWhat was measured?\nWhat uncertainty model is assumed?\nWhat data term follows from that assumption?\nWhat information is still missing from the data?"
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#what-students-should-remember",
@@ -7158,14 +7116,7 @@
     "href": "slides/week-04-noise-likelihood.html#after-class",
     "title": "Noise Models and Likelihoods",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
-  },
-  {
-    "objectID": "slides/week-04-noise-likelihood.html#next-time",
-    "href": "slides/week-04-noise-likelihood.html#next-time",
-    "title": "Noise Models and Likelihoods",
-    "section": "Next Time",
-    "text": "Next Time\nBayesian and variational reconstruction:\n\npriors and regularization;\nmaximum a posteriori estimation;\nTikhonov regularization;\nchoosing the balance parameter."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the Week 4 notebook and change Gaussian sigma or Poisson peak_photons.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#opening-question",
@@ -8103,14 +8054,14 @@
     "href": "slides/week-12-model-data.html#today",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Today",
-    "text": "Today\n\n\nCompare model-based and data-driven imaging.\nExplain why neural imaging is still an inverse-problem story.\nIdentify forward models, priors, solvers, and training data.\nInterpret a neural network as a parameterized operator.\nLearn a small patch prior from image data.\nDiscuss generalization and failure modes."
+    "text": "Today\n\n\nCompare model-based and data-driven imaging.\nExplain why neural imaging is still an inverse-problem story.\nIdentify forward models, priors, solvers, and training data.\nInterpret a neural network as a parameterized operator.\nDiscuss generalization and failure modes.\nLeave the final 20 minutes for Quiz 2."
   },
   {
-    "objectID": "slides/week-12-model-data.html#minute-plan",
-    "href": "slides/week-12-model-data.html#minute-plan",
+    "objectID": "slides/week-12-model-data.html#teaching-plan-quiz-2",
+    "href": "slides/week-12-model-data.html#teaching-plan-quiz-2",
     "title": "Model-Based vs Data-Driven Imaging",
-    "section": "75-Minute Plan",
-    "text": "75-Minute Plan\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: TV, sparsity, wavelets\n\n\n8-16 min\ncentral identity and model-based pipeline\n\n\n16-32 min\ndata-driven imaging pipeline\n\n\n32-44 min\nneural networks as learned operators\n\n\n44-60 min\nlearned patch prior example\n\n\n60-70 min\nnotebook activity\n\n\n70-75 min\nsynthesis and exit check"
+    "section": "Teaching Plan + Quiz 2",
+    "text": "Teaching Plan + Quiz 2\n\n\n\nTime\nWork\n\n\n\n\n0-6 min\nrecap: TV, sparsity, wavelets\n\n\n6-15 min\ncentral identity and model-based pipeline\n\n\n15-28 min\ndata-driven imaging pipeline\n\n\n28-40 min\nneural networks as learned operators\n\n\n40-52 min\nlearned priors, shift, and risk\n\n\n52-55 min\nquiz transition\n\n\n55-75 min\nQuiz 2 (20 minutes)"
   },
   {
     "objectID": "slides/week-12-model-data.html#bridge-from-week-11",
@@ -8386,32 +8337,11 @@
     "text": "Hybrid Methods\nMany modern methods combine both philosophies:\n\n\nexplicit forward model;\nlearned denoiser or prior;\niterative algorithm structure;\ndata-consistency step.\n\n\n\nThis is the doorway to plug-and-play and learned regularization."
   },
   {
-    "objectID": "slides/week-12-model-data.html#code-demo-run-week-12-examples",
-    "href": "slides/week-12-model-data.html#code-demo-run-week-12-examples",
+    "objectID": "slides/week-12-model-data.html#before-quiz-2",
+    "href": "slides/week-12-model-data.html#before-quiz-2",
     "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Code Demo: Run Week 12 Examples",
-    "text": "Code Demo: Run Week 12 Examples\nFrom the repository root:\npython3 examples/week12_model_data.py\npython3 examples/make_week12_figures.py\npython3 scripts/build_notebooks.py\n./scripts/quarto render"
-  },
-  {
-    "objectID": "slides/week-12-model-data.html#in-class-notebook-activity",
-    "href": "slides/week-12-model-data.html#in-class-notebook-activity",
-    "title": "Model-Based vs Data-Driven Imaging",
-    "section": "In-Class Notebook Activity",
-    "text": "In-Class Notebook Activity\n\n10 minutes\n\n\nOpen the Week 12 notebook.\n\nChange the number of learned PCA components.\nChange the noise level.\nChange the training crop.\nCompare Gaussian, wavelet, and learned patch priors.\nTest on a different image."
-  },
-  {
-    "objectID": "slides/week-12-model-data.html#quiz-style-check",
-    "href": "slides/week-12-model-data.html#quiz-style-check",
-    "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Quiz-Style Check",
-    "text": "Quiz-Style Check\n\nAnswer quickly:\n\nWhat does a model-based method specify explicitly?\nWhat does a data-driven method learn?\nWhy is a neural network an operator?\nWhat is distribution shift?"
-  },
-  {
-    "objectID": "slides/week-12-model-data.html#suggested-answers",
-    "href": "slides/week-12-model-data.html#suggested-answers",
-    "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Suggested Answers",
-    "text": "Suggested Answers\n\n\n\nQuestion\nShort answer\n\n\n\n\nmodel-based\nforward model, data term, prior, solver\n\n\ndata-driven\nparameters from examples and a loss\n\n\nneural operator\nmaps an input image to an output image\n\n\ndistribution shift\ntest data differs from training data"
+    "section": "Before Quiz 2",
+    "text": "Before Quiz 2\n\nUse the central identity as the organizing question:\n\nWhat part of the method comes from the forward model?\nWhat part comes from an explicit prior?\nWhat part is learned from examples?\nHow could the reconstruction fail on new data?"
   },
   {
     "objectID": "slides/week-12-model-data.html#what-students-should-remember",
@@ -8425,14 +8355,7 @@
     "href": "slides/week-12-model-data.html#after-class",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
-  },
-  {
-    "objectID": "slides/week-12-model-data.html#next-time",
-    "href": "slides/week-12-model-data.html#next-time",
-    "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Next Time",
-    "text": "Next Time\nPlug-and-play and learned regularization:\n\niterative algorithms with learned denoisers;\nreplacing proximal operators;\nlearned priors inside optimization loops;\nconvergence questions."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the Week 12 notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#opening-question",
