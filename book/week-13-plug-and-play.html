@@ -487,6 +487,10 @@ y\approx Ax,
 </span></p>
 <p>This makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.</p>
 <p>PnP is also where the middle and right parts of the course identity meet. Classical variational reconstruction gives an iteration with a data step and a prior step. Neural reconstruction can replace the prior step by a learned denoiser. The forward model still asks for measurement consistency, while the denoiser supplies learned image structure.</p>
+<p>This is the most concrete bridge from Chapter 9 to neural imaging. Chapter 9 described an algorithm as an alternation between a data step and a prior step. Plug-and-play keeps the data step recognizable and changes the prior step. The course question becomes:</p>
+<blockquote class="blockquote">
+<p>If a proximal operator behaves like a denoiser, what happens when the denoiser is learned?</p>
+</blockquote>
 </section>
 <section id="proximal-algorithms" class="level2">
 <h2 class="anchored" data-anchor-id="proximal-algorithms">Proximal Algorithms</h2>

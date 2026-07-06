@@ -404,6 +404,7 @@ window.Quarto = {
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#where-does-prior-knowledge-come-from" id="toc-where-does-prior-knowledge-come-from" class="nav-link" data-scroll-target="#where-does-prior-knowledge-come-from">Where Does Prior Knowledge Come From?</a></li>
   <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
+  <li><a href="#what-changes-what-does-not" id="toc-what-changes-what-does-not" class="nav-link" data-scroll-target="#what-changes-what-does-not">What Changes, What Does Not</a></li>
   <li><a href="#model-based-imaging" id="toc-model-based-imaging" class="nav-link" data-scroll-target="#model-based-imaging">Model-Based Imaging</a></li>
   <li><a href="#what-model-based-does-not-mean" id="toc-what-model-based-does-not-mean" class="nav-link" data-scroll-target="#what-model-based-does-not-mean">What Model-Based Does Not Mean</a></li>
   <li><a href="#data-driven-imaging" id="toc-data-driven-imaging" class="nav-link" data-scroll-target="#data-driven-imaging">Data-Driven Imaging</a></li>
@@ -502,6 +503,59 @@ D(Ax,y)+\lambda R(x).
 <li>How can we test whether the result is supported by the data?</li>
 </ul>
 <p>In a classical method, the prior may be a formula such as <span class="math inline">\|Lx\|^2</span>, <span class="math inline">\|\nabla x\|_1</span>, or <span class="math inline">\|\alpha\|_1</span> in a wavelet basis. In a learned method, the prior may be spread across the training set, architecture, loss, optimizer, and learned parameters. The mathematical discipline is the same: do not confuse the prior with the measurement.</p>
+</section>
+<section id="what-changes-what-does-not" class="level2">
+<h2 class="anchored" data-anchor-id="what-changes-what-does-not">What Changes, What Does Not</h2>
+<p>Moving from handcrafted priors to learned priors changes where image knowledge comes from. It does not remove the inverse problem.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part of reconstruction</th>
+<th>Classical version</th>
+<th>Learned version</th>
+<th>Still required?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>measurement model</td>
+<td><span class="math inline">A</span> or <span class="math inline">f</span> written explicitly</td>
+<td>sometimes explicit, sometimes implicit</td>
+<td>yes, if data fidelity matters</td>
+</tr>
+<tr class="even">
+<td>data consistency</td>
+<td>residual or likelihood term</td>
+<td>loss term, layer, projection, or audit</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>image prior</td>
+<td>formula such as TV or sparsity</td>
+<td>training data, architecture, denoiser, learned features</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>computation</td>
+<td>optimizer or proximal algorithm</td>
+<td>network inference or learned iteration</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>evidence</td>
+<td>residuals, sweeps, baselines</td>
+<td>validation, shift tests, residuals, baselines</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>The learned method may be more expressive, but it is not less responsible. If anything, the responsibility increases because some assumptions become harder to read from a formula.</p>
 </section>
 <section id="model-based-imaging" class="level2">
 <h2 class="anchored" data-anchor-id="model-based-imaging">Model-Based Imaging</h2>

@@ -481,6 +481,44 @@ window.Quarto = {
 <p>Wavelets also give a concrete example of a representation that is not learned but already feels “feature-like.” This makes them a useful stepping stone toward convolutional neural networks.</p>
 <p>The price is a localization tradeoff. Fourier is perfectly localized in frequency but not in space. Compactly supported wavelets are localized in space and scale, but they do not isolate a single exact frequency. This is a practical form of the time-frequency or space-frequency uncertainty principle: one cannot be perfectly localized in both domains at once.</p>
 <p>In the course arc, wavelets resolve a tension introduced in Chapter 3. Fourier gives orthogonal directions and a Pythagorean energy decomposition, but those directions are global. Wavelets keep the orthogonal-decomposition viewpoint while making many basis functions local. That is why wavelets are a natural last fixed representation before learned features enter the course.</p>
+<p>Wavelets also complete a short representation ladder:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Representation</th>
+<th>Main idea</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pixels</td>
+<td>direct spatial samples</td>
+<td>weak at separating structure from noise</td>
+</tr>
+<tr class="even">
+<td>Fourier</td>
+<td>global orthogonal frequencies</td>
+<td>no spatial localization</td>
+</tr>
+<tr class="odd">
+<td>DCT/sparse transforms</td>
+<td>compact coefficient descriptions</td>
+<td>representation still fixed by hand</td>
+</tr>
+<tr class="even">
+<td>wavelets</td>
+<td>localized multiscale features</td>
+<td>filters are designed, not learned</td>
+</tr>
+</tbody>
+</table>
+<p>Chapter 12 asks what happens when the last row becomes learnable. Neural features are not introduced as magic; they are introduced after students have seen why representation choice matters.</p>
 </section>
 <section id="haar-intuition" class="level2">
 <h2 class="anchored" data-anchor-id="haar-intuition">Haar Intuition</h2>

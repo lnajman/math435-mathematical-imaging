@@ -445,7 +445,7 @@
     "href": "slides/week-13-plug-and-play.html#after-class",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 13 of the book for the proximal-to-denoiser bridge.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#next-time",
@@ -739,7 +739,7 @@
     "href": "slides/week-11-wavelets.html#after-class",
     "title": "Wavelets and Multiscale Representation",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 11 of the book for the Fourier-wavelet-Pythagorean bridge.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-11-wavelets.html#next-time",
@@ -2364,7 +2364,7 @@
     "href": "book/week-14-stability-robustness-ethics.html#why-this-chapter-matters",
     "title": "Stability, Robustness, and Ethics",
     "section": "Why This Chapter Matters",
-    "text": "Why This Chapter Matters\nThis final chapter returns to the beginning of the course. We started with the inverse-problem question:\n\ny = Ax+\\eta,\n\\qquad\n\\text{recover } x \\text{ from } y.\n\nWe then saw why this is difficult: information can be lost, noise can be amplified, and many images can be compatible with the same data. Regularization, sparse priors, wavelets, learned priors, neural networks, and plug-and-play algorithms are all ways to make reconstruction possible.\nBut the final question is not only whether reconstruction is possible. It is whether the result should be trusted for the intended use.\nThis is where the course becomes a habit of mind. Every reconstruction should be read as a mixture of:\n\nmeasured evidence;\nforward-model assumptions;\nnoise assumptions;\nprior information;\nalgorithmic choices;\ntraining-data influence, if learning is used.\n\nReliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.\nThis is especially important for neural imaging. A neural method can make an inverse problem look solved because it produces a sharp, realistic output. But sharpness is not the same as evidence. The central identity remains:\n\n\\text{neural imaging}\n=\n\\text{inverse problems}\n+\n\\text{learned image models}.\n\nThe inverse-problem part asks what the measurement supports. The learned-model part adds expectations from examples. Reliability asks whether those two sources of information agree, conflict, or become impossible to separate.",
+    "text": "Why This Chapter Matters\nThis final chapter returns to the beginning of the course. We started with the inverse-problem question:\n\ny = Ax+\\eta,\n\\qquad\n\\text{recover } x \\text{ from } y.\n\nWe then saw why this is difficult: information can be lost, noise can be amplified, and many images can be compatible with the same data. Regularization, sparse priors, wavelets, learned priors, neural networks, and plug-and-play algorithms are all ways to make reconstruction possible.\nBut the final question is not only whether reconstruction is possible. It is whether the result should be trusted for the intended use.\nThis is where the course becomes a habit of mind. Every reconstruction should be read as a mixture of:\n\nmeasured evidence;\nforward-model assumptions;\nnoise assumptions;\nprior information;\nalgorithmic choices;\ntraining-data influence, if learning is used.\n\nReliability means understanding that mixture well enough to say what the image supports, what it suggests, and what it cannot justify.\nThis is especially important for neural imaging. A neural method can make an inverse problem look solved because it produces a sharp, realistic output. But sharpness is not the same as evidence. The central identity remains:\n\n\\text{neural imaging}\n=\n\\text{inverse problems}\n+\n\\text{learned image models}.\n\nThe inverse-problem part asks what the measurement supports. The learned-model part adds expectations from examples. Reliability asks whether those two sources of information agree, conflict, or become impossible to separate.\nThe reliability questions in this chapter apply to every method in the course. Tikhonov can over-smooth. TV can create artificial plateaus. Sparse and wavelet methods can erase texture. Learned priors can hallucinate or fail under distribution shift. The mechanisms differ, but the responsibility is the same: report what was measured, what was assumed, and what evidence supports the claim.",
     "crumbs": [
       "Book",
       "Part V: Reliability",
@@ -2696,6 +2696,18 @@
     ]
   },
   {
+    "objectID": "book/week-12-model-data.html#what-changes-what-does-not",
+    "href": "book/week-12-model-data.html#what-changes-what-does-not",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "What Changes, What Does Not",
+    "text": "What Changes, What Does Not\nMoving from handcrafted priors to learned priors changes where image knowledge comes from. It does not remove the inverse problem.\n\n\n\n\n\n\n\n\n\nPart of reconstruction\nClassical version\nLearned version\nStill required?\n\n\n\n\nmeasurement model\nA or f written explicitly\nsometimes explicit, sometimes implicit\nyes, if data fidelity matters\n\n\ndata consistency\nresidual or likelihood term\nloss term, layer, projection, or audit\nyes\n\n\nimage prior\nformula such as TV or sparsity\ntraining data, architecture, denoiser, learned features\nyes\n\n\ncomputation\noptimizer or proximal algorithm\nnetwork inference or learned iteration\nyes\n\n\nevidence\nresiduals, sweeps, baselines\nvalidation, shift tests, residuals, baselines\nyes\n\n\n\nThe learned method may be more expressive, but it is not less responsible. If anything, the responsibility increases because some assumptions become harder to read from a formula.",
+    "crumbs": [
+      "Book",
+      "Part IV: Sparse and Learned Priors",
+      "12. Model-based vs data-driven imaging"
+    ]
+  },
+  {
     "objectID": "book/week-12-model-data.html#model-based-imaging",
     "href": "book/week-12-model-data.html#model-based-imaging",
     "title": "Model-Based vs Data-Driven Imaging",
@@ -2964,7 +2976,7 @@
     "href": "book/week-10-sparse-reconstruction.html#why-this-chapter-matters",
     "title": "Sparse Reconstruction",
     "section": "Why This Chapter Matters",
-    "text": "Why This Chapter Matters\nThe previous chapters introduced regularization as a way to stabilize inverse problems. Tikhonov prefers small energy. Total Variation prefers sparse gradients. Sparse reconstruction generalizes this idea: a signal or image may be simple after the right representation is chosen.\nThis is an important turn in the course. We stop asking only whether an image is smooth and begin asking where its information is concentrated. If most of the meaningful structure can be described by a small number of coefficients, then incomplete measurements may be enough to reconstruct it.\nThis also prepares the path to neural networks. A neural network can be understood, partly, as learning a representation in which relevant image structure becomes easier to describe, separate, or reconstruct. Sparse reconstruction is a hand-designed predecessor of that idea.\nA vector x\\in\\mathbb{R}^n is k-sparse if it has at most k nonzero entries:\n\n\\|x\\|_0\n=\n\\#\\{i:x_i\\neq 0\\}.\n\nThe notation \\|\\cdot\\|_0 counts nonzeros; it is not a true norm.\n\n\nSparse vectors have only a few active coefficients; dense vectors spread information across many entries.\n\nSparsity is stronger than smallness. A vector can have small entries everywhere and still be dense. Sparse modeling says that most entries are exactly zero or negligible, and a relatively small set carries the important information.\nIn practice, exact sparsity is rare. Approximate sparsity is enough for many imaging methods: sorted coefficient magnitudes decay rapidly, so keeping the largest coefficients captures most visible structure.",
+    "text": "Why This Chapter Matters\nThe previous chapters introduced regularization as a way to stabilize inverse problems. Tikhonov prefers small energy. Total Variation prefers sparse gradients. Sparse reconstruction generalizes this idea: a signal or image may be simple after the right representation is chosen.\nThis is an important turn in the course. We stop asking only whether an image is smooth and begin asking where its information is concentrated. If most of the meaningful structure can be described by a small number of coefficients, then incomplete measurements may be enough to reconstruct it.\nThis also prepares the path to neural networks. A neural network can be understood, partly, as learning a representation in which relevant image structure becomes easier to describe, separate, or reconstruct. Sparse reconstruction is a hand-designed predecessor of that idea.\nIn the course identity,\n\n\\hat{x}\n=\n\\operatorname*{argmin}_x D(Ax,y)+\\lambda R(x),\n\nthis chapter changes the meaning of R. The prior no longer says only “be small” or “be smooth.” It says: be simple in a chosen representation. That representation might be DCT, wavelets, a learned dictionary, or later a neural feature space.\nThis is why sparse reconstruction belongs between TV and learned imaging. It teaches that the quality of a prior depends not only on the penalty, but also on the coordinates in which the penalty is applied.\nA vector x\\in\\mathbb{R}^n is k-sparse if it has at most k nonzero entries:\n\n\\|x\\|_0\n=\n\\#\\{i:x_i\\neq 0\\}.\n\nThe notation \\|\\cdot\\|_0 counts nonzeros; it is not a true norm.\n\n\nSparse vectors have only a few active coefficients; dense vectors spread information across many entries.\n\nSparsity is stronger than smallness. A vector can have small entries everywhere and still be dense. Sparse modeling says that most entries are exactly zero or negligible, and a relatively small set carries the important information.\nIn practice, exact sparsity is rare. Approximate sparsity is enough for many imaging methods: sorted coefficient magnitudes decay rapidly, so keeping the largest coefficients captures most visible structure.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -4734,7 +4746,7 @@
     "href": "book/index.html",
     "title": "Mathematical Imaging",
     "section": "",
-    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.\nThe motivation chapter develops the central identity of the course:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y).\nMathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.\nThe formula above should be read as the spine of the book, not as three separate topics. The left side describes how measurements are formed. The middle describes how classical reconstruction balances data fit and prior assumptions. The right side describes one modern possibility: a learned map or learned component. The course keeps asking when these arrows are justified.\nThe book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the project page.\nEach chapter connects:",
+    "text": "This online book is the narrative companion to the MATH 435 slides and notebooks. The slides are designed for class structure; the book is designed for slower reading, review, and project preparation.\nThe motivation chapter develops the central identity of the course:\ny = Ax+\\eta\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}\n=\n\\arg\\min_x D(Ax,y)+\\lambda R(x)\n\\qquad\\Longrightarrow\\qquad\n\\hat{x}=f_\\theta(y).\nMathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.\nThe formula above should be read as the spine of the book, not as three separate topics. The left side describes how measurements are formed. The middle describes how classical reconstruction balances data fit and prior assumptions. The right side describes one modern possibility: a learned map or learned component. The course keeps asking when these arrows are justified.\nThe book contains the motivation chapter and the fourteen teaching chapters. It is now the main long-form reference for the course arc. The final project, report, and oral defense are handled separately on the project page.\nEach chapter connects:",
     "crumbs": [
       "Book",
       "Book home"
@@ -4746,6 +4758,17 @@
     "title": "Mathematical Imaging",
     "section": "How To Use This Book",
     "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The preparation rhythm gives the weekly sequence that connects these resources.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat prior, regularizer, or learned information is being used?\nWhat can go wrong?\n\nThe same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
+    "objectID": "book/index.html#reading-threads",
+    "href": "book/index.html#reading-threads",
+    "title": "Mathematical Imaging",
+    "section": "Reading Threads",
+    "text": "Reading Threads\nFour threads run through the whole book.\n\n\n\n\n\n\n\nThread\nGuiding question\n\n\n\n\nmeasurement\nWhat did the data actually record?\n\n\nprior\nWhat assumptions choose among possible reconstructions?\n\n\ncomputation\nWhat algorithm, iteration, or learned map produces the image?\n\n\nevidence\nWhat tests justify trusting the output?\n\n\n\nThe chapters should not be read as isolated techniques. Fourier analysis, Tikhonov regularization, TV, sparsity, wavelets, and learned denoisers are different answers to the same reconstruction problem. Each answer changes what information is emphasized, what information is assumed, and what evidence must be reported.",
     "crumbs": [
       "Book",
       "Book home"
@@ -4767,7 +4790,18 @@
     "href": "book/index.html#book-arc",
     "title": "Mathematical Imaging",
     "section": "Book Arc",
-    "text": "Book Arc\nThe book follows the course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nStart\nMotivation\nInverse problems as the path toward neural reconstruction\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14\nRobustness, ethics, and responsible reconstruction\n\n\n\nThe course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.",
+    "text": "Book Arc\nThe book follows a single course arc:\n\n\n\n\n\n\n\n\nPart\nChapters\nTheme\n\n\n\n\nStart\nMotivation\nInverse problems as the path toward neural reconstruction\n\n\nI\n1-3\nImages, operators, convolution, Fourier analysis\n\n\nII\n4-6\nNoise, likelihoods, ill-posedness, Tikhonov regularization\n\n\nIII\n7-9\nVariational models, TV, and optimization\n\n\nIV\n10-13\nSparsity, wavelets, learned priors, plug-and-play methods\n\n\nV\n14\nRobustness, ethics, and responsible reconstruction\n\n\n\nThe course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.",
+    "crumbs": [
+      "Book",
+      "Book home"
+    ]
+  },
+  {
+    "objectID": "book/index.html#how-the-parts-connect",
+    "href": "book/index.html#how-the-parts-connect",
+    "title": "Mathematical Imaging",
+    "section": "How The Parts Connect",
+    "text": "How The Parts Connect\nThe early chapters define images and measurements. Chapters 4-6 explain why measurement agreement alone is not enough: noise, missing information, and instability force us to add assumptions. Chapters 7-9 turn those assumptions into variational models and algorithms. Chapters 10-11 ask where image information is sparse. Chapters 12-13 ask whether those priors, denoisers, or update rules can be learned from examples. Chapter 14 returns to trust: what was measured, what was assumed, what was learned, and what evidence supports the reconstruction?\nThis is why the slides and book have different jobs. The slides give the live class path. The book gives the slower argument connecting the weeks.",
     "crumbs": [
       "Book",
       "Book home"
@@ -6181,7 +6215,7 @@
     "href": "book/week-11-wavelets.html#why-this-chapter-matters",
     "title": "Wavelets and Multiscale Representation",
     "section": "Why This Chapter Matters",
-    "text": "Why This Chapter Matters\nChapter 10 explained that sparse reconstruction depends on representation. Wavelets are one of the most important fixed representations for images because they combine three ideas:\n\nlocation: where something happens;\nscale: how large the structure is;\ndirection: whether the structure is horizontal, vertical, or diagonal.\n\nFourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.\nWavelets also give a concrete example of a representation that is not learned but already feels “feature-like.” This makes them a useful stepping stone toward convolutional neural networks.\nThe price is a localization tradeoff. Fourier is perfectly localized in frequency but not in space. Compactly supported wavelets are localized in space and scale, but they do not isolate a single exact frequency. This is a practical form of the time-frequency or space-frequency uncertainty principle: one cannot be perfectly localized in both domains at once.\nIn the course arc, wavelets resolve a tension introduced in Chapter 3. Fourier gives orthogonal directions and a Pythagorean energy decomposition, but those directions are global. Wavelets keep the orthogonal-decomposition viewpoint while making many basis functions local. That is why wavelets are a natural last fixed representation before learned features enter the course.",
+    "text": "Why This Chapter Matters\nChapter 10 explained that sparse reconstruction depends on representation. Wavelets are one of the most important fixed representations for images because they combine three ideas:\n\nlocation: where something happens;\nscale: how large the structure is;\ndirection: whether the structure is horizontal, vertical, or diagonal.\n\nFourier coefficients are excellent for global frequency content. Wavelet coefficients are better suited to local events such as edges, corners, and transitions. This makes wavelets a bridge between classical harmonic analysis and the multiscale features used in modern image models.\nWavelets also give a concrete example of a representation that is not learned but already feels “feature-like.” This makes them a useful stepping stone toward convolutional neural networks.\nThe price is a localization tradeoff. Fourier is perfectly localized in frequency but not in space. Compactly supported wavelets are localized in space and scale, but they do not isolate a single exact frequency. This is a practical form of the time-frequency or space-frequency uncertainty principle: one cannot be perfectly localized in both domains at once.\nIn the course arc, wavelets resolve a tension introduced in Chapter 3. Fourier gives orthogonal directions and a Pythagorean energy decomposition, but those directions are global. Wavelets keep the orthogonal-decomposition viewpoint while making many basis functions local. That is why wavelets are a natural last fixed representation before learned features enter the course.\nWavelets also complete a short representation ladder:\n\n\n\n\n\n\n\n\nRepresentation\nMain idea\nLimitation\n\n\n\n\npixels\ndirect spatial samples\nweak at separating structure from noise\n\n\nFourier\nglobal orthogonal frequencies\nno spatial localization\n\n\nDCT/sparse transforms\ncompact coefficient descriptions\nrepresentation still fixed by hand\n\n\nwavelets\nlocalized multiscale features\nfilters are designed, not learned\n\n\n\nChapter 12 asks what happens when the last row becomes learnable. Neural features are not introduced as magic; they are introduced after students have seen why representation choice matters.",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -6397,7 +6431,7 @@
     "href": "book/week-13-plug-and-play.html#why-this-chapter-matters",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Why This Chapter Matters",
-    "text": "Why This Chapter Matters\nChapter 12 compared explicit model-based reconstruction with data-driven methods. Plug-and-play is the meeting point. It keeps the inverse-problem structure:\n\ny\\approx Ax,\n\nbut replaces an explicit handcrafted proximal prior with a denoising operator.\nThis is a beautiful idea because denoising is often easier to learn than full reconstruction. A denoiser learns what clean images tend to look like. Plug-and-play then uses that denoiser inside an algorithm that still knows the forward model.\nIn other words:\n\n\\text{plug-and-play}\n=\n\\text{data consistency}\n+\n\\text{denoising prior}.\n\nThis makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.\nPnP is also where the middle and right parts of the course identity meet. Classical variational reconstruction gives an iteration with a data step and a prior step. Neural reconstruction can replace the prior step by a learned denoiser. The forward model still asks for measurement consistency, while the denoiser supplies learned image structure.",
+    "text": "Why This Chapter Matters\nChapter 12 compared explicit model-based reconstruction with data-driven methods. Plug-and-play is the meeting point. It keeps the inverse-problem structure:\n\ny\\approx Ax,\n\nbut replaces an explicit handcrafted proximal prior with a denoising operator.\nThis is a beautiful idea because denoising is often easier to learn than full reconstruction. A denoiser learns what clean images tend to look like. Plug-and-play then uses that denoiser inside an algorithm that still knows the forward model.\nIn other words:\n\n\\text{plug-and-play}\n=\n\\text{data consistency}\n+\n\\text{denoising prior}.\n\nThis makes PnP one of the clearest examples of the course identity: neural or learned tools become most meaningful when we understand the inverse problem they are helping to solve.\nPnP is also where the middle and right parts of the course identity meet. Classical variational reconstruction gives an iteration with a data step and a prior step. Neural reconstruction can replace the prior step by a learned denoiser. The forward model still asks for measurement consistency, while the denoiser supplies learned image structure.\nThis is the most concrete bridge from Chapter 9 to neural imaging. Chapter 9 described an algorithm as an alternation between a data step and a prior step. Plug-and-play keeps the data step recognizable and changes the prior step. The course question becomes:\n\nIf a proximal operator behaves like a denoiser, what happens when the denoiser is learned?",
     "crumbs": [
       "Book",
       "Part IV: Sparse and Learned Priors",
@@ -8186,7 +8220,7 @@
     "href": "slides/week-10-sparse-reconstruction.html#after-class",
     "title": "Sparse Reconstruction",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 10 of the book to connect l1 geometry with representation-dependent priors.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#next-time",
@@ -8508,7 +8542,7 @@
     "href": "slides/week-12-model-data.html#after-class",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the Week 12 notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 12 of the book for the model-based/data-driven comparison.\nRun the Week 12 notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#opening-question",
@@ -8830,7 +8864,7 @@
     "href": "slides/week-14-stability-robustness-ethics.html#after-class",
     "title": "Stability, Robustness, and Ethics",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 14 of the book as the reliability checklist for projects.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#next-time",

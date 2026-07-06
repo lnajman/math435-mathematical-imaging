@@ -367,8 +367,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#how-to-use-this-book" id="toc-how-to-use-this-book" class="nav-link active" data-scroll-target="#how-to-use-this-book">How To Use This Book</a></li>
+  <li><a href="#reading-threads" id="toc-reading-threads" class="nav-link" data-scroll-target="#reading-threads">Reading Threads</a></li>
   <li><a href="#current-chapters" id="toc-current-chapters" class="nav-link" data-scroll-target="#current-chapters">Current Chapters</a></li>
   <li><a href="#book-arc" id="toc-book-arc" class="nav-link" data-scroll-target="#book-arc">Book Arc</a></li>
+  <li><a href="#how-the-parts-connect" id="toc-how-the-parts-connect" class="nav-link" data-scroll-target="#how-the-parts-connect">How The Parts Connect</a></li>
   <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lnajman/math435-mathematical-imaging/edit/main/book/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/lnajman/math435-mathematical-imaging/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -409,7 +411,7 @@ y = Ax+\eta
 </span></p>
 <p>Mathematical imaging begins with inverse problems and naturally leads to neural networks as learned inverse maps, learned priors, learned denoisers, or learned components of reconstruction algorithms. The book keeps these ideas in one story: a reconstruction must be explained by the data, the forward model, the assumptions, and the evidence that it can be trusted.</p>
 <p>The formula above should be read as the spine of the book, not as three separate topics. The left side describes how measurements are formed. The middle describes how classical reconstruction balances data fit and prior assumptions. The right side describes one modern possibility: a learned map or learned component. The course keeps asking when these arrows are justified.</p>
-<p>The book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the <a href="../project/index.html">project page</a>.</p>
+<p>The book contains the motivation chapter and the fourteen teaching chapters. It is now the main long-form reference for the course arc. The final project, report, and oral defense are handled separately on the <a href="../project/index.html">project page</a>.</p>
 <p>Each chapter connects:</p>
 <ul>
 <li>the mathematical model;</li>
@@ -431,6 +433,41 @@ y = Ax+\eta
 <li>What can go wrong?</li>
 </ol>
 <p>The same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.</p>
+</section>
+<section id="reading-threads" class="level2">
+<h2 class="anchored" data-anchor-id="reading-threads">Reading Threads</h2>
+<p>Four threads run through the whole book.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Thread</th>
+<th>Guiding question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>measurement</td>
+<td>What did the data actually record?</td>
+</tr>
+<tr class="even">
+<td>prior</td>
+<td>What assumptions choose among possible reconstructions?</td>
+</tr>
+<tr class="odd">
+<td>computation</td>
+<td>What algorithm, iteration, or learned map produces the image?</td>
+</tr>
+<tr class="even">
+<td>evidence</td>
+<td>What tests justify trusting the output?</td>
+</tr>
+</tbody>
+</table>
+<p>The chapters should not be read as isolated techniques. Fourier analysis, Tikhonov regularization, TV, sparsity, wavelets, and learned denoisers are different answers to the same reconstruction problem. Each answer changes what information is emphasized, what information is assumed, and what evidence must be reported.</p>
 </section>
 <section id="current-chapters" class="level2">
 <h2 class="anchored" data-anchor-id="current-chapters">Current Chapters</h2>
@@ -539,7 +576,7 @@ y = Ax+\eta
 </section>
 <section id="book-arc" class="level2">
 <h2 class="anchored" data-anchor-id="book-arc">Book Arc</h2>
-<p>The book follows the course arc:</p>
+<p>The book follows a single course arc:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -587,6 +624,11 @@ y = Ax+\eta
 </tbody>
 </table>
 <p>The course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.</p>
+</section>
+<section id="how-the-parts-connect" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-parts-connect">How The Parts Connect</h2>
+<p>The early chapters define images and measurements. Chapters 4-6 explain why measurement agreement alone is not enough: noise, missing information, and instability force us to add assumptions. Chapters 7-9 turn those assumptions into variational models and algorithms. Chapters 10-11 ask where image information is sparse. Chapters 12-13 ask whether those priors, denoisers, or update rules can be learned from examples. Chapter 14 returns to trust: what was measured, what was assumed, what was learned, and what evidence supports the reconstruction?</p>
+<p>This is why the slides and book have different jobs. The slides give the live class path. The book gives the slower argument connecting the weeks.</p>
 </section>
 <section id="notation" class="level2">
 <h2 class="anchored" data-anchor-id="notation">Notation</h2>
