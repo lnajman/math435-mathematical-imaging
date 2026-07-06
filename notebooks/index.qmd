@@ -6,6 +6,30 @@ The notebooks are student-facing companions to the slide decks. They are designe
 
 Use the Google Colab links if you want to work in a browser without installing Python locally.
 
+## How To Use Them
+
+For each notebook:
+
+1. run the setup cells first;
+2. run the demonstration cells without changing anything;
+3. change the marked parameters or `TODO` cells;
+4. compare the image, residual, coefficient, or curve before and after the change;
+5. answer the final coherence check in your own words.
+
+The notebooks are not only code examples. They are experiments for the course identity:
+
+$$
+\text{measurement}
+\quad+\quad
+\text{prior or learned assumption}
+\quad+\quad
+\text{algorithm}
+\quad\Longrightarrow\quad
+\text{reconstruction}.
+$$
+
+When a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.
+
 | Week | Topic | Notebook | Google Colab |
 |---:|---|---|---|
 | 1 | Image formation as arrays | [Download](week01_image_formation.ipynb) / [GitHub](https://github.com/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) | [Open in Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |

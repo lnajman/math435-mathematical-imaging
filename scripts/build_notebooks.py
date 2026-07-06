@@ -371,7 +371,7 @@ def week01_cells() -> list[nbf.NotebookNode]:
         ),
         md(
             """
-            ## Checkpoint
+            ## Checks
 
             Answer in your own words:
 
@@ -379,6 +379,19 @@ def week01_cells() -> list[nbf.NotebookNode]:
             2. What information does `image.shape` give?
             3. What does a binary mask select?
             4. Why is a missing recorded pixel not the same as seeing behind an occluding object?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 2 turns the forward model into a concrete operator:
+
+            ```text
+            image x -> blurred measurement y
+            ```
+
+            Keep the same question in mind: what part of the output is measured, and what part would require an assumption?
             """
         ),
     ]
@@ -730,7 +743,7 @@ def week02_cells() -> list[nbf.NotebookNode]:
         ),
         md(
             """
-            ## Checkpoint
+            ## Checks
 
             Answer in your own words:
 
@@ -738,6 +751,20 @@ def week02_cells() -> list[nbf.NotebookNode]:
             2. Why is a point spread function a useful model?
             3. Which boundary mode would you choose for a natural photograph?
             4. Why does naive inverse filtering amplify noise?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 3 uses Fourier analysis to explain why some blurred components are stable and others are fragile.
+
+            Watch for the same inverse-problem pattern:
+
+            ```text
+            strongly transmitted information -> reliable reconstruction
+            weakly transmitted information -> regularization or prior needed
+            ```
             """
         ),
     ]
@@ -1155,7 +1182,7 @@ def week03_cells() -> list[nbf.NotebookNode]:
         ),
         md(
             """
-            ## Checkpoint
+            ## Checks
 
             Answer in your own words:
 
@@ -1163,6 +1190,19 @@ def week03_cells() -> list[nbf.NotebookNode]:
             2. Where are low frequencies after `fftshift`?
             3. What does the convolution theorem say?
             4. Why is deblurring unstable when the blur response is small?
+            """
+        ),
+        md(
+            """
+            ## Next Steps
+
+            Week 4 adds noise models. The question changes from "does the reconstruction fit the data exactly?" to:
+
+            ```text
+            is the residual plausible under the measurement noise model?
+            ```
+
+            This is the beginning of the data-fidelity term in the variational formulation.
             """
         ),
     ]
