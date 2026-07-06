@@ -22,7 +22,7 @@ Mathematical imaging begins with inverse problems and naturally leads to neural 
 
 The formula above should be read as the spine of the book, not as three separate topics. The left side describes how measurements are formed. The middle describes how classical reconstruction balances data fit and prior assumptions. The right side describes one modern possibility: a learned map or learned component. The course keeps asking when these arrows are justified.
 
-The book currently contains the motivation chapter and the fourteen teaching chapters. The final project, report, and oral defense are handled separately on the [project page](../project/index.qmd).
+The book contains the motivation chapter and the fourteen teaching chapters. It is now the main long-form reference for the course arc. The final project, report, and oral defense are handled separately on the [project page](../project/index.qmd).
 
 Each chapter connects:
 
@@ -47,6 +47,19 @@ For each chapter, students should be able to answer:
 
 The same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.
 
+## Reading Threads
+
+Four threads run through the whole book.
+
+| Thread | Guiding question |
+|---|---|
+| measurement | What did the data actually record? |
+| prior | What assumptions choose among possible reconstructions? |
+| computation | What algorithm, iteration, or learned map produces the image? |
+| evidence | What tests justify trusting the output? |
+
+The chapters should not be read as isolated techniques. Fourier analysis, Tikhonov regularization, TV, sparsity, wavelets, and learned denoisers are different answers to the same reconstruction problem. Each answer changes what information is emphasized, what information is assumed, and what evidence must be reported.
+
 ## Current Chapters
 
 | Chapter | Topic | Slides | Notebook |
@@ -69,7 +82,7 @@ The same six questions apply to classical and neural methods. The notation chang
 
 ## Book Arc
 
-The book follows the course arc:
+The book follows a single course arc:
 
 | Part | Chapters | Theme |
 |---|---|---|
@@ -81,6 +94,12 @@ The book follows the course arc:
 | V | 14 | Robustness, ethics, and responsible reconstruction |
 
 The course project extends this arc by asking students to build and defend their own reconstruction study. It is part of the course, but it is not a separate book chapter.
+
+## How The Parts Connect
+
+The early chapters define images and measurements. Chapters 4-6 explain why measurement agreement alone is not enough: noise, missing information, and instability force us to add assumptions. Chapters 7-9 turn those assumptions into variational models and algorithms. Chapters 10-11 ask where image information is sparse. Chapters 12-13 ask whether those priors, denoisers, or update rules can be learned from examples. Chapter 14 returns to trust: what was measured, what was assumed, what was learned, and what evidence supports the reconstruction?
+
+This is why the slides and book have different jobs. The slides give the live class path. The book gives the slower argument connecting the weeks.
 
 ## Notation
 

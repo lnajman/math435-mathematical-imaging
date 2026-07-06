@@ -506,6 +506,7 @@ This is the boundary modern imaging has to test.
 
 ::: {.checklist}
 - Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
+- Use Chapter 14 of the book as the reliability checklist for projects.
 - Run the week notebook and change at least one important parameter.
 - Write one claim-evidence-limit sentence about today's model.
 :::

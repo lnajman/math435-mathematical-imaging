@@ -67,6 +67,20 @@ This identity is more than a slogan. It says that a neural method should be read
 
 In a classical method, the prior may be a formula such as $\|Lx\|^2$, $\|\nabla x\|_1$, or $\|\alpha\|_1$ in a wavelet basis. In a learned method, the prior may be spread across the training set, architecture, loss, optimizer, and learned parameters. The mathematical discipline is the same: do not confuse the prior with the measurement.
 
+## What Changes, What Does Not
+
+Moving from handcrafted priors to learned priors changes where image knowledge comes from. It does not remove the inverse problem.
+
+| Part of reconstruction | Classical version | Learned version | Still required? |
+|---|---|---|---|
+| measurement model | $A$ or $f$ written explicitly | sometimes explicit, sometimes implicit | yes, if data fidelity matters |
+| data consistency | residual or likelihood term | loss term, layer, projection, or audit | yes |
+| image prior | formula such as TV or sparsity | training data, architecture, denoiser, learned features | yes |
+| computation | optimizer or proximal algorithm | network inference or learned iteration | yes |
+| evidence | residuals, sweeps, baselines | validation, shift tests, residuals, baselines | yes |
+
+The learned method may be more expressive, but it is not less responsible. If anything, the responsibility increases because some assumptions become harder to read from a formula.
+
 ## Model-Based Imaging
 
 A classical reconstruction often solves

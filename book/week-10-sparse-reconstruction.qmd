@@ -36,6 +36,18 @@ This is an important turn in the course. We stop asking only whether an image is
 
 This also prepares the path to neural networks. A neural network can be understood, partly, as learning a representation in which relevant image structure becomes easier to describe, separate, or reconstruct. Sparse reconstruction is a hand-designed predecessor of that idea.
 
+In the course identity,
+
+$$
+\hat{x}
+=
+\operatorname*{argmin}_x D(Ax,y)+\lambda R(x),
+$$
+
+this chapter changes the meaning of $R$. The prior no longer says only "be small" or "be smooth." It says: be simple in a chosen representation. That representation might be DCT, wavelets, a learned dictionary, or later a neural feature space.
+
+This is why sparse reconstruction belongs between TV and learned imaging. It teaches that the quality of a prior depends not only on the penalty, but also on the coordinates in which the penalty is applied.
+
 A vector $x\in\mathbb{R}^n$ is $k$-sparse if it has at most $k$ nonzero entries:
 
 $$

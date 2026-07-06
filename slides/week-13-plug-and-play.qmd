@@ -596,6 +596,7 @@ Answer quickly:
 
 ::: {.checklist}
 - Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
+- Use Chapter 13 of the book for the proximal-to-denoiser bridge.
 - Run the week notebook and change at least one important parameter.
 - Write one claim-evidence-limit sentence about today's model.
 :::

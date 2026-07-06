@@ -48,6 +48,17 @@ The price is a localization tradeoff. Fourier is perfectly localized in frequenc
 
 In the course arc, wavelets resolve a tension introduced in Chapter 3. Fourier gives orthogonal directions and a Pythagorean energy decomposition, but those directions are global. Wavelets keep the orthogonal-decomposition viewpoint while making many basis functions local. That is why wavelets are a natural last fixed representation before learned features enter the course.
 
+Wavelets also complete a short representation ladder:
+
+| Representation | Main idea | Limitation |
+|---|---|---|
+| pixels | direct spatial samples | weak at separating structure from noise |
+| Fourier | global orthogonal frequencies | no spatial localization |
+| DCT/sparse transforms | compact coefficient descriptions | representation still fixed by hand |
+| wavelets | localized multiscale features | filters are designed, not learned |
+
+Chapter 12 asks what happens when the last row becomes learnable. Neural features are not introduced as magic; they are introduced after students have seen why representation choice matters.
+
 ## Haar Intuition
 
 The Haar wavelet is the simplest wavelet example.
