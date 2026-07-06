@@ -3261,6 +3261,18 @@
     ]
   },
   {
+    "objectID": "book/week-08-total-variation.html#what-tv-actually-counts",
+    "href": "book/week-08-total-variation.html#what-tv-actually-counts",
+    "title": "Total Variation Regularization",
+    "section": "What TV Actually Counts",
+    "text": "What TV Actually Counts\nTV counts accumulated local change. It does not count objects, textures, anatomical structures, or semantic meaning.\nThis distinction is important. If an image contains a sharp boundary between two regions, TV sees a concentrated set of large gradients. If an image contains fine texture, TV sees many gradients. If an image contains random noise, TV also sees many gradients. The regularizer has no direct way to know which gradients are meaningful. It only expresses a preference for images whose gradient map is simple.\nFor this reason, TV should be described as a structural prior rather than as an edge detector. It encourages a certain kind of image organization:\n\n\n\nImage behavior\nHow TV tends to respond\n\n\n\n\nflat region with small noise\nsuppress many weak gradients\n\n\nstrong coherent edge\noften keep a sharper transition\n\n\nfine texture\nmay remove or simplify it\n\n\nsmooth shading\nmay replace it by plateaus\n\n\nisolated noise spike\nmay keep it if it is strong enough\n\n\n\nThis table also explains why TV is useful in a course leading to neural networks. Learned priors are richer, but they still impose structure. TV gives a transparent first example of what it means for a prior to prefer some image explanations over others.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
     "objectID": "book/week-08-total-variation.html#tv-denoising",
     "href": "book/week-08-total-variation.html#tv-denoising",
     "title": "Total Variation Regularization",
@@ -3301,7 +3313,7 @@
     "href": "book/week-08-total-variation.html#one-dimensional-edge-preservation",
     "title": "Total Variation Regularization",
     "section": "One-Dimensional Edge Preservation",
-    "text": "One-Dimensional Edge Preservation\nTV is easiest to understand on a step signal.\n\n\nQuadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.\n\nTV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.\nThis is useful when the image contains objects separated by edges.\nThe same property can be expressed as sparsity of the gradient. TV does not usually make the image itself sparse. Instead, it encourages the gradient image to be sparse: many pixels have nearly zero gradient, and relatively few pixels carry transitions.\nThis idea prepares the next part of the course. Sparse reconstruction generalizes the question: in which representation should an image be simple? TV answers: the gradient representation. Wavelets answer differently. Neural representations answer differently again.",
+    "text": "One-Dimensional Edge Preservation\nTV is easiest to understand on a step signal.\n\n\nQuadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.\n\nTV is well matched to piecewise-constant structure. It counts the amount of change, not the square of the change. In one dimension, a unit jump and a monotone ramp of total height one can have comparable TV, while a quadratic gradient penalty strongly prefers spreading the change across many samples. TV is therefore much less biased toward blurring an edge into a ramp.\nThis is useful when the image contains objects separated by edges.\nThe same property can be expressed as sparsity of the gradient. TV does not usually make the image itself sparse. Instead, it encourages the gradient image to be sparse: many pixels have nearly zero gradient, and relatively few pixels carry transitions.\nThis idea prepares the next part of the course. Sparse reconstruction generalizes the question: in which representation should an image be simple? TV answers: the gradient representation. Wavelets answer differently. Neural representations answer differently again.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -3321,11 +3333,35 @@
     ]
   },
   {
+    "objectID": "book/week-08-total-variation.html#how-to-read-a-tv-result",
+    "href": "book/week-08-total-variation.html#how-to-read-a-tv-result",
+    "title": "Total Variation Regularization",
+    "section": "How To Read A TV Result",
+    "text": "How To Read A TV Result\nWhen looking at a TV reconstruction, it is useful to inspect four regions separately.\n\n\n\n\n\n\n\nRegion\nUseful question\n\n\n\n\nflat background\ndid noise decrease without changing the average intensity?\n\n\nobject boundary\ndid the edge stay localized or become displaced?\n\n\ntextured region\nwas meaningful texture mistaken for noise?\n\n\nsmooth shading\ndid staircasing create artificial plateaus?\n\n\n\nThe residual should also be inspected. If the TV image looks clean but the residual contains structured edges, the regularizer may have removed information that the measurements supported. If the residual is mostly noise-like, the reconstruction is more credible, although still not automatically true.\nThis habit prepares students for learned reconstruction. A neural output can look much more natural than a TV output, but the same questions remain: what changed, where did the evidence come from, and what does the residual still contain?",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
     "objectID": "book/week-08-total-variation.html#choosing-the-tv-weight",
     "href": "book/week-08-total-variation.html#choosing-the-tv-weight",
     "title": "Total Variation Regularization",
     "section": "Choosing The TV Weight",
     "text": "Choosing The TV Weight\nIn\n\n\\frac12\\|u-y\\|_2^2+\\lambda\\operatorname{TV}(u),\n\nlarger \\lambda means:\n\nstronger denoising;\nfewer small variations;\ngreater risk of losing detail.\n\n\n\nThe best value of \\lambda depends on the task.\n\nFor a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.\nThe parameter \\lambda has the same conceptual role as in Tikhonov, but the visual effect is different. Increasing \\lambda does not simply blur the image. It tends to remove weak oscillations and simplify the edge set. This can look like denoising, segmentation, or cartoonization depending on the image and the parameter.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "8. Total Variation regularization"
+    ]
+  },
+  {
+    "objectID": "book/week-08-total-variation.html#choosing-without-the-truth",
+    "href": "book/week-08-total-variation.html#choosing-without-the-truth",
+    "title": "Total Variation Regularization",
+    "section": "Choosing Without The Truth",
+    "text": "Choosing Without The Truth\nIn notebooks, we can sometimes compare a reconstruction to a known clean image. In real inverse problems, the ground truth is usually unavailable. Then \\lambda must be chosen using indirect evidence.\nPossible evidence includes:\n\nknowledge of the noise level;\nthe residual norm and residual image;\nstability under small parameter changes;\npreservation of task-relevant structures;\ncomparison with independent measurements or expert judgment.\n\nNo single criterion is universal. A visually attractive TV result may be too simple for measurement or diagnosis. A data-fitting result may preserve noise. Parameter choice is therefore part of the scientific argument, not only part of the computation.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5420,11 +5456,35 @@
     ]
   },
   {
+    "objectID": "book/week-07-variational-formulation.html#energy-as-negotiation",
+    "href": "book/week-07-variational-formulation.html#energy-as-negotiation",
+    "title": "Variational Formulation",
+    "section": "Energy As Negotiation",
+    "text": "Energy As Negotiation\nIt is helpful to read a variational model as a negotiation between terms.\nSuppose two candidate reconstructions are possible:\n\nx_1 fits the measurements very closely but contains many oscillations;\nx_2 is smoother or simpler but does not fit every measurement exactly.\n\nThe energy\n\nE(x)=D(Ax,y)+\\lambda R(x)\n\ndoes not know which candidate is “true” in an absolute sense. It only knows how to score candidates according to the two terms that we wrote down. The data term asks whether the candidate is compatible with the observed data and forward model. The regularizer asks whether the candidate looks plausible according to the chosen prior. The parameter \\lambda decides how much disagreement between these two voices is tolerated.\nThis is why the same image data can lead to different reconstructions under different energies. A reconstruction method is not only a numerical recipe. It is a set of priorities.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
     "objectID": "book/week-07-variational-formulation.html#reading-an-energy-as-an-audit-trail",
     "href": "book/week-07-variational-formulation.html#reading-an-energy-as-an-audit-trail",
     "title": "Variational Formulation",
     "section": "Reading An Energy As An Audit Trail",
     "text": "Reading An Energy As An Audit Trail\nAn energy functional is an audit trail for the reconstruction.\nFor example,\n\nE(x)=D(Ax,y)+\\lambda R(x)\n\nrecords at least four choices:\n\n\n\nPart\nWhat it records\n\n\n\n\nA\nwhat measurement process is assumed\n\n\nD\nwhat noise or discrepancy model is assumed\n\n\nR\nwhat image structures are preferred\n\n\n\\lambda\nhow data fit and prior are balanced\n\n\n\nThis is why variational models are useful pedagogically. They force assumptions into visible mathematical locations. If a reconstruction fails, we can ask whether the forward model, data term, regularizer, parameter, or optimizer is responsible.\nLearned methods often hide some of these choices inside training data, architecture, and loss functions. The variational viewpoint gives us a vocabulary for making those hidden choices visible again.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
+    "objectID": "book/week-07-variational-formulation.html#what-the-energy-cannot-see",
+    "href": "book/week-07-variational-formulation.html#what-the-energy-cannot-see",
+    "title": "Variational Formulation",
+    "section": "What The Energy Cannot See",
+    "text": "What The Energy Cannot See\nThe energy can only evaluate the information represented in its terms.\nIf the forward model is masking, pixels hidden behind the mask are not directly observed. The energy may still fill them in using a prior, but that fill-in is inferred structure, not recovered measurement. If an object is occluded by another object, the missing part is not secretly available to the algorithm. The method can guess using context, training data, or regularity assumptions, but the guess should not be confused with evidence.\nThis is a central difference between many image problems and idealized signal separation. In sound, under favorable assumptions, one may hope to separate mixed sources because the signals are superposed. In images, occlusion is often not a linear mixture. A hidden object may leave no measured trace at all.\nThe variational language makes this distinction visible. The data term says what was measured. The regularizer says how missing or unstable information is completed. Both are needed, but they have different epistemic status.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5521,6 +5581,18 @@
     "title": "Variational Formulation",
     "section": "Gradient Descent",
     "text": "Gradient Descent\nThe optimality equation gives a condition that the minimizer must satisfy. Gradient descent gives an iterative way to approach it.\nFor an energy E(u),\n\nu^{k+1}=u^k-\\tau\\nabla E(u^k).\n\nThe parameter \\tau is the step size.\n\n\nGradient descent moves locally downhill on the energy landscape.\n\nFor quadratic denoising,\n\n\\nabla E(u)\n=\n(u-y)+\\lambda L u.\n\nTherefore,\n\nu^{k+1}\n=\nu^k-\\tau\\left[(u^k-y)+\\lambda L u^k\\right].\n\nIf \\tau is too large, gradient descent can overshoot or diverge even for a convex quadratic.\n\n\nThe energy can decrease while image quality first improves and then becomes too smooth.\n\nThis last observation is subtle. The algorithm may be doing exactly what we asked: decreasing the chosen energy. But the image quality can still become worse if the energy does not perfectly match the desired task, or if the regularization weight is not appropriate. Optimization success and reconstruction success are related, but they are not identical.\nThis distinction will become important for learned models. A neural network can minimize its training loss very well and still fail on images that differ from the training distribution.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "7. Variational formulation"
+    ]
+  },
+  {
+    "objectID": "book/week-07-variational-formulation.html#optimality-is-not-truth",
+    "href": "book/week-07-variational-formulation.html#optimality-is-not-truth",
+    "title": "Variational Formulation",
+    "section": "Optimality Is Not Truth",
+    "text": "Optimality Is Not Truth\nThe phrase “optimal solution” can be misleading if it is detached from the model. A minimizer is optimal for a particular energy, not necessarily for the real-world task.\nFor a reconstruction \\hat{x}, three statements are different:\n\n\n\n\n\n\n\nStatement\nWhat it means\n\n\n\n\n\\hat{x} minimizes E\nthe computation solved the chosen mathematical problem\n\n\n\\hat{x} fits the measurements\nthe residual is small under the assumed forward model\n\n\n\\hat{x} is a faithful image\nthe reconstruction preserves the structures that matter for the task\n\n\n\nThe first statement is about optimization. The second is about data consistency. The third is about interpretation. A good imaging workflow tries to check all three, especially when ground truth is unavailable.\nThis is why residual images, parameter sweeps, and sensitivity tests matter. They help us see whether the reconstruction is supported by the data or mainly imposed by the prior.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5636,6 +5708,18 @@
     ]
   },
   {
+    "objectID": "book/week-09-optimization-methods.html#three-questions-for-any-algorithm",
+    "href": "book/week-09-optimization-methods.html#three-questions-for-any-algorithm",
+    "title": "Optimization Methods",
+    "section": "Three Questions For Any Algorithm",
+    "text": "Three Questions For Any Algorithm\nWhen reading or reporting an iterative reconstruction method, ask three questions.\n\n\n\n\n\n\n\nQuestion\nWhy it matters\n\n\n\n\nWhat objective or fixed point is being targeted?\nidentifies the mathematical goal\n\n\nWhat update rule is used?\nidentifies the computational method\n\n\nWhat evidence shows the iteration behaved well?\nseparates convergence evidence from visual impression\n\n\n\nFor classical convex optimization, the target is often an explicit energy. For plug-and-play or learned methods, the target may be a fixed point rather than a known energy. This difference matters, but the reporting habit is the same: name the target, name the update, and show diagnostics.\nThis habit is especially useful in projects. If ground truth is unavailable, students can still report objective curves, residuals, iterate changes, parameter sensitivity, and qualitative failure cases. A reconstruction image alone is rarely enough.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
     "objectID": "book/week-09-optimization-methods.html#why-this-chapter-matters",
     "href": "book/week-09-optimization-methods.html#why-this-chapter-matters",
     "title": "Optimization Methods",
@@ -5677,6 +5761,18 @@
     "title": "Optimization Methods",
     "section": "Step Size",
     "text": "Step Size\nStep size controls stability.\nIf \\tau is too small:\n\nprogress is safe but slow;\nmany iterations are needed.\n\nIf \\tau is too large:\n\nthe method may oscillate;\nthe energy can increase;\nthe iterates may diverge.\n\n\n\nThe same objective can behave very differently under different step sizes.\n\nIf \\nabla E is Lipschitz with constant L, a typical safe range is\n\n0&lt;\\tau&lt;\\frac{2}{L}.\n\nOften one uses\n\n\\tau\\leq \\frac{1}{L}\n\nfor stable monotone decrease.\nThe Lipschitz constant is a measure of how quickly the gradient can change. A steep or badly conditioned energy requires a smaller step size. This is the optimization version of the singular-value story from Chapter 5: directions with very different sensitivities make naive algorithms slow or unstable.\nIn practice, step sizes may be chosen by theory, backtracking line search, heuristic tuning, or learned parameters in an unrolled method.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#conditioning-and-slow-directions",
+    "href": "book/week-09-optimization-methods.html#conditioning-and-slow-directions",
+    "title": "Optimization Methods",
+    "section": "Conditioning And Slow Directions",
+    "text": "Conditioning And Slow Directions\nEven when a step size is stable, gradient descent may be slow.\nFor a quadratic energy, level sets can be nearly circular or highly elongated. In a nearly circular landscape, the gradient direction points efficiently toward the minimizer. In an elongated landscape, the method may zigzag: a step size large enough to move along the flat direction may be too large for the steep direction.\nThis connects optimization back to ill-posed inverse problems. If the forward operator has singular values with very different magnitudes, the objective has directions with very different curvature. Stable directions and unstable directions coexist. Regularization improves the model, but conditioning still affects how quickly an algorithm computes the solution.\nPreconditioning, variable splitting, and more advanced methods are partly ways to reshape the computational problem. We will not develop all of them in this course, but students should recognize the symptom: a method can be mathematically correct and still converge too slowly to be useful.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",
@@ -5756,11 +5852,35 @@
     ]
   },
   {
+    "objectID": "book/week-09-optimization-methods.html#data-step-prior-step",
+    "href": "book/week-09-optimization-methods.html#data-step-prior-step",
+    "title": "Optimization Methods",
+    "section": "Data Step, Prior Step",
+    "text": "Data Step, Prior Step\nProximal gradient has a useful interpretation for imaging:\n\ntake a data-consistency step;\ntake a prior-enforcing step;\nrepeat until the two are balanced.\n\nThis is one of the central patterns of the course. It appears in sparse reconstruction, TV algorithms, plug-and-play methods, and unrolled neural networks. The formula may change, but the architecture of the thought remains recognizable:\n\n\\text{measurement correction}\n\\quad \\longleftrightarrow \\quad\n\\text{image prior}.\n\nIn classical optimization, the prior step is mathematically tied to a regularizer through a proximal operator. In plug-and-play methods, the prior step may be replaced by a denoiser. In an unrolled neural network, the update may be learned from training data. The more learned the step becomes, the more important it is to check data consistency and failure cases.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
     "objectID": "book/week-09-optimization-methods.html#ista",
     "href": "book/week-09-optimization-methods.html#ista",
     "title": "Optimization Methods",
     "section": "ISTA",
     "text": "ISTA\nFor the l1-regularized problem\n\n\\min_x\n\\frac12\\|Ax-y\\|_2^2+\\lambda\\|x\\|_1,\n\nISTA is\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right),\n\nwhere S_{\\tau\\lambda} is soft thresholding.\n\n\n\nStep\nMeaning\n\n\n\n\ncompute Ax^k-y\ncurrent data mismatch\n\n\napply A^\\top\nmove mismatch back to image or coefficient space\n\n\ngradient step\nimprove data fidelity\n\n\nsoft threshold\nimpose sparsity\n\n\n\nReading ISTA as an inverse-problem algorithm:\n\nsimulate the current measurement Ax^k;\ncompare it with the observed data y;\nbackproject the error through A^\\top;\ntake a data-consistency step;\napply the sparse prior through soft thresholding.\n\n\n\nISTA alternates between data correction and sparsity promotion.\n\n\n\nThe same pattern appears in image reconstruction with transform-domain sparsity.\n\nThis pattern will appear again in modern neural imaging. Unrolled networks often keep the data-consistency step and replace the hand-designed proximal or thresholding step with a learned module.",
+    "crumbs": [
+      "Book",
+      "Part III: Variational Models and Optimization",
+      "9. Optimization methods"
+    ]
+  },
+  {
+    "objectID": "book/week-09-optimization-methods.html#from-ista-to-a-learned-iteration",
+    "href": "book/week-09-optimization-methods.html#from-ista-to-a-learned-iteration",
+    "title": "Optimization Methods",
+    "section": "From ISTA To A Learned Iteration",
+    "text": "From ISTA To A Learned Iteration\nISTA is useful not only because it solves an l1 problem. It is useful because its structure is visible:\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right).\n\nThe term A^\\top(Ax^k-y) is tied to the measurements. The soft-thresholding operator is tied to the sparse prior. An unrolled learned method may keep the first part and replace the second part:\n\nx^{k+1}\n=\n\\mathcal{D}_{\\theta_k}\n\\left(x^k-\\tau_k A^\\top(Ax^k-y)\\right),\n\nwhere \\mathcal{D}_{\\theta_k} is a learned denoising or correction module.\nThis formula should not be read as saying that every network is ISTA. It shows the conceptual bridge. A classical algorithm alternates between what the data say and what the prior says. A learned algorithm can keep that alternation while learning a more flexible prior step.",
     "crumbs": [
       "Book",
       "Part III: Variational Models and Optimization",

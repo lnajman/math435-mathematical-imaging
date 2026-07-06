@@ -397,12 +397,15 @@ window.Quarto = {
   <li><a href="#edges-are-not-noise" id="toc-edges-are-not-noise" class="nav-link" data-scroll-target="#edges-are-not-noise">Edges Are Not Noise</a></li>
   <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#continuous-total-variation" id="toc-continuous-total-variation" class="nav-link" data-scroll-target="#continuous-total-variation">Continuous Total Variation</a></li>
+  <li><a href="#what-tv-actually-counts" id="toc-what-tv-actually-counts" class="nav-link" data-scroll-target="#what-tv-actually-counts">What TV Actually Counts</a></li>
   <li><a href="#tv-denoising" id="toc-tv-denoising" class="nav-link" data-scroll-target="#tv-denoising">TV Denoising</a></li>
   <li><a href="#l2-versus-tv-penalties" id="toc-l2-versus-tv-penalties" class="nav-link" data-scroll-target="#l2-versus-tv-penalties">l2 Versus TV Penalties</a></li>
   <li><a href="#nonsmoothness" id="toc-nonsmoothness" class="nav-link" data-scroll-target="#nonsmoothness">Nonsmoothness</a></li>
   <li><a href="#one-dimensional-edge-preservation" id="toc-one-dimensional-edge-preservation" class="nav-link" data-scroll-target="#one-dimensional-edge-preservation">One-Dimensional Edge Preservation</a></li>
   <li><a href="#image-denoising" id="toc-image-denoising" class="nav-link" data-scroll-target="#image-denoising">Image Denoising</a></li>
+  <li><a href="#how-to-read-a-tv-result" id="toc-how-to-read-a-tv-result" class="nav-link" data-scroll-target="#how-to-read-a-tv-result">How To Read A TV Result</a></li>
   <li><a href="#choosing-the-tv-weight" id="toc-choosing-the-tv-weight" class="nav-link" data-scroll-target="#choosing-the-tv-weight">Choosing The TV Weight</a></li>
+  <li><a href="#choosing-without-the-truth" id="toc-choosing-without-the-truth" class="nav-link" data-scroll-target="#choosing-without-the-truth">Choosing Without The Truth</a></li>
   <li><a href="#staircasing" id="toc-staircasing" class="nav-link" data-scroll-target="#staircasing">Staircasing</a></li>
   <li><a href="#strengths-and-weaknesses" id="toc-strengths-and-weaknesses" class="nav-link" data-scroll-target="#strengths-and-weaknesses">Strengths And Weaknesses</a></li>
   <li><a href="#edge-preservation-is-not-truth" id="toc-edge-preservation-is-not-truth" class="nav-link" data-scroll-target="#edge-preservation-is-not-truth">Edge Preservation Is Not Truth</a></li>
@@ -501,6 +504,43 @@ E(u)
 </span></p>
 <p>Both encourage small total variation, but they can behave differently with respect to diagonal edges and grid directions. In this course, isotropic TV is the default because it is less tied to horizontal and vertical axes.</p>
 </section>
+<section id="what-tv-actually-counts" class="level2">
+<h2 class="anchored" data-anchor-id="what-tv-actually-counts">What TV Actually Counts</h2>
+<p>TV counts accumulated local change. It does not count objects, textures, anatomical structures, or semantic meaning.</p>
+<p>This distinction is important. If an image contains a sharp boundary between two regions, TV sees a concentrated set of large gradients. If an image contains fine texture, TV sees many gradients. If an image contains random noise, TV also sees many gradients. The regularizer has no direct way to know which gradients are meaningful. It only expresses a preference for images whose gradient map is simple.</p>
+<p>For this reason, TV should be described as a structural prior rather than as an edge detector. It encourages a certain kind of image organization:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Image behavior</th>
+<th>How TV tends to respond</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>flat region with small noise</td>
+<td>suppress many weak gradients</td>
+</tr>
+<tr class="even">
+<td>strong coherent edge</td>
+<td>often keep a sharper transition</td>
+</tr>
+<tr class="odd">
+<td>fine texture</td>
+<td>may remove or simplify it</td>
+</tr>
+<tr class="even">
+<td>smooth shading</td>
+<td>may replace it by plateaus</td>
+</tr>
+<tr class="odd">
+<td>isolated noise spike</td>
+<td>may keep it if it is strong enough</td>
+</tr>
+</tbody>
+</table>
+<p>This table also explains why TV is useful in a course leading to neural networks. Learned priors are richer, but they still impose structure. TV gives a transparent first example of what it means for a prior to prefer some image explanations over others.</p>
+</section>
 <section id="tv-denoising" class="level2">
 <h2 class="anchored" data-anchor-id="tv-denoising">TV Denoising</h2>
 <p>The classical Rudin-Osher-Fatemi model is</p>
@@ -558,7 +598,7 @@ D_{\text{Poisson}}(y,u)
 <p><img src="../assets/figures/week08-step-l2-tv.png" class="img-fluid" alt="Noisy step signal denoised by quadratic smoothing and TV"></p>
 <p>Quadratic smoothing rounds jumps, while TV keeps flatter regions and sharper transitions.</p>
 </div>
-<p>TV is well matched to piecewise-constant structure. It counts the amount of change, not how spread out the change is. A sharp jump can be cheaper than a long gradual transition with many small changes.</p>
+<p>TV is well matched to piecewise-constant structure. It counts the amount of change, not the square of the change. In one dimension, a unit jump and a monotone ramp of total height one can have comparable TV, while a quadratic gradient penalty strongly prefers spreading the change across many samples. TV is therefore much less biased toward blurring an edge into a ramp.</p>
 <p>This is useful when the image contains objects separated by edges.</p>
 <p>The same property can be expressed as sparsity of the gradient. TV does not usually make the image itself sparse. Instead, it encourages the gradient image to be sparse: many pixels have nearly zero gradient, and relatively few pixels carry transitions.</p>
 <p>This idea prepares the next part of the course. Sparse reconstruction generalizes the question: in which representation should an image be simple? TV answers: the gradient representation. Wavelets answer differently. Neural representations answer differently again.</p>
@@ -578,6 +618,42 @@ D_{\text{Poisson}}(y,u)
 <p>When reading the gradient maps, compare density rather than only brightness. The noisy image has gradients almost everywhere. The TV result has a more selective gradient map: many weak fluctuations disappear, while some coherent boundaries remain.</p>
 <p>This selectivity is why TV can improve segmentation, object boundaries, and cartoon-like reconstructions. It is also why TV can damage textures, because texture often consists of many meaningful gradients.</p>
 </section>
+<section id="how-to-read-a-tv-result" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-read-a-tv-result">How To Read A TV Result</h2>
+<p>When looking at a TV reconstruction, it is useful to inspect four regions separately.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Region</th>
+<th>Useful question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>flat background</td>
+<td>did noise decrease without changing the average intensity?</td>
+</tr>
+<tr class="even">
+<td>object boundary</td>
+<td>did the edge stay localized or become displaced?</td>
+</tr>
+<tr class="odd">
+<td>textured region</td>
+<td>was meaningful texture mistaken for noise?</td>
+</tr>
+<tr class="even">
+<td>smooth shading</td>
+<td>did staircasing create artificial plateaus?</td>
+</tr>
+</tbody>
+</table>
+<p>The residual should also be inspected. If the TV image looks clean but the residual contains structured edges, the regularizer may have removed information that the measurements supported. If the residual is mostly noise-like, the reconstruction is more credible, although still not automatically true.</p>
+<p>This habit prepares students for learned reconstruction. A neural output can look much more natural than a TV output, but the same questions remain: what changed, where did the evidence come from, and what does the residual still contain?</p>
+</section>
 <section id="choosing-the-tv-weight" class="level2">
 <h2 class="anchored" data-anchor-id="choosing-the-tv-weight">Choosing The TV Weight</h2>
 <p>In</p>
@@ -596,6 +672,19 @@ D_{\text{Poisson}}(y,u)
 </div>
 <p>For a photograph, a visually pleasing balance may be appropriate. For a diagnostic image, oversmoothing a small structure may be unacceptable. Parameter choice is therefore both mathematical and domain dependent.</p>
 <p>The parameter <span class="math inline">\lambda</span> has the same conceptual role as in Tikhonov, but the visual effect is different. Increasing <span class="math inline">\lambda</span> does not simply blur the image. It tends to remove weak oscillations and simplify the edge set. This can look like denoising, segmentation, or cartoonization depending on the image and the parameter.</p>
+</section>
+<section id="choosing-without-the-truth" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-without-the-truth">Choosing Without The Truth</h2>
+<p>In notebooks, we can sometimes compare a reconstruction to a known clean image. In real inverse problems, the ground truth is usually unavailable. Then <span class="math inline">\lambda</span> must be chosen using indirect evidence.</p>
+<p>Possible evidence includes:</p>
+<ul>
+<li>knowledge of the noise level;</li>
+<li>the residual norm and residual image;</li>
+<li>stability under small parameter changes;</li>
+<li>preservation of task-relevant structures;</li>
+<li>comparison with independent measurements or expert judgment.</li>
+</ul>
+<p>No single criterion is universal. A visually attractive TV result may be too simple for measurement or diagnosis. A data-fitting result may preserve noise. Parameter choice is therefore part of the scientific argument, not only part of the computation.</p>
 </section>
 <section id="staircasing" class="level2">
 <h2 class="anchored" data-anchor-id="staircasing">Staircasing</h2>

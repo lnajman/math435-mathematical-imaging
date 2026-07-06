@@ -395,17 +395,21 @@ window.Quarto = {
   <ul>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#models-are-not-enough" id="toc-models-are-not-enough" class="nav-link" data-scroll-target="#models-are-not-enough">Models Are Not Enough</a></li>
+  <li><a href="#three-questions-for-any-algorithm" id="toc-three-questions-for-any-algorithm" class="nav-link" data-scroll-target="#three-questions-for-any-algorithm">Three Questions For Any Algorithm</a></li>
   <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters">Why This Chapter Matters</a></li>
   <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
   <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
   <li><a href="#step-size" id="toc-step-size" class="nav-link" data-scroll-target="#step-size">Step Size</a></li>
+  <li><a href="#conditioning-and-slow-directions" id="toc-conditioning-and-slow-directions" class="nav-link" data-scroll-target="#conditioning-and-slow-directions">Conditioning And Slow Directions</a></li>
   <li><a href="#stopping-criteria" id="toc-stopping-criteria" class="nav-link" data-scroll-target="#stopping-criteria">Stopping Criteria</a></li>
   <li><a href="#nonsmooth-terms" id="toc-nonsmooth-terms" class="nav-link" data-scroll-target="#nonsmooth-terms">Nonsmooth Terms</a></li>
   <li><a href="#subgradient-intuition" id="toc-subgradient-intuition" class="nav-link" data-scroll-target="#subgradient-intuition">Subgradient Intuition</a></li>
   <li><a href="#proximal-operators" id="toc-proximal-operators" class="nav-link" data-scroll-target="#proximal-operators">Proximal Operators</a></li>
   <li><a href="#soft-thresholding" id="toc-soft-thresholding" class="nav-link" data-scroll-target="#soft-thresholding">Soft Thresholding</a></li>
   <li><a href="#proximal-gradient" id="toc-proximal-gradient" class="nav-link" data-scroll-target="#proximal-gradient">Proximal Gradient</a></li>
+  <li><a href="#data-step-prior-step" id="toc-data-step-prior-step" class="nav-link" data-scroll-target="#data-step-prior-step">Data Step, Prior Step</a></li>
   <li><a href="#ista" id="toc-ista" class="nav-link" data-scroll-target="#ista">ISTA</a></li>
+  <li><a href="#from-ista-to-a-learned-iteration" id="toc-from-ista-to-a-learned-iteration" class="nav-link" data-scroll-target="#from-ista-to-a-learned-iteration">From ISTA To A Learned Iteration</a></li>
   <li><a href="#optimization-and-neural-networks" id="toc-optimization-and-neural-networks" class="nav-link" data-scroll-target="#optimization-and-neural-networks">Optimization And Neural Networks</a></li>
   <li><a href="#common-failure-modes" id="toc-common-failure-modes" class="nav-link" data-scroll-target="#common-failure-modes">Common Failure Modes</a></li>
   <li><a href="#optimization-diagnostics" id="toc-optimization-diagnostics" class="nav-link" data-scroll-target="#optimization-diagnostics">Optimization Diagnostics</a></li>
@@ -463,6 +467,38 @@ u^0,\ u^1,\ u^2,\ldots
 </span></p>
 <p>Regularization chooses the model. Optimization chooses how the model is solved.</p>
 <p>This distinction matters. A good model can fail in practice if solved poorly, and a fast algorithm can be meaningless if it minimizes the wrong objective.</p>
+</section>
+<section id="three-questions-for-any-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="three-questions-for-any-algorithm">Three Questions For Any Algorithm</h2>
+<p>When reading or reporting an iterative reconstruction method, ask three questions.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What objective or fixed point is being targeted?</td>
+<td>identifies the mathematical goal</td>
+</tr>
+<tr class="even">
+<td>What update rule is used?</td>
+<td>identifies the computational method</td>
+</tr>
+<tr class="odd">
+<td>What evidence shows the iteration behaved well?</td>
+<td>separates convergence evidence from visual impression</td>
+</tr>
+</tbody>
+</table>
+<p>For classical convex optimization, the target is often an explicit energy. For plug-and-play or learned methods, the target may be a fixed point rather than a known energy. This difference matters, but the reporting habit is the same: name the target, name the update, and show diagnostics.</p>
+<p>This habit is especially useful in projects. If ground truth is unavailable, students can still report objective curves, residuals, iterate changes, parameter sensitivity, and qualitative failure cases. A reconstruction image alone is rarely enough.</p>
 </section>
 <section id="why-this-chapter-matters" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-chapter-matters">Why This Chapter Matters</h2>
@@ -546,6 +582,13 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <p>for stable monotone decrease.</p>
 <p>The Lipschitz constant is a measure of how quickly the gradient can change. A steep or badly conditioned energy requires a smaller step size. This is the optimization version of the singular-value story from Chapter 5: directions with very different sensitivities make naive algorithms slow or unstable.</p>
 <p>In practice, step sizes may be chosen by theory, backtracking line search, heuristic tuning, or learned parameters in an unrolled method.</p>
+</section>
+<section id="conditioning-and-slow-directions" class="level2">
+<h2 class="anchored" data-anchor-id="conditioning-and-slow-directions">Conditioning And Slow Directions</h2>
+<p>Even when a step size is stable, gradient descent may be slow.</p>
+<p>For a quadratic energy, level sets can be nearly circular or highly elongated. In a nearly circular landscape, the gradient direction points efficiently toward the minimizer. In an elongated landscape, the method may zigzag: a step size large enough to move along the flat direction may be too large for the steep direction.</p>
+<p>This connects optimization back to ill-posed inverse problems. If the forward operator has singular values with very different magnitudes, the objective has directions with very different curvature. Stable directions and unstable directions coexist. Regularization improves the model, but conditioning still affects how quickly an algorithm computes the solution.</p>
+<p>Preconditioning, variable splitting, and more advanced methods are partly ways to reshape the computational problem. We will not develop all of them in this course, but students should recognize the symptom: a method can be mathematically correct and still converge too slowly to be useful.</p>
 </section>
 <section id="stopping-criteria" class="level2">
 <h2 class="anchored" data-anchor-id="stopping-criteria">Stopping Criteria</h2>
@@ -661,6 +704,22 @@ u^{k+1}
 <p>The gradient step improves the smooth data term. The proximal step imposes the nonsmooth prior.</p>
 <p>This split is useful because the two parts of the energy require different tools. We use derivatives where derivatives are reliable, and proximal operators where nonsmooth structure matters.</p>
 </section>
+<section id="data-step-prior-step" class="level2">
+<h2 class="anchored" data-anchor-id="data-step-prior-step">Data Step, Prior Step</h2>
+<p>Proximal gradient has a useful interpretation for imaging:</p>
+<ol type="1">
+<li>take a data-consistency step;</li>
+<li>take a prior-enforcing step;</li>
+<li>repeat until the two are balanced.</li>
+</ol>
+<p>This is one of the central patterns of the course. It appears in sparse reconstruction, TV algorithms, plug-and-play methods, and unrolled neural networks. The formula may change, but the architecture of the thought remains recognizable:</p>
+<p><span class="math display">
+\text{measurement correction}
+\quad \longleftrightarrow \quad
+\text{image prior}.
+</span></p>
+<p>In classical optimization, the prior step is mathematically tied to a regularizer through a proximal operator. In plug-and-play methods, the prior step may be replaced by a denoiser. In an unrolled neural network, the update may be learned from training data. The more learned the step becomes, the more important it is to check data consistency and failure cases.</p>
+</section>
 <section id="ista" class="level2">
 <h2 class="anchored" data-anchor-id="ista">ISTA</h2>
 <p>For the l1-regularized problem</p>
@@ -719,6 +778,25 @@ S_{\tau\lambda}
 <p>The same pattern appears in image reconstruction with transform-domain sparsity.</p>
 </div>
 <p>This pattern will appear again in modern neural imaging. Unrolled networks often keep the data-consistency step and replace the hand-designed proximal or thresholding step with a learned module.</p>
+</section>
+<section id="from-ista-to-a-learned-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="from-ista-to-a-learned-iteration">From ISTA To A Learned Iteration</h2>
+<p>ISTA is useful not only because it solves an l1 problem. It is useful because its structure is visible:</p>
+<p><span class="math display">
+x^{k+1}
+=
+S_{\tau\lambda}
+\left(x^k-\tau A^\top(Ax^k-y)\right).
+</span></p>
+<p>The term <span class="math inline">A^\top(Ax^k-y)</span> is tied to the measurements. The soft-thresholding operator is tied to the sparse prior. An unrolled learned method may keep the first part and replace the second part:</p>
+<p><span class="math display">
+x^{k+1}
+=
+\mathcal{D}_{\theta_k}
+\left(x^k-\tau_k A^\top(Ax^k-y)\right),
+</span></p>
+<p>where <span class="math inline">\mathcal{D}_{\theta_k}</span> is a learned denoising or correction module.</p>
+<p>This formula should not be read as saying that every network is ISTA. It shows the conceptual bridge. A classical algorithm alternates between what the data say and what the prior says. A learned algorithm can keep that alternation while learning a more flexible prior step.</p>
 </section>
 <section id="optimization-and-neural-networks" class="level2">
 <h2 class="anchored" data-anchor-id="optimization-and-neural-networks">Optimization And Neural Networks</h2>
