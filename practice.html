@@ -192,6 +192,7 @@ window.Quarto = {
   <ul>
   <li><a href="#how-to-use-this-page" id="toc-how-to-use-this-page" class="nav-link active" data-scroll-target="#how-to-use-this-page">How To Use This Page</a></li>
   <li><a href="#claim-evidence-limit-template" id="toc-claim-evidence-limit-template" class="nav-link" data-scroll-target="#claim-evidence-limit-template">Claim-Evidence-Limit Template</a></li>
+  <li><a href="#four-thread-notebook-note" id="toc-four-thread-notebook-note" class="nav-link" data-scroll-target="#four-thread-notebook-note">Four-Thread Notebook Note</a></li>
   <li><a href="#weekly-practice-guide" id="toc-weekly-practice-guide" class="nav-link" data-scroll-target="#weekly-practice-guide">Weekly Practice Guide</a></li>
   <li><a href="#project-preparation-guide" id="toc-project-preparation-guide" class="nav-link" data-scroll-target="#project-preparation-guide">Project Preparation Guide</a></li>
   <li><a href="#grading-boundary" id="toc-grading-boundary" class="nav-link" data-scroll-target="#grading-boundary">Grading Boundary</a></li>
@@ -246,7 +247,7 @@ Important
 <li>read the connected book chapter;</li>
 <li>attend class and use the slide deck as the discussion structure;</li>
 <li>run the notebook in Python or Google Colab;</li>
-<li>write a short claim-evidence-limit note for yourself.</li>
+<li>write a short four-thread or claim-evidence-limit note for yourself.</li>
 </ul>
 <p>The notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.</p>
 <p>For the full weekly workflow connecting book, slides, notebooks, and these practice notes, see <a href="./preparation.html">How To Prepare For Class</a>.</p>
@@ -289,6 +290,40 @@ Limit or failure case:</code></pre>
 <tr class="even">
 <td>Limit or failure case</td>
 <td>TV creates staircasing on smooth intensity ramps.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="four-thread-notebook-note" class="level2">
+<h2 class="anchored" data-anchor-id="four-thread-notebook-note">Four-Thread Notebook Note</h2>
+<p>Several notebooks now end with a short four-thread note. It is the same habit in a slightly more structured form:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Thread</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Measurement</td>
+<td>What did the data record?</td>
+</tr>
+<tr class="even">
+<td>Prior</td>
+<td>What assumption, regularizer, denoiser, or learned information entered?</td>
+</tr>
+<tr class="odd">
+<td>Computation</td>
+<td>What algorithm, update, transform, or learned map produced the result?</td>
+</tr>
+<tr class="even">
+<td>Evidence</td>
+<td>What output, residual, metric, sweep, or failure case supports the claim?</td>
 </tr>
 </tbody>
 </table>
@@ -372,35 +407,35 @@ Limit or failure case:</code></pre>
 <tr class="even">
 <td style="text-align: right;">10</td>
 <td>Sparse reconstruction</td>
-<td>State the representation where the image is assumed sparse and design one mismatch example.</td>
+<td>Fill the four-thread note for sparse DCT reconstruction and design one representation-mismatch example.</td>
 <td>Representation Mismatch</td>
 <td><a href="./book/week-10-sparse-reconstruction.html">book</a>, <a href="./slides/week-10-sparse-reconstruction.html">slides</a>, <a href="notebooks/week10_sparse_reconstruction.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week10_sparse_reconstruction.ipynb">Colab</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">11</td>
 <td>Wavelets and multiscale representation</td>
-<td>Explain which local features wavelets capture better than global Fourier modes.</td>
+<td>Fill the four-thread note for wavelet denoising: task, wavelet prior, thresholding step, and one lost detail.</td>
 <td>Fourier, Wavelets, and Energy</td>
 <td><a href="./book/week-11-wavelets.html">book</a>, <a href="./slides/week-11-wavelets.html">slides</a>, <a href="notebooks/week11_wavelets.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week11_wavelets.ipynb">Colab</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">12</td>
 <td>Model-based vs data-driven imaging</td>
-<td>Describe what the training data teach the learned prior to expect and test one distribution shift.</td>
+<td>Fill the four-thread note for learned PCA denoising and test one distribution shift.</td>
 <td>Training Data as a Prior</td>
 <td><a href="./book/week-12-model-data.html">book</a>, <a href="./slides/week-12-model-data.html">slides</a>, <a href="notebooks/week12_model_data.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week12_model_data.ipynb">Colab</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">13</td>
 <td>Plug-and-play and learned regularization</td>
-<td>Compare data residual, RMSE when available, and fixed-point change for two denoisers.</td>
+<td>Fill the four-thread note for PnP, including residual, fixed-point change, denoiser prior, and failure case.</td>
 <td>Implicit Prior Strength</td>
 <td><a href="./book/week-13-plug-and-play.html">book</a>, <a href="./slides/week-13-plug-and-play.html">slides</a>, <a href="notebooks/week13_plug_and_play.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week13_plug_and_play.ipynb">Colab</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">14</td>
 <td>Stability, robustness, and ethics</td>
-<td>Write three project-style claims and pair each with evidence and a limitation.</td>
+<td>Turn one four-thread note into three project-style claims with evidence and limitations.</td>
 <td>From Notebook to Project Defense</td>
 <td><a href="./book/week-14-stability-robustness-ethics.html">book</a>, <a href="./slides/week-14-stability-robustness-ethics.html">slides</a>, <a href="notebooks/week14_stability_robustness.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb">Colab</a></td>
 </tr>
