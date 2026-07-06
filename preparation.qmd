@@ -22,8 +22,8 @@ The course has several resources because they do different jobs:
 |---|---|---|
 | Before class | Open the [class roadmap](classes.qmd). Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path. | One question you want class to answer. |
 | During class | Use the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure. | Annotated notes around the main model. |
-| After class | Run the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter. | One observation about what changed and why. |
-| Weekly consolidation | Write a short claim-evidence-limit note using the [practice page](practice.qmd). | A study note you can reuse for quizzes, exams, and projects. |
+| After class | Run the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter. | A four-thread note about measurement, prior, computation, and evidence. |
+| Weekly consolidation | Turn the notebook note into a short claim-evidence-limit note using the [practice page](practice.qmd). | A study note you can reuse for quizzes, exams, and projects. |
 | Before the next class | Revisit the previous week only enough to state the central idea without looking. | A one-sentence bridge to the next topic. |
 
 ## The Five Questions

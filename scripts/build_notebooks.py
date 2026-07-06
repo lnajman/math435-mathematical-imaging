@@ -374,6 +374,15 @@ def week01_cells() -> list[nbf.NotebookNode]:
             print("observed fraction:", round(float(toy_mask.mean()), 3))
             """
         ),
+        four_thread_note(
+            "Image Formation",
+            [
+                ("Measurement", "State what the mask records and which pixels or scene content it discards."),
+                ("Prior", "Name one assumption that would be needed to fill in unobserved pixels."),
+                ("Computation", "Identify the array reshape, vectorization, or indexing step that creates the data vector."),
+                ("Evidence", "Report the observed fraction and one claim the observation cannot support."),
+            ],
+        ),
         coherence_checkpoint(
             "From Scene to Data",
             [
@@ -745,6 +754,15 @@ def week02_cells() -> list[nbf.NotebookNode]:
                 rms_error = np.sqrt(np.mean((estimate - clean) ** 2))
                 print(f"stabilizer={value:g}, RMS error={rms_error:.3f}")
             """
+        ),
+        four_thread_note(
+            "Convolution and Blur",
+            [
+                ("Measurement", "State which blurred or noisy signal is treated as the observed data."),
+                ("Prior", "Explain what assumption is introduced when a stabilizer damps weak blur frequencies."),
+                ("Computation", "Identify the convolution, Fourier response, and inverse-filtering steps."),
+                ("Evidence", "Use the kernel response, RMS error, or plots to justify where deblurring becomes unstable."),
+            ],
         ),
         coherence_checkpoint(
             "Blur as a Forward Model",
@@ -1184,6 +1202,15 @@ def week03_cells() -> list[nbf.NotebookNode]:
                 rms_error = np.sqrt(np.mean((estimate - deblur_image) ** 2))
                 print(f"regularization={value:g}, RMS error={rms_error:.3f}")
             """
+        ),
+        four_thread_note(
+            "Fourier Imaging",
+            [
+                ("Measurement", "State which image or spectrum is the observed blurred data."),
+                ("Prior", "Explain how regularization decides which weak frequencies not to trust fully."),
+                ("Computation", "Identify the FFT, filtering, and inverse FFT steps."),
+                ("Evidence", "Use spectrum, energy, RMS error, or artifacts to say which restored frequencies are credible."),
+            ],
         ),
         coherence_checkpoint(
             "Fourier Projection and Stability",
@@ -1713,6 +1740,15 @@ def week04_cells() -> list[nbf.NotebookNode]:
             print(answer)
             """
         ),
+        four_thread_note(
+            "Noise and Likelihood",
+            [
+                ("Measurement", "State whether the data are modeled as Gaussian-valued pixels or photon counts."),
+                ("Prior", "Name what extra image assumption would still be needed when likelihood alone is insufficient."),
+                ("Computation", "Identify the simulation, likelihood, averaging, or residual calculation used."),
+                ("Evidence", "Report one variance, RMSE, likelihood, or averaging result, and one failure averaging cannot fix."),
+            ],
+        ),
         coherence_checkpoint(
             "Likelihood as Data Evidence",
             [
@@ -2175,6 +2211,15 @@ def week05_cells() -> list[nbf.NotebookNode]:
             fig.show()
             """
         ),
+        four_thread_note(
+            "Ill-Posed Directions",
+            [
+                ("Measurement", "State which blur or mask operator produced the observed data."),
+                ("Prior", "Explain the stability rule introduced by truncating weak singular directions."),
+                ("Computation", "Identify the SVD coordinates and the truncated inverse step."),
+                ("Evidence", "Use singular values, coefficient plots, or noise amplification to name one trustworthy and one untrustworthy direction."),
+            ],
+        ),
         coherence_checkpoint(
             "Directions and Evidence",
             [
@@ -2635,6 +2680,15 @@ def week06_cells() -> list[nbf.NotebookNode]:
                 print(f"lambda={lam:g}, RMSE={rmse(estimate, image):.4f}")
             """
         ),
+        four_thread_note(
+            "Tikhonov Regularization",
+            [
+                ("Measurement", "State the blurred or noisy observation and the forward operator used."),
+                ("Prior", "Describe the small-norm or smoothness preference controlled by lambda."),
+                ("Computation", "Identify the Tikhonov solve or frequency-domain filter."),
+                ("Evidence", "Compare residual, smoothness, artifacts, and RMSE when the clean image is available."),
+            ],
+        ),
         coherence_checkpoint(
             "Choosing Lambda Without the Truth",
             [
@@ -3022,6 +3076,15 @@ def week07_cells() -> list[nbf.NotebookNode]:
             print(answer)
             """
         ),
+        four_thread_note(
+            "Variational Formulation",
+            [
+                ("Measurement", "State which observation appears in the data term."),
+                ("Prior", "Name the regularizer and what image structures it rewards or penalizes."),
+                ("Computation", "Identify the gradient descent or Euler-Lagrange step used to reduce the energy."),
+                ("Evidence", "Use energy, residual, snapshots, or RMSE to say what the computation proves and what it does not prove."),
+            ],
+        ),
         coherence_checkpoint(
             "Energy as an Audit Trail",
             [
@@ -3407,6 +3470,15 @@ def week08_cells() -> list[nbf.NotebookNode]:
             )
             fig.show()
             """
+        ),
+        four_thread_note(
+            "Total Variation",
+            [
+                ("Measurement", "State the noisy image or signal being fitted."),
+                ("Prior", "Describe the sparse-gradient or piecewise-smooth assumption imposed by TV."),
+                ("Computation", "Identify the TV denoising step and the parameter sweep."),
+                ("Evidence", "Use image view, gradient behavior, TV value, RMSE, or staircasing to justify one success and one limitation."),
+            ],
         ),
         coherence_checkpoint(
             "Edge Preservation Is Not Proof",
@@ -3862,6 +3934,15 @@ def week09_cells() -> list[nbf.NotebookNode]:
             print("final energy:", round(energies[-1], 2))
             print("active DCT coefficients:", active[-1])
             """
+        ),
+        four_thread_note(
+            "Optimization Methods",
+            [
+                ("Measurement", "State the observation used in the data-consistency step."),
+                ("Prior", "Name the sparse representation and how lambda changes the prior strength."),
+                ("Computation", "Separate the gradient/data step from the soft-thresholding prior step."),
+                ("Evidence", "Use energy decrease, active coefficients, RMSE, or visible artifacts to assess the iteration."),
+            ],
         ),
         coherence_checkpoint(
             "Optimization Diagnostics",

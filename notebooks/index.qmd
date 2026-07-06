@@ -16,7 +16,7 @@ For each notebook:
 2. run the demonstration cells without changing anything;
 3. change the marked parameters or `TODO` cells;
 4. compare the image, residual, coefficient, or curve before and after the change;
-5. answer the final coherence check in your own words.
+5. answer the final four-thread note and coherence check in your own words.
 
 The notebooks are not only code examples. They are experiments for the course identity:
 
@@ -31,6 +31,8 @@ $$
 $$
 
 When a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.
+
+Each weekly notebook ends by asking students to connect the computation to four reading threads: measurement, prior, computation, and evidence.
 
 | Week | Topic | Notebook | Google Colab |
 |---:|---|---|---|

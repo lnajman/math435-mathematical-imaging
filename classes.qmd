@@ -10,7 +10,7 @@ Use each week as a checklist. The [preparation rhythm](preparation.qmd) explains
 
 - **Before class:** read enough of the book chapter to recognize the main objects.
 - **In class:** use the slides for discussion, derivation, and guided examples.
-- **After class:** run the notebook, change parameters, and answer the checks.
+- **After class:** run the notebook, change parameters, and answer the four-thread note and checks.
 - **Practice:** use the [ungraded weekly practice page](practice.qmd) to keep a short record of what the data support, what the model assumes, and what can fail.
 
 Weekly practice notes are study aids, not separate graded assignments. Course grading is governed by the [syllabus](syllabus.qmd).
