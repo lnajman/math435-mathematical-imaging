@@ -132,7 +132,8 @@ def make_nonuniqueness(path: Path) -> None:
 def make_singular_values(path: Path) -> None:
     n = 90
     sigmas = [1.2, 2.4, 4.8]
-    fig, ax = plt.subplots(figsize=(8.8, 4.8), dpi=150)
+    fig, ax = plt.subplots(figsize=(8.8, 5.1), dpi=150)
+    fig.subplots_adjust(left=0.11, right=0.98, top=0.86, bottom=0.23)
     for sigma in sigmas:
         matrix = convolution_matrix(n, sigma)
         singular_values = np.linalg.svd(matrix, compute_uv=False)
@@ -144,7 +145,7 @@ def make_singular_values(path: Path) -> None:
     ax.legend(frameon=False)
     fig.text(
         0.5,
-        0.02,
+        0.055,
         "stronger blur creates smaller singular values, making inversion more sensitive",
         ha="center",
         fontsize=13,
@@ -202,7 +203,8 @@ def make_svd_coefficients(path: Path) -> None:
     noisy_coefficients = np.abs(u.T @ noisy)
     inverted_noise = np.abs(u.T @ noise) / singular_values
 
-    fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11.2, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.25, wspace=0.22)
     axes[0].semilogy(singular_values, color="#24536b", linewidth=2.4)
     axes[0].set_title("singular values", fontsize=15, color="#1f4f63", pad=9)
     axes[0].set_xlabel("index")
@@ -219,7 +221,7 @@ def make_svd_coefficients(path: Path) -> None:
     axes[1].legend(frameon=False)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "small singular values expose directions where noise dominates the reconstruction",
         ha="center",
         fontsize=13,
