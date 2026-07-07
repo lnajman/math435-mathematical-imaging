@@ -68,7 +68,8 @@ def make_energy_terms(path: Path) -> None:
     regularizer = 0.5 * lam * x**2
     total = data_term + regularizer
 
-    fig, ax = plt.subplots(figsize=(9.4, 4.6), dpi=150)
+    fig, ax = plt.subplots(figsize=(9.4, 4.9), dpi=150)
+    fig.subplots_adjust(left=0.1, right=0.98, top=0.86, bottom=0.24)
     ax.plot(x, data_term, label="data fit", color="#24536b", linewidth=2.5)
     ax.plot(x, regularizer, label="regularizer", color="#9a5b2f", linewidth=2.5)
     ax.plot(x, total, label="energy", color="#2f7a54", linewidth=3.0)
@@ -83,7 +84,7 @@ def make_energy_terms(path: Path) -> None:
     ax.legend(frameon=False)
     fig.text(
         0.5,
-        0.02,
+        0.055,
         "a variational model chooses the image that minimizes an energy",
         ha="center",
         fontsize=13,
@@ -250,7 +251,8 @@ def make_gradient_descent_energy(path: Path) -> None:
         if iteration in [2, 9, 39, 79]:
             snapshots.append(current.copy())
 
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.27, wspace=0.22)
     axes[0].semilogy(energies, color="#24536b", linewidth=2.5)
     axes[0].set_title("energy decreases during descent", fontsize=15, color="#1f4f63", pad=9)
     axes[0].set_xlabel("iteration")
@@ -267,7 +269,7 @@ def make_gradient_descent_energy(path: Path) -> None:
         axes[1].axvline(i * image.shape[1] - 0.5, color="white", linewidth=1.2)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "gradient descent gives an algorithmic view of variational reconstruction",
         ha="center",
         fontsize=13,
