@@ -177,7 +177,8 @@ def make_parameter_tradeoff(path: Path) -> None:
         errors.append(rmse(estimate, clean))
 
     best_index = int(np.argmin(errors))
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.25, wspace=0.24)
     axes[0].loglog(lambdas, errors, color="#24536b", linewidth=2.5)
     axes[0].scatter([lambdas[best_index]], [errors[best_index]], color="#9a5b2f", s=55, zorder=3)
     axes[0].set_title("reconstruction error", fontsize=15, color="#1f4f63", pad=9)
@@ -193,7 +194,7 @@ def make_parameter_tradeoff(path: Path) -> None:
     axes[1].grid(True, which="both", alpha=0.22)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         f"best shown lambda is about {lambdas[best_index]:.1e}; in practice the true image is unknown",
         ha="center",
         fontsize=13,
@@ -228,7 +229,8 @@ def make_bias_variance(path: Path) -> None:
         variances.append(variance)
         mse.append(bias2 + variance)
 
-    fig, ax = plt.subplots(figsize=(9.4, 4.8), dpi=150)
+    fig, ax = plt.subplots(figsize=(9.4, 5.0), dpi=150)
+    fig.subplots_adjust(left=0.1, right=0.98, top=0.86, bottom=0.24)
     ax.loglog(lambdas, means, label="bias^2", color="#9a5b2f", linewidth=2.5)
     ax.loglog(lambdas, variances, label="variance", color="#24536b", linewidth=2.5)
     ax.loglog(lambdas, mse, label="bias^2 + variance", color="#2f7a54", linewidth=2.8)
@@ -241,7 +243,7 @@ def make_bias_variance(path: Path) -> None:
     ax.legend(frameon=False)
     fig.text(
         0.5,
-        0.02,
+        0.055,
         "larger lambda lowers variance but increases bias",
         ha="center",
         fontsize=13,
