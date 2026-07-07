@@ -79,7 +79,8 @@ def make_noise_histograms(path: Path) -> None:
     peak_photons = 50
     samples = rng.poisson(peak_photons * true_intensities[:, None], size=(3, 7000))
 
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.25, wspace=0.22)
     axes[0].hist(gaussian_residual, bins=70, density=True, color="#1f4f63", alpha=0.85)
     axes[0].axvline(0, color="#9a5b2f", linewidth=2)
     axes[0].set_title("Gaussian residuals", fontsize=15, color="#1f4f63", pad=9)
@@ -104,7 +105,7 @@ def make_noise_histograms(path: Path) -> None:
     axes[1].grid(True, alpha=0.2)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "Poisson variance equals its mean, so brighter pixels fluctuate more in counts",
         ha="center",
         fontsize=13,
@@ -118,7 +119,8 @@ def make_snr_curves(path: Path) -> None:
     gaussian_sigma = 0.08
     photon_levels = [12, 40, 140]
 
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.25, wspace=0.22)
     gaussian_snr = intensities / gaussian_sigma
     axes[0].plot(intensities, gaussian_snr, color="#1f4f63", linewidth=2.5)
     axes[0].set_title("Gaussian: SNR grows linearly", fontsize=15, color="#1f4f63", pad=9)
@@ -136,7 +138,7 @@ def make_snr_curves(path: Path) -> None:
     axes[1].grid(True, alpha=0.2)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "Low light is statistically hard because the signal arrives as a small number of random counts",
         ha="center",
         fontsize=13,
@@ -158,7 +160,8 @@ def make_likelihood_curves(path: Path) -> None:
     poisson_nll = poisson_mean - observed_count * np.log(poisson_mean)
     poisson_nll -= poisson_nll.min()
 
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.6), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.26, wspace=0.22)
     axes[0].plot(x, gaussian_nll, color="#1f4f63", linewidth=2.5)
     axes[0].axvline(y_gaussian, color="#9a5b2f", linestyle="--", linewidth=2)
     axes[0].set_title("Gaussian negative log-likelihood", fontsize=15, color="#1f4f63", pad=9)
@@ -176,7 +179,7 @@ def make_likelihood_curves(path: Path) -> None:
     axes[1].grid(True, alpha=0.2)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "A likelihood turns a noise model into a data-fidelity term for reconstruction",
         ha="center",
         fontsize=13,

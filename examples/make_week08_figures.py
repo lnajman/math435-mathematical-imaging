@@ -216,7 +216,8 @@ def make_staircasing(path: Path) -> None:
     l2 = quadratic_smooth(noisy, 22.0)
     tv = denoise_tv_chambolle(noisy, weight=0.12)
 
-    fig, ax = plt.subplots(figsize=(10.8, 4.4), dpi=150)
+    fig, ax = plt.subplots(figsize=(10.8, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.24)
     ax.plot(x, clean, label="clean smooth signal", color="#202428", linewidth=2.5)
     ax.plot(x, noisy, label="noisy", color="#c0c5c8", linewidth=1.2)
     ax.plot(x, l2, label="quadratic smoothing", color="#24536b", linewidth=2.2)
@@ -228,7 +229,7 @@ def make_staircasing(path: Path) -> None:
     ax.legend(frameon=False, ncol=2)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "TV may approximate smooth ramps by piecewise-flat plateaus",
         ha="center",
         fontsize=13,
