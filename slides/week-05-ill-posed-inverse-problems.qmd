@@ -1,8 +1,7 @@
 ---
 title: "Ill-Posed Inverse Problems"
-subtitle: "MATH 435: Mathematical Imaging - Week 5"
+subtitle: "MATH 435: Mathematical Imaging - Class 5"
 author: "Laurent Najman"
-date: "Week 5"
 format:
   revealjs:
     incremental: false
@@ -40,9 +39,9 @@ Can a problem have a solution, a unique solution, and still be impossible to sol
 | 62-70 min | notebook activity |
 | 70-75 min | synthesis and exit question |
 
-## Bridge from Week 4
+## Bridge from Class 4
 
-Week 4 gave us a data term:
+Class 4 gave us a data term:
 
 $$
 D(y, f(x)).
@@ -517,7 +516,7 @@ Regularization is a controlled way to trade exact data fit for stability.
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 5 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -529,7 +528,7 @@ Regularization is a controlled way to trade exact data fit for stability.
 :::
 
 ::: {.exercise-box}
-Open the Week 5 notebook.
+Open the corresponding notebook.
 
 1. Change the blur strength.
 2. Change the noise level.

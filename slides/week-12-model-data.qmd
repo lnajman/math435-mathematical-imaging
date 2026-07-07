@@ -1,8 +1,7 @@
 ---
 title: "Model-Based vs Data-Driven Imaging"
-subtitle: "MATH 435: Mathematical Imaging - Week 12"
+subtitle: "MATH 435: Mathematical Imaging - Class 12"
 author: "Laurent Najman"
-date: "Week 12"
 format:
   revealjs:
     incremental: false
@@ -41,7 +40,7 @@ Should an imaging algorithm use a prior we write down, or one it learns from exa
 | 52-55 min | quiz transition |
 | 55-75 min | Quiz 2 (20 minutes) |
 
-## Bridge from Week 11
+## Bridge from Class 11
 
 Wavelets gave us a handcrafted representation.
 
@@ -303,7 +302,7 @@ x^{k+1}
 $$
 
 ::: {.caption}
-Week 13 will study plug-and-play and learned regularization.
+Class 13 will study plug-and-play and learned regularization.
 :::
 
 ## Activity 2: Operator or Prior?
@@ -500,6 +499,6 @@ Use the central identity as the organizing question:
 ::: {.checklist}
 - Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 12 of the book for the model-based/data-driven comparison.
-- Run the Week 12 notebook and test one distribution shift.
+- Run the corresponding notebook and test one distribution shift.
 - Write one claim-evidence-limit sentence about today's model.
 :::

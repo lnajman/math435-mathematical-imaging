@@ -1,8 +1,7 @@
 ---
 title: "Variational Formulation"
-subtitle: "MATH 435: Mathematical Imaging - Week 7"
+subtitle: "MATH 435: Mathematical Imaging - Class 7"
 author: "Laurent Najman"
-date: "Week 7"
 format:
   revealjs:
     incremental: false
@@ -40,7 +39,7 @@ What does it mean to reconstruct an image by minimizing an energy?
 | 62-70 min | real-image quadratic denoising |
 | 70-75 min | synthesis check |
 
-## Bridge from Week 6
+## Bridge from Class 6
 
 Tikhonov regularization solves
 
@@ -348,7 +347,7 @@ This is Tikhonov with a different penalty:
 
 ::: {.two-col}
 ::: {.definition-box}
-Week 6:
+Class 6:
 
 $$
 \|Ax-y\|_2^2+\lambda\|x\|_2^2.
@@ -356,7 +355,7 @@ $$
 :::
 
 ::: {.model-box}
-Week 7:
+Class 7:
 
 $$
 \|u-y\|_2^2+\lambda\|\nabla u\|_2^2.
@@ -487,7 +486,7 @@ What does $\|\nabla u\|_2^2$ do to edges?
 Quadratic smoothing reduces noise and blurs edges.
 :::
 
-## Preview of Week 8
+## Preview of Class 8
 
 Total Variation replaces squared gradients by gradient magnitude:
 
@@ -502,7 +501,7 @@ This changes the behavior near edges.
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 7 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -514,7 +513,7 @@ This changes the behavior near edges.
 :::
 
 ::: {.exercise-box}
-Open the Week 7 notebook.
+Open the corresponding notebook.
 
 1. Change $\lambda$ in quadratic denoising.
 2. Change the gradient descent step size.

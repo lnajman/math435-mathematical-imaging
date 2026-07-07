@@ -1,8 +1,7 @@
 ---
 title: "Images as Mathematical Objects"
-subtitle: "MATH 435: Mathematical Imaging - Week 1"
+subtitle: "MATH 435: Mathematical Imaging - Class 1"
 author: "Laurent Najman"
-date: "Week 1"
 format:
   revealjs:
     incremental: false

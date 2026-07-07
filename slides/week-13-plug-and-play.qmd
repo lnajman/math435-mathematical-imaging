@@ -1,8 +1,7 @@
 ---
 title: "Plug-and-Play and Learned Regularization"
-subtitle: "MATH 435: Mathematical Imaging - Week 13"
+subtitle: "MATH 435: Mathematical Imaging - Class 13"
 author: "Laurent Najman"
-date: "Week 13"
 format:
   revealjs:
     incremental: false
@@ -43,9 +42,9 @@ Can you insert it inside an inverse-problem solver?
 | 62-72 min | notebook activity |
 | 72-75 min | synthesis and exit check |
 
-## Bridge from Week 12
+## Bridge from Class 12
 
-Week 12 compared:
+Class 12 compared:
 
 ::: {.checklist}
 - model-based methods: write the prior;
@@ -550,7 +549,7 @@ Where do you see measurement evidence, and where do you see prior influence?
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 13 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -562,7 +561,7 @@ Where do you see measurement evidence, and where do you see prior influence?
 :::
 
 ::: {.exercise-box}
-Open the Week 13 notebook.
+Open the corresponding notebook.
 
 1. Change the denoiser strength.
 2. Change the number of PnP iterations.

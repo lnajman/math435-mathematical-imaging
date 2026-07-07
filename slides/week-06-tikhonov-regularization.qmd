@@ -1,8 +1,7 @@
 ---
 title: "Tikhonov Regularization"
-subtitle: "MATH 435: Mathematical Imaging - Week 6"
+subtitle: "MATH 435: Mathematical Imaging - Class 6"
 author: "Laurent Najman"
-date: "Week 6"
 format:
   revealjs:
     incremental: false
@@ -41,9 +40,9 @@ If exact inversion is unstable, what should we give up: exact data fit, sharpnes
 | 68-72 min | project assignment note |
 | 72-75 min | exit question |
 
-## Bridge from Week 5
+## Bridge from Class 5
 
-Week 5 showed that direct inversion may amplify noise:
+Class 5 showed that direct inversion may amplify noise:
 
 $$
 \frac{\langle \eta,u_i\rangle}{\sigma_i}.
@@ -486,7 +485,7 @@ See the project page for the current project structure and expectations.
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 6 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -498,7 +497,7 @@ See the project page for the current project structure and expectations.
 :::
 
 ::: {.exercise-box}
-Open the Week 6 notebook.
+Open the corresponding notebook.
 
 1. Change blur strength.
 2. Change noise level.

@@ -1,8 +1,7 @@
 ---
 title: "Optimization Methods"
-subtitle: "MATH 435: Mathematical Imaging - Week 9"
+subtitle: "MATH 435: Mathematical Imaging - Class 9"
 author: "Laurent Najman"
-date: "Week 9"
 format:
   revealjs:
     incremental: false
@@ -40,7 +39,7 @@ If the reconstructed image is defined as a minimizer, how do we actually find it
 | 61-71 min | notebook activity |
 | 71-75 min | synthesis and exit check |
 
-## Bridge from Week 8
+## Bridge from Class 8
 
 TV denoising asks for
 
@@ -429,7 +428,7 @@ The same pattern appears repeatedly:
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 9 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -441,7 +440,7 @@ The same pattern appears repeatedly:
 :::
 
 ::: {.exercise-box}
-Open the Week 9 notebook.
+Open the corresponding notebook.
 
 1. Change the gradient descent step size.
 2. Change the soft-threshold value.

@@ -1,8 +1,7 @@
 ---
 title: "Convolution and Blur"
-subtitle: "MATH 435: Mathematical Imaging - Week 2"
+subtitle: "MATH 435: Mathematical Imaging - Class 2"
 author: "Laurent Najman"
-date: "Week 2"
 format:
   revealjs:
     incremental: false
@@ -40,7 +39,7 @@ What does it mean, mathematically, for an image to be blurred?
 | 65-72 min | why deblurring is hard |
 | 72-75 min | exit question |
 
-## Reminder from Week 1
+## Reminder from Class 1
 
 ::: {.model-box}
 For a fixed measurement rule, we often write
@@ -376,7 +375,7 @@ For each application, choose a boundary condition and justify it:
 ## Part 5: Matrix View {.section-slide}
 
 ::: {.section-kicker}
-Back to Week 1
+Back to Class 1
 :::
 
 Convolution is a linear operator when the kernel is fixed

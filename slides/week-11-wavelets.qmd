@@ -1,8 +1,7 @@
 ---
 title: "Wavelets and Multiscale Representation"
-subtitle: "MATH 435: Mathematical Imaging - Week 11"
+subtitle: "MATH 435: Mathematical Imaging - Class 11"
 author: "Laurent Najman"
-date: "Week 11"
 format:
   revealjs:
     incremental: false
@@ -42,9 +41,9 @@ How can we also know where they occur?
 | 60-70 min | notebook activity |
 | 70-75 min | synthesis and exit check |
 
-## Bridge from Week 10
+## Bridge from Class 10
 
-Week 10 said:
+Class 10 said:
 
 ::: {.takeaway-box}
 Sparse reconstruction depends on choosing a representation where the image has few important coefficients.
@@ -408,7 +407,7 @@ Wavelets are not automatic truth machines.
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 11 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -420,7 +419,7 @@ Wavelets are not automatic truth machines.
 :::
 
 ::: {.exercise-box}
-Open the Week 11 notebook.
+Open the corresponding notebook.
 
 1. Change the wavelet family.
 2. Change the number of decomposition levels.

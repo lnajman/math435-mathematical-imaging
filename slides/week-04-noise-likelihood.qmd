@@ -1,8 +1,7 @@
 ---
 title: "Noise Models and Likelihoods"
-subtitle: "MATH 435: Mathematical Imaging - Week 4"
+subtitle: "MATH 435: Mathematical Imaging - Class 4"
 author: "Laurent Najman"
-date: "Week 4"
 format:
   revealjs:
     incremental: false
@@ -40,7 +39,7 @@ If two pixels have the same recorded value, do we have the same confidence in bo
 | 52-55 min | quiz transition |
 | 55-75 min | Quiz 1 (20 minutes) |
 
-## Bridge from Week 3
+## Bridge from Class 3
 
 Last time we wrote a noisy deblurring model as
 
@@ -640,6 +639,6 @@ Use the same questions we used all morning:
 
 ::: {.checklist}
 - Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
-- Run the Week 4 notebook and change Gaussian `sigma` or Poisson `peak_photons`.
+- Run the corresponding notebook and change Gaussian `sigma` or Poisson `peak_photons`.
 - Write one claim-evidence-limit sentence about today's model.
 :::

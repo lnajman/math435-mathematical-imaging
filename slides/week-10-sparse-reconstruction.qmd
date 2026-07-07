@@ -1,8 +1,7 @@
 ---
 title: "Sparse Reconstruction"
-subtitle: "MATH 435: Mathematical Imaging - Week 10"
+subtitle: "MATH 435: Mathematical Imaging - Class 10"
 author: "Laurent Najman"
-date: "Week 10"
 format:
   revealjs:
     incremental: false
@@ -40,9 +39,9 @@ Can fewer measurements be enough if the unknown image has a simple hidden struct
 | 60-70 min | notebook activity |
 | 70-75 min | synthesis and exit check |
 
-## Bridge from Week 9
+## Bridge from Class 9
 
-Week 9 introduced ISTA:
+Class 9 introduced ISTA:
 
 $$
 x^{k+1}
@@ -350,7 +349,7 @@ The Discrete Cosine Transform represents an image patch as cosine patterns.
 Many image patches can be approximated using only a small fraction of DCT coefficients.
 
 ::: {.caption}
-Wavelets in Week 11 will give a more imaging-focused multiscale representation.
+Wavelets in Class 11 will give a more imaging-focused multiscale representation.
 :::
 
 ## Few Coefficients, Good Approximation
@@ -404,7 +403,7 @@ This is not a universal promise.
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 10 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -416,7 +415,7 @@ This is not a universal promise.
 :::
 
 ::: {.exercise-box}
-Open the Week 10 notebook.
+Open the corresponding notebook.
 
 1. Change the number of measurements.
 2. Change the sparsity level.

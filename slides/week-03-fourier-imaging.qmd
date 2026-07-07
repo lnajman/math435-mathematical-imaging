@@ -1,8 +1,7 @@
 ---
 title: "Fourier Transform in Imaging"
-subtitle: "MATH 435: Mathematical Imaging - Week 3"
+subtitle: "MATH 435: Mathematical Imaging - Class 3"
 author: "Laurent Najman"
-date: "Week 3"
 format:
   revealjs:
     incremental: false
@@ -40,7 +39,7 @@ What does it mean for an image to contain high frequencies?
 | 63-72 min | filtering and deblurring |
 | 72-75 min | exit question |
 
-## Reminder from Week 2
+## Reminder from Class 2
 
 ::: {.model-box}
 For a fixed blur kernel $h$,
@@ -358,7 +357,7 @@ python3 scripts/build_notebooks.py
 ## Part 4: Convolution Theorem {.section-slide}
 
 ::: {.section-kicker}
-The Week 2 bridge
+The Class 2 bridge
 :::
 
 Convolution becomes multiplication
@@ -517,7 +516,7 @@ The parameter $\lambda$ controls how much we trust weak frequencies.
 :::
 
 ::: {.exercise-box}
-Open the Week 3 notebook.
+Open the corresponding notebook.
 
 Change the low-pass radius and the deblurring stabilizer.
 

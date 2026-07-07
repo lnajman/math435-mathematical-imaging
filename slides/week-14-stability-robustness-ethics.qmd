@@ -1,8 +1,7 @@
 ---
 title: "Stability, Robustness, and Ethics"
-subtitle: "MATH 435: Mathematical Imaging - Week 14"
+subtitle: "MATH 435: Mathematical Imaging - Class 14"
 author: "Laurent Najman"
-date: "Week 14"
 format:
   revealjs:
     incremental: false
@@ -41,7 +40,7 @@ An image can look plausible and still be wrong in a way that matters.
 | 62-72 min | notebook activity and project report preparation |
 | 72-75 min | synthesis and exit check |
 
-## Bridge from Week 13
+## Bridge from Class 13
 
 Plug-and-play gave us a hybrid loop:
 
@@ -435,7 +434,7 @@ For a reconstruction method, document:
 ## Project Reports Due
 
 ::: {.time-tag}
-Week 14 report
+Project report
 :::
 
 Your project report should include:
@@ -452,7 +451,7 @@ Your project report should include:
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 14 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -464,7 +463,7 @@ Your project report should include:
 :::
 
 ::: {.exercise-box}
-Open the Week 14 notebook.
+Open the corresponding notebook.
 
 1. Sweep Tikhonov lambda.
 2. Measure perturbation amplification.

@@ -1,8 +1,7 @@
 ---
 title: "Total Variation Regularization"
-subtitle: "MATH 435: Mathematical Imaging - Week 8"
+subtitle: "MATH 435: Mathematical Imaging - Class 8"
 author: "Laurent Najman"
-date: "Week 8"
 format:
   revealjs:
     incremental: false
@@ -40,9 +39,9 @@ How can a regularizer remove noise without treating every edge as a mistake?
 | 62-69 min | notebook activity |
 | 69-75 min | midterm/course synthesis |
 
-## Bridge from Week 7
+## Bridge from Class 7
 
-Week 7 used the quadratic smoothing energy:
+Class 7 used the quadratic smoothing energy:
 
 $$
 E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2.
@@ -164,7 +163,7 @@ Why might this make optimization more delicate than quadratic smoothing?
 :::
 
 ::: {.caption}
-Week 9 will discuss subgradients and proximal ideas.
+Class 9 will discuss subgradients and proximal ideas.
 :::
 
 ## Part 2: 1D Edge Preservation {.section-slide}
@@ -345,7 +344,7 @@ TV may struggle with:
 
 ## Midterm / Course Checkpoint
 
-Week 8 is also the midterm week in the syllabus.
+The syllabus also places the midterm around this part of the course.
 
 ::: {.checklist}
 - Forward models and image arrays.
@@ -358,7 +357,7 @@ Week 8 is also the midterm week in the syllabus.
 ## Notebook Demo and Code Reference {.code-small}
 
 ::: {.checklist}
-- Use the Week 8 notebook for the live experiment.
+- Use the corresponding notebook for the live experiment.
 - Example scripts live in `examples/` for after-class reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
@@ -370,7 +369,7 @@ Week 8 is also the midterm week in the syllabus.
 :::
 
 ::: {.exercise-box}
-Open the Week 8 notebook.
+Open the corresponding notebook.
 
 1. Change the TV weight.
 2. Compare TV and l2 smoothing on an image.
