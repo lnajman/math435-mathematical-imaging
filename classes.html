@@ -218,8 +218,8 @@ window.Quarto = {
 </header>
 
 
-<p>This page is the class-material entry point for the course. Because the course normally meets twice in a teaching week, the guidance below is organized by class unit rather than by calendar week.</p>
-<p>Most slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.</p>
+<p>This page is the class-material entry point for the course. Because the course normally meets twice for each syllabus topic period, the guidance below is organized by class unit rather than by calendar blocks.</p>
+<p>Most slide decks organize 75-minute class meetings. Class units 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.</p>
 <p>Use each row as a resource checklist. The <a href="./preparation.html">preparation rhythm</a> explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.</p>
 <ul>
 <li><strong>Before class:</strong> read enough of the book chapter to recognize the main objects.</li>
@@ -228,13 +228,13 @@ window.Quarto = {
 <li><strong>Practice:</strong> use the <a href="./practice.html">ungraded practice page</a> to keep a short record of what the data support, what the model assumes, and what can fail.</li>
 </ul>
 <p>Practice notes are study aids, not separate graded assignments. Course grading is governed by the <a href="./syllabus.html">syllabus</a>.</p>
-<p>Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long. See the <a href="./quizzes.html">quiz information page</a> for student-facing logistics and preparation guidance.</p>
+<p>Quiz 1 is attached to class unit 4 and Quiz 2 to class unit 12. Each quiz is 20 minutes long. See the <a href="./quizzes.html">quiz information page</a> for student-facing logistics and preparation guidance.</p>
 <section id="at-a-glance" class="level2">
 <h2 class="anchored" data-anchor-id="at-a-glance">At a Glance</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Week</th>
+<th style="text-align: right;">Class</th>
 <th>Topic</th>
 <th>Slides</th>
 <th>Notebook</th>
@@ -363,7 +363,7 @@ window.Quarto = {
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Week</th>
+<th style="text-align: right;">Class</th>
 <th>Before Class</th>
 <th>In Class</th>
 <th>After Class</th>
@@ -376,7 +376,7 @@ window.Quarto = {
 <td style="text-align: right;">1</td>
 <td>Read the image formation chapter.</td>
 <td>Discuss images as arrays, vectors, and unknowns.</td>
-<td>Run the Week 1 notebook and modify the mask.</td>
+<td>Run the corresponding notebook and modify the mask.</td>
 <td>State what the observation records and what it discards.</td>
 <td>An image becomes an unknown <span class="math inline">x</span>; data are produced by a forward process.</td>
 </tr>
@@ -384,7 +384,7 @@ window.Quarto = {
 <td style="text-align: right;">2</td>
 <td>Read the convolution and blur chapter.</td>
 <td>Interpret blur kernels, boundary conditions, and point spread functions.</td>
-<td>Run the Week 2 notebook and vary blur strength.</td>
+<td>Run the corresponding notebook and vary blur strength.</td>
 <td>Describe one modeling assumption behind convolution.</td>
 <td>The forward model <span class="math inline">A</span> can be a blur operator, but its assumptions matter.</td>
 </tr>
@@ -392,7 +392,7 @@ window.Quarto = {
 <td style="text-align: right;">3</td>
 <td>Read the Fourier chapter.</td>
 <td>Connect projections, energy, and frequency-domain filtering.</td>
-<td>Run the Week 3 notebook and change cutoff or regularization.</td>
+<td>Run the corresponding notebook and change cutoff or regularization.</td>
 <td>Explain why one Fourier coefficient affects the whole image.</td>
 <td>Fourier gives global orthogonal directions and a Pythagorean energy view.</td>
 </tr>
@@ -400,7 +400,7 @@ window.Quarto = {
 <td style="text-align: right;">4</td>
 <td>Read the noise and likelihood chapter.</td>
 <td>Compare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes).</td>
-<td>Run the Week 4 notebook and change photon counts or noise level.</td>
+<td>Run the corresponding notebook and change photon counts or noise level.</td>
 <td>Match a noise model to a data-fidelity term.</td>
 <td>Likelihood decides what it means for a reconstruction to fit the data.</td>
 </tr>
@@ -408,7 +408,7 @@ window.Quarto = {
 <td style="text-align: right;">5</td>
 <td>Read the ill-posed inverse problems chapter.</td>
 <td>Diagnose non-uniqueness, instability, and singular values.</td>
-<td>Run the Week 5 notebook and inspect SVD coefficients.</td>
+<td>Run the corresponding notebook and inspect SVD coefficients.</td>
 <td>Name one supported direction and one invisible direction.</td>
 <td>Inverse problems fail when data are missing, unstable, or nonunique.</td>
 </tr>
@@ -416,7 +416,7 @@ window.Quarto = {
 <td style="text-align: right;">6</td>
 <td>Read the Tikhonov chapter and the project page.</td>
 <td>Derive the regularized least-squares model and assign projects.</td>
-<td>Run the Week 6 notebook and sweep lambda.</td>
+<td>Run the corresponding notebook and sweep lambda.</td>
 <td>Draft or refine a project topic and first forward model.</td>
 <td>Regularization adds a prior so weak data directions do not dominate.</td>
 </tr>
@@ -424,7 +424,7 @@ window.Quarto = {
 <td style="text-align: right;">7</td>
 <td>Read the variational formulation chapter.</td>
 <td>Turn reconstruction into energy minimization.</td>
-<td>Run the Week 7 notebook and track energy/residuals.</td>
+<td>Run the corresponding notebook and track energy/residuals.</td>
 <td>Identify data term, prior term, and optimality condition.</td>
 <td>Reconstruction becomes data agreement plus image structure.</td>
 </tr>
@@ -432,7 +432,7 @@ window.Quarto = {
 <td style="text-align: right;">8</td>
 <td>Read the Total Variation chapter.</td>
 <td>Compare quadratic smoothing with TV edge preservation.</td>
-<td>Run the Week 8 notebook and vary TV weight.</td>
+<td>Run the corresponding notebook and vary TV weight.</td>
 <td>Explain one edge-preservation success and one staircasing failure.</td>
 <td>A prior can protect edges, but it can also create artifacts.</td>
 </tr>
@@ -440,7 +440,7 @@ window.Quarto = {
 <td style="text-align: right;">9</td>
 <td>Read the optimization chapter.</td>
 <td>Study gradient descent, proximal steps, and ISTA.</td>
-<td>Run the Week 9 notebook and change step size or lambda.</td>
+<td>Run the corresponding notebook and change step size or lambda.</td>
 <td>Report convergence evidence, not only a final image.</td>
 <td>Algorithms turn models and priors into computable reconstructions.</td>
 </tr>
@@ -448,7 +448,7 @@ window.Quarto = {
 <td style="text-align: right;">10</td>
 <td>Read the sparse reconstruction chapter.</td>
 <td>Compare l1 and l2 solutions in underdetermined problems.</td>
-<td>Run the Week 10 notebook and change sampling density.</td>
+<td>Run the corresponding notebook and change sampling density.</td>
 <td>State where the unknown is sparse and where that prior fails.</td>
 <td>Sparse priors can recover information only when the representation fits.</td>
 </tr>
@@ -456,7 +456,7 @@ window.Quarto = {
 <td style="text-align: right;">11</td>
 <td>Read the wavelets chapter.</td>
 <td>Contrast global Fourier vectors with compactly supported wavelets.</td>
-<td>Run the Week 11 notebook and compare thresholds/wavelets.</td>
+<td>Run the corresponding notebook and compare thresholds/wavelets.</td>
 <td>Relate coefficient energy to local image features.</td>
 <td>Wavelets make sparse, multiscale, localized priors possible.</td>
 </tr>
@@ -464,7 +464,7 @@ window.Quarto = {
 <td style="text-align: right;">12</td>
 <td>Read the model-based vs data-driven chapter.</td>
 <td>Interpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes).</td>
-<td>Run the Week 12 notebook and test distribution shift.</td>
+<td>Run the corresponding notebook and test distribution shift.</td>
 <td>Describe what the training data teach the method to expect.</td>
 <td>Neural networks act like learned inverse-problem priors or operators.</td>
 </tr>
@@ -472,7 +472,7 @@ window.Quarto = {
 <td style="text-align: right;">13</td>
 <td>Read the plug-and-play chapter.</td>
 <td>Combine data-consistency steps with denoisers.</td>
-<td>Run the Week 13 notebook and compare residual/change/RMSE.</td>
+<td>Run the corresponding notebook and compare residual/change/RMSE.</td>
 <td>Explain what the denoiser contributes and what it cannot prove.</td>
 <td>Learned regularization can be inserted into iterative reconstruction.</td>
 </tr>
@@ -480,7 +480,7 @@ window.Quarto = {
 <td style="text-align: right;">14</td>
 <td>Read the stability, robustness, and ethics chapter.</td>
 <td>Build reliability checks and project defense arguments.</td>
-<td>Run the Week 14 notebook and complete a claim-evidence table.</td>
+<td>Run the corresponding notebook and complete a claim-evidence table.</td>
 <td>Prepare project failure case and oral-defense checklist.</td>
 <td>A reconstruction is trustworthy only with tested limits.</td>
 </tr>
@@ -497,7 +497,7 @@ window.Quarto = {
 </section>
 <section id="project-preparation-guide" class="level2">
 <h2 class="anchored" data-anchor-id="project-preparation-guide">Project Preparation Guide</h2>
-<p>The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the <a href="./project/index.html">project page</a>. They do not create a separate grading category.</p>
+<p>The syllabus defines the assessed project moments as the proposal, the report, and the oral defense. In this roadmap, they are represented by class units 6, 14, and 15. The other rows below are planning aids for the final project described on the <a href="./project/index.html">project page</a>. They do not create a separate grading category.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 57%">
@@ -505,7 +505,7 @@ window.Quarto = {
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Week</th>
+<th style="text-align: right;">Class</th>
 <th>Milestone</th>
 </tr>
 </thead>
