@@ -10,7 +10,6 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-06-01">
   <title>MATH 435: Mathematical Imaging – Tikhonov Regularization</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -215,7 +214,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Tikhonov Regularization</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 6</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Class 6</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -225,7 +224,6 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-06-01</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
@@ -291,9 +289,9 @@ Laurent Najman
 </tbody>
 </table>
 </section>
-<section id="bridge-from-week-5" class="slide level2">
-<h2>Bridge from Week 5</h2>
-<p>Week 5 showed that direct inversion may amplify noise:</p>
+<section id="bridge-from-class-5" class="slide level2">
+<h2>Bridge from Class 5</h2>
+<p>Class 5 showed that direct inversion may amplify noise:</p>
 <p><span class="math display">
 \frac{\langle \eta,u_i\rangle}{\sigma_i}.
 </span></p>
@@ -486,7 +484,7 @@ x_\lambda
 </section>
 <section id="python-demo-normal-equations" class="slide level2 code-small">
 <h2>Python Demo: Normal Equations</h2>
-<div id="b50f2eca" class="cell">
+<div id="1b634350" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
 <span id="cb1-2"><a></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
 <span id="cb1-3"><a></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -678,7 +676,7 @@ x_\lambda
 <h2>Notebook Demo and Code Reference</h2>
 <div class="checklist">
 <ul>
-<li>Use the Week 6 notebook for the live experiment.</li>
+<li>Use the corresponding notebook for the live experiment.</li>
 <li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
@@ -690,7 +688,7 @@ x_\lambda
 <p>8 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Open the Week 6 notebook.</p>
+<p>Open the corresponding notebook.</p>
 <ol type="1">
 <li>Change blur strength.</li>
 <li>Change noise level.</li>

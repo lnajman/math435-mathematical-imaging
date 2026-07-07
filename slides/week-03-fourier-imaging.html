@@ -10,7 +10,6 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Laurent Najman">
-  <meta name="dcterms.date" content="2001-03-01">
   <title>MATH 435: Mathematical Imaging – Fourier Transform in Imaging</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -215,7 +214,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Fourier Transform in Imaging</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Week 3</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Class 3</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -225,7 +224,6 @@ Laurent Najman
 </div>
 </div>
 
-  <p class="date">2001-03-01</p>
 </section>
 <section id="opening-question" class="slide level2 inverse-slide">
 <h2>Opening Question</h2>
@@ -287,8 +285,8 @@ Laurent Najman
 </tbody>
 </table>
 </section>
-<section id="reminder-from-week-2" class="slide level2">
-<h2>Reminder from Week 2</h2>
+<section id="reminder-from-class-2" class="slide level2">
+<h2>Reminder from Class 2</h2>
 <div class="model-box">
 <p>For a fixed blur kernel <span class="math inline">h</span>,</p>
 <p><span class="math display">
@@ -429,7 +427,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 <section id="what-fft-returns" class="slide level2">
 <h2>What FFT Returns</h2>
 <div class="code-small">
-<div id="ee66498d" class="cell">
+<div id="1426cb4b" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>spectrum <span class="op">=</span> np.fft.fft(signal)</span>
@@ -468,7 +466,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 <p>Most software places the zero frequency at the corner.</p>
 <p>For visualization, we often use:</p>
 <div class="code-small">
-<div id="99eff5ed" class="cell">
+<div id="0d35d94c" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>F <span class="op">=</span> np.fft.fft2(image)</span>
 <span id="cb2-2"><a></a>F_centered <span class="op">=</span> np.fft.fftshift(F)</span>
 <span id="cb2-3"><a></a>log_magnitude <span class="op">=</span> np.log1p(np.<span class="bu">abs</span>(F_centered))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -538,7 +536,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 </section>
 <section id="python-demo-spectrum-of-an-image" class="slide level2 code-small">
 <h2>Python Demo: Spectrum of an Image</h2>
-<div id="0a25e74f" class="cell">
+<div id="3e366ad9" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb3-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-3"><a></a></span>
@@ -559,7 +557,7 @@ x[n] = \sin(2\pi 5n/N) + 0.5\sin(2\pi 20n/N).
 <section id="part-4-convolution-theorem" class="slide level2 section-slide">
 <h2>Part 4: Convolution Theorem</h2>
 <div class="section-kicker">
-<p>The Week 2 bridge</p>
+<p>The Class 2 bridge</p>
 </div>
 <p>Convolution becomes multiplication</p>
 </section>
@@ -695,7 +693,7 @@ y = h * x,
 <p>8 minutes</p>
 </div>
 <div class="exercise-box">
-<p>Open the Week 3 notebook.</p>
+<p>Open the corresponding notebook.</p>
 <p>Change the low-pass radius and the deblurring stabilizer.</p>
 <p>Record one visual effect and one numerical effect.</p>
 </div>
