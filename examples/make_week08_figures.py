@@ -56,7 +56,8 @@ def make_penalties(path: Path) -> None:
     tv = np.abs(g)
     eps_tv = np.sqrt(g**2 + 0.12**2)
 
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.25, wspace=0.22)
     axes[0].plot(g, l2, label=r"$\frac{1}{2} g^2$", color="#24536b", linewidth=2.5)
     axes[0].plot(g, tv, label=r"$|g|$", color="#9a5b2f", linewidth=2.5)
     axes[0].plot(g, eps_tv, label=r"$\sqrt{g^2+\epsilon^2}$", color="#2f7a54", linewidth=2.0, linestyle="--")
@@ -76,7 +77,7 @@ def make_penalties(path: Path) -> None:
     axes[1].legend(frameon=False)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "TV grows linearly with gradient size; quadratic smoothing grows quadratically",
         ha="center",
         fontsize=13,
@@ -97,7 +98,8 @@ def make_step_signal(path: Path) -> None:
     l2 = quadratic_smooth(noisy, 18.0)
     tv = denoise_tv_chambolle(noisy, weight=0.18)
 
-    fig, ax = plt.subplots(figsize=(10.8, 4.4), dpi=150)
+    fig, ax = plt.subplots(figsize=(10.8, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.24)
     ax.plot(x, clean, label="clean", color="#202428", linewidth=2.5)
     ax.plot(x, noisy, label="noisy", color="#b8bfc4", linewidth=1.2)
     ax.plot(x, l2, label="quadratic smoothing", color="#24536b", linewidth=2.2)
@@ -110,7 +112,7 @@ def make_step_signal(path: Path) -> None:
     ax.legend(frameon=False, ncol=2)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "TV keeps sharp jumps better; quadratic smoothing rounds them",
         ha="center",
         fontsize=13,
