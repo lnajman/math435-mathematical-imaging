@@ -2,9 +2,9 @@
 title: "Class Roadmap"
 ---
 
-This page is the class-material entry point for the course. Because the course normally meets twice in a teaching week, the guidance below is organized by class unit rather than by calendar week.
+This page is the class-material entry point for the course. Because the course normally meets twice for each syllabus topic period, the guidance below is organized by class unit rather than by calendar blocks.
 
-Most slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.
+Most slide decks organize 75-minute class meetings. Class units 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.
 
 Use each row as a resource checklist. The [preparation rhythm](preparation.qmd) explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.
 
@@ -15,11 +15,11 @@ Use each row as a resource checklist. The [preparation rhythm](preparation.qmd) 
 
 Practice notes are study aids, not separate graded assignments. Course grading is governed by the [syllabus](syllabus.qmd).
 
-Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long. See the [quiz information page](quizzes.qmd) for student-facing logistics and preparation guidance.
+Quiz 1 is attached to class unit 4 and Quiz 2 to class unit 12. Each quiz is 20 minutes long. See the [quiz information page](quizzes.qmd) for student-facing logistics and preparation guidance.
 
 ## At a Glance
 
-| Week | Topic | Slides | Notebook | Book |
+| Class | Topic | Slides | Notebook | Book |
 |---:|---|---|---|---|
 | 1 | Images as mathematical objects | [slides](slides/week-01-image-formation.html) | [notebook](notebooks/week01_image_formation.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) | [chapter](book/week-01-image-formation.html) |
 | 2 | Convolution and blur | [slides](slides/week-02-convolution-blur.html) | [notebook](notebooks/week02_convolution_blur.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) | [chapter](book/week-02-convolution-blur.html) |
@@ -39,29 +39,29 @@ Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 
 
 ## Work Plan
 
-| Week | Before Class | In Class | After Class | Ungraded Practice Note | Course Identity |
+| Class | Before Class | In Class | After Class | Ungraded Practice Note | Course Identity |
 |---:|---|---|---|---|---|
-| 1 | Read the image formation chapter. | Discuss images as arrays, vectors, and unknowns. | Run the Week 1 notebook and modify the mask. | State what the observation records and what it discards. | An image becomes an unknown $x$; data are produced by a forward process. |
-| 2 | Read the convolution and blur chapter. | Interpret blur kernels, boundary conditions, and point spread functions. | Run the Week 2 notebook and vary blur strength. | Describe one modeling assumption behind convolution. | The forward model $A$ can be a blur operator, but its assumptions matter. |
-| 3 | Read the Fourier chapter. | Connect projections, energy, and frequency-domain filtering. | Run the Week 3 notebook and change cutoff or regularization. | Explain why one Fourier coefficient affects the whole image. | Fourier gives global orthogonal directions and a Pythagorean energy view. |
-| 4 | Read the noise and likelihood chapter. | Compare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes). | Run the Week 4 notebook and change photon counts or noise level. | Match a noise model to a data-fidelity term. | Likelihood decides what it means for a reconstruction to fit the data. |
-| 5 | Read the ill-posed inverse problems chapter. | Diagnose non-uniqueness, instability, and singular values. | Run the Week 5 notebook and inspect SVD coefficients. | Name one supported direction and one invisible direction. | Inverse problems fail when data are missing, unstable, or nonunique. |
-| 6 | Read the Tikhonov chapter and the project page. | Derive the regularized least-squares model and assign projects. | Run the Week 6 notebook and sweep lambda. | Draft or refine a project topic and first forward model. | Regularization adds a prior so weak data directions do not dominate. |
-| 7 | Read the variational formulation chapter. | Turn reconstruction into energy minimization. | Run the Week 7 notebook and track energy/residuals. | Identify data term, prior term, and optimality condition. | Reconstruction becomes data agreement plus image structure. |
-| 8 | Read the Total Variation chapter. | Compare quadratic smoothing with TV edge preservation. | Run the Week 8 notebook and vary TV weight. | Explain one edge-preservation success and one staircasing failure. | A prior can protect edges, but it can also create artifacts. |
-| 9 | Read the optimization chapter. | Study gradient descent, proximal steps, and ISTA. | Run the Week 9 notebook and change step size or lambda. | Report convergence evidence, not only a final image. | Algorithms turn models and priors into computable reconstructions. |
-| 10 | Read the sparse reconstruction chapter. | Compare l1 and l2 solutions in underdetermined problems. | Run the Week 10 notebook and change sampling density. | State where the unknown is sparse and where that prior fails. | Sparse priors can recover information only when the representation fits. |
-| 11 | Read the wavelets chapter. | Contrast global Fourier vectors with compactly supported wavelets. | Run the Week 11 notebook and compare thresholds/wavelets. | Relate coefficient energy to local image features. | Wavelets make sparse, multiscale, localized priors possible. |
-| 12 | Read the model-based vs data-driven chapter. | Interpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes). | Run the Week 12 notebook and test distribution shift. | Describe what the training data teach the method to expect. | Neural networks act like learned inverse-problem priors or operators. |
-| 13 | Read the plug-and-play chapter. | Combine data-consistency steps with denoisers. | Run the Week 13 notebook and compare residual/change/RMSE. | Explain what the denoiser contributes and what it cannot prove. | Learned regularization can be inserted into iterative reconstruction. |
-| 14 | Read the stability, robustness, and ethics chapter. | Build reliability checks and project defense arguments. | Run the Week 14 notebook and complete a claim-evidence table. | Prepare project failure case and oral-defense checklist. | A reconstruction is trustworthy only with tested limits. |
+| 1 | Read the image formation chapter. | Discuss images as arrays, vectors, and unknowns. | Run the corresponding notebook and modify the mask. | State what the observation records and what it discards. | An image becomes an unknown $x$; data are produced by a forward process. |
+| 2 | Read the convolution and blur chapter. | Interpret blur kernels, boundary conditions, and point spread functions. | Run the corresponding notebook and vary blur strength. | Describe one modeling assumption behind convolution. | The forward model $A$ can be a blur operator, but its assumptions matter. |
+| 3 | Read the Fourier chapter. | Connect projections, energy, and frequency-domain filtering. | Run the corresponding notebook and change cutoff or regularization. | Explain why one Fourier coefficient affects the whole image. | Fourier gives global orthogonal directions and a Pythagorean energy view. |
+| 4 | Read the noise and likelihood chapter. | Compare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes). | Run the corresponding notebook and change photon counts or noise level. | Match a noise model to a data-fidelity term. | Likelihood decides what it means for a reconstruction to fit the data. |
+| 5 | Read the ill-posed inverse problems chapter. | Diagnose non-uniqueness, instability, and singular values. | Run the corresponding notebook and inspect SVD coefficients. | Name one supported direction and one invisible direction. | Inverse problems fail when data are missing, unstable, or nonunique. |
+| 6 | Read the Tikhonov chapter and the project page. | Derive the regularized least-squares model and assign projects. | Run the corresponding notebook and sweep lambda. | Draft or refine a project topic and first forward model. | Regularization adds a prior so weak data directions do not dominate. |
+| 7 | Read the variational formulation chapter. | Turn reconstruction into energy minimization. | Run the corresponding notebook and track energy/residuals. | Identify data term, prior term, and optimality condition. | Reconstruction becomes data agreement plus image structure. |
+| 8 | Read the Total Variation chapter. | Compare quadratic smoothing with TV edge preservation. | Run the corresponding notebook and vary TV weight. | Explain one edge-preservation success and one staircasing failure. | A prior can protect edges, but it can also create artifacts. |
+| 9 | Read the optimization chapter. | Study gradient descent, proximal steps, and ISTA. | Run the corresponding notebook and change step size or lambda. | Report convergence evidence, not only a final image. | Algorithms turn models and priors into computable reconstructions. |
+| 10 | Read the sparse reconstruction chapter. | Compare l1 and l2 solutions in underdetermined problems. | Run the corresponding notebook and change sampling density. | State where the unknown is sparse and where that prior fails. | Sparse priors can recover information only when the representation fits. |
+| 11 | Read the wavelets chapter. | Contrast global Fourier vectors with compactly supported wavelets. | Run the corresponding notebook and compare thresholds/wavelets. | Relate coefficient energy to local image features. | Wavelets make sparse, multiscale, localized priors possible. |
+| 12 | Read the model-based vs data-driven chapter. | Interpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes). | Run the corresponding notebook and test distribution shift. | Describe what the training data teach the method to expect. | Neural networks act like learned inverse-problem priors or operators. |
+| 13 | Read the plug-and-play chapter. | Combine data-consistency steps with denoisers. | Run the corresponding notebook and compare residual/change/RMSE. | Explain what the denoiser contributes and what it cannot prove. | Learned regularization can be inserted into iterative reconstruction. |
+| 14 | Read the stability, robustness, and ethics chapter. | Build reliability checks and project defense arguments. | Run the corresponding notebook and complete a claim-evidence table. | Prepare project failure case and oral-defense checklist. | A reconstruction is trustworthy only with tested limits. |
 | 15 | Review the project page and final notebook/report. | Present results and complete individual oral defense. | Archive code, report, and LLM-use statement. | Defend the whole project without relying on the LLM. | Ownership is shown by explaining the model, code, evidence, and failure cases. |
 
 ## Project Preparation Guide
 
-The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the [project page](project/index.qmd). They do not create a separate grading category.
+The syllabus defines the assessed project moments as the proposal, the report, and the oral defense. In this roadmap, they are represented by class units 6, 14, and 15. The other rows below are planning aids for the final project described on the [project page](project/index.qmd). They do not create a separate grading category.
 
-| Week | Milestone |
+| Class | Milestone |
 |---:|---|
 | 6 | Project proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question. |
 | 7 | Planning feedback: refine the model statement, data access, and implementation choices. |
