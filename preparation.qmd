@@ -2,13 +2,13 @@
 title: "How To Prepare For Class"
 ---
 
-This page gives a weekly rhythm for using the course materials. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the [syllabus](syllabus.qmd).
+This page gives a class-by-class rhythm for using the course materials. Because the course normally meets twice in a teaching week, use this rhythm around each class meeting rather than as a calendar-week checklist. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the [syllabus](syllabus.qmd).
 
 The course has several resources because they do different jobs:
 
 | Resource | Main Role |
 |---|---|
-| [Class roadmap](classes.qmd) | Find the week, slides, notebook, book chapter, quiz timing, and project milestones. |
+| [Class roadmap](classes.qmd) | Find the class unit, slides, notebook, book chapter, quiz timing, and project milestones. |
 | [Book](book/index.qmd) | Read the slower explanation and connect the mathematics to the course arc. |
 | [Slides](classes.qmd) | Follow the live class path: questions, derivations, examples, and discussion. |
 | [Notebooks](notebooks/index.qmd) | Change parameters, run experiments, and see what the model does. |
@@ -16,15 +16,15 @@ The course has several resources because they do different jobs:
 | [Quizzes](quizzes.qmd) | Check quiz timing, permitted tools, and preparation focus. |
 | [Project](project/index.qmd) | Prepare the modeling project, report, LLM-use statement, and oral defense. |
 
-## Weekly Rhythm
+## Class Rhythm
 
 | Moment | What To Do | Output |
 |---|---|---|
 | Before class | Open the [class roadmap](classes.qmd). Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path. | One question you want class to answer. |
 | During class | Use the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure. | Annotated notes around the main model. |
 | After class | Run the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter. | A four-thread note about measurement, prior, computation, and evidence. |
-| Weekly consolidation | Turn the notebook note into a short claim-evidence-limit note using the [practice page](practice.qmd). | A study note you can reuse for quizzes, exams, and projects. |
-| Before the next class | Revisit the previous week only enough to state the central idea without looking. | A one-sentence bridge to the next topic. |
+| Between-class consolidation | Turn the notebook note into a short claim-evidence-limit note using the [practice page](practice.qmd). | A study note you can reuse for quizzes, exams, and projects. |
+| Before the next class | Revisit the previous class only enough to state the central idea without looking. | A one-sentence bridge to the next topic. |
 
 ## The Five Questions
 
@@ -43,10 +43,10 @@ These questions are more important than memorizing code. The code is there to te
 When time is short before class:
 
 1. Read the first page or introduction of the book chapter.
-2. Look at the timing slide in the weekly deck.
+2. Look at the timing slide in the corresponding deck.
 3. Find the main formula or model.
 4. Write one question about what the model assumes.
-5. Check whether the week has a quiz, project milestone, or special constraint.
+5. Check whether the class unit has a quiz, project milestone, or special constraint.
 
 This is enough to enter the class discussion without treating the materials as a pile of disconnected files.
 
@@ -55,7 +55,7 @@ This is enough to enter the class discussion without treating the materials as a
 Weeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:
 
 - use the [quiz information page](quizzes.qmd) to check timing and permitted tools;
-- review the weekly practice prompts from the preceding material;
+- review the practice prompts from the preceding material;
 - focus on explaining concepts and models without code;
 - remember that only a basic calculator is permitted unless the instructor explicitly announces a change.
 
@@ -63,7 +63,7 @@ Actual quiz questions and solution keys are not published on this website before
 
 ## Project Weeks
 
-The project should grow from the same weekly rhythm. Each project should be able to answer:
+The project should grow from the same class rhythm. Each project should be able to answer:
 
 - What is the forward model?
 - What is the reconstruction method?

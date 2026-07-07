@@ -2,18 +2,18 @@
 title: "Class Roadmap"
 ---
 
-This page is the weekly entry point for the course.
+This page is the class-material entry point for the course. Because the course normally meets twice in a teaching week, the guidance below is organized by class unit rather than by calendar week.
 
 Most slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.
 
-Use each week as a checklist. The [preparation rhythm](preparation.qmd) explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.
+Use each row as a resource checklist. The [preparation rhythm](preparation.qmd) explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.
 
 - **Before class:** read enough of the book chapter to recognize the main objects.
 - **In class:** use the slides for discussion, derivation, and guided examples.
 - **After class:** run the notebook, change parameters, and answer the four-thread note and checks.
-- **Practice:** use the [ungraded weekly practice page](practice.qmd) to keep a short record of what the data support, what the model assumes, and what can fail.
+- **Practice:** use the [ungraded practice page](practice.qmd) to keep a short record of what the data support, what the model assumes, and what can fail.
 
-Weekly practice notes are study aids, not separate graded assignments. Course grading is governed by the [syllabus](syllabus.qmd).
+Practice notes are study aids, not separate graded assignments. Course grading is governed by the [syllabus](syllabus.qmd).
 
 Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long. See the [quiz information page](quizzes.qmd) for student-facing logistics and preparation guidance.
 
@@ -37,7 +37,7 @@ Quiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 
 | 14 | Stability, robustness, and ethics | [slides](slides/week-14-stability-robustness-ethics.html) | [notebook](notebooks/week14_stability_robustness.ipynb) / [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week14_stability_robustness.ipynb) | [chapter](book/week-14-stability-robustness-ethics.html) |
 | 15 | Project presentations and oral defenses | [project page](project/index.html) | - | - |
 
-## Weekly Work Plan
+## Work Plan
 
 | Week | Before Class | In Class | After Class | Ungraded Practice Note | Course Identity |
 |---:|---|---|---|---|---|

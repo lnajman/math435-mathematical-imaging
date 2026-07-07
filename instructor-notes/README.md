@@ -6,7 +6,7 @@ Important visibility note: the course repository is public on GitHub. These file
 
 ## How To Use These Notes
 
-Each week includes:
+Each teaching note includes:
 
 - a 75-minute teaching rhythm;
 - suggested pauses for student discussion;
@@ -19,7 +19,7 @@ The notes are meant to support class flow, not to create additional graded work.
 
 ## Practical Pacing Rules
 
-Treat each weekly note as a teaching menu, not a checklist to exhaust. For most classes, protect three things:
+Treat each teaching note as a menu, not a checklist to exhaust. For most classes, protect three things:
 
 1. the central modeling sentence for the week;
 2. one board derivation that students can follow by hand;

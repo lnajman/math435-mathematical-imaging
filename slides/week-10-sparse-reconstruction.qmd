@@ -449,9 +449,9 @@ Answer quickly:
 ## After Class
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 10 of the book to connect l1 geometry with representation-dependent priors.
-- Run the week notebook and change at least one important parameter.
+- Run the corresponding notebook and change at least one important parameter.
 - Write one claim-evidence-limit sentence about today's model.
 :::
 

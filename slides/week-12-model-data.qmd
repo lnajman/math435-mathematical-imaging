@@ -498,7 +498,7 @@ Use the central identity as the organizing question:
 ## After Class
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 12 of the book for the model-based/data-driven comparison.
 - Run the Week 12 notebook and test one distribution shift.
 - Write one claim-evidence-limit sentence about today's model.

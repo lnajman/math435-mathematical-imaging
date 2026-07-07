@@ -484,8 +484,8 @@ Match each idea to its role:
 ## After Class
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
-- Run the week notebook and change at least one important parameter.
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Run the corresponding notebook and change at least one important parameter.
 - Write one claim-evidence-limit sentence about today's model.
 :::
 

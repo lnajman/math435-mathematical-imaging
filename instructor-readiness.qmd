@@ -14,9 +14,9 @@ Last live smoke test: July 6, 2026.
 | Area | Status | Evidence |
 |---|---|---|
 | Public entry path | Ready | Home, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site. |
-| Representative weekly paths | Ready | Weeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links. |
+| Representative course paths | Ready | Weeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links. |
 | Colab access | Ready | All fourteen Google Colab notebook links returned HTTP 200. |
-| Grading boundary | Ready | Live pages state that the syllabus is authoritative and that weekly practice notes are not separate graded assignments. |
+| Grading boundary | Ready | Live pages state that the syllabus is authoritative and that practice notes are not separate graded assignments. |
 | Quiz logistics | Ready | Live quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long. |
 | Project boundary | Ready | Live project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade. |
 | Course arc | Ready | Home, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language. |

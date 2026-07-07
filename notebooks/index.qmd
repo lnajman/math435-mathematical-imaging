@@ -6,7 +6,7 @@ The notebooks are student-facing companions to the slide decks. They are designe
 
 Use the Google Colab links if you want to work in a browser without installing Python locally.
 
-The [preparation rhythm](../preparation.qmd) explains when to use notebooks in relation to the book, slides, weekly practice, quizzes, and project work.
+The [preparation rhythm](../preparation.qmd) explains when to use notebooks in relation to the book, slides, practice prompts, quizzes, and project work.
 
 ## How To Use Them
 
@@ -32,7 +32,7 @@ $$
 
 When a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.
 
-Each weekly notebook ends by asking students to connect the computation to four reading threads: measurement, prior, computation, and evidence.
+Each notebook ends by asking students to connect the computation to four reading threads: measurement, prior, computation, and evidence.
 
 | Week | Topic | Notebook | Google Colab |
 |---:|---|---|---|

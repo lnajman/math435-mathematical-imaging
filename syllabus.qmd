@@ -416,7 +416,7 @@ Please ensure that you sign your name on the Attendance register. If you do not 
 
 **If you are absent for any lecture, it is your responsibility to cover the missed material.**
 
-## Weekly Plan (Tentative)
+## Course Plan (Tentative)
 
 <table>
 <colgroup>
@@ -498,7 +498,7 @@ Project report</td>
 </tbody>
 </table>
 
-## Detailed Weekly Plan (15 Weeks, Tentative)
+## Detailed Course Plan (15 Weeks, Tentative)
 
 ## Week 1 – Introduction to Imaging as a Mathematical Problem
 

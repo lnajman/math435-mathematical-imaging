@@ -503,7 +503,7 @@ This is already a bias-stability tradeoff.
 
 ## Preview of Regularization
 
-Next week, instead of a hard cutoff, we will solve problems like
+Next class, instead of a hard cutoff, we will solve problems like
 
 $$
 \min_x
@@ -572,8 +572,8 @@ Answer in one sentence each:
 ## After Class
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and weekly practice prompt.
-- Run the week notebook and change at least one important parameter.
+- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Run the corresponding notebook and change at least one important parameter.
 - Write one claim-evidence-limit sentence about today's model.
 :::
 
