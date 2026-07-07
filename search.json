@@ -445,7 +445,7 @@
     "href": "slides/week-13-plug-and-play.html#after-class",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 13 of the book for the proximal-to-denoiser bridge.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 13 of the book for the proximal-to-denoiser bridge.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#next-time",
@@ -739,7 +739,7 @@
     "href": "slides/week-11-wavelets.html#after-class",
     "title": "Wavelets and Multiscale Representation",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 11 of the book for the Fourier-wavelet-Pythagorean bridge.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 11 of the book for the Fourier-wavelet-Pythagorean bridge.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-11-wavelets.html#next-time",
@@ -1040,7 +1040,7 @@
     "href": "slides/week-09-optimization-methods.html#after-class",
     "title": "Optimization Methods",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-09-optimization-methods.html#next-time",
@@ -1113,11 +1113,11 @@
     "text": "Why This Is Powerful\n\n\nThe data model decides the fidelity term.\nThe image prior decides the regularizer.\nThe optimization method decides how we minimize.\nThe minimizer is the reconstruction."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#examples-from-previous-weeks",
-    "href": "slides/week-07-variational-formulation.html#examples-from-previous-weeks",
+    "objectID": "slides/week-07-variational-formulation.html#earlier-examples",
+    "href": "slides/week-07-variational-formulation.html#earlier-examples",
     "title": "Variational Formulation",
-    "section": "Examples from Previous Weeks",
-    "text": "Examples from Previous Weeks\n\n\n\nModel\nEnergy\n\n\n\n\nGaussian direct denoising\n\\|x-y\\|_2^2\n\n\nTikhonov\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2\n\n\nQuadratic smoothing\n\\|u-y\\|_2^2+\\lambda\\|\\nabla u\\|_2^2\n\n\nPoisson data\n\\sum_i f_i(x)-z_i\\log f_i(x)"
+    "section": "Earlier Examples",
+    "text": "Earlier Examples\n\n\n\nModel\nEnergy\n\n\n\n\nGaussian direct denoising\n\\|x-y\\|_2^2\n\n\nTikhonov\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2\n\n\nQuadratic smoothing\n\\|u-y\\|_2^2+\\lambda\\|\\nabla u\\|_2^2\n\n\nPoisson data\n\\sum_i f_i(x)-z_i\\log f_i(x)"
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#activity-1-name-the-terms",
@@ -1369,7 +1369,7 @@
     "href": "slides/week-07-variational-formulation.html#after-class",
     "title": "Variational Formulation",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#next-time",
@@ -1656,7 +1656,7 @@
     "href": "slides/week-05-ill-posed-inverse-problems.html#preview-of-regularization",
     "title": "Ill-Posed Inverse Problems",
     "section": "Preview of Regularization",
-    "text": "Preview of Regularization\nNext week, instead of a hard cutoff, we will solve problems like\n\n\\min_x\n\\|Ax-y\\|_2^2 + \\lambda \\|x\\|_2^2.\n\n\nRegularization is a controlled way to trade exact data fit for stability."
+    "text": "Preview of Regularization\nNext class, instead of a hard cutoff, we will solve problems like\n\n\\min_x\n\\|Ax-y\\|_2^2 + \\lambda \\|x\\|_2^2.\n\n\nRegularization is a controlled way to trade exact data fit for stability."
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#notebook-demo-and-code-reference",
@@ -1698,7 +1698,7 @@
     "href": "slides/week-05-ill-posed-inverse-problems.html#after-class",
     "title": "Ill-Posed Inverse Problems",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#next-time",
@@ -2020,7 +2020,7 @@
     "href": "slides/week-03-fourier-imaging.html#after-class",
     "title": "Fourier Transform in Imaging",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#next-time",
@@ -2293,7 +2293,7 @@
     "href": "slides/week-01-image-formation.html#mini-case-blurred-photograph",
     "title": "Images as Mathematical Objects",
     "section": "Mini-Case: Blurred Photograph",
-    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext week, we will make this precise and compute it."
+    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext class, we will make this precise and compute it."
   },
   {
     "objectID": "slides/week-01-image-formation.html#end-of-class-checkpoint",
@@ -2314,7 +2314,7 @@
     "href": "slides/week-01-image-formation.html#after-class",
     "title": "Images as Mathematical Objects",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-01-image-formation.html#next-time",
@@ -4312,14 +4312,14 @@
     "href": "notebooks/index.html",
     "title": "Notebooks",
     "section": "",
-    "text": "The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.\nUse the Google Colab links if you want to work in a browser without installing Python locally.\nThe preparation rhythm explains when to use notebooks in relation to the book, slides, weekly practice, quizzes, and project work."
+    "text": "The notebooks are student-facing companions to the slide decks. They are designed to be run, modified, and rerun.\nUse the Google Colab links if you want to work in a browser without installing Python locally.\nThe preparation rhythm explains when to use notebooks in relation to the book, slides, practice prompts, quizzes, and project work."
   },
   {
     "objectID": "notebooks/index.html#how-to-use-them",
     "href": "notebooks/index.html#how-to-use-them",
     "title": "Notebooks",
     "section": "How To Use Them",
-    "text": "How To Use Them\nFor each notebook:\n\nrun the setup cells first;\nrun the demonstration cells without changing anything;\nchange the marked parameters or TODO cells;\ncompare the image, residual, coefficient, or curve before and after the change;\nanswer the final four-thread note and coherence check in your own words.\n\nThe notebooks are not only code examples. They are experiments for the course identity:\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}.\n\nWhen a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.\nEach weekly notebook ends by asking students to connect the computation to four reading threads: measurement, prior, computation, and evidence.\n\n\n\nWeek\nTopic\nNotebook\nGoogle Colab\n\n\n\n\n1\nImage formation as arrays\nDownload / GitHub\nOpen in Colab\n\n\n2\nConvolution and blur\nDownload / GitHub\nOpen in Colab\n\n\n3\nFourier transform in imaging\nDownload / GitHub\nOpen in Colab\n\n\n4\nNoise models and likelihoods\nDownload / GitHub\nOpen in Colab\n\n\n5\nIll-posed inverse problems\nDownload / GitHub\nOpen in Colab\n\n\n6\nTikhonov regularization\nDownload / GitHub\nOpen in Colab\n\n\n7\nVariational formulation\nDownload / GitHub\nOpen in Colab\n\n\n8\nTotal Variation regularization\nDownload / GitHub\nOpen in Colab\n\n\n9\nOptimization methods\nDownload / GitHub\nOpen in Colab\n\n\n10\nSparse reconstruction\nDownload / GitHub\nOpen in Colab\n\n\n11\nWavelets and multiscale representation\nDownload / GitHub\nOpen in Colab\n\n\n12\nModel-based vs data-driven imaging\nDownload / GitHub\nOpen in Colab\n\n\n13\nPlug-and-play and learned regularization\nDownload / GitHub\nOpen in Colab\n\n\n14\nStability, robustness, and ethics\nDownload / GitHub\nOpen in Colab"
+    "text": "How To Use Them\nFor each notebook:\n\nrun the setup cells first;\nrun the demonstration cells without changing anything;\nchange the marked parameters or TODO cells;\ncompare the image, residual, coefficient, or curve before and after the change;\nanswer the final four-thread note and coherence check in your own words.\n\nThe notebooks are not only code examples. They are experiments for the course identity:\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}.\n\nWhen a figure improves, ask what caused the improvement: stronger data consistency, a better prior, a different parameter, or a more stable algorithm.\nEach notebook ends by asking students to connect the computation to four reading threads: measurement, prior, computation, and evidence.\n\n\n\nWeek\nTopic\nNotebook\nGoogle Colab\n\n\n\n\n1\nImage formation as arrays\nDownload / GitHub\nOpen in Colab\n\n\n2\nConvolution and blur\nDownload / GitHub\nOpen in Colab\n\n\n3\nFourier transform in imaging\nDownload / GitHub\nOpen in Colab\n\n\n4\nNoise models and likelihoods\nDownload / GitHub\nOpen in Colab\n\n\n5\nIll-posed inverse problems\nDownload / GitHub\nOpen in Colab\n\n\n6\nTikhonov regularization\nDownload / GitHub\nOpen in Colab\n\n\n7\nVariational formulation\nDownload / GitHub\nOpen in Colab\n\n\n8\nTotal Variation regularization\nDownload / GitHub\nOpen in Colab\n\n\n9\nOptimization methods\nDownload / GitHub\nOpen in Colab\n\n\n10\nSparse reconstruction\nDownload / GitHub\nOpen in Colab\n\n\n11\nWavelets and multiscale representation\nDownload / GitHub\nOpen in Colab\n\n\n12\nModel-based vs data-driven imaging\nDownload / GitHub\nOpen in Colab\n\n\n13\nPlug-and-play and learned regularization\nDownload / GitHub\nOpen in Colab\n\n\n14\nStability, robustness, and ethics\nDownload / GitHub\nOpen in Colab"
   },
   {
     "objectID": "notebooks/index.html#repository-examples",
@@ -4347,7 +4347,7 @@
     "href": "instructor-readiness.html#current-readiness",
     "title": "Course Readiness Checklist",
     "section": "Current Readiness",
-    "text": "Current Readiness\nLast live smoke test: July 6, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nRepresentative weekly paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that weekly practice notes are not separate graded assignments.\n\n\nQuiz logistics\nReady\nLive quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long.\n\n\nProject boundary\nReady\nLive project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nCourse arc\nReady\nHome, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language."
+    "text": "Current Readiness\nLast live smoke test: July 6, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nQuiz logistics\nReady\nLive quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long.\n\n\nProject boundary\nReady\nLive project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nCourse arc\nReady\nHome, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language."
   },
   {
     "objectID": "instructor-readiness.html#before-the-semester",
@@ -4389,7 +4389,7 @@
     "href": "quizzes.html",
     "title": "Quiz Information",
     "section": "",
-    "text": "This page summarizes student-facing quiz logistics. The syllabus remains the authority for grading, assessment policies, approved absences, and course rules.\nFor the ordinary weekly study workflow before and after quiz weeks, see How To Prepare For Class.\nThere are two quizzes in the course. Each quiz is 20 minutes long."
+    "text": "This page summarizes student-facing quiz logistics. The syllabus remains the authority for grading, assessment policies, approved absences, and course rules.\nFor the ordinary class-by-class study workflow before and after quiz classes, see How To Prepare For Class.\nThere are two quizzes in the course. Each quiz is 20 minutes long."
   },
   {
     "objectID": "quizzes.html#allowed-tools",
@@ -4410,7 +4410,7 @@
     "href": "quizzes.html#how-to-study",
     "title": "Quiz Information",
     "section": "How To Study",
-    "text": "How To Study\nUse the class roadmap as the main study guide:\n\nreview the corresponding book chapters;\nrerun the relevant notebooks and change one important parameter;\nanswer the weekly practice prompt in your own words;\nexplain the central identity of the course without relying on code:\n\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}."
+    "text": "How To Study\nUse the class roadmap as the main study guide:\n\nreview the corresponding book chapters;\nrerun the relevant notebooks and change one important parameter;\nanswer the relevant practice prompt in your own words;\nexplain the central identity of the course without relying on code:\n\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}."
   },
   {
     "objectID": "quizzes.html#what-will-not-be-published-here",
@@ -4546,18 +4546,18 @@
     "text": "Additional Information\n\nAssessment\nLate submission of the group project will not be accepted.\n\n\nProject\nThe project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.\nStudents are required to use Python for all computational implementations and analyses. Students are also required to use an LLM as part of the project process and disclose how it was used. The LLM-use statement is required but not graded separately.\nA written report and the corresponding code must be submitted in Week 14.\nIn Week 15, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, code, parameter choices, failure analysis, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project. The oral defense and code walkthrough represent 25% of the project grade.\nFailure to participate in the oral defense will result in a zero for the oral defense and code walkthrough component.\n\n\nCalculator Policy\nYou will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.\n\n\nClassroom Policies\nDiscipline is one of the main components of your academic and professional success.\nPlease arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.\nPlease ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.\nIf you are absent for any lecture, it is your responsibility to cover the missed material."
   },
   {
-    "objectID": "syllabus.html#weekly-plan-tentative",
-    "href": "syllabus.html#weekly-plan-tentative",
+    "objectID": "syllabus.html#course-plan-tentative",
+    "href": "syllabus.html#course-plan-tentative",
     "title": "Syllabus",
-    "section": "Weekly Plan (Tentative)",
-    "text": "Weekly Plan (Tentative)\n\n\n\n\n\n\n\n\nWeek #\n\n\nTopics\n\n\n\n\n\n\n01\n\n\nImage formation models; convolution; linear systems\n\n\n\n\n02\n\n\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n\n\n03\n\n\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n\n\n04\n\n\nNoise models: Gaussian and Poisson; likelihood formulation Quiz 1 (20 minutes)\n\n\n\n\n05\n\n\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n\n\n06\n\n\nTikhonov regularization; parameter effects; bias–variance tradeoff Project assigned\n\n\n\n\n07\n\n\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n\n\n08\n\n\nTotal Variation regularization; edge preservation; comparison with ℓ2 Midterm\n\n\n\n\n09\n\n\nConvex optimization basics; gradient descent; proximal ideas\n\n\n\n\n10\n\n\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n\n\n11\n\n\nWavelets and multiscale representations; thresholding\n\n\n\n\n12\n\n\nModern computational imaging: model-based vs data-driven reconstruction Quiz 2 (20 minutes)\n\n\n\n\n13\n\n\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n\n\n14\n\n\nStability, robustness, and limitations of AI-based reconstruction Project report\n\n\n\n\n15\n\n\nProject presentations and oral defenses"
+    "section": "Course Plan (Tentative)",
+    "text": "Course Plan (Tentative)\n\n\n\n\n\n\n\n\nWeek #\n\n\nTopics\n\n\n\n\n\n\n01\n\n\nImage formation models; convolution; linear systems\n\n\n\n\n02\n\n\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n\n\n03\n\n\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n\n\n04\n\n\nNoise models: Gaussian and Poisson; likelihood formulation Quiz 1 (20 minutes)\n\n\n\n\n05\n\n\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n\n\n06\n\n\nTikhonov regularization; parameter effects; bias–variance tradeoff Project assigned\n\n\n\n\n07\n\n\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n\n\n08\n\n\nTotal Variation regularization; edge preservation; comparison with ℓ2 Midterm\n\n\n\n\n09\n\n\nConvex optimization basics; gradient descent; proximal ideas\n\n\n\n\n10\n\n\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n\n\n11\n\n\nWavelets and multiscale representations; thresholding\n\n\n\n\n12\n\n\nModern computational imaging: model-based vs data-driven reconstruction Quiz 2 (20 minutes)\n\n\n\n\n13\n\n\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n\n\n14\n\n\nStability, robustness, and limitations of AI-based reconstruction Project report\n\n\n\n\n15\n\n\nProject presentations and oral defenses"
   },
   {
-    "objectID": "syllabus.html#detailed-weekly-plan-15-weeks-tentative",
-    "href": "syllabus.html#detailed-weekly-plan-15-weeks-tentative",
+    "objectID": "syllabus.html#detailed-course-plan-15-weeks-tentative",
+    "href": "syllabus.html#detailed-course-plan-15-weeks-tentative",
     "title": "Syllabus",
-    "section": "Detailed Weekly Plan (15 Weeks, Tentative)",
-    "text": "Detailed Weekly Plan (15 Weeks, Tentative)"
+    "section": "Detailed Course Plan (15 Weeks, Tentative)",
+    "text": "Detailed Course Plan (15 Weeks, Tentative)"
   },
   {
     "objectID": "syllabus.html#week-1-introduction-to-imaging-as-a-mathematical-problem",
@@ -4676,7 +4676,7 @@
     "href": "index.html#how-to-use-this-site",
     "title": "MATH 435: Mathematical Imaging",
     "section": "How To Use This Site",
-    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nHow to prepare for class\nUse the weekly rhythm connecting book, slides, notebooks, practice, quizzes, and projects.\n\n\nUngraded weekly practice\nUse optional practice prompts connected to the notebooks.\n\n\nQuiz information\nCheck quiz timing, allowed tools, and preparation guidance.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
+    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nHow to prepare for class\nUse the class rhythm connecting book, slides, notebooks, practice, quizzes, and projects.\n\n\nUngraded practice\nUse optional practice prompts connected to the notebooks.\n\n\nQuiz information\nCheck quiz timing, allowed tools, and preparation guidance.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
   },
   {
     "objectID": "index.html#course-arc",
@@ -4697,14 +4697,14 @@
     "href": "preparation.html",
     "title": "How To Prepare For Class",
     "section": "",
-    "text": "This page gives a weekly rhythm for using the course materials. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the syllabus.\nThe course has several resources because they do different jobs:"
+    "text": "This page gives a class-by-class rhythm for using the course materials. Because the course normally meets twice in a teaching week, use this rhythm around each class meeting rather than as a calendar-week checklist. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the syllabus.\nThe course has several resources because they do different jobs:"
   },
   {
-    "objectID": "preparation.html#weekly-rhythm",
-    "href": "preparation.html#weekly-rhythm",
+    "objectID": "preparation.html#class-rhythm",
+    "href": "preparation.html#class-rhythm",
     "title": "How To Prepare For Class",
-    "section": "Weekly Rhythm",
-    "text": "Weekly Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore class\nOpen the class roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path.\nOne question you want class to answer.\n\n\nDuring class\nUse the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure.\nAnnotated notes around the main model.\n\n\nAfter class\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nWeekly consolidation\nTurn the notebook note into a short claim-evidence-limit note using the practice page.\nA study note you can reuse for quizzes, exams, and projects.\n\n\nBefore the next class\nRevisit the previous week only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
+    "section": "Class Rhythm",
+    "text": "Class Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore class\nOpen the class roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path.\nOne question you want class to answer.\n\n\nDuring class\nUse the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure.\nAnnotated notes around the main model.\n\n\nAfter class\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nBetween-class consolidation\nTurn the notebook note into a short claim-evidence-limit note using the practice page.\nA study note you can reuse for quizzes, exams, and projects.\n\n\nBefore the next class\nRevisit the previous class only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
   },
   {
     "objectID": "preparation.html#the-five-questions",
@@ -4718,21 +4718,21 @@
     "href": "preparation.html#a-minimal-30-minute-preparation",
     "title": "How To Prepare For Class",
     "section": "A Minimal 30-Minute Preparation",
-    "text": "A Minimal 30-Minute Preparation\nWhen time is short before class:\n\nRead the first page or introduction of the book chapter.\nLook at the timing slide in the weekly deck.\nFind the main formula or model.\nWrite one question about what the model assumes.\nCheck whether the week has a quiz, project milestone, or special constraint.\n\nThis is enough to enter the class discussion without treating the materials as a pile of disconnected files."
+    "text": "A Minimal 30-Minute Preparation\nWhen time is short before class:\n\nRead the first page or introduction of the book chapter.\nLook at the timing slide in the corresponding deck.\nFind the main formula or model.\nWrite one question about what the model assumes.\nCheck whether the class unit has a quiz, project milestone, or special constraint.\n\nThis is enough to enter the class discussion without treating the materials as a pile of disconnected files."
   },
   {
     "objectID": "preparation.html#quiz-weeks",
     "href": "preparation.html#quiz-weeks",
     "title": "How To Prepare For Class",
     "section": "Quiz Weeks",
-    "text": "Quiz Weeks\nWeeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:\n\nuse the quiz information page to check timing and permitted tools;\nreview the weekly practice prompts from the preceding material;\nfocus on explaining concepts and models without code;\nremember that only a basic calculator is permitted unless the instructor explicitly announces a change.\n\nActual quiz questions and solution keys are not published on this website before the quizzes."
+    "text": "Quiz Weeks\nWeeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:\n\nuse the quiz information page to check timing and permitted tools;\nreview the practice prompts from the preceding material;\nfocus on explaining concepts and models without code;\nremember that only a basic calculator is permitted unless the instructor explicitly announces a change.\n\nActual quiz questions and solution keys are not published on this website before the quizzes."
   },
   {
     "objectID": "preparation.html#project-weeks",
     "href": "preparation.html#project-weeks",
     "title": "How To Prepare For Class",
     "section": "Project Weeks",
-    "text": "Project Weeks\nThe project should grow from the same weekly rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
+    "text": "Project Weeks\nThe project should grow from the same class rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
   },
   {
     "objectID": "preparation.html#llm-use-while-studying",
@@ -4751,51 +4751,51 @@
   {
     "objectID": "practice.html",
     "href": "practice.html",
-    "title": "Ungraded Weekly Practice",
+    "title": "Ungraded Practice",
     "section": "",
-    "text": "This page gives optional weekly practice prompts connected to the book, slides, and notebooks.\nThe purpose is to help students keep a running record of the central habit of the course:\nStudents may keep these notes privately, use them while studying, or bring questions from them to class."
+    "text": "This page gives optional practice prompts connected to the book, slides, and notebooks.\nThe purpose is to help students keep a running record of the central habit of the course:\nStudents may keep these notes privately, use them while studying, or bring questions from them to class."
   },
   {
     "objectID": "practice.html#how-to-use-this-page",
     "href": "practice.html#how-to-use-this-page",
-    "title": "Ungraded Weekly Practice",
+    "title": "Ungraded Practice",
     "section": "How To Use This Page",
-    "text": "How To Use This Page\nFor each week:\n\nread the connected book chapter;\nattend class and use the slide deck as the discussion structure;\nrun the notebook in Python or Google Colab;\nwrite a short four-thread or claim-evidence-limit note for yourself.\n\nThe notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.\nFor the full weekly workflow connecting book, slides, notebooks, and these practice notes, see How To Prepare For Class."
+    "text": "How To Use This Page\nFor each class unit:\n\nread the connected book chapter;\nattend class and use the slide deck as the discussion structure;\nrun the notebook in Python or Google Colab;\nwrite a short four-thread or claim-evidence-limit note for yourself.\n\nThe notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.\nFor the full class workflow connecting book, slides, notebooks, and these practice notes, see How To Prepare For Class."
   },
   {
     "objectID": "practice.html#claim-evidence-limit-template",
     "href": "practice.html#claim-evidence-limit-template",
-    "title": "Ungraded Weekly Practice",
+    "title": "Ungraded Practice",
     "section": "Claim-Evidence-Limit Template",
     "text": "Claim-Evidence-Limit Template\nUse this short format when a notebook or class discussion produces a reconstruction result.\nClaim:\n\nEvidence:\n\nModel assumption:\n\nLimit or failure case:\nExample:\n\n\n\n\n\n\n\nItem\nExample\n\n\n\n\nClaim\nTV denoising keeps the main edge sharper than quadratic smoothing.\n\n\nEvidence\nGradient maps and edge contrast stay high across three TV weights.\n\n\nModel assumption\nThe image is approximately piecewise smooth.\n\n\nLimit or failure case\nTV creates staircasing on smooth intensity ramps."
   },
   {
     "objectID": "practice.html#four-thread-notebook-note",
     "href": "practice.html#four-thread-notebook-note",
-    "title": "Ungraded Weekly Practice",
+    "title": "Ungraded Practice",
     "section": "Four-Thread Notebook Note",
-    "text": "Four-Thread Notebook Note\nEach weekly notebook ends with a short four-thread note. It is the same habit in a slightly more structured form:\n\n\n\n\n\n\n\nThread\nQuestion\n\n\n\n\nMeasurement\nWhat did the data record?\n\n\nPrior\nWhat assumption, regularizer, denoiser, or learned information entered?\n\n\nComputation\nWhat algorithm, update, transform, or learned map produced the result?\n\n\nEvidence\nWhat output, residual, metric, sweep, or failure case supports the claim?"
+    "text": "Four-Thread Notebook Note\nEach notebook ends with a short four-thread note. It is the same habit in a slightly more structured form:\n\n\n\n\n\n\n\nThread\nQuestion\n\n\n\n\nMeasurement\nWhat did the data record?\n\n\nPrior\nWhat assumption, regularizer, denoiser, or learned information entered?\n\n\nComputation\nWhat algorithm, update, transform, or learned map produced the result?\n\n\nEvidence\nWhat output, residual, metric, sweep, or failure case supports the claim?"
   },
   {
-    "objectID": "practice.html#weekly-practice-guide",
-    "href": "practice.html#weekly-practice-guide",
-    "title": "Ungraded Weekly Practice",
-    "section": "Weekly Practice Guide",
-    "text": "Weekly Practice Guide\n\n\n\nWeek\nTopic\nUngraded Practice\nNotebook Focus\nUseful Links\n\n\n\n\n1\nImages as mathematical objects\nFill the four-thread note for a masked image: observation, missing information, vectorization, and one unsupported claim.\nFrom Scene to Data\nbook, slides, notebook, Colab\n\n\n2\nConvolution and blur\nFill the four-thread note for blur: observed data, convolution assumption, inverse filtering, and instability evidence.\nBlur as a Forward Model\nbook, slides, notebook, Colab\n\n\n3\nFourier transform in imaging\nFill the four-thread note for Fourier deblurring: measured spectrum, regularized frequencies, FFT computation, and artifacts.\nFourier Projection and Stability\nbook, slides, notebook, Colab\n\n\n4\nNoise models and likelihoods\nFill the four-thread note for likelihood: noise model, missing prior, simulation or averaging, and one limit of repeated measurements.\nLikelihood as Data Evidence\nbook, slides, notebook, Colab\n\n\n5\nIll-posed inverse problems\nFill the four-thread note for SVD directions: measurement, stability rule, truncated inverse, and trustworthy versus unstable directions.\nDirections and Evidence\nbook, slides, notebook, Colab\n\n\n6\nTikhonov regularization\nFill the four-thread note for Tikhonov: observation, lambda prior, filtering computation, and observable diagnostics without ground truth.\nChoosing Lambda Without the Truth\nbook, slides, notebook, Colab\n\n\n7\nVariational formulation\nFill the four-thread note for one energy: data term, regularizer, descent computation, and what energy decrease proves.\nEnergy as an Audit Trail\nbook, slides, notebook, Colab\n\n\n8\nTotal Variation regularization\nFill the four-thread note for TV: noisy data, sparse-gradient prior, denoising sweep, and one staircasing or edge-preservation claim.\nEdge Preservation Is Not Proof\nbook, slides, notebook, Colab\n\n\n9\nOptimization methods\nFill the four-thread note for ISTA: data step, sparse prior, update rule, and convergence evidence beyond the final image.\nOptimization Diagnostics\nbook, slides, notebook, Colab\n\n\n10\nSparse reconstruction\nFill the four-thread note for sparse DCT reconstruction and design one representation-mismatch example.\nRepresentation Mismatch\nbook, slides, notebook, Colab\n\n\n11\nWavelets and multiscale representation\nFill the four-thread note for wavelet denoising: task, wavelet prior, thresholding step, and one lost detail.\nFourier, Wavelets, and Energy\nbook, slides, notebook, Colab\n\n\n12\nModel-based vs data-driven imaging\nFill the four-thread note for learned PCA denoising and test one distribution shift.\nTraining Data as a Prior\nbook, slides, notebook, Colab\n\n\n13\nPlug-and-play and learned regularization\nFill the four-thread note for PnP, including residual, fixed-point change, denoiser prior, and failure case.\nImplicit Prior Strength\nbook, slides, notebook, Colab\n\n\n14\nStability, robustness, and ethics\nTurn one four-thread note into three project-style claims with evidence and limitations.\nFrom Notebook to Project Defense\nbook, slides, notebook, Colab\n\n\n15\nProject presentations and oral defenses\nReview the model, code, evidence, limitations, and LLM-use statement for the final project.\nNot applicable\nproject page, syllabus"
+    "objectID": "practice.html#practice-guide",
+    "href": "practice.html#practice-guide",
+    "title": "Ungraded Practice",
+    "section": "Practice Guide",
+    "text": "Practice Guide\n\n\n\nWeek\nTopic\nUngraded Practice\nNotebook Focus\nUseful Links\n\n\n\n\n1\nImages as mathematical objects\nFill the four-thread note for a masked image: observation, missing information, vectorization, and one unsupported claim.\nFrom Scene to Data\nbook, slides, notebook, Colab\n\n\n2\nConvolution and blur\nFill the four-thread note for blur: observed data, convolution assumption, inverse filtering, and instability evidence.\nBlur as a Forward Model\nbook, slides, notebook, Colab\n\n\n3\nFourier transform in imaging\nFill the four-thread note for Fourier deblurring: measured spectrum, regularized frequencies, FFT computation, and artifacts.\nFourier Projection and Stability\nbook, slides, notebook, Colab\n\n\n4\nNoise models and likelihoods\nFill the four-thread note for likelihood: noise model, missing prior, simulation or averaging, and one limit of repeated measurements.\nLikelihood as Data Evidence\nbook, slides, notebook, Colab\n\n\n5\nIll-posed inverse problems\nFill the four-thread note for SVD directions: measurement, stability rule, truncated inverse, and trustworthy versus unstable directions.\nDirections and Evidence\nbook, slides, notebook, Colab\n\n\n6\nTikhonov regularization\nFill the four-thread note for Tikhonov: observation, lambda prior, filtering computation, and observable diagnostics without ground truth.\nChoosing Lambda Without the Truth\nbook, slides, notebook, Colab\n\n\n7\nVariational formulation\nFill the four-thread note for one energy: data term, regularizer, descent computation, and what energy decrease proves.\nEnergy as an Audit Trail\nbook, slides, notebook, Colab\n\n\n8\nTotal Variation regularization\nFill the four-thread note for TV: noisy data, sparse-gradient prior, denoising sweep, and one staircasing or edge-preservation claim.\nEdge Preservation Is Not Proof\nbook, slides, notebook, Colab\n\n\n9\nOptimization methods\nFill the four-thread note for ISTA: data step, sparse prior, update rule, and convergence evidence beyond the final image.\nOptimization Diagnostics\nbook, slides, notebook, Colab\n\n\n10\nSparse reconstruction\nFill the four-thread note for sparse DCT reconstruction and design one representation-mismatch example.\nRepresentation Mismatch\nbook, slides, notebook, Colab\n\n\n11\nWavelets and multiscale representation\nFill the four-thread note for wavelet denoising: task, wavelet prior, thresholding step, and one lost detail.\nFourier, Wavelets, and Energy\nbook, slides, notebook, Colab\n\n\n12\nModel-based vs data-driven imaging\nFill the four-thread note for learned PCA denoising and test one distribution shift.\nTraining Data as a Prior\nbook, slides, notebook, Colab\n\n\n13\nPlug-and-play and learned regularization\nFill the four-thread note for PnP, including residual, fixed-point change, denoiser prior, and failure case.\nImplicit Prior Strength\nbook, slides, notebook, Colab\n\n\n14\nStability, robustness, and ethics\nTurn one four-thread note into three project-style claims with evidence and limitations.\nFrom Notebook to Project Defense\nbook, slides, notebook, Colab\n\n\n15\nProject presentations and oral defenses\nReview the model, code, evidence, limitations, and LLM-use statement for the final project.\nNot applicable\nproject page, syllabus"
   },
   {
     "objectID": "practice.html#project-preparation-guide",
     "href": "practice.html#project-preparation-guide",
-    "title": "Ungraded Weekly Practice",
+    "title": "Ungraded Practice",
     "section": "Project Preparation Guide",
     "text": "Project Preparation Guide\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project notes below are study and planning aids for the final modeling project described on the project page; they do not create additional graded items.\n\n\n\n\n\n\n\nWeek\nPlanning Aid\n\n\n\n\n6\nPrepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of x, y, and the forward process.\n\n\n7\nRefine the model statement, data access, and implementation choices after feedback.\n\n\n8\nMake sure the notebook can generate or load data and run a simple baseline.\n\n\n10\nCheck that both methods run on the same test cases.\n\n\n12\nAdd one parameter sweep, one metric, and one robustness or failure test.\n\n\n14\nPrepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations."
   },
   {
     "objectID": "practice.html#grading-boundary",
     "href": "practice.html#grading-boundary",
-    "title": "Ungraded Weekly Practice",
+    "title": "Ungraded Practice",
     "section": "Grading Boundary",
-    "text": "Grading Boundary\nThis page does not modify the syllabus.\nFormal grading is based on the grading categories and policies stated in the syllabus, together with any explicit instructor announcements. Weekly practice notes are meant to support learning and project preparation; they are not an additional hidden assessment."
+    "text": "Grading Boundary\nThis page does not modify the syllabus.\nFormal grading is based on the grading categories and policies stated in the syllabus, together with any explicit instructor announcements. Practice notes are meant to support learning and project preparation; they are not an additional hidden assessment."
   },
   {
     "objectID": "book/index.html",
@@ -4813,7 +4813,7 @@
     "href": "book/index.html#how-to-use-this-book",
     "title": "Mathematical Imaging",
     "section": "How To Use This Book",
-    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The preparation rhythm gives the weekly sequence that connects these resources.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat prior, regularizer, or learned information is being used?\nWhat can go wrong?\n\nThe same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.",
+    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The preparation rhythm gives the class-by-class sequence that connects these resources.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat prior, regularizer, or learned information is being used?\nWhat can go wrong?\n\nThe same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.",
     "crumbs": [
       "Book",
       "Book home"
@@ -6715,7 +6715,7 @@
     "href": "classes.html",
     "title": "Class Roadmap",
     "section": "",
-    "text": "This page is the weekly entry point for the course.\nMost slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each week as a checklist. The preparation rhythm explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.\nWeekly practice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus.\nQuiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long. See the quiz information page for student-facing logistics and preparation guidance."
+    "text": "This page is the class-material entry point for the course. Because the course normally meets twice in a teaching week, the guidance below is organized by class unit rather than by calendar week.\nMost slide decks organize 75-minute class meetings. Weeks 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each row as a resource checklist. The preparation rhythm explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.\nPractice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus.\nQuiz 1 takes place in Week 4 and Quiz 2 takes place in Week 12. Each quiz is 20 minutes long. See the quiz information page for student-facing logistics and preparation guidance."
   },
   {
     "objectID": "classes.html#at-a-glance",
@@ -6725,11 +6725,11 @@
     "text": "At a Glance\n\n\n\nWeek\nTopic\nSlides\nNotebook\nBook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\nchapter\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\nchapter\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\nchapter\n\n\n4\nNoise models and likelihoods + Quiz 1\nslides\nnotebook / Colab\nchapter\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\nchapter\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab\nchapter\n\n\n7\nVariational formulation\nslides\nnotebook / Colab\nchapter\n\n\n8\nTotal Variation regularization\nslides\nnotebook / Colab\nchapter\n\n\n9\nOptimization methods\nslides\nnotebook / Colab\nchapter\n\n\n10\nSparse reconstruction\nslides\nnotebook / Colab\nchapter\n\n\n11\nWavelets and multiscale representation\nslides\nnotebook / Colab\nchapter\n\n\n12\nModel-based vs data-driven imaging + Quiz 2\nslides\nnotebook / Colab\nchapter\n\n\n13\nPlug-and-play and learned regularization\nslides\nnotebook / Colab\nchapter\n\n\n14\nStability, robustness, and ethics\nslides\nnotebook / Colab\nchapter\n\n\n15\nProject presentations and oral defenses\nproject page\n-\n-"
   },
   {
-    "objectID": "classes.html#weekly-work-plan",
-    "href": "classes.html#weekly-work-plan",
+    "objectID": "classes.html#work-plan",
+    "href": "classes.html#work-plan",
     "title": "Class Roadmap",
-    "section": "Weekly Work Plan",
-    "text": "Weekly Work Plan\n\n\n\n\n\n\n\n\n\n\n\nWeek\nBefore Class\nIn Class\nAfter Class\nUngraded Practice Note\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the Week 1 notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the Week 2 notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the Week 3 notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes).\nRun the Week 4 notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the Week 5 notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the Week 6 notebook and sweep lambda.\nDraft or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the Week 7 notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the Week 8 notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the Week 9 notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the Week 10 notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the Week 11 notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes).\nRun the Week 12 notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the Week 13 notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the Week 14 notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
+    "section": "Work Plan",
+    "text": "Work Plan\n\n\n\n\n\n\n\n\n\n\n\nWeek\nBefore Class\nIn Class\nAfter Class\nUngraded Practice Note\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the Week 1 notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the Week 2 notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the Week 3 notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes).\nRun the Week 4 notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the Week 5 notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the Week 6 notebook and sweep lambda.\nDraft or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the Week 7 notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the Week 8 notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the Week 9 notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the Week 10 notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the Week 11 notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes).\nRun the Week 12 notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the Week 13 notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the Week 14 notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
   },
   {
     "objectID": "classes.html#project-preparation-guide",
@@ -7030,7 +7030,7 @@
     "href": "slides/week-02-convolution-blur.html#after-class",
     "title": "Convolution and Blur",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#next-time",
@@ -7380,7 +7380,7 @@
     "href": "slides/week-04-noise-likelihood.html#after-class",
     "title": "Noise Models and Likelihoods",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the Week 4 notebook and change Gaussian sigma or Poisson peak_photons.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the Week 4 notebook and change Gaussian sigma or Poisson peak_photons.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#opening-question",
@@ -7695,7 +7695,7 @@
     "href": "slides/week-06-tikhonov-regularization.html#after-class",
     "title": "Tikhonov Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#next-time",
@@ -7975,7 +7975,7 @@
     "href": "slides/week-08-total-variation.html#after-class",
     "title": "Total Variation Regularization",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-08-total-variation.html#next-time",
@@ -8276,7 +8276,7 @@
     "href": "slides/week-10-sparse-reconstruction.html#after-class",
     "title": "Sparse Reconstruction",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 10 of the book to connect l1 geometry with representation-dependent priors.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 10 of the book to connect l1 geometry with representation-dependent priors.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#next-time",
@@ -8598,7 +8598,7 @@
     "href": "slides/week-12-model-data.html#after-class",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 12 of the book for the model-based/data-driven comparison.\nRun the Week 12 notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 12 of the book for the model-based/data-driven comparison.\nRun the Week 12 notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#opening-question",
@@ -8920,7 +8920,7 @@
     "href": "slides/week-14-stability-robustness-ethics.html#after-class",
     "title": "Stability, Robustness, and Ethics",
     "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and weekly practice prompt.\nUse Chapter 14 of the book as the reliability checklist for projects.\nRun the week notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 14 of the book as the reliability checklist for projects.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#next-time",
