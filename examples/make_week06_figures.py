@@ -132,7 +132,8 @@ def make_filter_factors(path: Path) -> None:
     singular_values = np.linalg.svd(matrix, compute_uv=False)
     lambdas = [1e-6, 1e-4, 1e-2, 1e-1]
 
-    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.4), dpi=150)
+    fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.8), dpi=150)
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.84, bottom=0.25, wspace=0.24)
     axes[0].semilogy(singular_values, color="#24536b", linewidth=2.5)
     axes[0].set_title("singular values", fontsize=15, color="#1f4f63", pad=9)
     axes[0].set_xlabel("index")
@@ -149,7 +150,7 @@ def make_filter_factors(path: Path) -> None:
     axes[1].legend(frameon=False)
     fig.text(
         0.5,
-        0.015,
+        0.055,
         "Tikhonov replaces explosive division by a damped inverse",
         ha="center",
         fontsize=13,
