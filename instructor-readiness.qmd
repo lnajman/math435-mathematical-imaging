@@ -9,21 +9,50 @@ This page is an instructor maintenance aid. It is rendered for convenience, but 
 
 ## Current Readiness
 
-Last live smoke test: July 6, 2026.
+Last live smoke test: July 8, 2026.
 
 | Area | Status | Evidence |
 |---|---|---|
 | Public entry path | Ready | Home, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site. |
+| Weekly structure | Ready | The roadmap is organized as fifteen weekly modules. Each module has one book chapter, one slide deck, one notebook, and two planned 75-minute sessions. |
+| Slide structure | Ready | All fourteen teaching decks use Week labels, a two-session plan, and explicit Session 1 / Session 2 divider slides. |
+| Slide fit | Ready | The slide-fit audit passed after the two-session reorganization. All audited slides fit within the slide frame. |
 | Representative course paths | Ready | Weeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links. |
 | Colab access | Ready | All fourteen Google Colab notebook links returned HTTP 200. |
+| Quiz logistics | Ready | Quiz 1 is planned for the final 20 minutes of the second meeting of Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting of Week 12. |
+| Project boundary | Ready | The project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade. |
 | Grading boundary | Ready | Live pages state that the syllabus is authoritative and that practice notes are not separate graded assignments. |
-| Quiz logistics | Ready | Live quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long. |
-| Project boundary | Ready | Live project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade. |
-| Course arc | Ready | Home, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language. |
+| Academic calendar | Needs confirmation | The working plan assumes classes from August 28 to December 18, 2026, twice per week. This gives about 32 or 33 meetings before holidays, depending on meeting days. Official holidays and exact meeting days still need confirmation. |
+
+## Planning Model
+
+The course should be maintained as a weekly course, not as a list of isolated class meetings:
+
+- one weekly topic;
+- two 75-minute meetings;
+- one weekly slide deck;
+- one weekly notebook;
+- one book chapter;
+- one practice thread.
+
+The notebook is part of the weekly activity load. When judging whether a deck is paced correctly, count notebook and code-reference slides as part of the session plan, even though they are not pure lecture slides.
+
+## Pacing Targets
+
+| Week Type | Target Total Slides | Notes |
+|---|---:|---|
+| Normal two-session week | 38-48 slides | This includes title, plan, session dividers, activities, notebook/code slides, checkpoints, and next-week slides. |
+| Quiz week | 34-40 slides | The final 20 minutes of Session 2 are reserved for the quiz, so the teaching portion should be leaner. |
+| Heavy derivation week | 32-42 slides | Leave time for board work, student questions, and pauses in the derivation. |
+| Project-focused week | 30-40 slides | Leave time for project discussion, model checks, and oral-defense preparation. |
+
+If a normal weekly deck has more than about 48 slides, first mark slides as optional or backup rather than deleting useful material. The instructor-facing decision is: what must be covered live, what can become a notebook prompt, and what can remain as review material.
 
 ## Before The Semester
 
-- [ ] Confirm official semester dates, room, calendar exceptions, and university policy language in the syllabus.
+- [ ] Confirm official semester dates, exact meeting days, room, holidays, and university policy language in the syllabus.
+- [ ] Check whether the August 28 to December 18, 2026 calendar gives 32 or 33 scheduled meetings for the assigned class days.
+- [ ] Decide how holidays or missed meetings map onto the fifteen-week roadmap.
 - [ ] Review the syllabus grading table against the official course record.
 - [ ] Confirm that quiz timing and permitted tools match what will be announced in class.
 - [ ] Open the Week 1 notebook from Colab using a student-like browser session.
@@ -31,13 +60,31 @@ Last live smoke test: July 6, 2026.
 - [ ] Read the final project page end to end and confirm the project rubric language.
 - [ ] Decide whether this readiness page should remain unlinked or be moved to private notes.
 
-## Before Each Class
+## Before Each Week
 
-- [ ] Open the weekly roadmap for the week.
+- [ ] Open the [weekly roadmap](classes.qmd) for the week.
 - [ ] Check the corresponding book chapter, slide deck, notebook, and Colab link.
-- [ ] Run the notebook if code or dependencies changed.
+- [ ] Confirm that the slide deck has a useful two-session plan.
+- [ ] Decide which slides are core, optional, or backup.
+- [ ] Run the notebook if code, data, figures, or dependencies changed.
+- [ ] Choose one notebook result or parameter change for live discussion.
 - [ ] Check whether the week has a quiz, project milestone, or special timing constraint.
-- [ ] Decide which notebook result should become the main in-class discussion point.
+- [ ] Identify one failure case or limitation students should be able to explain.
+
+## Before Session 1
+
+- [ ] Open the deck at the beginning and verify the Session 1 target.
+- [ ] Choose the main board derivation, diagram, or conceptual discussion.
+- [ ] Decide where to pause for student prediction or discussion.
+- [ ] Keep enough time to reach the Session 1 stopping point without rushing the central model.
+
+## Before Session 2
+
+- [ ] Open the deck at the Session 2 divider.
+- [ ] Confirm the notebook activity, code demonstration, or project discussion point.
+- [ ] Decide which content can be skipped if the notebook discussion takes longer than expected.
+- [ ] For Week 4 and Week 12, reserve the final 20 minutes for the quiz.
+- [ ] End with the checkpoint or practice thread that students should carry forward.
 
 ## When Editing The Site
 
@@ -68,9 +115,10 @@ These items need human judgment, not only automated checks.
 
 - [ ] Does the home page express the course vision clearly enough for students?
 - [ ] Do the first two weeks make the inverse-problem viewpoint concrete?
-- [ ] Are the quiz weeks paced realistically for 55 minutes of teaching plus a 20-minute quiz?
+- [ ] Do the two-session slide decks leave enough time for notebook discussion?
+- [ ] Are Week 4 and Week 12 realistically paced for the quiz weeks?
 - [ ] Are the project expectations ambitious enough but still feasible with LLM assistance?
-- [ ] Do the book chapters have enough prose for students who miss a class?
+- [ ] Do the book chapters have enough prose for students who miss one of the two weekly sessions?
 - [ ] Are examples and images appropriate for Khalifa University students and course policies?
 
 ## Boundary Reminder
