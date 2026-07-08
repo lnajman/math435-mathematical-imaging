@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week12_model_data.ipynb`
 - Practice: `practice.qmd`, Week 12
 
-## Class Purpose
+## Week Purpose
 
 Week 12 is the explicit turn toward neural networks and learned methods. Keep the central identity visible:
 
@@ -17,18 +17,14 @@ neural imaging = inverse problems + learned image models
 
 Students should understand that learned methods do not remove assumptions. They move many assumptions into training data, architecture, loss, and optimization.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall wavelets as handcrafted representations. Ask what could be learned instead. |
-| 8-20 min | Model-based reconstruction: explicit forward model, data term, regularizer. |
-| 20-32 min | Data-driven reconstruction: learned map $f_\theta(y)$. |
-| 32-42 min | Training data as a prior. Architecture and loss as assumptions. |
-| 42-54 min | Patch PCA as a small learned prior. |
-| 54-64 min | Capacity and generalization. Too little, too much, and distribution shift. |
-| 64-72 min | Notebook distribution-shift experiment. |
-| 72-75 min | Exit question: what did the training set teach the method to expect? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall wavelets as handcrafted representations; compare model-based and data-driven imaging; introduce learned inverse maps and neural operators. |
+| Between sessions | Ask students where the prior went in $\hat{x}=f_\theta(y)$. |
+| Session 2 | Training data as a prior; patch PCA; capacity and distribution shift; notebook shift experiment; reserve final 20 minutes for Quiz 2. |
+| After Session 2 | End with the question: what did the training set teach the method to expect? |
 
 ## Discussion Pauses
 
@@ -112,7 +108,7 @@ If the notebook or internet fails:
 - compare model-based and data-driven assumptions in a two-column table;
 - discuss one distribution-shift example verbally, such as natural photos versus microscopy.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

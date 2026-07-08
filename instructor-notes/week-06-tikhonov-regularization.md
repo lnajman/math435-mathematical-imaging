@@ -8,7 +8,7 @@ Student-facing materials:
 - Practice: `practice.qmd`, Week 6
 - Project: `project/index.qmd`
 
-## Class Purpose
+## Week Purpose
 
 Week 6 gives the first complete regularized reconstruction model:
 
@@ -18,18 +18,14 @@ fit the data, but control unstable or implausible image directions
 
 It also anchors the project proposal moment. Keep the grading boundary clear: the assessed project requirements are the ones in the syllabus and project page.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall Week 5: small singular values make naive inversion unstable. |
-| 8-20 min | Introduce Tikhonov as data fit plus penalty. |
-| 20-32 min | Derive normal equations for the simplest case. |
-| 32-44 min | Singular-value filter view: how $\lambda$ damps weak directions. |
-| 44-55 min | Choosing $\lambda$: residual, norm, L-curve intuition, and no free truth. |
-| 55-65 min | Notebook sweep over $\lambda$. Discuss under- and over-regularization. |
-| 65-72 min | Project proposal bridge: topic, data, forward model, baseline, reliability question. |
-| 72-75 min | Exit question: what prior does Tikhonov add? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall small singular values; introduce Tikhonov as data fit plus penalty; derive normal equations and closed form. |
+| Between sessions | Ask students to state what prior Tikhonov adds before seeing the SVD view. |
+| Session 2 | SVD filter factors; choosing $\lambda$; notebook sweep; bias-stability tradeoff; project proposal bridge. |
+| After Session 2 | End with the question: what prior does Tikhonov add, and what does it trade away? |
 
 ## Discussion Pauses
 
@@ -109,7 +105,7 @@ Use the last ten minutes to remind students that a project proposal should ident
 - second method for comparison;
 - one reliability or failure question.
 
-Do not add extra grading rules in class. Point to the syllabus and project page as the authority.
+Do not add extra grading rules live. Point to the syllabus and project page as the authority.
 
 ## Common Misconceptions
 
@@ -127,7 +123,7 @@ If the notebook or internet fails:
 - use the SVD filter factor to explain the role of $\lambda$;
 - discuss project proposals orally with the $x,y,A$ template.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

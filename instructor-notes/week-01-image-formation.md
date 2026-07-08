@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week01_image_formation.ipynb`
 - Practice: `practice.qmd`, Week 1
 
-## Class Purpose
+## Week Purpose
 
 The goal is to establish the central language of the course before any technical machinery appears:
 
@@ -17,18 +17,14 @@ unknown image x -> forward process -> observed data y
 
 Students should leave understanding that an image is not only a picture. It is a function, an array, and often a vector. They should also understand that missing recorded pixels are not the same as hidden scene content.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Opening question: what is an image mathematically? Let students give visual, physical, and numerical answers. |
-| 8-18 min | Images as arrays/functions/vectors. Keep notation light but precise. |
-| 18-28 min | Vectorize a small array by hand. Make students predict the vector before showing the convention. |
-| 28-40 min | Real image as data. Show pixel values and crop; stress that the display is not the object itself. |
-| 40-55 min | Introduce the forward model $y=Ax+\eta$ and the masking example. |
-| 55-65 min | Discuss masking versus occlusion. This is the important conceptual pause. |
-| 65-72 min | Five modeling questions: unknown, data, forward process, missing information, prior. |
-| 72-75 min | Exit question: what can never be recovered from the data alone? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Opening question; images as functions, arrays, and vectors; vectorization by hand; real image as data. |
+| Between sessions | Ask students to identify $x$, $y$, and a possible forward process in one imaging example. |
+| Session 2 | Forward model $y=Ax+\eta$; masking matrix; masking versus occlusion; five modeling questions; notebook mask parameter change. |
+| After Session 2 | End with the question: what can never be recovered from the data alone? |
 
 ## Discussion Pauses
 
@@ -71,7 +67,7 @@ A records some information and discards other information.
 
 ## Live Notebook Plan
 
-Run only the sections that make the concept visible. Do not try to execute every cell in class.
+Run only the sections that make the concept visible. Do not try to execute every cell live.
 
 Recommended live sequence:
 
@@ -105,13 +101,12 @@ If the notebook or internet fails:
 
 No live code is essential for Week 1. The core concept is representational: image, vector, data, forward process, missing information.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask students to write one sentence:
 
 ```text
-In today's example, x is ..., y is ..., and A does ...
+In this week's example, x is ..., y is ..., and A does ...
 ```
 
 This is not collected as a graded item. It sets the habit they will reuse every week.
-

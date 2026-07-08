@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week13_plug_and_play.ipynb`
 - Practice: `practice.qmd`, Week 13
 
-## Class Purpose
+## Week Purpose
 
 Week 13 shows how learned or handcrafted denoisers can enter an inverse-problem algorithm:
 
@@ -17,18 +17,14 @@ data-consistency step + denoiser step -> plug-and-play reconstruction
 
 This is one of the clearest places where neural imaging becomes a continuation of inverse problems rather than a separate topic.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall proximal methods: data step followed by prior step. |
-| 8-20 min | Proximal gradient and why a proximal map behaves like a denoiser. |
-| 20-32 min | Replace the proximal map by a denoiser $D_\sigma$. |
-| 32-44 min | Data consistency: why the forward model remains inside the loop. |
-| 44-54 min | Fixed points and convergence diagnostics. |
-| 54-64 min | Notebook deblurring comparison: Tikhonov, Gaussian PnP, learned PnP. |
-| 64-72 min | Strength tradeoff and failure modes. |
-| 72-75 min | Exit question: what does convergence prove and not prove? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall proximal methods; denoising interpretation; replace proximal map by $D_\sigma$; keep data consistency in the loop. |
+| Between sessions | Ask students what is still model-based and what is no longer classical. |
+| Session 2 | Learned regularization; fixed points and convergence diagnostics; notebook deblurring comparison; strength tradeoff and failure modes. |
+| After Session 2 | End with the question: what does convergence prove and not prove? |
 
 ## Discussion Pauses
 
@@ -114,7 +110,7 @@ If the notebook or internet fails:
 - compare two imaginary denoisers: weak and strong;
 - discuss data residual versus visual plausibility.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

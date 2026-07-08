@@ -8,7 +8,7 @@ Important visibility note: the course repository is public on GitHub. These file
 
 Each teaching note includes:
 
-- a 75-minute teaching rhythm;
+- a weekly two-session teaching rhythm;
 - suggested pauses for student discussion;
 - board derivations to do by hand;
 - notebook cells or sections to run live;
@@ -19,13 +19,26 @@ The notes are meant to support class flow, not to create additional graded work.
 
 ## Practical Pacing Rules
 
-Treat each teaching note as a menu, not a checklist to exhaust. For most classes, protect three things:
+Treat each teaching note as a menu, not a checklist to exhaust. Each weekly note assumes two 75-minute meetings. For most weeks, protect three things:
 
 1. the central modeling sentence for the week;
 2. one board derivation that students can follow by hand;
 3. one live notebook experiment with a parameter change.
 
 If time is short, cut extra live-code cells before cutting discussion of assumptions, failure modes, or evidence. The recurring goal is not to show every figure; it is to help students ask what the data support, what the model assumes, and where the reconstruction can fail.
+
+The notebook is part of the weekly class activity, not an extra afterthought. When judging pacing, count notebook and code-reference slides inside the weekly slide budget.
+
+Useful slide-count targets:
+
+| Week Type | Target Total Slides |
+|---|---:|
+| Normal two-session week | 38-48 |
+| Quiz week | 34-40 |
+| Heavy derivation week | 32-42 |
+| Project-focused week | 30-40 |
+
+For Week 4 and Week 12, reserve the final 20 minutes of Session 2 for the quiz.
 
 ## Current Files
 

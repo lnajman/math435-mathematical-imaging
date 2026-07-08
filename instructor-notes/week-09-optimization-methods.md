@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week09_optimization_methods.ipynb`
 - Practice: `practice.qmd`, Week 9
 
-## Class Purpose
+## Week Purpose
 
 Week 9 separates the model from the algorithm:
 
@@ -17,18 +17,14 @@ the energy says what we want; the optimization method says how we compute it
 
 Students should learn to report convergence evidence, not only final images.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall variational models and TV. Ask why minimization is not automatic. |
-| 8-20 min | Gradient descent for smooth energies. Step size and descent. |
-| 20-32 min | Failure from too-large step size. |
-| 32-44 min | Proximal step idea for nonsmooth terms. |
-| 44-56 min | Soft thresholding and ISTA as a sparse example. |
-| 56-66 min | Notebook convergence curves: energy, residual, change. |
-| 66-72 min | What to report in projects when ground truth is unavailable. |
-| 72-75 min | Exit question: what evidence says an iteration has stabilized? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall variational models; convexity; gradient descent for smooth energies; step size and failure from too-large steps. |
+| Between sessions | Ask students to identify what should be monitored besides the final image. |
+| Session 2 | Nonsmooth penalties; proximal step idea; soft thresholding; ISTA; notebook convergence curves. |
+| After Session 2 | End with the question: what evidence says an iteration has stabilized? |
 
 ## Discussion Pauses
 
@@ -109,7 +105,7 @@ If the notebook or internet fails:
 - draw an energy curve that decreases and one that oscillates;
 - connect proximal splitting to data/prior alternation.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

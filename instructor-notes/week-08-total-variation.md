@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week08_total_variation.ipynb`
 - Practice: `practice.qmd`, Week 8
 
-## Class Purpose
+## Week Purpose
 
 Week 8 introduces the first major nonquadratic prior:
 
@@ -15,20 +15,16 @@ Week 8 introduces the first major nonquadratic prior:
 prefer images with sparse gradients, not necessarily small gradients
 ```
 
-The class should make the difference between smoothing and edge preservation visible. TV is powerful, but not magic: it can preserve edges and also create staircasing.
+The week should make the difference between smoothing and edge preservation visible. TV is powerful, but not magic: it can preserve edges and also create staircasing.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall variational form. Ask what quadratic smoothness does to edges. |
-| 8-18 min | Image gradients and edge maps. |
-| 18-30 min | Quadratic gradient penalty versus TV penalty. |
-| 30-42 min | TV denoising model and edge-preserving intuition. |
-| 42-52 min | Non-differentiability and why optimization becomes harder. |
-| 52-64 min | Notebook comparison: Gaussian/quadratic smoothing versus TV. |
-| 64-70 min | Artifacts: staircasing, contrast loss, texture loss. |
-| 70-75 min | Exit question: when is TV's prior reasonable? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall variational form; image gradients; quadratic gradient penalty versus TV; one-dimensional edge preservation. |
+| Between sessions | Ask students to predict when an edge should be preserved and when noise should be removed. |
+| Session 2 | Image denoising with TV; notebook comparison; parameter effects; staircasing, contrast loss, and texture loss. |
+| After Session 2 | End with the question: when is TV's prior reasonable? |
 
 ## Discussion Pauses
 
@@ -97,7 +93,7 @@ Ask students:
 ## Common Misconceptions
 
 - Students may think TV preserves all important detail. It preserves some edges but can remove texture.
-- Students may think TV is always better than quadratic smoothing. It depends on the image class and task.
+- Students may think TV is always better than quadratic smoothing. It depends on the image family and task.
 - Students may think edge preservation proves data consistency. It does not; the residual must still be checked.
 - Students may think non-differentiability is a minor technicality. It changes the optimization methods.
 
@@ -110,7 +106,7 @@ If the notebook or internet fails:
 - use slide images for TV versus smoothing;
 - ask students to identify one success and one artifact.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

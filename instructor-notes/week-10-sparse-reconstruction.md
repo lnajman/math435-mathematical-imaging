@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week10_sparse_reconstruction.ipynb`
 - Practice: `practice.qmd`, Week 10
 
-## Class Purpose
+## Week Purpose
 
 Week 10 introduces sparsity as a prior:
 
@@ -17,18 +17,14 @@ the unknown may be complicated in pixels but simple in the right representation
 
 Students should understand both the promise and the danger. Sparse reconstruction works when the representation matches the image and the measurements preserve enough information.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall proximal methods and soft thresholding. |
-| 8-20 min | Underdetermined systems and why least squares is not enough. |
-| 20-32 min | Sparsity in a basis or dictionary. Pixels versus coefficients. |
-| 32-44 min | $\ell_0$ idea and $\ell_1$ relaxation. |
-| 44-54 min | Geometry intuition: why $\ell_1$ promotes zeros. |
-| 54-66 min | Notebook sampling experiment and sparse recovery. |
-| 66-72 min | Representation mismatch and failure cases. |
-| 72-75 min | Exit question: sparse where? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall soft thresholding; underdetermined systems; sparsity in a basis; $\ell_0$ idea and $\ell_1$ relaxation. |
+| Between sessions | Ask students to name the representation where the unknown is sparse. |
+| Session 2 | Geometry intuition; compressed sensing idea; notebook sampling experiment; representation mismatch and failure cases. |
+| After Session 2 | End with the question: sparse where? |
 
 ## Discussion Pauses
 
@@ -114,7 +110,7 @@ If the notebook or internet fails:
 - show why choosing the sparse solution is an assumption;
 - connect soft thresholding from Week 9 to $\ell_1$ sparsity.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

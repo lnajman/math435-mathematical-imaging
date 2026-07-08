@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week07_variational_formulation.ipynb`
 - Practice: `practice.qmd`, Week 7
 
-## Class Purpose
+## Week Purpose
 
 Week 7 turns reconstruction into a general modeling language:
 
@@ -17,18 +17,14 @@ reconstruction = minimizer of data term + prior term
 
 Students should see an energy as an audit trail. Every term says what evidence or assumption is being used.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall Tikhonov and ask which parts were data and prior. |
-| 8-18 min | General variational form $D(Ax,y)+\lambda R(x)$. |
-| 18-30 min | Interpret data terms from likelihood and regularizers from priors. |
-| 30-42 min | First-order optimality for differentiable energies. |
-| 42-52 min | Energy landscape: residual, prior, and total energy. |
-| 52-62 min | Notebook energy tracking and parameter changes. |
-| 62-70 min | Model comparison: same data, different regularizers. |
-| 70-75 min | Exit question: what does each term in the energy claim? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | General variational form; data terms from likelihood; regularizers from priors; first-order optimality. |
+| Between sessions | Ask students to label data term, prior term, and unknown for one previous method. |
+| Session 2 | Energy landscape; gradient descent intuition; notebook energy tracking; compare same data under different regularizers. |
+| After Session 2 | End with the question: what does each term in the energy claim? |
 
 ## Discussion Pauses
 
@@ -73,7 +69,7 @@ Expected answer: no. It proves the computation solved the chosen model, not that
    likelihood + prior -> posterior objective
    ```
 
-Do not overdo probability notation unless the class is comfortable. The central point is that modeling choices become mathematical terms.
+Do not overdo probability notation unless students are comfortable. The central point is that modeling choices become mathematical terms.
 
 ## Live Notebook Plan
 
@@ -107,7 +103,7 @@ If the notebook or internet fails:
 - sketch residual decreasing while prior penalty increases;
 - discuss two possible priors for the same noisy image.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

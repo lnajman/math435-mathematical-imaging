@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week02_convolution_blur.ipynb`
 - Practice: `practice.qmd`, Week 2
 
-## Class Purpose
+## Week Purpose
 
 Week 2 gives the first serious forward model:
 
@@ -17,18 +17,14 @@ sharp image x -> convolution by a blur kernel -> blurred data y
 
 The main point is not only how to compute convolution. The main point is that blur mixes nearby information and makes deblurring unstable.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall Week 1: $x$, $y$, and $A$. Ask what $A$ could be for a blurry photograph. |
-| 8-20 min | 1D local weighted average. Compute one output value by hand. |
-| 20-32 min | Interpret the kernel as a point spread function. Discuss normalization. |
-| 32-45 min | Move to 2D convolution and real image blur. |
-| 45-55 min | Boundary conditions. Make students choose a rule and defend it. |
-| 55-65 min | Matrix view: convolution as a linear operator. |
-| 65-72 min | Why naive deblurring fails. Connect to weak details and noise amplification. |
-| 72-75 min | Exit question: what does blur preserve, mix, and weaken? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall $x$, $y$, and $A$; compute 1D convolution by hand; interpret kernels and PSFs; move to 2D blur on a real image. |
+| Between sessions | Ask students to name one modeling assumption hidden inside a blur kernel. |
+| Session 2 | Boundary conditions; matrix view of convolution; naive deblurring and instability; notebook blur-strength experiment. |
+| After Session 2 | End with the question: what does blur preserve, mix, and weaken? |
 
 ## Discussion Pauses
 
@@ -86,7 +82,7 @@ For the live demo, keep one parameter change prepared:
 - change `kernel_size`;
 - compare `boundary="symm"` with another boundary if the cell makes this convenient.
 
-The best class moment is when students see that smooth images look "better" but contain less recoverable detail.
+The best live moment is when students see that smooth images look "better" but contain less recoverable detail.
 
 ## Common Misconceptions
 
@@ -105,9 +101,9 @@ If the notebook or internet fails:
 - use the slide images for real blur;
 - describe naive deblurring qualitatively as "dividing by small numbers."
 
-The class can be taught without code if the students understand local averaging, boundary assumptions, and instability.
+The week can be taught without code if the students understand local averaging, boundary assumptions, and instability.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 
@@ -116,4 +112,3 @@ What assumption does convolution make about the blur, and what detail becomes we
 ```
 
 Expected idea: the same local blur rule is used everywhere; fine details and sharp transitions become weak.
-

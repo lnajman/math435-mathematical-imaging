@@ -8,7 +8,7 @@ Student-facing materials:
 - Practice: `practice.qmd`, Week 14
 - Project: `project/index.qmd`
 
-## Class Purpose
+## Week Purpose
 
 Week 14 closes the technical arc by asking when a reconstruction should be trusted.
 
@@ -20,18 +20,14 @@ claim -> evidence -> limitation -> consequence
 
 This week also prepares the project report and oral defense without adding new grading categories beyond the syllabus.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall learned reconstruction and PnP. Ask what evidence is still missing. |
-| 8-20 min | Stability: response to small perturbations. |
-| 20-32 min | Robustness: domain shift, parameter sensitivity, and failure cases. |
-| 32-42 min | Uncertainty and unsupported detail. |
-| 42-52 min | Ethical stakes: plausible versus measured, especially in scientific and medical contexts. |
-| 52-62 min | Notebook reliability checks and claim-evidence table. |
-| 62-70 min | Project report preparation: evidence, limitations, LLM-use statement. |
-| 70-75 min | Exit question: what would make your project claim weaker? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall learned reconstruction and PnP; stability; perturbation amplification; robustness axes and domain shift. |
+| Between sessions | Ask students to write one project claim and one possible failure case. |
+| Session 2 | Hallucination and unsupported detail; ethics; notebook reliability checks; project report preparation and oral-defense evidence. |
+| After Session 2 | End with the question: what would make your project claim weaker? |
 
 ## Discussion Pauses
 
@@ -112,7 +108,7 @@ If the notebook or internet fails:
 - ask students to write one project claim and one failure case;
 - rehearse an oral-defense question: "How do you know the result is supported by the data?"
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

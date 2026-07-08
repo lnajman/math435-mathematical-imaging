@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week11_wavelets.ipynb`
 - Practice: `practice.qmd`, Week 11
 
-## Class Purpose
+## Week Purpose
 
 Week 11 gives the missing counterpart to Fourier:
 
@@ -17,18 +17,14 @@ Fourier uses global oscillations; wavelets use localized multiscale atoms
 
 Students should connect wavelets to Pythagorean energy, sparsity, and compact support. This is the natural bridge from sparse reconstruction to learned representations.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall Fourier as global projection. Ask what is missing from that view. |
-| 8-20 min | Haar averages and differences by hand. |
-| 20-32 min | Compact support and multiscale localization. |
-| 32-42 min | Orthonormal wavelet transform and energy preservation. |
-| 42-54 min | Sparse wavelet coefficients for natural images. |
-| 54-66 min | Notebook thresholding and reconstruction quality. |
-| 66-72 min | Compare Fourier and wavelet failure modes. |
-| 72-75 min | Exit question: what does localization buy us? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall Fourier as global projection; Haar averages and differences; compact support; multiscale localization; energy preservation. |
+| Between sessions | Ask students to explain how Fourier and wavelets both use Pythagoras but differ in support. |
+| Session 2 | 2D subbands; sparse wavelet coefficients; notebook thresholding and reconstruction quality; compare Fourier and wavelet failure modes. |
+| After Session 2 | End with the question: what does localization buy us? |
 
 ## Discussion Pauses
 
@@ -115,7 +111,7 @@ If the notebook or internet fails:
 - sketch subbands: coarse, horizontal, vertical, diagonal;
 - discuss thresholding as keeping only large coefficients.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

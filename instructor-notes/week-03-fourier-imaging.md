@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week03_fourier_imaging.ipynb`
 - Practice: `practice.qmd`, Week 3
 
-## Class Purpose
+## Week Purpose
 
 Week 3 explains why deblurring is unstable. Fourier analysis turns the vague sentence "blur removes detail" into a precise statement:
 
@@ -17,18 +17,14 @@ blur weakens some frequency directions, and inversion amplifies the weak directi
 
 Students should also understand the contrast with wavelets later: Fourier atoms are global, while wavelets will give localized multiscale directions.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall Week 2: blur mixes local information. Ask which image details blur weakens most. |
-| 8-20 min | 1D frequencies and Fourier coefficients as projections. |
-| 20-30 min | Parseval/Pythagoras and energy redistribution. |
-| 30-42 min | Global support of Fourier atoms. One coefficient affects the whole image. |
-| 42-52 min | 2D Fourier magnitude spectrum and centered display. |
-| 52-60 min | Magnitude versus phase discussion. |
-| 60-68 min | Convolution theorem: blur becomes multiplication in frequency. |
-| 68-75 min | Inverse filtering and stabilization. End with why naive inverse fails. |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Fourier as projection; Parseval/Pythagoras; global support of Fourier atoms; 2D magnitude spectra. |
+| Between sessions | Ask students why one local edge affects many Fourier coefficients. |
+| Session 2 | Magnitude versus phase; convolution theorem; frequency filtering; inverse filtering and stabilization; notebook cutoff or regularization experiment. |
+| After Session 2 | End with why the naive Fourier inverse fails when frequencies are weak or noisy. |
 
 ## Discussion Pauses
 
@@ -121,9 +117,9 @@ If the notebook or internet fails:
 - write $\widehat{y}=\widehat{h}\widehat{x}$ and $\widehat{x}=\widehat{y}/\widehat{h}$;
 - use the board to show why small $\widehat{h}$ is dangerous.
 
-This class can be taught from the board because the central mechanism is algebraic.
+This week can be taught from the board because the central mechanism is algebraic.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask students to complete:
 
@@ -132,4 +128,3 @@ Fourier helps explain deblurring because ...
 ```
 
 Expected answer: it shows which frequency components blur weakens, and why trying to restore them amplifies noise.
-

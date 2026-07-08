@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week05_ill_posed_inverse_problems.ipynb`
 - Practice: `practice.qmd`, Week 5
 
-## Class Purpose
+## Week Purpose
 
 Week 5 names the core difficulty of the course. Inverse problems fail for structural reasons:
 
@@ -15,20 +15,16 @@ Week 5 names the core difficulty of the course. Inverse problems fail for struct
 missing directions, weak directions, noise, and non-uniqueness
 ```
 
-The class should not feel like a list of pathologies. It should feel like a diagnostic framework students can reuse for every reconstruction method.
+The week should not feel like a list of pathologies. It should feel like a diagnostic framework students can reuse for every reconstruction method.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Opening question: if $Ax=y$ has a solution, is the inverse problem solved? |
-| 8-18 min | Non-uniqueness and nullspace. Draw two different images with the same data. |
-| 18-30 min | Stability: small data changes can create large reconstruction changes. |
-| 30-42 min | Singular values as measurement strengths. Supported, weak, and invisible directions. |
-| 42-52 min | Naive inverse answer. Let students propose it before showing failure modes. |
-| 52-62 min | Noise amplification by division by small singular values. |
-| 62-70 min | Notebook SVD experiment and coefficient view. |
-| 70-75 min | Exit question: what is one direction the data cannot defend? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Hadamard conditions; non-uniqueness and nullspace; stability; let students propose the naive inverse before showing why it is insufficient. |
+| Between sessions | Ask students to classify one failure as non-existence, non-uniqueness, or instability. |
+| Session 2 | Singular values as measurement strengths; noise amplification; truncated SVD; notebook SVD coefficient experiment. |
+| After Session 2 | End with the question: what is one direction the data cannot defend? |
 
 ## Discussion Pauses
 
@@ -36,7 +32,7 @@ After writing $Ax=y$, ask:
 
 > What would be the naive inverse-problem answer?
 
-Let the class say: solve the equation, invert $A$, or find $x$ such that $Ax=y$. Keep that naive answer visible. Then add the failure reasons one at a time:
+Let students say: solve the equation, invert $A$, or find $x$ such that $Ax=y$. Keep that naive answer visible. Then add the failure reasons one at a time:
 
 - there may be no exact solution because of noise;
 - there may be many solutions;
@@ -111,9 +107,9 @@ If the notebook or internet fails:
 - show how dividing by $0.01$ turns small noise into a large coefficient;
 - return to Fourier inverse filtering as a familiar example.
 
-The essential class can be taught with only nullspace and singular values.
+The essential week can be taught with only nullspace and singular values.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask:
 

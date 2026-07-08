@@ -7,7 +7,7 @@ Student-facing materials:
 - Notebook: `notebooks/week04_noise_likelihood.ipynb`
 - Practice: `practice.qmd`, Week 4
 
-## Class Purpose
+## Week Purpose
 
 Week 4 changes the meaning of "fit the data." The same residual can be normal, suspicious, or impossible depending on the noise model.
 
@@ -19,18 +19,14 @@ forward model + noise model -> data-fidelity term
 
 This is the bridge from $y=Ax+\eta$ to optimization. Before choosing a reconstruction, we must decide what kind of mismatch between $Ax$ and $y$ is statistically plausible.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-8 min | Recall blur and Fourier instability. Ask what changes when the data are noisy. |
-| 8-18 min | Additive Gaussian noise: residuals, variance, and squared error. |
-| 18-30 min | Likelihood idea: which clean image makes the observed data plausible? |
-| 30-42 min | Poisson noise and photon counting. Contrast with Gaussian assumptions. |
-| 42-52 min | Averaging and signal-to-noise ratio. What averaging fixes and what it cannot fix. |
-| 52-62 min | From likelihood to data terms: least squares and Poisson negative log-likelihood. |
-| 62-70 min | Notebook comparison: same image, different noise regimes. |
-| 70-75 min | Exit question: what does the noise model authorize us to ignore? |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Recall blur/Fourier instability; introduce observation models; additive Gaussian noise; Poisson photon counting. |
+| Between sessions | Ask students to compare one residual under Gaussian and Poisson assumptions. |
+| Session 2 | Likelihood as data fidelity; averaging and SNR limits; notebook noise comparison; reserve final 20 minutes for Quiz 1. |
+| After Session 2 | End with the question: what does the noise model authorize us to ignore? |
 
 ## Discussion Pauses
 
@@ -111,9 +107,9 @@ If the notebook or internet fails:
 - write Gaussian and Poisson models side by side;
 - use the slide figures for noisy images and photon counts.
 
-The class can be taught without computation if students understand that different physical measurements produce different data terms.
+The week can be taught without computation if students understand that different physical measurements produce different data terms.
 
-## End-of-Class Prompt
+## End-of-Week Prompt
 
 Ask students to complete:
 

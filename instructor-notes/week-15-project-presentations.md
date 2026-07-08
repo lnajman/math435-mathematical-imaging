@@ -4,9 +4,9 @@ Student-facing materials:
 
 - Project: `project/index.qmd`
 - Syllabus: `syllabus.qmd`
-- Class roadmap: `classes.qmd`, Week 15
+- Weekly roadmap: `classes.qmd`, Week 15
 
-## Class Purpose
+## Week Purpose
 
 Week 15 is not a new content chapter. It is the ownership week.
 
@@ -14,16 +14,16 @@ Students present and defend their work. The oral defense is the place where stud
 
 Keep the structure aligned with the syllabus and project page. Do not introduce new grading criteria in the room.
 
-## 75-Minute Teaching Rhythm
+## Weekly Two-Session Rhythm
 
 Adjust the timing to the number of teams. A useful default is:
 
-| Time | Instructor Focus |
-|---:|---|
-| 0-5 min | Set expectations: concise presentations, evidence-first answers, respectful questions. |
-| 5-50 min | Team presentations. Keep time firmly. |
-| 50-70 min | Individual oral-defense questions. Rotate across teams or use scheduled slots if needed. |
-| 70-75 min | Closing synthesis: what the course has taught about reconstruction and trust. |
+| Moment | Instructor Focus |
+|---|---|
+| Session 1 | Set expectations; run team presentations; keep time firmly; record claim, evidence, limitation, and follow-up question for each team. |
+| Between sessions | Identify students who need a targeted oral-defense question about model, code, evidence, or LLM use. |
+| Session 2 | Individual oral-defense questions, remaining presentations if needed, and course synthesis on reconstruction and trust. |
+| After Session 2 | Record any follow-up needed under the syllabus and project-page assessment rules. |
 
 If there are many teams, move oral defenses into scheduled individual slots outside the shared presentation block, following the syllabus constraints.
 
@@ -34,7 +34,7 @@ Use one of these formats depending on enrollment and room constraints:
 | Format | Best Use | Instructor Move |
 |---|---|---|
 | Short talks plus live questions | Small class or few teams | Keep a visible timer and ask one model question plus one evidence question per team. |
-| Presentations in class, defenses scheduled separately | Many teams | Use class time for shared results and reserve individual ownership checks for scheduled slots. |
+| Shared presentations, defenses scheduled separately | Many teams | Use shared session time for project results and reserve individual ownership checks for scheduled slots. |
 | Poster or table rotation | Very large or time-constrained group | Ask each student one targeted oral-defense question at the project station. |
 
 Do not let the format change the assessment boundary. The syllabus and project page define what is assessed; the format only changes how the defense is organized.
