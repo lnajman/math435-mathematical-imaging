@@ -148,7 +148,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Plug-and-Play and Learned Regularization</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 13</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 13</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -167,8 +167,8 @@ Laurent Najman
 <p>Suppose you already have a good denoising algorithm.</p>
 <p>Can you insert it inside an inverse-problem solver?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Recall proximal algorithms for regularized inverse problems.</li>
@@ -180,50 +180,40 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap: model-based vs data-driven</td>
+<td>Session 1</td>
+<td>Proximal algorithms; denoising interpretation; plug-and-play update.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-22 min</td>
-<td>proximal steps as denoising-like operations</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">22-38 min</td>
-<td>plug-and-play idea and update equations</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">38-50 min</td>
-<td>learned regularization and unrolled algorithms</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">50-62 min</td>
-<td>convergence, fixed points, and failure modes</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">62-72 min</td>
-<td>notebook activity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">72-75 min</td>
-<td>synthesis and exit check</td>
+<td>Session 2</td>
+<td>Learned regularization; deblurring example; fixed points, convergence, and trust.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-12" class="slide level2">
-<h2>Bridge from Class 12</h2>
-<p>Class 12 compared:</p>
+<section id="session-1-plugging-a-denoiser-into-an-inverse-problem" class="slide level2 section-slide">
+<h2>Session 1: Plugging a Denoiser into an Inverse Problem</h2>
+<div class="section-kicker">
+<p>Data consistency plus denoising</p>
+</div>
+</section>
+<section id="bridge-from-week-12" class="slide level2">
+<h2>Bridge from Week 12</h2>
+<p>Week 12 compared:</p>
 <div class="checklist">
 <ul>
 <li>model-based methods: write the prior;</li>
@@ -424,6 +414,12 @@ A^\top(Ax^k-y).
 <li><span class="math inline">x^{k+1}=D_\sigma(z^k)</span>.</li>
 </ol>
 <p>What mathematical object is explicit in the first update but implicit in the second?</p>
+</div>
+</section>
+<section id="session-2-learned-regularization-and-trust" class="slide level2 section-slide">
+<h2>Session 2: Learned Regularization and Trust</h2>
+<div class="section-kicker">
+<p>Useful does not automatically mean justified</p>
 </div>
 </section>
 <section id="part-3-learned-regularization" class="slide level2 section-slide">
@@ -694,7 +690,7 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -739,19 +735,19 @@ D_\sigma\!\left(x^\star-\tau A^\top(Ax^\star-y)\right).
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Use Chapter 13 of the book for the proximal-to-denoiser bridge.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Stability, robustness, and ethics:</p>
 <ul>
 <li>parameter sensitivity analysis;</li>

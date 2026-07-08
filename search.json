@@ -105,25 +105,32 @@
     "text": "Opening Question\n\nCan a denoiser be a prior?\n\nSuppose you already have a good denoising algorithm.\nCan you insert it inside an inverse-problem solver?"
   },
   {
-    "objectID": "slides/week-13-plug-and-play.html#today",
-    "href": "slides/week-13-plug-and-play.html#today",
+    "objectID": "slides/week-13-plug-and-play.html#this-week",
+    "href": "slides/week-13-plug-and-play.html#this-week",
     "title": "Plug-and-Play and Learned Regularization",
-    "section": "Today",
-    "text": "Today\n\n\nRecall proximal algorithms for regularized inverse problems.\nDefine plug-and-play reconstruction.\nExplain how learned algorithms can keep data consistency in the loop.\nCompare explicit and implicit regularization.\nRun a deblurring example with handcrafted and learned denoisers.\nDiscuss fixed points, convergence, and trust."
+    "section": "This Week",
+    "text": "This Week\n\n\nRecall proximal algorithms for regularized inverse problems.\nDefine plug-and-play reconstruction.\nExplain how learned algorithms can keep data consistency in the loop.\nCompare explicit and implicit regularization.\nRun a deblurring example with handcrafted and learned denoisers.\nDiscuss fixed points, convergence, and trust."
   },
   {
-    "objectID": "slides/week-13-plug-and-play.html#minute-live-path",
-    "href": "slides/week-13-plug-and-play.html#minute-live-path",
+    "objectID": "slides/week-13-plug-and-play.html#two-session-plan",
+    "href": "slides/week-13-plug-and-play.html#two-session-plan",
     "title": "Plug-and-Play and Learned Regularization",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: model-based vs data-driven\n\n\n8-22 min\nproximal steps as denoising-like operations\n\n\n22-38 min\nplug-and-play idea and update equations\n\n\n38-50 min\nlearned regularization and unrolled algorithms\n\n\n50-62 min\nconvergence, fixed points, and failure modes\n\n\n62-72 min\nnotebook activity\n\n\n72-75 min\nsynthesis and exit check"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nProximal algorithms; denoising interpretation; plug-and-play update.\n\n\nSession 2\nLearned regularization; deblurring example; fixed points, convergence, and trust."
   },
   {
-    "objectID": "slides/week-13-plug-and-play.html#bridge-from-class-12",
-    "href": "slides/week-13-plug-and-play.html#bridge-from-class-12",
+    "objectID": "slides/week-13-plug-and-play.html#session-1-plugging-a-denoiser-into-an-inverse-problem",
+    "href": "slides/week-13-plug-and-play.html#session-1-plugging-a-denoiser-into-an-inverse-problem",
     "title": "Plug-and-Play and Learned Regularization",
-    "section": "Bridge from Class 12",
-    "text": "Bridge from Class 12\nClass 12 compared:\n\n\nmodel-based methods: write the prior;\ndata-driven methods: learn the prior;\nhybrid methods: use both physics and learned image structure.\n\n\n\nPlug-and-play is one of the cleanest hybrid ideas."
+    "section": "Session 1: Plugging a Denoiser into an Inverse Problem",
+    "text": "Session 1: Plugging a Denoiser into an Inverse Problem\n\nData consistency plus denoising"
+  },
+  {
+    "objectID": "slides/week-13-plug-and-play.html#bridge-from-week-12",
+    "href": "slides/week-13-plug-and-play.html#bridge-from-week-12",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Bridge from Week 12",
+    "text": "Bridge from Week 12\nWeek 12 compared:\n\n\nmodel-based methods: write the prior;\ndata-driven methods: learn the prior;\nhybrid methods: use both physics and learned image structure.\n\n\n\nPlug-and-play is one of the cleanest hybrid ideas."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#the-hybrid-goal",
@@ -243,6 +250,13 @@
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Activity 1: What Changed?",
     "text": "Activity 1: What Changed?\n\n5 minutes\n\n\nCompare these two updates:\n\nx^{k+1}=\\operatorname{prox}_{\\tau\\lambda R}(z^k);\nx^{k+1}=D_\\sigma(z^k).\n\nWhat mathematical object is explicit in the first update but implicit in the second?"
+  },
+  {
+    "objectID": "slides/week-13-plug-and-play.html#session-2-learned-regularization-and-trust",
+    "href": "slides/week-13-plug-and-play.html#session-2-learned-regularization-and-trust",
+    "title": "Plug-and-Play and Learned Regularization",
+    "section": "Session 2: Learned Regularization and Trust",
+    "text": "Session 2: Learned Regularization and Trust\n\nUseful does not automatically mean justified"
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#part-3-learned-regularization",
@@ -417,7 +431,7 @@
     "href": "slides/week-13-plug-and-play.html#notebook-demo-and-code-reference",
     "title": "Plug-and-Play and Learned Regularization",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-13-plug-and-play.html#in-class-notebook-activity",
@@ -441,18 +455,18 @@
     "text": "What Students Should Remember\n\n\nPlug-and-play keeps the forward model and inserts a denoiser.\nThe denoiser acts as an implicit prior.\nLearned denoisers can improve reconstructions when data match training.\nPnP needs careful validation because objective and convergence guarantees change.\nAlways check both image quality and consistency with measurements."
   },
   {
-    "objectID": "slides/week-13-plug-and-play.html#after-class",
-    "href": "slides/week-13-plug-and-play.html#after-class",
+    "objectID": "slides/week-13-plug-and-play.html#after-this-week",
+    "href": "slides/week-13-plug-and-play.html#after-this-week",
     "title": "Plug-and-Play and Learned Regularization",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 13 of the book for the proximal-to-denoiser bridge.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 13 of the book for the proximal-to-denoiser bridge.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-13-plug-and-play.html#next-time",
-    "href": "slides/week-13-plug-and-play.html#next-time",
+    "objectID": "slides/week-13-plug-and-play.html#next-week",
+    "href": "slides/week-13-plug-and-play.html#next-week",
     "title": "Plug-and-Play and Learned Regularization",
-    "section": "Next Time",
-    "text": "Next Time\nStability, robustness, and ethics:\n\nparameter sensitivity analysis;\nhallucination artifacts;\noverfitting and distribution shift;\nreliability in high-stakes imaging."
+    "section": "Next Week",
+    "text": "Next Week\nStability, robustness, and ethics:\n\nparameter sensitivity analysis;\nhallucination artifacts;\noverfitting and distribution shift;\nreliability in high-stakes imaging."
   },
   {
     "objectID": "slides/week-11-wavelets.html#opening-question",
@@ -462,25 +476,32 @@
     "text": "Opening Question\n\nWhere is the detail?\n\nFourier tells us which frequencies are present.\nHow can we also know where they occur?"
   },
   {
-    "objectID": "slides/week-11-wavelets.html#today",
-    "href": "slides/week-11-wavelets.html#today",
+    "objectID": "slides/week-11-wavelets.html#this-week",
+    "href": "slides/week-11-wavelets.html#this-week",
     "title": "Wavelets and Multiscale Representation",
-    "section": "Today",
-    "text": "Today\n\n\nExplain wavelets as localized multiscale patterns.\nRead a 2D wavelet decomposition.\nConnect wavelet coefficients to sparsity.\nUse thresholding for compression and denoising.\nCompare wavelet denoising with ordinary smoothing."
+    "section": "This Week",
+    "text": "This Week\n\n\nExplain wavelets as localized multiscale patterns.\nRead a 2D wavelet decomposition.\nConnect wavelet coefficients to sparsity.\nUse thresholding for compression and denoising.\nCompare wavelet denoising with ordinary smoothing."
   },
   {
-    "objectID": "slides/week-11-wavelets.html#minute-live-path",
-    "href": "slides/week-11-wavelets.html#minute-live-path",
+    "objectID": "slides/week-11-wavelets.html#two-session-plan",
+    "href": "slides/week-11-wavelets.html#two-session-plan",
     "title": "Wavelets and Multiscale Representation",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap sparse reconstruction\n\n\n8-22 min\nwavelet intuition and Haar atoms\n\n\n22-36 min\nmultiscale decomposition\n\n\n36-48 min\n2D wavelet subbands and sparsity\n\n\n48-60 min\nthresholding, compression, denoising\n\n\n60-70 min\nnotebook activity\n\n\n70-75 min\nsynthesis and exit check"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nFourier global support; wavelet localization; Haar intuition; multiscale decomposition.\n\n\nSession 2\n2D subbands; sparsity; thresholding; compression and denoising."
   },
   {
-    "objectID": "slides/week-11-wavelets.html#bridge-from-class-10",
-    "href": "slides/week-11-wavelets.html#bridge-from-class-10",
+    "objectID": "slides/week-11-wavelets.html#session-1-local-multiscale-geometry",
+    "href": "slides/week-11-wavelets.html#session-1-local-multiscale-geometry",
     "title": "Wavelets and Multiscale Representation",
-    "section": "Bridge from Class 10",
-    "text": "Bridge from Class 10\nClass 10 said:\n\nSparse reconstruction depends on choosing a representation where the image has few important coefficients.\n\n\nWhat representation should we choose for localized edges and details?"
+    "section": "Session 1: Local Multiscale Geometry",
+    "text": "Session 1: Local Multiscale Geometry\n\nSame energy idea, different basis geometry"
+  },
+  {
+    "objectID": "slides/week-11-wavelets.html#bridge-from-week-10",
+    "href": "slides/week-11-wavelets.html#bridge-from-week-10",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Bridge from Week 10",
+    "text": "Bridge from Week 10\nWeek 10 said:\n\nSparse reconstruction depends on choosing a representation where the image has few important coefficients.\n\n\nWhat representation should we choose for localized edges and details?"
   },
   {
     "objectID": "slides/week-11-wavelets.html#fourier-is-global",
@@ -579,6 +600,13 @@
     "title": "Wavelets and Multiscale Representation",
     "section": "Energy Is Redistributed",
     "text": "Energy Is Redistributed\nThe transform does not create new information.\nIt reorganizes information into:\n\n\\text{coarse approximation}+\\text{details at several scales}.\n\n\nFor orthogonal wavelets, energy is preserved up to normalization."
+  },
+  {
+    "objectID": "slides/week-11-wavelets.html#session-2-image-subbands-and-thresholding",
+    "href": "slides/week-11-wavelets.html#session-2-image-subbands-and-thresholding",
+    "title": "Wavelets and Multiscale Representation",
+    "section": "Session 2: Image Subbands and Thresholding",
+    "text": "Session 2: Image Subbands and Thresholding\n\nWhere details live, and when to keep them"
   },
   {
     "objectID": "slides/week-11-wavelets.html#part-3-images-and-subbands",
@@ -711,7 +739,7 @@
     "href": "slides/week-11-wavelets.html#notebook-demo-and-code-reference",
     "title": "Wavelets and Multiscale Representation",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-11-wavelets.html#in-class-notebook-activity",
@@ -735,18 +763,18 @@
     "text": "What Students Should Remember\n\n\nWavelets represent images across position, scale, and direction.\nWavelet transforms split images into coarse approximation and detail subbands.\nMany images are approximately sparse in wavelet coefficients.\nThresholding gives compression and denoising algorithms.\nRepresentation choice controls the success of sparse reconstruction."
   },
   {
-    "objectID": "slides/week-11-wavelets.html#after-class",
-    "href": "slides/week-11-wavelets.html#after-class",
+    "objectID": "slides/week-11-wavelets.html#after-this-week",
+    "href": "slides/week-11-wavelets.html#after-this-week",
     "title": "Wavelets and Multiscale Representation",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 11 of the book for the Fourier-wavelet-Pythagorean bridge.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 11 of the book for the Fourier-wavelet-Pythagorean bridge.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-11-wavelets.html#next-time",
-    "href": "slides/week-11-wavelets.html#next-time",
+    "objectID": "slides/week-11-wavelets.html#next-week",
+    "href": "slides/week-11-wavelets.html#next-week",
     "title": "Wavelets and Multiscale Representation",
-    "section": "Next Time",
-    "text": "Next Time\nModel-based versus data-driven imaging:\n\nhandcrafted priors;\nlearned priors;\nneural networks as parameterized operators;\nstrengths and risks of each viewpoint."
+    "section": "Next Week",
+    "text": "Next Week\nModel-based versus data-driven imaging:\n\nhandcrafted priors;\nlearned priors;\nneural networks as parameterized operators;\nstrengths and risks of each viewpoint."
   },
   {
     "objectID": "slides/week-09-optimization-methods.html#opening-question",
@@ -756,25 +784,32 @@
     "text": "Opening Question\n\nModels are not enough\n\nIf the reconstructed image is defined as a minimizer, how do we actually find it?"
   },
   {
-    "objectID": "slides/week-09-optimization-methods.html#today",
-    "href": "slides/week-09-optimization-methods.html#today",
+    "objectID": "slides/week-09-optimization-methods.html#this-week",
+    "href": "slides/week-09-optimization-methods.html#this-week",
     "title": "Optimization Methods",
-    "section": "Today",
-    "text": "Today\n\n\nRecognize convex optimization problems in imaging.\nUse gradient descent for smooth energies.\nExplain why step size matters.\nUnderstand subgradient intuition for nonsmooth terms.\nUse proximal and ISTA ideas for sparse regularization."
+    "section": "This Week",
+    "text": "This Week\n\n\nRecognize convex optimization problems in imaging.\nUse gradient descent for smooth energies.\nExplain why step size matters.\nUnderstand subgradient intuition for nonsmooth terms.\nUse proximal and ISTA ideas for sparse regularization."
   },
   {
-    "objectID": "slides/week-09-optimization-methods.html#minute-live-path",
-    "href": "slides/week-09-optimization-methods.html#minute-live-path",
+    "objectID": "slides/week-09-optimization-methods.html#two-session-plan",
+    "href": "slides/week-09-optimization-methods.html#two-session-plan",
     "title": "Optimization Methods",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: energies from Weeks 7-8\n\n\n8-22 min\nconvexity and why it matters\n\n\n22-37 min\ngradient descent and step size\n\n\n37-49 min\nnonsmooth penalties and subgradients\n\n\n49-61 min\nproximal operators and ISTA\n\n\n61-71 min\nnotebook activity\n\n\n71-75 min\nsynthesis and exit check"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nConvexity; smooth optimization; gradient descent; step-size diagnostics.\n\n\nSession 2\nNonsmooth terms; proximal operators; ISTA; convergence evidence."
   },
   {
-    "objectID": "slides/week-09-optimization-methods.html#bridge-from-class-8",
-    "href": "slides/week-09-optimization-methods.html#bridge-from-class-8",
+    "objectID": "slides/week-09-optimization-methods.html#session-1-smooth-optimization",
+    "href": "slides/week-09-optimization-methods.html#session-1-smooth-optimization",
     "title": "Optimization Methods",
-    "section": "Bridge from Class 8",
-    "text": "Bridge from Class 8\nTV denoising asks for\n\nu_\\lambda\n=\n\\operatorname*{argmin}_u\n\\frac12\\|u-y\\|_2^2+\\lambda\\operatorname{TV}(u).\n\n\nWhat makes this harder than quadratic Tikhonov regularization?"
+    "section": "Session 1: Smooth Optimization",
+    "text": "Session 1: Smooth Optimization\n\nFollow a descent direction"
+  },
+  {
+    "objectID": "slides/week-09-optimization-methods.html#bridge-from-week-8",
+    "href": "slides/week-09-optimization-methods.html#bridge-from-week-8",
+    "title": "Optimization Methods",
+    "section": "Bridge from Week 8",
+    "text": "Bridge from Week 8\nTV denoising asks for\n\nu_\\lambda\n=\n\\operatorname*{argmin}_u\n\\frac12\\|u-y\\|_2^2+\\lambda\\operatorname{TV}(u).\n\n\nWhat makes this harder than quadratic Tikhonov regularization?"
   },
   {
     "objectID": "slides/week-09-optimization-methods.html#the-algorithmic-question",
@@ -896,6 +931,13 @@
     "text": "Stopping Criteria\nCommon stopping rules:\n\n\nmaximum number of iterations;\nsmall change in energy;\nsmall change in the image;\nsmall gradient norm;\nvisual or task-driven stopping."
   },
   {
+    "objectID": "slides/week-09-optimization-methods.html#session-2-nonsmooth-priors-and-proximal-steps",
+    "href": "slides/week-09-optimization-methods.html#session-2-nonsmooth-priors-and-proximal-steps",
+    "title": "Optimization Methods",
+    "section": "Session 2: Nonsmooth Priors and Proximal Steps",
+    "text": "Session 2: Nonsmooth Priors and Proximal Steps\n\nSparse models need a different move"
+  },
+  {
     "objectID": "slides/week-09-optimization-methods.html#part-3-nonsmooth-terms",
     "href": "slides/week-09-optimization-methods.html#part-3-nonsmooth-terms",
     "title": "Optimization Methods",
@@ -1005,7 +1047,7 @@
     "href": "slides/week-09-optimization-methods.html#notebook-demo-and-code-reference",
     "title": "Optimization Methods",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-09-optimization-methods.html#in-class-notebook-activity",
@@ -1036,18 +1078,18 @@
     "text": "What Students Should Remember\n\n\nConvexity makes minimization conceptually safer.\nGradient descent solves smooth problems by local descent.\nStep size controls stability.\nl1 and TV are convex but nonsmooth.\nProximal operators are central for sparse and edge-preserving imaging."
   },
   {
-    "objectID": "slides/week-09-optimization-methods.html#after-class",
-    "href": "slides/week-09-optimization-methods.html#after-class",
+    "objectID": "slides/week-09-optimization-methods.html#after-this-week",
+    "href": "slides/week-09-optimization-methods.html#after-this-week",
     "title": "Optimization Methods",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-09-optimization-methods.html#next-time",
-    "href": "slides/week-09-optimization-methods.html#next-time",
+    "objectID": "slides/week-09-optimization-methods.html#next-week",
+    "href": "slides/week-09-optimization-methods.html#next-week",
     "title": "Optimization Methods",
-    "section": "Next Time",
-    "text": "Next Time\nSparse reconstruction:\n\nsparsity as a prior;\nl1 versus l2 regularization;\ncompressed sensing intuition;\nexamples in transform domains."
+    "section": "Next Week",
+    "text": "Next Week\nSparse reconstruction:\n\nsparsity as a prior;\nl1 versus l2 regularization;\ncompressed sensing intuition;\nexamples in transform domains."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#opening-question",
@@ -1057,25 +1099,32 @@
     "text": "Opening Question\n\nFrom formula to framework\n\nWhat does it mean to reconstruct an image by minimizing an energy?"
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#today",
-    "href": "slides/week-07-variational-formulation.html#today",
+    "objectID": "slides/week-07-variational-formulation.html#this-week",
+    "href": "slides/week-07-variational-formulation.html#this-week",
     "title": "Variational Formulation",
-    "section": "Today",
-    "text": "Today\n\n\nInterpret reconstruction as energy minimization.\nSeparate data fidelity and regularization.\nRead convexity geometrically.\nDerive the Euler-Lagrange equation for an \\ell_2 model.\nConnect optimality to gradient descent."
+    "section": "This Week",
+    "text": "This Week\n\n\nInterpret reconstruction as energy minimization.\nSeparate data fidelity and regularization.\nRead convexity geometrically.\nDerive the Euler-Lagrange equation for an \\ell_2 model.\nConnect optimality to gradient descent."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#minute-live-path",
-    "href": "slides/week-07-variational-formulation.html#minute-live-path",
+    "objectID": "slides/week-07-variational-formulation.html#two-session-plan",
+    "href": "slides/week-07-variational-formulation.html#two-session-plan",
     "title": "Variational Formulation",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap Tikhonov regularization\n\n\n8-20 min\nvariational energy viewpoint\n\n\n20-32 min\nconvexity as geometry\n\n\n32-50 min\nEuler-Lagrange derivation for \\ell_2 smoothing\n\n\n50-62 min\ngradient descent intuition\n\n\n62-70 min\nreal-image quadratic denoising\n\n\n70-75 min\nsynthesis check"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nEnergy viewpoint; data term and regularizer; convexity; Euler-Lagrange equation.\n\n\nSession 2\nGradient descent intuition; quadratic denoising; real-image limits."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#bridge-from-class-6",
-    "href": "slides/week-07-variational-formulation.html#bridge-from-class-6",
+    "objectID": "slides/week-07-variational-formulation.html#session-1-energies-as-models",
+    "href": "slides/week-07-variational-formulation.html#session-1-energies-as-models",
     "title": "Variational Formulation",
-    "section": "Bridge from Class 6",
-    "text": "Bridge from Class 6\nTikhonov regularization solves\n\n\\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\n\nThis is one example of a much larger idea: choose an energy and minimize it."
+    "section": "Session 1: Energies as Models",
+    "text": "Session 1: Energies as Models\n\nData agreement plus image structure"
+  },
+  {
+    "objectID": "slides/week-07-variational-formulation.html#bridge-from-week-6",
+    "href": "slides/week-07-variational-formulation.html#bridge-from-week-6",
+    "title": "Variational Formulation",
+    "section": "Bridge from Week 6",
+    "text": "Bridge from Week 6\nTikhonov regularization solves\n\n\\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\n\nThis is one example of a much larger idea: choose an energy and minimize it."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#variational-reconstruction",
@@ -1236,7 +1285,7 @@
     "href": "slides/week-07-variational-formulation.html#relationship-to-tikhonov",
     "title": "Variational Formulation",
     "section": "Relationship to Tikhonov",
-    "text": "Relationship to Tikhonov\nThis is Tikhonov with a different penalty:\n\n\nClass 6:\n\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\n\n\nClass 7:\n\n\\|u-y\\|_2^2+\\lambda\\|\\nabla u\\|_2^2."
+    "text": "Relationship to Tikhonov\nThis is Tikhonov with a different penalty:\n\n\nWeek 6:\n\n\\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\n\n\n\nWeek 7:\n\n\\|u-y\\|_2^2+\\lambda\\|\\nabla u\\|_2^2."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#what-the-regularizer-says",
@@ -1244,6 +1293,13 @@
     "title": "Variational Formulation",
     "section": "What the Regularizer Says",
     "text": "What the Regularizer Says\nThe term\n\n\\|\\nabla u\\|_2^2\n\npenalizes changes between neighboring pixels.\n\nIt prefers smooth images."
+  },
+  {
+    "objectID": "slides/week-07-variational-formulation.html#session-2-from-optimality-to-algorithms",
+    "href": "slides/week-07-variational-formulation.html#session-2-from-optimality-to-algorithms",
+    "title": "Variational Formulation",
+    "section": "Session 2: From Optimality to Algorithms",
+    "text": "Session 2: From Optimality to Algorithms\n\nMinimizers have to be computed"
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#part-4-gradient-descent-intuition",
@@ -1323,18 +1379,18 @@
     "text": "What This Model Gets Wrong\n\nEdges are also large gradients.\nWhat does \\|\\nabla u\\|_2^2 do to edges?\n\n\nQuadratic smoothing reduces noise and blurs edges."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#preview-of-class-8",
-    "href": "slides/week-07-variational-formulation.html#preview-of-class-8",
+    "objectID": "slides/week-07-variational-formulation.html#preview-of-week-8",
+    "href": "slides/week-07-variational-formulation.html#preview-of-week-8",
     "title": "Variational Formulation",
-    "section": "Preview of Class 8",
-    "text": "Preview of Class 8\nTotal Variation replaces squared gradients by gradient magnitude:\n\n\\int_\\Omega |\\nabla u|\\,dx.\n\n\nThis changes the behavior near edges."
+    "section": "Preview of Week 8",
+    "text": "Preview of Week 8\nTotal Variation replaces squared gradients by gradient magnitude:\n\n\\int_\\Omega |\\nabla u|\\,dx.\n\n\nThis changes the behavior near edges."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#notebook-demo-and-code-reference",
     "href": "slides/week-07-variational-formulation.html#notebook-demo-and-code-reference",
     "title": "Variational Formulation",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#in-class-notebook-activity",
@@ -1351,11 +1407,11 @@
     "text": "Quiz-Style Check\n\nFor each expression, identify its role:\n\nD(y,f(u));\nR(u);\n(u-y)-\\lambda\\Delta u=0;\nu^{k+1}=u^k-\\tau\\nabla E(u^k)."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#end-of-class-checkpoint",
-    "href": "slides/week-07-variational-formulation.html#end-of-class-checkpoint",
+    "objectID": "slides/week-07-variational-formulation.html#end-of-week-checkpoint",
+    "href": "slides/week-07-variational-formulation.html#end-of-week-checkpoint",
     "title": "Variational Formulation",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nAnswer in one sentence each:\n\nWhat is a variational model?\nWhy is convexity useful?\nWhat is an Euler-Lagrange equation?\nWhat does gradient descent do?"
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\nAnswer in one sentence each:\n\nWhat is a variational model?\nWhy is convexity useful?\nWhat is an Euler-Lagrange equation?\nWhat does gradient descent do?"
   },
   {
     "objectID": "slides/week-07-variational-formulation.html#what-students-should-remember",
@@ -1365,18 +1421,18 @@
     "text": "What Students Should Remember\n\n\nVariational imaging models are energy minimization models.\nEnergies combine data fidelity and regularization.\nConvexity gives a safer optimization landscape.\nEuler-Lagrange equations express optimality.\nQuadratic smoothness is clear and useful, but it blurs edges."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#after-class",
-    "href": "slides/week-07-variational-formulation.html#after-class",
+    "objectID": "slides/week-07-variational-formulation.html#after-this-week",
+    "href": "slides/week-07-variational-formulation.html#after-this-week",
     "title": "Variational Formulation",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-07-variational-formulation.html#next-time",
-    "href": "slides/week-07-variational-formulation.html#next-time",
+    "objectID": "slides/week-07-variational-formulation.html#next-week",
+    "href": "slides/week-07-variational-formulation.html#next-week",
     "title": "Variational Formulation",
-    "section": "Next Time",
-    "text": "Next Time\nTotal Variation regularization:\n\nTV norm;\nedge preservation;\ncomparison with \\ell_2 smoothing;\nstaircasing effect."
+    "section": "Next Week",
+    "text": "Next Week\nTotal Variation regularization:\n\nTV norm;\nedge preservation;\ncomparison with \\ell_2 smoothing;\nstaircasing effect."
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#opening-question",
@@ -1386,25 +1442,32 @@
     "text": "Opening Question\n\nWhen inversion goes wrong\n\nCan a problem have a solution, a unique solution, and still be impossible to solve reliably?"
   },
   {
-    "objectID": "slides/week-05-ill-posed-inverse-problems.html#today",
-    "href": "slides/week-05-ill-posed-inverse-problems.html#today",
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#this-week",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#this-week",
     "title": "Ill-Posed Inverse Problems",
-    "section": "Today",
-    "text": "Today\n\n\nState Hadamard’s three conditions for well-posedness.\nIdentify non-uniqueness in missing-data imaging.\nExplain stability and instability.\nInterpret small singular values.\nConnect inverse filtering to SVD noise amplification."
+    "section": "This Week",
+    "text": "This Week\n\n\nState Hadamard’s three conditions for well-posedness.\nIdentify non-uniqueness in missing-data imaging.\nExplain stability and instability.\nInterpret small singular values.\nConnect inverse filtering to SVD noise amplification."
   },
   {
-    "objectID": "slides/week-05-ill-posed-inverse-problems.html#minute-live-path",
-    "href": "slides/week-05-ill-posed-inverse-problems.html#minute-live-path",
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#two-session-plan",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#two-session-plan",
     "title": "Ill-Posed Inverse Problems",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap likelihood and data fidelity\n\n\n8-20 min\nHadamard well-posedness\n\n\n20-32 min\nnon-uniqueness and missing information\n\n\n32-48 min\nstability and inverse sensitivity\n\n\n48-62 min\nsingular values and conceptual SVD\n\n\n62-70 min\nnotebook activity\n\n\n70-75 min\nsynthesis and exit question"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nHadamard well-posedness; non-uniqueness; missing information; stability.\n\n\nSession 2\nSingular values; noise amplification; condition numbers; stabilization ideas."
   },
   {
-    "objectID": "slides/week-05-ill-posed-inverse-problems.html#bridge-from-class-4",
-    "href": "slides/week-05-ill-posed-inverse-problems.html#bridge-from-class-4",
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#session-1-what-can-fail",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#session-1-what-can-fail",
     "title": "Ill-Posed Inverse Problems",
-    "section": "Bridge from Class 4",
-    "text": "Bridge from Class 4\nClass 4 gave us a data term:\n\nD(y, f(x)).\n\n\nIf a candidate image fits the data well, does that mean it is the correct image?"
+    "section": "Session 1: What Can Fail?",
+    "text": "Session 1: What Can Fail?\n\nExistence, uniqueness, and stability"
+  },
+  {
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#bridge-from-week-4",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#bridge-from-week-4",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Bridge from Week 4",
+    "text": "Bridge from Week 4\nWeek 4 gave us a data term:\n\nD(y, f(x)).\n\n\nIf a candidate image fits the data well, does that mean it is the correct image?"
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#the-inverse-problem",
@@ -1554,6 +1617,13 @@
     "text": "What Failed?\nIn the instability picture:\n\n\na solution exists;\nthe model is known;\nthe data error is tiny;\nthe direct inverse is still useless.\n\n\n\nThis is a stability failure."
   },
   {
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#session-2-singular-values-and-stabilization",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#session-2-singular-values-and-stabilization",
+    "title": "Ill-Posed Inverse Problems",
+    "section": "Session 2: Singular Values and Stabilization",
+    "text": "Session 2: Singular Values and Stabilization\n\nDirections that data support, and directions they do not"
+  },
+  {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#part-4-singular-values",
     "href": "slides/week-05-ill-posed-inverse-problems.html#part-4-singular-values",
     "title": "Ill-Posed Inverse Problems",
@@ -1656,14 +1726,14 @@
     "href": "slides/week-05-ill-posed-inverse-problems.html#preview-of-regularization",
     "title": "Ill-Posed Inverse Problems",
     "section": "Preview of Regularization",
-    "text": "Preview of Regularization\nNext class, instead of a hard cutoff, we will solve problems like\n\n\\min_x\n\\|Ax-y\\|_2^2 + \\lambda \\|x\\|_2^2.\n\n\nRegularization is a controlled way to trade exact data fit for stability."
+    "text": "Preview of Regularization\nNext week, instead of a hard cutoff, we will solve problems like\n\n\\min_x\n\\|Ax-y\\|_2^2 + \\lambda \\|x\\|_2^2.\n\n\nRegularization is a controlled way to trade exact data fit for stability."
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#notebook-demo-and-code-reference",
     "href": "slides/week-05-ill-posed-inverse-problems.html#notebook-demo-and-code-reference",
     "title": "Ill-Posed Inverse Problems",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#in-class-notebook-activity",
@@ -1680,11 +1750,11 @@
     "text": "Quiz-Style Check\n\nFor each statement, identify the issue:\n\nNo image matches the measured data exactly.\nMany images match the same data.\nA tiny measurement error creates a huge reconstruction error.\nA singular value is nearly zero."
   },
   {
-    "objectID": "slides/week-05-ill-posed-inverse-problems.html#end-of-class-checkpoint",
-    "href": "slides/week-05-ill-posed-inverse-problems.html#end-of-class-checkpoint",
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#end-of-week-checkpoint",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#end-of-week-checkpoint",
     "title": "Ill-Posed Inverse Problems",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nAnswer in one sentence each:\n\nWhat are Hadamard’s three conditions?\nWhat is a nullspace?\nWhy do small singular values cause instability?\nWhat does truncated SVD trade away?"
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\nAnswer in one sentence each:\n\nWhat are Hadamard’s three conditions?\nWhat is a nullspace?\nWhy do small singular values cause instability?\nWhat does truncated SVD trade away?"
   },
   {
     "objectID": "slides/week-05-ill-posed-inverse-problems.html#what-students-should-remember",
@@ -1694,18 +1764,18 @@
     "text": "What Students Should Remember\n\n\nIll-posedness is not just “hard”; it is a structural failure.\nMissing information causes non-uniqueness.\nSmall singular values cause instability.\nA direct inverse may fit the model and still be useless.\nRegularization is motivated by the need for stable reconstruction."
   },
   {
-    "objectID": "slides/week-05-ill-posed-inverse-problems.html#after-class",
-    "href": "slides/week-05-ill-posed-inverse-problems.html#after-class",
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#after-this-week",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#after-this-week",
     "title": "Ill-Posed Inverse Problems",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-05-ill-posed-inverse-problems.html#next-time",
-    "href": "slides/week-05-ill-posed-inverse-problems.html#next-time",
+    "objectID": "slides/week-05-ill-posed-inverse-problems.html#next-week",
+    "href": "slides/week-05-ill-posed-inverse-problems.html#next-week",
     "title": "Ill-Posed Inverse Problems",
-    "section": "Next Time",
-    "text": "Next Time\nTikhonov regularization:\n\n\\ell_2 regularization;\nfilter factors;\nparameter effects;\nbias-stability tradeoff."
+    "section": "Next Week",
+    "text": "Next Week\nTikhonov regularization:\n\n\\ell_2 regularization;\nfilter factors;\nparameter effects;\nbias-stability tradeoff."
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#opening-question",
@@ -1715,25 +1785,32 @@
     "text": "Opening Question\n\nFrom blur to frequency\n\nWhat does it mean for an image to contain high frequencies?"
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#today",
-    "href": "slides/week-03-fourier-imaging.html#today",
+    "objectID": "slides/week-03-fourier-imaging.html#this-week",
+    "href": "slides/week-03-fourier-imaging.html#this-week",
     "title": "Fourier Transform in Imaging",
-    "section": "Today",
-    "text": "Today\n\n\nInterpret 1D and 2D frequencies.\nCompute and read Fourier magnitudes.\nSeparate magnitude and phase.\nUse the convolution theorem.\nExplain blur and deblurring in frequency space."
+    "section": "This Week",
+    "text": "This Week\n\n\nInterpret 1D and 2D frequencies.\nCompute and read Fourier magnitudes.\nSeparate magnitude and phase.\nUse the convolution theorem.\nExplain blur and deblurring in frequency space."
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#minute-live-path",
-    "href": "slides/week-03-fourier-imaging.html#minute-live-path",
+    "objectID": "slides/week-03-fourier-imaging.html#two-session-plan",
+    "href": "slides/week-03-fourier-imaging.html#two-session-plan",
     "title": "Fourier Transform in Imaging",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-10 min\nrecap convolution and blur\n\n\n10-25 min\n1D frequencies and the DFT\n\n\n25-40 min\n2D Fourier transform of images\n\n\n40-52 min\nmagnitude, phase, and geometry\n\n\n52-63 min\nconvolution theorem\n\n\n63-72 min\nfiltering and deblurring\n\n\n72-75 min\nexit question"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nFourier atoms; projection; energy and Pythagoras; global support; 2D spectra.\n\n\nSession 2\nConvolution theorem; frequency filtering; inverse filtering and stabilization."
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#reminder-from-class-2",
-    "href": "slides/week-03-fourier-imaging.html#reminder-from-class-2",
+    "objectID": "slides/week-03-fourier-imaging.html#session-1-fourier-as-projection",
+    "href": "slides/week-03-fourier-imaging.html#session-1-fourier-as-projection",
     "title": "Fourier Transform in Imaging",
-    "section": "Reminder from Class 2",
-    "text": "Reminder from Class 2\n\nFor a fixed blur kernel h,\n\ny = h * x.\n\n\n\nWhy does blur remove fine details?"
+    "section": "Session 1: Fourier as Projection",
+    "text": "Session 1: Fourier as Projection\n\nGlobal directions and energy"
+  },
+  {
+    "objectID": "slides/week-03-fourier-imaging.html#reminder-from-week-2",
+    "href": "slides/week-03-fourier-imaging.html#reminder-from-week-2",
+    "title": "Fourier Transform in Imaging",
+    "section": "Reminder from Week 2",
+    "text": "Reminder from Week 2\n\nFor a fixed blur kernel h,\n\ny = h * x.\n\n\n\nWhy does blur remove fine details?"
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#the-big-idea",
@@ -1890,18 +1967,25 @@
     "text": "Python Demo: Spectrum of an Image\n\nfrom skimage import data\nimport numpy as np\n\nimage = data.camera().astype(float) / 255\nF = np.fft.fft2(image)\nmagnitude = np.abs(F)\nphase = np.angle(F)"
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#run-todays-code",
-    "href": "slides/week-03-fourier-imaging.html#run-todays-code",
+    "objectID": "slides/week-03-fourier-imaging.html#run-this-weeks-code",
+    "href": "slides/week-03-fourier-imaging.html#run-this-weeks-code",
     "title": "Fourier Transform in Imaging",
-    "section": "Run Today’s Code",
-    "text": "Run Today’s Code\nFrom the repository root:\npython3 examples/week03_fourier_imaging.py\npython3 examples/make_week03_figures.py\npython3 scripts/build_notebooks.py\n./scripts/quarto render"
+    "section": "Run This Week’s Code",
+    "text": "Run This Week’s Code\nFrom the repository root:\npython3 examples/week03_fourier_imaging.py\npython3 examples/make_week03_figures.py\npython3 scripts/build_notebooks.py\n./scripts/quarto render"
+  },
+  {
+    "objectID": "slides/week-03-fourier-imaging.html#session-2-filtering-and-deblurring",
+    "href": "slides/week-03-fourier-imaging.html#session-2-filtering-and-deblurring",
+    "title": "Fourier Transform in Imaging",
+    "section": "Session 2: Filtering and Deblurring",
+    "text": "Session 2: Filtering and Deblurring\n\nWhat convolution becomes in frequency space"
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#part-4-convolution-theorem",
     "href": "slides/week-03-fourier-imaging.html#part-4-convolution-theorem",
     "title": "Fourier Transform in Imaging",
     "section": "Part 4: Convolution Theorem",
-    "text": "Part 4: Convolution Theorem\n\nThe Class 2 bridge\n\nConvolution becomes multiplication"
+    "text": "Part 4: Convolution Theorem\n\nThe Week 2 bridge\n\nConvolution becomes multiplication"
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#the-convolution-theorem",
@@ -2002,11 +2086,11 @@
     "text": "In-Class Notebook Activity\n\n8 minutes\n\n\nOpen the corresponding notebook.\nChange the low-pass radius and the deblurring stabilizer.\nRecord one visual effect and one numerical effect."
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#end-of-class-checkpoint",
-    "href": "slides/week-03-fourier-imaging.html#end-of-class-checkpoint",
+    "objectID": "slides/week-03-fourier-imaging.html#end-of-week-checkpoint",
+    "href": "slides/week-03-fourier-imaging.html#end-of-week-checkpoint",
     "title": "Fourier Transform in Imaging",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nFor each item, give one sentence:\n\nWhat does a Fourier magnitude show?\nWhere are low frequencies in a centered spectrum?\nWhat does the convolution theorem say?\nWhy does inverse filtering amplify noise?"
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\nFor each item, give one sentence:\n\nWhat does a Fourier magnitude show?\nWhere are low frequencies in a centered spectrum?\nWhat does the convolution theorem say?\nWhy does inverse filtering amplify noise?"
   },
   {
     "objectID": "slides/week-03-fourier-imaging.html#what-students-should-remember",
@@ -2016,18 +2100,18 @@
     "text": "What Students Should Remember\n\n\nFourier coefficients describe oscillations.\nImages have horizontal and vertical frequencies.\nMagnitude and phase carry different information.\nBlur is low-pass behavior in frequency space.\nDeblurring needs regularization because inverse filtering is unstable."
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#after-class",
-    "href": "slides/week-03-fourier-imaging.html#after-class",
+    "objectID": "slides/week-03-fourier-imaging.html#after-this-week",
+    "href": "slides/week-03-fourier-imaging.html#after-this-week",
     "title": "Fourier Transform in Imaging",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-03-fourier-imaging.html#next-time",
-    "href": "slides/week-03-fourier-imaging.html#next-time",
+    "objectID": "slides/week-03-fourier-imaging.html#next-week",
+    "href": "slides/week-03-fourier-imaging.html#next-week",
     "title": "Fourier Transform in Imaging",
-    "section": "Next Time",
-    "text": "Next Time\nNoise and statistical image models:\n\nadditive noise;\nGaussian and Poisson models;\nsignal-to-noise ratio;\nlikelihoods for reconstruction."
+    "section": "Next Week",
+    "text": "Next Week\nNoise and statistical image models:\n\nadditive noise;\nGaussian and Poisson models;\nsignal-to-noise ratio;\nlikelihoods for reconstruction."
   },
   {
     "objectID": "slides/week-01-image-formation.html#opening-question",
@@ -2037,18 +2121,25 @@
     "text": "Opening Question\n\nMathematical imaging begins here\n\nIf a scanner gives us imperfect data, what exactly are we trying to recover?"
   },
   {
-    "objectID": "slides/week-01-image-formation.html#today",
-    "href": "slides/week-01-image-formation.html#today",
+    "objectID": "slides/week-01-image-formation.html#this-week",
+    "href": "slides/week-01-image-formation.html#this-week",
     "title": "Images as Mathematical Objects",
-    "section": "Today",
-    "text": "Today\n\n\nModel an image as a function, an array, and a vector.\nConnect pixel grids to linear algebra.\nIntroduce the forward model y = Ax + \\eta.\nSeparate image formation from image reconstruction.\nWrite the first NumPy representations."
+    "section": "This Week",
+    "text": "This Week\n\n\nModel an image as a function, an array, and a vector.\nConnect pixel grids to linear algebra.\nIntroduce the forward model y = Ax + \\eta.\nSeparate image formation from image reconstruction.\nWrite the first NumPy representations."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#minute-live-path",
-    "href": "slides/week-01-image-formation.html#minute-live-path",
+    "objectID": "slides/week-01-image-formation.html#two-session-plan",
+    "href": "slides/week-01-image-formation.html#two-session-plan",
     "title": "Images as Mathematical Objects",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-10 min\nmotivation and course pattern\n\n\n10-30 min\nimage models, pixels, vectorization\n\n\n30-45 min\nhand activity and NumPy representation\n\n\n45-60 min\nforward model and inverse problem\n\n\n60-72 min\nmasking example with a real image\n\n\n72-75 min\nexit question"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nCourse pattern; images as functions, arrays, vectors; pixel grids and NumPy representation.\n\n\nSession 2\nForward models; masking and occlusion; missing information; assumptions."
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#session-1-images-as-data",
+    "href": "slides/week-01-image-formation.html#session-1-images-as-data",
+    "title": "Images as Mathematical Objects",
+    "section": "Session 1: Images as Data",
+    "text": "Session 1: Images as Data\n\nFunctions, arrays, vectors"
   },
   {
     "objectID": "slides/week-01-image-formation.html#the-course-pattern",
@@ -2140,6 +2231,13 @@
     "title": "Images as Mathematical Objects",
     "section": "Micro-Check",
     "text": "Micro-Check\n\n\n2 minutes\n\nFor a 4 \\times 5 image, where does pixel (i,j) = (3,2) appear in row-major vectorization?\n\nk = (i-1)n + j"
+  },
+  {
+    "objectID": "slides/week-01-image-formation.html#session-2-forward-models-and-missing-information",
+    "href": "slides/week-01-image-formation.html#session-2-forward-models-and-missing-information",
+    "title": "Images as Mathematical Objects",
+    "section": "Session 2: Forward Models and Missing Information",
+    "text": "Session 2: Forward Models and Missing Information\n\nWhat the data did and did not record"
   },
   {
     "objectID": "slides/week-01-image-formation.html#the-forward-model",
@@ -2293,14 +2391,14 @@
     "href": "slides/week-01-image-formation.html#mini-case-blurred-photograph",
     "title": "Images as Mathematical Objects",
     "section": "Mini-Case: Blurred Photograph",
-    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext class, we will make this precise and compute it."
+    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext week, we will make this precise and compute it."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#end-of-class-checkpoint",
-    "href": "slides/week-01-image-formation.html#end-of-class-checkpoint",
+    "objectID": "slides/week-01-image-formation.html#end-of-week-checkpoint",
+    "href": "slides/week-01-image-formation.html#end-of-week-checkpoint",
     "title": "Images as Mathematical Objects",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\n\nExit ticket\n\nFor each situation, identify x, y, A, and one reasonable prior:\n\na blurred phone photograph;\na CT scan with few projection angles;\nan old photograph with scratches and missing regions."
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\n\nExit ticket\n\nFor each situation, identify x, y, A, and one reasonable prior:\n\na blurred phone photograph;\na CT scan with few projection angles;\nan old photograph with scratches and missing regions."
   },
   {
     "objectID": "slides/week-01-image-formation.html#what-students-should-remember",
@@ -2310,18 +2408,18 @@
     "text": "What Students Should Remember\n\n\nA digital image can be treated as a function, matrix, or vector.\nLinear operators are a powerful first model for many controlled imaging systems.\nReal image formation can also be nonlinear and information-losing.\nReconstruction is difficult because the inverse map may be unstable, nonunique, or physically impossible.\nRegularization adds mathematical prior knowledge to stabilize recovery."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#after-class",
-    "href": "slides/week-01-image-formation.html#after-class",
+    "objectID": "slides/week-01-image-formation.html#after-this-week",
+    "href": "slides/week-01-image-formation.html#after-this-week",
     "title": "Images as Mathematical Objects",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-01-image-formation.html#next-time",
-    "href": "slides/week-01-image-formation.html#next-time",
+    "objectID": "slides/week-01-image-formation.html#next-week",
+    "href": "slides/week-01-image-formation.html#next-week",
     "title": "Images as Mathematical Objects",
-    "section": "Next Time",
-    "text": "Next Time\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
+    "section": "Next Week",
+    "text": "Next Week\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
   },
   {
     "objectID": "book/week-14-stability-robustness-ethics.html",
@@ -4347,7 +4445,7 @@
     "href": "instructor-readiness.html#current-readiness",
     "title": "Course Readiness Checklist",
     "section": "Current Readiness",
-    "text": "Current Readiness\nLast live smoke test: July 6, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nQuiz logistics\nReady\nLive quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long.\n\n\nProject boundary\nReady\nLive project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nCourse arc\nReady\nHome, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language."
+    "text": "Current Readiness\nLast live smoke test: July 6, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nQuiz logistics\nReady\nLive quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long.\n\n\nProject boundary\nReady\nLive project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nCourse arc\nReady\nHome, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language."
   },
   {
     "objectID": "instructor-readiness.html#before-the-semester",
@@ -4361,7 +4459,7 @@
     "href": "instructor-readiness.html#before-each-class",
     "title": "Course Readiness Checklist",
     "section": "Before Each Class",
-    "text": "Before Each Class\n\nOpen the class roadmap for the week.\nCheck the corresponding book chapter, slide deck, notebook, and Colab link.\nRun the notebook if code or dependencies changed.\nCheck whether the week has a quiz, project milestone, or special timing constraint.\nDecide which notebook result should become the main in-class discussion point."
+    "text": "Before Each Class\n\nOpen the weekly roadmap for the week.\nCheck the corresponding book chapter, slide deck, notebook, and Colab link.\nRun the notebook if code or dependencies changed.\nCheck whether the week has a quiz, project milestone, or special timing constraint.\nDecide which notebook result should become the main in-class discussion point."
   },
   {
     "objectID": "instructor-readiness.html#when-editing-the-site",
@@ -4389,7 +4487,7 @@
     "href": "quizzes.html",
     "title": "Quiz Information",
     "section": "",
-    "text": "This page summarizes student-facing quiz logistics. The syllabus remains the authority for grading, assessment policies, approved absences, and course rules.\nFor the ordinary class-by-class study workflow before and after quiz classes, see How To Prepare For Class.\nThere are two quizzes in the course. Each quiz is 20 minutes long."
+    "text": "This page summarizes student-facing quiz logistics. The syllabus remains the authority for grading, assessment policies, approved absences, and course rules.\nFor the ordinary weekly study workflow before and after quiz sessions, see How To Prepare For Class.\nThere are two quizzes in the course. Each quiz is 20 minutes long."
   },
   {
     "objectID": "quizzes.html#allowed-tools",
@@ -4410,7 +4508,7 @@
     "href": "quizzes.html#how-to-study",
     "title": "Quiz Information",
     "section": "How To Study",
-    "text": "How To Study\nUse the class roadmap as the main study guide:\n\nreview the corresponding book chapters;\nrerun the relevant notebooks and change one important parameter;\nanswer the relevant practice prompt in your own words;\nexplain the central identity of the course without relying on code:\n\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}."
+    "text": "How To Study\nUse the weekly roadmap as the main study guide:\n\nreview the corresponding book chapters;\nrerun the relevant notebooks and change one important parameter;\nanswer the relevant practice prompt in your own words;\nexplain the central identity of the course without relying on code:\n\n\n\\text{measurement}\n\\quad+\\quad\n\\text{prior or learned assumption}\n\\quad+\\quad\n\\text{algorithm}\n\\quad\\Longrightarrow\\quad\n\\text{reconstruction}."
   },
   {
     "objectID": "quizzes.html#what-will-not-be-published-here",
@@ -4676,7 +4774,7 @@
     "href": "index.html#how-to-use-this-site",
     "title": "MATH 435: Mathematical Imaging",
     "section": "How To Use This Site",
-    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nClass roadmap and slides\nFind the material for each class meeting.\n\n\nHow to prepare for class\nUse the class rhythm connecting book, slides, notebooks, practice, quizzes, and projects.\n\n\nUngraded practice\nUse optional practice prompts connected to the notebooks.\n\n\nQuiz information\nCheck quiz timing, allowed tools, and preparation guidance.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
+    "text": "How To Use This Site\nThe syllabus is the authority for course grading, assessment dates, and course policies. The other pages support teaching, practice, notebooks, and project preparation without adding separate graded work.\n\n\n\nResource\nUse it for\n\n\n\n\nWeekly roadmap and slides\nFind the material for each week and its two class meetings.\n\n\nHow to prepare for class\nUse the weekly rhythm connecting book, slides, notebooks, practice, quizzes, and projects.\n\n\nUngraded practice\nUse optional practice prompts connected to the notebooks.\n\n\nQuiz information\nCheck quiz timing, allowed tools, and preparation guidance.\n\n\nNotebooks\nRun and modify the computational experiments, including Colab links.\n\n\nOnline book\nRead the motivation chapter and fourteen narrative chapters.\n\n\nSyllabus\nCheck course policies, schedule, and grading.\n\n\nFinal project\nUnderstand the LLM-aware project, rubric, and oral defense.\n\n\nLLM-use statement\nRead how Codex assisted development and how instructor responsibility was maintained."
   },
   {
     "objectID": "index.html#course-arc",
@@ -4697,14 +4795,14 @@
     "href": "preparation.html",
     "title": "How To Prepare For Class",
     "section": "",
-    "text": "This page gives a class-by-class rhythm for using the course materials. Because the course normally meets twice in a teaching week, use this rhythm around each class meeting rather than as a calendar-week checklist. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the syllabus.\nThe course has several resources because they do different jobs:"
+    "text": "This page gives a weekly rhythm for using the course materials. Because the course normally meets twice per week, each weekly module has two live sessions, one book chapter, one slide deck, and one notebook. It does not add any graded work. Course grading, assessment dates, and formal policies are governed by the syllabus.\nThe course has several resources because they do different jobs:"
   },
   {
-    "objectID": "preparation.html#class-rhythm",
-    "href": "preparation.html#class-rhythm",
+    "objectID": "preparation.html#weekly-rhythm",
+    "href": "preparation.html#weekly-rhythm",
     "title": "How To Prepare For Class",
-    "section": "Class Rhythm",
-    "text": "Class Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore class\nOpen the class roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the first few slides to see the live path.\nOne question you want class to answer.\n\n\nDuring class\nUse the slides as the structure. Track the unknown image, the data, the forward process, the prior or regularizer, and the possible failure.\nAnnotated notes around the main model.\n\n\nAfter class\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nBetween-class consolidation\nTurn the notebook note into a short claim-evidence-limit note using the practice page.\nA study note you can reuse for quizzes, exams, and projects.\n\n\nBefore the next class\nRevisit the previous class only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
+    "section": "Weekly Rhythm",
+    "text": "Weekly Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore Session 1\nOpen the weekly roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the beginning of the weekly slide deck.\nOne question you want the week to answer.\n\n\nDuring Session 1\nUse the first part of the slides for concepts, derivations, and guided examples. Track the unknown image, data, forward process, prior, and possible failure.\nAnnotated notes around the main model.\n\n\nBetween Sessions\nRevisit the main model and identify what the data support and what the assumptions add.\nOne question or uncertainty to bring to Session 2.\n\n\nDuring Session 2\nUse the second part of the slides for consequences, computation, notebook discussion, quizzes, or project work.\nA clearer link between model, algorithm, and evidence.\n\n\nAfter Session 2\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nBefore the next week\nRevisit the previous module only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
   },
   {
     "objectID": "preparation.html#the-five-questions",
@@ -4718,21 +4816,21 @@
     "href": "preparation.html#a-minimal-30-minute-preparation",
     "title": "How To Prepare For Class",
     "section": "A Minimal 30-Minute Preparation",
-    "text": "A Minimal 30-Minute Preparation\nWhen time is short before class:\n\nRead the first page or introduction of the book chapter.\nLook at the timing slide in the corresponding deck.\nFind the main formula or model.\nWrite one question about what the model assumes.\nCheck whether the class unit has a quiz, project milestone, or special constraint.\n\nThis is enough to enter the class discussion without treating the materials as a pile of disconnected files."
+    "text": "A Minimal 30-Minute Preparation\nWhen time is short before class:\n\nRead the first page or introduction of the book chapter.\nLook at the two-session plan slide in the corresponding deck.\nFind the main formula or model.\nWrite one question about what the model assumes.\nCheck whether the week has a quiz, project milestone, or special constraint.\n\nThis is enough to enter the class discussion without treating the materials as a pile of disconnected files."
   },
   {
     "objectID": "preparation.html#quiz-weeks",
     "href": "preparation.html#quiz-weeks",
     "title": "How To Prepare For Class",
     "section": "Quiz Weeks",
-    "text": "Quiz Weeks\nWeeks 4 and 12 reserve the final 20 minutes for quizzes. On those weeks:\n\nuse the quiz information page to check timing and permitted tools;\nreview the practice prompts from the preceding material;\nfocus on explaining concepts and models without code;\nremember that only a basic calculator is permitted unless the instructor explicitly announces a change.\n\nActual quiz questions and solution keys are not published on this website before the quizzes."
+    "text": "Quiz Weeks\nWeeks 4 and 12 reserve the final 20 minutes of the second meeting for quizzes. On those weeks:\n\nuse the quiz information page to check timing and permitted tools;\nreview the practice prompts from the preceding material;\nfocus on explaining concepts and models without code;\nremember that only a basic calculator is permitted unless the instructor explicitly announces a change.\n\nActual quiz questions and solution keys are not published on this website before the quizzes."
   },
   {
     "objectID": "preparation.html#project-weeks",
     "href": "preparation.html#project-weeks",
     "title": "How To Prepare For Class",
     "section": "Project Weeks",
-    "text": "Project Weeks\nThe project should grow from the same class rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
+    "text": "Project Weeks\nThe project should grow from the same weekly rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
   },
   {
     "objectID": "preparation.html#llm-use-while-studying",
@@ -4760,7 +4858,7 @@
     "href": "practice.html#how-to-use-this-page",
     "title": "Ungraded Practice",
     "section": "How To Use This Page",
-    "text": "How To Use This Page\nFor each class unit:\n\nread the connected book chapter;\nattend class and use the slide deck as the discussion structure;\nrun the notebook in Python or Google Colab;\nwrite a short four-thread or claim-evidence-limit note for yourself.\n\nThe notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.\nFor the full class workflow connecting book, slides, notebooks, and these practice notes, see How To Prepare For Class."
+    "text": "How To Use This Page\nFor each week/module:\n\nread the connected book chapter;\nattend both sessions and use the weekly slide deck as the discussion structure;\nrun the notebook in Python or Google Colab;\nwrite a short four-thread or claim-evidence-limit note for yourself.\n\nThe notes are useful preparation for quizzes, exams, project work, and the oral defense, but they are not an additional grading category.\nFor the full class workflow connecting book, slides, notebooks, and these practice notes, see How To Prepare For Class."
   },
   {
     "objectID": "practice.html#claim-evidence-limit-template",
@@ -4813,7 +4911,7 @@
     "href": "book/index.html#how-to-use-this-book",
     "title": "Mathematical Imaging",
     "section": "How To Use This Book",
-    "text": "How To Use This Book\nRead each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The preparation rhythm gives the class-by-class sequence that connects these resources.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat prior, regularizer, or learned information is being used?\nWhat can go wrong?\n\nThe same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.",
+    "text": "How To Use This Book\nRead each chapter before or after the corresponding week. Use the slides for the two-session lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The preparation rhythm gives the weekly sequence that connects these resources.\nFor each chapter, students should be able to answer:\n\nWhat is the mathematical object?\nWhat is the forward model?\nWhat information is lost or degraded?\nWhat computation tests the idea?\nWhat prior, regularizer, or learned information is being used?\nWhat can go wrong?\n\nThe same six questions apply to classical and neural methods. The notation changes, but the responsibility does not.",
     "crumbs": [
       "Book",
       "Book home"
@@ -6713,30 +6811,30 @@
   {
     "objectID": "classes.html",
     "href": "classes.html",
-    "title": "Class Roadmap",
+    "title": "Weekly Roadmap",
     "section": "",
-    "text": "This page is the class-material entry point for the course. Because the course normally meets twice for each syllabus topic period, the guidance below is organized by class unit rather than by calendar blocks.\nMost slide decks organize 75-minute class meetings. Class units 4 and 12 reserve the final 20 minutes for quizzes, so those decks are paced as 55-minute teaching sessions. The book chapters give the slower narrative version. The notebooks are where students experiment with the ideas computationally.\nUse each row as a resource checklist. The preparation rhythm explains how to move from book to slides to notebook to practice without treating the materials as separate tasks.\nPractice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus.\nQuiz 1 is attached to class unit 4 and Quiz 2 to class unit 12. Each quiz is 20 minutes long. See the quiz information page for student-facing logistics and preparation guidance."
+    "text": "This page is the weekly entry point for the course materials. The course normally meets twice per week, so each row below is a week/module, not a single 75-minute meeting.\nEach week has one mathematical story:\nHolidays and official announcements may shift the exact calendar dates. The syllabus remains the authority for grading, assessment dates, and course policies.\nQuiz 1 is planned for the final 20 minutes of the second meeting in Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting in Week 12. See the quiz information page for student-facing logistics and preparation guidance."
   },
   {
-    "objectID": "classes.html#at-a-glance",
-    "href": "classes.html#at-a-glance",
-    "title": "Class Roadmap",
-    "section": "At a Glance",
-    "text": "At a Glance\n\n\n\nClass\nTopic\nSlides\nNotebook\nBook\n\n\n\n\n1\nImages as mathematical objects\nslides\nnotebook / Colab\nchapter\n\n\n2\nConvolution and blur\nslides\nnotebook / Colab\nchapter\n\n\n3\nFourier transform in imaging\nslides\nnotebook / Colab\nchapter\n\n\n4\nNoise models and likelihoods + Quiz 1\nslides\nnotebook / Colab\nchapter\n\n\n5\nIll-posed inverse problems\nslides\nnotebook / Colab\nchapter\n\n\n6\nTikhonov regularization\nslides\nnotebook / Colab\nchapter\n\n\n7\nVariational formulation\nslides\nnotebook / Colab\nchapter\n\n\n8\nTotal Variation regularization\nslides\nnotebook / Colab\nchapter\n\n\n9\nOptimization methods\nslides\nnotebook / Colab\nchapter\n\n\n10\nSparse reconstruction\nslides\nnotebook / Colab\nchapter\n\n\n11\nWavelets and multiscale representation\nslides\nnotebook / Colab\nchapter\n\n\n12\nModel-based vs data-driven imaging + Quiz 2\nslides\nnotebook / Colab\nchapter\n\n\n13\nPlug-and-play and learned regularization\nslides\nnotebook / Colab\nchapter\n\n\n14\nStability, robustness, and ethics\nslides\nnotebook / Colab\nchapter\n\n\n15\nProject presentations and oral defenses\nproject page\n-\n-"
+    "objectID": "classes.html#weekly-modules",
+    "href": "classes.html#weekly-modules",
+    "title": "Weekly Roadmap",
+    "section": "Weekly Modules",
+    "text": "Weekly Modules\n\n\n\nWeek\nTopic\nSession 1\nSession 2\nMaterials\n\n\n\n\n1\nImages as mathematical objects\nImages as functions, arrays, and vectors.\nForward models, masking, missing information, and first inverse problems.\nslides, book, notebook, Colab\n\n\n2\nConvolution and blur\nKernels, point spread functions, and convolution as a forward model.\nBoundary conditions, matrix view, and why deblurring is unstable.\nslides, book, notebook, Colab\n\n\n3\nFourier transform in imaging\nFourier as projection, energy, Pythagoras, and global support.\n2D spectra, convolution theorem, filtering, and stabilized deblurring.\nslides, book, notebook, Colab\n\n\n4\nNoise models and likelihoods\nGaussian and Poisson noise as measurement models.\nLikelihoods as data terms, then Quiz 1 in the final 20 minutes.\nslides, book, notebook, Colab\n\n\n5\nIll-posed inverse problems\nWell-posedness, non-uniqueness, missing data, and stability.\nSingular values, noise amplification, condition numbers, and stabilization.\nslides, book, notebook, Colab\n\n\n6\nTikhonov regularization\nRegularized least squares and normal equations.\nSVD interpretation, choosing lambda, bias-variance, and project proposal.\nslides, book, notebook, Colab\n\n\n7\nVariational formulation\nEnergies as models, convexity, and Euler-Lagrange equations.\nGradient descent intuition, quadratic denoising, and model limitations.\nslides, book, notebook, Colab\n\n\n8\nTotal Variation regularization\nTV, sparse gradients, edge preservation, and one-dimensional examples.\nImage denoising, staircasing, modeling limits, and practice synthesis.\nslides, book, notebook, Colab\n\n\n9\nOptimization methods\nConvexity, smooth optimization, gradient descent, and step size.\nNonsmooth terms, proximal operators, ISTA, and convergence evidence.\nslides, book, notebook, Colab\n\n\n10\nSparse reconstruction\nSparsity, representation choice, and l1 versus l2 regularization.\nUnderdetermined recovery, compressed sensing intuition, and sparse images.\nslides, book, notebook, Colab\n\n\n11\nWavelets and multiscale representation\nFourier global support, wavelet localization, Haar intuition, and multiscale energy.\n2D subbands, thresholding, compression, denoising, and wavelet limits.\nslides, book, notebook, Colab\n\n\n12\nModel-based vs data-driven imaging\nModel-based imaging, data-driven imaging, and neural networks as operators.\nLearned priors, distribution shift, evaluation, then Quiz 2 in the final 20 minutes.\nslides, book, notebook, Colab\n\n\n13\nPlug-and-play and learned regularization\nProximal algorithms, denoising interpretation, and the plug-and-play update.\nLearned regularization, deblurring, fixed points, convergence, and trust.\nslides, book, notebook, Colab\n\n\n14\nStability, robustness, and ethics\nStability tests, perturbation amplification, robustness axes, and project evidence.\nHallucination risk, ethics, documentation, and project report preparation.\nslides, book, notebook, Colab\n\n\n15\nProject presentations and oral defenses\nProject presentations and discussion.\nIndividual oral defenses and course synthesis.\nproject page, syllabus"
   },
   {
-    "objectID": "classes.html#work-plan",
-    "href": "classes.html#work-plan",
-    "title": "Class Roadmap",
-    "section": "Work Plan",
-    "text": "Work Plan\n\n\n\n\n\n\n\n\n\n\n\nClass\nBefore Class\nIn Class\nAfter Class\nUngraded Practice Note\nCourse Identity\n\n\n\n\n1\nRead the image formation chapter.\nDiscuss images as arrays, vectors, and unknowns.\nRun the corresponding notebook and modify the mask.\nState what the observation records and what it discards.\nAn image becomes an unknown x; data are produced by a forward process.\n\n\n2\nRead the convolution and blur chapter.\nInterpret blur kernels, boundary conditions, and point spread functions.\nRun the corresponding notebook and vary blur strength.\nDescribe one modeling assumption behind convolution.\nThe forward model A can be a blur operator, but its assumptions matter.\n\n\n3\nRead the Fourier chapter.\nConnect projections, energy, and frequency-domain filtering.\nRun the corresponding notebook and change cutoff or regularization.\nExplain why one Fourier coefficient affects the whole image.\nFourier gives global orthogonal directions and a Pythagorean energy view.\n\n\n4\nRead the noise and likelihood chapter.\nCompare Gaussian and Poisson noise models, then complete Quiz 1 (20 minutes).\nRun the corresponding notebook and change photon counts or noise level.\nMatch a noise model to a data-fidelity term.\nLikelihood decides what it means for a reconstruction to fit the data.\n\n\n5\nRead the ill-posed inverse problems chapter.\nDiagnose non-uniqueness, instability, and singular values.\nRun the corresponding notebook and inspect SVD coefficients.\nName one supported direction and one invisible direction.\nInverse problems fail when data are missing, unstable, or nonunique.\n\n\n6\nRead the Tikhonov chapter and the project page.\nDerive the regularized least-squares model and assign projects.\nRun the corresponding notebook and sweep lambda.\nDraft or refine a project topic and first forward model.\nRegularization adds a prior so weak data directions do not dominate.\n\n\n7\nRead the variational formulation chapter.\nTurn reconstruction into energy minimization.\nRun the corresponding notebook and track energy/residuals.\nIdentify data term, prior term, and optimality condition.\nReconstruction becomes data agreement plus image structure.\n\n\n8\nRead the Total Variation chapter.\nCompare quadratic smoothing with TV edge preservation.\nRun the corresponding notebook and vary TV weight.\nExplain one edge-preservation success and one staircasing failure.\nA prior can protect edges, but it can also create artifacts.\n\n\n9\nRead the optimization chapter.\nStudy gradient descent, proximal steps, and ISTA.\nRun the corresponding notebook and change step size or lambda.\nReport convergence evidence, not only a final image.\nAlgorithms turn models and priors into computable reconstructions.\n\n\n10\nRead the sparse reconstruction chapter.\nCompare l1 and l2 solutions in underdetermined problems.\nRun the corresponding notebook and change sampling density.\nState where the unknown is sparse and where that prior fails.\nSparse priors can recover information only when the representation fits.\n\n\n11\nRead the wavelets chapter.\nContrast global Fourier vectors with compactly supported wavelets.\nRun the corresponding notebook and compare thresholds/wavelets.\nRelate coefficient energy to local image features.\nWavelets make sparse, multiscale, localized priors possible.\n\n\n12\nRead the model-based vs data-driven chapter.\nInterpret learned priors and training data as part of the model, then complete Quiz 2 (20 minutes).\nRun the corresponding notebook and test distribution shift.\nDescribe what the training data teach the method to expect.\nNeural networks act like learned inverse-problem priors or operators.\n\n\n13\nRead the plug-and-play chapter.\nCombine data-consistency steps with denoisers.\nRun the corresponding notebook and compare residual/change/RMSE.\nExplain what the denoiser contributes and what it cannot prove.\nLearned regularization can be inserted into iterative reconstruction.\n\n\n14\nRead the stability, robustness, and ethics chapter.\nBuild reliability checks and project defense arguments.\nRun the corresponding notebook and complete a claim-evidence table.\nPrepare project failure case and oral-defense checklist.\nA reconstruction is trustworthy only with tested limits.\n\n\n15\nReview the project page and final notebook/report.\nPresent results and complete individual oral defense.\nArchive code, report, and LLM-use statement.\nDefend the whole project without relying on the LLM.\nOwnership is shown by explaining the model, code, evidence, and failure cases."
+    "objectID": "classes.html#weekly-workflow",
+    "href": "classes.html#weekly-workflow",
+    "title": "Weekly Roadmap",
+    "section": "Weekly Workflow",
+    "text": "Weekly Workflow\n\n\n\n\n\n\n\nMoment\nWhat To Do\n\n\n\n\nBefore Session 1\nRead enough of the book chapter to recognize the main objects, formulas, and modeling question.\n\n\nSession 1\nUse the first part of the slide deck for concepts, derivations, and guided examples.\n\n\nBetween Sessions\nRevisit the main model and write one question about what the data support or what the model assumes.\n\n\nSession 2\nUse the second part of the slide deck for consequences, computation, notebook discussion, quizzes, or project work.\n\n\nAfter Session 2\nRun the notebook, change at least one important parameter, and write a short practice note.\n\n\n\nPractice notes are study aids, not separate graded assignments. Course grading is governed by the syllabus."
   },
   {
     "objectID": "classes.html#project-preparation-guide",
     "href": "classes.html#project-preparation-guide",
-    "title": "Class Roadmap",
+    "title": "Weekly Roadmap",
     "section": "Project Preparation Guide",
-    "text": "Project Preparation Guide\nThe syllabus defines the assessed project moments as the proposal, the report, and the oral defense. In this roadmap, they are represented by class units 6, 14, and 15. The other rows below are planning aids for the final project described on the project page. They do not create a separate grading category.\n\n\n\n\n\n\n\nClass\nMilestone\n\n\n\n\n6\nProject proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question.\n\n\n7\nPlanning feedback: refine the model statement, data access, and implementation choices.\n\n\n8\nBaseline preparation: create degraded data and run a simple reconstruction.\n\n\n10\nMethod development: implement two methods on the same test cases.\n\n\n12\nEvidence development: add a parameter sweep, quantitative metric, and first robustness or failure test.\n\n\n14\nProject report: final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.\n\n\n15\nFinal submission and individual oral defense."
+    "text": "Project Preparation Guide\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the project page. They do not create a separate grading category.\n\n\n\n\n\n\n\nWeek\nMilestone\n\n\n\n\n6\nProject proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question.\n\n\n7\nPlanning feedback: refine the model statement, data access, and implementation choices.\n\n\n8\nBaseline preparation: create degraded data and run a simple reconstruction.\n\n\n10\nMethod development: implement two methods on the same test cases.\n\n\n12\nEvidence development: add a parameter sweep, quantitative metric, and first robustness or failure test.\n\n\n14\nProject report: final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.\n\n\n15\nFinal submission and individual oral defense."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#opening-question",
@@ -6746,25 +6844,32 @@
     "text": "Opening Question\n\nFrom pixels to operators\n\nWhat does it mean, mathematically, for an image to be blurred?"
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#today",
-    "href": "slides/week-02-convolution-blur.html#today",
+    "objectID": "slides/week-02-convolution-blur.html#this-week",
+    "href": "slides/week-02-convolution-blur.html#this-week",
     "title": "Convolution and Blur",
-    "section": "Today",
-    "text": "Today\n\n\nBuild convolution from a local weighted average.\nInterpret the point spread function (PSF).\nApply 2D convolution to real images.\nUnderstand boundary conditions.\nSee why deblurring is already a hard inverse problem."
+    "section": "This Week",
+    "text": "This Week\n\n\nBuild convolution from a local weighted average.\nInterpret the point spread function (PSF).\nApply 2D convolution to real images.\nUnderstand boundary conditions.\nSee why deblurring is already a hard inverse problem."
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#minute-live-path",
-    "href": "slides/week-02-convolution-blur.html#minute-live-path",
+    "objectID": "slides/week-02-convolution-blur.html#two-session-plan",
+    "href": "slides/week-02-convolution-blur.html#two-session-plan",
     "title": "Convolution and Blur",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-10 min\nreview fixed forward models\n\n\n10-25 min\n1D convolution by hand\n\n\n25-40 min\n2D convolution and PSF\n\n\n40-55 min\nreal image blur demo\n\n\n55-65 min\nboundary conditions\n\n\n65-72 min\nwhy deblurring is hard\n\n\n72-75 min\nexit question"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\n1D and 2D convolution; kernels; point spread functions; real image blur.\n\n\nSession 2\nBoundary conditions; matrix view; deblurring instability and modeling caveats."
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#reminder-from-class-1",
-    "href": "slides/week-02-convolution-blur.html#reminder-from-class-1",
+    "objectID": "slides/week-02-convolution-blur.html#session-1-blur-as-a-forward-model",
+    "href": "slides/week-02-convolution-blur.html#session-1-blur-as-a-forward-model",
     "title": "Convolution and Blur",
-    "section": "Reminder from Class 1",
-    "text": "Reminder from Class 1\n\nFor a fixed measurement rule, we often write\n\ny = Ax + \\eta.\n\nToday, A will be a blur operator.\n\n\nThe blur kernel is assumed fixed. That is different from unknown scene occlusion or nonlinear visibility."
+    "section": "Session 1: Blur as a Forward Model",
+    "text": "Session 1: Blur as a Forward Model\n\nLocal averages become operators"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#reminder-from-week-1",
+    "href": "slides/week-02-convolution-blur.html#reminder-from-week-1",
+    "title": "Convolution and Blur",
+    "section": "Reminder from Week 1",
+    "text": "Reminder from Week 1\n\nFor a fixed measurement rule, we often write\n\ny = Ax + \\eta.\n\nThis week, A will be a blur operator.\n\n\nThe blur kernel is assumed fixed. That is different from unknown scene occlusion or nonlinear visibility."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#part-1-1d-convolution",
@@ -6893,11 +6998,11 @@
     "text": "Python Demo: Blur a Real Image\n\nfrom skimage import data\nfrom scipy import signal\nimport numpy as np\n\nimage = data.camera().astype(float) / 255\nkernel = np.ones((13, 13)) / (13 * 13)\n\nblurred = signal.convolve2d(\n    image, kernel, mode=\"same\", boundary=\"symm\"\n)"
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#run-todays-code",
-    "href": "slides/week-02-convolution-blur.html#run-todays-code",
+    "objectID": "slides/week-02-convolution-blur.html#run-this-weeks-code",
+    "href": "slides/week-02-convolution-blur.html#run-this-weeks-code",
     "title": "Convolution and Blur",
-    "section": "Run Today’s Code",
-    "text": "Run Today’s Code\nFrom the repository root:\npython3 examples/week02_convolution_blur.py\npython3 examples/make_week02_figures.py\n./scripts/quarto render\n\nThe first command prints numerical outputs. The second regenerates the figures used in this deck."
+    "section": "Run This Week’s Code",
+    "text": "Run This Week’s Code\nFrom the repository root:\npython3 examples/week02_convolution_blur.py\npython3 examples/make_week02_figures.py\n./scripts/quarto render\n\nThe first command prints numerical outputs. The second regenerates the figures used in this deck."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#why-normalize-the-kernel",
@@ -6912,6 +7017,13 @@
     "title": "Convolution and Blur",
     "section": "Mini-Check",
     "text": "Mini-Check\n\n\n2 minutes\n\nIf a 3 \\times 3 box blur has equal weights, what is each weight?\nWhat happens if the weights sum to 2 instead of 1?"
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#session-2-boundaries-matrices-and-deblurring",
+    "href": "slides/week-02-convolution-blur.html#session-2-boundaries-matrices-and-deblurring",
+    "title": "Convolution and Blur",
+    "section": "Session 2: Boundaries, Matrices, and Deblurring",
+    "text": "Session 2: Boundaries, Matrices, and Deblurring\n\nThe model choices become visible at the edges"
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#part-4-boundary-conditions",
@@ -6953,7 +7065,7 @@
     "href": "slides/week-02-convolution-blur.html#part-5-matrix-view",
     "title": "Convolution and Blur",
     "section": "Part 5: Matrix View",
-    "text": "Part 5: Matrix View\n\nBack to Class 1\n\nConvolution is a linear operator when the kernel is fixed"
+    "text": "Part 5: Matrix View\n\nBack to Week 1\n\nConvolution is a linear operator when the kernel is fixed"
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#convolution-as-a-matrix",
@@ -7012,11 +7124,11 @@
     "text": "In-Class Modeling Question\n\n\nDiscuss\n\nYou receive a blurry photo from a phone camera.\nWhat evidence would make you believe the blur is approximately convolutional?\nWhat evidence would make you reject the convolution model?"
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#end-of-class-checkpoint",
-    "href": "slides/week-02-convolution-blur.html#end-of-class-checkpoint",
+    "objectID": "slides/week-02-convolution-blur.html#end-of-week-checkpoint",
+    "href": "slides/week-02-convolution-blur.html#end-of-week-checkpoint",
     "title": "Convolution and Blur",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nFor each item, give one sentence:\n\nWhat is a PSF?\nWhy should a blur kernel often sum to 1?\nName two boundary conditions.\nWhy is deblurring sensitive to noise?"
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\nFor each item, give one sentence:\n\nWhat is a PSF?\nWhy should a blur kernel often sum to 1?\nName two boundary conditions.\nWhy is deblurring sensitive to noise?"
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#what-students-should-remember",
@@ -7026,18 +7138,18 @@
     "text": "What Students Should Remember\n\n\nConvolution is a local weighted average.\nThe PSF is the blur kernel of an imaging system.\nBoundary conditions are part of the model.\nFixed convolution is linear, but not all image formation is convolution.\nDeblurring is an inverse problem and is usually unstable."
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#after-class",
-    "href": "slides/week-02-convolution-blur.html#after-class",
+    "objectID": "slides/week-02-convolution-blur.html#after-this-week",
+    "href": "slides/week-02-convolution-blur.html#after-this-week",
     "title": "Convolution and Blur",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#next-time",
-    "href": "slides/week-02-convolution-blur.html#next-time",
+    "objectID": "slides/week-02-convolution-blur.html#next-week",
+    "href": "slides/week-02-convolution-blur.html#next-week",
     "title": "Convolution and Blur",
-    "section": "Next Time",
-    "text": "Next Time\nFourier transform in imaging:\n\nfrequency interpretation of blur;\nconvolution theorem;\nlow-pass and high-pass behavior;\nwhy inverse filtering amplifies noise."
+    "section": "Next Week",
+    "text": "Next Week\nFourier transform in imaging:\n\nfrequency interpretation of blur;\nconvolution theorem;\nlow-pass and high-pass behavior;\nwhy inverse filtering amplifies noise."
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#opening-question",
@@ -7047,25 +7159,32 @@
     "text": "Opening Question\n\nFrom images to statistics\n\nIf two pixels have the same recorded value, do we have the same confidence in both of them?"
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#today",
-    "href": "slides/week-04-noise-likelihood.html#today",
+    "objectID": "slides/week-04-noise-likelihood.html#this-week",
+    "href": "slides/week-04-noise-likelihood.html#this-week",
     "title": "Noise Models and Likelihoods",
-    "section": "Today",
-    "text": "Today\n\n\nDistinguish deterministic degradation from random noise.\nModel additive Gaussian noise.\nModel photon-counting Poisson noise.\nDerive likelihood-based data terms for reconstruction.\nLeave the final 20 minutes for Quiz 1."
+    "section": "This Week",
+    "text": "This Week\n\n\nDistinguish deterministic degradation from random noise.\nModel additive Gaussian noise.\nModel photon-counting Poisson noise.\nDerive likelihood-based data terms for reconstruction.\nLeave the final 20 minutes for Quiz 1."
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#teaching-plan-quiz-1",
-    "href": "slides/week-04-noise-likelihood.html#teaching-plan-quiz-1",
+    "objectID": "slides/week-04-noise-likelihood.html#two-session-plan-quiz-1",
+    "href": "slides/week-04-noise-likelihood.html#two-session-plan-quiz-1",
     "title": "Noise Models and Likelihoods",
-    "section": "Teaching Plan + Quiz 1",
-    "text": "Teaching Plan + Quiz 1\n\n\n\nTime\nWork\n\n\n\n\n0-5 min\nrecap Fourier and inverse filtering\n\n\n5-17 min\nobserve noise and introduce likelihood\n\n\n17-29 min\nGaussian noise and least squares\n\n\n29-41 min\nPoisson noise and photon counts\n\n\n41-52 min\nlikelihoods as data-fidelity terms\n\n\n52-55 min\nquiz transition\n\n\n55-75 min\nQuiz 1 (20 minutes)"
+    "section": "Two-Session Plan + Quiz 1",
+    "text": "Two-Session Plan + Quiz 1\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nObservation models; Gaussian noise; Poisson photon-counting noise.\n\n\nSession 2\nLikelihoods as data terms; repetition limits; reconstruction view; Quiz 1 in the final 20 minutes."
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#bridge-from-class-3",
-    "href": "slides/week-04-noise-likelihood.html#bridge-from-class-3",
+    "objectID": "slides/week-04-noise-likelihood.html#session-1-noise-as-a-measurement-model",
+    "href": "slides/week-04-noise-likelihood.html#session-1-noise-as-a-measurement-model",
     "title": "Noise Models and Likelihoods",
-    "section": "Bridge from Class 3",
-    "text": "Bridge from Class 3\nLast time we wrote a noisy deblurring model as\n\n\\widehat{y} = \\widehat{h}\\widehat{x} + \\widehat{\\eta}.\n\n\nWe discussed why deblurring amplifies noise. Today: what is that noise?"
+    "section": "Session 1: Noise as a Measurement Model",
+    "text": "Session 1: Noise as a Measurement Model\n\nWhat kind of uncertainty did the sensor create?"
+  },
+  {
+    "objectID": "slides/week-04-noise-likelihood.html#bridge-from-week-3",
+    "href": "slides/week-04-noise-likelihood.html#bridge-from-week-3",
+    "title": "Noise Models and Likelihoods",
+    "section": "Bridge from Week 3",
+    "text": "Bridge from Week 3\nLast time we wrote a noisy deblurring model as\n\n\\widehat{y} = \\widehat{h}\\widehat{x} + \\widehat{\\eta}.\n\n\nWe discussed why deblurring amplifies noise. This week: what is that noise?"
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#observation-model",
@@ -7271,6 +7390,13 @@
     "text": "Low Light Is Hard\n\nWhich is more reliable: observing 5 photons or 500 photons?\n\n\nLow-light imaging is difficult because the data are made of small random counts."
   },
   {
+    "objectID": "slides/week-04-noise-likelihood.html#session-2-likelihoods-and-quiz-1",
+    "href": "slides/week-04-noise-likelihood.html#session-2-likelihoods-and-quiz-1",
+    "title": "Noise Models and Likelihoods",
+    "section": "Session 2: Likelihoods and Quiz 1",
+    "text": "Session 2: Likelihoods and Quiz 1\n\nFrom noise model to data term"
+  },
+  {
     "objectID": "slides/week-04-noise-likelihood.html#poisson-likelihood",
     "href": "slides/week-04-noise-likelihood.html#poisson-likelihood",
     "title": "Noise Models and Likelihoods",
@@ -7376,11 +7502,11 @@
     "text": "What Students Should Remember\n\n\nA noise model is a probability law for measurements.\nGaussian noise has constant variance and leads to least squares.\nPoisson noise models counts and has variance equal to the mean.\nLikelihoods turn measurement assumptions into reconstruction objectives.\nRegularization is still needed when data alone do not determine a stable image."
   },
   {
-    "objectID": "slides/week-04-noise-likelihood.html#after-class",
-    "href": "slides/week-04-noise-likelihood.html#after-class",
+    "objectID": "slides/week-04-noise-likelihood.html#after-this-week",
+    "href": "slides/week-04-noise-likelihood.html#after-this-week",
     "title": "Noise Models and Likelihoods",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change Gaussian sigma or Poisson peak_photons.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change Gaussian sigma or Poisson peak_photons.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#opening-question",
@@ -7390,25 +7516,32 @@
     "text": "Opening Question\n\nStabilizing an inverse\n\nIf exact inversion is unstable, what should we give up: exact data fit, sharpness, or both?"
   },
   {
-    "objectID": "slides/week-06-tikhonov-regularization.html#today",
-    "href": "slides/week-06-tikhonov-regularization.html#today",
+    "objectID": "slides/week-06-tikhonov-regularization.html#this-week",
+    "href": "slides/week-06-tikhonov-regularization.html#this-week",
     "title": "Tikhonov Regularization",
-    "section": "Today",
-    "text": "Today\n\n\nFormulate Tikhonov regularization.\nDerive the normal equations.\nInterpret the regularization parameter.\nRead Tikhonov filter factors.\nExplain the bias-stability tradeoff."
+    "section": "This Week",
+    "text": "This Week\n\n\nFormulate Tikhonov regularization.\nDerive the normal equations.\nInterpret the regularization parameter.\nRead Tikhonov filter factors.\nExplain the bias-stability tradeoff."
   },
   {
-    "objectID": "slides/week-06-tikhonov-regularization.html#minute-live-path",
-    "href": "slides/week-06-tikhonov-regularization.html#minute-live-path",
+    "objectID": "slides/week-06-tikhonov-regularization.html#two-session-plan",
+    "href": "slides/week-06-tikhonov-regularization.html#two-session-plan",
     "title": "Tikhonov Regularization",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap ill-posedness and small singular values\n\n\n8-20 min\npenalized least squares\n\n\n20-34 min\nnormal equations and closed form\n\n\n34-48 min\nSVD and filter factors\n\n\n48-60 min\nparameter effects\n\n\n60-68 min\nbias-variance tradeoff\n\n\n68-72 min\nproject assignment note\n\n\n72-75 min\nexit question"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nTikhonov model; penalized least squares; normal equations and closed form.\n\n\nSession 2\nSVD filter factors; choosing lambda; bias-variance; project proposal."
   },
   {
-    "objectID": "slides/week-06-tikhonov-regularization.html#bridge-from-class-5",
-    "href": "slides/week-06-tikhonov-regularization.html#bridge-from-class-5",
+    "objectID": "slides/week-06-tikhonov-regularization.html#session-1-stabilizing-least-squares",
+    "href": "slides/week-06-tikhonov-regularization.html#session-1-stabilizing-least-squares",
     "title": "Tikhonov Regularization",
-    "section": "Bridge from Class 5",
-    "text": "Bridge from Class 5\nClass 5 showed that direct inversion may amplify noise:\n\n\\frac{\\langle \\eta,u_i\\rangle}{\\sigma_i}.\n\n\nHow can we keep useful directions without exploding in unstable directions?"
+    "section": "Session 1: Stabilizing Least Squares",
+    "text": "Session 1: Stabilizing Least Squares\n\nAdd a prior before inverting"
+  },
+  {
+    "objectID": "slides/week-06-tikhonov-regularization.html#bridge-from-week-5",
+    "href": "slides/week-06-tikhonov-regularization.html#bridge-from-week-5",
+    "title": "Tikhonov Regularization",
+    "section": "Bridge from Week 5",
+    "text": "Bridge from Week 5\nWeek 5 showed that direct inversion may amplify noise:\n\n\\frac{\\langle \\eta,u_i\\rangle}{\\sigma_i}.\n\n\nHow can we keep useful directions without exploding in unstable directions?"
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#the-basic-model",
@@ -7528,6 +7661,13 @@
     "title": "Tikhonov Regularization",
     "section": "Python Demo: Normal Equations",
     "text": "Python Demo: Normal Equations\n\nlhs = A.T @ A + lam * np.eye(n)\nrhs = A.T @ y\nx_lam = np.linalg.solve(lhs, rhs)\n\n\nThis is the direct matrix form for small educational examples."
+  },
+  {
+    "objectID": "slides/week-06-tikhonov-regularization.html#session-2-filter-factors-and-parameter-choice",
+    "href": "slides/week-06-tikhonov-regularization.html#session-2-filter-factors-and-parameter-choice",
+    "title": "Tikhonov Regularization",
+    "section": "Session 2: Filter Factors and Parameter Choice",
+    "text": "Session 2: Filter Factors and Parameter Choice\n\nHow lambda changes each direction"
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#part-3-svd-interpretation",
@@ -7660,7 +7800,7 @@
     "href": "slides/week-06-tikhonov-regularization.html#notebook-demo-and-code-reference",
     "title": "Tikhonov Regularization",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#in-class-notebook-activity",
@@ -7677,11 +7817,11 @@
     "text": "Quiz-Style Check\n\nFor each expression, identify its role:\n\n\\|Ax-y\\|_2^2;\n\\lambda\\|x\\|_2^2;\n(A^TA+\\lambda I)x=A^Ty;\n\\sigma_i/(\\sigma_i^2+\\lambda)."
   },
   {
-    "objectID": "slides/week-06-tikhonov-regularization.html#end-of-class-checkpoint",
-    "href": "slides/week-06-tikhonov-regularization.html#end-of-class-checkpoint",
+    "objectID": "slides/week-06-tikhonov-regularization.html#end-of-week-checkpoint",
+    "href": "slides/week-06-tikhonov-regularization.html#end-of-week-checkpoint",
     "title": "Tikhonov Regularization",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nAnswer in one sentence each:\n\nWhat does Tikhonov regularization minimize?\nWhy does \\lambda I improve stability?\nWhat happens when \\lambda is too small?\nWhat happens when \\lambda is too large?"
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\nAnswer in one sentence each:\n\nWhat does Tikhonov regularization minimize?\nWhy does \\lambda I improve stability?\nWhat happens when \\lambda is too small?\nWhat happens when \\lambda is too large?"
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#what-students-should-remember",
@@ -7691,18 +7831,18 @@
     "text": "What Students Should Remember\n\n\nTikhonov solves \\min_x \\|Ax-y\\|_2^2+\\lambda\\|x\\|_2^2.\nThe normal equations are (A^TA+\\lambda I)x=A^Ty.\nIn SVD coordinates, Tikhonov damps weak singular directions.\n\\lambda controls a bias-stability tradeoff.\nRegularization is not magic; it encodes a modeling choice."
   },
   {
-    "objectID": "slides/week-06-tikhonov-regularization.html#after-class",
-    "href": "slides/week-06-tikhonov-regularization.html#after-class",
+    "objectID": "slides/week-06-tikhonov-regularization.html#after-this-week",
+    "href": "slides/week-06-tikhonov-regularization.html#after-this-week",
     "title": "Tikhonov Regularization",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-06-tikhonov-regularization.html#next-time",
-    "href": "slides/week-06-tikhonov-regularization.html#next-time",
+    "objectID": "slides/week-06-tikhonov-regularization.html#next-week",
+    "href": "slides/week-06-tikhonov-regularization.html#next-week",
     "title": "Tikhonov Regularization",
-    "section": "Next Time",
-    "text": "Next Time\nVariational formulation:\n\nenergy minimization;\nconvexity as a geometric idea;\nguided Euler-Lagrange derivation;\ngradient descent intuition."
+    "section": "Next Week",
+    "text": "Next Week\nVariational formulation:\n\nenergy minimization;\nconvexity as a geometric idea;\nguided Euler-Lagrange derivation;\ngradient descent intuition."
   },
   {
     "objectID": "slides/week-08-total-variation.html#opening-question",
@@ -7712,25 +7852,32 @@
     "text": "Opening Question\n\nEdges are not noise\n\nHow can a regularizer remove noise without treating every edge as a mistake?"
   },
   {
-    "objectID": "slides/week-08-total-variation.html#today",
-    "href": "slides/week-08-total-variation.html#today",
+    "objectID": "slides/week-08-total-variation.html#this-week",
+    "href": "slides/week-08-total-variation.html#this-week",
     "title": "Total Variation Regularization",
-    "section": "Today",
-    "text": "Today\n\n\nDefine Total Variation (TV).\nCompare TV with quadratic smoothness.\nExplain why TV preserves edges better.\nObserve the staircasing effect.\nUse TV denoising on signals and images."
+    "section": "This Week",
+    "text": "This Week\n\n\nDefine Total Variation (TV).\nCompare TV with quadratic smoothness.\nExplain why TV preserves edges better.\nObserve the staircasing effect.\nUse TV denoising on signals and images."
   },
   {
-    "objectID": "slides/week-08-total-variation.html#minute-live-path",
-    "href": "slides/week-08-total-variation.html#minute-live-path",
+    "objectID": "slides/week-08-total-variation.html#two-session-plan",
+    "href": "slides/week-08-total-variation.html#two-session-plan",
     "title": "Total Variation Regularization",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap variational energy models\n\n\n8-22 min\nTV definition and gradient penalties\n\n\n22-38 min\nedge preservation in 1D\n\n\n38-52 min\nimage denoising: l2 versus TV\n\n\n52-62 min\nstaircasing and limitations\n\n\n62-69 min\nnotebook activity\n\n\n69-75 min\nmidterm/course synthesis"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nTV definition; sparse gradients; l2 versus TV; one-dimensional edge preservation.\n\n\nSession 2\nImage denoising; parameter effects; staircasing; modeling limits."
   },
   {
-    "objectID": "slides/week-08-total-variation.html#bridge-from-class-7",
-    "href": "slides/week-08-total-variation.html#bridge-from-class-7",
+    "objectID": "slides/week-08-total-variation.html#session-1-edges-as-structure",
+    "href": "slides/week-08-total-variation.html#session-1-edges-as-structure",
     "title": "Total Variation Regularization",
-    "section": "Bridge from Class 7",
-    "text": "Bridge from Class 7\nClass 7 used the quadratic smoothing energy:\n\nE(u)=\\frac12\\|u-y\\|_2^2+\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2.\n\n\nWhat happens to true edges when we penalize large gradients quadratically?"
+    "section": "Session 1: Edges as Structure",
+    "text": "Session 1: Edges as Structure\n\nNot every large gradient is an error"
+  },
+  {
+    "objectID": "slides/week-08-total-variation.html#bridge-from-week-7",
+    "href": "slides/week-08-total-variation.html#bridge-from-week-7",
+    "title": "Total Variation Regularization",
+    "section": "Bridge from Week 7",
+    "text": "Bridge from Week 7\nWeek 7 used the quadratic smoothing energy:\n\nE(u)=\\frac12\\|u-y\\|_2^2+\\frac{\\lambda}{2}\\|\\nabla u\\|_2^2.\n\n\nWhat happens to true edges when we penalize large gradients quadratically?"
   },
   {
     "objectID": "slides/week-08-total-variation.html#the-problem-with-quadratic-smoothing",
@@ -7793,7 +7940,7 @@
     "href": "slides/week-08-total-variation.html#nonsmoothness",
     "title": "Total Variation Regularization",
     "section": "Nonsmoothness",
-    "text": "Nonsmoothness\nThe function |g| is not differentiable at g=0.\n\nWhy might this make optimization more delicate than quadratic smoothing?\n\n\nClass 9 will discuss subgradients and proximal ideas."
+    "text": "Nonsmoothness\nThe function |g| is not differentiable at g=0.\n\nWhy might this make optimization more delicate than quadratic smoothing?\n\n\nWeek 9 will discuss subgradients and proximal ideas."
   },
   {
     "objectID": "slides/week-08-total-variation.html#part-2-1d-edge-preservation",
@@ -7829,6 +7976,13 @@
     "title": "Total Variation Regularization",
     "section": "Activity 2: Predict the Prior",
     "text": "Activity 2: Predict the Prior\n\n5 minutes\n\n\nWhich image class does TV prefer?\n\nsmooth ramps everywhere;\npiecewise flat regions separated by edges;\nhigh-frequency texture everywhere.\n\nGive a one-sentence reason."
+  },
+  {
+    "objectID": "slides/week-08-total-variation.html#session-2-images-artifacts-and-limits",
+    "href": "slides/week-08-total-variation.html#session-2-images-artifacts-and-limits",
+    "title": "Total Variation Regularization",
+    "section": "Session 2: Images, Artifacts, and Limits",
+    "text": "Session 2: Images, Artifacts, and Limits\n\nEdge preservation is a modeling choice"
   },
   {
     "objectID": "slides/week-08-total-variation.html#part-3-image-denoising",
@@ -7940,7 +8094,7 @@
     "href": "slides/week-08-total-variation.html#notebook-demo-and-code-reference",
     "title": "Total Variation Regularization",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-08-total-variation.html#in-class-notebook-activity",
@@ -7957,11 +8111,11 @@
     "text": "Quiz-Style Check\n\nFor each phrase, choose l2 smoothing or TV:\n\npenalizes squared gradients;\npenalizes gradient magnitude;\ntends to blur edges;\ncan create staircasing."
   },
   {
-    "objectID": "slides/week-08-total-variation.html#end-of-class-checkpoint",
-    "href": "slides/week-08-total-variation.html#end-of-class-checkpoint",
+    "objectID": "slides/week-08-total-variation.html#end-of-week-checkpoint",
+    "href": "slides/week-08-total-variation.html#end-of-week-checkpoint",
     "title": "Total Variation Regularization",
-    "section": "End-of-Class Checkpoint",
-    "text": "End-of-Class Checkpoint\n\nAnswer in one sentence each:\n\nWhat is Total Variation?\nWhy does TV preserve edges better than l2 smoothing?\nWhat is staircasing?\nWhy is TV optimization more delicate than quadratic smoothing?"
+    "section": "End-of-Week Checkpoint",
+    "text": "End-of-Week Checkpoint\n\nAnswer in one sentence each:\n\nWhat is Total Variation?\nWhy does TV preserve edges better than l2 smoothing?\nWhat is staircasing?\nWhy is TV optimization more delicate than quadratic smoothing?"
   },
   {
     "objectID": "slides/week-08-total-variation.html#what-students-should-remember",
@@ -7971,18 +8125,18 @@
     "text": "What Students Should Remember\n\n\nTV regularization uses \\operatorname{TV}(u)=\\int |\\nabla u|.\nTV is a variational prior favoring small total change.\nCompared with l2 smoothing, TV preserves stronger edges.\nTV can create staircasing artifacts.\nThe choice of regularizer is a modeling decision."
   },
   {
-    "objectID": "slides/week-08-total-variation.html#after-class",
-    "href": "slides/week-08-total-variation.html#after-class",
+    "objectID": "slides/week-08-total-variation.html#after-this-week",
+    "href": "slides/week-08-total-variation.html#after-this-week",
     "title": "Total Variation Regularization",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-08-total-variation.html#next-time",
-    "href": "slides/week-08-total-variation.html#next-time",
+    "objectID": "slides/week-08-total-variation.html#next-week",
+    "href": "slides/week-08-total-variation.html#next-week",
     "title": "Total Variation Regularization",
-    "section": "Next Time",
-    "text": "Next Time\nOptimization methods:\n\nconvex sets and convex functions;\nsubgradient intuition;\nproximal operator idea;\niterative shrinkage / ISTA intuition."
+    "section": "Next Week",
+    "text": "Next Week\nOptimization methods:\n\nconvex sets and convex functions;\nsubgradient intuition;\nproximal operator idea;\niterative shrinkage / ISTA intuition."
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#opening-question",
@@ -7992,25 +8146,32 @@
     "text": "Opening Question\n\nToo few measurements\n\nCan fewer measurements be enough if the unknown image has a simple hidden structure?"
   },
   {
-    "objectID": "slides/week-10-sparse-reconstruction.html#today",
-    "href": "slides/week-10-sparse-reconstruction.html#today",
+    "objectID": "slides/week-10-sparse-reconstruction.html#this-week",
+    "href": "slides/week-10-sparse-reconstruction.html#this-week",
     "title": "Sparse Reconstruction",
-    "section": "Today",
-    "text": "Today\n\n\nDefine sparsity in a basis or transform.\nCompare l1 and l2 regularization.\nExplain why l1 can recover sparse signals.\nBuild compressed sensing intuition.\nUse a sparse DCT prior for image reconstruction."
+    "section": "This Week",
+    "text": "This Week\n\n\nDefine sparsity in a basis or transform.\nCompare l1 and l2 regularization.\nExplain why l1 can recover sparse signals.\nBuild compressed sensing intuition.\nUse a sparse DCT prior for image reconstruction."
   },
   {
-    "objectID": "slides/week-10-sparse-reconstruction.html#minute-live-path",
-    "href": "slides/week-10-sparse-reconstruction.html#minute-live-path",
+    "objectID": "slides/week-10-sparse-reconstruction.html#two-session-plan",
+    "href": "slides/week-10-sparse-reconstruction.html#two-session-plan",
     "title": "Sparse Reconstruction",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: proximal methods and soft thresholding\n\n\n8-20 min\nsparsity and representations\n\n\n20-34 min\nl1 versus l2 geometry\n\n\n34-49 min\nunderdetermined sparse recovery\n\n\n49-60 min\ncompressed sensing intuition\n\n\n60-70 min\nnotebook activity\n\n\n70-75 min\nsynthesis and exit check"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nSparsity; representation choice; l1 versus l2; underdetermined recovery.\n\n\nSession 2\nCompressed sensing intuition; sparse images; DCT priors; notebook evidence."
   },
   {
-    "objectID": "slides/week-10-sparse-reconstruction.html#bridge-from-class-9",
-    "href": "slides/week-10-sparse-reconstruction.html#bridge-from-class-9",
+    "objectID": "slides/week-10-sparse-reconstruction.html#session-1-sparsity-as-a-prior",
+    "href": "slides/week-10-sparse-reconstruction.html#session-1-sparsity-as-a-prior",
     "title": "Sparse Reconstruction",
-    "section": "Bridge from Class 9",
-    "text": "Bridge from Class 9\nClass 9 introduced ISTA:\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right).\n\n\nWhat modeling assumption is soft thresholding trying to impose?"
+    "section": "Session 1: Sparsity as a Prior",
+    "text": "Session 1: Sparsity as a Prior\n\nFew important coefficients, if the representation fits"
+  },
+  {
+    "objectID": "slides/week-10-sparse-reconstruction.html#bridge-from-week-9",
+    "href": "slides/week-10-sparse-reconstruction.html#bridge-from-week-9",
+    "title": "Sparse Reconstruction",
+    "section": "Bridge from Week 9",
+    "text": "Bridge from Week 9\nWeek 9 introduced ISTA:\n\nx^{k+1}\n=\nS_{\\tau\\lambda}\n\\left(x^k-\\tau A^\\top(Ax^k-y)\\right).\n\n\nWhat modeling assumption is soft thresholding trying to impose?"
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#part-1-sparsity",
@@ -8153,6 +8314,13 @@
     "text": "Important Caveat\nl1 does not magically recover every sparse signal.\nIt needs enough measurements and a measurement operator that mixes information well.\n\nSparse recovery depends on the pair: sparsity model plus measurement design."
   },
   {
+    "objectID": "slides/week-10-sparse-reconstruction.html#session-2-from-sparse-vectors-to-sparse-images",
+    "href": "slides/week-10-sparse-reconstruction.html#session-2-from-sparse-vectors-to-sparse-images",
+    "title": "Sparse Reconstruction",
+    "section": "Session 2: From Sparse Vectors to Sparse Images",
+    "text": "Session 2: From Sparse Vectors to Sparse Images\n\nThe prior only helps when the representation matches"
+  },
+  {
     "objectID": "slides/week-10-sparse-reconstruction.html#part-4-compressed-sensing-intuition",
     "href": "slides/week-10-sparse-reconstruction.html#part-4-compressed-sensing-intuition",
     "title": "Sparse Reconstruction",
@@ -8206,7 +8374,7 @@
     "href": "slides/week-10-sparse-reconstruction.html#dct-compression",
     "title": "Sparse Reconstruction",
     "section": "DCT Compression",
-    "text": "DCT Compression\nThe Discrete Cosine Transform represents an image patch as cosine patterns.\nMany image patches can be approximated using only a small fraction of DCT coefficients.\n\nWavelets in Class 11 will give a more imaging-focused multiscale representation."
+    "text": "DCT Compression\nThe Discrete Cosine Transform represents an image patch as cosine patterns.\nMany image patches can be approximated using only a small fraction of DCT coefficients.\n\nWavelets in Week 11 will give a more imaging-focused multiscale representation."
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#few-coefficients-good-approximation",
@@ -8248,7 +8416,7 @@
     "href": "slides/week-10-sparse-reconstruction.html#notebook-demo-and-code-reference",
     "title": "Sparse Reconstruction",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-10-sparse-reconstruction.html#in-class-notebook-activity",
@@ -8272,18 +8440,18 @@
     "text": "What Students Should Remember\n\n\nSparsity is representation-dependent.\nl1 is a convex surrogate for sparse selection.\nl1 and l2 encode different priors.\nCompressed sensing works when measurements and sparse model are compatible.\nSparse priors can reconstruct images from incomplete data, but only under assumptions."
   },
   {
-    "objectID": "slides/week-10-sparse-reconstruction.html#after-class",
-    "href": "slides/week-10-sparse-reconstruction.html#after-class",
+    "objectID": "slides/week-10-sparse-reconstruction.html#after-this-week",
+    "href": "slides/week-10-sparse-reconstruction.html#after-this-week",
     "title": "Sparse Reconstruction",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 10 of the book to connect l1 geometry with representation-dependent priors.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 10 of the book to connect l1 geometry with representation-dependent priors.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-10-sparse-reconstruction.html#next-time",
-    "href": "slides/week-10-sparse-reconstruction.html#next-time",
+    "objectID": "slides/week-10-sparse-reconstruction.html#next-week",
+    "href": "slides/week-10-sparse-reconstruction.html#next-week",
     "title": "Sparse Reconstruction",
-    "section": "Next Time",
-    "text": "Next Time\nWavelets and multiscale representation:\n\nwhy image detail lives at multiple scales;\nwavelet coefficients;\nthresholding;\ndenoising experiments."
+    "section": "Next Week",
+    "text": "Next Week\nWavelets and multiscale representation:\n\nwhy image detail lives at multiple scales;\nwavelet coefficients;\nthresholding;\ndenoising experiments."
   },
   {
     "objectID": "slides/week-12-model-data.html#opening-question",
@@ -8293,25 +8461,32 @@
     "text": "Opening Question\n\nWhere does prior knowledge come from?\n\nShould an imaging algorithm use a prior we write down, or one it learns from examples?"
   },
   {
-    "objectID": "slides/week-12-model-data.html#today",
-    "href": "slides/week-12-model-data.html#today",
+    "objectID": "slides/week-12-model-data.html#this-week",
+    "href": "slides/week-12-model-data.html#this-week",
     "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Today",
-    "text": "Today\n\n\nCompare model-based and data-driven imaging.\nExplain why neural imaging is still an inverse-problem story.\nIdentify forward models, priors, solvers, and training data.\nInterpret a neural network as a parameterized operator.\nDiscuss generalization and failure modes.\nLeave the final 20 minutes for Quiz 2."
+    "section": "This Week",
+    "text": "This Week\n\n\nCompare model-based and data-driven imaging.\nExplain why neural imaging is still an inverse-problem story.\nIdentify forward models, priors, solvers, and training data.\nInterpret a neural network as a parameterized operator.\nDiscuss generalization and failure modes.\nLeave the final 20 minutes for Quiz 2."
   },
   {
-    "objectID": "slides/week-12-model-data.html#teaching-plan-quiz-2",
-    "href": "slides/week-12-model-data.html#teaching-plan-quiz-2",
+    "objectID": "slides/week-12-model-data.html#two-session-plan-quiz-2",
+    "href": "slides/week-12-model-data.html#two-session-plan-quiz-2",
     "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Teaching Plan + Quiz 2",
-    "text": "Teaching Plan + Quiz 2\n\n\n\nTime\nWork\n\n\n\n\n0-6 min\nrecap: TV, sparsity, wavelets\n\n\n6-15 min\ncentral identity and model-based pipeline\n\n\n15-28 min\ndata-driven imaging pipeline\n\n\n28-40 min\nneural networks as learned operators\n\n\n40-52 min\nlearned priors, shift, and risk\n\n\n52-55 min\nquiz transition\n\n\n55-75 min\nQuiz 2 (20 minutes)"
+    "section": "Two-Session Plan + Quiz 2",
+    "text": "Two-Session Plan + Quiz 2\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nModel-based and data-driven imaging; neural networks as inverse-problem operators.\n\n\nSession 2\nLearned priors; capacity; distribution shift; evaluation; Quiz 2 in the final 20 minutes."
   },
   {
-    "objectID": "slides/week-12-model-data.html#bridge-from-class-11",
-    "href": "slides/week-12-model-data.html#bridge-from-class-11",
+    "objectID": "slides/week-12-model-data.html#session-1-from-written-priors-to-learned-operators",
+    "href": "slides/week-12-model-data.html#session-1-from-written-priors-to-learned-operators",
     "title": "Model-Based vs Data-Driven Imaging",
-    "section": "Bridge from Class 11",
-    "text": "Bridge from Class 11\nWavelets gave us a handcrafted representation.\nWe chose:\n\n\nthe wavelet family;\nthe decomposition level;\nthe thresholding rule;\nthe threshold strength.\n\n\n\nWhat if these choices were learned from data instead?"
+    "section": "Session 1: From Written Priors to Learned Operators",
+    "text": "Session 1: From Written Priors to Learned Operators\n\nThe inverse-problem story continues"
+  },
+  {
+    "objectID": "slides/week-12-model-data.html#bridge-from-week-11",
+    "href": "slides/week-12-model-data.html#bridge-from-week-11",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Bridge from Week 11",
+    "text": "Bridge from Week 11\nWavelets gave us a handcrafted representation.\nWe chose:\n\n\nthe wavelet family;\nthe decomposition level;\nthe thresholding rule;\nthe threshold strength.\n\n\n\nWhat if these choices were learned from data instead?"
   },
   {
     "objectID": "slides/week-12-model-data.html#central-identity",
@@ -8465,7 +8640,7 @@
     "href": "slides/week-12-model-data.html#neural-networks-and-forward-models",
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Neural Networks and Forward Models",
-    "text": "Neural Networks and Forward Models\nSome methods ignore the explicit forward model:\n\n\\hat{x}=f_\\theta(y).\n\nOthers include it:\n\nx^{k+1}\n=\n\\text{learned step using } A,\\ A^\\top,\\ y.\n\n\nClass 13 will study plug-and-play and learned regularization."
+    "text": "Neural Networks and Forward Models\nSome methods ignore the explicit forward model:\n\n\\hat{x}=f_\\theta(y).\n\nOthers include it:\n\nx^{k+1}\n=\n\\text{learned step using } A,\\ A^\\top,\\ y.\n\n\nWeek 13 will study plug-and-play and learned regularization."
   },
   {
     "objectID": "slides/week-12-model-data.html#activity-2-operator-or-prior",
@@ -8473,6 +8648,13 @@
     "title": "Model-Based vs Data-Driven Imaging",
     "section": "Activity 2: Operator or Prior?",
     "text": "Activity 2: Operator or Prior?\n\n5 minutes\n\n\nClassify each idea:\n\na CNN that maps noisy images to clean images;\nTV inside an optimization problem;\na denoiser used as a proximal step;\na neural network trained to predict wavelet coefficients."
+  },
+  {
+    "objectID": "slides/week-12-model-data.html#session-2-learned-priors-shift-and-quiz-2",
+    "href": "slides/week-12-model-data.html#session-2-learned-priors-shift-and-quiz-2",
+    "title": "Model-Based vs Data-Driven Imaging",
+    "section": "Session 2: Learned Priors, Shift, and Quiz 2",
+    "text": "Session 2: Learned Priors, Shift, and Quiz 2\n\nTraining data become part of the model"
   },
   {
     "objectID": "slides/week-12-model-data.html#part-4-a-small-learned-prior",
@@ -8594,11 +8776,11 @@
     "text": "What Students Should Remember\n\n\nModel-based methods write assumptions explicitly.\nData-driven methods learn assumptions from examples.\nNeural networks are parameterized nonlinear operators.\nLearned methods can be powerful but depend on training data.\nModern imaging often combines physics, optimization, and learning."
   },
   {
-    "objectID": "slides/week-12-model-data.html#after-class",
-    "href": "slides/week-12-model-data.html#after-class",
+    "objectID": "slides/week-12-model-data.html#after-this-week",
+    "href": "slides/week-12-model-data.html#after-this-week",
     "title": "Model-Based vs Data-Driven Imaging",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 12 of the book for the model-based/data-driven comparison.\nRun the corresponding notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 12 of the book for the model-based/data-driven comparison.\nRun the corresponding notebook and test one distribution shift.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#opening-question",
@@ -8608,25 +8790,32 @@
     "text": "Opening Question\n\nWhen is a beautiful reconstruction unsafe?\n\nAn image can look plausible and still be wrong in a way that matters."
   },
   {
-    "objectID": "slides/week-14-stability-robustness-ethics.html#today",
-    "href": "slides/week-14-stability-robustness-ethics.html#today",
+    "objectID": "slides/week-14-stability-robustness-ethics.html#this-week",
+    "href": "slides/week-14-stability-robustness-ethics.html#this-week",
     "title": "Stability, Robustness, and Ethics",
-    "section": "Today",
-    "text": "Today\n\n\nDefine stability and parameter sensitivity.\nSee how small perturbations can become large reconstruction changes.\nExplain robustness across noise levels, models, and image families.\nAudit learned reconstructions across measurement, training, and decision domains.\nDiscuss hallucination and small-feature suppression.\nConnect mathematical validation to ethical responsibility."
+    "section": "This Week",
+    "text": "This Week\n\n\nDefine stability and parameter sensitivity.\nSee how small perturbations can become large reconstruction changes.\nExplain robustness across noise levels, models, and image families.\nAudit learned reconstructions across measurement, training, and decision domains.\nDiscuss hallucination and small-feature suppression.\nConnect mathematical validation to ethical responsibility."
   },
   {
-    "objectID": "slides/week-14-stability-robustness-ethics.html#minute-live-path",
-    "href": "slides/week-14-stability-robustness-ethics.html#minute-live-path",
+    "objectID": "slides/week-14-stability-robustness-ethics.html#two-session-plan",
+    "href": "slides/week-14-stability-robustness-ethics.html#two-session-plan",
     "title": "Stability, Robustness, and Ethics",
-    "section": "75-Minute Live Path",
-    "text": "75-Minute Live Path\n\n\n\nTime\nWork\n\n\n\n\n0-8 min\nrecap: plug-and-play and learned priors\n\n\n8-23 min\nstability and parameter sensitivity\n\n\n23-36 min\nperturbation amplification\n\n\n36-50 min\nrobustness and learned-domain shift\n\n\n50-62 min\nhallucination, small features, reliability\n\n\n62-72 min\nnotebook activity and project report preparation\n\n\n72-75 min\nsynthesis and exit check"
+    "section": "Two-Session Plan",
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nStability; parameter sensitivity; perturbation amplification; robustness axes.\n\n\nSession 2\nHallucination risk; ethics; documentation; project report preparation."
   },
   {
-    "objectID": "slides/week-14-stability-robustness-ethics.html#bridge-from-class-13",
-    "href": "slides/week-14-stability-robustness-ethics.html#bridge-from-class-13",
+    "objectID": "slides/week-14-stability-robustness-ethics.html#session-1-stability-and-robustness-tests",
+    "href": "slides/week-14-stability-robustness-ethics.html#session-1-stability-and-robustness-tests",
     "title": "Stability, Robustness, and Ethics",
-    "section": "Bridge from Class 13",
-    "text": "Bridge from Class 13\nPlug-and-play gave us a hybrid loop:\n\n\nuse the forward model for data consistency;\nuse a denoiser as an implicit prior;\nmonitor fixed-point behavior.\n\n\n\nHow do we know whether the result should be trusted?"
+    "section": "Session 1: Stability and Robustness Tests",
+    "text": "Session 1: Stability and Robustness Tests\n\nTrust needs perturbations, not only pretty images"
+  },
+  {
+    "objectID": "slides/week-14-stability-robustness-ethics.html#bridge-from-week-13",
+    "href": "slides/week-14-stability-robustness-ethics.html#bridge-from-week-13",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Bridge from Week 13",
+    "text": "Bridge from Week 13\nPlug-and-play gave us a hybrid loop:\n\n\nuse the forward model for data consistency;\nuse a denoiser as an implicit prior;\nmonitor fixed-point behavior.\n\n\n\nHow do we know whether the result should be trusted?"
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#final-course-identity",
@@ -8783,6 +8972,13 @@
     "text": "Activity 2: Robustness Plan\n\n5 minutes\n\n\nFor your project, name:\n\none parameter you will sweep;\none model mismatch you will test;\none failure case you will show honestly."
   },
   {
+    "objectID": "slides/week-14-stability-robustness-ethics.html#session-2-reliability-ethics-and-project-defense",
+    "href": "slides/week-14-stability-robustness-ethics.html#session-2-reliability-ethics-and-project-defense",
+    "title": "Stability, Robustness, and Ethics",
+    "section": "Session 2: Reliability, Ethics, and Project Defense",
+    "text": "Session 2: Reliability, Ethics, and Project Defense\n\nWhat must be documented before trust?"
+  },
+  {
     "objectID": "slides/week-14-stability-robustness-ethics.html#part-4-hallucination-and-small-features",
     "href": "slides/week-14-stability-robustness-ethics.html#part-4-hallucination-and-small-features",
     "title": "Stability, Robustness, and Ethics",
@@ -8885,7 +9081,7 @@
     "href": "slides/week-14-stability-robustness-ethics.html#notebook-demo-and-code-reference",
     "title": "Stability, Robustness, and Ethics",
     "section": "Notebook Demo and Code Reference",
-    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for after-class reruns.\nGeneral run instructions are on the notebooks page."
+    "text": "Notebook Demo and Code Reference\n\n\nUse the corresponding notebook for the live experiment.\nExample scripts live in examples/ for later reruns.\nGeneral run instructions are on the notebooks page."
   },
   {
     "objectID": "slides/week-14-stability-robustness-ethics.html#in-class-notebook-activity",
@@ -8916,17 +9112,17 @@
     "text": "Final Boundary Question\n\nWhich parts of the reconstruction are dictated by the measurement, and which parts are supplied by prior knowledge?\n\nThis is the boundary modern imaging has to test."
   },
   {
-    "objectID": "slides/week-14-stability-robustness-ethics.html#after-class",
-    "href": "slides/week-14-stability-robustness-ethics.html#after-class",
+    "objectID": "slides/week-14-stability-robustness-ethics.html#after-this-week",
+    "href": "slides/week-14-stability-robustness-ethics.html#after-this-week",
     "title": "Stability, Robustness, and Ethics",
-    "section": "After Class",
-    "text": "After Class\n\n\nUse the class roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 14 of the book as the reliability checklist for projects.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about today’s model."
+    "section": "After This Week",
+    "text": "After This Week\n\n\nUse the weekly roadmap to find the book chapter, notebook, and practice prompt.\nUse Chapter 14 of the book as the reliability checklist for projects.\nRun the corresponding notebook and change at least one important parameter.\nWrite one claim-evidence-limit sentence about this week’s model."
   },
   {
-    "objectID": "slides/week-14-stability-robustness-ethics.html#next-time",
-    "href": "slides/week-14-stability-robustness-ethics.html#next-time",
+    "objectID": "slides/week-14-stability-robustness-ethics.html#next-week",
+    "href": "slides/week-14-stability-robustness-ethics.html#next-week",
     "title": "Stability, Robustness, and Ethics",
-    "section": "Next Time",
-    "text": "Next Time\nOral defenses:\n\nexplain your model clearly;\njustify algorithm and parameters;\ninterpret results and failures;\nshow that both teammates understand the whole project."
+    "section": "Next Week",
+    "text": "Next Week\nOral defenses:\n\nexplain your model clearly;\njustify algorithm and parameters;\ninterpret results and failures;\nshow that both teammates understand the whole project."
   }
 ]

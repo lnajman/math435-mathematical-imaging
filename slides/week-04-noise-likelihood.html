@@ -214,7 +214,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Noise Models and Likelihoods</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 4</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 4</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -232,8 +232,8 @@ Laurent Najman
 </div>
 <p>If two pixels have the same recorded value, do we have the same confidence in both of them?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Distinguish deterministic degradation from random noise.</li>
@@ -244,55 +244,45 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="teaching-plan-quiz-1" class="slide level2">
-<h2>Teaching Plan + Quiz 1</h2>
+<section id="two-session-plan-quiz-1" class="slide level2">
+<h2>Two-Session Plan + Quiz 1</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-5 min</td>
-<td>recap Fourier and inverse filtering</td>
+<td>Session 1</td>
+<td>Observation models; Gaussian noise; Poisson photon-counting noise.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">5-17 min</td>
-<td>observe noise and introduce likelihood</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">17-29 min</td>
-<td>Gaussian noise and least squares</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">29-41 min</td>
-<td>Poisson noise and photon counts</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">41-52 min</td>
-<td>likelihoods as data-fidelity terms</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">52-55 min</td>
-<td>quiz transition</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">55-75 min</td>
-<td>Quiz 1 (20 minutes)</td>
+<td>Session 2</td>
+<td>Likelihoods as data terms; repetition limits; reconstruction view; Quiz 1 in the final 20 minutes.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-3" class="slide level2">
-<h2>Bridge from Class 3</h2>
+<section id="session-1-noise-as-a-measurement-model" class="slide level2 section-slide">
+<h2>Session 1: Noise as a Measurement Model</h2>
+<div class="section-kicker">
+<p>What kind of uncertainty did the sensor create?</p>
+</div>
+</section>
+<section id="bridge-from-week-3" class="slide level2">
+<h2>Bridge from Week 3</h2>
 <p>Last time we wrote a noisy deblurring model as</p>
 <p><span class="math display">
 \widehat{y} = \widehat{h}\widehat{x} + \widehat{\eta}.
 </span></p>
 <div class="question-box">
-<p>We discussed why deblurring amplifies noise. Today: what is that noise?</p>
+<p>We discussed why deblurring amplifies noise. This week: what is that noise?</p>
 </div>
 </section>
 <section id="observation-model" class="slide level2">
@@ -509,7 +499,7 @@ y = f(x)+\eta,
 </section>
 <section id="python-demo-gaussian-noise" class="slide level2 code-small">
 <h2>Python Demo: Gaussian Noise</h2>
-<div id="dd095852" class="cell">
+<div id="91c84c27" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb1-3"><a></a></span>
@@ -620,6 +610,12 @@ y_i = z_i / \alpha.
 </div>
 <div class="takeaway-box">
 <p>Low-light imaging is difficult because the data are made of small random counts.</p>
+</div>
+</section>
+<section id="session-2-likelihoods-and-quiz-1" class="slide level2 section-slide">
+<h2>Session 2: Likelihoods and Quiz 1</h2>
+<div class="section-kicker">
+<p>From noise model to data term</p>
 </div>
 </section>
 <section id="poisson-likelihood" class="slide level2">
@@ -839,13 +835,13 @@ D(z,f(x))=
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change Gaussian <code>sigma</code> or Poisson <code>peak_photons</code>.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 

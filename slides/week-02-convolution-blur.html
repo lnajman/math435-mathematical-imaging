@@ -214,7 +214,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Convolution and Blur</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 2</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 2</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -232,8 +232,8 @@ Laurent Najman
 </div>
 <p>What does it mean, mathematically, for an image to be blurred?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Build convolution from a local weighted average.</li>
@@ -244,55 +244,45 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>review fixed forward models</td>
+<td>Session 1</td>
+<td>1D and 2D convolution; kernels; point spread functions; real image blur.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-25 min</td>
-<td>1D convolution by hand</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">25-40 min</td>
-<td>2D convolution and PSF</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">40-55 min</td>
-<td>real image blur demo</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">55-65 min</td>
-<td>boundary conditions</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">65-72 min</td>
-<td>why deblurring is hard</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">72-75 min</td>
-<td>exit question</td>
+<td>Session 2</td>
+<td>Boundary conditions; matrix view; deblurring instability and modeling caveats.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="reminder-from-class-1" class="slide level2">
-<h2>Reminder from Class 1</h2>
+<section id="session-1-blur-as-a-forward-model" class="slide level2 section-slide">
+<h2>Session 1: Blur as a Forward Model</h2>
+<div class="section-kicker">
+<p>Local averages become operators</p>
+</div>
+</section>
+<section id="reminder-from-week-1" class="slide level2">
+<h2>Reminder from Week 1</h2>
 <div class="model-box">
 <p>For a fixed measurement rule, we often write</p>
 <p><span class="math display">
 y = Ax + \eta.
 </span></p>
-<p>Today, <span class="math inline">A</span> will be a blur operator.</p>
+<p>This week, <span class="math inline">A</span> will be a blur operator.</p>
 </div>
 <div class="caption">
 <p>The blur kernel is assumed fixed. That is different from unknown scene occlusion or nonlinear visibility.</p>
@@ -509,7 +499,7 @@ y = h * x
 </section>
 <section id="python-demo-blur-a-real-image" class="slide level2 code-small">
 <h2>Python Demo: Blur a Real Image</h2>
-<div id="1cbf5ce6" class="cell">
+<div id="347c5cdd" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb1-2"><a></a><span class="im">from</span> scipy <span class="im">import</span> signal</span>
 <span id="cb1-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -522,8 +512,8 @@ y = h * x
 <span id="cb1-10"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="run-todays-code" class="slide level2 code-small">
-<h2>Run Today’s Code</h2>
+<section id="run-this-weeks-code" class="slide level2 code-small">
+<h2>Run This Week’s Code</h2>
 <p>From the repository root:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week02_convolution_blur.py</span>
 <span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week02_figures.py</span>
@@ -550,6 +540,12 @@ y = h * x
 </div>
 <p>If a <span class="math inline">3 \times 3</span> box blur has equal weights, what is each weight?</p>
 <p>What happens if the weights sum to 2 instead of 1?</p>
+</div>
+</section>
+<section id="session-2-boundaries-matrices-and-deblurring" class="slide level2 section-slide">
+<h2>Session 2: Boundaries, Matrices, and Deblurring</h2>
+<div class="section-kicker">
+<p>The model choices become visible at the edges</p>
 </div>
 </section>
 <section id="part-4-boundary-conditions" class="slide level2 section-slide">
@@ -626,7 +622,7 @@ y[1,1] = \sum_{a,b} h[a,b] x[1-a,1-b].
 <section id="part-5-matrix-view" class="slide level2 section-slide">
 <h2>Part 5: Matrix View</h2>
 <div class="section-kicker">
-<p>Back to Class 1</p>
+<p>Back to Week 1</p>
 </div>
 <p>Convolution is a linear operator when the kernel is fixed</p>
 </section>
@@ -719,8 +715,8 @@ x = A^{-1}y.
 <p>What evidence would make you reject the convolution model?</p>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="end-of-week-checkpoint" class="slide level2">
+<h2>End-of-Week Checkpoint</h2>
 <div class="exercise-box">
 <p>For each item, give one sentence:</p>
 <ol type="1">
@@ -743,18 +739,18 @@ x = A^{-1}y.
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Fourier transform in imaging:</p>
 <ul>
 <li>frequency interpretation of blur;</li>

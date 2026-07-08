@@ -148,7 +148,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Optimization Methods</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 9</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 9</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -166,8 +166,8 @@ Laurent Najman
 </div>
 <p>If the reconstructed image is defined as a minimizer, how do we actually find it?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Recognize convex optimization problems in imaging.</li>
@@ -178,49 +178,39 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap: energies from Weeks 7-8</td>
+<td>Session 1</td>
+<td>Convexity; smooth optimization; gradient descent; step-size diagnostics.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-22 min</td>
-<td>convexity and why it matters</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">22-37 min</td>
-<td>gradient descent and step size</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">37-49 min</td>
-<td>nonsmooth penalties and subgradients</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">49-61 min</td>
-<td>proximal operators and ISTA</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">61-71 min</td>
-<td>notebook activity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">71-75 min</td>
-<td>synthesis and exit check</td>
+<td>Session 2</td>
+<td>Nonsmooth terms; proximal operators; ISTA; convergence evidence.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-8" class="slide level2">
-<h2>Bridge from Class 8</h2>
+<section id="session-1-smooth-optimization" class="slide level2 section-slide">
+<h2>Session 1: Smooth Optimization</h2>
+<div class="section-kicker">
+<p>Follow a descent direction</p>
+</div>
+</section>
+<section id="bridge-from-week-8" class="slide level2">
+<h2>Bridge from Week 8</h2>
 <p>TV denoising asks for</p>
 <p><span class="math display">
 u_\lambda
@@ -402,6 +392,12 @@ u^{k+1}=u^k-\tau\nabla E(u^k).
 <li>small gradient norm;</li>
 <li>visual or task-driven stopping.</li>
 </ul>
+</div>
+</section>
+<section id="session-2-nonsmooth-priors-and-proximal-steps" class="slide level2 section-slide">
+<h2>Session 2: Nonsmooth Priors and Proximal Steps</h2>
+<div class="section-kicker">
+<p>Sparse models need a different move</p>
 </div>
 </section>
 <section id="part-3-nonsmooth-terms" class="slide level2 section-slide">
@@ -589,7 +585,7 @@ S_{\tau\lambda}
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -646,18 +642,18 @@ S_{\tau\lambda}
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Sparse reconstruction:</p>
 <ul>
 <li>sparsity as a prior;</li>

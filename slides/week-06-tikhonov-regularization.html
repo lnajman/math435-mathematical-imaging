@@ -214,7 +214,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Tikhonov Regularization</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 6</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 6</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -232,8 +232,8 @@ Laurent Najman
 </div>
 <p>If exact inversion is unstable, what should we give up: exact data fit, sharpness, or both?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Formulate Tikhonov regularization.</li>
@@ -244,54 +244,40 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap ill-posedness and small singular values</td>
+<td>Session 1</td>
+<td>Tikhonov model; penalized least squares; normal equations and closed form.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-20 min</td>
-<td>penalized least squares</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">20-34 min</td>
-<td>normal equations and closed form</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">34-48 min</td>
-<td>SVD and filter factors</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">48-60 min</td>
-<td>parameter effects</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">60-68 min</td>
-<td>bias-variance tradeoff</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">68-72 min</td>
-<td>project assignment note</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">72-75 min</td>
-<td>exit question</td>
+<td>Session 2</td>
+<td>SVD filter factors; choosing lambda; bias-variance; project proposal.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-5" class="slide level2">
-<h2>Bridge from Class 5</h2>
-<p>Class 5 showed that direct inversion may amplify noise:</p>
+<section id="session-1-stabilizing-least-squares" class="slide level2 section-slide">
+<h2>Session 1: Stabilizing Least Squares</h2>
+<div class="section-kicker">
+<p>Add a prior before inverting</p>
+</div>
+</section>
+<section id="bridge-from-week-5" class="slide level2">
+<h2>Bridge from Week 5</h2>
+<p>Week 5 showed that direct inversion may amplify noise:</p>
 <p><span class="math display">
 \frac{\langle \eta,u_i\rangle}{\sigma_i}.
 </span></p>
@@ -484,13 +470,19 @@ x_\lambda
 </section>
 <section id="python-demo-normal-equations" class="slide level2 code-small">
 <h2>Python Demo: Normal Equations</h2>
-<div id="5ff4c381" class="cell">
+<div id="a3c26631" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
 <span id="cb1-2"><a></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
 <span id="cb1-3"><a></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="caption">
 <p>This is the direct matrix form for small educational examples.</p>
+</div>
+</section>
+<section id="session-2-filter-factors-and-parameter-choice" class="slide level2 section-slide">
+<h2>Session 2: Filter Factors and Parameter Choice</h2>
+<div class="section-kicker">
+<p>How lambda changes each direction</p>
 </div>
 </section>
 <section id="part-3-svd-interpretation" class="slide level2 section-slide">
@@ -677,7 +669,7 @@ x_\lambda
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -709,8 +701,8 @@ x_\lambda
 </ol>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="end-of-week-checkpoint" class="slide level2">
+<h2>End-of-Week Checkpoint</h2>
 <div class="exercise-box">
 <p>Answer in one sentence each:</p>
 <ol type="1">
@@ -733,18 +725,18 @@ x_\lambda
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Variational formulation:</p>
 <ul>
 <li>energy minimization;</li>

@@ -148,7 +148,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Variational Formulation</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 7</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 7</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -166,8 +166,8 @@ Laurent Najman
 </div>
 <p>What does it mean to reconstruct an image by minimizing an energy?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Interpret reconstruction as energy minimization.</li>
@@ -178,49 +178,39 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap Tikhonov regularization</td>
+<td>Session 1</td>
+<td>Energy viewpoint; data term and regularizer; convexity; Euler-Lagrange equation.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-20 min</td>
-<td>variational energy viewpoint</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">20-32 min</td>
-<td>convexity as geometry</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">32-50 min</td>
-<td>Euler-Lagrange derivation for <span class="math inline">\ell_2</span> smoothing</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">50-62 min</td>
-<td>gradient descent intuition</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">62-70 min</td>
-<td>real-image quadratic denoising</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">70-75 min</td>
-<td>synthesis check</td>
+<td>Session 2</td>
+<td>Gradient descent intuition; quadratic denoising; real-image limits.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-6" class="slide level2">
-<h2>Bridge from Class 6</h2>
+<section id="session-1-energies-as-models" class="slide level2 section-slide">
+<h2>Session 1: Energies as Models</h2>
+<div class="section-kicker">
+<p>Data agreement plus image structure</p>
+</div>
+</section>
+<section id="bridge-from-week-6" class="slide level2">
+<h2>Bridge from Week 6</h2>
 <p>Tikhonov regularization solves</p>
 <p><span class="math display">
 \min_x \|Ax-y\|_2^2+\lambda\|x\|_2^2.
@@ -503,13 +493,13 @@ E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|Du\|_2^2,
 <p>This is Tikhonov with a different penalty:</p>
 <div class="two-col">
 <div class="definition-box">
-<p>Class 6:</p>
+<p>Week 6:</p>
 <p><span class="math display">
 \|Ax-y\|_2^2+\lambda\|x\|_2^2.
 </span></p>
 </div>
 <div class="model-box">
-<p>Class 7:</p>
+<p>Week 7:</p>
 <p><span class="math display">
 \|u-y\|_2^2+\lambda\|\nabla u\|_2^2.
 </span></p>
@@ -525,6 +515,12 @@ E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|Du\|_2^2,
 <p>penalizes changes between neighboring pixels.</p>
 <div class="takeaway-box">
 <p>It prefers smooth images.</p>
+</div>
+</section>
+<section id="session-2-from-optimality-to-algorithms" class="slide level2 section-slide">
+<h2>Session 2: From Optimality to Algorithms</h2>
+<div class="section-kicker">
+<p>Minimizers have to be computed</p>
 </div>
 </section>
 <section id="part-4-gradient-descent-intuition" class="slide level2 section-slide">
@@ -628,8 +624,8 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 <p>Quadratic smoothing reduces noise and blurs edges.</p>
 </div>
 </section>
-<section id="preview-of-class-8" class="slide level2">
-<h2>Preview of Class 8</h2>
+<section id="preview-of-week-8" class="slide level2">
+<h2>Preview of Week 8</h2>
 <p>Total Variation replaces squared gradients by gradient magnitude:</p>
 <p><span class="math display">
 \int_\Omega |\nabla u|\,dx.
@@ -643,7 +639,7 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -675,8 +671,8 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 </ol>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="end-of-week-checkpoint" class="slide level2">
+<h2>End-of-Week Checkpoint</h2>
 <div class="exercise-box">
 <p>Answer in one sentence each:</p>
 <ol type="1">
@@ -699,18 +695,18 @@ u^k-\tau\left[(u^k-y)+\lambda L u^k\right].
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Total Variation regularization:</p>
 <ul>
 <li>TV norm;</li>

@@ -148,7 +148,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Ill-Posed Inverse Problems</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 5</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 5</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -166,8 +166,8 @@ Laurent Najman
 </div>
 <p>Can a problem have a solution, a unique solution, and still be impossible to solve reliably?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>State Hadamard’s three conditions for well-posedness.</li>
@@ -178,50 +178,40 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap likelihood and data fidelity</td>
+<td>Session 1</td>
+<td>Hadamard well-posedness; non-uniqueness; missing information; stability.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-20 min</td>
-<td>Hadamard well-posedness</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">20-32 min</td>
-<td>non-uniqueness and missing information</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">32-48 min</td>
-<td>stability and inverse sensitivity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">48-62 min</td>
-<td>singular values and conceptual SVD</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">62-70 min</td>
-<td>notebook activity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">70-75 min</td>
-<td>synthesis and exit question</td>
+<td>Session 2</td>
+<td>Singular values; noise amplification; condition numbers; stabilization ideas.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-4" class="slide level2">
-<h2>Bridge from Class 4</h2>
-<p>Class 4 gave us a data term:</p>
+<section id="session-1-what-can-fail" class="slide level2 section-slide">
+<h2>Session 1: What Can Fail?</h2>
+<div class="section-kicker">
+<p>Existence, uniqueness, and stability</p>
+</div>
+</section>
+<section id="bridge-from-week-4" class="slide level2">
+<h2>Bridge from Week 4</h2>
+<p>Week 4 gave us a data term:</p>
 <p><span class="math display">
 D(y, f(x)).
 </span></p>
@@ -462,6 +452,12 @@ x = y/\varepsilon.
 <p>This is a stability failure.</p>
 </div>
 </section>
+<section id="session-2-singular-values-and-stabilization" class="slide level2 section-slide">
+<h2>Session 2: Singular Values and Stabilization</h2>
+<div class="section-kicker">
+<p>Directions that data support, and directions they do not</p>
+</div>
+</section>
 <section id="part-4-singular-values" class="slide level2 section-slide">
 <h2>Part 4: Singular Values</h2>
 <div class="section-kicker">
@@ -613,7 +609,7 @@ y^\delta = Ax + \eta.
 </section>
 <section id="preview-of-regularization" class="slide level2">
 <h2>Preview of Regularization</h2>
-<p>Next class, instead of a hard cutoff, we will solve problems like</p>
+<p>Next week, instead of a hard cutoff, we will solve problems like</p>
 <p><span class="math display">
 \min_x
 \|Ax-y\|_2^2 + \lambda \|x\|_2^2.
@@ -627,7 +623,7 @@ y^\delta = Ax + \eta.
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -659,8 +655,8 @@ y^\delta = Ax + \eta.
 </ol>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="end-of-week-checkpoint" class="slide level2">
+<h2>End-of-Week Checkpoint</h2>
 <div class="exercise-box">
 <p>Answer in one sentence each:</p>
 <ol type="1">
@@ -683,18 +679,18 @@ y^\delta = Ax + \eta.
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Tikhonov regularization:</p>
 <ul>
 <li><span class="math inline">\ell_2</span> regularization;</li>

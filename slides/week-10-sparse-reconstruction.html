@@ -148,7 +148,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Sparse Reconstruction</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 10</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 10</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -166,8 +166,8 @@ Laurent Najman
 </div>
 <p>Can fewer measurements be enough if the unknown image has a simple hidden structure?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Define sparsity in a basis or transform.</li>
@@ -178,50 +178,40 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap: proximal methods and soft thresholding</td>
+<td>Session 1</td>
+<td>Sparsity; representation choice; l1 versus l2; underdetermined recovery.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-20 min</td>
-<td>sparsity and representations</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">20-34 min</td>
-<td>l1 versus l2 geometry</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">34-49 min</td>
-<td>underdetermined sparse recovery</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">49-60 min</td>
-<td>compressed sensing intuition</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">60-70 min</td>
-<td>notebook activity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">70-75 min</td>
-<td>synthesis and exit check</td>
+<td>Session 2</td>
+<td>Compressed sensing intuition; sparse images; DCT priors; notebook evidence.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-9" class="slide level2">
-<h2>Bridge from Class 9</h2>
-<p>Class 9 introduced ISTA:</p>
+<section id="session-1-sparsity-as-a-prior" class="slide level2 section-slide">
+<h2>Session 1: Sparsity as a Prior</h2>
+<div class="section-kicker">
+<p>Few important coefficients, if the representation fits</p>
+</div>
+</section>
+<section id="bridge-from-week-9" class="slide level2">
+<h2>Bridge from Week 9</h2>
+<p>Week 9 introduced ISTA:</p>
 <p><span class="math display">
 x^{k+1}
 =
@@ -429,6 +419,12 @@ Ax=y.
 <p>Sparse recovery depends on the pair: sparsity model plus measurement design.</p>
 </div>
 </section>
+<section id="session-2-from-sparse-vectors-to-sparse-images" class="slide level2 section-slide">
+<h2>Session 2: From Sparse Vectors to Sparse Images</h2>
+<div class="section-kicker">
+<p>The prior only helps when the representation matches</p>
+</div>
+</section>
 <section id="part-4-compressed-sensing-intuition" class="slide level2 section-slide">
 <h2>Part 4: Compressed Sensing Intuition</h2>
 <div class="section-kicker">
@@ -492,7 +488,7 @@ Ax=y.
 <p>The Discrete Cosine Transform represents an image patch as cosine patterns.</p>
 <p>Many image patches can be approximated using only a small fraction of DCT coefficients.</p>
 <div class="caption">
-<p>Wavelets in Class 11 will give a more imaging-focused multiscale representation.</p>
+<p>Wavelets in Week 11 will give a more imaging-focused multiscale representation.</p>
 </div>
 </section>
 <section id="few-coefficients-good-approximation" class="slide level2">
@@ -575,7 +571,7 @@ Ax=y.
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -620,19 +616,19 @@ Ax=y.
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Use Chapter 10 of the book to connect l1 geometry with representation-dependent priors.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Wavelets and multiscale representation:</p>
 <ul>
 <li>why image detail lives at multiple scales;</li>

@@ -217,7 +217,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Images as Mathematical Objects</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 1</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 1</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -235,8 +235,8 @@ Laurent Najman
 </div>
 <p>If a scanner gives us imperfect data, what exactly are we trying to recover?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Model an image as a function, an array, and a vector.</li>
@@ -247,42 +247,36 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-10 min</td>
-<td>motivation and course pattern</td>
+<td>Session 1</td>
+<td>Course pattern; images as functions, arrays, vectors; pixel grids and NumPy representation.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">10-30 min</td>
-<td>image models, pixels, vectorization</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">30-45 min</td>
-<td>hand activity and NumPy representation</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">45-60 min</td>
-<td>forward model and inverse problem</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">60-72 min</td>
-<td>masking example with a real image</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">72-75 min</td>
-<td>exit question</td>
+<td>Session 2</td>
+<td>Forward models; masking and occlusion; missing information; assumptions.</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="session-1-images-as-data" class="slide level2 section-slide">
+<h2>Session 1: Images as Data</h2>
+<div class="section-kicker">
+<p>Functions, arrays, vectors</p>
+</div>
 </section>
 <section id="the-course-pattern" class="slide level2">
 <h2>The Course Pattern</h2>
@@ -437,7 +431,7 @@ x \mapsto Ax.
 </section>
 <section id="first-numpy-representation" class="slide level2 code-small">
 <h2>First NumPy Representation</h2>
-<div id="5c2914dd" class="cell">
+<div id="01ec1a97" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a></a></span>
 <span id="cb2-3"><a></a>m, n <span class="op">=</span> <span class="dv">4</span>, <span class="dv">5</span></span>
@@ -456,7 +450,7 @@ x \mapsto Ax.
 <section id="vectorization-convention" class="slide level2">
 <h2>Vectorization Convention</h2>
 <p>NumPy uses row-major order by default:</p>
-<div id="7bb0b99f" class="cell">
+<div id="d6a56e39" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>U <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
 <span id="cb3-2"><a></a>              [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]])</span>
 <span id="cb3-3"><a></a></span>
@@ -495,6 +489,12 @@ x_k.
 <p><span class="math display">
 k = (i-1)n + j
 </span></p>
+</div>
+</section>
+<section id="session-2-forward-models-and-missing-information" class="slide level2 section-slide">
+<h2>Session 2: Forward Models and Missing Information</h2>
+<div class="section-kicker">
+<p>What the data did and did not record</p>
 </div>
 </section>
 <section id="the-forward-model" class="slide level2 section-slide">
@@ -684,7 +684,7 @@ x = A^{-1}y.
 <section id="a-toy-masking-operator" class="slide level2">
 <h2>A Toy Masking Operator</h2>
 <p>Suppose a fixed set of pixels is measured.</p>
-<div id="fc10bf84" class="cell">
+<div id="6f16a0a3" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>)</span>
@@ -759,7 +759,7 @@ x.
 </section>
 <section id="python-demo-masking-a-real-image" class="slide level2 code-small">
 <h2>Python Demo: Masking a Real Image</h2>
-<div id="a40938f9" class="cell">
+<div id="e6bacd2e" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb5-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-3"><a></a></span>
@@ -844,12 +844,12 @@ y = h * x + \eta.
 <div class="tag">
 <p>Preview</p>
 </div>
-<p>Next class, we will make this precise and compute it.</p>
+<p>Next week, we will make this precise and compute it.</p>
 </div>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="end-of-week-checkpoint" class="slide level2">
+<h2>End-of-Week Checkpoint</h2>
 <div class="exercise-box">
 <div class="tag">
 <p>Exit ticket</p>
@@ -874,18 +874,18 @@ y = h * x + \eta.
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Convolution and blur:</p>
 <ul>
 <li>1D and 2D convolution;</li>

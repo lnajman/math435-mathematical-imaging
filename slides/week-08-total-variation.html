@@ -148,7 +148,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Total Variation Regularization</h1>
-  <p class="subtitle">MATH 435: Mathematical Imaging - Class 8</p>
+  <p class="subtitle">MATH 435: Mathematical Imaging - Week 8</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -166,8 +166,8 @@ Laurent Najman
 </div>
 <p>How can a regularizer remove noise without treating every edge as a mistake?</p>
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+<section id="this-week" class="slide level2">
+<h2>This Week</h2>
 <div class="checklist">
 <ul>
 <li>Define Total Variation (TV).</li>
@@ -178,50 +178,40 @@ Laurent Najman
 </ul>
 </div>
 </section>
-<section id="minute-live-path" class="slide level2">
-<h2>75-Minute Live Path</h2>
+<section id="two-session-plan" class="slide level2">
+<h2>Two-Session Plan</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Time</th>
-<th>Work</th>
+<th>Session</th>
+<th>Focus</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0-8 min</td>
-<td>recap variational energy models</td>
+<td>Session 1</td>
+<td>TV definition; sparse gradients; l2 versus TV; one-dimensional edge preservation.</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">8-22 min</td>
-<td>TV definition and gradient penalties</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">22-38 min</td>
-<td>edge preservation in 1D</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">38-52 min</td>
-<td>image denoising: l2 versus TV</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">52-62 min</td>
-<td>staircasing and limitations</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">62-69 min</td>
-<td>notebook activity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">69-75 min</td>
-<td>midterm/course synthesis</td>
+<td>Session 2</td>
+<td>Image denoising; parameter effects; staircasing; modeling limits.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="bridge-from-class-7" class="slide level2">
-<h2>Bridge from Class 7</h2>
-<p>Class 7 used the quadratic smoothing energy:</p>
+<section id="session-1-edges-as-structure" class="slide level2 section-slide">
+<h2>Session 1: Edges as Structure</h2>
+<div class="section-kicker">
+<p>Not every large gradient is an error</p>
+</div>
+</section>
+<section id="bridge-from-week-7" class="slide level2">
+<h2>Bridge from Week 7</h2>
+<p>Week 7 used the quadratic smoothing energy:</p>
 <p><span class="math display">
 E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2.
 </span></p>
@@ -325,7 +315,7 @@ u_\lambda
 <p>Why might this make optimization more delicate than quadratic smoothing?</p>
 </div>
 <div class="caption">
-<p>Class 9 will discuss subgradients and proximal ideas.</p>
+<p>Week 9 will discuss subgradients and proximal ideas.</p>
 </div>
 </section>
 <section id="part-2-1d-edge-preservation" class="slide level2 section-slide">
@@ -372,6 +362,12 @@ u_\lambda
 <li>high-frequency texture everywhere.</li>
 </ol>
 <p>Give a one-sentence reason.</p>
+</div>
+</section>
+<section id="session-2-images-artifacts-and-limits" class="slide level2 section-slide">
+<h2>Session 2: Images, Artifacts, and Limits</h2>
+<div class="section-kicker">
+<p>Edge preservation is a modeling choice</p>
 </div>
 </section>
 <section id="part-3-image-denoising" class="slide level2 section-slide">
@@ -549,7 +545,7 @@ u_\lambda
 <div class="checklist">
 <ul>
 <li>Use the corresponding notebook for the live experiment.</li>
-<li>Example scripts live in <code>examples/</code> for after-class reruns.</li>
+<li>Example scripts live in <code>examples/</code> for later reruns.</li>
 <li>General run instructions are on the <a href="../notebooks/index.html">notebooks page</a>.</li>
 </ul>
 </div>
@@ -581,8 +577,8 @@ u_\lambda
 </ol>
 </div>
 </section>
-<section id="end-of-class-checkpoint" class="slide level2">
-<h2>End-of-Class Checkpoint</h2>
+<section id="end-of-week-checkpoint" class="slide level2">
+<h2>End-of-Week Checkpoint</h2>
 <div class="exercise-box">
 <p>Answer in one sentence each:</p>
 <ol type="1">
@@ -605,18 +601,18 @@ u_\lambda
 </ul>
 </div>
 </section>
-<section id="after-class" class="slide level2">
-<h2>After Class</h2>
+<section id="after-this-week" class="slide level2">
+<h2>After This Week</h2>
 <div class="checklist">
 <ul>
-<li>Use the <a href="../classes.html">class roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
+<li>Use the <a href="../classes.html">weekly roadmap</a> to find the book chapter, notebook, and practice prompt.</li>
 <li>Run the corresponding notebook and change at least one important parameter.</li>
-<li>Write one claim-evidence-limit sentence about today’s model.</li>
+<li>Write one claim-evidence-limit sentence about this week’s model.</li>
 </ul>
 </div>
 </section>
-<section id="next-time" class="slide level2">
-<h2>Next Time</h2>
+<section id="next-week" class="slide level2">
+<h2>Next Week</h2>
 <p>Optimization methods:</p>
 <ul>
 <li>convex sets and convex functions;</li>
