@@ -1,6 +1,6 @@
 ---
 title: "Total Variation Regularization"
-subtitle: "MATH 435: Mathematical Imaging - Class 8"
+subtitle: "MATH 435: Mathematical Imaging - Week 8"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ Edges are not noise
 
 How can a regularizer remove noise without treating every edge as a mistake?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Define Total Variation (TV).
@@ -27,21 +27,22 @@ How can a regularizer remove noise without treating every edge as a mistake?
 - Use TV denoising on signals and images.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap variational energy models |
-| 8-22 min | TV definition and gradient penalties |
-| 22-38 min | edge preservation in 1D |
-| 38-52 min | image denoising: l2 versus TV |
-| 52-62 min | staircasing and limitations |
-| 62-69 min | notebook activity |
-| 69-75 min | midterm/course synthesis |
+| Session | Focus |
+|---|---|
+| Session 1 | TV definition; sparse gradients; l2 versus TV; one-dimensional edge preservation. |
+| Session 2 | Image denoising; parameter effects; staircasing; modeling limits. |
 
-## Bridge from Class 7
+## Session 1: Edges as Structure {.section-slide}
 
-Class 7 used the quadratic smoothing energy:
+::: {.section-kicker}
+Not every large gradient is an error
+:::
+
+## Bridge from Week 7
+
+Week 7 used the quadratic smoothing energy:
 
 $$
 E(u)=\frac12\|u-y\|_2^2+\frac{\lambda}{2}\|\nabla u\|_2^2.
@@ -163,7 +164,7 @@ Why might this make optimization more delicate than quadratic smoothing?
 :::
 
 ::: {.caption}
-Class 9 will discuss subgradients and proximal ideas.
+Week 9 will discuss subgradients and proximal ideas.
 :::
 
 ## Part 2: 1D Edge Preservation {.section-slide}
@@ -211,6 +212,12 @@ Which image class does TV prefer?
 3. high-frequency texture everywhere.
 
 Give a one-sentence reason.
+:::
+
+## Session 2: Images, Artifacts, and Limits {.section-slide}
+
+::: {.section-kicker}
+Edge preservation is a modeling choice
 :::
 
 ## Part 3: Image Denoising {.section-slide}
@@ -358,7 +365,7 @@ The syllabus also places the midterm around this part of the course.
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -388,7 +395,7 @@ For each phrase, choose l2 smoothing or TV:
 4. can create staircasing.
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 Answer in one sentence each:
@@ -409,15 +416,15 @@ Answer in one sentence each:
 - The choice of regularizer is a modeling decision.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Optimization methods:
 

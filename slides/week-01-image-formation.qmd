@@ -1,6 +1,6 @@
 ---
 title: "Images as Mathematical Objects"
-subtitle: "MATH 435: Mathematical Imaging - Class 1"
+subtitle: "MATH 435: Mathematical Imaging - Week 1"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ Mathematical imaging begins here
 
 If a scanner gives us imperfect data, what exactly are we trying to recover?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Model an image as a function, an array, and a vector.
@@ -27,16 +27,18 @@ If a scanner gives us imperfect data, what exactly are we trying to recover?
 - Write the first NumPy representations.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-10 min | motivation and course pattern |
-| 10-30 min | image models, pixels, vectorization |
-| 30-45 min | hand activity and NumPy representation |
-| 45-60 min | forward model and inverse problem |
-| 60-72 min | masking example with a real image |
-| 72-75 min | exit question |
+| Session | Focus |
+|---|---|
+| Session 1 | Course pattern; images as functions, arrays, vectors; pixel grids and NumPy representation. |
+| Session 2 | Forward models; masking and occlusion; missing information; assumptions. |
+
+## Session 1: Images as Data {.section-slide}
+
+::: {.section-kicker}
+Functions, arrays, vectors
+:::
 
 ## The Course Pattern
 
@@ -273,6 +275,12 @@ For a $4 \times 5$ image, where does pixel $(i,j) = (3,2)$ appear in row-major v
 $$
 k = (i-1)n + j
 $$
+:::
+
+## Session 2: Forward Models and Missing Information {.section-slide}
+
+::: {.section-kicker}
+What the data did and did not record
 :::
 
 ## The Forward Model {.section-slide}
@@ -638,11 +646,11 @@ The operator $A$ is convolution by the point spread function $h$.
 Preview
 :::
 
-Next class, we will make this precise and compute it.
+Next week, we will make this precise and compute it.
 :::
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 ::: {.tag}
@@ -666,15 +674,15 @@ For each situation, identify $x$, $y$, $A$, and one reasonable prior:
 - Regularization adds mathematical prior knowledge to stabilize recovery.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Convolution and blur:
 

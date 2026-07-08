@@ -1,6 +1,6 @@
 ---
 title: "Wavelets and Multiscale Representation"
-subtitle: "MATH 435: Mathematical Imaging - Class 11"
+subtitle: "MATH 435: Mathematical Imaging - Week 11"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -19,7 +19,7 @@ Fourier tells us which frequencies are present.
 
 How can we also know where they occur?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Explain wavelets as localized multiscale patterns.
@@ -29,21 +29,22 @@ How can we also know where they occur?
 - Compare wavelet denoising with ordinary smoothing.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap sparse reconstruction |
-| 8-22 min | wavelet intuition and Haar atoms |
-| 22-36 min | multiscale decomposition |
-| 36-48 min | 2D wavelet subbands and sparsity |
-| 48-60 min | thresholding, compression, denoising |
-| 60-70 min | notebook activity |
-| 70-75 min | synthesis and exit check |
+| Session | Focus |
+|---|---|
+| Session 1 | Fourier global support; wavelet localization; Haar intuition; multiscale decomposition. |
+| Session 2 | 2D subbands; sparsity; thresholding; compression and denoising. |
 
-## Bridge from Class 10
+## Session 1: Local Multiscale Geometry {.section-slide}
 
-Class 10 said:
+::: {.section-kicker}
+Same energy idea, different basis geometry
+:::
+
+## Bridge from Week 10
+
+Week 10 said:
 
 ::: {.takeaway-box}
 Sparse reconstruction depends on choosing a representation where the image has few important coefficients.
@@ -221,6 +222,12 @@ $$
 
 ::: {.caption}
 For orthogonal wavelets, energy is preserved up to normalization.
+:::
+
+## Session 2: Image Subbands and Thresholding {.section-slide}
+
+::: {.section-kicker}
+Where details live, and when to keep them
 :::
 
 ## Part 3: Images and Subbands {.section-slide}
@@ -408,7 +415,7 @@ Wavelets are not automatic truth machines.
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -449,16 +456,16 @@ Answer quickly:
 - Representation choice controls the success of sparse reconstruction.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 11 of the book for the Fourier-wavelet-Pythagorean bridge.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Model-based versus data-driven imaging:
 

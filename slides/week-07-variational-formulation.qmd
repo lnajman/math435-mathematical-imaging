@@ -1,6 +1,6 @@
 ---
 title: "Variational Formulation"
-subtitle: "MATH 435: Mathematical Imaging - Class 7"
+subtitle: "MATH 435: Mathematical Imaging - Week 7"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ From formula to framework
 
 What does it mean to reconstruct an image by minimizing an energy?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Interpret reconstruction as energy minimization.
@@ -27,19 +27,20 @@ What does it mean to reconstruct an image by minimizing an energy?
 - Connect optimality to gradient descent.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap Tikhonov regularization |
-| 8-20 min | variational energy viewpoint |
-| 20-32 min | convexity as geometry |
-| 32-50 min | Euler-Lagrange derivation for $\ell_2$ smoothing |
-| 50-62 min | gradient descent intuition |
-| 62-70 min | real-image quadratic denoising |
-| 70-75 min | synthesis check |
+| Session | Focus |
+|---|---|
+| Session 1 | Energy viewpoint; data term and regularizer; convexity; Euler-Lagrange equation. |
+| Session 2 | Gradient descent intuition; quadratic denoising; real-image limits. |
 
-## Bridge from Class 6
+## Session 1: Energies as Models {.section-slide}
+
+::: {.section-kicker}
+Data agreement plus image structure
+:::
+
+## Bridge from Week 6
 
 Tikhonov regularization solves
 
@@ -347,7 +348,7 @@ This is Tikhonov with a different penalty:
 
 ::: {.two-col}
 ::: {.definition-box}
-Class 6:
+Week 6:
 
 $$
 \|Ax-y\|_2^2+\lambda\|x\|_2^2.
@@ -355,7 +356,7 @@ $$
 :::
 
 ::: {.model-box}
-Class 7:
+Week 7:
 
 $$
 \|u-y\|_2^2+\lambda\|\nabla u\|_2^2.
@@ -375,6 +376,12 @@ penalizes changes between neighboring pixels.
 
 ::: {.takeaway-box}
 It prefers smooth images.
+:::
+
+## Session 2: From Optimality to Algorithms {.section-slide}
+
+::: {.section-kicker}
+Minimizers have to be computed
 :::
 
 ## Part 4: Gradient Descent Intuition {.section-slide}
@@ -486,7 +493,7 @@ What does $\|\nabla u\|_2^2$ do to edges?
 Quadratic smoothing reduces noise and blurs edges.
 :::
 
-## Preview of Class 8
+## Preview of Week 8
 
 Total Variation replaces squared gradients by gradient magnitude:
 
@@ -502,7 +509,7 @@ This changes the behavior near edges.
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -532,7 +539,7 @@ For each expression, identify its role:
 4. $u^{k+1}=u^k-\tau\nabla E(u^k)$.
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 Answer in one sentence each:
@@ -553,15 +560,15 @@ Answer in one sentence each:
 - Quadratic smoothness is clear and useful, but it blurs edges.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Total Variation regularization:
 

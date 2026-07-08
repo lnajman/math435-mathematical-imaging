@@ -1,6 +1,6 @@
 ---
 title: "Stability, Robustness, and Ethics"
-subtitle: "MATH 435: Mathematical Imaging - Class 14"
+subtitle: "MATH 435: Mathematical Imaging - Week 14"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ When is a beautiful reconstruction unsafe?
 
 An image can look plausible and still be wrong in a way that matters.
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Define stability and parameter sensitivity.
@@ -28,19 +28,20 @@ An image can look plausible and still be wrong in a way that matters.
 - Connect mathematical validation to ethical responsibility.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap: plug-and-play and learned priors |
-| 8-23 min | stability and parameter sensitivity |
-| 23-36 min | perturbation amplification |
-| 36-50 min | robustness and learned-domain shift |
-| 50-62 min | hallucination, small features, reliability |
-| 62-72 min | notebook activity and project report preparation |
-| 72-75 min | synthesis and exit check |
+| Session | Focus |
+|---|---|
+| Session 1 | Stability; parameter sensitivity; perturbation amplification; robustness axes. |
+| Session 2 | Hallucination risk; ethics; documentation; project report preparation. |
 
-## Bridge from Class 13
+## Session 1: Stability and Robustness Tests {.section-slide}
+
+::: {.section-kicker}
+Trust needs perturbations, not only pretty images
+:::
+
+## Bridge from Week 13
 
 Plug-and-play gave us a hybrid loop:
 
@@ -293,6 +294,12 @@ For your project, name:
 3. one failure case you will show honestly.
 :::
 
+## Session 2: Reliability, Ethics, and Project Defense {.section-slide}
+
+::: {.section-kicker}
+What must be documented before trust?
+:::
+
 ## Part 4: Hallucination and Small Features {.section-slide}
 
 ::: {.section-kicker}
@@ -452,7 +459,7 @@ Your project report should include:
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -501,16 +508,16 @@ Which parts of the reconstruction are dictated by the measurement, and which par
 
 This is the boundary modern imaging has to test.
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 14 of the book as the reliability checklist for projects.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Oral defenses:
 

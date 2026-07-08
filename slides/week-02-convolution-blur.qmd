@@ -1,6 +1,6 @@
 ---
 title: "Convolution and Blur"
-subtitle: "MATH 435: Mathematical Imaging - Class 2"
+subtitle: "MATH 435: Mathematical Imaging - Week 2"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ From pixels to operators
 
 What does it mean, mathematically, for an image to be blurred?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Build convolution from a local weighted average.
@@ -27,19 +27,20 @@ What does it mean, mathematically, for an image to be blurred?
 - See why deblurring is already a hard inverse problem.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-10 min | review fixed forward models |
-| 10-25 min | 1D convolution by hand |
-| 25-40 min | 2D convolution and PSF |
-| 40-55 min | real image blur demo |
-| 55-65 min | boundary conditions |
-| 65-72 min | why deblurring is hard |
-| 72-75 min | exit question |
+| Session | Focus |
+|---|---|
+| Session 1 | 1D and 2D convolution; kernels; point spread functions; real image blur. |
+| Session 2 | Boundary conditions; matrix view; deblurring instability and modeling caveats. |
 
-## Reminder from Class 1
+## Session 1: Blur as a Forward Model {.section-slide}
+
+::: {.section-kicker}
+Local averages become operators
+:::
+
+## Reminder from Week 1
 
 ::: {.model-box}
 For a fixed measurement rule, we often write
@@ -48,7 +49,7 @@ $$
 y = Ax + \eta.
 $$
 
-Today, $A$ will be a blur operator.
+This week, $A$ will be a blur operator.
 :::
 
 ::: {.caption}
@@ -284,7 +285,7 @@ blurred = signal.convolve2d(
 )
 ```
 
-## Run Today's Code {.code-small}
+## Run This Week's Code {.code-small}
 
 From the repository root:
 
@@ -320,6 +321,12 @@ This preserves the average brightness of the image.
 If a $3 \times 3$ box blur has equal weights, what is each weight?
 
 What happens if the weights sum to 2 instead of 1?
+:::
+
+## Session 2: Boundaries, Matrices, and Deblurring {.section-slide}
+
+::: {.section-kicker}
+The model choices become visible at the edges
 :::
 
 ## Part 4: Boundary Conditions {.section-slide}
@@ -375,7 +382,7 @@ For each application, choose a boundary condition and justify it:
 ## Part 5: Matrix View {.section-slide}
 
 ::: {.section-kicker}
-Back to Class 1
+Back to Week 1
 :::
 
 Convolution is a linear operator when the kernel is fixed
@@ -480,7 +487,7 @@ What evidence would make you believe the blur is approximately convolutional?
 What evidence would make you reject the convolution model?
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 For each item, give one sentence:
@@ -501,15 +508,15 @@ For each item, give one sentence:
 - Deblurring is an inverse problem and is usually unstable.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Fourier transform in imaging:
 

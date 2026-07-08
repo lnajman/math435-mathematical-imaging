@@ -56,7 +56,7 @@ website:
       - href: index.qmd
         text: Home
       - href: classes.qmd
-        text: Classes
+        text: Roadmap
       - href: preparation.qmd
         text: Prepare
       - href: practice.qmd

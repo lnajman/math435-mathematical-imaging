@@ -1,6 +1,6 @@
 ---
 title: "Ill-Posed Inverse Problems"
-subtitle: "MATH 435: Mathematical Imaging - Class 5"
+subtitle: "MATH 435: Mathematical Imaging - Week 5"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ When inversion goes wrong
 
 Can a problem have a solution, a unique solution, and still be impossible to solve reliably?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - State Hadamard's three conditions for well-posedness.
@@ -27,21 +27,22 @@ Can a problem have a solution, a unique solution, and still be impossible to sol
 - Connect inverse filtering to SVD noise amplification.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap likelihood and data fidelity |
-| 8-20 min | Hadamard well-posedness |
-| 20-32 min | non-uniqueness and missing information |
-| 32-48 min | stability and inverse sensitivity |
-| 48-62 min | singular values and conceptual SVD |
-| 62-70 min | notebook activity |
-| 70-75 min | synthesis and exit question |
+| Session | Focus |
+|---|---|
+| Session 1 | Hadamard well-posedness; non-uniqueness; missing information; stability. |
+| Session 2 | Singular values; noise amplification; condition numbers; stabilization ideas. |
 
-## Bridge from Class 4
+## Session 1: What Can Fail? {.section-slide}
 
-Class 4 gave us a data term:
+::: {.section-kicker}
+Existence, uniqueness, and stability
+:::
+
+## Bridge from Week 4
+
+Week 4 gave us a data term:
 
 $$
 D(y, f(x)).
@@ -328,6 +329,12 @@ In the instability picture:
 This is a stability failure.
 :::
 
+## Session 2: Singular Values and Stabilization {.section-slide}
+
+::: {.section-kicker}
+Directions that data support, and directions they do not
+:::
+
 ## Part 4: Singular Values {.section-slide}
 
 ::: {.section-kicker}
@@ -502,7 +509,7 @@ This is already a bias-stability tradeoff.
 
 ## Preview of Regularization
 
-Next class, instead of a hard cutoff, we will solve problems like
+Next week, instead of a hard cutoff, we will solve problems like
 
 $$
 \min_x
@@ -517,7 +524,7 @@ Regularization is a controlled way to trade exact data fit for stability.
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -547,7 +554,7 @@ For each statement, identify the issue:
 4. A singular value is nearly zero.
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 Answer in one sentence each:
@@ -568,15 +575,15 @@ Answer in one sentence each:
 - Regularization is motivated by the need for stable reconstruction.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Tikhonov regularization:
 

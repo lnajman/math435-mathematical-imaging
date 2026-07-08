@@ -16,10 +16,10 @@ Students may keep these notes privately, use them while studying, or bring quest
 
 ## How To Use This Page
 
-For each class unit:
+For each week/module:
 
 - read the connected book chapter;
-- attend class and use the slide deck as the discussion structure;
+- attend both sessions and use the weekly slide deck as the discussion structure;
 - run the notebook in Python or Google Colab;
 - write a short four-thread or claim-evidence-limit note for yourself.
 

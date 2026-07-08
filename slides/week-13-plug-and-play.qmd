@@ -1,6 +1,6 @@
 ---
 title: "Plug-and-Play and Learned Regularization"
-subtitle: "MATH 435: Mathematical Imaging - Class 13"
+subtitle: "MATH 435: Mathematical Imaging - Week 13"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -19,7 +19,7 @@ Suppose you already have a good denoising algorithm.
 
 Can you insert it inside an inverse-problem solver?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Recall proximal algorithms for regularized inverse problems.
@@ -30,21 +30,22 @@ Can you insert it inside an inverse-problem solver?
 - Discuss fixed points, convergence, and trust.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap: model-based vs data-driven |
-| 8-22 min | proximal steps as denoising-like operations |
-| 22-38 min | plug-and-play idea and update equations |
-| 38-50 min | learned regularization and unrolled algorithms |
-| 50-62 min | convergence, fixed points, and failure modes |
-| 62-72 min | notebook activity |
-| 72-75 min | synthesis and exit check |
+| Session | Focus |
+|---|---|
+| Session 1 | Proximal algorithms; denoising interpretation; plug-and-play update. |
+| Session 2 | Learned regularization; deblurring example; fixed points, convergence, and trust. |
 
-## Bridge from Class 12
+## Session 1: Plugging a Denoiser into an Inverse Problem {.section-slide}
 
-Class 12 compared:
+::: {.section-kicker}
+Data consistency plus denoising
+:::
+
+## Bridge from Week 12
+
+Week 12 compared:
 
 ::: {.checklist}
 - model-based methods: write the prior;
@@ -274,6 +275,12 @@ Compare these two updates:
 2. $x^{k+1}=D_\sigma(z^k)$.
 
 What mathematical object is explicit in the first update but implicit in the second?
+:::
+
+## Session 2: Learned Regularization and Trust {.section-slide}
+
+::: {.section-kicker}
+Useful does not automatically mean justified
 :::
 
 ## Part 3: Learned Regularization {.section-slide}
@@ -550,7 +557,7 @@ Where do you see measurement evidence, and where do you see prior influence?
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -591,16 +598,16 @@ Answer quickly:
 - Always check both image quality and consistency with measurements.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 13 of the book for the proximal-to-denoiser bridge.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Stability, robustness, and ethics:
 

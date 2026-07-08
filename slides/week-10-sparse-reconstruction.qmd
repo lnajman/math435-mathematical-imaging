@@ -1,6 +1,6 @@
 ---
 title: "Sparse Reconstruction"
-subtitle: "MATH 435: Mathematical Imaging - Class 10"
+subtitle: "MATH 435: Mathematical Imaging - Week 10"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ Too few measurements
 
 Can fewer measurements be enough if the unknown image has a simple hidden structure?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Define sparsity in a basis or transform.
@@ -27,21 +27,22 @@ Can fewer measurements be enough if the unknown image has a simple hidden struct
 - Use a sparse DCT prior for image reconstruction.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap: proximal methods and soft thresholding |
-| 8-20 min | sparsity and representations |
-| 20-34 min | l1 versus l2 geometry |
-| 34-49 min | underdetermined sparse recovery |
-| 49-60 min | compressed sensing intuition |
-| 60-70 min | notebook activity |
-| 70-75 min | synthesis and exit check |
+| Session | Focus |
+|---|---|
+| Session 1 | Sparsity; representation choice; l1 versus l2; underdetermined recovery. |
+| Session 2 | Compressed sensing intuition; sparse images; DCT priors; notebook evidence. |
 
-## Bridge from Class 9
+## Session 1: Sparsity as a Prior {.section-slide}
 
-Class 9 introduced ISTA:
+::: {.section-kicker}
+Few important coefficients, if the representation fits
+:::
+
+## Bridge from Week 9
+
+Week 9 introduced ISTA:
 
 $$
 x^{k+1}
@@ -281,6 +282,12 @@ It needs enough measurements and a measurement operator that mixes information w
 Sparse recovery depends on the pair: sparsity model plus measurement design.
 :::
 
+## Session 2: From Sparse Vectors to Sparse Images {.section-slide}
+
+::: {.section-kicker}
+The prior only helps when the representation matches
+:::
+
 ## Part 4: Compressed Sensing Intuition {.section-slide}
 
 ::: {.section-kicker}
@@ -349,7 +356,7 @@ The Discrete Cosine Transform represents an image patch as cosine patterns.
 Many image patches can be approximated using only a small fraction of DCT coefficients.
 
 ::: {.caption}
-Wavelets in Class 11 will give a more imaging-focused multiscale representation.
+Wavelets in Week 11 will give a more imaging-focused multiscale representation.
 :::
 
 ## Few Coefficients, Good Approximation
@@ -404,7 +411,7 @@ This is not a universal promise.
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -445,16 +452,16 @@ Answer quickly:
 - Sparse priors can reconstruct images from incomplete data, but only under assumptions.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 10 of the book to connect l1 geometry with representation-dependent priors.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Wavelets and multiscale representation:
 

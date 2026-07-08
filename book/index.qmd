@@ -34,7 +34,7 @@ Each chapter connects:
 
 ## How To Use This Book
 
-Read each chapter before or after the corresponding class. Use the slides for the lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The [preparation rhythm](../preparation.qmd) gives the class-by-class sequence that connects these resources.
+Read each chapter before or after the corresponding week. Use the slides for the two-session lecture structure, the notebook for experiments, and the book for the slower explanation that connects the mathematics to the course arc. The [preparation rhythm](../preparation.qmd) gives the weekly sequence that connects these resources.
 
 For each chapter, students should be able to answer:
 

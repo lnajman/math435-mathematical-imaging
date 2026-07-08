@@ -1,6 +1,6 @@
 ---
 title: "Model-Based vs Data-Driven Imaging"
-subtitle: "MATH 435: Mathematical Imaging - Class 12"
+subtitle: "MATH 435: Mathematical Imaging - Week 12"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ Where does prior knowledge come from?
 
 Should an imaging algorithm use a prior we write down, or one it learns from examples?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Compare model-based and data-driven imaging.
@@ -28,19 +28,20 @@ Should an imaging algorithm use a prior we write down, or one it learns from exa
 - Leave the final 20 minutes for Quiz 2.
 :::
 
-## Teaching Plan + Quiz 2
+## Two-Session Plan + Quiz 2
 
-| Time | Work |
-|---:|---|
-| 0-6 min | recap: TV, sparsity, wavelets |
-| 6-15 min | central identity and model-based pipeline |
-| 15-28 min | data-driven imaging pipeline |
-| 28-40 min | neural networks as learned operators |
-| 40-52 min | learned priors, shift, and risk |
-| 52-55 min | quiz transition |
-| 55-75 min | Quiz 2 (20 minutes) |
+| Session | Focus |
+|---|---|
+| Session 1 | Model-based and data-driven imaging; neural networks as inverse-problem operators. |
+| Session 2 | Learned priors; capacity; distribution shift; evaluation; Quiz 2 in the final 20 minutes. |
 
-## Bridge from Class 11
+## Session 1: From Written Priors to Learned Operators {.section-slide}
+
+::: {.section-kicker}
+The inverse-problem story continues
+:::
+
+## Bridge from Week 11
 
 Wavelets gave us a handcrafted representation.
 
@@ -302,7 +303,7 @@ x^{k+1}
 $$
 
 ::: {.caption}
-Class 13 will study plug-and-play and learned regularization.
+Week 13 will study plug-and-play and learned regularization.
 :::
 
 ## Activity 2: Operator or Prior?
@@ -318,6 +319,12 @@ Classify each idea:
 2. TV inside an optimization problem;
 3. a denoiser used as a proximal step;
 4. a neural network trained to predict wavelet coefficients.
+:::
+
+## Session 2: Learned Priors, Shift, and Quiz 2 {.section-slide}
+
+::: {.section-kicker}
+Training data become part of the model
 :::
 
 ## Part 4: A Small Learned Prior {.section-slide}
@@ -494,11 +501,11 @@ Use the central identity as the organizing question:
 - Modern imaging often combines physics, optimization, and learning.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Use Chapter 12 of the book for the model-based/data-driven comparison.
 - Run the corresponding notebook and test one distribution shift.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::

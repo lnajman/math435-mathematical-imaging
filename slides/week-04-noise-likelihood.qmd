@@ -1,6 +1,6 @@
 ---
 title: "Noise Models and Likelihoods"
-subtitle: "MATH 435: Mathematical Imaging - Class 4"
+subtitle: "MATH 435: Mathematical Imaging - Week 4"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ From images to statistics
 
 If two pixels have the same recorded value, do we have the same confidence in both of them?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Distinguish deterministic degradation from random noise.
@@ -27,19 +27,20 @@ If two pixels have the same recorded value, do we have the same confidence in bo
 - Leave the final 20 minutes for Quiz 1.
 :::
 
-## Teaching Plan + Quiz 1
+## Two-Session Plan + Quiz 1
 
-| Time | Work |
-|---:|---|
-| 0-5 min | recap Fourier and inverse filtering |
-| 5-17 min | observe noise and introduce likelihood |
-| 17-29 min | Gaussian noise and least squares |
-| 29-41 min | Poisson noise and photon counts |
-| 41-52 min | likelihoods as data-fidelity terms |
-| 52-55 min | quiz transition |
-| 55-75 min | Quiz 1 (20 minutes) |
+| Session | Focus |
+|---|---|
+| Session 1 | Observation models; Gaussian noise; Poisson photon-counting noise. |
+| Session 2 | Likelihoods as data terms; repetition limits; reconstruction view; Quiz 1 in the final 20 minutes. |
 
-## Bridge from Class 3
+## Session 1: Noise as a Measurement Model {.section-slide}
+
+::: {.section-kicker}
+What kind of uncertainty did the sensor create?
+:::
+
+## Bridge from Week 3
 
 Last time we wrote a noisy deblurring model as
 
@@ -48,7 +49,7 @@ $$
 $$
 
 ::: {.question-box}
-We discussed why deblurring amplifies noise. Today: what is that noise?
+We discussed why deblurring amplifies noise. This week: what is that noise?
 :::
 
 ## Observation Model
@@ -421,6 +422,12 @@ Which is more reliable: observing 5 photons or 500 photons?
 Low-light imaging is difficult because the data are made of small random counts.
 :::
 
+## Session 2: Likelihoods and Quiz 1 {.section-slide}
+
+::: {.section-kicker}
+From noise model to data term
+:::
+
 ## Poisson Likelihood
 
 For independent counts:
@@ -635,10 +642,10 @@ Use the same questions we used all morning:
 - Regularization is still needed when data alone do not determine a stable image.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change Gaussian `sigma` or Poisson `peak_photons`.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::

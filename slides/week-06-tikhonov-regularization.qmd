@@ -1,6 +1,6 @@
 ---
 title: "Tikhonov Regularization"
-subtitle: "MATH 435: Mathematical Imaging - Class 6"
+subtitle: "MATH 435: Mathematical Imaging - Week 6"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ Stabilizing an inverse
 
 If exact inversion is unstable, what should we give up: exact data fit, sharpness, or both?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Formulate Tikhonov regularization.
@@ -27,22 +27,22 @@ If exact inversion is unstable, what should we give up: exact data fit, sharpnes
 - Explain the bias-stability tradeoff.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap ill-posedness and small singular values |
-| 8-20 min | penalized least squares |
-| 20-34 min | normal equations and closed form |
-| 34-48 min | SVD and filter factors |
-| 48-60 min | parameter effects |
-| 60-68 min | bias-variance tradeoff |
-| 68-72 min | project assignment note |
-| 72-75 min | exit question |
+| Session | Focus |
+|---|---|
+| Session 1 | Tikhonov model; penalized least squares; normal equations and closed form. |
+| Session 2 | SVD filter factors; choosing lambda; bias-variance; project proposal. |
 
-## Bridge from Class 5
+## Session 1: Stabilizing Least Squares {.section-slide}
 
-Class 5 showed that direct inversion may amplify noise:
+::: {.section-kicker}
+Add a prior before inverting
+:::
+
+## Bridge from Week 5
+
+Week 5 showed that direct inversion may amplify noise:
 
 $$
 \frac{\langle \eta,u_i\rangle}{\sigma_i}.
@@ -280,6 +280,12 @@ x_lam = np.linalg.solve(lhs, rhs)
 This is the direct matrix form for small educational examples.
 :::
 
+## Session 2: Filter Factors and Parameter Choice {.section-slide}
+
+::: {.section-kicker}
+How lambda changes each direction
+:::
+
 ## Part 3: SVD Interpretation {.section-slide}
 
 ::: {.section-kicker}
@@ -486,7 +492,7 @@ See the project page for the current project structure and expectations.
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -516,7 +522,7 @@ For each expression, identify its role:
 4. $\sigma_i/(\sigma_i^2+\lambda)$.
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 Answer in one sentence each:
@@ -537,15 +543,15 @@ Answer in one sentence each:
 - Regularization is not magic; it encodes a modeling choice.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Variational formulation:
 

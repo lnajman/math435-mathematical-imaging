@@ -13,7 +13,7 @@ Last live smoke test: July 6, 2026.
 
 | Area | Status | Evidence |
 |---|---|---|
-| Public entry path | Ready | Home, class roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site. |
+| Public entry path | Ready | Home, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site. |
 | Representative course paths | Ready | Weeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links. |
 | Colab access | Ready | All fourteen Google Colab notebook links returned HTTP 200. |
 | Grading boundary | Ready | Live pages state that the syllabus is authoritative and that practice notes are not separate graded assignments. |
@@ -33,7 +33,7 @@ Last live smoke test: July 6, 2026.
 
 ## Before Each Class
 
-- [ ] Open the class roadmap for the week.
+- [ ] Open the weekly roadmap for the week.
 - [ ] Check the corresponding book chapter, slide deck, notebook, and Colab link.
 - [ ] Run the notebook if code or dependencies changed.
 - [ ] Check whether the week has a quiz, project milestone, or special timing constraint.

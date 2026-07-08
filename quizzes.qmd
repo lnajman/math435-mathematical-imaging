@@ -4,14 +4,14 @@ title: "Quiz Information"
 
 This page summarizes student-facing quiz logistics. The [syllabus](syllabus.qmd) remains the authority for grading, assessment policies, approved absences, and course rules.
 
-For the ordinary class-by-class study workflow before and after quiz classes, see [How To Prepare For Class](preparation.qmd).
+For the ordinary weekly study workflow before and after quiz sessions, see [How To Prepare For Class](preparation.qmd).
 
 There are two quizzes in the course. Each quiz is 20 minutes long.
 
 | Quiz | Week | Timing in Class | Weight |
 |---|---:|---|---:|
-| Quiz 1 | 4 | final 20 minutes of the Week 4 meeting | 7.5% |
-| Quiz 2 | 12 | final 20 minutes of the Week 12 meeting | 7.5% |
+| Quiz 1 | 4 | final 20 minutes of the second meeting of Week 4 | 7.5% |
+| Quiz 2 | 12 | final 20 minutes of the second meeting of Week 12 | 7.5% |
 
 ## Allowed Tools
 
@@ -36,7 +36,7 @@ For each topic, students should be able to identify:
 
 ## How To Study
 
-Use the class roadmap as the main study guide:
+Use the weekly roadmap as the main study guide:
 
 - review the corresponding book chapters;
 - rerun the relevant notebooks and change one important parameter;

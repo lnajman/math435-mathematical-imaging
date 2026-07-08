@@ -1,6 +1,6 @@
 ---
 title: "Optimization Methods"
-subtitle: "MATH 435: Mathematical Imaging - Class 9"
+subtitle: "MATH 435: Mathematical Imaging - Week 9"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ Models are not enough
 
 If the reconstructed image is defined as a minimizer, how do we actually find it?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Recognize convex optimization problems in imaging.
@@ -27,19 +27,20 @@ If the reconstructed image is defined as a minimizer, how do we actually find it
 - Use proximal and ISTA ideas for sparse regularization.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-8 min | recap: energies from Weeks 7-8 |
-| 8-22 min | convexity and why it matters |
-| 22-37 min | gradient descent and step size |
-| 37-49 min | nonsmooth penalties and subgradients |
-| 49-61 min | proximal operators and ISTA |
-| 61-71 min | notebook activity |
-| 71-75 min | synthesis and exit check |
+| Session | Focus |
+|---|---|
+| Session 1 | Convexity; smooth optimization; gradient descent; step-size diagnostics. |
+| Session 2 | Nonsmooth terms; proximal operators; ISTA; convergence evidence. |
 
-## Bridge from Class 8
+## Session 1: Smooth Optimization {.section-slide}
+
+::: {.section-kicker}
+Follow a descent direction
+:::
+
+## Bridge from Week 8
 
 TV denoising asks for
 
@@ -244,6 +245,12 @@ Common stopping rules:
 - visual or task-driven stopping.
 :::
 
+## Session 2: Nonsmooth Priors and Proximal Steps {.section-slide}
+
+::: {.section-kicker}
+Sparse models need a different move
+:::
+
 ## Part 3: Nonsmooth Terms {.section-slide}
 
 ::: {.section-kicker}
@@ -429,7 +436,7 @@ The same pattern appears repeatedly:
 
 ::: {.checklist}
 - Use the corresponding notebook for the live experiment.
-- Example scripts live in `examples/` for after-class reruns.
+- Example scripts live in `examples/` for later reruns.
 - General run instructions are on the [notebooks page](../notebooks/index.html).
 :::
 
@@ -480,15 +487,15 @@ Match each idea to its role:
 - Proximal operators are central for sparse and edge-preserving imaging.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Sparse reconstruction:
 

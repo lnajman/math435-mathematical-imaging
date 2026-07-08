@@ -1,6 +1,6 @@
 ---
 title: "Fourier Transform in Imaging"
-subtitle: "MATH 435: Mathematical Imaging - Class 3"
+subtitle: "MATH 435: Mathematical Imaging - Week 3"
 author: "Laurent Najman"
 format:
   revealjs:
@@ -17,7 +17,7 @@ From blur to frequency
 
 What does it mean for an image to contain high frequencies?
 
-## Today
+## This Week
 
 ::: {.checklist}
 - Interpret 1D and 2D frequencies.
@@ -27,19 +27,20 @@ What does it mean for an image to contain high frequencies?
 - Explain blur and deblurring in frequency space.
 :::
 
-## 75-Minute Live Path
+## Two-Session Plan
 
-| Time | Work |
-|---:|---|
-| 0-10 min | recap convolution and blur |
-| 10-25 min | 1D frequencies and the DFT |
-| 25-40 min | 2D Fourier transform of images |
-| 40-52 min | magnitude, phase, and geometry |
-| 52-63 min | convolution theorem |
-| 63-72 min | filtering and deblurring |
-| 72-75 min | exit question |
+| Session | Focus |
+|---|---|
+| Session 1 | Fourier atoms; projection; energy and Pythagoras; global support; 2D spectra. |
+| Session 2 | Convolution theorem; frequency filtering; inverse filtering and stabilization. |
 
-## Reminder from Class 2
+## Session 1: Fourier as Projection {.section-slide}
+
+::: {.section-kicker}
+Global directions and energy
+:::
+
+## Reminder from Week 2
 
 ::: {.model-box}
 For a fixed blur kernel $h$,
@@ -343,7 +344,7 @@ magnitude = np.abs(F)
 phase = np.angle(F)
 ```
 
-## Run Today's Code {.code-small}
+## Run This Week's Code {.code-small}
 
 From the repository root:
 
@@ -354,10 +355,16 @@ python3 scripts/build_notebooks.py
 ./scripts/quarto render
 ```
 
+## Session 2: Filtering and Deblurring {.section-slide}
+
+::: {.section-kicker}
+What convolution becomes in frequency space
+:::
+
 ## Part 4: Convolution Theorem {.section-slide}
 
 ::: {.section-kicker}
-The Class 2 bridge
+The Week 2 bridge
 :::
 
 Convolution becomes multiplication
@@ -523,7 +530,7 @@ Change the low-pass radius and the deblurring stabilizer.
 Record one visual effect and one numerical effect.
 :::
 
-## End-of-Class Checkpoint
+## End-of-Week Checkpoint
 
 ::: {.exercise-box}
 For each item, give one sentence:
@@ -544,15 +551,15 @@ For each item, give one sentence:
 - Deblurring needs regularization because inverse filtering is unstable.
 :::
 
-## After Class
+## After This Week
 
 ::: {.checklist}
-- Use the [class roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
+- Use the [weekly roadmap](../classes.html) to find the book chapter, notebook, and practice prompt.
 - Run the corresponding notebook and change at least one important parameter.
-- Write one claim-evidence-limit sentence about today's model.
+- Write one claim-evidence-limit sentence about this week's model.
 :::
 
-## Next Time
+## Next Week
 
 Noise and statistical image models:
 

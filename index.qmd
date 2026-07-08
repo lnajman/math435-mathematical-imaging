@@ -29,8 +29,8 @@ The [syllabus](syllabus.qmd) is the authority for course grading, assessment dat
 
 | Resource | Use it for |
 |---|---|
-| [Class roadmap and slides](classes.qmd) | Find the material for each class meeting. |
-| [How to prepare for class](preparation.qmd) | Use the class rhythm connecting book, slides, notebooks, practice, quizzes, and projects. |
+| [Weekly roadmap and slides](classes.qmd) | Find the material for each week and its two class meetings. |
+| [How to prepare for class](preparation.qmd) | Use the weekly rhythm connecting book, slides, notebooks, practice, quizzes, and projects. |
 | [Ungraded practice](practice.qmd) | Use optional practice prompts connected to the notebooks. |
 | [Quiz information](quizzes.qmd) | Check quiz timing, allowed tools, and preparation guidance. |
 | [Notebooks](notebooks/index.qmd) | Run and modify the computational experiments, including Colab links. |
