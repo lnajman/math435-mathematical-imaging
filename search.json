@@ -4445,21 +4445,49 @@
     "href": "instructor-readiness.html#current-readiness",
     "title": "Course Readiness Checklist",
     "section": "Current Readiness",
-    "text": "Current Readiness\nLast live smoke test: July 6, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nQuiz logistics\nReady\nLive quiz and class pages state that Quiz 1 is in Week 4, Quiz 2 is in Week 12, and each quiz is 20 minutes long.\n\n\nProject boundary\nReady\nLive project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nCourse arc\nReady\nHome, book, practice, and notebooks pages use the shared measurement, prior, computation, and evidence language."
+    "text": "Current Readiness\nLast live smoke test: July 8, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nWeekly structure\nReady\nThe roadmap is organized as fifteen weekly modules. Each module has one book chapter, one slide deck, one notebook, and two planned 75-minute sessions.\n\n\nSlide structure\nReady\nAll fourteen teaching decks use Week labels, a two-session plan, and explicit Session 1 / Session 2 divider slides.\n\n\nSlide fit\nReady\nThe slide-fit audit passed after the two-session reorganization. All audited slides fit within the slide frame.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nQuiz logistics\nReady\nQuiz 1 is planned for the final 20 minutes of the second meeting of Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting of Week 12.\n\n\nProject boundary\nReady\nThe project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nAcademic calendar\nNeeds confirmation\nThe working plan assumes classes from August 28 to December 18, 2026, twice per week. This gives about 32 or 33 meetings before holidays, depending on meeting days. Official holidays and exact meeting days still need confirmation."
+  },
+  {
+    "objectID": "instructor-readiness.html#planning-model",
+    "href": "instructor-readiness.html#planning-model",
+    "title": "Course Readiness Checklist",
+    "section": "Planning Model",
+    "text": "Planning Model\nThe course should be maintained as a weekly course, not as a list of isolated class meetings:\n\none weekly topic;\ntwo 75-minute meetings;\none weekly slide deck;\none weekly notebook;\none book chapter;\none practice thread.\n\nThe notebook is part of the weekly activity load. When judging whether a deck is paced correctly, count notebook and code-reference slides as part of the session plan, even though they are not pure lecture slides."
+  },
+  {
+    "objectID": "instructor-readiness.html#pacing-targets",
+    "href": "instructor-readiness.html#pacing-targets",
+    "title": "Course Readiness Checklist",
+    "section": "Pacing Targets",
+    "text": "Pacing Targets\n\n\n\n\n\n\n\n\nWeek Type\nTarget Total Slides\nNotes\n\n\n\n\nNormal two-session week\n38-48 slides\nThis includes title, plan, session dividers, activities, notebook/code slides, checkpoints, and next-week slides.\n\n\nQuiz week\n34-40 slides\nThe final 20 minutes of Session 2 are reserved for the quiz, so the teaching portion should be leaner.\n\n\nHeavy derivation week\n32-42 slides\nLeave time for board work, student questions, and pauses in the derivation.\n\n\nProject-focused week\n30-40 slides\nLeave time for project discussion, model checks, and oral-defense preparation.\n\n\n\nIf a normal weekly deck has more than about 48 slides, first mark slides as optional or backup rather than deleting useful material. The instructor-facing decision is: what must be covered live, what can become a notebook prompt, and what can remain as review material."
   },
   {
     "objectID": "instructor-readiness.html#before-the-semester",
     "href": "instructor-readiness.html#before-the-semester",
     "title": "Course Readiness Checklist",
     "section": "Before The Semester",
-    "text": "Before The Semester\n\nConfirm official semester dates, room, calendar exceptions, and university policy language in the syllabus.\nReview the syllabus grading table against the official course record.\nConfirm that quiz timing and permitted tools match what will be announced in class.\nOpen the Week 1 notebook from Colab using a student-like browser session.\nSkim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.\nRead the final project page end to end and confirm the project rubric language.\nDecide whether this readiness page should remain unlinked or be moved to private notes."
+    "text": "Before The Semester\n\nConfirm official semester dates, exact meeting days, room, holidays, and university policy language in the syllabus.\nCheck whether the August 28 to December 18, 2026 calendar gives 32 or 33 scheduled meetings for the assigned class days.\nDecide how holidays or missed meetings map onto the fifteen-week roadmap.\nReview the syllabus grading table against the official course record.\nConfirm that quiz timing and permitted tools match what will be announced in class.\nOpen the Week 1 notebook from Colab using a student-like browser session.\nSkim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.\nRead the final project page end to end and confirm the project rubric language.\nDecide whether this readiness page should remain unlinked or be moved to private notes."
   },
   {
-    "objectID": "instructor-readiness.html#before-each-class",
-    "href": "instructor-readiness.html#before-each-class",
+    "objectID": "instructor-readiness.html#before-each-week",
+    "href": "instructor-readiness.html#before-each-week",
     "title": "Course Readiness Checklist",
-    "section": "Before Each Class",
-    "text": "Before Each Class\n\nOpen the weekly roadmap for the week.\nCheck the corresponding book chapter, slide deck, notebook, and Colab link.\nRun the notebook if code or dependencies changed.\nCheck whether the week has a quiz, project milestone, or special timing constraint.\nDecide which notebook result should become the main in-class discussion point."
+    "section": "Before Each Week",
+    "text": "Before Each Week\n\nOpen the weekly roadmap for the week.\nCheck the corresponding book chapter, slide deck, notebook, and Colab link.\nConfirm that the slide deck has a useful two-session plan.\nDecide which slides are core, optional, or backup.\nRun the notebook if code, data, figures, or dependencies changed.\nChoose one notebook result or parameter change for live discussion.\nCheck whether the week has a quiz, project milestone, or special timing constraint.\nIdentify one failure case or limitation students should be able to explain."
+  },
+  {
+    "objectID": "instructor-readiness.html#before-session-1",
+    "href": "instructor-readiness.html#before-session-1",
+    "title": "Course Readiness Checklist",
+    "section": "Before Session 1",
+    "text": "Before Session 1\n\nOpen the deck at the beginning and verify the Session 1 target.\nChoose the main board derivation, diagram, or conceptual discussion.\nDecide where to pause for student prediction or discussion.\nKeep enough time to reach the Session 1 stopping point without rushing the central model."
+  },
+  {
+    "objectID": "instructor-readiness.html#before-session-2",
+    "href": "instructor-readiness.html#before-session-2",
+    "title": "Course Readiness Checklist",
+    "section": "Before Session 2",
+    "text": "Before Session 2\n\nOpen the deck at the Session 2 divider.\nConfirm the notebook activity, code demonstration, or project discussion point.\nDecide which content can be skipped if the notebook discussion takes longer than expected.\nFor Week 4 and Week 12, reserve the final 20 minutes for the quiz.\nEnd with the checkpoint or practice thread that students should carry forward."
   },
   {
     "objectID": "instructor-readiness.html#when-editing-the-site",
@@ -4473,7 +4501,7 @@
     "href": "instructor-readiness.html#instructor-review-items",
     "title": "Course Readiness Checklist",
     "section": "Instructor Review Items",
-    "text": "Instructor Review Items\nThese items need human judgment, not only automated checks.\n\nDoes the home page express the course vision clearly enough for students?\nDo the first two weeks make the inverse-problem viewpoint concrete?\nAre the quiz weeks paced realistically for 55 minutes of teaching plus a 20-minute quiz?\nAre the project expectations ambitious enough but still feasible with LLM assistance?\nDo the book chapters have enough prose for students who miss a class?\nAre examples and images appropriate for Khalifa University students and course policies?"
+    "text": "Instructor Review Items\nThese items need human judgment, not only automated checks.\n\nDoes the home page express the course vision clearly enough for students?\nDo the first two weeks make the inverse-problem viewpoint concrete?\nDo the two-session slide decks leave enough time for notebook discussion?\nAre Week 4 and Week 12 realistically paced for the quiz weeks?\nAre the project expectations ambitious enough but still feasible with LLM assistance?\nDo the book chapters have enough prose for students who miss one of the two weekly sessions?\nAre examples and images appropriate for Khalifa University students and course policies?"
   },
   {
     "objectID": "instructor-readiness.html#boundary-reminder",
