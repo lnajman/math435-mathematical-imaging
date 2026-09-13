@@ -118,7 +118,7 @@ Chapters 10-13 introduce sparsity, wavelets, data-driven priors, and plug-and-pl
 
 Chapter 14 asks how to trust any reconstruction, classical or learned.
 
-The final project asks students to use these ideas in a concrete inverse problem, with LLM assistance required but ownership tested through experiments and oral defense.
+The final project asks students to use these ideas in a concrete inverse problem. AI assistance is permitted, with attribution of any AI-generated content; ownership is tested through experiments and the individual oral defense.
 
 ## The Habit Of Mind
 

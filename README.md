@@ -59,6 +59,18 @@ python3 scripts/validate_notebooks.py
 - `project/`: modeling project description, datasets, rubrics, and milestones.
 - `assets/`: shared styling and static assets.
 
+## Updating the Syllabus
+
+The syllabus page is generated from the current official Word document. Supply the source explicitly:
+
+```bash
+python3 scripts/convert_syllabus_docx.py /path/to/current-syllabus.docx
+```
+
+The converter preserves the document's policy text, tables, and reading links, while turning headings and single-cell policy tables into webpage sections. It does not insert fixed policy wording from an older syllabus. The current source is `MATH435_revised_reviewed_Sep2026.docx` (September 13, 2026).
+
+After importing a revision, reconcile the project page, roadmap, preparation and practice pages, relevant slides, and instructor notes. Then render and audit the site. The separate project rubric retains the instructor's internal assessment breakdown; it must remain compatible with the official syllabus.
+
 ## Publishing
 
 The repository is prepared for GitHub Pages with Quarto. The GitHub Action in `.github/workflows/publish.yml` installs Quarto in CI, renders the site, and publishes it to the `gh-pages` branch.

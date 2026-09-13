@@ -26,6 +26,10 @@ The main point is not only how to compute convolution. The main point is that bl
 | Session 2 | Boundary conditions; matrix view of convolution; naive deblurring and instability; notebook blur-strength experiment. |
 | After Session 2 | End with the question: what does blur preserve, mix, and weaken? |
 
+## Fourier Bridge
+
+The syllabus includes Fourier transforms, the convolution theorem, and frequency interpretation of blur in Week 2. In Session 2, use the slides "A First Fourier View" and "Convolution Becomes Multiplication" to introduce oscillating components and explain how a small blur transfer coefficient amplifies noise. Assign the corresponding Chapter 3 reading. The detailed DFT, FFT, projection, and spectral experiments follow in Week 3.
+
 ## Discussion Pauses
 
 After the 1D convolution hand calculation, ask:

@@ -16,7 +16,7 @@ Week 6 gives the first complete regularized reconstruction model:
 fit the data, but control unstable or implausible image directions
 ```
 
-It also anchors the project proposal moment. Keep the grading boundary clear: the assessed project requirements are the ones in the syllabus and project page.
+The project is assigned this week. Topic planning is ungraded; the syllabus requires a brief ungraded progress draft in Week 8, with feedback by Week 9, before the graded report/code in Week 14 and individual oral presentation in Week 15.
 
 ## Weekly Two-Session Rhythm
 
@@ -24,7 +24,7 @@ It also anchors the project proposal moment. Keep the grading boundary clear: th
 |---|---|
 | Session 1 | Recall small singular values; introduce Tikhonov as data fit plus penalty; derive normal equations and closed form. |
 | Between sessions | Ask students to state what prior Tikhonov adds before seeing the SVD view. |
-| Session 2 | SVD filter factors; choosing $\lambda$; notebook sweep; bias-stability tradeoff; project proposal bridge. |
+| Session 2 | SVD filter factors; choosing $\lambda$; notebook sweep; bias-stability tradeoff; project assignment and planning. |
 | After Session 2 | End with the question: what prior does Tikhonov add, and what does it trade away? |
 
 ## Discussion Pauses
@@ -92,9 +92,9 @@ Good live questions:
 - Which result would you trust if the true image were hidden?
 - What evidence would you report besides the picture?
 
-## Project Proposal Moment
+## Project Assignment and Planning
 
-Use the last ten minutes to remind students that a project proposal should identify:
+Use the last ten minutes for ungraded project planning. Help students identify:
 
 - team and topic;
 - data source or synthetic data plan;
@@ -121,7 +121,7 @@ If the notebook or internet fails:
 - derive the normal equations on the board;
 - draw a one-dimensional tradeoff curve with residual versus solution norm;
 - use the SVD filter factor to explain the role of $\lambda$;
-- discuss project proposals orally with the $x,y,A$ template.
+- discuss project plans orally with the $x,y,A$ template.
 
 ## End-of-Week Prompt
 

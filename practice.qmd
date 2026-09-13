@@ -5,14 +5,14 @@ title: "Ungraded Practice"
 This page gives optional practice prompts connected to the book, slides, and notebooks.
 
 ::: {.callout-important}
-These activities are for practice and preparation. They are **not separate graded assignments** unless the instructor explicitly announces otherwise. Course grading is governed by the [syllabus](syllabus.qmd).
+These activities are for practice and preparation. They are **optional and ungraded**. Course grading is governed by the [syllabus](syllabus.qmd).
 :::
 
 The purpose is to help students keep a running record of the central habit of the course:
 
 > What does the data support, what does the model assume, and where can the reconstruction fail?
 
-Students may keep these notes privately, use them while studying, or bring questions from them to class.
+Students may keep these notes privately, use them while studying, or bring questions from them to class. Instructor feedback is provided through discussion or model solutions, as described in the syllabus.
 
 ## How To Use This Page
 
@@ -83,16 +83,18 @@ Each notebook ends with a short four-thread note. It is the same habit in a slig
 
 ## Project Preparation Guide
 
-The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project notes below are study and planning aids for the final modeling project described on the [project page](project/index.qmd); they do not create additional graded items.
+The syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the graded report and code submission in Week 14 and individual oral presentation in Week 15. The planning aids below support those milestones without creating additional graded items.
 
 | Week | Planning Aid |
 |---:|---|
-| 6 | Prepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of $x$, $y$, and the forward process. |
+| 6 | Plan the assigned project: topic, team, data source, baseline, second method, degradation model, and first definition of $x$, $y$, and the forward process. |
 | 7 | Refine the model statement, data access, and implementation choices after feedback. |
-| 8 | Make sure the notebook can generate or load data and run a simple baseline. |
+| 8 | Submit the brief ungraded progress draft: forward model, proposed reconstruction method, and initial computational results. |
+| 9 | Use instructor feedback on the draft to revise the model and implementation. |
 | 10 | Check that both methods run on the same test cases. |
 | 12 | Add one parameter sweep, one metric, and one robustness or failure test. |
-| 14 | Prepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations. |
+| 14 | Submit the final notebook/code and written report, including the claim-evidence table and attribution of any AI assistance. Prepare oral-defense explanations. |
+| 15 | Give the individual oral presentation and defend the submitted project. |
 
 ## Grading Boundary
 

@@ -17,6 +17,8 @@ the energy says what we want; the optimization method says how we compute it
 
 Students should learn to report convergence evidence, not only final images.
 
+Return feedback on the Week 8 project progress drafts by this week. Focus on the forward model, reconstruction method, and initial results, and ask teams to revise their model and implementation. This is formative feedback with no separate grade.
+
 ## Weekly Two-Session Rhythm
 
 | Moment | Instructor Focus |

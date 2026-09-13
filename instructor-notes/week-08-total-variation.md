@@ -26,6 +26,12 @@ The week should make the difference between smoothing and edge preservation visi
 | Session 2 | Image denoising with TV; notebook comparison; parameter effects; staircasing, contrast loss, and texture loss. |
 | After Session 2 | End with the question: when is TV's prior reasonable? |
 
+## Assessment and Project Timing
+
+The semester examination is scheduled in Week 8. Confirm its exact slot and duration before using the two-session teaching plan; adjust the live TV material around the exam.
+
+Collect the brief ungraded project progress draft this week. It should identify the forward model, proposed reconstruction method, and initial computational results. Provide feedback by Week 9. The draft has no separate grade.
+
 ## Discussion Pauses
 
 After showing gradient magnitudes, ask:

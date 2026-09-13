@@ -18,6 +18,8 @@ The course has several resources because they do different jobs:
 
 ## Weekly Rhythm
 
+Use the [syllabus reading schedule](syllabus.qmd#weekly-plan-tentative) to choose the assigned sections. Some weeks draw on more than one chapter: Week 1 includes the Motivation and a Chapter 2 convolution preview, while Week 2 also introduces Fourier ideas from Chapter 3. Supporting textbook extracts will be identified before the relevant teaching week; only the assigned selections are expected.
+
 | Moment | What To Do | Output |
 |---|---|---|
 | Before Session 1 | Open the [weekly roadmap](classes.qmd). Read enough of the book chapter to recognize the main objects and formulas. Skim the beginning of the weekly slide deck. | One question you want the week to answer. |
@@ -73,7 +75,7 @@ The project should grow from the same weekly rhythm. Each project should be able
 - What failure case did the team test?
 - What role did the LLM play, and what did the students verify themselves?
 
-Use the [project page](project/index.qmd) for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus.
+Use the [project page](project/index.qmd) for the formal project description and rubric. The project is assigned in Week 6. Submit the brief ungraded progress draft in Week 8 and use feedback provided by Week 9. The graded report and code are due in Week 14, with the individual oral presentation in Week 15.
 
 ## LLM Use While Studying
 
@@ -84,4 +86,4 @@ LLMs can be useful for explanation, debugging, and alternative examples, but the
 3. verify the answer against the book, slides, notebook output, or instructor guidance;
 4. write the final understanding in your own words.
 
-LLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense.
+LLM assistance is not permitted during quizzes. For the project, AI assistance is optional; any AI-generated content must be properly attributed. Ownership is checked through the report, code, evidence, and individual oral defense.

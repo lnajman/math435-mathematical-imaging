@@ -14,6 +14,10 @@ Students present and defend their work. The oral defense is the place where stud
 
 Keep the structure aligned with the syllabus and project page. Do not introduce new grading criteria in the room.
 
+The project is 25% of the course grade. The instructor's oral-defense component remains 25% of the project grade, or 6.25% of the course grade. The revised syllabus caps the total project grade at 50% for a student who does not participate in the oral presentation. The report and code were due in Week 14.
+
+AI assistance is optional. Ask about attribution and verification when it was used; do not assess the choice to use or not use an LLM.
+
 ## Weekly Two-Session Rhythm
 
 Adjust the timing to the number of teams. A useful default is:
@@ -47,7 +51,7 @@ For each project, listen for:
 - baseline method and second method compared on the same data;
 - metric or qualitative evidence tied to the claim;
 - at least one failure case or limitation;
-- explicit LLM-use statement;
+- attribution of any AI-generated content, with an LLM-use statement when applicable;
 - whether each student can explain the code and decisions.
 
 ## Oral Defense Question Bank
@@ -77,7 +81,7 @@ Evidence questions:
 - What result weakened your original expectation?
 - What would you test next with more time?
 
-LLM-use questions:
+LLM-use questions, when applicable:
 
 - Where did an LLM help in the project?
 - What did you personally verify?

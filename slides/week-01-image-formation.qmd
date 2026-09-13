@@ -646,7 +646,7 @@ The operator $A$ is convolution by the point spread function $h$.
 Preview
 :::
 
-Next week, we will make this precise and compute it.
+A fixed kernel combines neighboring pixels with fixed weights. This is a linear forward model. Read Chapter 2's convolution preview alongside Chapter 1.
 :::
 :::
 
@@ -684,10 +684,10 @@ For each situation, identify $x$, $y$, $A$, and one reasonable prior:
 
 ## Next Week
 
-Convolution and blur:
+Convolution, blur, and a first Fourier view:
 
 - 1D and 2D convolution;
 - point spread functions;
 - boundary conditions;
 - blur as a linear operator;
-- first deblurring experiment.
+- frequency interpretation and a first deblurring experiment.

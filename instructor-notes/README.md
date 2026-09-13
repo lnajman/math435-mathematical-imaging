@@ -17,6 +17,16 @@ Each teaching note includes:
 
 The notes are meant to support class flow, not to create additional graded work. The syllabus remains the authority for assessment.
 
+## September 2026 Syllabus
+
+The revised syllabus dated September 13, 2026 sets quizzes at 15%, the semester examination at 25%, the project at 25%, and the final examination at 35%. The two quizzes remain in Weeks 4 and 12, and the semester examination is in Week 8.
+
+Assign the project in Week 6, collect a brief ungraded progress draft in Week 8, and provide feedback by Week 9. Final report and code are due in Week 14; individual oral presentations are in Week 15. Topic planning and the progress draft carry no separate grade.
+
+AI assistance is optional, and any AI-generated content must be attributed. The instructor's rubric retains 25% of the project grade for the oral defense and code walkthrough. The syllabus caps the total project grade at 50% if a student misses the oral presentation.
+
+Use the weekly reading links in the syllabus: Week 1 includes the Chapter 2 convolution preview, and Week 2 includes the Fourier and convolution-theorem material from Chapter 3. The book chapters and notebooks are organized by topic and can support more than one week.
+
 ## Practical Pacing Rules
 
 Treat each teaching note as a menu, not a checklist to exhaust. Each weekly note assumes two 75-minute meetings. For most weeks, protect three things:

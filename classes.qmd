@@ -6,25 +6,29 @@ This page is the weekly entry point for the course materials. The course normall
 
 Each week has one mathematical story:
 
-- one book chapter for slower reading;
+- one primary book chapter, with the additional readings assigned in the syllabus;
 - one slide deck for the two live sessions;
 - one notebook for computational experiments;
 - one practice thread connecting measurement, prior, computation, and evidence.
 
 Holidays and official announcements may shift the exact calendar dates. The [syllabus](syllabus.qmd) remains the authority for grading, assessment dates, and course policies.
 
+Follow the [weekly reading schedule](syllabus.qmd#weekly-plan-tentative) as well as each module's primary chapter. Week 1 includes the [Motivation](book/motivation.qmd), Chapter 1, and a [Chapter 2 convolution preview](book/week-02-convolution-blur.qmd). Week 2 also uses [Chapter 3's Fourier and convolution-theorem material](book/week-03-fourier-imaging.qmd); Week 3 develops the DFT and filtering in detail. The syllabus lists supporting textbook selections for each week.
+
 Quiz 1 is planned for the final 20 minutes of the second meeting in Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting in Week 12. See the [quiz information page](quizzes.qmd) for student-facing logistics and preparation guidance.
+
+The semester examination is in Week 8; its exact slot and duration will be announced. The Week 8 session plan will be adjusted around it. Semester dates also need to account for holidays, Innovation Week, and the final examination period, as stated in the syllabus.
 
 ## Weekly Modules
 
 | Week | Topic | Session 1 | Session 2 | Materials |
 |---:|---|---|---|---|
-| 1 | Images as mathematical objects | Images as functions, arrays, and vectors. | Forward models, masking, missing information, and first inverse problems. | [slides](slides/week-01-image-formation.html), [book](book/week-01-image-formation.qmd), [notebook](notebooks/week01_image_formation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |
-| 2 | Convolution and blur | Kernels, point spread functions, and convolution as a forward model. | Boundary conditions, matrix view, and why deblurring is unstable. | [slides](slides/week-02-convolution-blur.html), [book](book/week-02-convolution-blur.qmd), [notebook](notebooks/week02_convolution_blur.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
-| 3 | Fourier transform in imaging | Fourier as projection, energy, Pythagoras, and global support. | 2D spectra, convolution theorem, filtering, and stabilized deblurring. | [slides](slides/week-03-fourier-imaging.html), [book](book/week-03-fourier-imaging.qmd), [notebook](notebooks/week03_fourier_imaging.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) |
+| 1 | Images as mathematical objects | Images as functions, arrays, and vectors. | Forward models, masking, missing information, and convolution preview. | [slides](slides/week-01-image-formation.html), [book](book/week-01-image-formation.qmd), [notebook](notebooks/week01_image_formation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb) |
+| 2 | Convolution, Fourier transform, and blur | Kernels, point spread functions, and convolution as a forward model. | Boundary conditions, matrix view, Fourier transform, convolution theorem, and unstable deblurring. | [slides](slides/week-02-convolution-blur.html), [book](book/week-02-convolution-blur.qmd), [notebook](notebooks/week02_convolution_blur.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb) |
+| 3 | DFT, spectral analysis, and filtering | Fourier as projection, energy, Pythagoras, and global support. | 2D spectra, convolution theorem, filtering, and stabilized deblurring. | [slides](slides/week-03-fourier-imaging.html), [book](book/week-03-fourier-imaging.qmd), [notebook](notebooks/week03_fourier_imaging.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb) |
 | 4 | Noise models and likelihoods | Gaussian and Poisson noise as measurement models. | Likelihoods as data terms, then Quiz 1 in the final 20 minutes. | [slides](slides/week-04-noise-likelihood.html), [book](book/week-04-noise-likelihood.qmd), [notebook](notebooks/week04_noise_likelihood.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week04_noise_likelihood.ipynb) |
 | 5 | Ill-posed inverse problems | Well-posedness, non-uniqueness, missing data, and stability. | Singular values, noise amplification, condition numbers, and stabilization. | [slides](slides/week-05-ill-posed-inverse-problems.html), [book](book/week-05-ill-posed-inverse-problems.qmd), [notebook](notebooks/week05_ill_posed_inverse_problems.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week05_ill_posed_inverse_problems.ipynb) |
-| 6 | Tikhonov regularization | Regularized least squares and normal equations. | SVD interpretation, choosing lambda, bias-variance, and project proposal. | [slides](slides/week-06-tikhonov-regularization.html), [book](book/week-06-tikhonov-regularization.qmd), [notebook](notebooks/week06_tikhonov_regularization.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb) |
+| 6 | Tikhonov regularization | Regularized least squares and normal equations. | SVD interpretation, choosing lambda, bias-variance, and project assignment. | [slides](slides/week-06-tikhonov-regularization.html), [book](book/week-06-tikhonov-regularization.qmd), [notebook](notebooks/week06_tikhonov_regularization.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb) |
 | 7 | Variational formulation | Energies as models, convexity, and Euler-Lagrange equations. | Gradient descent intuition, quadratic denoising, and model limitations. | [slides](slides/week-07-variational-formulation.html), [book](book/week-07-variational-formulation.qmd), [notebook](notebooks/week07_variational_formulation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week07_variational_formulation.ipynb) |
 | 8 | Total Variation regularization | TV, sparse gradients, edge preservation, and one-dimensional examples. | Image denoising, staircasing, modeling limits, and practice synthesis. | [slides](slides/week-08-total-variation.html), [book](book/week-08-total-variation.qmd), [notebook](notebooks/week08_total_variation.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week08_total_variation.ipynb) |
 | 9 | Optimization methods | Convexity, smooth optimization, gradient descent, and step size. | Nonsmooth terms, proximal operators, ISTA, and convergence evidence. | [slides](slides/week-09-optimization-methods.html), [book](book/week-09-optimization-methods.qmd), [notebook](notebooks/week09_optimization_methods.ipynb), [Colab](https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week09_optimization_methods.ipynb) |
@@ -49,14 +53,15 @@ Practice notes are study aids, not separate graded assignments. Course grading i
 
 ## Project Preparation Guide
 
-The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the [project page](project/index.qmd). They do not create a separate grading category.
+The syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the graded report and code submission in Week 14 and individual oral presentation in Week 15. Other planning aids on the [project page](project/index.qmd) do not create separate graded items.
 
 | Week | Milestone |
 |---:|---|
-| 6 | Project proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question. |
+| 6 | Project assigned; plan the team, topic, data source, baseline, second method, forward model, and reliability question. |
 | 7 | Planning feedback: refine the model statement, data access, and implementation choices. |
-| 8 | Baseline preparation: create degraded data and run a simple reconstruction. |
+| 8 | Brief ungraded progress draft due: forward model, proposed reconstruction method, and initial computational results. |
+| 9 | Instructor feedback on the draft; revise the model and implementation. |
 | 10 | Method development: implement two methods on the same test cases. |
 | 12 | Evidence development: add a parameter sweep, quantitative metric, and first robustness or failure test. |
-| 14 | Project report: final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation. |
-| 15 | Final submission and individual oral defense. |
+| 14 | Final report and code due, with the claim-evidence table and attribution of any AI assistance. |
+| 15 | Individual oral presentation and defense of the submitted project. |

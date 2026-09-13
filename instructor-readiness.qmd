@@ -11,16 +11,20 @@ This page is an instructor maintenance aid. It is rendered for convenience, but 
 
 Last live smoke test: July 8, 2026.
 
+Syllabus alignment reviewed against `MATH435_revised_reviewed_Sep2026.docx`, dated September 13, 2026. The earlier smoke-test date above records the broader technical check, not the date of the official syllabus.
+
 | Area | Status | Evidence |
 |---|---|---|
 | Public entry path | Ready | Home, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site. |
-| Weekly structure | Ready | The roadmap is organized as fifteen weekly modules. Each module has one book chapter, one slide deck, one notebook, and two planned 75-minute sessions. |
+| Weekly structure | Ready | Fifteen teaching blocks: Weeks 1-14 have a primary chapter, deck, and notebook for two planned 75-minute sessions; Week 15 is for project presentations. Assigned reading also crosses chapter boundaries in the syllabus. |
 | Slide structure | Ready | All fourteen teaching decks use Week labels, a two-session plan, and explicit Session 1 / Session 2 divider slides. |
 | Slide fit | Ready | The slide-fit audit passed after the two-session reorganization. All audited slides fit within the slide frame. |
 | Representative course paths | Ready | Weeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links. |
 | Colab access | Ready | All fourteen Google Colab notebook links returned HTTP 200. |
 | Quiz logistics | Ready | Quiz 1 is planned for the final 20 minutes of the second meeting of Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting of Week 12. |
-| Project boundary | Ready | The project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade. |
+| Project boundary | Ready | The project is 25% of the course grade. AI assistance is optional and attribution is required when used. The oral component remains 25% of the project, with a total project-grade cap of 50% for missing the oral presentation. |
+| Official grading | Ready | Both syllabus assessment summaries use quizzes 15%, semester examination 25%, project 25%, final examination 35%. The project page also uses the revised 25% project weight. |
+| Project feedback | Ready | Assignment in Week 6; ungraded progress draft in Week 8; feedback by Week 9; report/code in Week 14; individual oral presentation in Week 15. |
 | Grading boundary | Ready | Live pages state that the syllabus is authoritative and that practice notes are not separate graded assignments. |
 | Academic calendar | Needs confirmation | The working plan assumes classes from August 28 to December 18, 2026, twice per week. This gives about 32 or 33 meetings before holidays, depending on meeting days. Official holidays and exact meeting days still need confirmation. |
 
@@ -53,7 +57,8 @@ If a normal weekly deck has more than about 48 slides, first mark slides as opti
 - [ ] Confirm official semester dates, exact meeting days, room, holidays, and university policy language in the syllabus.
 - [ ] Check whether the August 28 to December 18, 2026 calendar gives 32 or 33 scheduled meetings for the assigned class days.
 - [ ] Decide how holidays or missed meetings map onto the fifteen-week roadmap.
-- [ ] Review the syllabus grading table against the official course record.
+- [x] Reconcile website grading and project policies with the revised September 2026 syllabus.
+- [ ] Confirm the Week 8 semester-examination slot and duration, and adjust that week's live teaching time.
 - [ ] Confirm that quiz timing and permitted tools match what will be announced in class.
 - [ ] Open the Week 1 notebook from Colab using a student-like browser session.
 - [ ] Skim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.

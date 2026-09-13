@@ -24,7 +24,7 @@ What does it mean, mathematically, for an image to be blurred?
 - Interpret the point spread function (PSF).
 - Apply 2D convolution to real images.
 - Understand boundary conditions.
-- See why deblurring is already a hard inverse problem.
+- Interpret blur and inverse instability in Fourier coordinates.
 :::
 
 ## Two-Session Plan
@@ -32,7 +32,7 @@ What does it mean, mathematically, for an image to be blurred?
 | Session | Focus |
 |---|---|
 | Session 1 | 1D and 2D convolution; kernels; point spread functions; real image blur. |
-| Session 2 | Boundary conditions; matrix view; deblurring instability and modeling caveats. |
+| Session 2 | Boundaries; matrix view; Fourier transform and convolution theorem; deblurring. |
 
 ## Session 1: Blur as a Forward Model {.section-slide}
 
@@ -323,7 +323,7 @@ If a $3 \times 3$ box blur has equal weights, what is each weight?
 What happens if the weights sum to 2 instead of 1?
 :::
 
-## Session 2: Boundaries, Matrices, and Deblurring {.section-slide}
+## Session 2: Fourier View and Deblurring {.section-slide}
 
 ::: {.section-kicker}
 The model choices become visible at the edges
@@ -421,6 +421,36 @@ The inverse problem appears
 
 If blur is linear, why not just invert it?
 
+## A First Fourier View
+
+The Fourier transform describes a signal by its oscillating components:
+
+$$
+\widehat{x}(\xi)=\int_{\mathbb R}x(t)e^{-2\pi i\xi t}\,dt.
+$$
+
+::: {.checklist}
+- Low frequencies describe slow variation; high frequencies describe rapid variation.
+- Each coefficient compares the signal with a global oscillation.
+- Week 3 develops the discrete transform and its computation by FFT.
+:::
+
+## Convolution Becomes Multiplication
+
+For convolution, the Fourier transform gives
+
+$$
+y=h*x+\eta
+\quad\Longrightarrow\quad
+\widehat y=\widehat h\,\widehat x+\widehat\eta.
+$$
+
+::: {.checklist}
+- For typical smoothing kernels, high-frequency components are attenuated.
+- Dividing by a small $\widehat h$ amplifies noise; zeros lose information.
+- Finite arrays use this product rule with circular convolution or suitable padding.
+:::
+
 ## The Naive Deblurring Idea
 
 If
@@ -455,7 +485,7 @@ Deblurring can fail because:
 4. the blur kernel may be unknown or only approximately known.
 
 ::: {.caption}
-Fourier analysis will make this precise in the next lectures.
+Week 3 develops the DFT, spectral plots, and frequency-domain filtering.
 :::
 
 ## Modeling Caveat
@@ -495,7 +525,7 @@ For each item, give one sentence:
 1. What is a PSF?
 2. Why should a blur kernel often sum to 1?
 3. Name two boundary conditions.
-4. Why is deblurring sensitive to noise?
+4. How does $\widehat y=\widehat h\,\widehat x+\widehat\eta$ explain noise amplification?
 :::
 
 ## What Students Should Remember
@@ -518,9 +548,9 @@ For each item, give one sentence:
 
 ## Next Week
 
-Fourier transform in imaging:
+Discrete Fourier transform and filtering:
 
-- frequency interpretation of blur;
-- convolution theorem;
+- DFT, FFT, and spectral analysis;
+- convolution theorem revisited;
 - low-pass and high-pass behavior;
 - why inverse filtering amplifies noise.

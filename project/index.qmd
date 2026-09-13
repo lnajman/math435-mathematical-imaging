@@ -24,11 +24,7 @@ or a related model adapted to the chosen degradation.
 
 The team must define what $x$, $y$, $A$, and $\eta$ mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.
 
-The course identity is:
-
-$$
-\text{data} + \text{model} + \text{prior} + \text{optimization} \rightarrow \text{reconstruction with limits}.
-$$
+The course identity is that **data + model + prior + optimization** produce a reconstruction whose limits must be tested.
 
 For learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership.
 
@@ -36,21 +32,24 @@ For learned methods, the training data and architecture become part of the prior
 
 Exact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.
 
-The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The intermediate rows below are for feedback and preparation; they do not create additional graded items outside the syllabus.
+The syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the final report and code submission in Week 14 and individual oral presentation in Week 15. Topic planning and the progress draft carry no separate grade.
 
 | Stage | Expected Progress | What Students Should Have |
 |---|---|---|
-| Week 6 | Project proposal | Team, tentative topic, data source, baseline method, second method, first statement of $x$, $y$, forward model, degradation, and reliability question. |
+| Week 6 | Project assigned; topic planning | Team, tentative topic, data source, baseline method, second method, first statement of $x$, $y$, forward model, degradation, and reliability question. |
 | Week 7 | Planning feedback | Refined model statement, data access, and first implementation choices. |
-| Week 8 | Baseline preparation | A runnable notebook that creates the degraded data and runs a simple baseline. |
+| Week 8 | Ungraded progress draft due | Forward model, proposed reconstruction method, and initial computational results, supported by a runnable baseline. |
+| Week 9 | Feedback on the draft | Use instructor feedback to revise the model and implementation. |
 | Week 10 | Method development | Two reconstruction methods implemented on the same test cases. |
 | Week 12 | Evidence development | Parameter sweep, quantitative metric, and first robustness or failure test. |
-| Week 14 | Project report | Complete notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation. |
-| Week 15 | Presentation and oral defense | Final submission plus individual code walkthrough and defense. |
+| Week 14 | Final report and code due | Complete notebook, written report, claim-evidence table, attribution of any AI assistance, and oral-defense preparation. |
+| Week 15 | Individual presentation and oral defense | Code walkthrough and defense of the report and code submitted in Week 14. |
 
-## Required LLM Use
+Late submission of the group project will not be accepted, as stated in the syllabus.
 
-Use of an LLM is required for this project.
+## AI Assistance and Attribution
+
+The September 2026 syllabus permits computational tools and AI assistance for the project. LLM use is optional and is not graded in itself. Each student must be able to justify and defend all modeling decisions during the individual oral presentation.
 
 Students may use an LLM for:
 
@@ -64,15 +63,15 @@ Students may use an LLM for:
 
 However, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.
 
-Each submission must include an **LLM-use statement** describing:
+Any AI-generated content used in the submission must be properly attributed. Teams using an LLM should include an **LLM-use statement** describing:
 
 1. which LLM tools were used;
 2. what they were used for;
 3. which generated code or text was accepted, modified, or rejected;
 4. what the team verified independently;
-5. at least one mistake, limitation, or misleading suggestion produced by the LLM.
+5. any mistakes, limitations, or misleading suggestions the team identified.
 
-The LLM-use statement is **required but not graded separately**. A missing or dishonest LLM-use statement makes the project incomplete.
+Attribution is an academic-integrity requirement, not a separately graded component. Teams that do not use AI assistance may simply state that none was used; they are not required to use an LLM to complete this project.
 
 ### LLM-Use Statement Template
 
@@ -89,7 +88,7 @@ Rejected suggestions:
 
 Independent verification:
 
-One LLM mistake or limitation we found:
+LLM mistakes or limitations we identified, if any:
 
 What each teammate can explain without the LLM:
 ```
@@ -120,7 +119,7 @@ The final submission should contain four parts.
 | Notebook | A runnable notebook that generates or loads the data, runs the methods, produces the figures, and prints the key metrics. |
 | Report | A concise written explanation of the model, methods, evidence, limitations, and conclusions. |
 | Claim-evidence table | Three to five claims, each paired with evidence and a limitation or failure mode. |
-| LLM-use statement | The required disclosure described above. |
+| Attribution | Acknowledge any AI-generated content and other sources; include an LLM-use statement if an LLM was used. |
 
 The notebook and report should agree. Every important figure or numerical result in the report should be reproducible from the notebook.
 
@@ -157,7 +156,7 @@ The report should be concise and structured.
 6. **Results.** Present quantitative and visual comparisons.
 7. **Robustness and failure.** Show stress tests and at least one failure case.
 8. **Limitations.** Explain when the method should not be trusted.
-9. **LLM-use statement.** Disclose how the required LLM support was used.
+9. **Attribution.** Acknowledge sources and disclose any AI assistance used.
 
 ## Claim-Evidence Table
 
@@ -212,7 +211,7 @@ Avoid:
 
 ## Grading Rubric
 
-The syllabus assigns 30% of the course grade to the two-student team modeling project, including the joint report and individual oral defense. The percentages below describe the internal breakdown of that 30% project grade; they do not add any graded work outside the syllabus.
+The syllabus assigns **25% of the course grade** to the two-student team modeling project, including the joint report and individual oral presentation. The percentages below describe the instructor's internal breakdown of that project grade. They sum to 100% of the project, not of the course, and do not add graded work outside the syllabus.
 
 | Component | Weight |
 |---|---:|
@@ -222,7 +221,7 @@ The syllabus assigns 30% of the course grade to the two-student team modeling pr
 | Robustness and failure analysis | 20% |
 | Written report clarity | 10% |
 | Oral defense and code walkthrough | 25% |
-| LLM-use statement | Required, ungraded |
+| AI attribution, when applicable | Required, ungraded |
 
 ## Oral Defense
 
@@ -239,9 +238,11 @@ During the defense, students may be asked to:
 - identify one failure case;
 - walk through selected lines of code;
 - run the notebook on a new test image or modified degradation;
-- explain how LLM assistance was checked.
+- explain how any AI assistance used was checked.
 
-The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact. It is the part of the project that cannot be outsourced to an LLM.
+The oral defense and code walkthrough are worth **25% of the project grade**, equivalent to **6.25% of the course grade**. This retains the instructor's internal rubric while applying the revised overall project weight.
+
+The syllabus also states that failure to participate in the individual oral presentation limits the student's total project grade to **a maximum of 50%**. This cap applies in addition to losing credit for the oral component.
 
 ### Defense Preparation Checklist
 
@@ -258,7 +259,7 @@ Each student should be ready to answer:
 - Which result is mostly imposed by the prior?
 - What is your clearest failure case?
 - Which part of the code would you change first if the method failed on a new image?
-- What did the LLM help with, and how did you verify it?
+- If you used an LLM, what did it help with, and how did you verify it?
 
 ## What A Strong Project Shows
 

@@ -32,7 +32,7 @@ If exact inversion is unstable, what should we give up: exact data fit, sharpnes
 | Session | Focus |
 |---|---|
 | Session 1 | Tikhonov model; penalized least squares; normal equations and closed form. |
-| Session 2 | SVD filter factors; choosing lambda; bias-variance; project proposal. |
+| Session 2 | SVD filter factors; choosing lambda; bias-variance; project assignment. |
 
 ## Session 1: Stabilizing Least Squares {.section-slide}
 
@@ -480,7 +480,8 @@ This week the modeling project is assigned.
 
 ::: {.checklist}
 - Teams choose or receive an imaging reconstruction problem.
-- The proposal, report, and oral defense follow the dates stated in the syllabus.
+- Ungraded draft: Week 8; feedback: Week 9.
+- Final report/code: Week 14; individual oral presentation: Week 15.
 - Each student should understand the entire model and implementation.
 :::
 
