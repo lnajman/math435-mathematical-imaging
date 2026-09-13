@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Laurent Najman">
   <title>MATH 435: Mathematical Imaging – Tikhonov Regularization</title>
@@ -20,10 +20,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -219,7 +222,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Laurent Najman 
+Laurent Najman
 </div>
 </div>
 </div>
@@ -264,7 +267,7 @@ Laurent Najman
 </tr>
 <tr class="even">
 <td>Session 2</td>
-<td>SVD filter factors; choosing lambda; bias-variance; project proposal.</td>
+<td>SVD filter factors; choosing lambda; bias-variance; project assignment.</td>
 </tr>
 </tbody>
 </table>
@@ -470,10 +473,10 @@ x_\lambda
 </section>
 <section id="python-demo-normal-equations" class="slide level2 code-small">
 <h2>Python Demo: Normal Equations</h2>
-<div id="428a7bc7" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
-<span id="cb1-2"><a></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
-<span id="cb1-3"><a></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="3b55f810" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a>lhs <span class="op">=</span> A.T <span class="op">@</span> A <span class="op">+</span> lam <span class="op">*</span> np.eye(n)</span>
+<span id="cb1-2"><a aria-label="2"></a>rhs <span class="op">=</span> A.T <span class="op">@</span> y</span>
+<span id="cb1-3"><a aria-label="3"></a>x_lam <span class="op">=</span> np.linalg.solve(lhs, rhs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="caption">
 <p>This is the direct matrix form for small educational examples.</p>
@@ -656,7 +659,8 @@ x_\lambda
 <div class="checklist">
 <ul>
 <li>Teams choose or receive an imaging reconstruction problem.</li>
-<li>The proposal, report, and oral defense follow the dates stated in the syllabus.</li>
+<li>Ungraded draft: Week 8; feedback: Week 9.</li>
+<li>Final report/code: Week 14; individual oral presentation: Week 15.</li>
 <li>Each student should understand the entire model and implementation.</li>
 </ul>
 </div>

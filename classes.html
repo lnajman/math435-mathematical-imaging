@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-24ee7f1b01100a7d334bcbfbf2324abc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5e43f460a1ccd1245f5aab379af51328.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -178,13 +181,15 @@ ul.task-list li input[type="checkbox"] {
 <p>This page is the weekly entry point for the course materials. The course normally meets twice per week, so each row below is a <strong>week/module</strong>, not a single 75-minute meeting.</p>
 <p>Each week has one mathematical story:</p>
 <ul>
-<li>one book chapter for slower reading;</li>
+<li>one primary book chapter, with the additional readings assigned in the syllabus;</li>
 <li>one slide deck for the two live sessions;</li>
 <li>one notebook for computational experiments;</li>
 <li>one practice thread connecting measurement, prior, computation, and evidence.</li>
 </ul>
 <p>Holidays and official announcements may shift the exact calendar dates. The <a href="./syllabus.html">syllabus</a> remains the authority for grading, assessment dates, and course policies.</p>
+<p>Follow the <a href="./syllabus.html#weekly-plan-tentative">weekly reading schedule</a> as well as each module’s primary chapter. Week 1 includes the <a href="./book/motivation.html">Motivation</a>, Chapter 1, and a <a href="./book/week-02-convolution-blur.html">Chapter 2 convolution preview</a>. Week 2 also uses <a href="./book/week-03-fourier-imaging.html">Chapter 3’s Fourier and convolution-theorem material</a>; Week 3 develops the DFT and filtering in detail. The syllabus lists supporting textbook selections for each week.</p>
 <p>Quiz 1 is planned for the final 20 minutes of the second meeting in Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting in Week 12. See the <a href="./quizzes.html">quiz information page</a> for student-facing logistics and preparation guidance.</p>
+<p>The semester examination is in Week 8; its exact slot and duration will be announced. The Week 8 session plan will be adjusted around it. Semester dates also need to account for holidays, Innovation Week, and the final examination period, as stated in the syllabus.</p>
 <section id="weekly-modules" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-modules">Weekly Modules</h2>
 <table class="caption-top table">
@@ -202,19 +207,19 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1</td>
 <td>Images as mathematical objects</td>
 <td>Images as functions, arrays, and vectors.</td>
-<td>Forward models, masking, missing information, and first inverse problems.</td>
+<td>Forward models, masking, missing information, and convolution preview.</td>
 <td><a href="slides/week-01-image-formation.html">slides</a>, <a href="./book/week-01-image-formation.html">book</a>, <a href="notebooks/week01_image_formation.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week01_image_formation.ipynb">Colab</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
-<td>Convolution and blur</td>
+<td>Convolution, Fourier transform, and blur</td>
 <td>Kernels, point spread functions, and convolution as a forward model.</td>
-<td>Boundary conditions, matrix view, and why deblurring is unstable.</td>
+<td>Boundary conditions, matrix view, Fourier transform, convolution theorem, and unstable deblurring.</td>
 <td><a href="slides/week-02-convolution-blur.html">slides</a>, <a href="./book/week-02-convolution-blur.html">book</a>, <a href="notebooks/week02_convolution_blur.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week02_convolution_blur.ipynb">Colab</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td>Fourier transform in imaging</td>
+<td>DFT, spectral analysis, and filtering</td>
 <td>Fourier as projection, energy, Pythagoras, and global support.</td>
 <td>2D spectra, convolution theorem, filtering, and stabilized deblurring.</td>
 <td><a href="slides/week-03-fourier-imaging.html">slides</a>, <a href="./book/week-03-fourier-imaging.html">book</a>, <a href="notebooks/week03_fourier_imaging.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week03_fourier_imaging.ipynb">Colab</a></td>
@@ -237,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">6</td>
 <td>Tikhonov regularization</td>
 <td>Regularized least squares and normal equations.</td>
-<td>SVD interpretation, choosing lambda, bias-variance, and project proposal.</td>
+<td>SVD interpretation, choosing lambda, bias-variance, and project assignment.</td>
 <td><a href="slides/week-06-tikhonov-regularization.html">slides</a>, <a href="./book/week-06-tikhonov-regularization.html">book</a>, <a href="notebooks/week06_tikhonov_regularization.ipynb">notebook</a>, <a href="https://colab.research.google.com/github/lnajman/math435-mathematical-imaging/blob/main/notebooks/week06_tikhonov_regularization.ipynb">Colab</a></td>
 </tr>
 <tr class="odd">
@@ -346,7 +351,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="project-preparation-guide" class="level2">
 <h2 class="anchored" data-anchor-id="project-preparation-guide">Project Preparation Guide</h2>
-<p>The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the <a href="./project/index.html">project page</a>. They do not create a separate grading category.</p>
+<p>The syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the graded report and code submission in Week 14 and individual oral presentation in Week 15. Other planning aids on the <a href="./project/index.html">project page</a> do not create separate graded items.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 57%">
@@ -361,7 +366,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">6</td>
-<td>Project proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question.</td>
+<td>Project assigned; plan the team, topic, data source, baseline, second method, forward model, and reliability question.</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">7</td>
@@ -369,23 +374,27 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: right;">8</td>
-<td>Baseline preparation: create degraded data and run a simple reconstruction.</td>
+<td>Brief ungraded progress draft due: forward model, proposed reconstruction method, and initial computational results.</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">9</td>
+<td>Instructor feedback on the draft; revise the model and implementation.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">10</td>
 <td>Method development: implement two methods on the same test cases.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">12</td>
 <td>Evidence development: add a parameter sweep, quantitative metric, and first robustness or failure test.</td>
 </tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td>Project report: final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.</td>
-</tr>
 <tr class="odd">
+<td style="text-align: right;">14</td>
+<td>Final report and code due, with the claim-evidence table and attribution of any AI assistance.</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">15</td>
-<td>Final submission and individual oral defense.</td>
+<td>Individual oral presentation and defense of the submitted project.</td>
 </tr>
 </tbody>
 </table>

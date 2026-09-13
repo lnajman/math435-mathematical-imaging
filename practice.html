@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-24ee7f1b01100a7d334bcbfbf2324abc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5e43f460a1ccd1245f5aab379af51328.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -232,14 +235,14 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>These activities are for practice and preparation. They are <strong>not separate graded assignments</strong> unless the instructor explicitly announces otherwise. Course grading is governed by the <a href="./syllabus.html">syllabus</a>.</p>
+<p>These activities are for practice and preparation. They are <strong>optional and ungraded</strong>. Course grading is governed by the <a href="./syllabus.html">syllabus</a>.</p>
 </div>
 </div>
 <p>The purpose is to help students keep a running record of the central habit of the course:</p>
 <blockquote class="blockquote">
 <p>What does the data support, what does the model assume, and where can the reconstruction fail?</p>
 </blockquote>
-<p>Students may keep these notes privately, use them while studying, or bring questions from them to class.</p>
+<p>Students may keep these notes privately, use them while studying, or bring questions from them to class. Instructor feedback is provided through discussion or model solutions, as described in the syllabus.</p>
 <section id="how-to-use-this-page" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-page">How To Use This Page</h2>
 <p>For each week/module:</p>
@@ -451,7 +454,7 @@ Limit or failure case:</code></pre>
 </section>
 <section id="project-preparation-guide" class="level2">
 <h2 class="anchored" data-anchor-id="project-preparation-guide">Project Preparation Guide</h2>
-<p>The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project notes below are study and planning aids for the final modeling project described on the <a href="./project/index.html">project page</a>; they do not create additional graded items.</p>
+<p>The syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the graded report and code submission in Week 14 and individual oral presentation in Week 15. The planning aids below support those milestones without creating additional graded items.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 57%">
@@ -466,7 +469,7 @@ Limit or failure case:</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">6</td>
-<td>Prepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of <span class="math inline">x</span>, <span class="math inline">y</span>, and the forward process.</td>
+<td>Plan the assigned project: topic, team, data source, baseline, second method, degradation model, and first definition of <span class="math inline">x</span>, <span class="math inline">y</span>, and the forward process.</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">7</td>
@@ -474,19 +477,27 @@ Limit or failure case:</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">8</td>
-<td>Make sure the notebook can generate or load data and run a simple baseline.</td>
+<td>Submit the brief ungraded progress draft: forward model, proposed reconstruction method, and initial computational results.</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">9</td>
+<td>Use instructor feedback on the draft to revise the model and implementation.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">10</td>
 <td>Check that both methods run on the same test cases.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: right;">12</td>
 <td>Add one parameter sweep, one metric, and one robustness or failure test.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: right;">14</td>
-<td>Prepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations.</td>
+<td>Submit the final notebook/code and written report, including the claim-evidence table and attribution of any AI assistance. Prepare oral-defense explanations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>Give the individual oral presentation and defend the submitted project.</td>
 </tr>
 </tbody>
 </table>

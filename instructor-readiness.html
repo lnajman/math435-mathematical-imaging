@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -74,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-24ee7f1b01100a7d334bcbfbf2324abc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5e43f460a1ccd1245f5aab379af51328.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -234,6 +237,7 @@ Note
 <section id="current-readiness" class="level2">
 <h2 class="anchored" data-anchor-id="current-readiness">Current Readiness</h2>
 <p>Last live smoke test: July 8, 2026.</p>
+<p>Syllabus alignment reviewed against <code>MATH435_revised_reviewed_Sep2026.docx</code>, dated September 13, 2026. The earlier smoke-test date above records the broader technical check, not the date of the official syllabus.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -256,7 +260,7 @@ Note
 <tr class="even">
 <td>Weekly structure</td>
 <td>Ready</td>
-<td>The roadmap is organized as fifteen weekly modules. Each module has one book chapter, one slide deck, one notebook, and two planned 75-minute sessions.</td>
+<td>Fifteen teaching blocks: Weeks 1-14 have a primary chapter, deck, and notebook for two planned 75-minute sessions; Week 15 is for project presentations. Assigned reading also crosses chapter boundaries in the syllabus.</td>
 </tr>
 <tr class="odd">
 <td>Slide structure</td>
@@ -286,7 +290,17 @@ Note
 <tr class="even">
 <td>Project boundary</td>
 <td>Ready</td>
-<td>The project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.</td>
+<td>The project is 25% of the course grade. AI assistance is optional and attribution is required when used. The oral component remains 25% of the project, with a total project-grade cap of 50% for missing the oral presentation.</td>
+</tr>
+<tr class="odd">
+<td>Official grading</td>
+<td>Ready</td>
+<td>Both syllabus assessment summaries use quizzes 15%, semester examination 25%, project 25%, final examination 35%. The project page also uses the revised 25% project weight.</td>
+</tr>
+<tr class="even">
+<td>Project feedback</td>
+<td>Ready</td>
+<td>Assignment in Week 6; ungraded progress draft in Week 8; feedback by Week 9; report/code in Week 14; individual oral presentation in Week 15.</td>
 </tr>
 <tr class="odd">
 <td>Grading boundary</td>
@@ -360,7 +374,8 @@ Note
 <li><label><input type="checkbox">Confirm official semester dates, exact meeting days, room, holidays, and university policy language in the syllabus.</label></li>
 <li><label><input type="checkbox">Check whether the August 28 to December 18, 2026 calendar gives 32 or 33 scheduled meetings for the assigned class days.</label></li>
 <li><label><input type="checkbox">Decide how holidays or missed meetings map onto the fifteen-week roadmap.</label></li>
-<li><label><input type="checkbox">Review the syllabus grading table against the official course record.</label></li>
+<li><label><input type="checkbox" checked="">Reconcile website grading and project policies with the revised September 2026 syllabus.</label></li>
+<li><label><input type="checkbox">Confirm the Week 8 semester-examination slot and duration, and adjust that week’s live teaching time.</label></li>
 <li><label><input type="checkbox">Confirm that quiz timing and permitted tools match what will be announced in class.</label></li>
 <li><label><input type="checkbox">Open the Week 1 notebook from Colab using a student-like browser session.</label></li>
 <li><label><input type="checkbox">Skim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.</label></li>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-24ee7f1b01100a7d334bcbfbf2324abc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5e43f460a1ccd1245f5aab379af51328.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -220,6 +223,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <section id="weekly-rhythm" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-rhythm">Weekly Rhythm</h2>
+<p>Use the <a href="./syllabus.html#weekly-plan-tentative">syllabus reading schedule</a> to choose the assigned sections. Some weeks draw on more than one chapter: Week 1 includes the Motivation and a Chapter 2 convolution preview, while Week 2 also introduces Fourier ideas from Chapter 3. Supporting textbook extracts will be identified before the relevant teaching week; only the assigned selections are expected.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -308,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <li>What failure case did the team test?</li>
 <li>What role did the LLM play, and what did the students verify themselves?</li>
 </ul>
-<p>Use the <a href="./project/index.html">project page</a> for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus.</p>
+<p>Use the <a href="./project/index.html">project page</a> for the formal project description and rubric. The project is assigned in Week 6. Submit the brief ungraded progress draft in Week 8 and use feedback provided by Week 9. The graded report and code are due in Week 14, with the individual oral presentation in Week 15.</p>
 </section>
 <section id="llm-use-while-studying" class="level2">
 <h2 class="anchored" data-anchor-id="llm-use-while-studying">LLM Use While Studying</h2>
@@ -319,7 +323,7 @@ ul.task-list li input[type="checkbox"] {
 <li>verify the answer against the book, slides, notebook output, or instructor guidance;</li>
 <li>write the final understanding in your own words.</li>
 </ol>
-<p>LLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense.</p>
+<p>LLM assistance is not permitted during quizzes. For the project, AI assistance is optional; any AI-generated content must be properly attributed. Ownership is checked through the report, code, evidence, and individual oral defense.</p>
 
 
 </section>

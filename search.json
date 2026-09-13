@@ -11,21 +11,21 @@
     "href": "project/index.html#central-question",
     "title": "Final Modeling Project",
     "section": "Central Question",
-    "text": "Central Question\nEach project should answer the following question:\n\nGiven degraded image data y, a forward model A, and noise or uncertainty, how can we reconstruct an image x, and how do we know when the reconstruction is reliable?\n\nA typical project has the form:\n\ny = A x + \\eta,\n\nor a related model adapted to the chosen degradation.\nThe team must define what x, y, A, and \\eta mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.\nThe course identity is:\n\n\\text{data} + \\text{model} + \\text{prior} + \\text{optimization} \\rightarrow \\text{reconstruction with limits}.\n\nFor learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership."
+    "text": "Central Question\nEach project should answer the following question:\n\nGiven degraded image data y, a forward model A, and noise or uncertainty, how can we reconstruct an image x, and how do we know when the reconstruction is reliable?\n\nA typical project has the form:\n\ny = A x + \\eta,\n\nor a related model adapted to the chosen degradation.\nThe team must define what x, y, A, and \\eta mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.\nThe course identity is that data + model + prior + optimization produce a reconstruction whose limits must be tested.\nFor learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership."
   },
   {
     "objectID": "project/index.html#expected-timeline",
     "href": "project/index.html#expected-timeline",
     "title": "Final Modeling Project",
     "section": "Expected Timeline",
-    "text": "Expected Timeline\nExact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The intermediate rows below are for feedback and preparation; they do not create additional graded items outside the syllabus.\n\n\n\n\n\n\n\n\nStage\nExpected Progress\nWhat Students Should Have\n\n\n\n\nWeek 6\nProject proposal\nTeam, tentative topic, data source, baseline method, second method, first statement of x, y, forward model, degradation, and reliability question.\n\n\nWeek 7\nPlanning feedback\nRefined model statement, data access, and first implementation choices.\n\n\nWeek 8\nBaseline preparation\nA runnable notebook that creates the degraded data and runs a simple baseline.\n\n\nWeek 10\nMethod development\nTwo reconstruction methods implemented on the same test cases.\n\n\nWeek 12\nEvidence development\nParameter sweep, quantitative metric, and first robustness or failure test.\n\n\nWeek 14\nProject report\nComplete notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.\n\n\nWeek 15\nPresentation and oral defense\nFinal submission plus individual code walkthrough and defense."
+    "text": "Expected Timeline\nExact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.\nThe syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the final report and code submission in Week 14 and individual oral presentation in Week 15. Topic planning and the progress draft carry no separate grade.\n\n\n\n\n\n\n\n\nStage\nExpected Progress\nWhat Students Should Have\n\n\n\n\nWeek 6\nProject assigned; topic planning\nTeam, tentative topic, data source, baseline method, second method, first statement of x, y, forward model, degradation, and reliability question.\n\n\nWeek 7\nPlanning feedback\nRefined model statement, data access, and first implementation choices.\n\n\nWeek 8\nUngraded progress draft due\nForward model, proposed reconstruction method, and initial computational results, supported by a runnable baseline.\n\n\nWeek 9\nFeedback on the draft\nUse instructor feedback to revise the model and implementation.\n\n\nWeek 10\nMethod development\nTwo reconstruction methods implemented on the same test cases.\n\n\nWeek 12\nEvidence development\nParameter sweep, quantitative metric, and first robustness or failure test.\n\n\nWeek 14\nFinal report and code due\nComplete notebook, written report, claim-evidence table, attribution of any AI assistance, and oral-defense preparation.\n\n\nWeek 15\nIndividual presentation and oral defense\nCode walkthrough and defense of the report and code submitted in Week 14.\n\n\n\nLate submission of the group project will not be accepted, as stated in the syllabus."
   },
   {
-    "objectID": "project/index.html#required-llm-use",
-    "href": "project/index.html#required-llm-use",
+    "objectID": "project/index.html#ai-assistance-and-attribution",
+    "href": "project/index.html#ai-assistance-and-attribution",
     "title": "Final Modeling Project",
-    "section": "Required LLM Use",
-    "text": "Required LLM Use\nUse of an LLM is required for this project.\nStudents may use an LLM for:\n\nbrainstorming project ideas;\nunderstanding mathematical definitions;\ngenerating or debugging code;\nimproving plots;\norganizing the report;\nchecking explanations;\npreparing for the oral defense.\n\nHowever, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.\nEach submission must include an LLM-use statement describing:\n\nwhich LLM tools were used;\nwhat they were used for;\nwhich generated code or text was accepted, modified, or rejected;\nwhat the team verified independently;\nat least one mistake, limitation, or misleading suggestion produced by the LLM.\n\nThe LLM-use statement is required but not graded separately. A missing or dishonest LLM-use statement makes the project incomplete.\n\nLLM-Use Statement Template\nStudents may use the following structure.\nLLM tools used:\n\nMain uses:\n\nAccepted or modified suggestions:\n\nRejected suggestions:\n\nIndependent verification:\n\nOne LLM mistake or limitation we found:\n\nWhat each teammate can explain without the LLM:"
+    "section": "AI Assistance and Attribution",
+    "text": "AI Assistance and Attribution\nThe September 2026 syllabus permits computational tools and AI assistance for the project. LLM use is optional and is not graded in itself. Each student must be able to justify and defend all modeling decisions during the individual oral presentation.\nStudents may use an LLM for:\n\nbrainstorming project ideas;\nunderstanding mathematical definitions;\ngenerating or debugging code;\nimproving plots;\norganizing the report;\nchecking explanations;\npreparing for the oral defense.\n\nHowever, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.\nAny AI-generated content used in the submission must be properly attributed. Teams using an LLM should include an LLM-use statement describing:\n\nwhich LLM tools were used;\nwhat they were used for;\nwhich generated code or text was accepted, modified, or rejected;\nwhat the team verified independently;\nany mistakes, limitations, or misleading suggestions the team identified.\n\nAttribution is an academic-integrity requirement, not a separately graded component. Teams that do not use AI assistance may simply state that none was used; they are not required to use an LLM to complete this project.\n\nLLM-Use Statement Template\nStudents may use the following structure.\nLLM tools used:\n\nMain uses:\n\nAccepted or modified suggestions:\n\nRejected suggestions:\n\nIndependent verification:\n\nLLM mistakes or limitations we identified, if any:\n\nWhat each teammate can explain without the LLM:"
   },
   {
     "objectID": "project/index.html#core-requirements",
@@ -39,7 +39,7 @@
     "href": "project/index.html#submission-package",
     "title": "Final Modeling Project",
     "section": "Submission Package",
-    "text": "Submission Package\nThe final submission should contain four parts.\n\n\n\n\n\n\n\nPart\nContent\n\n\n\n\nNotebook\nA runnable notebook that generates or loads the data, runs the methods, produces the figures, and prints the key metrics.\n\n\nReport\nA concise written explanation of the model, methods, evidence, limitations, and conclusions.\n\n\nClaim-evidence table\nThree to five claims, each paired with evidence and a limitation or failure mode.\n\n\nLLM-use statement\nThe required disclosure described above.\n\n\n\nThe notebook and report should agree. Every important figure or numerical result in the report should be reproducible from the notebook."
+    "text": "Submission Package\nThe final submission should contain four parts.\n\n\n\n\n\n\n\nPart\nContent\n\n\n\n\nNotebook\nA runnable notebook that generates or loads the data, runs the methods, produces the figures, and prints the key metrics.\n\n\nReport\nA concise written explanation of the model, methods, evidence, limitations, and conclusions.\n\n\nClaim-evidence table\nThree to five claims, each paired with evidence and a limitation or failure mode.\n\n\nAttribution\nAcknowledge any AI-generated content and other sources; include an LLM-use statement if an LLM was used.\n\n\n\nThe notebook and report should agree. Every important figure or numerical result in the report should be reproducible from the notebook."
   },
   {
     "objectID": "project/index.html#notebook-expectations",
@@ -53,7 +53,7 @@
     "href": "project/index.html#report-structure",
     "title": "Final Modeling Project",
     "section": "Report Structure",
-    "text": "Report Structure\nThe report should be concise and structured.\n\nProblem statement. What imaging problem is being solved?\nForward model. Define x, y, A, and the noise or degradation.\nMethods. Describe the reconstruction algorithms.\nImplementation. Explain the main computational choices.\nParameter study. Show how reconstruction changes as a parameter changes.\nResults. Present quantitative and visual comparisons.\nRobustness and failure. Show stress tests and at least one failure case.\nLimitations. Explain when the method should not be trusted.\nLLM-use statement. Disclose how the required LLM support was used."
+    "text": "Report Structure\nThe report should be concise and structured.\n\nProblem statement. What imaging problem is being solved?\nForward model. Define x, y, A, and the noise or degradation.\nMethods. Describe the reconstruction algorithms.\nImplementation. Explain the main computational choices.\nParameter study. Show how reconstruction changes as a parameter changes.\nResults. Present quantitative and visual comparisons.\nRobustness and failure. Show stress tests and at least one failure case.\nLimitations. Explain when the method should not be trusted.\nAttribution. Acknowledge sources and disclose any AI assistance used."
   },
   {
     "objectID": "project/index.html#claim-evidence-table",
@@ -81,14 +81,14 @@
     "href": "project/index.html#grading-rubric",
     "title": "Final Modeling Project",
     "section": "Grading Rubric",
-    "text": "Grading Rubric\nThe syllabus assigns 30% of the course grade to the two-student team modeling project, including the joint report and individual oral defense. The percentages below describe the internal breakdown of that 30% project grade; they do not add any graded work outside the syllabus.\n\n\n\nComponent\nWeight\n\n\n\n\nMathematical model and assumptions\n15%\n\n\nReproducible notebook and implementation\n15%\n\n\nExperiments and parameter study\n15%\n\n\nRobustness and failure analysis\n20%\n\n\nWritten report clarity\n10%\n\n\nOral defense and code walkthrough\n25%\n\n\nLLM-use statement\nRequired, ungraded"
+    "text": "Grading Rubric\nThe syllabus assigns 25% of the course grade to the two-student team modeling project, including the joint report and individual oral presentation. The percentages below describe the instructor’s internal breakdown of that project grade. They sum to 100% of the project, not of the course, and do not add graded work outside the syllabus.\n\n\n\nComponent\nWeight\n\n\n\n\nMathematical model and assumptions\n15%\n\n\nReproducible notebook and implementation\n15%\n\n\nExperiments and parameter study\n15%\n\n\nRobustness and failure analysis\n20%\n\n\nWritten report clarity\n10%\n\n\nOral defense and code walkthrough\n25%\n\n\nAI attribution, when applicable\nRequired, ungraded"
   },
   {
     "objectID": "project/index.html#oral-defense",
     "href": "project/index.html#oral-defense",
     "title": "Final Modeling Project",
     "section": "Oral Defense",
-    "text": "Oral Defense\nThe oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.\nDuring the defense, students may be asked to:\n\ndefine the forward model;\nexplain why the inverse problem is difficult;\nderive or interpret the reconstruction objective;\nexplain how a parameter affects the result;\ninterpret a quantitative metric;\nexplain a figure from the report;\nidentify one failure case;\nwalk through selected lines of code;\nrun the notebook on a new test image or modified degradation;\nexplain how LLM assistance was checked.\n\nThe oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact. It is the part of the project that cannot be outsourced to an LLM.\n\nDefense Preparation Checklist\nEach student should be ready to answer:\n\nWhat does x represent in your project?\nWhat does y represent?\nWhat is known, unknown, or estimated in the forward model?\nWhich method is your baseline?\nWhich method uses a stronger prior?\nWhich parameter matters most?\nWhat happens when that parameter is too small or too large?\nWhich result is supported by the data?\nWhich result is mostly imposed by the prior?\nWhat is your clearest failure case?\nWhich part of the code would you change first if the method failed on a new image?\nWhat did the LLM help with, and how did you verify it?"
+    "text": "Oral Defense\nThe oral defense is individual. Each student must be able to explain the whole project, not only the part they personally wrote.\nDuring the defense, students may be asked to:\n\ndefine the forward model;\nexplain why the inverse problem is difficult;\nderive or interpret the reconstruction objective;\nexplain how a parameter affects the result;\ninterpret a quantitative metric;\nexplain a figure from the report;\nidentify one failure case;\nwalk through selected lines of code;\nrun the notebook on a new test image or modified degradation;\nexplain how any AI assistance used was checked.\n\nThe oral defense and code walkthrough are worth 25% of the project grade, equivalent to 6.25% of the course grade. This retains the instructor’s internal rubric while applying the revised overall project weight.\nThe syllabus also states that failure to participate in the individual oral presentation limits the student’s total project grade to a maximum of 50%. This cap applies in addition to losing credit for the oral component.\n\nDefense Preparation Checklist\nEach student should be ready to answer:\n\nWhat does x represent in your project?\nWhat does y represent?\nWhat is known, unknown, or estimated in the forward model?\nWhich method is your baseline?\nWhich method uses a stronger prior?\nWhich parameter matters most?\nWhat happens when that parameter is too small or too large?\nWhich result is supported by the data?\nWhich result is mostly imposed by the prior?\nWhat is your clearest failure case?\nWhich part of the code would you change first if the method failed on a new image?\nIf you used an LLM, what did it help with, and how did you verify it?"
   },
   {
     "objectID": "project/index.html#what-a-strong-project-shows",
@@ -2391,7 +2391,7 @@
     "href": "slides/week-01-image-formation.html#mini-case-blurred-photograph",
     "title": "Images as Mathematical Objects",
     "section": "Mini-Case: Blurred Photograph",
-    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nNext week, we will make this precise and compute it."
+    "text": "Mini-Case: Blurred Photograph\n\n\nThe data are a blurred and noisy image:\n\ny = h * x + \\eta.\n\nThe operator A is convolution by the point spread function h.\n\n\n\nPreview\n\nA fixed kernel combines neighboring pixels with fixed weights. This is a linear forward model. Read Chapter 2’s convolution preview alongside Chapter 1."
   },
   {
     "objectID": "slides/week-01-image-formation.html#end-of-week-checkpoint",
@@ -2419,7 +2419,7 @@
     "href": "slides/week-01-image-formation.html#next-week",
     "title": "Images as Mathematical Objects",
     "section": "Next Week",
-    "text": "Next Week\nConvolution and blur:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfirst deblurring experiment."
+    "text": "Next Week\nConvolution, blur, and a first Fourier view:\n\n1D and 2D convolution;\npoint spread functions;\nboundary conditions;\nblur as a linear operator;\nfrequency interpretation and a first deblurring experiment."
   },
   {
     "objectID": "book/week-14-stability-robustness-ethics.html",
@@ -4388,7 +4388,7 @@
     "href": "book/motivation.html#how-the-book-develops-the-idea",
     "title": "Motivation",
     "section": "How The Book Develops The Idea",
-    "text": "How The Book Develops The Idea\nThe book follows the course arc.\nChapters 1-3 build the foundation: images as mathematical objects, blur as a forward model, and Fourier analysis as a way to see what blur removes.\nChapters 4-6 introduce noise, likelihoods, ill-posedness, and regularization. These chapters explain why reconstruction requires assumptions.\nChapters 7-9 show how assumptions become variational problems and numerical algorithms.\nChapters 10-13 introduce sparsity, wavelets, data-driven priors, and plug-and-play methods. This is where the bridge to neural reconstruction becomes explicit.\nChapter 14 asks how to trust any reconstruction, classical or learned.\nThe final project asks students to use these ideas in a concrete inverse problem, with LLM assistance required but ownership tested through experiments and oral defense.",
+    "text": "How The Book Develops The Idea\nThe book follows the course arc.\nChapters 1-3 build the foundation: images as mathematical objects, blur as a forward model, and Fourier analysis as a way to see what blur removes.\nChapters 4-6 introduce noise, likelihoods, ill-posedness, and regularization. These chapters explain why reconstruction requires assumptions.\nChapters 7-9 show how assumptions become variational problems and numerical algorithms.\nChapters 10-13 introduce sparsity, wavelets, data-driven priors, and plug-and-play methods. This is where the bridge to neural reconstruction becomes explicit.\nChapter 14 asks how to trust any reconstruction, classical or learned.\nThe final project asks students to use these ideas in a concrete inverse problem. AI assistance is permitted, with attribution of any AI-generated content; ownership is tested through experiments and the individual oral defense.",
     "crumbs": [
       "Book",
       "Motivation: inverse problems to neural networks"
@@ -4445,7 +4445,7 @@
     "href": "instructor-readiness.html#current-readiness",
     "title": "Course Readiness Checklist",
     "section": "Current Readiness",
-    "text": "Current Readiness\nLast live smoke test: July 8, 2026.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nWeekly structure\nReady\nThe roadmap is organized as fifteen weekly modules. Each module has one book chapter, one slide deck, one notebook, and two planned 75-minute sessions.\n\n\nSlide structure\nReady\nAll fourteen teaching decks use Week labels, a two-session plan, and explicit Session 1 / Session 2 divider slides.\n\n\nSlide fit\nReady\nThe slide-fit audit passed after the two-session reorganization. All audited slides fit within the slide frame.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nQuiz logistics\nReady\nQuiz 1 is planned for the final 20 minutes of the second meeting of Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting of Week 12.\n\n\nProject boundary\nReady\nThe project page states that the LLM-use statement is required but ungraded, and that the oral defense is worth 25% of the project grade.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nAcademic calendar\nNeeds confirmation\nThe working plan assumes classes from August 28 to December 18, 2026, twice per week. This gives about 32 or 33 meetings before holidays, depending on meeting days. Official holidays and exact meeting days still need confirmation."
+    "text": "Current Readiness\nLast live smoke test: July 8, 2026.\nSyllabus alignment reviewed against MATH435_revised_reviewed_Sep2026.docx, dated September 13, 2026. The earlier smoke-test date above records the broader technical check, not the date of the official syllabus.\n\n\n\n\n\n\n\n\nArea\nStatus\nEvidence\n\n\n\n\nPublic entry path\nReady\nHome, weekly roadmap, book home, notebooks page, practice page, syllabus, and project page returned HTTP 200 on the deployed site.\n\n\nWeekly structure\nReady\nFifteen teaching blocks: Weeks 1-14 have a primary chapter, deck, and notebook for two planned 75-minute sessions; Week 15 is for project presentations. Assigned reading also crosses chapter boundaries in the syllabus.\n\n\nSlide structure\nReady\nAll fourteen teaching decks use Week labels, a two-session plan, and explicit Session 1 / Session 2 divider slides.\n\n\nSlide fit\nReady\nThe slide-fit audit passed after the two-session reorganization. All audited slides fit within the slide frame.\n\n\nRepresentative course paths\nReady\nWeeks 1, 6, 10, 12, and 14 returned HTTP 200 for chapter, slide deck, and notebook links.\n\n\nColab access\nReady\nAll fourteen Google Colab notebook links returned HTTP 200.\n\n\nQuiz logistics\nReady\nQuiz 1 is planned for the final 20 minutes of the second meeting of Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting of Week 12.\n\n\nProject boundary\nReady\nThe project is 25% of the course grade. AI assistance is optional and attribution is required when used. The oral component remains 25% of the project, with a total project-grade cap of 50% for missing the oral presentation.\n\n\nOfficial grading\nReady\nBoth syllabus assessment summaries use quizzes 15%, semester examination 25%, project 25%, final examination 35%. The project page also uses the revised 25% project weight.\n\n\nProject feedback\nReady\nAssignment in Week 6; ungraded progress draft in Week 8; feedback by Week 9; report/code in Week 14; individual oral presentation in Week 15.\n\n\nGrading boundary\nReady\nLive pages state that the syllabus is authoritative and that practice notes are not separate graded assignments.\n\n\nAcademic calendar\nNeeds confirmation\nThe working plan assumes classes from August 28 to December 18, 2026, twice per week. This gives about 32 or 33 meetings before holidays, depending on meeting days. Official holidays and exact meeting days still need confirmation."
   },
   {
     "objectID": "instructor-readiness.html#planning-model",
@@ -4466,7 +4466,7 @@
     "href": "instructor-readiness.html#before-the-semester",
     "title": "Course Readiness Checklist",
     "section": "Before The Semester",
-    "text": "Before The Semester\n\nConfirm official semester dates, exact meeting days, room, holidays, and university policy language in the syllabus.\nCheck whether the August 28 to December 18, 2026 calendar gives 32 or 33 scheduled meetings for the assigned class days.\nDecide how holidays or missed meetings map onto the fifteen-week roadmap.\nReview the syllabus grading table against the official course record.\nConfirm that quiz timing and permitted tools match what will be announced in class.\nOpen the Week 1 notebook from Colab using a student-like browser session.\nSkim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.\nRead the final project page end to end and confirm the project rubric language.\nDecide whether this readiness page should remain unlinked or be moved to private notes."
+    "text": "Before The Semester\n\nConfirm official semester dates, exact meeting days, room, holidays, and university policy language in the syllabus.\nCheck whether the August 28 to December 18, 2026 calendar gives 32 or 33 scheduled meetings for the assigned class days.\nDecide how holidays or missed meetings map onto the fifteen-week roadmap.\nReconcile website grading and project policies with the revised September 2026 syllabus.\nConfirm the Week 8 semester-examination slot and duration, and adjust that week’s live teaching time.\nConfirm that quiz timing and permitted tools match what will be announced in class.\nOpen the Week 1 notebook from Colab using a student-like browser session.\nSkim the Week 1, Week 4, Week 12, and Week 14 slide decks in presentation mode.\nRead the final project page end to end and confirm the project rubric language.\nDecide whether this readiness page should remain unlinked or be moved to private notes."
   },
   {
     "objectID": "instructor-readiness.html#before-each-week",
@@ -4550,56 +4550,49 @@
     "href": "syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "MATH 435: Mathematical Imaging\n(3 Lecture hours, 0 Laboratory, 3 Credits)"
+    "text": "MATH 435: Mathematical Imaging\n(3 Lecture hours, 0 Laboratory hours, 3 Credits)"
   },
   {
     "objectID": "syllabus.html#course-information",
     "href": "syllabus.html#course-information",
     "title": "Syllabus",
     "section": "",
-    "text": "MATH 435: Mathematical Imaging\n(3 Lecture hours, 0 Laboratory, 3 Credits)"
+    "text": "MATH 435: Mathematical Imaging\n(3 Lecture hours, 0 Laboratory hours, 3 Credits)"
   },
   {
     "objectID": "syllabus.html#prerequisites",
     "href": "syllabus.html#prerequisites",
     "title": "Syllabus",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\nMATH 317 – Advanced Calculus\nMATH 318 – Linear Algebra II\nMATH 412 – Probability and Statistics"
-  },
-  {
-    "objectID": "syllabus.html#corequisites",
-    "href": "syllabus.html#corequisites",
-    "title": "Syllabus",
-    "section": "Corequisites",
-    "text": "Corequisites\n\nNone"
+    "text": "Prerequisites\n\n(MATH 231 or MATH 232), MATH 315, and one of MATH 242, MATH 243, or MATH 244"
   },
   {
     "objectID": "syllabus.html#course-catalog-description",
     "href": "syllabus.html#course-catalog-description",
     "title": "Syllabus",
     "section": "Course Catalog Description",
-    "text": "Course Catalog Description\nThis course develops the mathematical foundations of imaging science from a modern inverse problems perspective. Students learn how images are formed, degraded, and reconstructed using tools from linear algebra, Fourier analysis, probability, variational modeling, and optimization.\nThe course emphasizes mathematical modeling, stability analysis, regularization techniques (Tikhonov, Total Variation, sparse methods), and computational implementation. Classical model-based approaches are connected to modern computational imaging techniques, including data-driven and learning-based reconstruction methods.\nApplications focus on medical and scientific imaging."
+    "text": "Course Catalog Description\nThis course introduces the mathematical foundations of imaging science from an inverse problems perspective. It covers image formation, reconstruction, and degradation using tools from linear algebra, Fourier analysis, probability, and optimization. Regularization methods and computational techniques for stable image reconstruction are studied. Applications focus on medical and scientific imaging."
   },
   {
     "objectID": "syllabus.html#textbook",
     "href": "syllabus.html#textbook",
     "title": "Syllabus",
     "section": "Textbook",
-    "text": "Textbook\n\nM Bertero. and P. Boccacci, Introduction to Inverse Problems in Imaging, 2nd ed., CRC Press, 2021."
+    "text": "Textbook\n\nM. Bertero, P. Boccacci, and C. De Mol, Introduction to Inverse Problems in Imaging, 2nd ed. Boca Raton, FL, USA: CRC Press, 2021."
   },
   {
     "objectID": "syllabus.html#reference-materials",
     "href": "syllabus.html#reference-materials",
     "title": "Syllabus",
     "section": "Reference Materials",
-    "text": "Reference Materials\n\nA. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” Acta Numerica, vol. 25, pp. 161–319, 2016.\nS. Mallat, A Wavelet Tour of Signal Processing, 3rd ed., Academic Press, 2008.\nSelected recent research articles on modern computational imaging and learning-based reconstruction (provided during the course)."
+    "text": "Reference Materials\n\nA. Chambolle and T. Pock, “An introduction to continuous optimization for imaging,” Acta Numerica, vol. 25, pp. 161–319, 2016.\nS. Mallat, A Wavelet Tour of Signal Processing, 3rd ed. Burlington, MA, USA: Academic Press, 2009.\nL. Najman, Mathematical Imaging, online course book for MATH 435."
   },
   {
     "objectID": "syllabus.html#course-structure-learning-methodology",
     "href": "syllabus.html#course-structure-learning-methodology",
     "title": "Syllabus",
     "section": "Course Structure & Learning Methodology",
-    "text": "Course Structure & Learning Methodology\nLectures will be 3x50 minutes or 2 × 75-minutes per week. The course is delivered through lectures, guided mathematical derivations, conceptual discussions, and computational demonstrations using MATLAB or Python. Homework assignments and an individual modeling project are conducted throughout the semester to reinforce understanding.\nThe course emphasizes reasoning and modeling rather than formal proof-writing."
+    "text": "Course Structure & Learning Methodology\nLectures are 2 × 75 minutes per week. Lectures are presented using slides and whiteboard. The course is facilitated by computational demonstrations. A team modeling project is conducted throughout the semester to reinforce understanding."
   },
   {
     "objectID": "syllabus.html#course-topics",
@@ -4616,18 +4609,18 @@
     "text": "Laboratory and/or Computing/Digital Resources\nPython (NumPy, SciPy, Matplotlib)."
   },
   {
-    "objectID": "syllabus.html#course-learning-outcomes-clo-and-program-learning-outcomes-plo",
-    "href": "syllabus.html#course-learning-outcomes-clo-and-program-learning-outcomes-plo",
+    "objectID": "syllabus.html#course-learning-outcomes-clos-and-contributions-to-bsc-applied-math-statistics-and-data-science-program-learning-outcomes-plos",
+    "href": "syllabus.html#course-learning-outcomes-clos-and-contributions-to-bsc-applied-math-statistics-and-data-science-program-learning-outcomes-plos",
     "title": "Syllabus",
-    "section": "Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)",
-    "text": "Course Learning Outcomes (CLO) and Program Learning Outcomes (PLO)\n\n\n\n\n\n\n\n\n\n\nNo.\n\n\nCLOs\n\n\nPLOs\n\n\nEmphasis Level#\n\n\n\n\n\n\n1\n\n\nFormulate mathematical models for image formation, degradation, and reconstruction problem\n\n\n1,2\n\n\nH,H\n\n\n\n\n2\n\n\n\nAnalyze ill-posed imaging problems and evaluate the role of\n\n\nregularization techniques in ensuring stability and meaningful\n\n\nreconstruction.\n\n\n\n1,3\n\n\nH,H\n\n\n\n\n3\n\n\n\nDesign and implement computational reconstruction methods and\n\n\ninterpret experimental results using scientific judgment.\n\n\n\n2,3\n\n\nH,H\n\n\n\n\n4\n\n\n\nCommunicate mathematical reasoning, modeling decisions, and\n\n\nreconstruction results effectively in written and oral formats.\n\n\n\n4\n\n\nH\n\n\n\n\n5\n\n\n\nWork effectively in two-student teams to plan, execute, and deliver a\n\n\nmodeling project while recognizing ethical considerations and the\n\n\nsocietal impact of computational imaging solutions.\n\n\n\n5,6\n\n\nM,H\n\n\n\n\n*PLOs can be found in the academic catalog\n#Emphasis level: H: High; M: Medium; L: Low; N: Nothing specific"
+    "section": "Course Learning Outcomes (CLOs) and Contributions to BSc Applied Math, Statistics, and Data Science Program Learning Outcomes (PLOs)*:",
+    "text": "Course Learning Outcomes (CLOs) and Contributions to BSc Applied Math, Statistics, and Data Science Program Learning Outcomes (PLOs)*:\n\n\n\n\n\n\n\n\n\n\nNo.\n\n\nCLOs\n\n\nPLOs\n\n\nEmphasis Level#\n\n\n\n\n\n\n1\n\n\nFormulate mathematical models for image formation, degradation, and reconstruction problems.\n\n\n1, 2\n\n\nH, H\n\n\n\n\n2\n\n\n\nAnalyze ill-posed imaging problems, including the role of\n\n\nregularization techniques in ensuring stability and meaningful\n\n\nreconstruction.\n\n\n\n1, 3\n\n\nH, H\n\n\n\n\n3\n\n\n\nDesign computational reconstruction methods based on\n\n\nexperimental results and scientific judgment.\n\n\n\n2, 3\n\n\nH, H\n\n\n\n\n4\n\n\n\nCommunicate mathematical reasoning, modeling decisions, and\n\n\nreconstruction results in written and oral formats.\n\n\n\n4\n\n\nH\n\n\n\n\n5\n\n\n\nApply ethical considerations and standards for\n\n\nsocietal impact of computational imaging solutions in group work.\n\n\n\n5, 6\n\n\nM, H\n\n\n\n\n*PLOs can be found in the academic catalog\n#Emphasis level: H: High; M: Medium; L: Low"
   },
   {
     "objectID": "syllabus.html#assessment",
     "href": "syllabus.html#assessment",
     "title": "Syllabus",
     "section": "Assessment",
-    "text": "Assessment\nAll course learning outcomes are assessed using the following assessment tools.\n\n\n\n\n\n\n\n\n\n\nAssessment Instruments\n\n\nContribution to Course Grade (%)\n\n\nWeek #\n\n\nCLO(s)\n\n\n\n\n\n\n\nQuizzes\n\n\n\n15%\n\n\n4,12\n\n\n1,2\n\n\n\n\n\nTwo-Student Team Modeling\n\n\nProject (Joint Report\n\n\nand Individual Oral Defense)\n\n\n\n30%\n\n\n\nProposal: Week 6\n\n\nReport: Week 14\n\n\nOral Defense: Week 15\n\n\n\n1,2,3,4,5\n\n\n\n\n\nSemester Examination\n\n\n\n25%\n\n\nWeek 8\n\n\n1,2\n\n\n\n\n\nFinal Examination\n\n\n\n30%\n\n\nExam Week\n\n\n1,2,3\n\n\n\n\nStudents are required to use an LLM for the project and must submit an LLM-use statement. The statement is required but not graded separately. Students remain responsible for the correctness of all code, models, results, and interpretations, and must be able to justify and defend all modeling decisions during the oral defense."
+    "text": "Assessment\nAll course learning outcomes are assessed using the following assessment tools.\n\n\n\n\n\n\n\n\n\n\nAssessment Instruments\n\n\nContribution to Course Grade (%)\n\n\nWeek #\n\n\nCLO(s)\n\n\n\n\n\n\n\n\nCoursework (Quizzes)\n\n\n\n\n15%\n\n\n4,12\n\n\n1,2\n\n\n\n\n\n\nSemester Examination\n\n\n\n\n25%\n\n\n8\n\n\n1,2\n\n\n\n\n\n\nProject (reports and presentation)\n\n\n\n\n25%\n\n\n14 (report/code) 15 (oral)\n\n\n1,2,3,4,5\n\n\n\n\n\n\nFinal Examination\n\n\n\n\n35%\n\n\nTBA\n\n\n1,2,3"
   },
   {
     "objectID": "syllabus.html#grading-scheme",
@@ -4648,147 +4641,63 @@
     "href": "syllabus.html#copyright-and-plagiarism",
     "title": "Syllabus",
     "section": "Copyright and Plagiarism",
-    "text": "Copyright and Plagiarism\nAll students must adhere to the university’s policies on copyright and plagiarism, including the ethical use of generative AI tools. Any use of AI-generated content must be properly attributed and must not violate academic integrity standards.\n\n\n\n\n\n\nNote\n\n\n\nThis syllabus must be augmented by a syllabus supplement for students."
+    "text": "Copyright and Plagiarism\nAll students must adhere to the university’s policies on copyright and plagiarism, including the ethical use of generative AI tools. Any use of AI-generated content must be properly attributed and must not violate academic integrity standards.\nThis syllabus must be augmented by a syllabus supplement for students"
   },
   {
     "objectID": "syllabus.html#syllabus-supplement",
     "href": "syllabus.html#syllabus-supplement",
     "title": "Syllabus",
-    "section": "Syllabus Supplement",
-    "text": "Syllabus Supplement\n\n\n\n\n\n\n\n\n\n\n\nOrganizational Details\n\n\n\n\nCourse Code and Title:\n\n\nMATH 435 – Mathematical Imaging\n\n\n\n\nSemester:\n\n\n\n\n\n\nSchedule:\n\n\n\n\n\n\nInstructor:\n\n\n\n\n\n\nContact Email:\n\n\n\n\n\n\nOffice Room Number:\n\n\n\n\n\n\nOffice Hours:\n\n\n\n\n\n\nAssessment Methodology\n\n\n\n\n\n\nTentative Dates\n\n\nWeight\n\n\n\n\nCoursework.\n\n\nQuiz 1\n\n\nWeek 4 (7.5%, 20 minutes)\n\n\n45%\n\n\n\n\nQuiz 2\n\n\nWeek 12 (7.5%, 20 minutes)\n\n\n\n\nProject and Presentation\n\n\nWeek 14/15 (30%)\n\n\n\n\nMidterm Examination.\n\n\nWeek 8\n\n\n25%\n\n\n\n\nFinal Examination.\n\n\nTBD by the Registrar’s Office\n\n\n30%"
+    "section": "Syllabus supplement",
+    "text": "Syllabus supplement\n\n\n\n\n\n\n\n\n\n\n\nOrganizational Details\n\n\n\n\nCourse Code and Title:\n\n\nMATH 435 Mathematical Imaging\n\n\n\n\nSemester:\n\n\n\n\n\n\nSchedule:\n\n\n\n\n\n\nInstructor:\n\n\nLaurent Alain Najman\n\n\n\n\nContact Email:\n\n\n\n\n\n\nOffice Room Number:\n\n\n\n\n\n\nOffice Hours:\n\n\nTo be announced in the semester course information\n\n\n\n\nAssessment Methodology\n\n\n\n\n\n\nTentative Dates\n\n\nWeight\n\n\n\n\nCoursework.\n\n\nQuiz 1\n\n\nWeek 4 (7.5%)\n\n\n40%\n\n\n\n\nQuiz 2\n\n\nWeek 12 (7.5%)\n\n\n\n\nProject and Presentation\n\n\nWeek 14 report/code; Week 15 oral (25%)\n\n\n\n\nMidterm Examination.\n\n\nWeek 8\n\n\n25%\n\n\n\n\nFinal Examination.\n\n\nTBD by the Registrar’s Office\n\n\n35%"
   },
   {
     "objectID": "syllabus.html#instructor-policy-on-late-submission-of-assignments",
     "href": "syllabus.html#instructor-policy-on-late-submission-of-assignments",
     "title": "Syllabus",
     "section": "Instructor Policy on Late Submission of Assignments",
-    "text": "Instructor Policy on Late Submission of Assignments\n\nQuizzes\nThere will be two quizzes: Quiz 1 in Week 4 and Quiz 2 in Week 12. Each quiz is 20 minutes long. A student-facing preparation summary is available on the quiz information page.\nThere will be no make-up quizzes. If the student fails to attend a scheduled quiz without an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.\nIf the student fails to attend a quiz and the Student Success Department confirms that the student’s absence from that quiz is approved, then the grade that will be assigned to that quiz is:\n\nthe grade of the Semester examination if that quiz took place before the Semester examination;\nthe grade of the Final Examination if that quiz took place after the Semester examination.\n\n\n\nSemester Examination\nThere will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination without an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.\nIf the student fails to attend the Semester examination and the Student Success Department confirms that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.\nA maximum of 40% of the course grade can be compensated through the above policy."
+    "text": "Instructor Policy on Late Submission of Assignments\nQuizzes • There will be no make-up quizzes. If the student fails to attend a scheduled quiz without an approved absence from the Student Success Department, then a grade of zero for that quiz will be assigned.\n• If the student fails to attend a quiz and the Student Success Department confirms that the student’s absence from that quiz is approved, then the grade that will be assigned to that quiz is\n– the grade of the Semester examination if that quiz took place before the Semester examination;\n– the grade of the Final Examination if that quiz took place after the Semester examination.\nSemester examination • There will be no make-up Semester Examination. If the student fails to attend the scheduled Semester examination without an approved absence from the Student Success Department, then a grade of zero will be assigned for the Semester examination.\n• If the student fails to attend the Semester examination and the Student Success Department confirms that the absence from the Semester examination is approved, then the grade for the Final Examination will also be assigned as the grade for the Semester examination.\nA maximum of 40% of the course grade can be compensated through the above policy"
+  },
+  {
+    "objectID": "syllabus.html#practice-and-feedback",
+    "href": "syllabus.html#practice-and-feedback",
+    "title": "Syllabus",
+    "section": "Practice and feedback",
+    "text": "Practice and feedback\nShort, ungraded exercises on convolution, Fourier filtering and regularization provide practice before graded assessments. Students will receive instructor feedback through discussion or model solutions. The project develops from assignment in week 6 to a brief progress draft in week 8, feedback by week 9, the final report and code in week 14, and individual oral presentations in week 15. The progress draft carries no separate grade."
+  },
+  {
+    "objectID": "syllabus.html#student-support",
+    "href": "syllabus.html#student-support",
+    "title": "Syllabus",
+    "section": "Student support",
+    "text": "Student support\nStudents are encouraged to contact the instructor during office hours for help with course material and assessment feedback, and their assigned academic adviser for advice on study planning. Instructor contact details, office location and office hours will be provided in the semester course information.\nStudent Success and counseling provide academic and personal support, including study-skills workshops. Contact StudentSuccess@ku.ac.ae or counselors@ku.ac.ae.\nCenter for Teaching and Learning offers tutoring and academic-skills support, subject to availability. Contact ctl@ku.ac.ae.\nKU Library provides learning resources, research assistance and information-literacy support. Contact libse@ku.ac.ae."
+  },
+  {
+    "objectID": "syllabus.html#reading-guidance-and-schedule",
+    "href": "syllabus.html#reading-guidance-and-schedule",
+    "title": "Syllabus",
+    "section": "Reading guidance and schedule",
+    "text": "Reading guidance and schedule\nThe Mathematical Imaging online book is the main weekly reading guide. Read the linked chapter alongside the slides and runnable notebook. The preparation guide describes the study sequence; practice exercises offer optional, ungraded reinforcement.\nSupporting readings use BBDM for Bertero, Boccacci and De Mol, Introduction to Inverse Problems in Imaging, second edition. Mallat and Chambolle and Pock refer to the sources under Reference Materials. Selected extracts will be identified before the relevant teaching week; only the assigned selections are expected.\nThis syllabus specifies the prerequisites, assessment weights, deadlines and course policies. The linked online materials support learning.\nThe plan contains 15 teaching blocks. Semester-specific dates will be mapped to the university academic calendar, including holidays, Innovation Week and the final examination period. Any necessary scheduling adjustments will be communicated through the course learning platform."
+  },
+  {
+    "objectID": "syllabus.html#weekly-plan-tentative",
+    "href": "syllabus.html#weekly-plan-tentative",
+    "title": "Syllabus",
+    "section": "Weekly plan (Tentative)",
+    "text": "Weekly plan (Tentative)\n\nWeek 1\nImage formation models; convolution; linear systems\n\nWhat is an image mathematically?\nContinuous vs discrete images\nPixels, grids, vector representation\nLinear systems viewpoint of imaging\nForward operator concept\n\nReading: Course book, Motivation; Chapter 1; Chapter 2 (convolution preview). Supporting: BBDM, selected material from Chapters 1–2.\n\n\nWeek 2\nFourier transform; convolution theorem; frequency interpretation of blur\n\nConvolution in 1D and 2D\nPoint spread function (PSF)\nPhysical meaning of blur\nBoundary conditions\n\nIn class\n\nCompute simple convolution examples\nVisual interpretation of blur\n\nReading: Course book, Chapter 2; Chapter 3 (convolution theorem and frequency-domain blur). Supporting: BBDM, Chapter 2; Mallat, Sections 2.1, 2.2 and 2.4 on filtering and Fourier transforms.\n\n\nWeek 3\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n2D Fourier transform\nConvolution theorem\nFrequency interpretation of blur\nLow-pass vs high-pass filtering\n\nReading: Course book, Chapter 3. Supporting: Mallat, Sections 3.3–3.4 on DFT, FFT and discrete image processing.\n\n\nWeek 4\nNoise models: Gaussian and Poisson; likelihood formulation\n\nDFT and FFT\nSpectral representation of images\nGaussian noise model\nPoisson noise (medical relevance)\nLikelihood formulation Quiz 1\n\nReading: Course book, Chapter 4; Chapter 3 (DFT/FFT recap). Supporting: BBDM, selected material from Chapters 11–13 on statistical models for Gaussian and Poisson data.\n\n\nWeek 5\nIll-posed inverse problems; instability; SVD (conceptual)\n\nHadamard definition of well-posedness\nInstability of inverse filtering\nSingular values (conceptual SVD)\nCondition number\n\nReading: Course book, Chapter 5. Supporting: BBDM, Chapter 3 and selected material from Chapter 7 on ill-posedness and SVD.\n\n\nWeek 6\nTikhonov regularization; parameter effects; bias–variance tradeoff\n\nℓ2 regularization\nBias–variance tradeoff\nParameter influence\n\nProject assigned\nReading: Course book, Chapter 6. Supporting: BBDM, Chapter 4 on quadratic Tikhonov regularization.\n\n\nWeek 7\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\nEnergy minimization framework\nConvexity (geometric interpretation)\nEuler–Lagrange derivation (guided)\nGradient descent intuition\n\nReading: Course book, Chapter 7. Supporting: Chambolle and Pock, Section 3 on convexity.\n\n\nWeek 8\nTotal Variation regularization; edge preservation; comparison with ℓ2\n\nDefinition of TV norm\nEdge preservation mechanism\nComparison with ℓ2 smoothing\nStaircasing effect Midterm\n\nReading: Course book, Chapter 8. Supporting: BBDM, Chapter 9 on edge-preserving regularization.\nFormative milestone: brief project progress draft due; no separate grade.\n\n\nWeek 9\nConvex optimization basics; gradient descent; proximal ideas\n\nConvex sets and convex functions\nSubgradient concept (intuitive)\nProximal operator idea\nIterative shrinkage algorithm (ISTA intuition)\n\nReading: Course book, Chapter 9. Supporting: Chambolle and Pock, selected material from Section 4 on gradient and proximal methods.\nFeedback on the progress draft; revise the model and implementation.\n\n\nWeek 10\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\nℓ1 regularization\nSparsity concept\nCompressed sensing intuition\nComparison ℓ1 vs ℓ2\n\nReading: Course book, Chapter 10. Supporting: BBDM, Chapter 10; Mallat, Section 12.6.4 on compressive sensing.\n\n\nWeek 11\nWavelets and multiscale representations; thresholding\n\nWavelet transform concept\nSparsity in wavelet domain\nThresholding methods\nDenoising comparison experiments\n\nReading: Course book, Chapter 11. Supporting: Mallat, selected material from Sections 7.1, 7.3 and 11.2 on wavelet bases and thresholding.\n\n\nWeek 12\nModern computational imaging: model-based vs data-driven reconstruction\n\nClassical variational reconstruction\nLearned priors concept\nNeural networks as parameterized operators\nComparison of philosophies Quiz 2\n\nReading: Course book, Chapter 12.\n\n\nWeek 13\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\nIterative algorithms structure\nReplacing proximal operator with denoiser\nPlug-and-play priors\nCNN as denoiser in optimization loop\nConvergence questions (conceptual)\n\nReading: Course book, Chapter 13.\n\n\nWeek 14\nStability, robustness, and limitations of AI-based reconstruction\n\nParameter sensitivity analysis\nHallucination artifacts in AI reconstruction\nOverfitting in inverse problems\nReliability in medical imaging\nSocietal and ethical implications\n\nProject report and code due\nReading: Course book, Chapter 14.\n\n\nWeek 15\nProject presentations and oral defenses\nReading: Revisit Course book, Chapter 14. Review the references used in the project and prepare to explain modeling choices, code and results."
   },
   {
     "objectID": "syllabus.html#additional-information",
     "href": "syllabus.html#additional-information",
     "title": "Syllabus",
-    "section": "Additional Information",
-    "text": "Additional Information\n\nAssessment\nLate submission of the group project will not be accepted.\n\n\nProject\nThe project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.\nStudents are required to use Python for all computational implementations and analyses. Students are also required to use an LLM as part of the project process and disclose how it was used. The LLM-use statement is required but not graded separately.\nA written report and the corresponding code must be submitted in Week 14.\nIn Week 15, each team will participate in an individual oral defense. Each student will be examined separately on the modeling decisions, implementation, code, parameter choices, failure analysis, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project. The oral defense and code walkthrough represent 25% of the project grade.\nFailure to participate in the oral defense will result in a zero for the oral defense and code walkthrough component.\n\n\nCalculator Policy\nYou will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.\n\n\nClassroom Policies\nDiscipline is one of the main components of your academic and professional success.\nPlease arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.\nPlease ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.\nIf you are absent for any lecture, it is your responsibility to cover the missed material."
+    "section": "Additional information",
+    "text": "Additional information\n\nAssessment\nLate submission of the group project will not be accepted.\n\n\nProject\nThe project will be assigned in Week 6 of the semester. Students will work in pairs (teams of two) to formulate, analyze, and solve a mathematical imaging reconstruction problem. Each team will develop an appropriate mathematical model, implement computational reconstruction methods, analyze the results, and evaluate model performance and parameter sensitivity.\nA brief, ungraded progress draft is due in Week 8. It should identify the forward model, proposed reconstruction method and initial computational results. Feedback will be provided by Week 9 to guide the final report and code.\nStudents are required to use Python for all computational implementations and analyses.\nA written report and the corresponding code must be submitted in Week 14.\nIn Week 15, each team will participate in an individual oral presentation. Each student will be examined separately on the modeling decisions, implementation, and interpretation of results. Both students are expected to demonstrate full understanding of the entire project.\nFailure to participate in the oral presentation will result in a maximum of 50% of the project grade.\nStudents may use computational tools and AI assistance for the project, but must be able to justify and defend all modeling decisions during the oral presentation.\n\n\nCalculator Policy\nYou will be permitted to only use a basic calculator in the Quizzes, Semester examination and the Final Examination.\n\n\nClassroom Policies\nDiscipline is one of the main components of your academic and professional success.\nPlease arrive at the class periods in a timely fashion. Students arriving late to class are a distraction to both the instructor and the other students in the classroom.\nPlease ensure that you sign your name on the Attendance register. If you do not sign the Attendance register, then you will be marked “Absent” in the Banner.\nIf you are absent for any lecture, it is your responsibility to cover the missed material."
   },
   {
-    "objectID": "syllabus.html#course-plan-tentative",
-    "href": "syllabus.html#course-plan-tentative",
+    "objectID": "syllabus.html#revision-record",
+    "href": "syllabus.html#revision-record",
     "title": "Syllabus",
-    "section": "Course Plan (Tentative)",
-    "text": "Course Plan (Tentative)\n\n\n\n\n\n\n\n\nWeek #\n\n\nTopics\n\n\n\n\n\n\n01\n\n\nImage formation models; convolution; linear systems\n\n\n\n\n02\n\n\nFourier transform; convolution theorem; frequency interpretation of blur\n\n\n\n\n03\n\n\nDiscrete Fourier transform (DFT); spectral analysis; filtering\n\n\n\n\n04\n\n\nNoise models: Gaussian and Poisson; likelihood formulation Quiz 1 (20 minutes)\n\n\n\n\n05\n\n\nIll-posed inverse problems; instability; SVD (conceptual)\n\n\n\n\n06\n\n\nTikhonov regularization; parameter effects; bias–variance tradeoff Project assigned\n\n\n\n\n07\n\n\nVariational models; convexity (geometric view); Euler–Lagrange derivation\n\n\n\n\n08\n\n\nTotal Variation regularization; edge preservation; comparison with ℓ2 Midterm\n\n\n\n\n09\n\n\nConvex optimization basics; gradient descent; proximal ideas\n\n\n\n\n10\n\n\nSparse reconstruction; ℓ1 regularization; compressed sensing intuition\n\n\n\n\n11\n\n\nWavelets and multiscale representations; thresholding\n\n\n\n\n12\n\n\nModern computational imaging: model-based vs data-driven reconstruction Quiz 2 (20 minutes)\n\n\n\n\n13\n\n\nPlug-and-play priors; learned regularization; CNNs as iterative operators\n\n\n\n\n14\n\n\nStability, robustness, and limitations of AI-based reconstruction Project report\n\n\n\n\n15\n\n\nProject presentations and oral defenses"
-  },
-  {
-    "objectID": "syllabus.html#detailed-course-plan-15-weeks-tentative",
-    "href": "syllabus.html#detailed-course-plan-15-weeks-tentative",
-    "title": "Syllabus",
-    "section": "Detailed Course Plan (15 Weeks, Tentative)",
-    "text": "Detailed Course Plan (15 Weeks, Tentative)"
-  },
-  {
-    "objectID": "syllabus.html#week-1-introduction-to-imaging-as-a-mathematical-problem",
-    "href": "syllabus.html#week-1-introduction-to-imaging-as-a-mathematical-problem",
-    "title": "Syllabus",
-    "section": "Week 1 – Introduction to Imaging as a Mathematical Problem",
-    "text": "Week 1 – Introduction to Imaging as a Mathematical Problem\nTopics\n\nWhat is an image mathematically?\nContinuous vs discrete images\nPixels, grids, vector representation\nLinear systems viewpoint of imaging\nForward operator concept\n\nFocus\nStudents understand that imaging is a mathematical mapping:\n\nAx = b\n\nLearning Goal\nStudents can describe image formation as a mathematical model."
-  },
-  {
-    "objectID": "syllabus.html#week-2-convolution-and-blur",
-    "href": "syllabus.html#week-2-convolution-and-blur",
-    "title": "Syllabus",
-    "section": "Week 2 – Convolution and Blur",
-    "text": "Week 2 – Convolution and Blur\nTopics\n\nConvolution in 1D and 2D\nPoint spread function (PSF)\nPhysical meaning of blur\nBoundary conditions\n\nIn class\n\nCompute simple convolution examples\nVisual interpretation of blur\n\nLearning Goal\nStudents can formulate blur as convolution."
-  },
-  {
-    "objectID": "syllabus.html#week-3-fourier-transform-in-imaging",
-    "href": "syllabus.html#week-3-fourier-transform-in-imaging",
-    "title": "Syllabus",
-    "section": "Week 3 – Fourier Transform in Imaging",
-    "text": "Week 3 – Fourier Transform in Imaging\nTopics\n\n2D Fourier transform\nConvolution theorem\nFrequency interpretation of blur\nLow-pass vs high-pass filtering\n\nFocus\nWhy inversion in frequency domain amplifies noise.\nLearning Goal\nStudents understand why deblurring is unstable."
-  },
-  {
-    "objectID": "syllabus.html#week-4-discrete-fourier-transform-noise-models",
-    "href": "syllabus.html#week-4-discrete-fourier-transform-noise-models",
-    "title": "Syllabus",
-    "section": "Week 4 – Discrete Fourier Transform & Noise Models",
-    "text": "Week 4 – Discrete Fourier Transform & Noise Models\nTopics\n\nDFT and FFT\nSpectral representation of images\nGaussian noise model\nPoisson noise (medical relevance)\nLikelihood formulation\n\nLearning Goal\nStudents can distinguish noise models and write likelihood expressions."
-  },
-  {
-    "objectID": "syllabus.html#week-5-ill-posed-inverse-problems",
-    "href": "syllabus.html#week-5-ill-posed-inverse-problems",
-    "title": "Syllabus",
-    "section": "Week 5 – Ill-Posed Inverse Problems",
-    "text": "Week 5 – Ill-Posed Inverse Problems\nTopics\n\nHadamard definition of well-posedness\nInstability of inverse filtering\nSingular values (conceptual SVD)\nCondition number\n\nDemonstration\nNoise amplification in inverse filtering.\nLearning Goal\nStudents understand why reconstruction requires regularization."
-  },
-  {
-    "objectID": "syllabus.html#week-6-tikhonov-regularization",
-    "href": "syllabus.html#week-6-tikhonov-regularization",
-    "title": "Syllabus",
-    "section": "Week 6 – Tikhonov Regularization",
-    "text": "Week 6 – Tikhonov Regularization\nTopics\n\nℓ2 regularization\nClosed-form solution\n\n\n(A^{T}A + \\lambda I)x = A^{T}b\n\n\nBias–variance tradeoff\nParameter influence\n\nProject Assigned\nTeams receive dataset + problem description.\nLearning Goal\nStudents understand stabilization through regularization."
-  },
-  {
-    "objectID": "syllabus.html#week-7-variational-formulation",
-    "href": "syllabus.html#week-7-variational-formulation",
-    "title": "Syllabus",
-    "section": "Week 7 – Variational Formulation",
-    "text": "Week 7 – Variational Formulation\nTopics\n\nEnergy minimization framework\nConvexity (geometric interpretation)\nEuler–Lagrange derivation (guided)\nGradient descent intuition\n\nLearning Goal\nStudents can derive optimality condition for ℓ2 model."
-  },
-  {
-    "objectID": "syllabus.html#week-8-total-variation-tv-regularization",
-    "href": "syllabus.html#week-8-total-variation-tv-regularization",
-    "title": "Syllabus",
-    "section": "Week 8 – Total Variation (TV) Regularization",
-    "text": "Week 8 – Total Variation (TV) Regularization\nTopics\n\nDefinition of TV norm\nEdge preservation mechanism\nComparison with ℓ2 smoothing\nStaircasing effect\n\nMidterm Exam\nLearning Goal\nStudents can explain why TV preserves edges better than ℓ2."
-  },
-  {
-    "objectID": "syllabus.html#week-9-optimization-methods",
-    "href": "syllabus.html#week-9-optimization-methods",
-    "title": "Syllabus",
-    "section": "Week 9 – Optimization Methods",
-    "text": "Week 9 – Optimization Methods\nTopics\n\nConvex sets and convex functions\nSubgradient concept (intuitive)\nProximal operator idea\nIterative shrinkage algorithm (ISTA intuition)\n\nLearning Goal\nStudents understand algorithmic structure behind regularization."
-  },
-  {
-    "objectID": "syllabus.html#week-10-sparse-reconstruction",
-    "href": "syllabus.html#week-10-sparse-reconstruction",
-    "title": "Syllabus",
-    "section": "Week 10 – Sparse Reconstruction",
-    "text": "Week 10 – Sparse Reconstruction\nTopics\n\nℓ1 regularization\nSparsity concept\nCompressed sensing intuition\nComparison ℓ1 vs ℓ2\n\nFocus\nWhy sparsity improves reconstruction in certain bases.\nLearning Goal\nStudents can justify when ℓ1 is preferable."
-  },
-  {
-    "objectID": "syllabus.html#week-11-wavelets-and-multiscale-representation",
-    "href": "syllabus.html#week-11-wavelets-and-multiscale-representation",
-    "title": "Syllabus",
-    "section": "Week 11 – Wavelets and Multiscale Representation",
-    "text": "Week 11 – Wavelets and Multiscale Representation\nTopics\n\nWavelet transform concept\nSparsity in wavelet domain\nThresholding methods\nDenoising comparison experiments\n\nLearning Goal\nStudents can connect representation choice to reconstruction quality."
-  },
-  {
-    "objectID": "syllabus.html#week-12-model-based-vs-data-driven-imaging",
-    "href": "syllabus.html#week-12-model-based-vs-data-driven-imaging",
-    "title": "Syllabus",
-    "section": "Week 12 – Model-Based vs Data-Driven Imaging",
-    "text": "Week 12 – Model-Based vs Data-Driven Imaging\nTopics\n\nClassical variational reconstruction\nLearned priors concept\nNeural networks as parameterized operators\nComparison of philosophies\n\nLearning Goal\nStudents understand the difference between handcrafted and learned regularizers."
-  },
-  {
-    "objectID": "syllabus.html#week-13-plug-and-play-and-learned-regularization",
-    "href": "syllabus.html#week-13-plug-and-play-and-learned-regularization",
-    "title": "Syllabus",
-    "section": "Week 13 – Plug-and-Play and Learned Regularization",
-    "text": "Week 13 – Plug-and-Play and Learned Regularization\nTopics\n\nIterative algorithms structure\nReplacing proximal operator with denoiser\nPlug-and-play priors\nCNN as denoiser in optimization loop\nConvergence questions (conceptual)\n\nLearning Goal\nStudents understand how AI integrates into mathematical frameworks."
-  },
-  {
-    "objectID": "syllabus.html#week-14-stability-robustness-and-ethics",
-    "href": "syllabus.html#week-14-stability-robustness-and-ethics",
-    "title": "Syllabus",
-    "section": "Week 14 – Stability, Robustness, and Ethics",
-    "text": "Week 14 – Stability, Robustness, and Ethics\nTopics\n\nParameter sensitivity analysis\nHallucination artifacts in AI reconstruction\nOverfitting in inverse problems\nReliability in medical imaging\nSocietal and ethical implications\n\nProject Reports Due\nLearning Goal\nStudents recognize limitations and ethical considerations."
-  },
-  {
-    "objectID": "syllabus.html#week-15-oral-defenses",
-    "href": "syllabus.html#week-15-oral-defenses",
-    "title": "Syllabus",
-    "section": "Week 15 – Oral Defenses",
-    "text": "Week 15 – Oral Defenses\nActivities\n\nIndividual oral defense per student\nEvaluation of:\n\nModeling understanding\nParameter reasoning\nInterpretation of results\nTeam collaboration\n\n\nLearning Goal\nStudents demonstrate independent mastery of project content."
+    "section": "Revision record",
+    "text": "Revision record\nMATH 435 Mathematical Imaging | 13 September 2026\nPrerequisite wording. Added MATH 232 as an alternative to MATH 231 and made the prerequisite grouping explicit. MATH 315 and the MATH 242/243/244 alternative are retained.\nProject dates. Aligned the assessment table, supplement overview, weekly plan and project instructions: final report and code in week 14; individual oral presentations in week 15.\nPractice and feedback. Added ungraded practice with discussion or model solutions, a brief project progress draft in week 8 and feedback by week 9. These activities carry no additional grade weight.\nWeekly readings. Added Laurent Najman’s Mathematical Imaging online course book as the main weekly reading guide, with direct links to the motivation chapter and Chapters 1–14. Selected textbook chapters and reference sections provide supporting reading. Added links to the preparation guide and optional practice exercises.\nStudent support. Added official KU links for Student Success, counseling, the Center for Teaching and Learning and the Library, together with academic-adviser and office-hours guidance.\nBibliographic correction. Added Christine De Mol to the author list for the second edition of Introduction to Inverse Problems in Imaging. The selected textbook is unchanged.\nScope and review. Credit hours, course topics, catalog description, CLO/PLO mappings, graded assessment instruments and percentage weights are retained. The instructor confirmed the project at 25% and final examination at 35%. The checklist records remaining items separately, including semester details and the 15/16-week template discrepancy.\nThe project remains 25% and the final examination remains 35% in both assessment summaries, as confirmed by the instructor. The existing comment asking “30 or 35?” has been resolved.\nPublisher source for the author correction and chapter headings:\nIntroduction to Inverse Problems in Imaging — publisher listing"
   },
   {
     "objectID": "index.html",
@@ -4830,7 +4739,7 @@
     "href": "preparation.html#weekly-rhythm",
     "title": "How To Prepare For Class",
     "section": "Weekly Rhythm",
-    "text": "Weekly Rhythm\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore Session 1\nOpen the weekly roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the beginning of the weekly slide deck.\nOne question you want the week to answer.\n\n\nDuring Session 1\nUse the first part of the slides for concepts, derivations, and guided examples. Track the unknown image, data, forward process, prior, and possible failure.\nAnnotated notes around the main model.\n\n\nBetween Sessions\nRevisit the main model and identify what the data support and what the assumptions add.\nOne question or uncertainty to bring to Session 2.\n\n\nDuring Session 2\nUse the second part of the slides for consequences, computation, notebook discussion, quizzes, or project work.\nA clearer link between model, algorithm, and evidence.\n\n\nAfter Session 2\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nBefore the next week\nRevisit the previous module only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
+    "text": "Weekly Rhythm\nUse the syllabus reading schedule to choose the assigned sections. Some weeks draw on more than one chapter: Week 1 includes the Motivation and a Chapter 2 convolution preview, while Week 2 also introduces Fourier ideas from Chapter 3. Supporting textbook extracts will be identified before the relevant teaching week; only the assigned selections are expected.\n\n\n\nMoment\nWhat To Do\nOutput\n\n\n\n\nBefore Session 1\nOpen the weekly roadmap. Read enough of the book chapter to recognize the main objects and formulas. Skim the beginning of the weekly slide deck.\nOne question you want the week to answer.\n\n\nDuring Session 1\nUse the first part of the slides for concepts, derivations, and guided examples. Track the unknown image, data, forward process, prior, and possible failure.\nAnnotated notes around the main model.\n\n\nBetween Sessions\nRevisit the main model and identify what the data support and what the assumptions add.\nOne question or uncertainty to bring to Session 2.\n\n\nDuring Session 2\nUse the second part of the slides for consequences, computation, notebook discussion, quizzes, or project work.\nA clearer link between model, algorithm, and evidence.\n\n\nAfter Session 2\nRun the notebook, preferably in Colab if you do not want a local setup. Change at least one important parameter.\nA four-thread note about measurement, prior, computation, and evidence.\n\n\nBefore the next week\nRevisit the previous module only enough to state the central idea without looking.\nA one-sentence bridge to the next topic."
   },
   {
     "objectID": "preparation.html#the-five-questions",
@@ -4858,14 +4767,14 @@
     "href": "preparation.html#project-weeks",
     "title": "How To Prepare For Class",
     "section": "Project Weeks",
-    "text": "Project Weeks\nThe project should grow from the same weekly rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The proposal, report, and oral defense remain the assessed moments specified by the syllabus."
+    "text": "Project Weeks\nThe project should grow from the same weekly rhythm. Each project should be able to answer:\n\nWhat is the forward model?\nWhat is the reconstruction method?\nWhat evidence supports the result?\nWhat parameter or modeling choice matters?\nWhat failure case did the team test?\nWhat role did the LLM play, and what did the students verify themselves?\n\nUse the project page for the formal project description and rubric. The project is assigned in Week 6. Submit the brief ungraded progress draft in Week 8 and use feedback provided by Week 9. The graded report and code are due in Week 14, with the individual oral presentation in Week 15."
   },
   {
     "objectID": "preparation.html#llm-use-while-studying",
     "href": "preparation.html#llm-use-while-studying",
     "title": "How To Prepare For Class",
     "section": "LLM Use While Studying",
-    "text": "LLM Use While Studying\nLLMs can be useful for explanation, debugging, and alternative examples, but they should not replace the student’s own model of the problem. A good use pattern is:\n\ntry the notebook or derivation yourself;\nask the LLM to explain one obstacle;\nverify the answer against the book, slides, notebook output, or instructor guidance;\nwrite the final understanding in your own words.\n\nLLM assistance is not permitted during quizzes. For the project, LLM use is required but ownership is checked through the report, code, evidence, LLM-use statement, and individual oral defense."
+    "text": "LLM Use While Studying\nLLMs can be useful for explanation, debugging, and alternative examples, but they should not replace the student’s own model of the problem. A good use pattern is:\n\ntry the notebook or derivation yourself;\nask the LLM to explain one obstacle;\nverify the answer against the book, slides, notebook output, or instructor guidance;\nwrite the final understanding in your own words.\n\nLLM assistance is not permitted during quizzes. For the project, AI assistance is optional; any AI-generated content must be properly attributed. Ownership is checked through the report, code, evidence, and individual oral defense."
   },
   {
     "objectID": "llm-use.html",
@@ -4879,7 +4788,7 @@
     "href": "practice.html",
     "title": "Ungraded Practice",
     "section": "",
-    "text": "This page gives optional practice prompts connected to the book, slides, and notebooks.\nThe purpose is to help students keep a running record of the central habit of the course:\nStudents may keep these notes privately, use them while studying, or bring questions from them to class."
+    "text": "This page gives optional practice prompts connected to the book, slides, and notebooks.\nThe purpose is to help students keep a running record of the central habit of the course:\nStudents may keep these notes privately, use them while studying, or bring questions from them to class. Instructor feedback is provided through discussion or model solutions, as described in the syllabus."
   },
   {
     "objectID": "practice.html#how-to-use-this-page",
@@ -4914,7 +4823,7 @@
     "href": "practice.html#project-preparation-guide",
     "title": "Ungraded Practice",
     "section": "Project Preparation Guide",
-    "text": "Project Preparation Guide\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The project notes below are study and planning aids for the final modeling project described on the project page; they do not create additional graded items.\n\n\n\n\n\n\n\nWeek\nPlanning Aid\n\n\n\n\n6\nPrepare the project proposal: topic, team, data source, baseline, second method, degradation model, and first definition of x, y, and the forward process.\n\n\n7\nRefine the model statement, data access, and implementation choices after feedback.\n\n\n8\nMake sure the notebook can generate or load data and run a simple baseline.\n\n\n10\nCheck that both methods run on the same test cases.\n\n\n12\nAdd one parameter sweep, one metric, and one robustness or failure test.\n\n\n14\nPrepare the final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense explanations."
+    "text": "Project Preparation Guide\nThe syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the graded report and code submission in Week 14 and individual oral presentation in Week 15. The planning aids below support those milestones without creating additional graded items.\n\n\n\n\n\n\n\nWeek\nPlanning Aid\n\n\n\n\n6\nPlan the assigned project: topic, team, data source, baseline, second method, degradation model, and first definition of x, y, and the forward process.\n\n\n7\nRefine the model statement, data access, and implementation choices after feedback.\n\n\n8\nSubmit the brief ungraded progress draft: forward model, proposed reconstruction method, and initial computational results.\n\n\n9\nUse instructor feedback on the draft to revise the model and implementation.\n\n\n10\nCheck that both methods run on the same test cases.\n\n\n12\nAdd one parameter sweep, one metric, and one robustness or failure test.\n\n\n14\nSubmit the final notebook/code and written report, including the claim-evidence table and attribution of any AI assistance. Prepare oral-defense explanations.\n\n\n15\nGive the individual oral presentation and defend the submitted project."
   },
   {
     "objectID": "practice.html#grading-boundary",
@@ -6841,14 +6750,14 @@
     "href": "classes.html",
     "title": "Weekly Roadmap",
     "section": "",
-    "text": "This page is the weekly entry point for the course materials. The course normally meets twice per week, so each row below is a week/module, not a single 75-minute meeting.\nEach week has one mathematical story:\nHolidays and official announcements may shift the exact calendar dates. The syllabus remains the authority for grading, assessment dates, and course policies.\nQuiz 1 is planned for the final 20 minutes of the second meeting in Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting in Week 12. See the quiz information page for student-facing logistics and preparation guidance."
+    "text": "This page is the weekly entry point for the course materials. The course normally meets twice per week, so each row below is a week/module, not a single 75-minute meeting.\nEach week has one mathematical story:\nHolidays and official announcements may shift the exact calendar dates. The syllabus remains the authority for grading, assessment dates, and course policies.\nFollow the weekly reading schedule as well as each module’s primary chapter. Week 1 includes the Motivation, Chapter 1, and a Chapter 2 convolution preview. Week 2 also uses Chapter 3’s Fourier and convolution-theorem material; Week 3 develops the DFT and filtering in detail. The syllabus lists supporting textbook selections for each week.\nQuiz 1 is planned for the final 20 minutes of the second meeting in Week 4. Quiz 2 is planned for the final 20 minutes of the second meeting in Week 12. See the quiz information page for student-facing logistics and preparation guidance.\nThe semester examination is in Week 8; its exact slot and duration will be announced. The Week 8 session plan will be adjusted around it. Semester dates also need to account for holidays, Innovation Week, and the final examination period, as stated in the syllabus."
   },
   {
     "objectID": "classes.html#weekly-modules",
     "href": "classes.html#weekly-modules",
     "title": "Weekly Roadmap",
     "section": "Weekly Modules",
-    "text": "Weekly Modules\n\n\n\nWeek\nTopic\nSession 1\nSession 2\nMaterials\n\n\n\n\n1\nImages as mathematical objects\nImages as functions, arrays, and vectors.\nForward models, masking, missing information, and first inverse problems.\nslides, book, notebook, Colab\n\n\n2\nConvolution and blur\nKernels, point spread functions, and convolution as a forward model.\nBoundary conditions, matrix view, and why deblurring is unstable.\nslides, book, notebook, Colab\n\n\n3\nFourier transform in imaging\nFourier as projection, energy, Pythagoras, and global support.\n2D spectra, convolution theorem, filtering, and stabilized deblurring.\nslides, book, notebook, Colab\n\n\n4\nNoise models and likelihoods\nGaussian and Poisson noise as measurement models.\nLikelihoods as data terms, then Quiz 1 in the final 20 minutes.\nslides, book, notebook, Colab\n\n\n5\nIll-posed inverse problems\nWell-posedness, non-uniqueness, missing data, and stability.\nSingular values, noise amplification, condition numbers, and stabilization.\nslides, book, notebook, Colab\n\n\n6\nTikhonov regularization\nRegularized least squares and normal equations.\nSVD interpretation, choosing lambda, bias-variance, and project proposal.\nslides, book, notebook, Colab\n\n\n7\nVariational formulation\nEnergies as models, convexity, and Euler-Lagrange equations.\nGradient descent intuition, quadratic denoising, and model limitations.\nslides, book, notebook, Colab\n\n\n8\nTotal Variation regularization\nTV, sparse gradients, edge preservation, and one-dimensional examples.\nImage denoising, staircasing, modeling limits, and practice synthesis.\nslides, book, notebook, Colab\n\n\n9\nOptimization methods\nConvexity, smooth optimization, gradient descent, and step size.\nNonsmooth terms, proximal operators, ISTA, and convergence evidence.\nslides, book, notebook, Colab\n\n\n10\nSparse reconstruction\nSparsity, representation choice, and l1 versus l2 regularization.\nUnderdetermined recovery, compressed sensing intuition, and sparse images.\nslides, book, notebook, Colab\n\n\n11\nWavelets and multiscale representation\nFourier global support, wavelet localization, Haar intuition, and multiscale energy.\n2D subbands, thresholding, compression, denoising, and wavelet limits.\nslides, book, notebook, Colab\n\n\n12\nModel-based vs data-driven imaging\nModel-based imaging, data-driven imaging, and neural networks as operators.\nLearned priors, distribution shift, evaluation, then Quiz 2 in the final 20 minutes.\nslides, book, notebook, Colab\n\n\n13\nPlug-and-play and learned regularization\nProximal algorithms, denoising interpretation, and the plug-and-play update.\nLearned regularization, deblurring, fixed points, convergence, and trust.\nslides, book, notebook, Colab\n\n\n14\nStability, robustness, and ethics\nStability tests, perturbation amplification, robustness axes, and project evidence.\nHallucination risk, ethics, documentation, and project report preparation.\nslides, book, notebook, Colab\n\n\n15\nProject presentations and oral defenses\nProject presentations and discussion.\nIndividual oral defenses and course synthesis.\nproject page, syllabus"
+    "text": "Weekly Modules\n\n\n\nWeek\nTopic\nSession 1\nSession 2\nMaterials\n\n\n\n\n1\nImages as mathematical objects\nImages as functions, arrays, and vectors.\nForward models, masking, missing information, and convolution preview.\nslides, book, notebook, Colab\n\n\n2\nConvolution, Fourier transform, and blur\nKernels, point spread functions, and convolution as a forward model.\nBoundary conditions, matrix view, Fourier transform, convolution theorem, and unstable deblurring.\nslides, book, notebook, Colab\n\n\n3\nDFT, spectral analysis, and filtering\nFourier as projection, energy, Pythagoras, and global support.\n2D spectra, convolution theorem, filtering, and stabilized deblurring.\nslides, book, notebook, Colab\n\n\n4\nNoise models and likelihoods\nGaussian and Poisson noise as measurement models.\nLikelihoods as data terms, then Quiz 1 in the final 20 minutes.\nslides, book, notebook, Colab\n\n\n5\nIll-posed inverse problems\nWell-posedness, non-uniqueness, missing data, and stability.\nSingular values, noise amplification, condition numbers, and stabilization.\nslides, book, notebook, Colab\n\n\n6\nTikhonov regularization\nRegularized least squares and normal equations.\nSVD interpretation, choosing lambda, bias-variance, and project assignment.\nslides, book, notebook, Colab\n\n\n7\nVariational formulation\nEnergies as models, convexity, and Euler-Lagrange equations.\nGradient descent intuition, quadratic denoising, and model limitations.\nslides, book, notebook, Colab\n\n\n8\nTotal Variation regularization\nTV, sparse gradients, edge preservation, and one-dimensional examples.\nImage denoising, staircasing, modeling limits, and practice synthesis.\nslides, book, notebook, Colab\n\n\n9\nOptimization methods\nConvexity, smooth optimization, gradient descent, and step size.\nNonsmooth terms, proximal operators, ISTA, and convergence evidence.\nslides, book, notebook, Colab\n\n\n10\nSparse reconstruction\nSparsity, representation choice, and l1 versus l2 regularization.\nUnderdetermined recovery, compressed sensing intuition, and sparse images.\nslides, book, notebook, Colab\n\n\n11\nWavelets and multiscale representation\nFourier global support, wavelet localization, Haar intuition, and multiscale energy.\n2D subbands, thresholding, compression, denoising, and wavelet limits.\nslides, book, notebook, Colab\n\n\n12\nModel-based vs data-driven imaging\nModel-based imaging, data-driven imaging, and neural networks as operators.\nLearned priors, distribution shift, evaluation, then Quiz 2 in the final 20 minutes.\nslides, book, notebook, Colab\n\n\n13\nPlug-and-play and learned regularization\nProximal algorithms, denoising interpretation, and the plug-and-play update.\nLearned regularization, deblurring, fixed points, convergence, and trust.\nslides, book, notebook, Colab\n\n\n14\nStability, robustness, and ethics\nStability tests, perturbation amplification, robustness axes, and project evidence.\nHallucination risk, ethics, documentation, and project report preparation.\nslides, book, notebook, Colab\n\n\n15\nProject presentations and oral defenses\nProject presentations and discussion.\nIndividual oral defenses and course synthesis.\nproject page, syllabus"
   },
   {
     "objectID": "classes.html#weekly-workflow",
@@ -6862,7 +6771,7 @@
     "href": "classes.html#project-preparation-guide",
     "title": "Weekly Roadmap",
     "section": "Project Preparation Guide",
-    "text": "Project Preparation Guide\nThe syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The other rows below are planning aids for the final project described on the project page. They do not create a separate grading category.\n\n\n\n\n\n\n\nWeek\nMilestone\n\n\n\n\n6\nProject proposal: team, tentative topic, data source, baseline, second method, first forward model, and reliability question.\n\n\n7\nPlanning feedback: refine the model statement, data access, and implementation choices.\n\n\n8\nBaseline preparation: create degraded data and run a simple reconstruction.\n\n\n10\nMethod development: implement two methods on the same test cases.\n\n\n12\nEvidence development: add a parameter sweep, quantitative metric, and first robustness or failure test.\n\n\n14\nProject report: final notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.\n\n\n15\nFinal submission and individual oral defense."
+    "text": "Project Preparation Guide\nThe syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the graded report and code submission in Week 14 and individual oral presentation in Week 15. Other planning aids on the project page do not create separate graded items.\n\n\n\n\n\n\n\nWeek\nMilestone\n\n\n\n\n6\nProject assigned; plan the team, topic, data source, baseline, second method, forward model, and reliability question.\n\n\n7\nPlanning feedback: refine the model statement, data access, and implementation choices.\n\n\n8\nBrief ungraded progress draft due: forward model, proposed reconstruction method, and initial computational results.\n\n\n9\nInstructor feedback on the draft; revise the model and implementation.\n\n\n10\nMethod development: implement two methods on the same test cases.\n\n\n12\nEvidence development: add a parameter sweep, quantitative metric, and first robustness or failure test.\n\n\n14\nFinal report and code due, with the claim-evidence table and attribution of any AI assistance.\n\n\n15\nIndividual oral presentation and defense of the submitted project."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#opening-question",
@@ -6876,14 +6785,14 @@
     "href": "slides/week-02-convolution-blur.html#this-week",
     "title": "Convolution and Blur",
     "section": "This Week",
-    "text": "This Week\n\n\nBuild convolution from a local weighted average.\nInterpret the point spread function (PSF).\nApply 2D convolution to real images.\nUnderstand boundary conditions.\nSee why deblurring is already a hard inverse problem."
+    "text": "This Week\n\n\nBuild convolution from a local weighted average.\nInterpret the point spread function (PSF).\nApply 2D convolution to real images.\nUnderstand boundary conditions.\nInterpret blur and inverse instability in Fourier coordinates."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#two-session-plan",
     "href": "slides/week-02-convolution-blur.html#two-session-plan",
     "title": "Convolution and Blur",
     "section": "Two-Session Plan",
-    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\n1D and 2D convolution; kernels; point spread functions; real image blur.\n\n\nSession 2\nBoundary conditions; matrix view; deblurring instability and modeling caveats."
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\n1D and 2D convolution; kernels; point spread functions; real image blur.\n\n\nSession 2\nBoundaries; matrix view; Fourier transform and convolution theorem; deblurring."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#session-1-blur-as-a-forward-model",
@@ -7047,11 +6956,11 @@
     "text": "Mini-Check\n\n\n2 minutes\n\nIf a 3 \\times 3 box blur has equal weights, what is each weight?\nWhat happens if the weights sum to 2 instead of 1?"
   },
   {
-    "objectID": "slides/week-02-convolution-blur.html#session-2-boundaries-matrices-and-deblurring",
-    "href": "slides/week-02-convolution-blur.html#session-2-boundaries-matrices-and-deblurring",
+    "objectID": "slides/week-02-convolution-blur.html#session-2-fourier-view-and-deblurring",
+    "href": "slides/week-02-convolution-blur.html#session-2-fourier-view-and-deblurring",
     "title": "Convolution and Blur",
-    "section": "Session 2: Boundaries, Matrices, and Deblurring",
-    "text": "Session 2: Boundaries, Matrices, and Deblurring\n\nThe model choices become visible at the edges"
+    "section": "Session 2: Fourier View and Deblurring",
+    "text": "Session 2: Fourier View and Deblurring\n\nThe model choices become visible at the edges"
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#part-4-boundary-conditions",
@@ -7117,6 +7026,20 @@
     "text": "Part 6: Why Deblurring Is Hard\n\nThe inverse problem appears\n\nIf blur is linear, why not just invert it?"
   },
   {
+    "objectID": "slides/week-02-convolution-blur.html#a-first-fourier-view",
+    "href": "slides/week-02-convolution-blur.html#a-first-fourier-view",
+    "title": "Convolution and Blur",
+    "section": "A First Fourier View",
+    "text": "A First Fourier View\nThe Fourier transform describes a signal by its oscillating components:\n\n\\widehat{x}(\\xi)=\\int_{\\mathbb R}x(t)e^{-2\\pi i\\xi t}\\,dt.\n\n\n\nLow frequencies describe slow variation; high frequencies describe rapid variation.\nEach coefficient compares the signal with a global oscillation.\nWeek 3 develops the discrete transform and its computation by FFT."
+  },
+  {
+    "objectID": "slides/week-02-convolution-blur.html#convolution-becomes-multiplication",
+    "href": "slides/week-02-convolution-blur.html#convolution-becomes-multiplication",
+    "title": "Convolution and Blur",
+    "section": "Convolution Becomes Multiplication",
+    "text": "Convolution Becomes Multiplication\nFor convolution, the Fourier transform gives\n\ny=h*x+\\eta\n\\quad\\Longrightarrow\\quad\n\\widehat y=\\widehat h\\,\\widehat x+\\widehat\\eta.\n\n\n\nFor typical smoothing kernels, high-frequency components are attenuated.\nDividing by a small \\widehat h amplifies noise; zeros lose information.\nFinite arrays use this product rule with circular convolution or suitable padding."
+  },
+  {
     "objectID": "slides/week-02-convolution-blur.html#the-naive-deblurring-idea",
     "href": "slides/week-02-convolution-blur.html#the-naive-deblurring-idea",
     "title": "Convolution and Blur",
@@ -7135,7 +7058,7 @@
     "href": "slides/week-02-convolution-blur.html#why-it-fails",
     "title": "Convolution and Blur",
     "section": "Why It Fails",
-    "text": "Why It Fails\nDeblurring can fail because:\n\nblur removes high-frequency detail;\nsmall singular values make inversion unstable;\nnoise is amplified by inverse filtering;\nthe blur kernel may be unknown or only approximately known.\n\n\nFourier analysis will make this precise in the next lectures."
+    "text": "Why It Fails\nDeblurring can fail because:\n\nblur removes high-frequency detail;\nsmall singular values make inversion unstable;\nnoise is amplified by inverse filtering;\nthe blur kernel may be unknown or only approximately known.\n\n\nWeek 3 develops the DFT, spectral plots, and frequency-domain filtering."
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#modeling-caveat",
@@ -7156,7 +7079,7 @@
     "href": "slides/week-02-convolution-blur.html#end-of-week-checkpoint",
     "title": "Convolution and Blur",
     "section": "End-of-Week Checkpoint",
-    "text": "End-of-Week Checkpoint\n\nFor each item, give one sentence:\n\nWhat is a PSF?\nWhy should a blur kernel often sum to 1?\nName two boundary conditions.\nWhy is deblurring sensitive to noise?"
+    "text": "End-of-Week Checkpoint\n\nFor each item, give one sentence:\n\nWhat is a PSF?\nWhy should a blur kernel often sum to 1?\nName two boundary conditions.\nHow does \\widehat y=\\widehat h\\,\\widehat x+\\widehat\\eta explain noise amplification?"
   },
   {
     "objectID": "slides/week-02-convolution-blur.html#what-students-should-remember",
@@ -7177,7 +7100,7 @@
     "href": "slides/week-02-convolution-blur.html#next-week",
     "title": "Convolution and Blur",
     "section": "Next Week",
-    "text": "Next Week\nFourier transform in imaging:\n\nfrequency interpretation of blur;\nconvolution theorem;\nlow-pass and high-pass behavior;\nwhy inverse filtering amplifies noise."
+    "text": "Next Week\nDiscrete Fourier transform and filtering:\n\nDFT, FFT, and spectral analysis;\nconvolution theorem revisited;\nlow-pass and high-pass behavior;\nwhy inverse filtering amplifies noise."
   },
   {
     "objectID": "slides/week-04-noise-likelihood.html#opening-question",
@@ -7555,7 +7478,7 @@
     "href": "slides/week-06-tikhonov-regularization.html#two-session-plan",
     "title": "Tikhonov Regularization",
     "section": "Two-Session Plan",
-    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nTikhonov model; penalized least squares; normal equations and closed form.\n\n\nSession 2\nSVD filter factors; choosing lambda; bias-variance; project proposal."
+    "text": "Two-Session Plan\n\n\n\n\n\n\n\nSession\nFocus\n\n\n\n\nSession 1\nTikhonov model; penalized least squares; normal equations and closed form.\n\n\nSession 2\nSVD filter factors; choosing lambda; bias-variance; project assignment."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#session-1-stabilizing-least-squares",
@@ -7821,7 +7744,7 @@
     "href": "slides/week-06-tikhonov-regularization.html#project-assigned",
     "title": "Tikhonov Regularization",
     "section": "Project Assigned",
-    "text": "Project Assigned\nThis week the modeling project is assigned.\n\n\nTeams choose or receive an imaging reconstruction problem.\nThe proposal, report, and oral defense follow the dates stated in the syllabus.\nEach student should understand the entire model and implementation.\n\n\n\nSee the project page for the current project structure and expectations."
+    "text": "Project Assigned\nThis week the modeling project is assigned.\n\n\nTeams choose or receive an imaging reconstruction problem.\nUngraded draft: Week 8; feedback: Week 9.\nFinal report/code: Week 14; individual oral presentation: Week 15.\nEach student should understand the entire model and implementation.\n\n\n\nSee the project page for the current project structure and expectations."
   },
   {
     "objectID": "slides/week-06-tikhonov-regularization.html#notebook-demo-and-code-reference",

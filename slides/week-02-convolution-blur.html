@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Laurent Najman">
   <title>MATH 435: Mathematical Imaging – Convolution and Blur</title>
@@ -20,10 +20,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -219,7 +222,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Laurent Najman 
+Laurent Najman
 </div>
 </div>
 </div>
@@ -240,7 +243,7 @@ Laurent Najman
 <li>Interpret the point spread function (PSF).</li>
 <li>Apply 2D convolution to real images.</li>
 <li>Understand boundary conditions.</li>
-<li>See why deblurring is already a hard inverse problem.</li>
+<li>Interpret blur and inverse instability in Fourier coordinates.</li>
 </ul>
 </div>
 </section>
@@ -264,7 +267,7 @@ Laurent Najman
 </tr>
 <tr class="even">
 <td>Session 2</td>
-<td>Boundary conditions; matrix view; deblurring instability and modeling caveats.</td>
+<td>Boundaries; matrix view; Fourier transform and convolution theorem; deblurring.</td>
 </tr>
 </tbody>
 </table>
@@ -499,25 +502,25 @@ y = h * x
 </section>
 <section id="python-demo-blur-a-real-image" class="slide level2 code-small">
 <h2>Python Demo: Blur a Real Image</h2>
-<div id="b5122cd2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
-<span id="cb1-2"><a></a><span class="im">from</span> scipy <span class="im">import</span> signal</span>
-<span id="cb1-3"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
-<span id="cb1-6"><a></a>kernel <span class="op">=</span> np.ones((<span class="dv">13</span>, <span class="dv">13</span>)) <span class="op">/</span> (<span class="dv">13</span> <span class="op">*</span> <span class="dv">13</span>)</span>
-<span id="cb1-7"><a></a></span>
-<span id="cb1-8"><a></a>blurred <span class="op">=</span> signal.convolve2d(</span>
-<span id="cb1-9"><a></a>    image, kernel, mode<span class="op">=</span><span class="st">"same"</span>, boundary<span class="op">=</span><span class="st">"symm"</span></span>
-<span id="cb1-10"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1ce8b15e" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="im">from</span> scipy <span class="im">import</span> signal</span>
+<span id="cb1-3"><a aria-label="3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a aria-label="4"></a></span>
+<span id="cb1-5"><a aria-label="5"></a>image <span class="op">=</span> data.camera().astype(<span class="bu">float</span>) <span class="op">/</span> <span class="dv">255</span></span>
+<span id="cb1-6"><a aria-label="6"></a>kernel <span class="op">=</span> np.ones((<span class="dv">13</span>, <span class="dv">13</span>)) <span class="op">/</span> (<span class="dv">13</span> <span class="op">*</span> <span class="dv">13</span>)</span>
+<span id="cb1-7"><a aria-label="7"></a></span>
+<span id="cb1-8"><a aria-label="8"></a>blurred <span class="op">=</span> signal.convolve2d(</span>
+<span id="cb1-9"><a aria-label="9"></a>    image, kernel, mode<span class="op">=</span><span class="st">"same"</span>, boundary<span class="op">=</span><span class="st">"symm"</span></span>
+<span id="cb1-10"><a aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="run-this-weeks-code" class="slide level2 code-small">
 <h2>Run This Week’s Code</h2>
 <p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">python3</span> examples/week02_convolution_blur.py</span>
-<span id="cb2-2"><a></a><span class="ex">python3</span> examples/make_week02_figures.py</span>
-<span id="cb2-3"><a></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">python3</span> examples/week02_convolution_blur.py</span>
+<span id="cb2-2"><a aria-label="2"></a><span class="ex">python3</span> examples/make_week02_figures.py</span>
+<span id="cb2-3"><a aria-label="3"></a><span class="ex">./scripts/quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="caption">
 <p>The first command prints numerical outputs. The second regenerates the figures used in this deck.</p>
 </div>
@@ -542,8 +545,8 @@ y = h * x
 <p>What happens if the weights sum to 2 instead of 1?</p>
 </div>
 </section>
-<section id="session-2-boundaries-matrices-and-deblurring" class="slide level2 section-slide">
-<h2>Session 2: Boundaries, Matrices, and Deblurring</h2>
+<section id="session-2-fourier-view-and-deblurring" class="slide level2 section-slide">
+<h2>Session 2: Fourier View and Deblurring</h2>
 <div class="section-kicker">
 <p>The model choices become visible at the edges</p>
 </div>
@@ -656,6 +659,36 @@ x.
 </div>
 <p>If blur is linear, why not just invert it?</p>
 </section>
+<section id="a-first-fourier-view" class="slide level2">
+<h2>A First Fourier View</h2>
+<p>The Fourier transform describes a signal by its oscillating components:</p>
+<p><span class="math display">
+\widehat{x}(\xi)=\int_{\mathbb R}x(t)e^{-2\pi i\xi t}\,dt.
+</span></p>
+<div class="checklist">
+<ul>
+<li>Low frequencies describe slow variation; high frequencies describe rapid variation.</li>
+<li>Each coefficient compares the signal with a global oscillation.</li>
+<li>Week 3 develops the discrete transform and its computation by FFT.</li>
+</ul>
+</div>
+</section>
+<section id="convolution-becomes-multiplication" class="slide level2">
+<h2>Convolution Becomes Multiplication</h2>
+<p>For convolution, the Fourier transform gives</p>
+<p><span class="math display">
+y=h*x+\eta
+\quad\Longrightarrow\quad
+\widehat y=\widehat h\,\widehat x+\widehat\eta.
+</span></p>
+<div class="checklist">
+<ul>
+<li>For typical smoothing kernels, high-frequency components are attenuated.</li>
+<li>Dividing by a small <span class="math inline">\widehat h</span> amplifies noise; zeros lose information.</li>
+<li>Finite arrays use this product rule with circular convolution or suitable padding.</li>
+</ul>
+</div>
+</section>
 <section id="the-naive-deblurring-idea" class="slide level2">
 <h2>The Naive Deblurring Idea</h2>
 <p>If</p>
@@ -686,7 +719,7 @@ x = A^{-1}y.
 <li>the blur kernel may be unknown or only approximately known.</li>
 </ol>
 <div class="caption">
-<p>Fourier analysis will make this precise in the next lectures.</p>
+<p>Week 3 develops the DFT, spectral plots, and frequency-domain filtering.</p>
 </div>
 </section>
 <section id="modeling-caveat" class="slide level2">
@@ -723,7 +756,7 @@ x = A^{-1}y.
 <li>What is a PSF?</li>
 <li>Why should a blur kernel often sum to 1?</li>
 <li>Name two boundary conditions.</li>
-<li>Why is deblurring sensitive to noise?</li>
+<li>How does <span class="math inline">\widehat y=\widehat h\,\widehat x+\widehat\eta</span> explain noise amplification?</li>
 </ol>
 </div>
 </section>
@@ -751,10 +784,10 @@ x = A^{-1}y.
 </section>
 <section id="next-week" class="slide level2">
 <h2>Next Week</h2>
-<p>Fourier transform in imaging:</p>
+<p>Discrete Fourier transform and filtering:</p>
 <ul>
-<li>frequency interpretation of blur;</li>
-<li>convolution theorem;</li>
+<li>DFT, FFT, and spectral analysis;</li>
+<li>convolution theorem revisited;</li>
 <li>low-pass and high-pass behavior;</li>
 <li>why inverse filtering amplifies noise.</li>
 </ul>

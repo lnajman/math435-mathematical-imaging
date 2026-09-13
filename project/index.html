@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-24ee7f1b01100a7d334bcbfbf2324abc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-5e43f460a1ccd1245f5aab379af51328.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -192,7 +195,7 @@ window.Quarto = {
   <ul>
   <li><a href="#central-question" id="toc-central-question" class="nav-link active" data-scroll-target="#central-question">Central Question</a></li>
   <li><a href="#expected-timeline" id="toc-expected-timeline" class="nav-link" data-scroll-target="#expected-timeline">Expected Timeline</a></li>
-  <li><a href="#required-llm-use" id="toc-required-llm-use" class="nav-link" data-scroll-target="#required-llm-use">Required LLM Use</a>
+  <li><a href="#ai-assistance-and-attribution" id="toc-ai-assistance-and-attribution" class="nav-link" data-scroll-target="#ai-assistance-and-attribution">AI Assistance and Attribution</a>
   <ul class="collapse">
   <li><a href="#llm-use-statement-template" id="toc-llm-use-statement-template" class="nav-link" data-scroll-target="#llm-use-statement-template">LLM-Use Statement Template</a></li>
   </ul></li>
@@ -249,16 +252,13 @@ y = A x + \eta,
 </span></p>
 <p>or a related model adapted to the chosen degradation.</p>
 <p>The team must define what <span class="math inline">x</span>, <span class="math inline">y</span>, <span class="math inline">A</span>, and <span class="math inline">\eta</span> mean in its project. If the forward process is not linear, the team must say so explicitly and explain what replaces the linear operator notation.</p>
-<p>The course identity is:</p>
-<p><span class="math display">
-\text{data} + \text{model} + \text{prior} + \text{optimization} \rightarrow \text{reconstruction with limits}.
-</span></p>
+<p>The course identity is that <strong>data + model + prior + optimization</strong> produce a reconstruction whose limits must be tested.</p>
 <p>For learned methods, the training data and architecture become part of the prior. For LLM-assisted work, the oral defense and the reproducibility checks are what establish student ownership.</p>
 </section>
 <section id="expected-timeline" class="level2">
 <h2 class="anchored" data-anchor-id="expected-timeline">Expected Timeline</h2>
 <p>Exact calendar dates will be announced in class. The project is assigned in Week 6 and defended during the final project period.</p>
-<p>The syllabus defines the assessed project moments as the proposal in Week 6, the report in Week 14, and the oral defense in Week 15. The intermediate rows below are for feedback and preparation; they do not create additional graded items outside the syllabus.</p>
+<p>The syllabus assigns the project in Week 6, requires a brief ungraded progress draft in Week 8 with feedback by Week 9, and sets the final report and code submission in Week 14 and individual oral presentation in Week 15. Topic planning and the progress draft carry no separate grade.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -275,7 +275,7 @@ y = A x + \eta,
 <tbody>
 <tr class="odd">
 <td>Week 6</td>
-<td>Project proposal</td>
+<td>Project assigned; topic planning</td>
 <td>Team, tentative topic, data source, baseline method, second method, first statement of <span class="math inline">x</span>, <span class="math inline">y</span>, forward model, degradation, and reliability question.</td>
 </tr>
 <tr class="even">
@@ -285,35 +285,41 @@ y = A x + \eta,
 </tr>
 <tr class="odd">
 <td>Week 8</td>
-<td>Baseline preparation</td>
-<td>A runnable notebook that creates the degraded data and runs a simple baseline.</td>
+<td>Ungraded progress draft due</td>
+<td>Forward model, proposed reconstruction method, and initial computational results, supported by a runnable baseline.</td>
 </tr>
 <tr class="even">
+<td>Week 9</td>
+<td>Feedback on the draft</td>
+<td>Use instructor feedback to revise the model and implementation.</td>
+</tr>
+<tr class="odd">
 <td>Week 10</td>
 <td>Method development</td>
 <td>Two reconstruction methods implemented on the same test cases.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Week 12</td>
 <td>Evidence development</td>
 <td>Parameter sweep, quantitative metric, and first robustness or failure test.</td>
 </tr>
-<tr class="even">
-<td>Week 14</td>
-<td>Project report</td>
-<td>Complete notebook, written report, claim-evidence table, LLM-use statement, and oral-defense preparation.</td>
-</tr>
 <tr class="odd">
+<td>Week 14</td>
+<td>Final report and code due</td>
+<td>Complete notebook, written report, claim-evidence table, attribution of any AI assistance, and oral-defense preparation.</td>
+</tr>
+<tr class="even">
 <td>Week 15</td>
-<td>Presentation and oral defense</td>
-<td>Final submission plus individual code walkthrough and defense.</td>
+<td>Individual presentation and oral defense</td>
+<td>Code walkthrough and defense of the report and code submitted in Week 14.</td>
 </tr>
 </tbody>
 </table>
+<p>Late submission of the group project will not be accepted, as stated in the syllabus.</p>
 </section>
-<section id="required-llm-use" class="level2">
-<h2 class="anchored" data-anchor-id="required-llm-use">Required LLM Use</h2>
-<p>Use of an LLM is required for this project.</p>
+<section id="ai-assistance-and-attribution" class="level2">
+<h2 class="anchored" data-anchor-id="ai-assistance-and-attribution">AI Assistance and Attribution</h2>
+<p>The September 2026 syllabus permits computational tools and AI assistance for the project. LLM use is optional and is not graded in itself. Each student must be able to justify and defend all modeling decisions during the individual oral presentation.</p>
 <p>Students may use an LLM for:</p>
 <ul>
 <li>brainstorming project ideas;</li>
@@ -325,15 +331,15 @@ y = A x + \eta,
 <li>preparing for the oral defense.</li>
 </ul>
 <p>However, students remain fully responsible for the correctness, reproducibility, and interpretation of the submitted work. An LLM can help produce an artifact, but it cannot replace ownership of the artifact.</p>
-<p>Each submission must include an <strong>LLM-use statement</strong> describing:</p>
+<p>Any AI-generated content used in the submission must be properly attributed. Teams using an LLM should include an <strong>LLM-use statement</strong> describing:</p>
 <ol type="1">
 <li>which LLM tools were used;</li>
 <li>what they were used for;</li>
 <li>which generated code or text was accepted, modified, or rejected;</li>
 <li>what the team verified independently;</li>
-<li>at least one mistake, limitation, or misleading suggestion produced by the LLM.</li>
+<li>any mistakes, limitations, or misleading suggestions the team identified.</li>
 </ol>
-<p>The LLM-use statement is <strong>required but not graded separately</strong>. A missing or dishonest LLM-use statement makes the project incomplete.</p>
+<p>Attribution is an academic-integrity requirement, not a separately graded component. Teams that do not use AI assistance may simply state that none was used; they are not required to use an LLM to complete this project.</p>
 <section id="llm-use-statement-template" class="level3">
 <h3 class="anchored" data-anchor-id="llm-use-statement-template">LLM-Use Statement Template</h3>
 <p>Students may use the following structure.</p>
@@ -347,7 +353,7 @@ Rejected suggestions:
 
 Independent verification:
 
-One LLM mistake or limitation we found:
+LLM mistakes or limitations we identified, if any:
 
 What each teammate can explain without the LLM:</code></pre>
 </section>
@@ -438,8 +444,8 @@ What each teammate can explain without the LLM:</code></pre>
 <td>Three to five claims, each paired with evidence and a limitation or failure mode.</td>
 </tr>
 <tr class="even">
-<td>LLM-use statement</td>
-<td>The required disclosure described above.</td>
+<td>Attribution</td>
+<td>Acknowledge any AI-generated content and other sources; include an LLM-use statement if an LLM was used.</td>
 </tr>
 </tbody>
 </table>
@@ -477,7 +483,7 @@ What each teammate can explain without the LLM:</code></pre>
 <li><strong>Results.</strong> Present quantitative and visual comparisons.</li>
 <li><strong>Robustness and failure.</strong> Show stress tests and at least one failure case.</li>
 <li><strong>Limitations.</strong> Explain when the method should not be trusted.</li>
-<li><strong>LLM-use statement.</strong> Disclose how the required LLM support was used.</li>
+<li><strong>Attribution.</strong> Acknowledge sources and disclose any AI assistance used.</li>
 </ol>
 </section>
 <section id="claim-evidence-table" class="level2">
@@ -609,7 +615,7 @@ What each teammate can explain without the LLM:</code></pre>
 </section>
 <section id="grading-rubric" class="level2">
 <h2 class="anchored" data-anchor-id="grading-rubric">Grading Rubric</h2>
-<p>The syllabus assigns 30% of the course grade to the two-student team modeling project, including the joint report and individual oral defense. The percentages below describe the internal breakdown of that 30% project grade; they do not add any graded work outside the syllabus.</p>
+<p>The syllabus assigns <strong>25% of the course grade</strong> to the two-student team modeling project, including the joint report and individual oral presentation. The percentages below describe the instructor’s internal breakdown of that project grade. They sum to 100% of the project, not of the course, and do not add graded work outside the syllabus.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -643,7 +649,7 @@ What each teammate can explain without the LLM:</code></pre>
 <td style="text-align: right;">25%</td>
 </tr>
 <tr class="odd">
-<td>LLM-use statement</td>
+<td>AI attribution, when applicable</td>
 <td style="text-align: right;">Required, ungraded</td>
 </tr>
 </tbody>
@@ -663,9 +669,10 @@ What each teammate can explain without the LLM:</code></pre>
 <li>identify one failure case;</li>
 <li>walk through selected lines of code;</li>
 <li>run the notebook on a new test image or modified degradation;</li>
-<li>explain how LLM assistance was checked.</li>
+<li>explain how any AI assistance used was checked.</li>
 </ul>
-<p>The oral defense is worth 25% of the project grade because it tests ownership of the submitted artifact. It is the part of the project that cannot be outsourced to an LLM.</p>
+<p>The oral defense and code walkthrough are worth <strong>25% of the project grade</strong>, equivalent to <strong>6.25% of the course grade</strong>. This retains the instructor’s internal rubric while applying the revised overall project weight.</p>
+<p>The syllabus also states that failure to participate in the individual oral presentation limits the student’s total project grade to <strong>a maximum of 50%</strong>. This cap applies in addition to losing credit for the oral component.</p>
 <section id="defense-preparation-checklist" class="level3">
 <h3 class="anchored" data-anchor-id="defense-preparation-checklist">Defense Preparation Checklist</h3>
 <p>Each student should be ready to answer:</p>
@@ -681,7 +688,7 @@ What each teammate can explain without the LLM:</code></pre>
 <li>Which result is mostly imposed by the prior?</li>
 <li>What is your clearest failure case?</li>
 <li>Which part of the code would you change first if the method failed on a new image?</li>
-<li>What did the LLM help with, and how did you verify it?</li>
+<li>If you used an LLM, what did it help with, and how did you verify it?</li>
 </ul>
 </section>
 </section>
